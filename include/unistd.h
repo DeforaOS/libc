@@ -29,12 +29,27 @@ enum { SEEK_CUR, SEEK_END, SEEK_SET };
 
 
 /* functions */
+int access(char const * filename, int mode);
+unsigned int alarm(unsigned int seconds);
+int chdir(char const * filename);
+int chown(char const * filename, uid_t owner, gid_t group);
 int close(int fildes);
+
 int dup(int fildes);
+int dup2(int fildes1, int fildes2);
+
+/* exec */
 
 pid_t fork(void);
 
+gid_t getegid(void);
+uid_t geteuid(void);
+gid_t getgid(void);
+
 pid_t getpid(void);
+pid_t getppid(void);
+
+uid_t getuid(void);
 
 void sync(void);
 
