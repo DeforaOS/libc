@@ -5,7 +5,7 @@
 .text
 .global _syscall0, _syscall1, _syscall2, _syscall3
 _syscall0:
-	mov	%esp, %eax
+	mov	0x4(%esp), %eax
 	int	$0x80
 	ret
 
