@@ -9,11 +9,15 @@
 
 /* syscall0 */
 _syscall0(pid_t, fork);
+_syscall0(gid_t, getegid);
+_syscall0(uid_t, geteuid);
+_syscall0(gid_t, getgid);
 _syscall0(pid_t, getpid);
 _syscall0(uid_t, getuid);
 
 
 /* syscall1 */
+_syscall1(unsigned, alarm, unsigned, seconds);
 _syscall1(int, close, int, fildes);
 _syscall1(int, dup, int, fildes);
 /* FIXME _syscall1(void, exit, int, status); */
@@ -33,6 +37,7 @@ _syscall2(int, link, const char *, path1, const char *, path2);
 _syscall2(off_t, lstat, const char * restrict, path,
 		struct stat * restrict, buf); */
 /* FIXME _syscall2(off_t, lstat, const char *, path, struct stat *, buf); */
+_syscall2(int, mkdir, const char *, path, mode_t, mode);
 
 
 /* syscall3 */
