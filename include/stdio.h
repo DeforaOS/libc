@@ -19,7 +19,7 @@
 
 /* types */
 typedef struct _FILE {
-	int fd;
+	int fildes;
 	int flags;
 	unsigned char buf[BUFSIZ];
 	int len;
