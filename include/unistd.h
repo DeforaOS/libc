@@ -21,8 +21,27 @@ enum { SEEK_CUR, SEEK_END, SEEK_SET };
 
 
 /* types */
-# include "sys/types.h"
-# include "inttypes.h"
+# ifndef size_t
+#  define size_t size_t
+typedef unsigned int size_t;
+# endif
+# ifndef ssize_t
+#  define ssize_t ssize_t
+typedef int ssize_t;
+# endif
+
+# ifndef gid_t
+#  define gid_t gid_t
+typedef int gid_t;
+# endif
+# ifndef pid_t
+#  define pid_t pid_t
+typedef int pid_t;
+# endif
+# ifndef uid_t
+#  define uid_t uid_t
+typedef int uid_t;
+# endif
 
 
 /* variables */
@@ -57,6 +76,8 @@ pid_t getpid(void);
 pid_t getppid(void);
 
 uid_t getuid(void);
+
+int lchown(char const *, uid_t, gid_t);
 
 int link(char const * from, char const * to);
 
