@@ -9,6 +9,13 @@
 #include "stdio.h"
 
 
+/* variables */
+FILE * stdin;
+FILE * stdout;
+FILE * stderr;
+
+
+/* functions */
 /* fclose */
 int fclose(FILE * stream)
 {
@@ -125,6 +132,13 @@ static int _fopen_mode(char const * mode)
 }
 
 
+/* fprintf */
+int fprintf(FILE * stream, char const * format, ...)
+{
+	return -1;
+}
+
+
 /* fputc */
 int fputc(int c, FILE * stream)
 {
@@ -150,4 +164,23 @@ size_t fwrite(void * ptr, size_t size, size_t nb, FILE * file)
 int getc(FILE * stream)
 {
 	return fgetc(stream);
+}
+
+
+/* printf */
+int printf(char const * format, ...)
+{
+	return -1;
+}
+
+
+/* puts */
+int puts(char const * string)
+{
+	int i;
+
+	for(i = 0; string[i] != '\0'; i++);
+	fwrite(string, sizeof(char), i, stdout);
+	fputc('\n', stdout);
+	return i;
 }
