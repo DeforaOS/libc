@@ -1,0 +1,99 @@
+/* unistd.c */
+
+
+
+#include "sys/types.h"
+#include "syscalls.h"
+
+
+/* access */
+syscall2(int, access, const char *, filename, int, mode);
+
+
+/* alarm */
+syscall1(unsigned int, alarm, unsigned int, seconds);
+
+
+/* chdir */
+syscall1(int, chdir, char const *, filename);
+
+
+/* chown */
+syscall3(int, chown, char const *, filename, uid_t, owner, gid_t, group);
+
+
+/* close */
+syscall1(int, close, int, fildes);
+
+
+/* dup */
+syscall1(int, dup, int, fildes);
+
+
+/* dup2 */
+syscall2(int, dup2, int, fildes1, int, fildes2);
+
+
+/* exit */
+syscall1(void, exit, int, status);
+void (* _exit)(int) = exit;
+
+
+/* fork */
+syscall0(pid_t, fork);
+
+
+/* getegid */
+syscall0(gid_t, getegid);
+
+
+/* geteuid */
+syscall0(uid_t, geteuid);
+
+
+/* getpid */
+syscall0(pid_t, getpid);
+
+
+/* getppid */
+syscall0(pid_t, getppid);
+
+
+/* getuid */
+syscall0(uid_t, getuid);
+
+
+/* link */
+syscall2(int, link, char const *, from, char const *, to);
+
+
+/* nice */
+syscall1(int, nice, int, inc);
+
+
+/* pipe */
+syscall1(int, pipe, int, filedes[2]);
+
+
+/* read */
+syscall3(ssize_t, read, int, fd, void *, buf, size_t, count);
+
+
+/* rmdir */
+syscall1(int, rmdir, char const *, filename);
+
+
+/* setgid */
+syscall1(int, setgid, gid_t, gid);
+
+
+/* symlink */
+syscall2(int, symlink,char const *, from, char const *, to);
+
+
+/* sync */
+syscall0(void, sync);
+
+
+/* unlink */
+syscall1(int, unlink, const char *, filename);
