@@ -2,6 +2,7 @@
 
 
 
+#include "errno.h"
 #include "fcntl.h"
 #include "unistd.h"
 #include "stdlib.h"
@@ -16,6 +17,25 @@ int fclose(FILE * stream)
 	res = fflush(stream);
 	close(stream->fildes);
 	return res;
+}
+
+
+/* fflush */
+int fflush(FILE * stream)
+{
+	size_t count;
+
+	if(stream->flags & O_RDONLY)
+		return 0;
+	else if(stream->flags & O_RDWR)
+	{
+		errno = ENOSYS;
+		return EOF;
+	}
+	count = stream->len - stream->pos;
+	if(write(stream->fildes, stream->buf, count) != count)
+		return EOF;
+	return 0;
 }
 
 
@@ -109,6 +129,20 @@ static int _fopen_mode(char const * mode)
 int fputc(int c, FILE * stream)
 {
 	return fwrite(&c, sizeof(char), 1, stream);
+}
+
+
+/* fread */
+size_t fread(void * ptr, size_t size, size_t nb, FILE * file)
+{
+	return -1;
+}
+
+
+/* fwrite */
+size_t fwrite(void * ptr, size_t size, size_t nb, FILE * file)
+{
+	return -1;
 }
 
 
