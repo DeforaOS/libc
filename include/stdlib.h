@@ -13,6 +13,7 @@
 int atoi(char const * str);
 long atol(char const * str);
 long long atoll(char const * nptr);
+void exit(int status);
 void free(void * ptr);
 void * malloc(size_t size);
 
