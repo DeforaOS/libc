@@ -1,4 +1,4 @@
-TARGETS	= libc
+TARGETS	= libc.a libc.so
 CFLAGSF	= -W -Wall -ansi -I../include
 CFLAGS	= -g
 CC	= cc
@@ -10,29 +10,33 @@ RM	= rm -f
 
 all: $(TARGETS)
 
-libc: libc.a libc.so
-
-libc.a: ctype.o libgen.o stdlib.o string.o
-	$(AR) libc.a ctype.o libgen.o stdlib.o string.o
+libc_OBJS= ctype.o libgen.o stdlib.o stdio.o string.o
+libc_CFLAGS=$(CFLAGSF) $(CFLAGS)
+libc.a: $(libc_OBJS)
+	$(AR) libc.a $(libc_OBJS)
 	$(RANLIB) libc.a
 
-libc.so: ctype.o libgen.o stdlib.o string.o
-	$(LD) -o libc.so ctype.o libgen.o stdlib.o string.o
+libc.so: $(libc_OBJS)
+	$(LD) -o libc.so $(libc_OBJS)
 
 ctype.o: ctype.c
-	$(CC) $(CFLAGSF) $(CFLAGS) -c ctype.c
+	$(CC) $(libc_CFLAGS) -c ctype.c
 
 libgen.o: libgen.c
-	$(CC) $(CFLAGSF) $(CFLAGS) -c libgen.c
+	$(CC) $(libc_CFLAGS) -c libgen.c
 
 stdlib.o: stdlib.c
-	$(CC) $(CFLAGSF) $(CFLAGS) -c stdlib.c
+	$(CC) $(libc_CFLAGS) -c stdlib.c
+
+stdio.o: stdio.c
+	$(CC) $(libc_CFLAGS) -c stdio.c
 
 string.o: string.c
-	$(CC) $(CFLAGSF) $(CFLAGS) -c string.c
+	$(CC) $(libc_CFLAGS) -c string.c
+
 
 clean:
-	$(RM) ctype.o libgen.o stdlib.o string.o
+	$(RM) $(libc_OBJS)
 
 distclean: clean
-	$(RM) libc.a libc.so
+	$(RM) $(TARGETS)

@@ -1,6 +1,14 @@
 SUBDIRS	= src
-MAKE	= make
 
 
-all clean distclean:
-	@for i in $(SUBDIRS); do $(MAKE) -C $$i $@ || exit $$?; done
+all: subdirs
+
+subdirs:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
+
+
+clean:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
+
+distclean: clean
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
