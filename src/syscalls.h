@@ -50,6 +50,8 @@
 # define SYS_setregid	71
 # define SYS_symlink	83
 # define SYS_readlink	85
+# define SYS_stat	106
+# define SYS_lstat	107
 # define SYS_chown	182
 # define SYS_vfork	190
 
