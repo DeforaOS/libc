@@ -95,6 +95,7 @@ void * calloc(size_t nmemb, size_t size)
 /* exit */
 void exit(int status)
 {
+	_exit(status);
 }
 
 
