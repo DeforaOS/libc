@@ -5,8 +5,15 @@
 #include "sys/types.h"
 #include "syscalls.h"
 #include "stddef.h"
+#include "unistd.h"
 
 
+/* variables */
+char * optarg = NULL;
+int optind = 1, opterr, optopt = '?';
+
+
+/* functions */
 /* access */
 syscall2(int, access, const char *, filename, int, mode);
 
@@ -45,8 +52,11 @@ syscall3(int, execve, char const *, filename, char const **, argv,
 
 
 /* exit */
-syscall1(void, exit, int, status);
-void (* _exit)(int) = exit;
+/* FIXME
+ * - _exit() seems to be the actual syscall but SYS__exit doesn't exist
+ * - exit() and _Exit() should be in stdlib.{c,h} */
+static syscall1(void, exit, int, status);
+/* void (* _exit)(int) = exit; */
 
 
 /* fork */
@@ -59,6 +69,59 @@ syscall0(gid_t, getegid);
 
 /* geteuid */
 syscall0(uid_t, geteuid);
+
+
+/* getopt */
+int getopt(int argc, char const * argv[], char const * optstring)
+{
+	static char const * p = NULL;
+	static int8_t flag = 1;
+	int i;
+
+	if(flag)
+	{
+		flag = 0;
+		p = *argv;
+	}
+	optarg = NULL;
+	optopt = '?';
+	if(argv[optind] == NULL || *argv[optind] != '-'
+			|| *(argv[optind]+1) == '\0')
+		return -1;
+	if(*(argv[optind]+1) == '-' && *(argv[optind]+2) == '\0')
+	{
+		optind++;
+		return -1;
+	}
+	if(*p == '\0')
+	{
+		optind++;
+		if(optind >= argc || argv[optind][0] != '-')
+			return -1;
+		p = argv[optind]+1;
+	}
+	for(i = 0; optstring[i] != '\0'; i++)
+	{
+		if(optstring[i] == ':')
+			continue;
+		if(optstring[i] == *p)
+			break;
+	}
+	if(optstring[i] != *p)
+	{
+		p++;
+		return '?';
+	}
+	p++;
+	if(optstring[i+1] == ':')
+	{
+		if(*p != '\0' || optind+1 >= argc)
+			return '?';
+		optarg = (char*)argv[++optind];
+		return optstring[i];
+	}
+	return optstring[i];
+}
 
 
 /* getpid */
