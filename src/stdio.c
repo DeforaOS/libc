@@ -220,3 +220,17 @@ int sprintf(char * str, char const * format, ...)
 	va_end(arg);
 	return ret;
 }
+
+
+/* vfprintf */
+int vfprintf(FILE * stream, char const * format, va_list arg)
+{
+	return -1; /* FIXME */
+}
+
+
+/* vsprintf */
+int vsprintf(char * str, char const * format, va_list arg)
+{
+	return -1; /* FIXME */
+}
