@@ -14,6 +14,10 @@ syscall2(int, access, const char *, filename, int, mode);
 syscall1(unsigned int, alarm, unsigned int, seconds);
 
 
+/* brk */
+syscall1(int, brk, void *, end_data_segment);
+
+
 /* chdir */
 syscall1(int, chdir, char const *, filename);
 
@@ -91,6 +95,13 @@ syscall3(ssize_t, readlink, char const *, filename, char *, buf,
 
 /* rmdir */
 syscall1(int, rmdir, char const *, filename);
+
+
+/* sbrk */
+void * sbrk(unsigned int increment) /* FIXME */
+{
+	return NULL;
+}
 
 
 /* setgid */
