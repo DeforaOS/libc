@@ -34,6 +34,11 @@ syscall1(int, dup, int, fildes);
 syscall2(int, dup2, int, fildes1, int, fildes2);
 
 
+/* execve */
+syscall3(int, execve, char const *, filename, char const **, argv,
+		char const **, envp);
+
+
 /* exit */
 syscall1(void, exit, int, status);
 void (* _exit)(int) = exit;

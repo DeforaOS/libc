@@ -16,6 +16,7 @@
 # define SYS_waitpid	7
 # define SYS_link	9
 # define SYS_unlink	10
+# define SYS_execve	11
 # define SYS_chdir	12
 # define SYS_time	13
 # define SYS_mknod	14

@@ -38,7 +38,7 @@ int close(int fildes);
 int dup(int fildes);
 int dup2(int fildes1, int fildes2);
 
-/* exec */
+int execve(char const * filename, char const * argv[], char const * envp[]);
 
 void _exit(int status);
 
