@@ -6,7 +6,7 @@
 #ifndef ___STDLIB_H
 # define ___STDLIB_H
 
-#include "stddef.h"
+# include "stddef.h"
 
 
 /* function prototypes */
@@ -16,4 +16,4 @@ long long atoll(char const * nptr);
 void free(void * ptr);
 void * malloc(size_t size);
 
-#endif /* ___STDLIB_H */
+#endif /* !___STDLIB_H */
