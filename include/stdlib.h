@@ -17,5 +17,6 @@ void exit(int status);
 void free(void * ptr);
 void * malloc(size_t size);
 void * realloc(void * ptr, size_t size);
+long strtol(char const *, char **, int);
 
 #endif /* !___STDLIB_H */
