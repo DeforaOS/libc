@@ -32,12 +32,27 @@
 
 
 /* types */
-# include "sys/types.h"
+# ifndef id_t
+#  define id_t id_t
+typedef int id_t;
+# endif
+# ifndef mode_t
+#  define mode_t mode_t
+typedef int mode_t;
+# endif
+# ifndef off_t
+#  define off_t off_t
+typedef int off_t;
+# endif
+# ifndef pid_t
+#  define pid_t pid_t
+typedef id_t pid_t;
+# endif
 
 
 /* functions */
 int creat(const char *, mode_t);
 int fcntl(int, int, ...);
-/* int open(char const *, int, ...); FIXME */
+int open(char const * filename, int flags, ...);
 
 #endif /* !___FCNTL_H */
