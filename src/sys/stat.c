@@ -18,5 +18,9 @@ syscall2(int, fstat, int, fd, struct stat *, buf);
 syscall2(int, lstat, char const *, filename, struct stat *, buf);
 
 
+/* mkdir */
+syscall2(int, mkdir, char const *, name, mode_t, mode);
+
+
 /* stat */
 syscall2(int, stat, char const *, filename, struct stat *, buf);

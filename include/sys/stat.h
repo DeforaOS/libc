@@ -107,7 +107,7 @@ int chmod(char const *, mode_t);
 int fchmod(int, mode_t);
 int fstat(int, struct stat *);
 int lstat(char const *, struct stat *);
-int mkdir(char const *, mode_t);
+int mkdir(char const * name, mode_t mode);
 int mkfifo(char const *, mode_t);
 int mknod(char const *, mode_t, dev_t);
 int stat(char const *, struct stat *);
