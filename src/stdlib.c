@@ -226,3 +226,10 @@ void * malloc(size_t size)
 	chnk->flags = CHUNK_ALLOCED;
 	return chnk + sizeof(Chunk);
 }
+
+
+/* realloc */
+void * realloc(void * ptr, size_t size)
+{
+	return NULL;
+}
