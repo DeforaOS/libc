@@ -7,4 +7,7 @@
 
 
 /* open */
-syscall3(int, open, char const *, filename, int, flags, mode_t, mode);
+int open(char const * filename, int flags, ...)
+{
+	_syscall3(SYS_open, filename, flags, 0); /* FIXME */
+}
