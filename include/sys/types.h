@@ -16,7 +16,12 @@ typedef int blkcnt_t;
 typedef int blksize_t;
 # endif
 typedef int clock_t;
+typedef int dev_t;
 typedef int id_t;
+# ifndef ino_t
+#  define ino_t ino_t
+typedef int ino_t;
+# endif
 # ifndef mode_t
 #  define mode_t mode_t
 typedef int mode_t;
