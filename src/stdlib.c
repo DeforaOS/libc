@@ -20,6 +20,50 @@ typedef struct _Chunk {
 } Chunk;
 
 
+/* atexit */
+typedef enum _AtexitFunction { AF_EXEC, AF_PURGE, AF_REGISTER } AtexitFunction;
+typedef void (*AtexitCallback)(void);
+static int _atexit_do(AtexitFunction function, void (*callback)(void));
+int atexit(void (*function)(void))
+{
+	return _atexit_do(AF_REGISTER, function);
+}
+
+static int _atexit_do(AtexitFunction function, void (*callback)(void))
+{
+	static AtexitCallback * cb = NULL;
+	static int cb_size = 0;
+	static int cb_pos = 0;
+	void * p;
+
+	if(cb == NULL && cb_size == 0)
+		cb = malloc(32 * sizeof(void*));
+	switch(function)
+	{
+		case AF_EXEC:
+			while(cb_pos-- > 0)
+				cb[cb_pos]();
+		case AF_PURGE:
+			free(cb);
+			cb = NULL;
+			cb_size = 0;
+			cb_pos = 0;
+			break;
+		case AF_REGISTER:
+			if(cb_pos == cb_size)
+			{
+				if((p = realloc(cb, (cb_size+1)*sizeof(void*)))
+						== NULL)
+					return -1;
+				cb = p;
+			}
+			cb[cb_pos++] = callback;
+			break;
+	}
+	return 0;
+}
+
+
 /* atoi */
 int atoi(char const * str)
 {
@@ -95,6 +139,7 @@ void * calloc(size_t nmemb, size_t size)
 /* exit */
 void exit(int status)
 {
+	_atexit_do(AF_EXEC, NULL);
 	_exit(status);
 }
 
