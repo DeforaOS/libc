@@ -6,15 +6,15 @@
 #ifndef ___STDIO_H
 # define ___STDIO_H
 
-#include "stddef.h"
+# include "stddef.h"
 
 
 /* constants */
 /* size of <stdio.h> buffers */
-#define BUFSIZ 8192
+# define BUFSIZ 8192
 
 /* end-of-file return value */
-#define EOF (-1)
+# define EOF (-1)
 
 
 /* types */
@@ -46,4 +46,4 @@ size_t fwrite(void * ptr, size_t size, size_t nb, FILE * file);
 int getc(FILE * stream);
 int getchar(void);
 
-#endif /* ___STDIO_H */
+#endif /* !___STDIO_H */

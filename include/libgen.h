@@ -11,4 +11,4 @@
 char * basename(char * path);
 char * dirname(char * path);
 
-#endif /* ___LIBGEN_H */
+#endif /* !___LIBGEN_H */

@@ -8,17 +8,17 @@
 
 
 /* null pointer */
-#ifndef NULL
-# define NULL ((void*)0)
-#endif
+# ifndef NULL
+#  define NULL ((void*)0)
+# endif
 
 /* largest character set supported */
 typedef char wchar_t;
 
 /* result of the sizeof operator */
-#ifndef size_t
-# define size_t size_t
+# ifndef size_t
+#  define size_t size_t
 typedef unsigned int size_t;
-#endif
+# endif
 
-#endif /* ___STDDEF_H */
+#endif /* !___STDDEF_H */

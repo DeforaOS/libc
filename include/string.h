@@ -6,7 +6,7 @@
 #ifndef ___STRING_H
 # define ___STRING_H
 
-#include "stddef.h"
+# include "stddef.h"
 
 
 /* function prototypes */
@@ -22,4 +22,4 @@ char * strncat(char * dest, char const * src, size_t n);
 int strncmp(char const * s1, char const * s2, size_t n);
 char * strncpy(char * dest, char const * src, size_t n);
 
-#endif
+#endif /* !___STRING_H */
