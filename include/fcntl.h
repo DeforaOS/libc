@@ -16,6 +16,8 @@
 # define F_GETLK	5
 # define F_SETLK	6
 # define F_SETLKW	7
+# define F_GETOWN	9
+# define F_SETOWN	8
 
 /* file access modes for open() and fcntl() */
 # define O_RDONLY	00
