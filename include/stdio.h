@@ -37,8 +37,10 @@ extern FILE * stderr;
 /* functions */
 int fclose(FILE * stream);
 FILE * fdopen(int fildes, char const * mode);
+int feof(FILE * stream);
 int fflush(FILE * stream);
 int fgetc(FILE * stream);
+int fileno(FILE * stream);
 FILE * fopen(char const * path, char const * mode);
 int fprintf(FILE * stream, char const * format, ...);
 int fputc(int c, FILE * stream);
@@ -49,5 +51,6 @@ int getchar(void);
 void perror(char const * s);
 int printf(char const * format, ...);
 int puts(char const * string);
+int sprintf(char *, char const *, ...);
 
 #endif /* !___STDIO_H */
