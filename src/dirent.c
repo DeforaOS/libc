@@ -58,5 +58,10 @@ DIR * opendir(char const * name)
 /* readdir */
 struct dirent * readdir(DIR * dir)
 {
+	if(dir == NULL)
+	{
+		errno = EINVAL;
+		return NULL;
+	}
 	return NULL; /* FIXME */
 }
