@@ -13,7 +13,7 @@ typedef int id_t;
 # endif
 # ifndef gid_t
 #  define gid_t gid_t
-typedef id_t gid_t
+typedef id_t gid_t;
 # endif
 struct group
 {
