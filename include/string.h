@@ -6,8 +6,8 @@
 #ifndef ___STRING_H
 # define ___STRING_H
 
-
 #include "stddef.h"
+
 
 /* function prototypes */
 void * memcpy(void * dest, void const * src, size_t n);
