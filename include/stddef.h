@@ -7,18 +7,17 @@
 # define ___STDDEF_H
 
 
-/* null pointer */
-# ifndef NULL
-#  define NULL ((void*)0)
-# endif
-
-/* largest character set supported */
-typedef char wchar_t;
-
-/* result of the sizeof operator */
+/* types */
 # ifndef size_t
 #  define size_t size_t
 typedef unsigned int size_t;
+# endif
+typedef char wchar_t;
+
+
+/* constants */
+# ifndef NULL
+#  define NULL ((void*)0)
 # endif
 
 #endif /* !___STDDEF_H */
