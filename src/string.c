@@ -4,6 +4,7 @@
 
 #include "stdlib.h"
 #include "string.h"
+#include "errno.h"
 
 
 /* FIXME */
@@ -173,6 +174,29 @@ char * strdup(char const * s)
 		return NULL;
 	strcpy(str, s);
 	return str;
+}
+
+
+/* strerror */
+char * strerror(int errnum)
+{
+	static char einval[] = "Invalid argument";
+	struct {
+		int errno;
+		char * errmsg;
+	} err[] = {
+		{ 0, "Success" },
+		{ E2BIG, "Argument list too long" },
+		{ EACCES, "Permission denied" },
+		{ EINVAL, einval },
+		{ EXDEV, "Cross-device link" }
+	};
+	unsigned int i;
+
+	for(i = 0; err[i].errno != EXDEV; i++)
+		if(err[i].errno == errnum)
+			return err[i].errmsg;
+	return einval;
 }
 
 
