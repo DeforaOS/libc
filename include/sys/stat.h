@@ -7,6 +7,18 @@
 
 
 /* types */
+# ifndef mode_t
+#  define mode_t mode_t
+typedef int mode_t;
+# endif
+# ifndef gid_t
+#  define gid_t gid_t
+typedef int gid_t;
+# endif
+# ifndef uid_t
+#  define uid_t uid_t
+typedef int uid_t;
+# endif
 struct stat {
 	dev_t st_dev;
 	ino_t st_ino;
