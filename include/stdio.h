@@ -41,5 +41,9 @@ int fflush(FILE * stream);
 int fgetc(FILE * stream);
 FILE * fopen(char const * path, char const * mode);
 int fputc(int c, FILE * stream);
+size_t fread(void * ptr, size_t size, size_t nb, FILE * file);
+size_t fwrite(void * ptr, size_t size, size_t nb, FILE * file);
+int getc(FILE * stream);
+int getchar(void);
 
 #endif /* ___STDIO_H */
