@@ -31,6 +31,7 @@ enum { SEEK_CUR, SEEK_END, SEEK_SET };
 /* functions */
 int access(char const * filename, int mode);
 unsigned int alarm(unsigned int seconds);
+int brk(void * end_data_segment);
 int chdir(char const * filename);
 int chown(char const * filename, uid_t owner, gid_t group);
 int close(int fildes);
@@ -60,6 +61,8 @@ int nice(int inc);
 ssize_t read(int fildes, void * buf, size_t count);
 ssize_t readlink(char const * filename, char * buf, size_t bufsiz);
 int rmdir(char const * filename);
+
+void * sbrk(size_t increment);
 
 int setgid(gid_t gid);
 int setpgid(pid_t pid, pid_t pgid);
