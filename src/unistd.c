@@ -51,12 +51,11 @@ syscall3(int, execve, char const *, filename, char const **, argv,
 		char const **, envp);
 
 
-/* exit */
-/* FIXME
- * - _exit() seems to be the actual syscall but SYS__exit doesn't exist
- * - exit() and _Exit() should be in stdlib.{c,h} */
-static syscall1(void, exit, int, status);
-/* void (* _exit)(int) = exit; */
+/* _exit */
+void _exit(int status)
+{
+	_syscall1(SYS_exit, status);
+}
 
 
 /* fork */
