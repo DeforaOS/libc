@@ -6,6 +6,37 @@
 #include "string.h"
 
 
+/* FIXME */
+#define max(a, b) ((a) > (b) ? (a) : (b))
+
+
+/* memchr */
+void * memchr(void const * s, int c, size_t n)
+{
+	unsigned char const * ls = s;
+	unsigned char lc = c;
+
+	while(n-- && *ls != lc)
+		ls++;
+	return n != 0 ? : ls;
+}
+
+
+/* memcmp */
+int memcmp(void const * s1, void const * s2, size_t n)
+{
+	unsigned char const * u1 = s1;
+	unsigned char const * u2 = s2;
+
+	while(n-- && *u1 == *u2)
+	{
+		u1++;
+		u2++;
+	}
+	return *u1 - *u2;
+}
+
+
 /* memcpy */
 void * memcpy(void * dest, void const * src, size_t n)
 {
@@ -68,6 +99,18 @@ char * strcat(char * dest, char const * src)
 }
 
 
+/* strchr */
+char const * strchr(char const * s, int c)
+{
+	unsigned char u = c;
+
+	for(; *s != '\0'; s++)
+		if(*s == u)
+			return s;
+	return u == 0 ? s : NULL;
+}
+
+
 /* strcmp */
 int strcmp(char const * s1, char const * s2)
 {
@@ -97,15 +140,34 @@ char * strcpy(char * dest, char const * src)
 }
 
 
+/* strcspn */
+size_t strcspn(char const * s1, char const * s2)
+{
+	unsigned int ret = 0;
+	unsigned int len = 0;
+	unsigned int i;
+
+	for(; *s1 != '\0'; s1++)
+	{
+		len++;
+		for(i = 0; s2[i] != '\0'; i++)
+			if(*s1 == s2[i])
+			{
+				ret = max(ret, len);
+				len = -1;
+				break;
+			}
+	}
+	return ret;
+}
+
+
 /* strdup */
 char * strdup(char const * s)
 {
 	size_t len;
 	char * str;
 
-	/* FIXME needed? */
-	if(s == NULL)
-		return NULL;
 	len = strlen(s) + 1;
 	if((str = malloc(sizeof(char) * len)) == NULL)
 		return NULL;
@@ -164,4 +226,59 @@ char * strncpy(char * dest, char const * src, size_t n)
 	while(n-- && *src)
 		*dest++ = *src++;
 	return res;
+}
+
+
+/* strrchr */
+char const * strrchr(char const * s, int c)
+{
+	unsigned char u = c;
+	char const * last = NULL;
+
+	for(; *s != '\0'; s++)
+		if(*s == c)
+			last = s;
+	return u == 0 ? s : last;
+}
+
+
+/* strstr */
+char const * strstr(char const * s1, char const * s2)
+{
+	unsigned int len1 = strlen(s1);
+	unsigned int len2 = strlen(s2);
+	unsigned int i;
+
+	if(len2 == 0)
+		return s1;
+	if(len1 < len2)
+		return NULL;
+	for(i = 0; i < len1 - len2; i++)
+		if(strncmp(&s1[i], s2, len2) == 0)
+			return s1 + i;
+	return NULL;
+}
+
+
+/* strtok */
+char * strtok(char * s1, char const * s2)
+{
+	static char * s = NULL;
+	unsigned int i;
+	unsigned int j;
+
+	if(s1 != NULL)
+		s = s1;
+	for(i = 0; s[i] != '\0'; i++)
+	{
+		for(j = 0; s2[j] != '\0'; j++)
+		{
+			if(s[i] == s2[j])
+			{
+				s+=(i + 1);
+				return s - i - 1;
+			}
+		}
+	}
+	return NULL;
 }
