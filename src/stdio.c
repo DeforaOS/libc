@@ -59,6 +59,18 @@ int fgetc(FILE * stream)
 }
 
 
+/* fileno */
+int fileno(FILE * stream)
+{
+	if(stream == NULL)
+	{
+		errno = EBADF;
+		return -1;
+	}
+	return stream->fildes;
+}
+
+
 /* fopen */
 static int _fopen_mode(char const * mode);
 FILE * fopen(char const * path, char const * mode)
