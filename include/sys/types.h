@@ -16,7 +16,10 @@ typedef int blkcnt_t;
 typedef int blksize_t;
 # endif
 typedef int clock_t;
+# ifndef dev_t
+#  define dev_t dev_t
 typedef int dev_t;
+# endif
 # ifndef id_t
 #  define id_t id_t
 typedef int id_t;
@@ -29,8 +32,14 @@ typedef int ino_t;
 #  define mode_t mode_t
 typedef int mode_t;
 # endif
+# ifndef nlink_t
+#  define nlink_t nlink_t
 typedef int nlink_t;
+# endif
+# ifndef off_t
+#  define off_t off_t
 typedef int off_t;
+# endif
 # ifndef size_t
 #  define size_t size_t
 typedef unsigned int size_t;
@@ -39,7 +48,10 @@ typedef unsigned int size_t;
 #  define ssize_t ssize_t
 typedef int ssize_t;
 # endif
+# ifndef time_t
+#  define time_t time_t
 typedef int time_t;
+# endif
 
 # ifndef gid_t
 #  define gid_t gid_t
