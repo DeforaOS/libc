@@ -136,6 +136,10 @@ syscall0(pid_t, getppid);
 syscall0(uid_t, getuid);
 
 
+/* lchown */
+syscall3(int, lchown, char const *, filename, uid_t, owner, gid_t, group);
+
+
 /* link */
 syscall2(int, link, char const *, from, char const *, to);
 
