@@ -6,6 +6,10 @@
 #include "../syscalls.h"
 
 
+/* chmod */
+syscall2(int, chmod, char const *, path, mode_t, mode);
+
+
 /* fstat */
 syscall2(int, fstat, int, fd, struct stat *, buf);
 
