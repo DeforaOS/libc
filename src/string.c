@@ -18,7 +18,7 @@ void * memchr(void const * s, int c, size_t n)
 
 	while(n-- && *ls != lc)
 		ls++;
-	return n != 0 ? : ls;
+	return n != 0 ? ls : NULL;
 }
 
 
