@@ -233,3 +233,10 @@ void * realloc(void * ptr, size_t size)
 {
 	return NULL;
 }
+
+
+/* strtol */
+long strtol(char const * nptr, char ** endptr, int base)
+{
+	return 0; /* FIXME */
+}
