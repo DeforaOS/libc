@@ -46,7 +46,8 @@ size_t fread(void * ptr, size_t size, size_t nb, FILE * file);
 size_t fwrite(void * ptr, size_t size, size_t nb, FILE * file);
 int getc(FILE * stream);
 int getchar(void);
+void perror(char const * s);
 int printf(char const * format, ...);
-int puts(char const *string);
+int puts(char const * string);
 
 #endif /* !___STDIO_H */

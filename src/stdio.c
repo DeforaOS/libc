@@ -7,6 +7,7 @@
 #include "unistd.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "string.h"
 
 
 /* variables */
@@ -164,6 +165,15 @@ size_t fwrite(void * ptr, size_t size, size_t nb, FILE * file)
 int getc(FILE * stream)
 {
 	return fgetc(stream);
+}
+
+
+/* perror */
+void perror(char const * s)
+{
+	if(s != NULL && *s != '\0')
+		fprintf(stdout, "%s%s", s, ": ");
+	fprintf(stdout, "%s%s", strerror(errno), "\n");
 }
 
 
