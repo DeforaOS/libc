@@ -18,6 +18,6 @@ typedef id_t pid_t;
 
 
 /* functions */
-int kill(pid_t, int);
+int kill(pid_t pid, int sig);
 
 #endif /* !___SIGNAL_H */

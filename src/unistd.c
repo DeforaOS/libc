@@ -16,7 +16,7 @@ int optind = 1, opterr, optopt = '?';
 
 /* functions */
 /* access */
-syscall2(int, access, const char *, filename, int, mode);
+syscall2(int, access, char const *, filename, int, mode);
 
 
 /* alarm */
@@ -201,7 +201,7 @@ syscall0(void, sync);
 
 
 /* unlink */
-syscall1(int, unlink, const char *, filename);
+syscall1(int, unlink, char const *, filename);
 
 
 /* vfork */
@@ -209,4 +209,4 @@ syscall0(pid_t, vfork);
 
 
 /* write */
-syscall3(ssize_t, write, int, fildes, const void *, buf, size_t, count);
+syscall3(ssize_t, write, int, fildes, void const *, buf, size_t, count);
