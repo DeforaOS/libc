@@ -51,6 +51,17 @@ pid_t getppid(void);
 
 uid_t getuid(void);
 
+int link(char const * from, char const * to);
+
+int nice(int inc);
+
+ssize_t read(int fd, void * buf, size_t count);
+
+int rmdir(char const * filename);
+
+int symlink(char const * from, char const * to);
 void sync(void);
+
+int unlink(char const * filename);
 
 #endif /* !___UNISTD_H */
