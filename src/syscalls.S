@@ -16,6 +16,7 @@ _syscall1:
 	mov	0x16(%esp), %ebx
 	mov	0x8(%esp), %eax
 	int	$0x80
+	pop	%ebp
 	ret
 
 _syscall2:
@@ -24,12 +25,15 @@ _syscall2:
 	mov	0x16(%esp), %ebx
 	mov	0x8(%esp), %eax
 	int	$0x80
+	pop	%ebp
 	ret
 
 _syscall3:
 	push	%ebp
 	mov	0x32(%esp), %edx
+	mov	0x24(%esp), %ecx
 	mov	0x16(%esp), %ebx
 	mov	0x8(%esp), %eax
 	int	$0x80
+	pop	%ebp
 	ret
