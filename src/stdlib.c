@@ -92,6 +92,12 @@ void * calloc(size_t nmemb, size_t size)
 }
 
 
+/* exit */
+void exit(int status)
+{
+}
+
+
 /* free */
 static void _free_merge(Chunk * chnk);
 void free(void * ptr)
