@@ -40,6 +40,8 @@ int dup2(int fildes1, int fildes2);
 
 /* exec */
 
+void _exit(int status);
+
 pid_t fork(void);
 
 gid_t getegid(void);
@@ -55,13 +57,25 @@ int link(char const * from, char const * to);
 
 int nice(int inc);
 
-ssize_t read(int fd, void * buf, size_t count);
-
+ssize_t read(int fildes, void * buf, size_t count);
+ssize_t readlink(char const * filename, char * buf, size_t bufsiz);
 int rmdir(char const * filename);
+
+int setgid(gid_t gid);
+int setpgid(pid_t pid, pid_t pgid);
+
+int setregid(gid_t rgid, gid_t egid);
+int setreuid(uid_t ruid, uid_t euid);
+pid_t setsid(void);
+
+int setuid(uid_t uid);
 
 int symlink(char const * from, char const * to);
 void sync(void);
 
 int unlink(char const * filename);
+
+pid_t vfork(void);
+ssize_t write(int fildes, const void * buf, size_t count);
 
 #endif /* !___UNISTD_H */

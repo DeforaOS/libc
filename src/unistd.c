@@ -79,12 +79,37 @@ syscall1(int, pipe, int, filedes[2]);
 syscall3(ssize_t, read, int, fd, void *, buf, size_t, count);
 
 
+/* readlink */
+syscall3(ssize_t, readlink, char const *, filename, char *, buf,
+		size_t, bufsiz);
+
+
 /* rmdir */
 syscall1(int, rmdir, char const *, filename);
 
 
 /* setgid */
 syscall1(int, setgid, gid_t, gid);
+
+
+/* setpgid */
+syscall2(int, setpgid, pid_t, pid, pid_t, pgid);
+
+
+/* setregid */
+syscall2(int, setregid, gid_t, rgid, gid_t, egid);
+
+
+/* setreuid */
+syscall2(int, setreuid, uid_t, ruid, uid_t, euid);
+
+
+/* setsid */
+syscall0(pid_t, setsid);
+
+
+/* setuid */
+syscall1(int, setuid, uid_t, uid);
 
 
 /* symlink */
@@ -97,3 +122,11 @@ syscall0(void, sync);
 
 /* unlink */
 syscall1(int, unlink, const char *, filename);
+
+
+/* vfork */
+syscall0(pid_t, vfork);
+
+
+/* write */
+syscall3(ssize_t, write, int, fildes, const void *, buf, size_t, count);

@@ -40,22 +40,28 @@
 # define SYS_signal	48
 # define SYS_geteuid	49
 # define SYS_getegid	50
+# define SYS_setpgid	57
 # define SYS_dup2	63
 # define SYS_getppid	64
+# define SYS_setsid	66
+# define SYS_setreuid	70
+# define SYS_setregid	71
 # define SYS_symlink	83
+# define SYS_readlink	85
 # define SYS_chown	182
+# define SYS_vfork	190
 
 
 # define syscall0(type, name) \
-	type name(void) { return _syscall0(SYS_ ## name); }
+	type name(void) { return (type) _syscall0(SYS_ ## name); }
 # define syscall1(type, name, type1, arg1) \
-	type name(type1 arg1) { return _syscall1(SYS_ ## name, (int)arg1); }
+	type name(type1 arg1) { return (type) _syscall1(SYS_ ## name, (int)arg1); }
 # define syscall2(type, name, type1, arg1, type2, arg2) \
 	type name(type1 arg1, type2 arg2) \
-	{ return _syscall2(SYS_ ## name, (int)arg1, (int)arg2); }
+	{ return (type) _syscall2(SYS_ ## name, (int)arg1, (int)arg2); }
 # define syscall3(type, name, type1, arg1, type2, arg2, type3, arg3) \
 	type name(type1 arg1, type2 arg2, type3 arg3) \
-	{ return _syscall3(SYS_ ## name, (int)arg1, (int)arg2, (int)arg3); }
+	{ return (type) _syscall3(SYS_ ## name, (int)arg1, (int)arg2, (int)arg3); }
 
 extern int _syscall0(int name);
 extern int _syscall1(int name, int arg1);
