@@ -17,7 +17,10 @@ typedef int blksize_t;
 # endif
 typedef int clock_t;
 typedef int dev_t;
+# ifndef id_t
+#  define id_t id_t
 typedef int id_t;
+# endif
 # ifndef ino_t
 #  define ino_t ino_t
 typedef int ino_t;
