@@ -13,6 +13,7 @@
 #  define ino_t ino_t
 typedef int ino_t;
 # endif
+typedef struct _DIR DIR;
 struct dirent {
 	ino_t d_ino;
 	char d_name[NAME_MAX];
