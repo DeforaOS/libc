@@ -3,7 +3,7 @@
 
 
 .text
-.global _syscall0, _syscall1, syscalls2, syscalls3
+.global _syscall0, _syscall1, _syscall2, _syscall3
 _syscall0:
 	push	%ebp
 	mov	0x8(%esp), %eax
