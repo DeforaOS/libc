@@ -16,5 +16,6 @@ long long atoll(char const * nptr);
 void exit(int status);
 void free(void * ptr);
 void * malloc(size_t size);
+void * realloc(void * ptr, size_t size);
 
 #endif /* !___STDLIB_H */
