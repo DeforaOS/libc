@@ -26,6 +26,11 @@ typedef struct _FILE {
 	int pos;
 } FILE;
 
+# ifndef va_list
+#  define va_list va_list
+typedef void * va_list;
+# endif
+
 
 /* variables */
 /* standard input, output, and error streams */
@@ -51,6 +56,8 @@ int getchar(void);
 void perror(char const * s);
 int printf(char const * format, ...);
 int puts(char const * string);
-int sprintf(char *, char const *, ...);
+int sprintf(char * str, char const * format, ...);
+int vfprintf(FILE * stream, char const * format, va_list arg);
+int vsprintf(char * str, char const * format, va_list arg);
 
 #endif /* !___STDIO_H */

@@ -7,6 +7,7 @@
 #include "unistd.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "stdarg.h"
 #include "string.h"
 
 
@@ -136,7 +137,13 @@ static int _fopen_mode(char const * mode)
 /* fprintf */
 int fprintf(FILE * stream, char const * format, ...)
 {
-	return -1;
+	va_list arg;
+	int ret;
+
+	va_start(arg, format);
+	ret = vfprintf(stream, format, arg);
+	va_end(arg);
+	return ret;
 }
 
 
@@ -180,7 +187,13 @@ void perror(char const * s)
 /* printf */
 int printf(char const * format, ...)
 {
-	return -1;
+	va_list arg;
+	int ret;
+
+	va_start(arg, format);
+	ret = vfprintf(stdout, format, arg);
+	va_end(arg);
+	return ret;
 }
 
 
@@ -193,4 +206,17 @@ int puts(char const * string)
 	fwrite(string, sizeof(char), i, stdout);
 	fputc('\n', stdout);
 	return i;
+}
+
+
+/* sprintf */
+int sprintf(char * str, char const * format, ...)
+{
+	va_list arg;
+	int ret;
+
+	va_start(arg, format);
+	ret = vsprintf(str, format, arg);
+	va_end(arg);
+	return ret;
 }
