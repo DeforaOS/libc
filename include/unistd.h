@@ -51,7 +51,7 @@ gid_t getegid(void);
 uid_t geteuid(void);
 gid_t getgid(void);
 
-int getopt(int argc, char const * argv[], char const * optstring);
+int getopt(int argc, char * const argv[], char const * optstring);
 
 pid_t getpid(void);
 pid_t getppid(void);

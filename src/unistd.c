@@ -71,7 +71,7 @@ syscall0(uid_t, geteuid);
 
 
 /* getopt */
-int getopt(int argc, char const * argv[], char const * optstring)
+int getopt(int argc, char * const argv[], char const * optstring)
 {
 	static char const * p = NULL;
 	static int8_t flag = 1;
