@@ -26,6 +26,8 @@ enum { SEEK_CUR, SEEK_END, SEEK_SET };
 
 
 /* variables */
+extern char * optarg;
+extern int optind, opterr, optopt;
 
 
 /* functions */
@@ -48,6 +50,8 @@ pid_t fork(void);
 gid_t getegid(void);
 uid_t geteuid(void);
 gid_t getgid(void);
+
+int getopt(int argc, char const * argv[], char const * optstring);
 
 pid_t getpid(void);
 pid_t getppid(void);
