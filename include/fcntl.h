@@ -38,6 +38,6 @@
 /* functions */
 int creat(const char *, mode_t);
 int fcntl(int, int, ...);
-int open(char const *, int, ...);
+/* int open(char const *, int, ...); FIXME */
 
 #endif /* !___FCNTL_H */
