@@ -31,7 +31,7 @@ int fclose(FILE * stream)
 /* fflush */
 int fflush(FILE * stream)
 {
-	size_t count;
+	ssize_t count;
 
 	if(stream->flags & O_RDONLY)
 		return 0;
