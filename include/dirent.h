@@ -13,7 +13,9 @@
 #  define ino_t ino_t
 typedef int ino_t;
 # endif
-typedef struct _DIR DIR;
+typedef struct _DIR {
+	int fd;
+} DIR;
 struct dirent {
 	ino_t d_ino;
 	char d_name[NAME_MAX];
@@ -21,9 +23,9 @@ struct dirent {
 
 
 /* functions */
-int closedir(DIR *);
-DIR * opendir(char const *);
-struct dirent *readdir(DIR *);
+int closedir(DIR * dir);
+DIR * opendir(char const * name);
+struct dirent *readdir(DIR * dir);
 void rewinddir(DIR *);
 void seekdir(DIR *, long);
 long telldir(DIR *);
