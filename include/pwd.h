@@ -1,4 +1,5 @@
 /* pwd.h */
+/* password structure */
 
 
 

@@ -1,4 +1,5 @@
 /* stdarg.h */
+/* handle variable argument list */
 
 
 

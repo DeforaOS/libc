@@ -1,4 +1,5 @@
 /* grp.h */
+/* group structure */
 
 
 

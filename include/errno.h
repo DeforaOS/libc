@@ -1,4 +1,5 @@
 /* errno.h */
+/* system error numbers */
 
 
 

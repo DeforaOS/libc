@@ -1,4 +1,5 @@
 /* dirent.h */
+/* format of directory entries */
 
 
 
