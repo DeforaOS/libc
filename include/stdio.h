@@ -24,6 +24,7 @@ typedef struct _FILE {
 	unsigned char buf[BUFSIZ];
 	int len;
 	int pos;
+	int eof;
 } FILE;
 
 # ifndef va_list
@@ -40,6 +41,7 @@ extern FILE * stderr;
 
 
 /* functions */
+void clearerr(FILE * stream);
 int fclose(FILE * stream);
 FILE * fdopen(int fildes, char const * mode);
 int feof(FILE * stream);

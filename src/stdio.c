@@ -18,6 +18,13 @@ FILE * stderr;
 
 
 /* functions */
+/* clearerr */
+void clearerr(FILE * stream)
+{
+	stream->eof = 0;
+}
+
+
 /* fclose */
 int fclose(FILE * stream)
 {
@@ -26,6 +33,13 @@ int fclose(FILE * stream)
 	res = fflush(stream);
 	close(stream->fildes);
 	return res;
+}
+
+
+/* feof */
+int feof(FILE * stream)
+{
+	return stream->eof;
 }
 
 
@@ -91,6 +105,7 @@ FILE * fopen(char const * path, char const * mode)
 	}
 	fp->len = 0;
 	fp->pos = 0;
+	fp->eof = 0;
 	return fp;
 }
 
@@ -169,14 +184,14 @@ int fputc(int c, FILE * stream)
 /* fread */
 size_t fread(void * ptr, size_t size, size_t nb, FILE * file)
 {
-	return -1;
+	return -1; /* FIXME */
 }
 
 
 /* fwrite */
 size_t fwrite(void * ptr, size_t size, size_t nb, FILE * file)
 {
-	return -1;
+	return -1; /* FIXME */
 }
 
 
