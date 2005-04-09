@@ -122,8 +122,8 @@ int strcmp(char const * s1, char const * s2)
 	u2 = s2;
 	while(*u1 && *u2 && *u1 == *u2)
 	{
-		*u1++;
-		*u2++;
+		u1++;
+		u2++;
 	}
 	return *u1 - *u2;
 }
