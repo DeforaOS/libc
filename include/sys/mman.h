@@ -7,6 +7,18 @@
 
 
 /* types */
+# ifndef mode_t
+#  define mode_t mode_t
+typedef int mode_t;
+# endif
+# ifndef off_t
+#  define off_t off_t
+typedef int off_t;
+# endif
+# ifndef size_t
+#  define size_t size_t
+typedef unsigned int size_t;
+# endif
 
 
 /* constants */
@@ -18,6 +30,7 @@
 # define MAP_SHARED	0x1
 # define MAP_PRIVATE	0x2
 # define MAP_FIXED	0x10
+# define MAP_ANONYMOUS	0x20
 # define MAP_FAILED	((void*)-1)
 
 
