@@ -25,7 +25,7 @@ struct group
 
 
 /* functions */
-struct group * getgrgid(gid_t);
-struct group * getgrnam(char const *);
+struct group * getgrgid(gid_t gid);
+struct group * getgrnam(char const * name);
 
 #endif /* !___GRP_H */

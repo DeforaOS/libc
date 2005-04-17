@@ -32,7 +32,7 @@ struct passwd
 
 
 /* functions */
-struct passwd * getpwnam(char const *);
-struct passwd * getpwuid(uid_t);
+struct passwd * getpwnam(char const * name);
+struct passwd * getpwuid(uid_t uid);
 
 #endif /* !___PWD_H */
