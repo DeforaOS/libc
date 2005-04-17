@@ -71,6 +71,10 @@ syscall0(gid_t, getegid);
 syscall0(uid_t, geteuid);
 
 
+/* getgid */
+syscall0(gid_t, getgid);
+
+
 /* getopt */
 int getopt(int argc, char * const argv[], char const * optstring)
 {
