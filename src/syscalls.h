@@ -51,6 +51,8 @@
 # define SYS_setregid	71
 # define SYS_symlink	83
 # define SYS_readlink	85
+# define SYS_mmap	90
+# define SYS_munmap	91
 # define SYS_stat	106
 # define SYS_lstat	107
 # define SYS_fstat	108
@@ -68,10 +70,16 @@
 # define syscall3(type, name, type1, arg1, type2, arg2, type3, arg3) \
 	type name(type1 arg1, type2 arg2, type3 arg3) \
 	{ return (type) _syscall3(SYS_ ## name, (int)arg1, (int)arg2, (int)arg3); }
+# define syscall6(type, name, type1, arg1, type2, arg2, type3, arg3, \
+		type4, arg4, type5, arg5, type6, arg6) \
+	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5, type6 arg6) \
+	{ return (type) _syscall6(SYS_ ## name, (int)arg1, (int)arg2, (int)arg3, (int)arg4, (int)arg5, (int)arg6); }
 
 extern int _syscall0(int name);
 extern int _syscall1(int name, int arg1);
 extern int _syscall2(int name, int arg1, int arg2);
 extern int _syscall3(int name, int arg1, int arg2, int arg3);
+extern int _syscall6(int name, int arg1, int arg2, int arg3, int arg4, int arg5,
+		int arg6);
 
 #endif /* !___SYSCALLS_H */
