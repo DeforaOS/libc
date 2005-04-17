@@ -2,22 +2,23 @@
 
 
 
-#include "errno.h"
-#include "unistd.h"
-#include "stdlib.h"
+#include "sys/mman.h"
 #include "string.h"
-#ifdef DEBUG
-# include "stdio.h"
-#endif
+#include "ctype.h"
+#include "stdlib.h"
 
 
 /* types */
-#define CHUNK_ALLOCED	1
-#define CHUNK_FOLLOWED	2
-typedef struct _Chunk {
-	size_t len;
-	int flags;
+typedef struct _Chunk
+{
+	void * ptr;
+	size_t length;
 } Chunk;
+
+
+/* variables */
+static Chunk * _chunks = NULL;
+static size_t _chunks_cnt = 0;
 
 
 /* atexit */
@@ -145,98 +146,87 @@ void exit(int status)
 
 
 /* free */
-static void _free_merge(Chunk * chnk);
 void free(void * ptr)
 {
-	Chunk * chnk;
+	size_t i;
 
-	chnk = ptr - sizeof(Chunk);
-	if(chnk->flags & CHUNK_ALLOCED)
-	{
-#ifdef DEBUG
-		fprintf(stderr, "%s", "libc: double free: %p\n", ptr);
-#endif
+	for(i = 0; i < _chunks_cnt; i++)
+		if(_chunks[i].ptr == ptr)
+			break;
+	if(i == _chunks_cnt)
 		return;
-	}
-	chnk->flags--;
-	_free_merge(chnk);
-}
-
-static void _free_merge(Chunk * chnk)
-{
-	Chunk * p;
-	Chunk * p2;
-
-	for(p = chnk; p->flags & CHUNK_FOLLOWED; p+=p->len)
-		if(p->flags & CHUNK_ALLOCED)
-			chnk = p + p->len;
-		else
-		{
-			do {
-				p2 = p + p->len;
-				if(p2->flags & CHUNK_ALLOCED)
-					break;
-				p->len += p2->len + sizeof(Chunk);
-			}
-			while(p2->flags & CHUNK_FOLLOWED);
-			p = p2;
-		}
-	if(p->flags & CHUNK_ALLOCED)
-		return;
-#ifdef DEBUG
-	if(brk(chnk) != 0)
-	{
-		fprintf(stderr, "%s", "libc: ");
-		perror("free");
-	}
-#else
-	brk(chnk);
-#endif
+	munmap(ptr, _chunks[i].length);
+	_chunks[i].ptr = NULL;
+	_chunks[i].length = 0;
 }
 
 
 /* malloc */
+void * _realloc(void * ptr, size_t size);
 void * malloc(size_t size)
 {
-	Chunk * chnk;
-	Chunk * p;
+	size_t i;
+	void * p;
 
 	if(size == 0)
 		return NULL;
-	for(chnk = sbrk(0); chnk->flags & CHUNK_FOLLOWED; chnk+=chnk->len)
+	for(i = 0; i < _chunks_cnt; i++)
+		if(_chunks[i].ptr == NULL)
+			break;
+	if(i == _chunks_cnt)
 	{
-		if(!(chnk->flags & CHUNK_ALLOCED)
-				&& chnk->len >= size + sizeof(Chunk))
-		{
-			chnk->flags |= CHUNK_ALLOCED;
-			p = chnk + size + sizeof(Chunk);
-			p->len = chnk->len - size - sizeof(Chunk);
-			p->flags = CHUNK_FOLLOWED;
-			chnk->len = size;
-			return chnk + sizeof(Chunk);
-		}
+		if((p = _realloc(_chunks, (_chunks_cnt+1)*sizeof(Chunk)))
+				== NULL)
+			return NULL;
+		_chunks = p;
+		_chunks_cnt++;
+		_chunks[i].ptr = NULL;
+		_chunks[i].length = 0;
 	}
-	chnk->flags |= CHUNK_FOLLOWED;
-	if((chnk = sbrk(size + sizeof(Chunk))) == NULL)
-	{
-		errno = ENOMEM;
+	if((p = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS, -1, 0))
+			== MAP_FAILED)
 		return NULL;
-	}
-	chnk->len = size;
-	chnk->flags = CHUNK_ALLOCED;
-	return chnk + sizeof(Chunk);
+	_chunks[i].ptr = p;
+	_chunks[i].length = size;
+	return p;
+}
+
+void * _realloc(void * ptr, size_t size)
+{
+	if(mmap(ptr, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_FIXED,
+				-1, 0) == MAP_FAILED)
+		return NULL;
+	return ptr;
 }
 
 
 /* realloc */
 void * realloc(void * ptr, size_t size)
 {
-	return NULL;
+	size_t i;
+
+	if(ptr == NULL)
+		return malloc(size);
+	for(i = 0; i < _chunks_cnt; i++)
+		if(_chunks[i].ptr == ptr)
+			break;
+	if(i == _chunks_cnt)
+		return NULL; /* FIXME */
+	if(mmap(_chunks[i].ptr, size, PROT_READ | PROT_WRITE,
+				MAP_ANONYMOUS | MAP_FIXED, -1, 0) == MAP_FAILED)
+		return NULL;
+	_chunks[i].length = size;
+	return ptr;
 }
 
 
 /* strtol */
 long strtol(char const * nptr, char ** endptr, int base)
 {
+	char * p;
+
+	if(base > 36 || base < 0 || base == 1)
+		return 0;
+	for(p = nptr; isspace(*p); p++);
 	return 0; /* FIXME */
 }
