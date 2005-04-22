@@ -206,8 +206,8 @@ int getc(FILE * stream)
 void perror(char const * s)
 {
 	if(s != NULL && *s != '\0')
-		fprintf(stdout, "%s%s", s, ": ");
-	fprintf(stdout, "%s%s", strerror(errno), "\n");
+		fprintf(stderr, "%s%s", s, ": ");
+	fprintf(stderr, "%s%s", strerror(errno), "\n");
 }
 
 
