@@ -63,17 +63,21 @@
 # define syscall0(type, name) \
 	type name(void) { return (type) _syscall0(SYS_ ## name); }
 # define syscall1(type, name, type1, arg1) \
-	type name(type1 arg1) { return (type) _syscall1(SYS_ ## name, (int)arg1); }
+	type name(type1 arg1) { return (type) _syscall1(SYS_ ## name, \
+			(int)arg1); }
 # define syscall2(type, name, type1, arg1, type2, arg2) \
 	type name(type1 arg1, type2 arg2) \
 	{ return (type) _syscall2(SYS_ ## name, (int)arg1, (int)arg2); }
 # define syscall3(type, name, type1, arg1, type2, arg2, type3, arg3) \
 	type name(type1 arg1, type2 arg2, type3 arg3) \
-	{ return (type) _syscall3(SYS_ ## name, (int)arg1, (int)arg2, (int)arg3); }
+	{ return (type) _syscall3(SYS_ ## name, (int)arg1, (int)arg2, \
+			(int)arg3); }
 # define syscall6(type, name, type1, arg1, type2, arg2, type3, arg3, \
 		type4, arg4, type5, arg5, type6, arg6) \
-	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5, type6 arg6) \
-	{ return (type) _syscall6(SYS_ ## name, (int)arg1, (int)arg2, (int)arg3, (int)arg4, (int)arg5, (int)arg6); }
+	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5, \
+			type6 arg6) \
+	{ return (type) _syscall6(SYS_ ## name, (int)arg1, (int)arg2, \
+			(int)arg3, (int)arg4, (int)arg5, (int)arg6); }
 
 extern int _syscall0(int name);
 extern int _syscall1(int name, int arg1);
