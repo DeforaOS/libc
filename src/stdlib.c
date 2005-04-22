@@ -3,6 +3,7 @@
 
 
 #include "sys/mman.h"
+#include "unistd.h"
 #include "string.h"
 #include "ctype.h"
 #include "stdlib.h"
@@ -223,7 +224,7 @@ void * realloc(void * ptr, size_t size)
 /* strtol */
 long strtol(char const * nptr, char ** endptr, int base)
 {
-	char * p;
+	char const * p;
 
 	if(base > 36 || base < 0 || base == 1)
 		return 0;
