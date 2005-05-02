@@ -63,6 +63,10 @@ void _exit(int status)
 syscall0(pid_t, fork);
 
 
+/* getcwd */
+syscall2(char *, getcwd, char *, buf, size_t, size);
+
+
 /* getegid */
 syscall0(gid_t, getegid);
 

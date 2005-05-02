@@ -66,6 +66,7 @@ void _exit(int status);
 
 pid_t fork(void);
 
+char * getcwd(char * buf, size_t size);
 gid_t getegid(void);
 uid_t geteuid(void);
 gid_t getgid(void);

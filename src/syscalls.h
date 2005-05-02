@@ -58,6 +58,7 @@
 # define SYS_fstat	108
 # define SYS_uname	122
 # define SYS_chown	182
+# define SYS_getcwd	183
 # define SYS_vfork	190
 
 
