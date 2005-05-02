@@ -9,6 +9,12 @@
 /* types */
 struct utsname
 {
+	/* FIXME these are of fixed size */
+	char * sysname;
+	char * nodename;
+	char * release;
+	char * version;
+	char * machine;
 };
 
 
