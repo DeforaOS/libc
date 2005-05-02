@@ -56,6 +56,7 @@
 # define SYS_stat	106
 # define SYS_lstat	107
 # define SYS_fstat	108
+# define SYS_uname	122
 # define SYS_chown	182
 # define SYS_vfork	190
 
