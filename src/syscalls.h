@@ -29,6 +29,7 @@
 # define SYS_getuid	24
 # define SYS_ptrace	26
 # define SYS_alarm	27
+# define SYS_utime	30
 # define SYS_access	33
 # define SYS_nice	34
 # define SYS_sync	36
