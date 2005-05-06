@@ -10,7 +10,7 @@ RM	= rm -f
 
 all: $(TARGETS)
 
-libc_OBJS= ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/utsname.o syscalls.o unistd.o
+libc_OBJS= ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/utsname.o syscalls.o time.o unistd.o utime.o
 libc_CFLAGS=$(CFLAGSF) $(CFLAGS)
 libc.a: $(libc_OBJS)
 	$(AR) libc.a $(libc_OBJS)
@@ -64,8 +64,14 @@ sys/utsname.o: sys/utsname.c
 syscalls.o: syscalls.S
 	$(CC) $(libc_CFLAGS) -c syscalls.S
 
+time.o: time.c
+	$(CC) $(libc_CFLAGS) -c time.c
+
 unistd.o: unistd.c
 	$(CC) $(libc_CFLAGS) -c unistd.c
+
+utime.o: utime.c
+	$(CC) $(libc_CFLAGS) -c utime.c
 
 
 clean:
