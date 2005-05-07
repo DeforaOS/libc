@@ -38,6 +38,7 @@
 # define SYS_rmdir	40
 # define SYS_dup	41
 # define SYS_pipe	42
+# define SYS_times	43
 # define SYS_brk	45
 # define SYS_setgid	46
 # define SYS_getgid	47
