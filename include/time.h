@@ -7,6 +7,20 @@
 
 
 /* types */
+# ifndef clock_t
+#  define clock_t clock_t
+typedef int clock_t;
+# endif
+# ifndef size_t
+#  define size_t size_t
+typedef unsigned int size_t;
+# endif
+# ifndef time_t
+#  define time_t time_t
+typedef int time_t;
+# endif
+/* FIXME also define clockid_t timer_t */
+
 struct tm
 {
 	int tm_sec;
@@ -31,20 +45,6 @@ struct itimespec
 	struct timespec it_interval;
 	struct timespec it_value;
 };
-
-# ifndef clock_t
-#  define clock_t clock_t
-typedef int clock_t;
-# endif
-# ifndef size_t
-#  define size_t size_t
-typedef unsigned int size_t;
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef int time_t;
-# endif
-/* FIXME also define clockid_t timer_t */
 
 
 /* functions */
