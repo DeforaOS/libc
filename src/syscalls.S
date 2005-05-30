@@ -3,7 +3,8 @@
 
 
 .text
-.global _syscall0, _syscall1, _syscall2, _syscall3, _syscall4, _syscall5, _syscall6
+.global _syscall0, _syscall1, _syscall2, _syscall3, _syscall4, _syscall5, \
+		_syscall6
 _syscall0:
 	mov	0x4(%esp), %eax
 	int	$0x80
@@ -51,22 +52,23 @@ _syscall5:
 
 _syscall6:
 	push	%ebp
-	mov	0x28(%esp), %ebp
-	mov	0x24(%esp), %edi
-	mov	0x20(%esp), %esi
-	mov	0x16(%esp), %edx
-	mov	0x12(%esp), %ecx
-	mov	0x8(%esp), %ebx
-	mov	0x4(%esp), %eax
+	mov	0x32(%esp), %ebp
+	mov	0x28(%esp), %edi
+	mov	0x24(%esp), %esi
+	mov	0x20(%esp), %edx
+	mov	0x16(%esp), %ecx
+	mov	0x12(%esp), %ebx
+	mov	0x8(%esp), %eax
 	int	$0x80
 	pop	%ebp
 	jmp	.errno
 
+.global errno
 .errno:
-	cmp	$-125, %eax
-	jle	.errno_ret
+	cmp	$0, %eax
+	jge	.errnoret
 	neg	%eax
 	mov	%eax, errno
 	mov	$-1, %eax
-.errno_ret:
+.errnoret:
 	ret
