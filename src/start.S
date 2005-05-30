@@ -22,4 +22,5 @@ _start:
 	push	%ebx
 	push	%ecx
 	call	main
+	push	%eax
 	call	exit
