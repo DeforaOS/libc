@@ -62,6 +62,7 @@
 # define SYS_chown	182
 # define SYS_getcwd	183
 # define SYS_vfork	190
+# define SYS_waitid	284
 
 
 # define syscall0(type, name) \
@@ -76,6 +77,11 @@
 	type name(type1 arg1, type2 arg2, type3 arg3) \
 	{ return (type) _syscall3(SYS_ ## name, (int)arg1, (int)arg2, \
 			(int)arg3); }
+# define syscall4(type, name, type1, arg1, type2, arg2, type3, arg3, \
+		type4, arg4) \
+	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4) \
+	{ return (type) _syscall4(SYS_ ## name, (int)arg1, (int)arg2, \
+			(int)arg3, (int)arg4); }
 # define syscall6(type, name, type1, arg1, type2, arg2, type3, arg3, \
 		type4, arg4, type5, arg5, type6, arg6) \
 	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5, \
@@ -87,6 +93,7 @@ extern int _syscall0(int name);
 extern int _syscall1(int name, int arg1);
 extern int _syscall2(int name, int arg1, int arg2);
 extern int _syscall3(int name, int arg1, int arg2, int arg3);
+extern int _syscall4(int name, int arg1, int arg2, int arg3, int arg4);
 extern int _syscall6(int name, int arg1, int arg2, int arg3, int arg4, int arg5,
 		int arg6);
 
