@@ -16,6 +16,10 @@ typedef int id_t;
 #  define pid_t pid_t
 typedef id_t pid_t;
 # endif
+# ifndef siginfo_t
+#  define siginfo_t siginfo_t
+typedef int siginfo_t; /* FIXME */
+# endif
 
 
 /* functions */
