@@ -6,7 +6,11 @@
 #include "unistd.h"
 #include "string.h"
 #include "ctype.h"
+#include "errno.h"
 #include "stdlib.h"
+
+/* FIXME */
+#define min(a, b) (((a) > (b)) ? (b) : (a))
 
 
 /* types */
@@ -222,12 +226,62 @@ void * realloc(void * ptr, size_t size)
 
 
 /* strtol */
-long strtol(char const * nptr, char ** endptr, int base)
+long strtol(char const * str, char ** endptr, int base)
 {
-	char const * p;
+	long ret = 0;
+	char const * p = str;
+	int neg = 0;
+	int r;
 
 	if(base > 36 || base < 0 || base == 1)
+	{
+		errno = EINVAL;
 		return 0;
-	for(p = nptr; isspace(*p); p++);
-	return 0; /* FIXME */
+	}
+	for(p = str; isspace(*p); p++);
+	if(*p == '\0')
+	{
+		if(endptr != NULL)
+			*endptr = p;
+		errno = ERANGE;
+		return 0;
+	}
+	if(*p == '+' || *p == '-')
+		if(*(p++) == '-')
+			neg = 1;
+	if(base == 0)
+	{
+		if(*p == '0')
+		{
+			p++;
+			if(*p == 'x' || *p == 'X')
+				base = 16;
+			else
+				base = 8;
+		}
+		else
+			base = 10;
+	}
+	if(base == 16 && *p == '0')
+	{
+		p++;
+		if(*p == 'x' || *p == 'X')
+			p++;
+	}
+	for(; *p != '\0'; p++)
+	{
+		ret *= base;
+		r = (*p) - '0';
+		if(r >= 0 && r < min(10, base))
+			r = *p - '0';
+		else if(base > 10 && (((r = (*p) - 'a') >= 0 && r < 26)
+				|| ((r = (*p) - 'A') >= 0 && r < 26)))
+			r+=10;
+		else
+			break;
+		ret+=r;
+	}
+	if(endptr != NULL)
+		*endptr = p;
+	return neg == 0 ? ret : -ret;
 }
