@@ -22,6 +22,7 @@ typedef struct _Chunk
 
 
 /* variables */
+extern char ** environ;
 static Chunk * _chunks = NULL;
 static size_t _chunks_cnt = 0;
 
@@ -163,6 +164,24 @@ void free(void * ptr)
 	munmap(ptr, _chunks[i].length);
 	_chunks[i].ptr = NULL;
 	_chunks[i].length = 0;
+}
+
+
+/* getenv */
+char * getenv(char const * name)
+{
+	int len = strlen(name);
+	char ** p;
+
+	for(p = environ; *p != NULL; p++)
+	{
+		if(strncmp(*p, name, len) != 0)
+			continue;
+		if(*p[len] != '=')
+			continue;
+		return &(*p[len+1]);
+	}
+	return NULL;
 }
 
 
