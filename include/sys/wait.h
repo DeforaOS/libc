@@ -23,22 +23,21 @@ typedef int siginfo_t; /* FIXME */
 
 
 /* constants */
-# define WNOHANG
-# define WUNTRACED
+# define WNOHANG	0 /* FIXME */
+# define WUNTRACED	0 /* FIXME */
 
-# define WEXITSTATUS(status) { } /* FIXME */
-# define WIFCONTINUED(status) { } /* FIXME */
-# define WIFEXITED(status) { } /* FIXME */
-# define WIFSIGNALED(status) { } /* FIXME */
-# define WIFSTOPPED(status) { } /* FIXME */
-# define WSTOPSIG(status) { } /* FIXME */
-# define WTERMSIG(status) { } /* FIXME */
+# define WEXITSTATUS(status) (0) /* FIXME */
+# define WIFCONTINUED(status) (0) /* FIXME */
+# define WIFEXITED(status) (0) /* FIXME */
+# define WIFSIGNALED(status) (0) /* FIXME */
+# define WIFSTOPPED(status) (0) /* FIXME */
+# define WSTOPSIG(status) (0) /* FIXME */
+# define WTERMSIG(status) (0) /* FIXME */
 
-# define WEXITED
-# define WSTOPPED
-# define WCONTINUED
-# define WNOHANG
-# define WNOWAIT
+# define WEXITED	0 /* FIXME */
+# define WSTOPPED	0 /* FIXME */
+# define WCONTINUED	0 /* FIXME */
+# define WNOWAIT	0 /* FIXME */
 
 
 /* functions */
