@@ -13,6 +13,8 @@
 char * optarg = NULL;
 int optind = 1, opterr, optopt = '?';
 
+char ** environ;
+
 
 /* functions */
 /* access */
