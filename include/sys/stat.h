@@ -111,6 +111,6 @@ int mkdir(char const * name, mode_t mode);
 int mkfifo(char const *, mode_t);
 int mknod(char const *, mode_t, dev_t);
 int stat(char const *, struct stat *);
-mode_t umask(mode_t);
+mode_t umask(mode_t mask);
 
 #endif /* !___SYS_STAT_H */
