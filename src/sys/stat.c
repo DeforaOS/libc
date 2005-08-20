@@ -24,3 +24,7 @@ syscall2(int, mkdir, char const *, name, mode_t, mode);
 
 /* stat */
 syscall2(int, stat, char const *, filename, struct stat *, buf);
+
+
+/* umask */
+syscall1(mode_t, umask, mode_t, mask);

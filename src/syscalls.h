@@ -46,6 +46,7 @@
 # define SYS_geteuid	49
 # define SYS_getegid	50
 # define SYS_setpgid	57
+# define SYS_umask	60
 # define SYS_dup2	63
 # define SYS_getppid	64
 # define SYS_setsid	66
