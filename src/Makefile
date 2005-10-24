@@ -1,7 +1,7 @@
 TARGETS	= libc.a libc.so
-CFLAGSF	= -W -Wall -ansi -I../include
-CFLAGS	= -g
 CC	= cc
+CFLAGSF	= -W -Wall -ansi -I ../include
+CFLAGS	= -g
 AR	= ar rc
 RANLIB	= ranlib
 LD	= ld -shared
@@ -10,12 +10,11 @@ RM	= rm -f
 
 all: $(TARGETS)
 
-libc_OBJS= ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o
-libc_CFLAGS=$(CFLAGSF) $(CFLAGS)
+libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o
+libc_CFLAGS = $(CFLAGSF) $(CFLAGS)
 libc.a: $(libc_OBJS)
 	$(AR) libc.a $(libc_OBJS)
 	$(RANLIB) libc.a
-
 libc.so: $(libc_OBJS)
 	$(LD) -o libc.so $(libc_OBJS)
 
@@ -78,7 +77,6 @@ unistd.o: unistd.c
 
 utime.o: utime.c
 	$(CC) $(libc_CFLAGS) -c utime.c
-
 
 clean:
 	$(RM) $(libc_OBJS)

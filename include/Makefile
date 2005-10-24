@@ -1,0 +1,7 @@
+
+
+all:
+
+clean:
+
+distclean: clean
