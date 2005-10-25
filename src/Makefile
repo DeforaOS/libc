@@ -88,7 +88,12 @@ clean:
 
 distclean: clean
 	$(RM) $(TARGETS)
+
 install: all
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 libc.a $(DESTDIR)$(LIBDIR)/libc.a
 	$(INSTALL) -m 0755 libc.so $(DESTDIR)$(LIBDIR)/libc.so
+
+uninstall:
+	$(RM) $(DESTDIR)$(LIBDIR)/libc.a
+	$(RM) $(DESTDIR)$(LIBDIR)/libc.so
