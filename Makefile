@@ -70,3 +70,5 @@ dist: distclean
 		src/Makefile \
 		project.conf \
 		Makefile
+install: all
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
