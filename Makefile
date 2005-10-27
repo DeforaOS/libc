@@ -1,6 +1,7 @@
 PACKAGE	= libc
 VERSION	= 0.0.0
 SUBDIRS	= src include
+LN	= ln -sf
 TAR	= tar cfzv
 
 
@@ -15,61 +16,64 @@ clean:
 distclean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
 
-dist: distclean
+dist:
+	$(RM) $(PACKAGE)-$(VERSION)
+	$(LN) . $(PACKAGE)-$(VERSION)
 	@$(TAR) $(PACKAGE)-$(VERSION).tar.gz \
-		include/assert.h \
-		include/ctype.h \
-		include/dirent.h \
-		include/errno.h \
-		include/fcntl.h \
-		include/grp.h \
-		include/inttypes.h \
-		include/libgen.h \
-		include/limits.h \
-		include/pwd.h \
-		include/signal.h \
-		include/stdarg.h \
-		include/stddef.h \
-		include/stdint.h \
-		include/stdio.h \
-		include/stdlib.h \
-		include/string.h \
-		include/sys/mman.h \
-		include/sys/stat.h \
-		include/sys/times.h \
-		include/sys/types.h \
-		include/sys/utsname.h \
-		include/sys/wait.h \
-		include/time.h \
-		include/unistd.h \
-		include/utime.h \
-		include/project.conf \
-		include/Makefile \
-		src/ctype.c \
-		src/dirent.c \
-		src/errno.c \
-		src/fcntl.c \
-		src/grp.c \
-		src/libgen.c \
-		src/pwd.c \
-		src/signal.c \
-		src/stdlib.c \
-		src/stdio.c \
-		src/string.c \
-		src/sys/mman.c \
-		src/sys/stat.c \
-		src/sys/times.c \
-		src/sys/utsname.c \
-		src/sys/wait.c \
-		src/syscalls.S \
-		src/time.c \
-		src/unistd.c \
-		src/utime.c \
-		src/syscalls.h \
-		src/project.conf \
-		src/Makefile \
-		project.conf \
-		Makefile
+		$(PACKAGE)-$(VERSION)/include/assert.h \
+		$(PACKAGE)-$(VERSION)/include/ctype.h \
+		$(PACKAGE)-$(VERSION)/include/dirent.h \
+		$(PACKAGE)-$(VERSION)/include/errno.h \
+		$(PACKAGE)-$(VERSION)/include/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/grp.h \
+		$(PACKAGE)-$(VERSION)/include/inttypes.h \
+		$(PACKAGE)-$(VERSION)/include/libgen.h \
+		$(PACKAGE)-$(VERSION)/include/limits.h \
+		$(PACKAGE)-$(VERSION)/include/pwd.h \
+		$(PACKAGE)-$(VERSION)/include/signal.h \
+		$(PACKAGE)-$(VERSION)/include/stdarg.h \
+		$(PACKAGE)-$(VERSION)/include/stddef.h \
+		$(PACKAGE)-$(VERSION)/include/stdint.h \
+		$(PACKAGE)-$(VERSION)/include/stdio.h \
+		$(PACKAGE)-$(VERSION)/include/stdlib.h \
+		$(PACKAGE)-$(VERSION)/include/string.h \
+		$(PACKAGE)-$(VERSION)/include/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/sys/times.h \
+		$(PACKAGE)-$(VERSION)/include/sys/types.h \
+		$(PACKAGE)-$(VERSION)/include/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/sys/wait.h \
+		$(PACKAGE)-$(VERSION)/include/time.h \
+		$(PACKAGE)-$(VERSION)/include/unistd.h \
+		$(PACKAGE)-$(VERSION)/include/utime.h \
+		$(PACKAGE)-$(VERSION)/include/project.conf \
+		$(PACKAGE)-$(VERSION)/include/Makefile \
+		$(PACKAGE)-$(VERSION)/src/ctype.c \
+		$(PACKAGE)-$(VERSION)/src/dirent.c \
+		$(PACKAGE)-$(VERSION)/src/errno.c \
+		$(PACKAGE)-$(VERSION)/src/fcntl.c \
+		$(PACKAGE)-$(VERSION)/src/grp.c \
+		$(PACKAGE)-$(VERSION)/src/libgen.c \
+		$(PACKAGE)-$(VERSION)/src/pwd.c \
+		$(PACKAGE)-$(VERSION)/src/signal.c \
+		$(PACKAGE)-$(VERSION)/src/stdlib.c \
+		$(PACKAGE)-$(VERSION)/src/stdio.c \
+		$(PACKAGE)-$(VERSION)/src/string.c \
+		$(PACKAGE)-$(VERSION)/src/sys/mman.c \
+		$(PACKAGE)-$(VERSION)/src/sys/stat.c \
+		$(PACKAGE)-$(VERSION)/src/sys/times.c \
+		$(PACKAGE)-$(VERSION)/src/sys/utsname.c \
+		$(PACKAGE)-$(VERSION)/src/sys/wait.c \
+		$(PACKAGE)-$(VERSION)/src/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/time.c \
+		$(PACKAGE)-$(VERSION)/src/unistd.c \
+		$(PACKAGE)-$(VERSION)/src/utime.c \
+		$(PACKAGE)-$(VERSION)/src/syscalls.h \
+		$(PACKAGE)-$(VERSION)/src/project.conf \
+		$(PACKAGE)-$(VERSION)/src/Makefile \
+		$(PACKAGE)-$(VERSION)/project.conf \
+		$(PACKAGE)-$(VERSION)/Makefile
+	$(RM) $(PACKAGE)-$(VERSION)
 
 install: all
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
