@@ -146,6 +146,14 @@ syscall0(pid_t, getppid);
 syscall0(uid_t, getuid);
 
 
+/* isatty */
+int isatty(int fd)
+{
+	/* FIXME */
+	return 0;
+}
+
+
 /* lchown */
 syscall3(int, lchown, char const *, filename, uid_t, owner, gid_t, group);
 

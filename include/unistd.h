@@ -78,6 +78,8 @@ pid_t getppid(void);
 
 uid_t getuid(void);
 
+int isatty(int fd);
+
 int lchown(char const * filename, uid_t owner, gid_t group);
 
 int link(char const * from, char const * to);
