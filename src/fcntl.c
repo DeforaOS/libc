@@ -11,10 +11,13 @@
 int open(char const * filename, int flags, ...)
 {
 	va_list arg;
-	int ret;
+	mode_t mode;
 
-	va_start(arg, flags);
-	ret = _syscall3(SYS_open, (int)filename, flags, (int)arg);
-	va_end(arg);
-	return ret;
+	if(flags & O_CREAT)
+	{
+		va_start(arg, flags);
+		mode = va_arg(arg, mode_t);
+		va_end(arg);
+	}
+	return _syscall3(SYS_open, (int)filename, flags, mode);
 }
