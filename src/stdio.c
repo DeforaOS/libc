@@ -26,11 +26,11 @@ struct _FILE
 
 
 /* variables */
-static FILE _stdin;
+static FILE _stdin = { 0, O_RDONLY, { 0 }, 0, 0, 0 };
 FILE * stdin = &_stdin;
-static FILE _stdout;
+static FILE _stdout = { 1, O_WRONLY, { 0 }, 0, 0, 0 };
 FILE * stdout = &_stdout;
-static FILE _stderr;
+static FILE _stderr = { 2, O_WRONLY, { 0 }, 0, 0, 0 };
 FILE * stderr = &_stderr;
 
 
