@@ -10,11 +10,28 @@
 #include "stdarg.h"
 #include "string.h"
 
+#define min(a, b) ((a) > (b) ? (b) : (a))
+
+
+/* types */
+struct _FILE
+{
+	int fildes;
+	int flags;
+	unsigned char buf[BUFSIZ];
+	unsigned int len;
+	unsigned int pos;
+	int eof;
+};
+
 
 /* variables */
-FILE * stdin;
-FILE * stdout;
-FILE * stderr;
+static FILE _stdin;
+FILE * stdin = &_stdin;
+static FILE _stdout;
+FILE * stdout = &_stdout;
+static FILE _stderr;
+FILE * stderr = &_stderr;
 
 
 /* functions */
@@ -56,6 +73,7 @@ int fflush(FILE * stream)
 		return EOF;
 	}
 	count = stream->len - stream->pos;
+	/* FIXME should loop until completion or an error occurs */
 	if(write(stream->fildes, stream->buf, count) != count)
 		return EOF;
 	return 0;
@@ -184,14 +202,53 @@ int fputc(int c, FILE * stream)
 /* fread */
 size_t fread(void * ptr, size_t size, size_t nb, FILE * file)
 {
-	return -1; /* FIXME */
+	ssize_t len;
+	size_t cnt;
+
+	if(size > BUFSIZ)
+	{
+		/* FIXME buffer can't handle this, call read repetedly */
+		errno = ENOBUFS;
+		return -1;
+	}
+	for(cnt = file->len / size; cnt < nb; cnt = file->len / size)
+	{
+		if((len = read(file->fildes, &file->buf[file->len],
+				BUFSIZ - file->len)) == 0)
+			break;
+		if(len == -1)
+			return -1;
+		file->len += len;
+	}
+	cnt = file->len / size;
+	memcpy(ptr, file->buf, size * cnt);
+	memmove(file->buf, &file->buf[size * cnt], file->len - (size * cnt));
+	file->len -= size * cnt;
+	return cnt;
 }
 
 
 /* fwrite */
-size_t fwrite(void * ptr, size_t size, size_t nb, FILE * file)
+size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 {
-	return -1; /* FIXME */
+	size_t pos;
+	ssize_t len;
+
+	for(pos = 0; pos < size * nb; pos+=len)
+	{
+		len = min(BUFSIZ - file->len, (size * nb) - pos);
+		memcpy(&file->buf[file->len], ptr + pos, len);
+		file->len+=len;
+		if(file->len != BUFSIZ)
+			return nb;
+		if((len = write(file->fildes, file->buf, file->len)) == 0)
+			return pos / size;
+		if(len == -1)
+			return -1;
+		memmove(file->buf, &file->buf[len], BUFSIZ - len);
+		file->len-=len;
+	}
+	return nb;
 }
 
 
@@ -227,9 +284,8 @@ int printf(char const * format, ...)
 /* puts */
 int puts(char const * string)
 {
-	int i;
+	int i = strlen(string);
 
-	for(i = 0; string[i] != '\0'; i++);
 	fwrite(string, sizeof(char), i, stdout);
 	fputc('\n', stdout);
 	return i;
@@ -250,14 +306,66 @@ int sprintf(char * str, char const * format, ...)
 
 
 /* vfprintf */
+typedef int (*print_func)(void * dest, size_t size, char const buf[]);
+static int _vprintf(print_func func, void * dest, char const * format,
+		va_list arg);
+static int _fprint(void * dest, size_t size, char const buf[]);
 int vfprintf(FILE * stream, char const * format, va_list arg)
 {
-	return -1; /* FIXME */
+	return _vprintf(_fprint, stream, format, arg);
+}
+
+static int _vprintf(print_func func, void * dest, char const * format,
+		va_list arg)
+{
+	char const * p;
+	char * str;
+	int len = 0;
+
+	for(p = format; *p != '\0'; p++)
+	{
+		if(*p != '%')
+		{
+			func(dest, sizeof(char), p);
+			len++;
+			continue;
+		}
+		switch(*++p)
+		{
+			case 's':
+				str = va_arg(arg, char *);
+				len+=strlen(str);
+				func(dest, strlen(str), str);
+				break;
+			default:
+				len++;
+				func(dest, sizeof(char), p);
+				break;
+		}
+	}
+	return len;
+}
+
+static int _fprint(void * dest, size_t size, char const buf[])
+{
+	FILE * fp = dest;
+
+	return fwrite(buf, sizeof(char), size, fp);
 }
 
 
 /* vsprintf */
+static int _sprint(void * dest, size_t size, char const buf[]);
 int vsprintf(char * str, char const * format, va_list arg)
 {
-	return -1; /* FIXME */
+	return _vprintf(_sprint, &str, format, arg);
+}
+
+static int _sprint(void * dest, size_t size, char const buf[])
+{
+	char ** str = dest;
+
+	strncpy(*str, buf, size);
+	*str += size;
+	return size;
 }

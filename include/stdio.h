@@ -18,14 +18,7 @@
 
 
 /* types */
-typedef struct _FILE {
-	int fildes;
-	int flags;
-	unsigned char buf[BUFSIZ];
-	int len;
-	int pos;
-	int eof;
-} FILE;
+typedef struct _FILE FILE;
 
 # ifndef va_list
 #  define va_list va_list
@@ -52,7 +45,7 @@ FILE * fopen(char const * path, char const * mode);
 int fprintf(FILE * stream, char const * format, ...);
 int fputc(int c, FILE * stream);
 size_t fread(void * ptr, size_t size, size_t nb, FILE * file);
-size_t fwrite(void * ptr, size_t size, size_t nb, FILE * file);
+size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file);
 int getc(FILE * stream);
 int getchar(void);
 void perror(char const * s);
