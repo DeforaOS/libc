@@ -7,9 +7,9 @@
 #include "string.h"
 #include "ctype.h"
 #include "errno.h"
+#include "stdio.h"
 #include "stdlib.h"
 
-/* FIXME */
 #define min(a, b) (((a) > (b)) ? (b) : (a))
 
 
@@ -146,6 +146,7 @@ void * calloc(size_t nmemb, size_t size)
 /* exit */
 void exit(int status)
 {
+	fflush(stdout); /* FIXME flush all opened files really */
 	_atexit_do(AF_EXEC, NULL);
 	_exit(status);
 }
