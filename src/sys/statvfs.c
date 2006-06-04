@@ -8,7 +8,7 @@
 
 
 /* statvfs */
-#ifdef SYS_statfs /* linux compatibility */
+#ifdef SYS_statfs
 typedef long fsid_t;
 struct statfs
 {
