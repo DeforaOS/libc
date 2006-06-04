@@ -23,6 +23,14 @@ typedef int clock_t;
 #  define dev_t dev_t
 typedef int dev_t;
 # endif
+# ifndef fsblkcnt_t
+#  define fsblkcnt_t fsblkcnt_t
+typedef unsigned long fsblkcnt_t;
+# endif
+# ifndef fsfilcnt_t
+#  define fsfilcnt_t fsfilcnt_t
+typedef unsigned long fsfilcnt_t;
+# endif
 # ifndef id_t
 #  define id_t id_t
 typedef int id_t;
