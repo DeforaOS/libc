@@ -56,22 +56,22 @@ stdio.o: stdio.c
 string.o: string.c
 	$(CC) $(libc_CFLAGS) -c string.c
 
-sys/mman.o: sys/mman.c
+sys/mman.o: sys/mman.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/mman.c -o sys/mman.o
 
-sys/stat.o: sys/stat.c
+sys/stat.o: sys/stat.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/stat.c -o sys/stat.o
 
-sys/statvfs.o: sys/statvfs.c
+sys/statvfs.o: sys/statvfs.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/statvfs.c -o sys/statvfs.o
 
-sys/times.o: sys/times.c
+sys/times.o: sys/times.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/times.c -o sys/times.o
 
-sys/utsname.o: sys/utsname.c
+sys/utsname.o: sys/utsname.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/utsname.c -o sys/utsname.o
 
-sys/wait.o: sys/wait.c
+sys/wait.o: sys/wait.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/wait.c -o sys/wait.o
 
 syscalls.o: syscalls.S
