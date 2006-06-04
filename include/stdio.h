@@ -50,6 +50,7 @@ int getc(FILE * stream);
 int getchar(void);
 void perror(char const * s);
 int printf(char const * format, ...);
+int putchar(int c);
 int puts(char const * string);
 int sprintf(char * str, char const * format, ...);
 int snprintf(char * str, size_t n, char const * format, ...);
