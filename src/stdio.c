@@ -17,11 +17,11 @@
 struct _FILE
 {
 	int fildes;
-	int flags;
+	char flags;
 	unsigned char buf[BUFSIZ];
 	unsigned int len;
 	unsigned int pos;
-	int eof;
+	char eof;
 };
 
 
@@ -278,6 +278,20 @@ int printf(char const * format, ...)
 	ret = vfprintf(stdout, format, arg);
 	va_end(arg);
 	return ret;
+}
+
+
+/* putc */
+int putc(int c, FILE * fp)
+{
+	return fputc(c, fp);
+}
+
+
+/* putchar */
+int putchar(int c)
+{
+	return fputc(c, stdout);
 }
 
 
