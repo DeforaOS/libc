@@ -3,7 +3,7 @@ PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
-CFLAGSF	= -W -Wall -ansi -I ../include
+CFLAGSF	= -W -Wall -ansi -I ../include -nostdinc
 CFLAGS	= -g
 AR	= ar -rc
 RANLIB	= ranlib
@@ -15,7 +15,7 @@ INSTALL	= install
 
 all: $(TARGETS)
 
-libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o
+libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/statvfs.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o
 libc_CFLAGS = $(CFLAGSF) $(CFLAGS)
 libc.a: $(libc_OBJS)
 	$(AR) libc.a $(libc_OBJS)
@@ -32,7 +32,7 @@ dirent.o: dirent.c
 errno.o: errno.c
 	$(CC) $(libc_CFLAGS) -c errno.c
 
-fcntl.o: fcntl.c
+fcntl.o: fcntl.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c fcntl.c
 
 grp.o: grp.c
@@ -44,7 +44,7 @@ libgen.o: libgen.c
 pwd.o: pwd.c
 	$(CC) $(libc_CFLAGS) -c pwd.c
 
-signal.o: signal.c
+signal.o: signal.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c signal.c
 
 stdlib.o: stdlib.c
@@ -62,6 +62,9 @@ sys/mman.o: sys/mman.c
 sys/stat.o: sys/stat.c
 	$(CC) $(libc_CFLAGS) -c sys/stat.c -o sys/stat.o
 
+sys/statvfs.o: sys/statvfs.c
+	$(CC) $(libc_CFLAGS) -c sys/statvfs.c -o sys/statvfs.o
+
 sys/times.o: sys/times.c
 	$(CC) $(libc_CFLAGS) -c sys/times.c -o sys/times.o
 
@@ -74,13 +77,13 @@ sys/wait.o: sys/wait.c
 syscalls.o: syscalls.S
 	$(CC) $(libc_CFLAGS) -c syscalls.S
 
-time.o: time.c
+time.o: time.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c time.c
 
-unistd.o: unistd.c
+unistd.o: unistd.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c unistd.c
 
-utime.o: utime.c
+utime.o: utime.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c utime.c
 
 clean:
