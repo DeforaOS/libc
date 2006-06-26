@@ -146,7 +146,9 @@ void * calloc(size_t nmemb, size_t size)
 /* exit */
 void exit(int status)
 {
-	fflush(stdout); /* FIXME flush all opened files really */
+	/* FIXME flush all opened files really */
+	fflush(stdout);
+	fflush(stderr);
 	_atexit_do(AF_EXEC, NULL);
 	_exit(status);
 }
