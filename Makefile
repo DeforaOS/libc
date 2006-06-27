@@ -33,6 +33,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/string.c \
 		$(PACKAGE)-$(VERSION)/src/sys/mman.c \
 		$(PACKAGE)-$(VERSION)/src/sys/stat.c \
+		$(PACKAGE)-$(VERSION)/src/sys/statvfs.c \
 		$(PACKAGE)-$(VERSION)/src/sys/times.c \
 		$(PACKAGE)-$(VERSION)/src/sys/utsname.c \
 		$(PACKAGE)-$(VERSION)/src/sys/wait.c \
@@ -42,7 +43,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/utime.c \
 		$(PACKAGE)-$(VERSION)/src/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/project.conf \
-		$(PACKAGE)-$(VERSION)/src/Makefile \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \
 		$(PACKAGE)-$(VERSION)/include/dirent.h \
@@ -62,6 +62,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/string.h \
 		$(PACKAGE)-$(VERSION)/include/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/sys/statvfs.h \
 		$(PACKAGE)-$(VERSION)/include/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/sys/utsname.h \
@@ -70,9 +71,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/utime.h \
 		$(PACKAGE)-$(VERSION)/include/project.conf \
-		$(PACKAGE)-$(VERSION)/include/Makefile \
-		$(PACKAGE)-$(VERSION)/project.conf \
-		$(PACKAGE)-$(VERSION)/Makefile
+		$(PACKAGE)-$(VERSION)/project.conf
 	$(RM) $(PACKAGE)-$(VERSION)
 
 install: all
@@ -80,3 +79,5 @@ install: all
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
+
+.PHONY: all subdirs clean distclean install uninstall
