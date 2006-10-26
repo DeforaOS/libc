@@ -5,67 +5,74 @@
 #ifndef ___SYSCALLS_H
 # define ___SYSCALLS_H
 
-
-/* linux syscalls */
-# define SYS_exit	1
-# define SYS_fork	2
-# define SYS_read	3
-# define SYS_write	4
-# define SYS_open	5
-# define SYS_close	6
-# define SYS_waitpid	7
-# define SYS_link	9
-# define SYS_unlink	10
-# define SYS_execve	11
-# define SYS_chdir	12
-# define SYS_time	13
-# define SYS_mknod	14
-# define SYS_chmod	15
-# define SYS_lchown	16
-# define SYS_getpid	20
-# define SYS_mount	21
-# define SYS_umount	22
-# define SYS_setuid	23
-# define SYS_getuid	24
-# define SYS_ptrace	26
-# define SYS_alarm	27
-# define SYS_utime	30
-# define SYS_access	33
-# define SYS_nice	34
-# define SYS_sync	36
-# define SYS_kill	37
-# define SYS_mkdir	39
-# define SYS_rmdir	40
-# define SYS_dup	41
-# define SYS_pipe	42
-# define SYS_times	43
-# define SYS_brk	45
-# define SYS_setgid	46
-# define SYS_getgid	47
-# define SYS_signal	48
-# define SYS_geteuid	49
-# define SYS_getegid	50
-# define SYS_setpgid	57
-# define SYS_umask	60
-# define SYS_dup2	63
-# define SYS_getppid	64
-# define SYS_setsid	66
-# define SYS_setreuid	70
-# define SYS_setregid	71
-# define SYS_symlink	83
-# define SYS_readlink	85
-# define SYS_mmap	90
-# define SYS_munmap	91
-# define SYS_statfs	99
-# define SYS_fstatfs	100
-# define SYS_stat	106
-# define SYS_lstat	107
-# define SYS_fstat	108
-# define SYS_uname	122
-# define SYS_chown	182
-# define SYS_getcwd	183
-# define SYS_vfork	190
-# define SYS_waitid	284
+# ifdef __linux__
+#  include "/usr/include/asm/unistd.h"
+#  undef _syscall0
+#  undef _syscall1
+#  undef _syscall2
+#  undef _syscall3
+#  undef _syscall4
+#  undef _syscall5
+#  undef _syscall6
+#  define SYS_exit	__NR_exit
+#  define SYS_fork	__NR_fork
+#  define SYS_read	__NR_read
+#  define SYS_write	__NR_write
+#  define SYS_open	__NR_open
+#  define SYS_close	__NR_close
+#  define SYS_waitpid	__NR_waitpid
+#  define SYS_link	__NR_link
+#  define SYS_unlink	__NR_unlink
+#  define SYS_execve	__NR_execve
+#  define SYS_chdir	__NR_chdir
+#  define SYS_time	__NR_time
+#  define SYS_mknod	__NR_mknod
+#  define SYS_chmod	__NR_chmod
+#  define SYS_lchown	__NR_lchown
+#  define SYS_getpid	__NR_getpid
+#  define SYS_mount	__NR_mount
+#  define SYS_umount	__NR_umount
+#  define SYS_setuid	__NR_setuid
+#  define SYS_getuid	__NR_getuid
+#  define SYS_ptrace	__NR_ptrace
+#  define SYS_alarm	__NR_alarm
+#  define SYS_utime	__NR_utime
+#  define SYS_access	__NR_access
+#  define SYS_nice	__NR_nice
+#  define SYS_sync	__NR_sync
+#  define SYS_kill	__NR_kill
+#  define SYS_mkdir	__NR_mkdir
+#  define SYS_rmdir	__NR_rmdir
+#  define SYS_dup	__NR_dup
+#  define SYS_pipe	__NR_pipe
+#  define SYS_times	__NR_times
+#  define SYS_brk	__NR_brk
+#  define SYS_setgid	__NR_setgid
+#  define SYS_getgid	__NR_getgid
+#  define SYS_signal	__NR_signal
+#  define SYS_geteuid	__NR_geteuid
+#  define SYS_getegid	__NR_getegid
+#  define SYS_setpgid	__NR_setpgid
+#  define SYS_umask	__NR_umask
+#  define SYS_dup2	__NR_dup2
+#  define SYS_getppid	__NR_getppid
+#  define SYS_setsid	__NR_setsid
+#  define SYS_setreuid	__NR_setreuid
+#  define SYS_setregid	__NR_setregid
+#  define SYS_symlink	__NR_symlink
+#  define SYS_readlink	__NR_readlink
+#  define SYS_mmap	__NR_mmap
+#  define SYS_munmap	__NR_munmap
+#  define SYS_statfs	__NR_statfs
+#  define SYS_fstatfs	__NR_fstatfs
+#  define SYS_stat	__NR_stat
+#  define SYS_lstat	__NR_lstat
+#  define SYS_fstat	__NR_fstat
+#  define SYS_uname	__NR_uname
+#  define SYS_chown	__NR_chown
+#  define SYS_getcwd	__NR_getcwd
+#  define SYS_vfork	__NR_vfork
+# endif /* __linux__ */
 
 
 # define syscall0(type, name) \
