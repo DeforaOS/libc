@@ -16,33 +16,28 @@ typedef enum { P_ALL, P_PID, P_PGID } idtype_t;
 typedef id_t pid_t;
 # endif
 /* FIXME rusage */
-# ifndef siginfo_t
-#  define siginfo_t siginfo_t
-typedef int siginfo_t; /* FIXME */
-# endif
 
 
 /* constants */
-# define WNOHANG	0 /* FIXME */
-# define WUNTRACED	0 /* FIXME */
+# define WNOHANG	0		/* FIXME */
+# define WUNTRACED	0		/* FIXME */
 
-# define WEXITSTATUS(status) (0) /* FIXME */
-# define WIFCONTINUED(status) (0) /* FIXME */
-# define WIFEXITED(status) (0) /* FIXME */
-# define WIFSIGNALED(status) (0) /* FIXME */
-# define WIFSTOPPED(status) (0) /* FIXME */
-# define WSTOPSIG(status) (0) /* FIXME */
-# define WTERMSIG(status) (0) /* FIXME */
+# define WEXITSTATUS(status) (0)	/* FIXME */
+# define WIFCONTINUED(status) (0)	/* FIXME */
+# define WIFEXITED(status) (0)		/* FIXME */
+# define WIFSIGNALED(status) (0)	/* FIXME */
+# define WIFSTOPPED(status) (0)		/* FIXME */
+# define WSTOPSIG(status) (0)		/* FIXME */
+# define WTERMSIG(status) (0)		/* FIXME */
 
-# define WEXITED	0 /* FIXME */
-# define WSTOPPED	0 /* FIXME */
-# define WCONTINUED	0 /* FIXME */
-# define WNOWAIT	0 /* FIXME */
+# define WEXITED	0		/* FIXME */
+# define WSTOPPED	0		/* FIXME */
+# define WCONTINUED	0		/* FIXME */
+# define WNOWAIT	0		/* FIXME */
 
 
 /* functions */
 pid_t wait(int * status);
-int waitid(idtype_t idtype, id_t id, siginfo_t * siginfo, int options);
 pid_t waitpid(pid_t pid, int * status, int options);
 
 #endif
