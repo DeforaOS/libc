@@ -1,4 +1,5 @@
-/* sys/wait.c */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
@@ -14,4 +15,6 @@ pid_t wait(int * status)
 
 
 /* waitpid */
+#ifndef __NetBSD__
 syscall3(pid_t, waitpid, pid_t, pid, int *, status, int, options)
+#endif

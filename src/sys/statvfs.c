@@ -1,4 +1,5 @@
-/* sys/statvfs.c */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
@@ -41,5 +42,5 @@ int statvfs(char const * path, struct statvfs * buf)
 	return 0;
 }
 #else
-syscall2(int, statvfs, char const *, path, struct vfs *, buf);
+syscall2(int, statvfs, char const *, path, struct statvfs *, buf);
 #endif

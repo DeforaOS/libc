@@ -1,11 +1,13 @@
-/* syscalls.h */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
 #ifndef ___SYSCALLS_H
 # define ___SYSCALLS_H
 
-# ifdef __linux__
+# if defined(__linux__)
+/* Linux syscalls */
 #  include "/usr/include/asm/unistd.h"
 #  undef _syscall0
 #  undef _syscall1
@@ -72,7 +74,16 @@
 #  define SYS_chown	__NR_chown
 #  define SYS_getcwd	__NR_getcwd
 #  define SYS_vfork	__NR_vfork
-# endif /* __linux__ */
+# elif defined(__NetBSD__)
+/* NetBSD syscalls */
+#  include "/usr/include/sys/syscall.h"
+#  define SYS_stat	SYS___stat13
+#  define SYS_lstat	SYS___lstat13
+#  define SYS_fstat	SYS___fstat13
+#  define SYS_statvfs	SYS_statvfs1
+# else
+#  error Unsupported platform
+# endif
 
 
 # define syscall0(type, name) \

@@ -22,11 +22,15 @@ syscall2(int, access, char const *, filename, int, mode);
 
 
 /* alarm */
+#ifndef __NetBSD__
 syscall1(unsigned int, alarm, unsigned int, seconds);
+#endif
 
 
 /* brk */
+#ifndef __NetBSD__
 syscall1(int, brk, void *, end_data_segment);
+#endif
 
 
 /* chdir */
@@ -66,7 +70,9 @@ syscall0(pid_t, fork);
 
 
 /* getcwd */
+#ifndef __NetBSD__
 syscall2(char *, getcwd, char *, buf, size_t, size);
+#endif
 
 
 /* getegid */
@@ -163,7 +169,9 @@ syscall2(int, link, char const *, from, char const *, to);
 
 
 /* nice */
+#ifndef __NetBSD__
 syscall1(int, nice, int, inc);
+#endif
 
 
 /* pipe */

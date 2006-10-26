@@ -1,4 +1,5 @@
-/* sys/utsname.c */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
@@ -7,4 +8,6 @@
 
 
 /* uname */
+#ifndef __NetBSD__
 syscall1(int, uname, struct utsname *, utsname);
+#endif
