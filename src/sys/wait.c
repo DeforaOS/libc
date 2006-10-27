@@ -17,4 +17,11 @@ pid_t wait(int * status)
 /* waitpid */
 #ifndef __NetBSD__
 syscall3(pid_t, waitpid, pid_t, pid, int *, status, int, options)
+#else
+# include "stdlib.h"
+syscall4(pid_t, wait4, pid_t, pid, int *, status, int, options, void *, rusage)
+pid_t waitpid(pid_t pid, int * status, int options)
+{
+	return wait4(pid, status, options, NULL);
+}
 #endif
