@@ -1,6 +1,6 @@
 TARGETS	= libc.a libc.so
 PREFIX	= /usr/local
-DESTDIR	=
+DESTDIR	= 
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
 CFLAGSF	= -W -Wall -ansi -I ../include -nostdinc
@@ -100,3 +100,5 @@ install: all
 uninstall:
 	$(RM) $(DESTDIR)$(LIBDIR)/libc.a
 	$(RM) $(DESTDIR)$(LIBDIR)/libc.so
+
+.PHONY: all clean distclean install uninstall
