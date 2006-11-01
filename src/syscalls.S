@@ -76,30 +76,18 @@ _syscall6:
 	ret
 #elif defined(__NetBSD__)
 _syscall0:
+_syscall1:
+_syscall2:
+_syscall3:
+_syscall4:
+_syscall5:
+_syscall6:
 	pop	%ecx
 	pop	%eax
 	push	%ecx
 	int	$0x80
 	push	%ecx
 	ret
-
-_syscall1:
-	jmp _syscall0
-
-_syscall2:
-	jmp _syscall0
-
-_syscall3:
-	jmp _syscall0
-
-_syscall4:
-	jmp _syscall0
-
-_syscall5:
-	jmp _syscall0
-
-_syscall6:
-	jmp _syscall0
 #else
 # error Unsupported system
 #endif
