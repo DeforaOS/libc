@@ -1,6 +1,7 @@
 PACKAGE	= libc
 VERSION	= 0.0.0
 SUBDIRS	= src include
+RM	= rm -f
 LN	= ln -sf
 TAR	= tar -czvf
 
@@ -17,7 +18,7 @@ distclean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
 
 dist:
-	$(RM) $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(VERSION)
 	$(LN) . $(PACKAGE)-$(VERSION)
 	@$(TAR) $(PACKAGE)-$(VERSION).tar.gz \
 		$(PACKAGE)-$(VERSION)/src/ctype.c \
