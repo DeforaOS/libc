@@ -42,8 +42,10 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/time.c \
 		$(PACKAGE)-$(VERSION)/src/unistd.c \
 		$(PACKAGE)-$(VERSION)/src/utime.c \
+		$(PACKAGE)-$(VERSION)/src/Makefile \
 		$(PACKAGE)-$(VERSION)/src/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/project.conf \
+		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \
 		$(PACKAGE)-$(VERSION)/include/dirent.h \
@@ -72,6 +74,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/utime.h \
 		$(PACKAGE)-$(VERSION)/include/project.conf \
+		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/project.conf
 	$(RM) $(PACKAGE)-$(VERSION)
 
