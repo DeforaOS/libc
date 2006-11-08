@@ -7,6 +7,7 @@
 .global _syscall0, _syscall1, _syscall2, _syscall3, _syscall4, _syscall5, \
 		_syscall6
 #if defined(__linux__)
+# if defined(__i386__)
 _syscall0:
 	mov	0x4(%esp), %eax
 	int	$0x80
@@ -74,7 +75,11 @@ _syscall6:
 	mov	$-1, %eax
 .errnoret:
 	ret
+# else /* !__i386__ */
+#  warning Unsupported architecture
+# endif
 #elif defined(__NetBSD__)
+# if defined(__i386__)
 _syscall0:
 _syscall1:
 _syscall2:
@@ -88,6 +93,9 @@ _syscall6:
 	int	$0x80
 	push	%ecx
 	ret
+# else /* !__i386__ */
+#  warning Unsupported architecture
+# endif
 #else
-# error Unsupported system
+# warning Unsupported system
 #endif
