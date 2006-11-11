@@ -5,6 +5,8 @@
 
 .text
 .global _start
+#if defined(__linux__)
+# if defined(__i386__)
 _start:
 	pop	%ecx		/* argc */
 	mov	%esp, %ebx	/* argv */
@@ -25,3 +27,9 @@ _start:
 	call	main
 	push	%eax
 	call	exit
+# else /* linux !i386 */
+#  warning Unsupported architecture
+# endif
+#else /* !linux */
+# warning Unsupported system
+#endif
