@@ -1,4 +1,4 @@
-TARGETS	= libc.a libc.so
+TARGETS	= libc.a libc.so start.o
 PREFIX	= /usr/local
 DESTDIR	= 
 LIBDIR	= $(PREFIX)/lib
@@ -17,11 +17,15 @@ all: $(TARGETS)
 
 libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/statvfs.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o
 libc_CFLAGS = $(CFLAGSF) $(CFLAGS)
+
 libc.a: $(libc_OBJS)
 	$(AR) libc.a $(libc_OBJS)
 	$(RANLIB) libc.a
+
 libc.so: $(libc_OBJS)
 	$(LD) -o libc.so $(libc_OBJS)
+
+start.o: start.S
 
 ctype.o: ctype.c
 	$(CC) $(libc_CFLAGS) -c ctype.c
@@ -86,8 +90,11 @@ unistd.o: unistd.c syscalls.h
 utime.o: utime.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c utime.c
 
+start.o: start.S
+	$(CC) $(start.o_CFLAGS) -c start.S
+
 clean:
-	$(RM) $(libc_OBJS)
+	$(RM) $(libc_OBJS) $(start.o_OBJS)
 
 distclean: clean
 	$(RM) $(TARGETS)
