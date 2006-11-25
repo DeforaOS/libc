@@ -81,6 +81,9 @@
 #  define SYS_lstat	SYS___lstat13
 #  define SYS_fstat	SYS___fstat13
 #  define SYS_statvfs	SYS_statvfs1
+#elif defined(__sun__)
+/* Solaris syscalls */
+#  include "/usr/include/sys/syscall.h"
 # else
 #  error Unsupported platform
 # endif
