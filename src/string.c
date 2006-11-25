@@ -101,7 +101,7 @@ char * strcat(char * dest, char const * src)
 
 
 /* strchr */
-char const * strchr(char const * s, int c)
+char * strchr(char const * s, int c)
 {
 	unsigned char u = c;
 
@@ -254,7 +254,7 @@ char * strncpy(char * dest, char const * src, size_t n)
 
 
 /* strrchr */
-char const * strrchr(char const * s, int c)
+char * strrchr(char const * s, int c)
 {
 	unsigned char u = c;
 	char const * last = NULL;
@@ -267,7 +267,7 @@ char const * strrchr(char const * s, int c)
 
 
 /* strstr */
-char const * strstr(char const * s1, char const * s2)
+char * strstr(char const * s1, char const * s2)
 {
 	unsigned int len1 = strlen(s1);
 	unsigned int len2 = strlen(s2);
