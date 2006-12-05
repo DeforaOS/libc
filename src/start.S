@@ -3,8 +3,13 @@
 
 
 
-.text
+#include "common.h"
+
+
+.section .text
 .global _start
+
+
 #if defined(__linux__)
 # if defined(__i386__)
 _start:
@@ -27,8 +32,9 @@ _start:
 	call	main
 	push	%eax
 	call	exit
+	hlt
 # else /* linux !i386 */
-#  warning Unsupported architecture
+#  warning Unsupported Linux port
 # endif
 #else /* !linux */
 # warning Unsupported system
