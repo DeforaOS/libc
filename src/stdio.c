@@ -72,7 +72,8 @@ int fflush(FILE * stream)
 		errno = ENOSYS;
 		return EOF;
 	}
-	count = stream->len - stream->pos;
+	if((count = stream->len - stream->pos) == 0)
+		return 0;
 	/* FIXME should loop until completion or an error occurs */
 	if(write(stream->fildes, stream->buf, count) != count)
 		return EOF;
