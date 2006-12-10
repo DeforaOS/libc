@@ -1,10 +1,10 @@
-/* pwd.h */
-/* password structure */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___PWD_H
-# define ___PWD_H
+#ifndef LIBC_PWD_H
+# define LIBC_PWD_H
 
 
 /* types */
@@ -35,4 +35,4 @@ struct passwd
 struct passwd * getpwnam(char const * name);
 struct passwd * getpwuid(uid_t uid);
 
-#endif /* !___PWD_H */
+#endif /* !LIBC_PWD_H */

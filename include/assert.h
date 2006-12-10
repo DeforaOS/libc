@@ -1,9 +1,10 @@
-/* assert.h */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___ASSERT_H
-# define ___ASSERT_H
+#ifndef LIBC_ASSERT_H
+# define LIBC_ASSERT_H
 
 
 # ifdef NDEBUG
@@ -15,4 +16,4 @@
 			__LINE__, "\n"); }
 # endif
 
-#endif
+#endif /* !LIBC_ASSERT_H */

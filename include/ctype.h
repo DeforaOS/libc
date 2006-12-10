@@ -1,10 +1,10 @@
-/* ctype.h */
-/* character types */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___CTYPE_H
-# define ___CTYPE_H
+#ifndef LIBC_CTYPE_H
+# define LIBC_CTYPE_H
 
 
 /* function prototypes */
@@ -23,4 +23,4 @@ int tolower(int c);
 int toupper(int c);
 # define _toupper(c) (c + 'A' - 'a')
 
-#endif /* !___CTYPE_H */
+#endif /* !LIBC_CTYPE_H */

@@ -1,8 +1,10 @@
-/* sys/wait.h */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
-#ifndef ___SYS_WAIT_H
-# define ___SYS_WAIT_H
+
+#ifndef LIBC_SYS_WAIT_H
+# define LIBC_SYS_WAIT_H
 
 
 /* types */
@@ -22,13 +24,13 @@ typedef id_t pid_t;
 # define WNOHANG	0		/* FIXME */
 # define WUNTRACED	0		/* FIXME */
 
-# define WEXITSTATUS(status) (0)	/* FIXME */
-# define WIFCONTINUED(status) (0)	/* FIXME */
-# define WIFEXITED(status) (0)		/* FIXME */
-# define WIFSIGNALED(status) (0)	/* FIXME */
-# define WIFSTOPPED(status) (0)		/* FIXME */
-# define WSTOPSIG(status) (0)		/* FIXME */
-# define WTERMSIG(status) (0)		/* FIXME */
+# define WEXITSTATUS(status)	(0)	/* FIXME */
+# define WIFCONTINUED(status)	(0)	/* FIXME */
+# define WIFEXITED(status)	(0)	/* FIXME */
+# define WIFSIGNALED(status)	(0)	/* FIXME */
+# define WIFSTOPPED(status)	(0)	/* FIXME */
+# define WSTOPSIG(status)	(0)	/* FIXME */
+# define WTERMSIG(status)	(0)	/* FIXME */
 
 # define WEXITED	0		/* FIXME */
 # define WSTOPPED	0		/* FIXME */

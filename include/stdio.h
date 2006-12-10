@@ -1,10 +1,10 @@
-/* stdio.h */
-/* standard buffered input/output */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___STDIO_H
-# define ___STDIO_H
+#ifndef LIBC_STDIO_H
+# define LIBC_STDIO_H
 
 # include "stddef.h"
 
@@ -57,4 +57,4 @@ int snprintf(char * str, size_t n, char const * format, ...);
 int vfprintf(FILE * stream, char const * format, va_list arg);
 int vsprintf(char * str, char const * format, va_list arg);
 
-#endif /* !___STDIO_H */
+#endif /* !LIBC_STDIO_H */

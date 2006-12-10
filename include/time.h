@@ -1,9 +1,10 @@
-/* time.h */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___TIME_H
-# define ___TIME_H
+#ifndef LIBC_TIME_H
+# define LIBC_TIME_H
 
 
 /* types */
@@ -50,4 +51,4 @@ struct itimespec
 /* functions */
 time_t time(time_t * t);
 
-#endif /* !___TIME_H */
+#endif /* !LIBC_TIME_H */

@@ -1,10 +1,10 @@
-/* grp.h */
-/* group structure */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___GRP_H
-# define ___GRP_H
+#ifndef LIBC_GRP_H
+# define LIBC_GRP_H
 
 
 /* types */
@@ -28,4 +28,4 @@ struct group
 struct group * getgrgid(gid_t gid);
 struct group * getgrnam(char const * name);
 
-#endif /* !___GRP_H */
+#endif /* !LIBC_GRP_H */

@@ -1,9 +1,10 @@
-/* sys/mman.h */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___SYS_MMAN_H
-# define ___SYS_MMAN_H
+#ifndef LIBC_SYS_MMAN_H
+# define LIBC_SYS_MMAN_H
 
 
 /* types */
@@ -38,4 +39,4 @@ typedef unsigned int size_t;
 void * mmap(void *, size_t, int, int, int, off_t);
 int munmap(void *, size_t);
 
-#endif /* !___SYS_MMAN_H */
+#endif /* !LIBC_SYS_MMAN_H */

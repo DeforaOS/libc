@@ -1,15 +1,15 @@
-/* errno.h */
-/* system error numbers */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___ERRNO_H
-# define ___ERRNO_H
+#ifndef LIBC_ERRNO_H
+# define LIBC_ERRNO_H
 
 
-extern unsigned int errno;
-
-enum {
+/* types */
+enum
+{
 	E2BIG = 1,
 	EACCES,
 	EADDRINUSE,
@@ -91,4 +91,8 @@ enum {
 	EXDEV
 };
 
-#endif /* !___ERRNO_H */
+
+/* variables */
+extern unsigned int errno;
+
+#endif /* !LIBC_ERRNO_H */

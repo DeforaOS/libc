@@ -1,10 +1,10 @@
-/* stdarg.h */
-/* handle variable argument list */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___STDARG_H
-# define ___STDARG_H
+#ifndef LIBC_STDARG_H
+# define LIBC_STDARG_H
 
 
 /* types */
@@ -19,4 +19,4 @@ typedef void * va_list;
 # define va_arg(ap, type) ((ap) += sizeof(type))
 # define va_end(ap)
 
-#endif /* !___STDARG_H */
+#endif /* !LIBC_STDARG_H */

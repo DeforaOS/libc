@@ -1,15 +1,15 @@
-/* string.h */
-/* string operations */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___STRING_H
-# define ___STRING_H
+#ifndef LIBC_STRING_H
+# define LIBC_STRING_H
 
 # include "stddef.h"
 
 
-/* function prototypes */
+/* functions */
 int memcmp(void const * s1, void const * s2, size_t n);
 void * memcpy(void * dest, void const * src, size_t n);
 void * memmove(void * dest, void const * src, size_t n);
@@ -29,4 +29,4 @@ char * strrchr(char const * s, int c);
 char * strstr(char const * s1, char const * s2);
 char * strtok(char * s1, char const * s2);
 
-#endif /* !___STRING_H */
+#endif /* !LIBC_STRING_H */

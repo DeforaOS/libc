@@ -1,9 +1,10 @@
-/* sys/statvfs.h */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___SYS_STATVFS_H
-# define ___SYS_STATVFS_H
+#ifndef LIBC_SYS_STATVFS_H
+# define LIBC_SYS_STATVFS_H
 
 
 /* types */
@@ -35,4 +36,4 @@ struct statvfs
 int statvfs(char const * path, struct statvfs * buf);
 int fstatvfs(int fd, struct statvfs * buf);
 
-#endif /* !___SYS_STATVFS_H */
+#endif /* !LIBC_SYS_STATVFS_H */

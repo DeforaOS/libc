@@ -1,9 +1,10 @@
-/* sys/utsname.h */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___SYS_UTSNAME_H
-# define ___SYS_UTSNAME_H
+#ifndef LIBC_SYS_UTSNAME_H
+# define LIBC_SYS_UTSNAME_H
 
 
 /* types */
@@ -21,4 +22,4 @@ struct utsname
 /* functions */
 int uname(struct utsname * name);
 
-#endif /* ___SYS_UTSNAME_H */
+#endif /* LIBC_SYS_UTSNAME_H */

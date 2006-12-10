@@ -1,10 +1,10 @@
-/* signal.h */
-/* signals */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___SIGNAL_H
-# define ___SIGNAL_H
+#ifndef LIBC_SIGNAL_H
+# define LIBC_SIGNAL_H
 
 
 /* types */
@@ -25,4 +25,4 @@ typedef int siginfo_t; /* FIXME */
 /* functions */
 int kill(pid_t pid, int sig);
 
-#endif /* !___SIGNAL_H */
+#endif /* !LIBC_SIGNAL_H */

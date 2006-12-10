@@ -1,14 +1,14 @@
-/* libgen.h */
-/* definitions for pattern matching functions */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___LIBGEN_H
-# define ___LIBGEN_H
+#ifndef LIBC_LIBGEN_H
+# define LIBC_LIBGEN_H
 
 
-/* function prototypes */
+/* functions */
 char * basename(char * path);
 char * dirname(char * path);
 
-#endif /* !___LIBGEN_H */
+#endif /* !LIBC_LIBGEN_H */

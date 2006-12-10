@@ -1,10 +1,10 @@
-/* fcntl.h */
-/* file control options */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___FCNTL_H
-# define ___FCNTL_H
+#ifndef LIBC_FCNTL_H
+# define LIBC_FCNTL_H
 
 
 /* constants */
@@ -56,4 +56,4 @@ int creat(const char *, mode_t);
 int fcntl(int, int, ...);
 int open(char const * filename, int flags, ...);
 
-#endif /* !___FCNTL_H */
+#endif /* !LIBC_FCNTL_H */

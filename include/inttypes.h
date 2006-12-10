@@ -1,11 +1,11 @@
-/* inttypes.h */
-/* fixed size integer types */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___INTTYPES_H
-# define ___INTTYPES_H
+#ifndef LIBC_INTTYPES_H
+# define LIBC_INTTYPES_H
 
 # include <stdint.h>
 
-#endif /* !___INTTYPES_H */
+#endif /* !LIBC_INTTYPES_H */

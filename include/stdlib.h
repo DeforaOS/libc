@@ -1,10 +1,10 @@
-/* stdlib.h */
-/* standard library definitions */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___STDLIB_H
-# define ___STDLIB_H
+#ifndef LIBC_STDLIB_H
+# define LIBC_STDLIB_H
 
 # include "stddef.h"
 
@@ -22,4 +22,4 @@ int setenv(char const * name, char const * value, int overwrite);
 long strtol(char const * str, char ** endptr, int base);
 int unsetenv(char const * name);
 
-#endif /* !___STDLIB_H */
+#endif /* !LIBC_STDLIB_H */

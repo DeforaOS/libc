@@ -1,10 +1,10 @@
-/* dirent.h */
-/* format of directory entries */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___DIRENT_H
-# define ___DIRENT_H
+#ifndef LIBC_DIRENT_H
+# define LIBC_DIRENT_H
 
 # include "limits.h"
 
@@ -14,10 +14,10 @@
 #  define ino_t ino_t
 typedef int ino_t;
 # endif
-typedef struct _DIR {
-	int fd;
-} DIR;
-struct dirent {
+typedef struct _DIR DIR;
+
+struct dirent
+{
 	ino_t d_ino;
 	char d_name[NAME_MAX];
 };
@@ -31,4 +31,4 @@ void rewinddir(DIR *);
 void seekdir(DIR *, long);
 long telldir(DIR *);
 
-#endif /* !___DIRENT_H */
+#endif /* !LIBC_DIRENT_H */

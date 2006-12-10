@@ -1,9 +1,10 @@
-/* sys/stat.h */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___SYS_STAT_H
-# define ___SYS_STAT_H
+#ifndef LIBC_SYS_STAT_H
+# define LIBC_SYS_STAT_H
 
 
 /* types */
@@ -113,4 +114,4 @@ int mknod(char const *, mode_t, dev_t);
 int stat(char const *, struct stat *);
 mode_t umask(mode_t mask);
 
-#endif /* !___SYS_STAT_H */
+#endif /* !LIBC_SYS_STAT_H */

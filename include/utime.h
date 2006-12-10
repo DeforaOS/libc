@@ -1,9 +1,10 @@
-/* utime.h */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___UTIME_H
-# define ___UTIME_H
+#ifndef LIBC_UTIME_H
+# define LIBC_UTIME_H
 
 
 /* types */
@@ -22,4 +23,4 @@ struct utimbuf
 /* functions */
 int utime(char const * filename, struct utimbuf const * buf);
 
-#endif /* !___UTIME_H */
+#endif /* !LIBC_UTIME_H */

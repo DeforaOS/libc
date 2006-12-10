@@ -1,9 +1,10 @@
-/* sys/types.h */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___SYS_TYPES_H
-# define ___SYS_TYPES_H
+#ifndef LIBC_SYS_TYPES_H
+# define LIBC_SYS_TYPES_H
 
 
 /* types */
@@ -77,4 +78,4 @@ typedef id_t pid_t;
 typedef id_t uid_t;
 # endif
 
-#endif /* !___SYS_TYPES_H */
+#endif /* !LIBC_SYS_TYPES_H */

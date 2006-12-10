@@ -1,10 +1,10 @@
-/* stddef.h */
-/* standard type definitions */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___STDDEF_H
-# define ___STDDEF_H
+#ifndef LIBC_STDDEF_H
+# define LIBC_STDDEF_H
 
 
 /* types */
@@ -20,4 +20,4 @@ typedef char wchar_t;
 #  define NULL ((void*)0)
 # endif
 
-#endif /* !___STDDEF_H */
+#endif /* !LIBC_STDDEF_H */

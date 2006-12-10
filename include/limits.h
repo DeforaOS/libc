@@ -1,10 +1,10 @@
-/* limits.h */
-/* implementation-defined constants */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___LIMITS_H
-# define ___LIMITS_H
+#ifndef LIBC_LIMITS_H
+# define LIBC_LIMITS_H
 
 
 /* constants */
@@ -12,4 +12,4 @@
 #  define NAME_MAX 256
 # endif
 
-#endif /* !___LIMITS_H */
+#endif /* !LIBC_LIMITS_H */

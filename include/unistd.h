@@ -1,10 +1,10 @@
-/* unistd.h */
-/* standard symbolic constants and types */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
-#ifndef ___UNISTD_H
-# define ___UNISTD_H
+#ifndef LIBC_UNISTD_H
+# define LIBC_UNISTD_H
 
 
 /* constants */
@@ -109,4 +109,4 @@ int unlink(char const * filename);
 pid_t vfork(void);
 ssize_t write(int fildes, const void * buf, size_t count);
 
-#endif /* !___UNISTD_H */
+#endif /* !LIBC_UNISTD_H */
