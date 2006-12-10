@@ -3,39 +3,29 @@
 
 
 
-#include "common.h"
-
-
-.section .text
+.text
 .global _start
 
 
+/* Linux */
 #if defined(__linux__)
+# include "kernel/linux/common.h"
 # if defined(__i386__)
-_start:
-	pop	%ecx		/* argc */
-	mov	%esp, %ebx	/* argv */
-	mov	%esp, %eax	/* envp */
-	add	$4, %eax
-	add	%ecx, %eax
-	add	%ecx, %eax
-	add	%ecx, %eax
-	add	%ecx, %eax
-	xor	%ebp, %ebp	/* stack */
-	push	%ebp
-	push	%ebp
-	push	%ebp
-	mov	%esp, %ebp
-	push	%eax
-	push	%ebx
-	push	%ecx
-	call	main
-	push	%eax
-	call	exit
-	hlt
-# else /* linux !i386 */
-#  warning Unsupported Linux port
+#  include "kernel/linux/i386/start.S"
+# else /* !__i386__ */
+#  warning Unsupported Linux architecture
 # endif
-#else /* !linux */
-# warning Unsupported system
+
+/* NetBSD */
+#elif defined(__NetBSD__)
+# include "kernel/netbsd/common.h"
+# if defined(__i386__)
+#  include "kernel/netbsd/i386/start.S"
+# else /* !__i386__ */
+#  warning Unsupported NetBSD architecture
+# endif
+
+/* Unknown */
+#else
+# warning Unsupported kernel and architecture
 #endif

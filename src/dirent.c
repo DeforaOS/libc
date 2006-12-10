@@ -1,4 +1,5 @@
-/* dirent.c */
+/* $Id$ */
+/* Copyright (c) 2006 The DeforaOS Project */
 
 
 
@@ -8,6 +9,14 @@
 #include "errno.h"
 #include "stdlib.h"
 #include "dirent.h"
+#include "syscalls.h"
+
+
+/* types */
+struct _DIR
+{
+	int fd;
+};
 
 
 /* closedir */
@@ -46,22 +55,12 @@ DIR * opendir(char const * name)
 		return NULL;
 	}
 	if((dir = malloc(sizeof(DIR))) == NULL)
-	{
 		close(fd);
-		return NULL;
-	}
-	dir->fd = fd;
+	else
+		dir->fd = fd;
 	return dir;
 }
 
 
 /* readdir */
-struct dirent * readdir(DIR * dir)
-{
-	if(dir == NULL)
-	{
-		errno = EINVAL;
-		return NULL;
-	}
-	return NULL; /* FIXME */
-}
+syscall1(struct dirent *, readdir, DIR *, dir);
