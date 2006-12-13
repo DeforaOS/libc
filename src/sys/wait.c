@@ -15,7 +15,7 @@ pid_t wait(int * status)
 
 
 /* waitpid */
-#ifndef __NetBSD__
+#if !defined(__NetBSD__) || defined(NETBSD_USE_LINUX_EMULATION)
 syscall3(pid_t, waitpid, pid_t, pid, int *, status, int, options)
 #else
 # include "stdlib.h"
