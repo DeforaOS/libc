@@ -206,8 +206,9 @@ int fputs(char const * str, FILE * file)
 {
 	size_t len;
 
-	len = strlen(str);
-	return fwrite(str, sizeof(char), len, file);
+	if((len = strlen(str)) == 0)
+		return 0;
+	return fwrite(str, sizeof(char), len, file) == len ? 0 : EOF;
 }
 
 
