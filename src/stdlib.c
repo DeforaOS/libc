@@ -248,6 +248,15 @@ void * realloc(void * ptr, size_t size)
 }
 
 
+/* setenv */
+int setenv(char const * name, char const * value, int overwrite)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
+}
+
+
 /* strtol */
 long strtol(char const * str, char ** endptr, int base)
 {
@@ -307,4 +316,20 @@ long strtol(char const * str, char ** endptr, int base)
 	if(endptr != NULL)
 		*endptr = p;
 	return neg == 0 ? ret : -ret;
+}
+
+
+/* unsetenv */
+int unsetenv(char const * name)
+{
+	if(name == NULL || *name == '\0' || strchr(name, '=') != NULL)
+	{
+		errno = EINVAL;
+		return -1;
+	}
+	if(getenv(name) == NULL)
+		return 0;
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
 }
