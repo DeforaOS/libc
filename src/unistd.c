@@ -59,6 +59,13 @@ syscall3(int, execve, char const *, filename, char const **, argv,
 		char const **, envp);
 
 
+/* execvp */
+int execvp(char const * filename, char const * argv[])
+{
+	return execve(filename, argv, environ);
+}
+
+
 /* _exit */
 void _exit(int status)
 {
@@ -156,7 +163,7 @@ syscall0(uid_t, getuid);
 /* isatty */
 int isatty(int fd)
 {
-	/* FIXME */
+	/* FIXME implement */
 	return 0;
 }
 

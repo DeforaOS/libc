@@ -61,6 +61,7 @@ int dup(int fildes);
 int dup2(int fildes1, int fildes2);
 
 int execve(char const * filename, char const * argv[], char const * envp[]);
+int execvp(char const * filename, char const * argv[]);
 
 void _exit(int status);
 
