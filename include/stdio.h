@@ -34,19 +34,20 @@ extern FILE * stderr;
 
 
 /* functions */
-void clearerr(FILE * stream);
-int fclose(FILE * stream);
+void clearerr(FILE * file);
+int fclose(FILE * file);
 FILE * fdopen(int fildes, char const * mode);
-int feof(FILE * stream);
-int fflush(FILE * stream);
-int fgetc(FILE * stream);
-int fileno(FILE * stream);
+int feof(FILE * file);
+int fflush(FILE * file);
+int fgetc(FILE * file);
+int fileno(FILE * file);
 FILE * fopen(char const * path, char const * mode);
-int fprintf(FILE * stream, char const * format, ...);
-int fputc(int c, FILE * stream);
+int fprintf(FILE * file, char const * format, ...);
+int fputc(int c, FILE * file);
+int fputs(char const * str, FILE * file);
 size_t fread(void * ptr, size_t size, size_t nb, FILE * file);
 size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file);
-int getc(FILE * stream);
+int getc(FILE * file);
 int getchar(void);
 void perror(char const * s);
 int printf(char const * format, ...);
@@ -54,7 +55,7 @@ int putchar(int c);
 int puts(char const * string);
 int sprintf(char * str, char const * format, ...);
 int snprintf(char * str, size_t n, char const * format, ...);
-int vfprintf(FILE * stream, char const * format, va_list arg);
+int vfprintf(FILE * file, char const * format, va_list arg);
 int vsprintf(char * str, char const * format, va_list arg);
 
 #endif /* !LIBC_STDIO_H */

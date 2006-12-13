@@ -37,71 +37,71 @@ FILE * stderr = &_stderr;
 
 /* functions */
 /* clearerr */
-void clearerr(FILE * stream)
+void clearerr(FILE * file)
 {
-	stream->eof = 0;
+	file->eof = 0;
 }
 
 
 /* fclose */
-int fclose(FILE * stream)
+int fclose(FILE * file)
 {
 	int res;
 	
-	res = fflush(stream);
-	close(stream->fildes);
+	res = fflush(file);
+	close(file->fildes);
 	return res;
 }
 
 
 /* feof */
-int feof(FILE * stream)
+int feof(FILE * file)
 {
-	return stream->eof;
+	return file->eof;
 }
 
 
 /* fflush */
-int fflush(FILE * stream)
+int fflush(FILE * file)
 {
 	ssize_t count;
 
-	if(stream->flags & O_RDONLY)
+	if(file->flags & O_RDONLY)
 		return 0;
-	else if(stream->flags & O_RDWR)
+	else if(file->flags & O_RDWR)
 	{
 		errno = ENOSYS;
 		return EOF;
 	}
-	if((count = stream->len - stream->pos) == 0)
+	if((count = file->len - file->pos) == 0)
 		return 0;
 	/* FIXME should loop until completion or an error occurs */
-	if(write(stream->fildes, stream->buf, count) != count)
+	if(write(file->fildes, file->buf, count) != count)
 		return EOF;
 	return 0;
 }
 
 
 /* fgetc */
-int fgetc(FILE * stream)
+int fgetc(FILE * file)
 {
 	char c;
 
-	if(fread(&c, sizeof(char), 1, stream) != 1)
+	if(fread(&c, sizeof(char), 1, file) != 1)
 		return EOF;
 	return c;
 }
 
 
 /* fileno */
-int fileno(FILE * stream)
+int fileno(FILE * file)
 {
-	if(stream == NULL)
+	if(file == NULL)
 	{
 		errno = EBADF;
 		return -1;
 	}
-	return stream->fildes;
+	return file->fildes;
 }
 
 
@@ -182,22 +182,32 @@ static int _fopen_mode(char const * mode)
 
 
 /* fprintf */
-int fprintf(FILE * stream, char const * format, ...)
+int fprintf(FILE * file, char const * format, ...)
 {
 	va_list arg;
 	int ret;
 
 	va_start(arg, format);
-	ret = vfprintf(stream, format, arg);
+	ret = vfprintf(file, format, arg);
 	va_end(arg);
 	return ret;
 }
 
 
 /* fputc */
-int fputc(int c, FILE * stream)
+int fputc(int c, FILE * file)
 {
-	return fwrite(&c, sizeof(char), 1, stream);
+	return fwrite(&c, sizeof(char), 1, file);
+}
+
+
+/* fputs */
+int fputs(char const * str, FILE * file)
+{
+	size_t len;
+
+	len = strlen(str);
+	return fwrite(str, sizeof(char), len, file);
 }
 
 
@@ -255,9 +265,9 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 
 
 /* getc */
-int getc(FILE * stream)
+int getc(FILE * file)
 {
-	return fgetc(stream);
+	return fgetc(file);
 }
 
 
@@ -326,9 +336,9 @@ typedef int (*print_func)(void * dest, size_t size, char const buf[]);
 static int _vprintf(print_func func, void * dest, char const * format,
 		va_list arg);
 static int _fprint(void * dest, size_t size, char const buf[]);
-int vfprintf(FILE * stream, char const * format, va_list arg)
+int vfprintf(FILE * file, char const * format, va_list arg)
 {
-	return _vprintf(_fprint, stream, format, arg);
+	return _vprintf(_fprint, file, format, arg);
 }
 
 static int _vprintf(print_func func, void * dest, char const * format,
