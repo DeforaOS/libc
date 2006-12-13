@@ -53,9 +53,10 @@ void perror(char const * s);
 int printf(char const * format, ...);
 int putchar(int c);
 int puts(char const * string);
+int snprintf(char * str, size_t size, char const * format, ...);
 int sprintf(char * str, char const * format, ...);
-int snprintf(char * str, size_t n, char const * format, ...);
 int vfprintf(FILE * file, char const * format, va_list arg);
+int vsnprintf(char * str, size_t size, char const * format, va_list arg);
 int vsprintf(char * str, char const * format, va_list arg);
 
 #endif /* !LIBC_STDIO_H */

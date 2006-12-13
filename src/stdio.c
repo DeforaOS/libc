@@ -319,6 +319,19 @@ int puts(char const * string)
 }
 
 
+/* snprintf */
+int snprintf(char * str, size_t size, char const * format, ...)
+{
+	va_list arg;
+	int ret;
+
+	va_start(arg, format);
+	ret = vsnprintf(str, size, format, arg);
+	va_end(arg);
+	return ret;
+}
+
+
 /* sprintf */
 int sprintf(char * str, char const * format, ...)
 {
@@ -334,43 +347,51 @@ int sprintf(char * str, char const * format, ...)
 
 /* vfprintf */
 typedef int (*print_func)(void * dest, size_t size, char const buf[]);
-static int _vprintf(print_func func, void * dest, char const * format,
-		va_list arg);
+static int _vprintf(print_func func, void * dest, size_t size,
+		char const * format, va_list arg);
 static int _fprint(void * dest, size_t size, char const buf[]);
 int vfprintf(FILE * file, char const * format, va_list arg)
 {
-	return _vprintf(_fprint, file, format, arg);
+	size_t len = -1;
+
+	return _vprintf(_fprint, file, len, format, arg);
 }
 
-static int _vprintf(print_func func, void * dest, char const * format,
-		va_list arg)
+static int _vprintf(print_func func, void * dest, size_t size,
+		char const * format, va_list arg)
 {
 	char const * p;
 	char * str;
-	int len = 0;
+	size_t len;
+	int ret = 0;
 
-	for(p = format; *p != '\0'; p++)
+	for(p = format; *p != '\0' && size > 0; p++)
 	{
 		if(*p != '%')
 		{
-			func(dest, sizeof(char), p);
-			len++;
+			if((len = func(dest, sizeof(char), p)) != sizeof(char))
+				return -1;
+			size--;
+			ret++;
 			continue;
 		}
+		/* FIXME implement properly */
 		switch(*++p)
 		{
 			case 's':
 				str = va_arg(arg, char *);
-				len+=strlen(str);
-				func(dest, strlen(str), str);
+				len = min(strlen(str), size);
+				if(func(dest, len, str) != len)
+					return -1;
 				break;
 			default:
-				len++;
-				func(dest, sizeof(char), p);
-				break;
+				errno = ENOSYS;
+				return -1;
 		}
+		size-=len;
+		ret+=len;
 	}
-	return len;
+	return ret;
 }
 
 static int _fprint(void * dest, size_t size, char const buf[])
@@ -381,11 +402,11 @@ static int _fprint(void * dest, size_t size, char const buf[])
 }
 
 
-/* vsprintf */
+/* vsnprintf */
 static int _sprint(void * dest, size_t size, char const buf[]);
-int vsprintf(char * str, char const * format, va_list arg)
+int vsnprintf(char * str, size_t size, char const * format, va_list arg)
 {
-	return _vprintf(_sprint, &str, format, arg);
+	return _vprintf(_sprint, &str, size, format, arg);
 }
 
 static int _sprint(void * dest, size_t size, char const buf[])
@@ -395,4 +416,13 @@ static int _sprint(void * dest, size_t size, char const buf[])
 	strncpy(*str, buf, size);
 	*str += size;
 	return size;
+}
+
+
+/* vsprintf */
+int vsprintf(char * str, char const * format, va_list arg)
+{
+	size_t size = -1;
+
+	return _vprintf(_sprint, &str, size, format, arg);
 }
