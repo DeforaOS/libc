@@ -13,6 +13,7 @@ _start:
 	add	%ecx, %eax
 	add	%ecx, %eax
 	add	%ecx, %eax
+	mov	%eax, environ
 	xor	%ebp, %ebp	/* stack */
 	push	%ebp
 	push	%ebp
