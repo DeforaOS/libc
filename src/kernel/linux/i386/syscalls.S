@@ -49,16 +49,10 @@ _syscall5:
 	jmp	.errno
 
 _syscall6:
-	push	%ebp
-	mov	0x20(%esp), %ebp
-	mov	0x1c(%esp), %edi
-	mov	0x18(%esp), %esi
-	mov	0x14(%esp), %edx
-	mov	0x10(%esp), %ecx
-	mov	0x0c(%esp), %ebx
-	mov	0x08(%esp), %eax
+	mov	0x04(%esp), %eax
+	mov	%esp, %ebx
+	add	$0x08, %ebx
 	int	$0x80
-	pop	%ebp
 	jmp	.errno
 
 .global errno
