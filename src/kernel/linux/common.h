@@ -60,6 +60,7 @@
 # define SYS_setregid	__NR_setregid
 # define SYS_symlink	__NR_symlink
 # define SYS_readlink	__NR_readlink
+# define SYS_readdir	__NR_readdir
 # define SYS_mmap	__NR_mmap
 # define SYS_munmap	__NR_munmap
 # define SYS_statfs	__NR_statfs
