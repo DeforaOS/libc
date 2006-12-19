@@ -14,18 +14,8 @@
 #define min(a, b) (((a) > (b)) ? (b) : (a))
 
 
-/* types */
-typedef struct _Chunk
-{
-	void * ptr;
-	size_t length;
-} Chunk;
-
-
 /* variables */
 extern char ** environ;
-static Chunk * _chunks = NULL;
-static size_t _chunks_cnt = 0;
 
 
 /* atexit */
@@ -158,16 +148,7 @@ void exit(int status)
 /* free */
 void free(void * ptr)
 {
-	size_t i;
-
-	for(i = 0; i < _chunks_cnt; i++)
-		if(_chunks[i].ptr == ptr)
-			break;
-	if(i == _chunks_cnt)
-		return;
-	munmap(ptr, _chunks[i].length);
-	_chunks[i].ptr = NULL;
-	_chunks[i].length = 0;
+	munmap(ptr, 4096);
 }
 
 
@@ -190,60 +171,32 @@ char * getenv(char const * name)
 
 
 /* malloc */
-void * _realloc(void * ptr, size_t size);
 void * malloc(size_t size)
 {
-	size_t i;
 	void * p;
 
-	if(size == 0)
-		return NULL;
-	for(i = 0; i < _chunks_cnt; i++)
-		if(_chunks[i].ptr == NULL)
-			break;
-	if(i == _chunks_cnt)
+	if(size == 0 || size > 4096)
 	{
-		if((p = _realloc(_chunks, (_chunks_cnt+1)*sizeof(Chunk)))
-				== NULL)
-			return NULL;
-		_chunks = p;
-		_chunks_cnt++;
-		_chunks[i].ptr = NULL;
-		_chunks[i].length = 0;
+		errno = ENOSYS;
+		return NULL;
 	}
-	if((p = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS, -1, 0))
+	size = 4096;
+	if((p = mmap(NULL, size, PROT_READ | PROT_WRITE,
+					MAP_PRIVATE | MAP_ANONYMOUS, -1, 0))
 			== MAP_FAILED)
 		return NULL;
-	_chunks[i].ptr = p;
-	_chunks[i].length = size;
 	return p;
-}
-
-void * _realloc(void * ptr, size_t size)
-{
-	if(mmap(ptr, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_FIXED,
-				-1, 0) == MAP_FAILED)
-		return NULL;
-	return ptr;
 }
 
 
 /* realloc */
 void * realloc(void * ptr, size_t size)
 {
-	size_t i;
-
-	if(ptr == NULL)
-		return malloc(size);
-	for(i = 0; i < _chunks_cnt; i++)
-		if(_chunks[i].ptr == ptr)
-			break;
-	if(i == _chunks_cnt)
-		return NULL; /* FIXME */
-	if(mmap(_chunks[i].ptr, size, PROT_READ | PROT_WRITE,
-				MAP_ANONYMOUS | MAP_FIXED, -1, 0) == MAP_FAILED)
+	if(size == 0 || size > 4096)
+	{
+		errno = ENOSYS;
 		return NULL;
-	_chunks[i].length = size;
+	}
 	return ptr;
 }
 
