@@ -1,3 +1,4 @@
+SUBDIRS	= kernel/linux kernel/netbsd
 TARGETS	= libc.a libc.so start.o
 PREFIX	= /usr/local
 DESTDIR	= 
@@ -13,7 +14,10 @@ MKDIR	= mkdir -p
 INSTALL	= install
 
 
-all: $(TARGETS)
+all: subdirs $(TARGETS)
+
+subdirs:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
 libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/statvfs.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o
 libc_CFLAGS = $(CFLAGSF) $(CFLAGS)
@@ -94,18 +98,23 @@ start.o: start.S
 	$(CC) $(start.o_CFLAGS) -c start.S
 
 clean:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
 	$(RM) $(libc_OBJS) $(start.o_OBJS)
 
-distclean: clean
+distclean:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
+	$(RM) $(libc_OBJS) $(start.o_OBJS)
 	$(RM) $(TARGETS)
 
 install: all
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 libc.a $(DESTDIR)$(LIBDIR)/libc.a
 	$(INSTALL) -m 0755 libc.so $(DESTDIR)$(LIBDIR)/libc.so
 
 uninstall:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
 	$(RM) $(DESTDIR)$(LIBDIR)/libc.a
 	$(RM) $(DESTDIR)$(LIBDIR)/libc.so
 
-.PHONY: all clean distclean install uninstall
+.PHONY: all subdirs clean distclean install uninstall
