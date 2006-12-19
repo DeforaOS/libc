@@ -83,7 +83,7 @@ _syscall6:
 	mov	0x04(%esp), %eax
 	push	%ebx
 	mov	%esp, %ebx
-	add	$0x08, %ebx
+	add	$0x0c, %ebx
 	int	$0x80
 	pop	%ebx
 	jmp	.errno
