@@ -49,6 +49,7 @@ struct itimespec
 
 
 /* functions */
+struct tm * localtime(time_t const * t);
 time_t time(time_t * t);
 
 #endif /* !LIBC_TIME_H */
