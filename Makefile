@@ -35,6 +35,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/sys/mman.c \
 		$(PACKAGE)-$(VERSION)/src/sys/stat.c \
 		$(PACKAGE)-$(VERSION)/src/sys/statvfs.c \
+		$(PACKAGE)-$(VERSION)/src/sys/time.c \
 		$(PACKAGE)-$(VERSION)/src/sys/times.c \
 		$(PACKAGE)-$(VERSION)/src/sys/utsname.c \
 		$(PACKAGE)-$(VERSION)/src/sys/wait.c \
@@ -42,9 +43,24 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/time.c \
 		$(PACKAGE)-$(VERSION)/src/unistd.c \
 		$(PACKAGE)-$(VERSION)/src/utime.c \
+		$(PACKAGE)-$(VERSION)/src/start.S \
 		$(PACKAGE)-$(VERSION)/src/Makefile \
 		$(PACKAGE)-$(VERSION)/src/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/common.h \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/i386/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/i386/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/i386/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/i386/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.h \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/project.conf \
 		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \
