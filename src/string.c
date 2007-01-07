@@ -192,9 +192,10 @@ char * strerror(int errnum)
 		{ EINVAL, einval },
 		{ EXDEV, "Cross-device link" }
 	};
+#define EXLAST EXDEV
 	unsigned int i;
 
-	for(i = 0; err[i].errno != EXDEV; i++)
+	for(i = 0; err[i].errno != EXLAST; i++)
 		if(err[i].errno == errnum)
 			return err[i].errmsg;
 	return einval;
@@ -205,6 +206,7 @@ char * strerror(int errnum)
 size_t strlen(char const * s)
 {
 	size_t len = 0;
+
 	while(*s++)
 		len++;
 	return len;

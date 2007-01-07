@@ -53,7 +53,8 @@ typedef id_t gid_t;
 #  define uid_t uid_t
 typedef id_t uid_t;
 # endif
-struct stat {
+struct stat
+{
 	dev_t st_dev;
 	ino_t st_ino;
 	mode_t st_mode;
@@ -104,14 +105,14 @@ struct stat {
 
 
 /* functions */
-int chmod(char const *, mode_t);
-int fchmod(int, mode_t);
-int fstat(int, struct stat *);
-int lstat(char const *, struct stat *);
+int chmod(char const * name, mode_t mode);
+int fchmod(int fd, mode_t mode);
+int fstat(int fd, struct stat * st);
+int lstat(char const * name, struct stat * st);
 int mkdir(char const * name, mode_t mode);
-int mkfifo(char const *, mode_t);
-int mknod(char const *, mode_t, dev_t);
-int stat(char const *, struct stat *);
+int mkfifo(char const * name, mode_t mode);
+int mknod(char const * name, mode_t mode, dev_t dev);
+int stat(char const * name, struct stat * st);
 mode_t umask(mode_t mask);
 
 #endif /* !LIBC_SYS_STAT_H */
