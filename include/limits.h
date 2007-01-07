@@ -12,4 +12,13 @@
 #  define NAME_MAX 256
 # endif
 
+/* numerical */
+/* FIXME architecture dependent */
+# ifndef LONG_MAX
+#  define LONG_MAX 0x7fffffff
+# endif
+# ifndef LONG_MIN
+#  define LONG_MIN (-0x7fffffff-1)
+# endif
+
 #endif /* !LIBC_LIMITS_H */
