@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -50,6 +50,7 @@ struct itimespec
 
 /* functions */
 struct tm * localtime(time_t const * t);
+int nanosleep(struct timespec * requested, struct timespec * remaining);
 time_t time(time_t * t);
 
 #endif /* !LIBC_TIME_H */

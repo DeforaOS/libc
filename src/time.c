@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -7,6 +7,11 @@
 #include "stdlib.h"
 #include "syscalls.h"
 #include "time.h"
+
+
+/* nanosleep */
+syscall2(int, nanosleep,struct timespec *, requested, struct timespec *,
+		remaining);
 
 
 /* time */

@@ -70,6 +70,7 @@
 # define SYS_lstat		__NR_lstat
 # define SYS_fstat		__NR_fstat
 # define SYS_uname		__NR_uname
+# define SYS_nanosleep		__NR_nanosleep
 # define SYS_chown		__NR_chown
 # define SYS_getcwd		__NR_getcwd
 # define SYS_vfork		__NR_vfork

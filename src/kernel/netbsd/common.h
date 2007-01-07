@@ -48,6 +48,7 @@
 #  define SYS_lstat		107
 #  define SYS_fstat		108
 #  define SYS_wait4		114
+#  define SYS_nanosleep		162
 #  define SYS_vfork		190
 #  define SYS_lchown		198
 #  define SYS_getuid		199
