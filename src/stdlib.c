@@ -8,6 +8,7 @@
 #include "string.h"
 #include "ctype.h"
 #include "errno.h"
+#include "limits.h"
 #include "stdio.h"
 #include "stdlib.h"
 
@@ -211,11 +212,36 @@ int setenv(char const * name, char const * value, int overwrite)
 
 
 /* strtol */
+static unsigned long _strtoul(char const * str, char ** endptr, int base,
+		int * neg);
 long strtol(char const * str, char ** endptr, int base)
 {
-	long ret = 0;
-	char const * p = str;
+	unsigned long ret;
 	int neg = 0;
+
+	ret = _strtoul(str, endptr, base, &neg);
+	if(neg != 0)
+	{
+		if(ret > (unsigned)LONG_MAX+1)
+		{
+			errno = ERANGE;
+			return LONG_MIN;
+		}
+		return -ret;
+	}
+	if(ret > LONG_MAX)
+	{
+		errno = ERANGE;
+		return LONG_MAX;
+	}
+	return ret;
+}
+
+static unsigned long _strtoul(char const * str, char ** endptr, int base,
+		int * neg)
+{
+	unsigned long ret = 0;
+	char const * p = str;
 	int r;
 
 	if(base > 36 || base < 0 || base == 1)
@@ -231,16 +257,18 @@ long strtol(char const * str, char ** endptr, int base)
 		errno = ERANGE;
 		return 0;
 	}
-	if(*p == '+' || *p == '-')
-		if(*(p++) == '-')
-			neg = 1;
+	if((*p == '+' || *p == '-') && *(p++) == '-' && neg != NULL)
+		*neg = 1;
 	if(base == 0)
 	{
 		if(*p == '0')
 		{
 			p++;
 			if(*p == 'x' || *p == 'X')
+			{
+				p++;
 				base = 16;
+			}
 			else
 				base = 8;
 		}
@@ -256,19 +284,26 @@ long strtol(char const * str, char ** endptr, int base)
 	for(; *p != '\0'; p++)
 	{
 		ret *= base;
-		r = (*p) - '0';
-		if(r >= 0 && r < min(10, base))
-			r = *p - '0';
+		if(*p >= '0' && *p - '0' < min(10, base))
+			ret += *p - '0';
 		else if(base > 10 && (((r = (*p) - 'a') >= 0 && r < 26)
-				|| ((r = (*p) - 'A') >= 0 && r < 26)))
-			r+=10;
+				|| ((r = (*p) - 'A') >= 0 && r < 26))
+				&& r < base - 10)
+			ret += r + 10;
 		else
 			break;
-		ret+=r;
+		/* FIXME add integer overflow detection code */
 	}
 	if(endptr != NULL)
 		*endptr = p;
-	return neg == 0 ? ret : -ret;
+	return ret;
+}
+
+
+/* strtoul */
+unsigned long strtoul(char const * str, char ** endptr, int base)
+{
+	return _strtoul(str, endptr, base, NULL);
 }
 
 

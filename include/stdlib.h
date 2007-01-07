@@ -20,6 +20,7 @@ void * malloc(size_t size);
 void * realloc(void * ptr, size_t size);
 int setenv(char const * name, char const * value, int overwrite);
 long strtol(char const * str, char ** endptr, int base);
+unsigned long strtoul(char const * str, char ** endptr, int base);
 int unsetenv(char const * name);
 
 #endif /* !LIBC_STDLIB_H */
