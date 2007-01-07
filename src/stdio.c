@@ -197,7 +197,11 @@ int fprintf(FILE * file, char const * format, ...)
 /* fputc */
 int fputc(int c, FILE * file)
 {
-	return fwrite(&c, sizeof(char), 1, file);
+	unsigned char p = c;
+
+	if(fwrite(&p, sizeof(char), 1, file) != 1)
+		return EOF;
+	return p;
 }
 
 
