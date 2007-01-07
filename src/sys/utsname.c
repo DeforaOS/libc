@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -8,6 +8,6 @@
 
 
 /* uname */
-#ifndef __NetBSD__
+#if !defined(__NetBSD__) || defined(NETBSD_USE_LINUX_EMULATION)
 syscall1(int, uname, struct utsname *, utsname);
 #endif
