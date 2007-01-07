@@ -205,6 +205,12 @@ void * realloc(void * ptr, size_t size)
 /* setenv */
 int setenv(char const * name, char const * value, int overwrite)
 {
+	if(getenv(name) != NULL)
+	{
+		if(overwrite == 0)
+			return 0;
+		unsetenv(name);
+	}
 	/* FIXME implement */
 	errno = ENOSYS;
 	return -1;
@@ -241,7 +247,7 @@ static unsigned long _strtoul(char const * str, char ** endptr, int base,
 		int * neg)
 {
 	unsigned long ret = 0;
-	char const * p = str;
+	char const * p;
 	int r;
 
 	if(base > 36 || base < 0 || base == 1)
