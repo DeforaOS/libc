@@ -1,11 +1,12 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
 #include "sys/types.h"
 #include "syscalls.h"
 #include "stddef.h"
+#include "time.h"
 #include "unistd.h"
 #include "inttypes.h"
 
@@ -228,6 +229,17 @@ syscall0(pid_t, setsid);
 
 /* setuid */
 syscall1(int, setuid, uid_t, uid);
+
+
+/* sleep */
+unsigned int sleep(unsigned int seconds)
+{
+	struct timespec ts = { seconds, 0 };
+
+	if(nanosleep(&ts, &ts) == 0)
+		return 0;
+	return ts.tv_sec;
+}
 
 
 /* symlink */

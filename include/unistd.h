@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -101,6 +101,8 @@ int setreuid(uid_t ruid, uid_t euid);
 pid_t setsid(void);
 
 int setuid(uid_t uid);
+
+unsigned int sleep(unsigned int seconds);
 
 int symlink(char const * from, char const * to);
 void sync(void);
