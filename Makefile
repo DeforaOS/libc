@@ -43,6 +43,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/time.c \
 		$(PACKAGE)-$(VERSION)/src/unistd.c \
 		$(PACKAGE)-$(VERSION)/src/utime.c \
+		$(PACKAGE)-$(VERSION)/src/utmpx.c \
 		$(PACKAGE)-$(VERSION)/src/start.S \
 		$(PACKAGE)-$(VERSION)/src/Makefile \
 		$(PACKAGE)-$(VERSION)/src/syscalls.h \

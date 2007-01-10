@@ -19,7 +19,7 @@ all: subdirs $(TARGETS)
 subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
-libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o
+libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o utmpx.o
 libc_CFLAGS = $(CFLAGSF) $(CFLAGS)
 
 libc.a: $(libc_OBJS)
@@ -34,7 +34,7 @@ start.o: start.S
 ctype.o: ctype.c
 	$(CC) $(libc_CFLAGS) -c ctype.c
 
-dirent.o: dirent.c
+dirent.o: dirent.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c dirent.c
 
 errno.o: errno.c
@@ -58,7 +58,7 @@ signal.o: signal.c syscalls.h
 stdlib.o: stdlib.c
 	$(CC) $(libc_CFLAGS) -c stdlib.c
 
-stdio.o: stdio.c
+stdio.o: stdio.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c stdio.c
 
 string.o: string.c
@@ -73,7 +73,7 @@ sys/stat.o: sys/stat.c syscalls.h
 sys/statvfs.o: sys/statvfs.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/statvfs.c -o sys/statvfs.o
 
-sys/time.o: sys/time.c
+sys/time.o: sys/time.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/time.c -o sys/time.o
 
 sys/times.o: sys/times.c syscalls.h
@@ -96,6 +96,9 @@ unistd.o: unistd.c syscalls.h
 
 utime.o: utime.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c utime.c
+
+utmpx.o: utmpx.c
+	$(CC) $(libc_CFLAGS) -c utmpx.c
 
 start.o: start.S
 	$(CC) $(start.o_CFLAGS) -c start.S
