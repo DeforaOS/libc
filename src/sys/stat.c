@@ -34,6 +34,10 @@ int mkfifo(char const * path, mode_t mode)
 #endif
 
 
+/* mknod */
+syscall3(int, mknod, char const *, path, mode_t, mode, dev_t, dev);
+
+
 /* stat */
 syscall2(int, stat, char const *, filename, struct stat *, buf);
 
