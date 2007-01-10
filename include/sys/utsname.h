@@ -24,4 +24,4 @@ struct utsname
 /* functions */
 int uname(struct utsname * name);
 
-#endif /* LIBC_SYS_UTSNAME_H */
+#endif /* !LIBC_SYS_UTSNAME_H */
