@@ -34,6 +34,11 @@
 	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4) \
 	{ return (type) _syscall4(SYS_ ## name, (int)arg1, (int)arg2, \
 			(int)arg3, (int)arg4); }
+# define syscall5(type, name, type1, arg1, type2, arg2, type3, arg3, \
+		type4, arg4, type5, arg5) \
+	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5) \
+	{ return (type) _syscall5(SYS_ ## name, (int)arg1, (int)arg2, \
+			(int)arg3, (int)arg4, (int)arg5); }
 # define syscall6(type, name, type1, arg1, type2, arg2, type3, arg3, \
 		type4, arg4, type5, arg5, type6, arg6) \
 	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5, \
@@ -48,6 +53,8 @@ extern int _syscall1(int name, int arg1);
 extern int _syscall2(int name, int arg1, int arg2);
 extern int _syscall3(int name, int arg1, int arg2, int arg3);
 extern int _syscall4(int name, int arg1, int arg2, int arg3, int arg4);
+extern int _syscall5(int name, int arg1, int arg2, int arg3, int arg4,
+		int arg5);
 extern int _syscall6(int name, int arg1, int arg2, int arg3, int arg4, int arg5,
 		int arg6);
 

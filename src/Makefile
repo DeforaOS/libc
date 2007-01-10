@@ -19,7 +19,7 @@ all: subdirs $(TARGETS)
 subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
-libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o utmpx.o
+libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o utmpx.o
 libc_CFLAGS = $(CFLAGSF) $(CFLAGS)
 
 libc.a: $(libc_OBJS)
@@ -66,6 +66,9 @@ string.o: string.c
 
 sys/mman.o: sys/mman.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/mman.c -o sys/mman.o
+
+sys/select.o: sys/select.c syscalls.h
+	$(CC) $(libc_CFLAGS) -c sys/select.c -o sys/select.o
 
 sys/stat.o: sys/stat.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/stat.c -o sys/stat.o

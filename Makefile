@@ -33,6 +33,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/stdio.c \
 		$(PACKAGE)-$(VERSION)/src/string.c \
 		$(PACKAGE)-$(VERSION)/src/sys/mman.c \
+		$(PACKAGE)-$(VERSION)/src/sys/select.c \
 		$(PACKAGE)-$(VERSION)/src/sys/stat.c \
 		$(PACKAGE)-$(VERSION)/src/sys/statvfs.c \
 		$(PACKAGE)-$(VERSION)/src/sys/time.c \

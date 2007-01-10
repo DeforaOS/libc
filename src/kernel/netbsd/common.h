@@ -42,6 +42,7 @@
 # define SYS_setpgid		82
 # define SYS_dup2		90
 # define SYS_fcntl		92
+# define SYS_select		93
 # define SYS_gettimeofday	116
 # define SYS_setreuid		126
 # define SYS_setregid		127
