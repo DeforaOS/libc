@@ -16,4 +16,3 @@ _syscall6:
 	int	$0x80
 	push	%ecx
 	ret
-#endif
