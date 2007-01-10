@@ -9,43 +9,73 @@ _syscall0:
 	jmp	.errno
 
 _syscall1:
-	mov	0x08(%esp), %ebx
 	mov	0x04(%esp), %eax
+	push	%ebx
+	mov	0x0c(%esp), %ebx
 	int	$0x80
+	pop	%ebx
 	jmp	.errno
 
 _syscall2:
-	mov	0x0c(%esp), %ecx
-	mov	0x08(%esp), %ebx
 	mov	0x04(%esp), %eax
+	push	%ebx
+	push	%ecx
+	mov	0x10(%esp), %ebx
+	mov	0x14(%esp), %ecx
 	int	$0x80
+	pop	%ecx
+	pop	%ebx
 	jmp	.errno
 
 _syscall3:
-	mov	0x10(%esp), %edx
-	mov	0x0c(%esp), %ecx
-	mov	0x08(%esp), %ebx
 	mov	0x04(%esp), %eax
+	push	%ebx
+	push	%ecx
+	push	%edx
+	mov	0x14(%esp), %ebx
+	mov	0x18(%esp), %ecx
+	mov	0x1c(%esp), %edx
 	int	$0x80
+	pop	%edx
+	pop	%ecx
+	pop	%ebx
 	jmp	.errno
 
 _syscall4:
-	mov	0x14(%esp), %esi
-	mov	0x10(%esp), %edx
-	mov	0x0c(%esp), %ecx
-	mov	0x80(%esp), %ebx
 	mov	0x04(%esp), %eax
+	push	%ebx
+	push	%ecx
+	push	%edx
+	push	%esi
+	mov	0x18(%esp), %ebx
+	mov	0x1c(%esp), %ecx
+	mov	0x20(%esp), %edx
+	mov	0x24(%esp), %esi
 	int	$0x80
+	pop	%esi
+	pop	%edx
+	pop	%ecx
+	pop	%ebx
 	jmp	.errno
 
 _syscall5:
-	mov	0x18(%esp), %edi
-	mov	0x14(%esp), %esi
-	mov	0x10(%esp), %edx
-	mov	0x0c(%esp), %ecx
-	mov	0x08(%esp), %ebx
 	mov	0x04(%esp), %eax
+	push	%ebx
+	push	%ecx
+	push	%edx
+	push	%esi
+	push	%edi
+	mov	0x1c(%esp), %ebx
+	mov	0x20(%esp), %ecx
+	mov	0x24(%esp), %edx
+	mov	0x28(%esp), %esi
+	mov	0x2c(%esp), %edi
 	int	$0x80
+	pop	%edi
+	pop	%esi
+	pop	%edx
+	pop	%ecx
+	pop	%ebx
 	jmp	.errno
 
 _syscall6:
