@@ -26,6 +26,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/errno.c \
 		$(PACKAGE)-$(VERSION)/src/fcntl.c \
 		$(PACKAGE)-$(VERSION)/src/grp.c \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/compat.c \
 		$(PACKAGE)-$(VERSION)/src/libgen.c \
 		$(PACKAGE)-$(VERSION)/src/pwd.c \
 		$(PACKAGE)-$(VERSION)/src/signal.c \

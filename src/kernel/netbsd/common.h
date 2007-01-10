@@ -53,6 +53,7 @@
 # define SYS_setegid		182
 # define SYS_seteuid		183
 # define SYS_mmap		197
+# define SYS_sysctl		202
 # define SYS_nanosleep		240
 # define SYS_rename		270
 # define SYS_lchmod		274
