@@ -8,6 +8,6 @@
 
 
 /* uname */
-#if !defined(__NetBSD__) || defined(NETBSD_USE_LINUX_EMULATION)
+#ifdef SYS_uname
 syscall1(int, uname, struct utsname *, utsname);
 #endif

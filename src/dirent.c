@@ -63,6 +63,6 @@ DIR * opendir(char const * name)
 
 
 /* readdir */
-#if !defined(__NetBSD__) || defined(NETBSD_USE_LINUX_EMULATION)
+#ifdef SYS_readdir
 syscall1(struct dirent *, readdir, DIR *, dir);
 #endif

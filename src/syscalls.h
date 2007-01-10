@@ -11,7 +11,6 @@
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/common.h"
 # elif defined(__sun__)
-#  include "kernel/solaris/common.h"
 # else
 #  error Unsupported platform
 # endif

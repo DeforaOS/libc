@@ -3,7 +3,7 @@
 
 
 
-#if defined(NETBSD_USE_LINUX_EMULATION)
+/* FIXME really is linux code */
 _start:
 	pop	%ecx		/* argc */
 	mov	%esp, %ebx	/* argv */
@@ -26,4 +26,3 @@ _start:
 	push	%eax
 	call	exit
 	hlt
-#endif
