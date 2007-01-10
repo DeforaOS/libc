@@ -18,6 +18,7 @@
 # define SYS_unlink		10
 # define SYS_execve		11
 # define SYS_chdir		12
+# define SYS_mknod		14
 # define SYS_chmod		15
 # define SYS_getpid		20
 # define SYS_alarm		27
