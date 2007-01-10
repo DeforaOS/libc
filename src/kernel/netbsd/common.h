@@ -46,6 +46,7 @@
 # define SYS_gettimeofday	116
 # define SYS_setreuid		126
 # define SYS_setregid		127
+# define SYS_mkfifo		132
 # define SYS_mkdir		136
 # define SYS_rmdir		137
 # define SYS_setsid		147
