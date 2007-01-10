@@ -26,6 +26,7 @@
 # define SYS_nice		34
 # define SYS_sync		36
 # define SYS_kill		37
+# define SYS_rename		38
 # define SYS_mkdir		39
 # define SYS_rmdir		40
 # define SYS_dup		41
