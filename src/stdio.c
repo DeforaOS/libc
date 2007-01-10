@@ -7,9 +7,10 @@
 #include "fcntl.h"
 #include "unistd.h"
 #include "stdlib.h"
-#include "stdio.h"
 #include "stdarg.h"
 #include "string.h"
+#include "syscalls.h"
+#include "stdio.h"
 
 #define min(a, b) ((a) > (b) ? (b) : (a))
 
@@ -321,6 +322,10 @@ int puts(char const * string)
 	fputc('\n', stdout);
 	return i;
 }
+
+
+/* rename */
+syscall2(int, rename, char const *, from, char const *, to);
 
 
 /* snprintf */

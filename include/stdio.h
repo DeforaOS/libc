@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -53,6 +53,7 @@ void perror(char const * s);
 int printf(char const * format, ...);
 int putchar(int c);
 int puts(char const * string);
+int rename(char const * from, char const * to);
 int snprintf(char * str, size_t size, char const * format, ...);
 int sprintf(char * str, char const * format, ...);
 int vfprintf(FILE * file, char const * format, va_list arg);
