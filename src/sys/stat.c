@@ -26,6 +26,11 @@ syscall2(int, mkdir, char const *, name, mode_t, mode);
 /* mkfifo */
 #ifdef SYS_mkfifo
 syscall2(int, mkfifo, char const *, path, mode_t, mode);
+#else
+int mkfifo(char const * path, mode_t mode)
+{
+	return mknod(path, mode | S_IFIFO, 0);
+}
 #endif
 
 
