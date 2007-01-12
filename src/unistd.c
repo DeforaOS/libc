@@ -4,11 +4,12 @@
 
 
 #include "sys/types.h"
-#include "syscalls.h"
+#include "inttypes.h"
 #include "stddef.h"
 #include "time.h"
+#include "errno.h"
+#include "syscalls.h"
 #include "unistd.h"
-#include "inttypes.h"
 
 
 /* variables */
@@ -24,13 +25,13 @@ syscall2(int, access, char const *, filename, int, mode);
 
 
 /* alarm */
-#ifndef __NetBSD__
+#ifndef SYS_alarm
 syscall1(unsigned int, alarm, unsigned int, seconds);
 #endif
 
 
 /* brk */
-#ifndef __NetBSD__
+#ifndef SYS_brk
 syscall1(int, brk, void *, end_data_segment);
 #endif
 
@@ -99,53 +100,41 @@ syscall0(gid_t, getgid);
 /* getopt */
 int getopt(int argc, char * const argv[], char const * optstring)
 {
-	static char const * p = NULL;
-	static int8_t flag = 1;
-	int i;
+	static char * const * oldargv = NULL;
+	static int i = 0;
+	size_t j;
 
-	if(flag)
+	if(argv == NULL)
 	{
-		flag = 0;
-		p = *argv;
-	}
-	optarg = NULL;
-	optopt = '?';
-	if(argv[optind] == NULL || *argv[optind] != '-'
-			|| *(argv[optind]+1) == '\0')
-		return -1;
-	if(*(argv[optind]+1) == '-' && *(argv[optind]+2) == '\0')
-	{
-		optind++;
+		errno = EINVAL;
 		return -1;
 	}
-	if(*p == '\0')
+	if(argv != oldargv) /* reset state */
 	{
-		optind++;
-		if(optind >= argc || argv[optind][0] != '-')
+		optind = 1;
+		optarg = NULL;
+		optopt = -1;
+		oldargv = argv;
+		i = 0;
+	}
+	if(optind == argc) /* there is nothing to parse */
+		return -1;
+	if(argv[optind][++i] == '\0')
+	{
+		if(++optind == argc) /* every argument contained options */
 			return -1;
-		p = argv[optind]+1;
+		if(argv[optind][0] != '-' /* argument contains no options */
+				|| argv[optind][1] == '\0')
+			return -1;
+		i = 1;
 	}
-	for(i = 0; optstring[i] != '\0'; i++)
-	{
-		if(optstring[i] == ':')
-			continue;
-		if(optstring[i] == *p)
-			break;
-	}
-	if(optstring[i] != *p)
-	{
-		p++;
-		return '?';
-	}
-	p++;
-	if(optstring[i+1] == ':')
-	{
-		if(*p != '\0' || optind+1 >= argc)
-			return '?';
-		optarg = (char*)argv[++optind];
-		return optstring[i];
-	}
-	return optstring[i];
+	optopt = '?';
+	for(j = 0; optstring[j] != '\0' && argv[optind][i] != optstring[j];
+			j++);
+	if(optstring[j] == '\0')
+		return optopt;
+	optopt = optstring[j];
+	return optopt;
 }
 
 
@@ -203,6 +192,7 @@ syscall1(int, rmdir, char const *, filename);
 /* sbrk */
 void * sbrk(unsigned int increment) /* FIXME */
 {
+	errno = ENOSYS;
 	return NULL;
 }
 
