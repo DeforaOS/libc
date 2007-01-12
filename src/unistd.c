@@ -14,7 +14,9 @@
 
 /* variables */
 char * optarg = NULL;
-int optind = 1, opterr, optopt = '?';
+int optind = 1;
+int opterr = 1;
+int optopt = -1;
 
 char ** environ;
 
@@ -118,7 +120,8 @@ int getopt(int argc, char * const argv[], char const * optstring)
 		oldargv = argv;
 		i = 0;
 	}
-	if(optind == argc) /* there is nothing to parse */
+	if(optind == argc || (i == 0 && argv[optind][0] != '-'))
+		/* there is nothing to parse */
 		return -1;
 	if(argv[optind][++i] == '\0')
 	{
@@ -129,19 +132,37 @@ int getopt(int argc, char * const argv[], char const * optstring)
 			return -1;
 		i = 1;
 	}
-	optopt = '?';
-	for(j = 0; optstring[j] != '\0' && argv[optind][i] != optstring[j];
-			j++);
+	optopt = argv[optind][j];
+	for(j = 0; optstring[j] != '\0'; j++)
+	{
+		if(optstring[j] == ':')
+			continue;
+		if(optopt == optstring[j])
+			break;
+	}
 	if(optstring[j] == '\0')
-		return optopt;
-	optopt = optstring[j];
+		return optstring[0] != ':' ? '?' : ':';
+	if(optstring[j+1] == ':')
+	{
+		if(argv[optind][i+1] != '\0')
+		{
+			optarg = &argv[optind][i+1];
+			optind++;
+			i = 0;
+			return optopt;
+		}
+		optarg = argv[optind+1];
+		optind+=2;
+		i = 0;
+	}
 	return optopt;
 }
 
 static void _getopt_reset(void)
 {
-	optind = 1;
 	optarg = NULL;
+	optind = 1;
+	opterr = 1;
 	optopt = -1;
 }
 
