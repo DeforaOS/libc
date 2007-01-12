@@ -125,11 +125,17 @@ int getopt(int argc, char * const argv[], char const * optstring)
 		return -1;
 	if(argv[optind][++i] == '\0')
 	{
-		if(++optind == argc) /* every argument contained options */
+		if(++optind == argc) /* every argument had options */
 			return -1;
-		if(argv[optind][0] != '-' /* argument contains no options */
+		if(argv[optind][0] != '-' /* next argument has no options */
 				|| argv[optind][1] == '\0')
 			return -1;
+		if(argv[optind][0] == '-' && argv[optind][1] == '-'
+				&& argv[optind][2] == '\0') /* "--" stops */
+		{
+			optind++;
+			return -1;
+		}
 		i = 1;
 	}
 	optopt = argv[optind][j];
