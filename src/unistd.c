@@ -98,6 +98,8 @@ syscall0(gid_t, getgid);
 
 
 /* getopt */
+static void _getopt_reset(void);
+
 int getopt(int argc, char * const argv[], char const * optstring)
 {
 	static char * const * oldargv = NULL;
@@ -106,14 +108,13 @@ int getopt(int argc, char * const argv[], char const * optstring)
 
 	if(argv == NULL)
 	{
+		_getopt_reset();
 		errno = EINVAL;
 		return -1;
 	}
 	if(argv != oldargv) /* reset state */
 	{
-		optind = 1;
-		optarg = NULL;
-		optopt = -1;
+		_getopt_reset();
 		oldargv = argv;
 		i = 0;
 	}
@@ -135,6 +136,13 @@ int getopt(int argc, char * const argv[], char const * optstring)
 		return optopt;
 	optopt = optstring[j];
 	return optopt;
+}
+
+static void _getopt_reset(void)
+{
+	optind = 1;
+	optarg = NULL;
+	optopt = -1;
 }
 
 
