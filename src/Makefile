@@ -4,6 +4,7 @@ PREFIX	= /usr/local
 DESTDIR	= 
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
+CPPFLAGS=
 CFLAGSF	= -W -I ../include
 CFLAGS	= -Wall -nostdinc -fPIC -g -ansi
 AR	= ar -rc
@@ -20,7 +21,7 @@ subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
 libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o kernel/netbsd/compat.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o utmpx.o
-libc_CFLAGS = $(CFLAGSF) $(CFLAGS)
+libc_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 
 libc.a: $(libc_OBJS)
 	$(AR) libc.a $(libc_OBJS)
@@ -30,7 +31,7 @@ libc.so: $(libc_OBJS)
 	$(LD) -o libc.so $(libc_OBJS)
 
 start.o_OBJS = start.o
-start.o_CFLAGS = $(CFLAGSF) $(CFLAGS)
+start.o_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 
 ctype.o: ctype.c
 	$(CC) $(libc_CFLAGS) -c ctype.c

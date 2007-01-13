@@ -57,13 +57,22 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/i386/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/i386/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/i386/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.h \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sys/sysctl.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc/project.conf \
 		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \
