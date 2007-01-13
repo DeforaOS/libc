@@ -27,13 +27,13 @@ syscall2(int, access, char const *, filename, int, mode);
 
 
 /* alarm */
-#ifndef SYS_alarm
+#ifdef SYS_alarm
 syscall1(unsigned int, alarm, unsigned int, seconds);
 #endif
 
 
 /* brk */
-#ifndef SYS_brk
+#ifdef SYS_brk
 syscall1(int, brk, void *, end_data_segment);
 #endif
 
@@ -82,7 +82,7 @@ syscall0(pid_t, fork);
 
 
 /* getcwd */
-#ifndef __NetBSD__
+#ifdef SYS_getcwd
 syscall2(char *, getcwd, char *, buf, size_t, size);
 #endif
 
@@ -202,7 +202,7 @@ syscall2(int, link, char const *, from, char const *, to);
 
 
 /* nice */
-#ifndef __NetBSD__
+#ifdef SYS_nice
 syscall1(int, nice, int, inc);
 #endif
 
