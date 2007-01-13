@@ -22,6 +22,8 @@
 # include "kernel/netbsd/common.h"
 # if defined(__i386__)
 #  include "kernel/netbsd/i386/syscalls.S"
+# elif defined(__sparc__)
+#  include "kernel/netbsd/sparc/syscalls.S"
 # else
 #  warning Unsupported NetBSD architecture
 # endif
