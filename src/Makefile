@@ -29,7 +29,8 @@ libc.a: $(libc_OBJS)
 libc.so: $(libc_OBJS)
 	$(LD) -o libc.so $(libc_OBJS)
 
-start.o: start.S
+start.o_OBJS = start.o
+start.o_CFLAGS = $(CFLAGSF) $(CFLAGS)
 
 ctype.o: ctype.c
 	$(CC) $(libc_CFLAGS) -c ctype.c
