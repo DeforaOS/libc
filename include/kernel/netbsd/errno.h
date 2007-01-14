@@ -10,6 +10,7 @@
 /* constants */
 # define E2BIG		7
 # define EBADF		9
+# define ENOMEM		12
 # define EACCES		13
 # define EXDEV		18
 # define ENOTDIR	20

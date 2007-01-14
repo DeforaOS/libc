@@ -182,15 +182,19 @@ char * strdup(char const * s)
 char * strerror(int errnum)
 {
 	static char einval[] = "Invalid argument";
-	struct {
+	struct
+	{
 		int errno;
 		char * errmsg;
-	} err[] = {
-		{ 0, "Success" },
-		{ E2BIG, "Argument list too long" },
-		{ EACCES, "Permission denied" },
-		{ EINVAL, einval },
-		{ EXDEV, "Cross-device link" }
+	} err[] =
+	{
+		{ 0,		"Success"		},
+		{ E2BIG,	"Argument list too long"},
+		{ EACCES,	"Permission denied"	},
+		{ EINVAL,	einval			},
+		{ ENOMEM,	"Not enough memory"	},
+		{ ENOSYS,	"Not implemented"	},
+		{ EXDEV,	"Cross-device link"	}
 	};
 #define EXLAST EXDEV
 	unsigned int i;
