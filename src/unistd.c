@@ -135,7 +135,7 @@ int getopt(int argc, char * const argv[], char const * optstring)
 		}
 		i = 1;
 	}
-	optopt = argv[optind][j];
+	optopt = argv[optind][i];
 	for(j = 0; optstring[j] != '\0'; j++)
 	{
 		if(optstring[j] == ':')
