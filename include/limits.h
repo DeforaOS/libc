@@ -14,6 +14,9 @@
 
 /* numerical */
 /* FIXME architecture dependent */
+# ifndef INT_MAX
+#  define INT_MAX 0x7fffffff
+# endif
 # ifndef LONG_MAX
 #  define LONG_MAX 0x7fffffff
 # endif

@@ -6,9 +6,10 @@
 #include "errno.h"
 #include "fcntl.h"
 #include "unistd.h"
-#include "stdlib.h"
 #include "stdarg.h"
+#include "stdlib.h"
 #include "string.h"
+#include "limits.h"
 #include "syscalls.h"
 #include "stdio.h"
 
@@ -289,8 +290,8 @@ void perror(char const * s)
 /* printf */
 int printf(char const * format, ...)
 {
-	va_list arg;
 	int ret;
+	va_list arg;
 
 	va_start(arg, format);
 	ret = vfprintf(stdout, format, arg);
@@ -316,11 +317,13 @@ int putchar(int c)
 /* puts */
 int puts(char const * string)
 {
-	int i = strlen(string);
-
-	fwrite(string, sizeof(char), i, stdout);
+	size_t i;
+	
+	i = strlen(string);
+	if(fwrite(string, sizeof(char), i, stdout) != i)
+		return EOF;
 	fputc('\n', stdout);
-	return i;
+	return i <= INT_MAX ? i : INT_MAX;
 }
 
 
@@ -359,6 +362,7 @@ typedef int (*print_func)(void * dest, size_t size, char const buf[]);
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg);
 static int _fprint(void * dest, size_t size, char const buf[]);
+
 int vfprintf(FILE * file, char const * format, va_list arg)
 {
 	size_t len = -1;
