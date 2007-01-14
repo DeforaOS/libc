@@ -283,7 +283,8 @@ void perror(char const * s)
 {
 	if(s != NULL && *s != '\0')
 		fprintf(stderr, "%s%s", s, ": ");
-	fprintf(stderr, "%s%s", strerror(errno), "\n");
+	fputs(strerror(errno), stderr);
+	fputc('\n', stderr);
 }
 
 
