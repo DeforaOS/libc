@@ -102,6 +102,21 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/utime.h \
 		$(PACKAGE)-$(VERSION)/include/project.conf \
+		$(PACKAGE)-$(VERSION)/include/compat/Makefile \
+		$(PACKAGE)-$(VERSION)/include/compat/errno.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/compat/project.conf \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/errno.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/project.conf \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/errno.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/project.conf
 	$(RM) $(PACKAGE)-$(VERSION)
