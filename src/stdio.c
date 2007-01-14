@@ -186,8 +186,8 @@ static int _fopen_mode(char const * mode)
 /* fprintf */
 int fprintf(FILE * file, char const * format, ...)
 {
-	va_list arg;
 	int ret;
+	va_list arg;
 
 	va_start(arg, format);
 	ret = vfprintf(file, format, arg);
