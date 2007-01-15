@@ -15,9 +15,13 @@ typedef void * va_list;
 
 
 /* macros */
-# define va_start(ap, arg) (ap) = ((char*)&arg) + 4
-# define va_arg(ap, type) ((ap) += sizeof(type), \
+# ifdef __i386__
+#  define va_start(ap, arg) (ap) = ((char*)&arg) + 4
+#  define va_arg(ap, type) ((ap) += sizeof(type), \
 		*(type*)((void*)ap - sizeof(type)))
-# define va_end(ap)
+#  define va_end(ap)
+# else
+#  warning Unsupported architecture
+# endif
 
 #endif /* !LIBC_STDARG_H */
