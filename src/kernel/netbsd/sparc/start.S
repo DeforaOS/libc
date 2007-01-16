@@ -46,3 +46,16 @@ _start:
 .umul:
 	ret
 	umulcc	%o0, %o1, %o0
+
+
+/* other essential sections */
+.section ".note.netbsd.ident", "a"
+	.p2align 2
+
+	.long	7
+	.long	4
+	.long	1
+	.ascii	"NetBSD\0\0"
+	.long	300000000
+	.previous
+	.p2align 2
