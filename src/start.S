@@ -3,13 +3,15 @@
 
 
 
-.text
+.section .text
+
+
+/* _start */
 .global _start
 
 
 /* Linux */
 #if defined(__linux__)
-# include "kernel/linux/common.h"
 # if defined(__i386__)
 #  include "kernel/linux/i386/start.S"
 # elif defined(__sparc__)
@@ -20,7 +22,6 @@
 
 /* NetBSD */
 #elif defined(__NetBSD__)
-# include "kernel/netbsd/common.h"
 # if defined(__i386__)
 #  include "kernel/netbsd/i386/start.S"
 # elif defined(__sparc__)
@@ -28,6 +29,7 @@
 # else /* !__i386__ && !__sparc__ */
 #  warning Unsupported NetBSD architecture
 # endif
+# include "kernel/netbsd/start.S"
 
 /* Unknown */
 #else
