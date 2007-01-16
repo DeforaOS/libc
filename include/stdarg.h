@@ -22,6 +22,9 @@ typedef void * va_list;
 #  define va_end(ap)
 # else
 #  warning Unsupported architecture
+#  define va_start(ap, arg)
+#  define va_arg(ap, type) (type)(ap)
+#  define va_end(ap)
 # endif
 
 #endif /* !LIBC_STDARG_H */
