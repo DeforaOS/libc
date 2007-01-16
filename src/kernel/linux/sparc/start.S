@@ -4,23 +4,21 @@
 
 
 _start:
-	/* terminate the stack frame */
+	/* terminate stack */
 	mov	%g0, %fp
 	sub	%sp, 0x18, %sp
 
-	/* argc, argv */
+	/* argc, argv, arge, environ */
 	ld	[%sp+0x58], %o0		/* argc, really is [%sp+0x40] */
 	add	%sp, 0x5c, %o1		/* argv, really is [%sp+0x44] */
-
-	/* environ */
-	add	%o1, %o0, %o2
+	add	%o1, %o0, %o2		/* arge = 4 * (argv + argc + 1) */
 	add	%o2, %o0, %o2
 	add	%o2, %o0, %o2
 	add	%o2, %o0, %o2
-	add	%o2, 4, %o2
-	sethi	%hi(environ), %o3
+	add	%o2, 0x4, %o2
+	sethi	%hi(environ), %o3	/* %o3 = &environ */
 	or	%o3, %lo(environ), %o3
-	st	%o2, [%o3]		/* environ = [%o2] */
+	st	%o2, [%o3]		/* *environ = %o2 */
 
 	/* main */
 	call	main
@@ -28,8 +26,23 @@ _start:
 
 	/* exit */
 	call	exit
-	mov	%o0, %i0
+	mov	%i0, %o0
 
-	/* die */
+	/* crash */
 	ret
 	nop
+
+
+/* other essential functions */
+/* udiv */
+.global .udiv
+.udiv:
+	ret
+	udivcc	%o0, %o1, %o0
+
+
+/* umul */
+.global .umul
+.umul:
+	ret
+	umulcc	%o0, %o1, %o0
