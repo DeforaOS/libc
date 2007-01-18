@@ -11,8 +11,10 @@
 #  include "kernel/linux/errno.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/errno.h"
+# elif defined(__sun__)
+#  include "kernel/solaris/errno.h"
 # else
-#  error Unsupported platform
+#  warning Unsupported platform
 # endif
 
 #endif /* !LIBC_COMPAT_ERRNO_H */

@@ -8,5 +8,7 @@
 
 
 /* select */
+#ifdef SYS_select
 syscall5(int, select, int, fdcnt, fd_set *, rfds, fd_set *, wfds,
 		fd_set *, efds, struct timeval *, timeout);
+#endif /* !SYS_select */

@@ -8,16 +8,20 @@
 
 
 /* wait */
+#ifdef SYS_wait
+syscall1(pid_t, wait, int *, status);
+#else /* !SYS_wait */
 pid_t wait(int * status)
 {
 	return waitpid(-1, status, 0);
 }
+#endif
 
 
 /* waitpid */
-#ifdef SYS_waitpid
+#if defined(SYS_waitpid)
 syscall3(pid_t, waitpid, pid_t, pid, int *, status, int, options)
-#else
+#elif defined(SYS_wait4__)
 # include "stdlib.h"
 syscall4(pid_t, wait4, pid_t, pid, int *, status, int, options, void *, rusage)
 pid_t waitpid(pid_t pid, int * status, int options)

@@ -11,8 +11,10 @@
 #  include "kernel/linux/sys/utsname.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/utsname.h"
+# elif defined(__sun__)
+#  include "kernel/solaris/sys/utsname.h"
 # else
-#  error Unsupported platform
+#  warning Unsupported platform
 # endif
 
 #endif /* !LIBC_COMPAT_SYS_UTSNAME_H */

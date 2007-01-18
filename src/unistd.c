@@ -55,7 +55,9 @@ syscall1(int, dup, int, fildes);
 
 
 /* dup2 */
+#ifdef SYS_dup2
 syscall2(int, dup2, int, fildes1, int, fildes2);
+#endif /* SYS_dup2 */
 
 
 /* execve */
@@ -88,11 +90,15 @@ syscall2(char *, getcwd, char *, buf, size_t, size);
 
 
 /* getegid */
+#ifdef SYS_getegid
 syscall0(gid_t, getegid);
+#endif /* SYS_getegid */
 
 
 /* geteuid */
+#ifdef SYS_geteuid
 syscall0(uid_t, geteuid);
+#endif /* SYS_geteuid */
 
 
 /* getgid */
@@ -178,7 +184,9 @@ syscall0(pid_t, getpid);
 
 
 /* getppid */
+#ifdef SYS_getppid
 syscall0(pid_t, getppid);
+#endif /* SYS_getppid */
 
 
 /* getuid */
@@ -237,7 +245,9 @@ syscall1(int, setgid, gid_t, gid);
 
 
 /* setpgid */
+#ifdef SYS_setpgid
 syscall2(int, setpgid, pid_t, pid, pid_t, pgid);
+#endif /* SYS_setpgid */
 
 
 /* setregid */
@@ -249,7 +259,9 @@ syscall2(int, setreuid, uid_t, ruid, uid_t, euid);
 
 
 /* setsid */
+#ifdef SYS_setsid
 syscall0(pid_t, setsid);
+#endif /* SYS_setsid */
 
 
 /* setuid */

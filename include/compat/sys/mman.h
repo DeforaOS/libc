@@ -11,8 +11,10 @@
 #  include "kernel/linux/sys/mman.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/mman.h"
+# elif defined(__sun__)
+#  include "kernel/solaris/sys/mman.h"
 # else
-#  error Unsupported platform
+#  warning Unsupported platform
 # endif
 
 #endif /* !LIBC_COMPAT_SYS_MMAN_H */

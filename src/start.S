@@ -31,6 +31,14 @@
 # endif
 # include "kernel/netbsd/start.S"
 
+/* Solaris */
+#elif defined(__sun__)
+# if defined(__sparc__)
+#  include "kernel/solaris/sparc/start.S"
+# else
+#  warning Unsupported Solaris architecture
+# endif
+
 /* Unknown */
 #else
 # warning Unsupported kernel and architecture
