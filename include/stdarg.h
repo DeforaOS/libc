@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -20,7 +20,7 @@ typedef void * va_list;
 #  define va_arg(ap, type) ((ap) += sizeof(type), \
 		*(type*)((void*)ap - sizeof(type)))
 #  define va_end(ap)
-# else
+# else /* !__i386__ */
 #  warning Unsupported architecture
 #  define va_start(ap, arg)
 #  define va_arg(ap, type) (type)(ap)

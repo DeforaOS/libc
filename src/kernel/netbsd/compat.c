@@ -2,7 +2,7 @@
 
 
 
-#if defined(__NetBSD__) && !defined(__linux__)
+#if defined(__NetBSD__)
 # include "sys/sysctl.h"
 # include "../../syscalls.h"
 
