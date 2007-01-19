@@ -4,8 +4,7 @@
 
 
 .text
-.global _syscall0, _syscall1, _syscall2, _syscall3, _syscall4, _syscall5, \
-		_syscall6
+.global _syscall0, _syscall1, _syscall2, _syscall3, _syscall4, _syscall5, _syscall6
 
 
 /* Linux */
