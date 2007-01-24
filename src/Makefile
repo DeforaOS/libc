@@ -4,9 +4,11 @@ PREFIX	= /usr/local
 DESTDIR	= 
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
-CPPFLAGS=
-CFLAGSF	= -W -I ../include
-CFLAGS	= -Wall -nostdinc -fPIC -g -ansi
+CPPFLAGS= -I ../include -nostdinc
+CFLAGSF	= -W
+CFLAGS	= -Wall -fPIC -g -ansi
+AS	= $(CC)
+ASFLAGS	= $(CPPFLAGS) $(CFLAGS) -c
 AR	= ar -rc
 RANLIB	= ranlib
 LD	= ld -shared
@@ -32,7 +34,7 @@ libc.so: $(libc_OBJS)
 	$(LD) -o libc.so $(libc_OBJS)
 
 start.o_OBJS = start.o
-start.o_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+start.o_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
 
 ctype.o: ctype.c
 	$(CC) $(libc_CFLAGS) -c ctype.c
