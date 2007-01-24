@@ -15,7 +15,7 @@ typedef void * va_list;
 
 
 /* macros */
-# ifdef __i386__
+# if defined(__i386__)
 #  define va_start(ap, arg) (ap) = ((char*)&arg) + 4
 #  define va_arg(ap, type) ((ap) += sizeof(type), \
 		*(type*)((void*)ap - sizeof(type)))
