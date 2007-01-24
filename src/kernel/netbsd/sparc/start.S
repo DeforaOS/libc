@@ -16,8 +16,7 @@ _start:
 	add	%o2, %o0, %o2
 	add	%o2, %o0, %o2
 	add	%o2, 0x4, %o2
-	sethi	%hi(environ), %o3	/* %o3 = &environ */
-	or	%o3, %lo(environ), %o3
+	set	environ, %o3		/* %o3 = &environ */
 	st	%o2, [%o3]		/* *environ = %o2 */
 
 	/* main */

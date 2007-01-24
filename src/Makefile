@@ -8,7 +8,7 @@ CPPFLAGS= -I ../include -nostdinc
 CFLAGSF	= -W
 CFLAGS	= -Wall -fPIC -g -ansi
 AS	= $(CC)
-ASFLAGS	= $(CFLAGSF) $(CFLAGS) -c
+ASFLAGS	= -W -Wall -g -ansi -c
 AR	= ar -rc
 RANLIB	= ranlib
 LD	= ld -shared
@@ -97,7 +97,7 @@ sys/wait.o: sys/wait.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/wait.c -o sys/wait.o
 
 syscalls.o: syscalls.S kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S
-	$(AS) $(libc_ASFLAGS) -o syscalls.o syscalls.S
+	$(AS) $(libc_ASFLAGS) -fPIC -o syscalls.o syscalls.S
 
 time.o: time.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c time.c
