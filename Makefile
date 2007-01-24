@@ -73,6 +73,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/project.conf \
 		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \

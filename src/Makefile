@@ -111,7 +111,7 @@ utime.o: utime.c syscalls.h
 utmpx.o: utmpx.c
 	$(CC) $(libc_CFLAGS) -c utmpx.c
 
-start.o: start.S kernel/linux/i386/start.S kernel/linux/sparc/start.S kernel/netbsd/i386/start.S kernel/netbsd/sparc/start.S
+start.o: start.S kernel/linux/i386/start.S kernel/linux/sparc/start.S kernel/netbsd/i386/start.S kernel/netbsd/sparc64/start.S kernel/netbsd/sparc/start.S
 	$(AS) $(start.o_ASFLAGS) -o start.o start.S
 
 clean:

@@ -24,6 +24,8 @@
 #elif defined(__NetBSD__)
 # if defined(__i386__)
 #  include "kernel/netbsd/i386/start.S"
+# elif defined(__sparc64__)
+#  include "kernel/netbsd/sparc64/start.S"
 # elif defined(__sparc__)
 #  include "kernel/netbsd/sparc/start.S"
 # else /* !__i386__ && !__sparc__ */
