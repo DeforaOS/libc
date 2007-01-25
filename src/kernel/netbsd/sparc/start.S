@@ -11,10 +11,10 @@ _start:
 	/* %sp is 0xefffec48, argc is 0xefffec88, argv is 0xefffed3c */
 	ld	[%sp+0x40], %o0		/* argc */
 	add	%sp, 0x44, %o1		/* argv */
-	add	%o1, %o0, %o2		/* arge = 4 * (argv + argc + 1) */
-	add	%o2, %o0, %o2
-	add	%o2, %o0, %o2
-	add	%o2, %o0, %o2
+	add	%o0, %o1, %o2		/* arge = 4 * (argv + argc + 1) */
+	add	%o0, %o2, %o2
+	add	%o0, %o2, %o2
+	add	%o0, %o2, %o2
 	add	%o2, 0x4, %o2
 	set	environ, %o3		/* %o3 = &environ */
 	st	%o2, [%o3]		/* *environ = %o2 */
