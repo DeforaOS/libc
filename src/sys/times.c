@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -7,7 +7,5 @@
 #include "sys/times.h"
 
 
+/* functions */
 /* times */
-#ifndef __NetBSD__
-syscall1(clock_t, times, struct tms *, buf);
-#endif

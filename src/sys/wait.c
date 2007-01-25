@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -8,22 +8,18 @@
 
 
 /* wait */
-#ifdef SYS_wait
-syscall1(pid_t, wait, int *, status);
-#else /* !SYS_wait */
+#ifndef SYS_wait
 pid_t wait(int * status)
 {
 	return waitpid(-1, status, 0);
 }
-#endif
+#endif /* !SYS_wait */
 
 
 /* waitpid */
-#if defined(SYS_waitpid)
-syscall3(pid_t, waitpid, pid_t, pid, int *, status, int, options)
-#elif defined(SYS_wait4__)
+#if !defined(SYS_waitpid) && defined(SYS_wait4)
 # include "stdlib.h"
-syscall4(pid_t, wait4, pid_t, pid, int *, status, int, options, void *, rusage)
+pid_t wait4(pid_t pid, int * status, int options, void * rusage);
 pid_t waitpid(pid_t pid, int * status, int options)
 {
 	return wait4(pid, status, options, NULL);

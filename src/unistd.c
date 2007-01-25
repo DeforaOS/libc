@@ -23,46 +23,30 @@ char ** environ;
 
 /* functions */
 /* access */
-syscall2(int, access, char const *, filename, int, mode);
 
 
 /* alarm */
-#ifdef SYS_alarm
-syscall1(unsigned int, alarm, unsigned int, seconds);
-#endif
 
 
 /* brk */
-#ifdef SYS_brk
-syscall1(int, brk, void *, end_data_segment);
-#endif
 
 
 /* chdir */
-syscall1(int, chdir, char const *, filename);
 
 
 /* chown */
-syscall3(int, chown, char const *, filename, uid_t, owner, gid_t, group);
 
 
 /* close */
-syscall1(int, close, int, fildes);
 
 
 /* dup */
-syscall1(int, dup, int, fildes);
 
 
 /* dup2 */
-#ifdef SYS_dup2
-syscall2(int, dup2, int, fildes1, int, fildes2);
-#endif /* SYS_dup2 */
 
 
 /* execve */
-syscall3(int, execve, char const *, filename, char const **, argv,
-		char const **, envp);
 
 
 /* execvp */
@@ -73,36 +57,21 @@ int execvp(char const * filename, char const * argv[])
 
 
 /* _exit */
-void _exit(int status)
-{
-	_syscall1(SYS_exit, status);
-}
 
 
 /* fork */
-syscall0(pid_t, fork);
 
 
 /* getcwd */
-#ifdef SYS_getcwd
-syscall2(char *, getcwd, char *, buf, size_t, size);
-#endif
 
 
 /* getegid */
-#ifdef SYS_getegid
-syscall0(gid_t, getegid);
-#endif /* SYS_getegid */
 
 
 /* geteuid */
-#ifdef SYS_geteuid
-syscall0(uid_t, geteuid);
-#endif /* SYS_geteuid */
 
 
 /* getgid */
-syscall0(gid_t, getgid);
 
 
 /* getopt */
@@ -180,17 +149,12 @@ static void _getopt_reset(char * const ** oldargv, char * const * argv,
 
 
 /* getpid */
-syscall0(pid_t, getpid);
 
 
 /* getppid */
-#ifdef SYS_getppid
-syscall0(pid_t, getppid);
-#endif /* SYS_getppid */
 
 
 /* getuid */
-syscall0(uid_t, getuid);
 
 
 /* isatty */
@@ -202,34 +166,24 @@ int isatty(int fd)
 
 
 /* lchown */
-syscall3(int, lchown, char const *, filename, uid_t, owner, gid_t, group);
 
 
 /* link */
-syscall2(int, link, char const *, from, char const *, to);
 
 
 /* nice */
-#ifdef SYS_nice
-syscall1(int, nice, int, inc);
-#endif
 
 
 /* pipe */
-syscall1(int, pipe, int, filedes[2]);
 
 
 /* read */
-syscall3(ssize_t, read, int, fd, void *, buf, size_t, count);
 
 
 /* readlink */
-syscall3(ssize_t, readlink, char const *, filename, char *, buf,
-		size_t, bufsiz);
 
 
 /* rmdir */
-syscall1(int, rmdir, char const *, filename);
 
 
 /* sbrk */
@@ -241,31 +195,21 @@ void * sbrk(unsigned int increment) /* FIXME */
 
 
 /* setgid */
-syscall1(int, setgid, gid_t, gid);
 
 
 /* setpgid */
-#ifdef SYS_setpgid
-syscall2(int, setpgid, pid_t, pid, pid_t, pgid);
-#endif /* SYS_setpgid */
 
 
 /* setregid */
-syscall2(int, setregid, gid_t, rgid, gid_t, egid);
 
 
 /* setreuid */
-syscall2(int, setreuid, uid_t, ruid, uid_t, euid);
 
 
 /* setsid */
-#ifdef SYS_setsid
-syscall0(pid_t, setsid);
-#endif /* SYS_setsid */
 
 
 /* setuid */
-syscall1(int, setuid, uid_t, uid);
 
 
 /* sleep */
@@ -280,20 +224,15 @@ unsigned int sleep(unsigned int seconds)
 
 
 /* symlink */
-syscall2(int, symlink,char const *, from, char const *, to);
 
 
 /* sync */
-syscall0(void, sync);
 
 
 /* unlink */
-syscall1(int, unlink, char const *, filename);
 
 
 /* vfork */
-syscall0(pid_t, vfork);
 
 
 /* write */
-syscall3(ssize_t, write, int, fildes, void const *, buf, size_t, count);

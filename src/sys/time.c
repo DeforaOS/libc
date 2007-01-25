@@ -3,9 +3,8 @@
 
 
 
-#include "../syscalls.h"
 #include "sys/time.h"
 
 
 /* functions */
-syscall2(int, gettimeofday, struct timeval *, tv, void *, null);
+/* gettimeofday */

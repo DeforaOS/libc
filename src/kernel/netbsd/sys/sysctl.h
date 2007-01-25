@@ -1,9 +1,10 @@
 /* $Id$ */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
-#ifndef LIBC_KERNEL_NETBSD_SYS_SYSCTL_H
-# define LIBC_KERNEL_NETBSD_SYS_SYSCTL_H
+#ifndef KERNEL_NETBSD_SYS_SYSCTL_H
+# define KERNEL_NETBSD_SYS_SYSCTL_H
 
 
 /* types */
@@ -34,4 +35,4 @@ typedef unsigned int size_t;
 int sysctl(int * name, unsigned int namecnt, void * from, size_t * fromsize,
 		void * to, size_t tosize);
 
-#endif /* !LIBC_KERNEL_NETBSD_SYS_SYSCTL_H */
+#endif /* !KERNEL_NETBSD_SYS_SYSCTL_H */

@@ -1,15 +1,15 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
+#include "string.h"
 #include "../syscalls.h"
 #include "sys/statvfs.h"
-#include "string.h"
 
 
 /* statvfs */
-#ifdef SYS_statfs
+#if defined(SYS_statfs)
 typedef long fsid_t;
 struct statfs
 {
@@ -23,7 +23,7 @@ struct statfs
 	fsid_t f_fsid;
 	long f_namelen;
 };
-syscall2(int, statfs, char const *, path, struct statfs *, buf);
+int statfs(char const * path, struct statfs * buf);
 int statvfs(char const * path, struct statvfs * buf)
 {
 	struct statfs fs;
@@ -41,6 +41,6 @@ int statvfs(char const * path, struct statvfs * buf)
 	buf->f_namemax = fs.f_namelen;
 	return 0;
 }
-#else
-syscall2(int, statvfs, char const *, path, struct statvfs *, buf);
+#elif !defined(SYS_statvfs)
+# warning Unsupported architecture (missing statvfs and no statfs)
 #endif

@@ -5,13 +5,10 @@
 
 #include "sys/time.h"
 #include "stdlib.h"
-#include "syscalls.h"
 #include "time.h"
 
 
 /* nanosleep */
-syscall2(int, nanosleep,struct timespec *, requested, struct timespec *,
-		remaining);
 
 
 /* time */

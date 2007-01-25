@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -9,7 +9,6 @@
 #include "errno.h"
 #include "stdlib.h"
 #include "dirent.h"
-#include "syscalls.h"
 
 
 /* types */
@@ -63,6 +62,3 @@ DIR * opendir(char const * name)
 
 
 /* readdir */
-#ifdef SYS_readdir
-syscall1(struct dirent *, readdir, DIR *, dir);
-#endif

@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -10,7 +10,6 @@
 #include "stdlib.h"
 #include "string.h"
 #include "limits.h"
-#include "syscalls.h"
 #include "stdio.h"
 
 #define min(a, b) ((a) > (b) ? (b) : (a))
@@ -329,7 +328,6 @@ int puts(char const * string)
 
 
 /* rename */
-syscall2(int, rename, char const *, from, char const *, to);
 
 
 /* snprintf */

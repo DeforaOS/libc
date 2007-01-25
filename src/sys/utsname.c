@@ -3,14 +3,12 @@
 
 
 
-#include "../syscalls.h"
 #include "sys/utsname.h"
 
 
+/* functions */
 /* uname */
-#ifdef SYS_uname
-syscall1(int, uname, struct utsname *, name);
-#elif defined(__NetBSD__)
+#if defined(__NetBSD__)
 # include "../kernel/netbsd/sys/sysctl.h"
 int uname(struct utsname * name)
 {
@@ -41,4 +39,4 @@ int uname(struct utsname * name)
 		return -1;
 	return 0;
 }
-#endif
+#endif /* __NetBSD__ */

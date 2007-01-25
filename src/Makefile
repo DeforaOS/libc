@@ -6,7 +6,7 @@ LIBDIR	= $(PREFIX)/lib
 CC	= cc
 CPPFLAGS= -I ../include -nostdinc
 CFLAGSF	= -W
-CFLAGS	= -Wall -fPIC -g -ansi
+CFLAGS	= -Wall -g -ansi
 AS	= $(CC)
 ASFLAGS	= -W -Wall -g -ansi -c
 AR	= ar -rc
@@ -22,8 +22,8 @@ all: subdirs $(TARGETS)
 subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
-libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o kernel/netbsd/compat.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o utmpx.o
-libc_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o sys/mman.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o time.o unistd.o utime.o utmpx.o
+libc_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS) -fPIC
 libc_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
 
 libc.a: $(libc_OBJS)
@@ -50,9 +50,6 @@ fcntl.o: fcntl.c syscalls.h
 
 grp.o: grp.c
 	$(CC) $(libc_CFLAGS) -c grp.c
-
-kernel/netbsd/compat.o: kernel/netbsd/compat.c
-	$(CC) $(libc_CFLAGS) -c kernel/netbsd/compat.c -o kernel/netbsd/compat.o
 
 libgen.o: libgen.c
 	$(CC) $(libc_CFLAGS) -c libgen.c

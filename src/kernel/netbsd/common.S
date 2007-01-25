@@ -3,7 +3,5 @@
 
 
 
-#include "sys/select.h"
-
-
-/* select */
+/* sysctl */
+SYSCALL(sysctl)
