@@ -22,30 +22,30 @@
 	type name(void) { return (type) _syscall0(SYS_ ## name); }
 # define syscall1(type, name, type1, arg1) \
 	type name(type1 arg1) { return (type) _syscall1(SYS_ ## name, \
-			(int)arg1); }
+			(long)arg1); }
 # define syscall2(type, name, type1, arg1, type2, arg2) \
 	type name(type1 arg1, type2 arg2) \
-	{ return (type) _syscall2(SYS_ ## name, (int)arg1, (int)arg2); }
+	{ return (type) _syscall2(SYS_ ## name, (long)arg1, (long)arg2); }
 # define syscall3(type, name, type1, arg1, type2, arg2, type3, arg3) \
 	type name(type1 arg1, type2 arg2, type3 arg3) \
-	{ return (type) _syscall3(SYS_ ## name, (int)arg1, (int)arg2, \
-			(int)arg3); }
+	{ return (type) _syscall3(SYS_ ## name, (long)arg1, (long)arg2, \
+			(long)arg3); }
 # define syscall4(type, name, type1, arg1, type2, arg2, type3, arg3, \
 		type4, arg4) \
 	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4) \
-	{ return (type) _syscall4(SYS_ ## name, (int)arg1, (int)arg2, \
-			(int)arg3, (int)arg4); }
+	{ return (type) _syscall4(SYS_ ## name, (long)arg1, (long)arg2, \
+			(long)arg3, (long)arg4); }
 # define syscall5(type, name, type1, arg1, type2, arg2, type3, arg3, \
 		type4, arg4, type5, arg5) \
 	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5) \
-	{ return (type) _syscall5(SYS_ ## name, (int)arg1, (int)arg2, \
-			(int)arg3, (int)arg4, (int)arg5); }
+	{ return (type) _syscall5(SYS_ ## name, (long)arg1, (long)arg2, \
+			(long)arg3, (long)arg4, (long)arg5); }
 # define syscall6(type, name, type1, arg1, type2, arg2, type3, arg3, \
 		type4, arg4, type5, arg5, type6, arg6) \
 	type name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5, \
 			type6 arg6) \
-	{ return (type) _syscall6(SYS_ ## name, (int)arg1, (int)arg2, \
-			(int)arg3, (int)arg4, (int)arg5, (int)arg6); }
+	{ return (type) _syscall6(SYS_ ## name, (long)arg1, (long)arg2, \
+			(long)arg3, (long)arg4, (long)arg5, (long)arg6); }
 
 
 /* functions */
