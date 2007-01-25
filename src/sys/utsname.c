@@ -37,7 +37,7 @@ int uname(struct utsname * name)
 	mib[0] = CTL_HW;
 	mib[1] = HW_MACHINE;
 	len = sizeof(name->machine);
-	if(sysctl(mib, 2, &name->version, &len, NULL, 0) == -1)
+	if(sysctl(mib, 2, &name->machine, &len, NULL, 0) == -1)
 		return -1;
 	return 0;
 }
