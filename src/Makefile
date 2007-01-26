@@ -39,7 +39,7 @@ start.o_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
 ctype.o: ctype.c
 	$(CC) $(libc_CFLAGS) -c ctype.c
 
-dirent.o: dirent.c syscalls.h
+dirent.o: dirent.c
 	$(CC) $(libc_CFLAGS) -c dirent.c
 
 errno.o: errno.c
@@ -57,22 +57,22 @@ libgen.o: libgen.c
 pwd.o: pwd.c
 	$(CC) $(libc_CFLAGS) -c pwd.c
 
-signal.o: signal.c syscalls.h
+signal.o: signal.c
 	$(CC) $(libc_CFLAGS) -c signal.c
 
 stdlib.o: stdlib.c
 	$(CC) $(libc_CFLAGS) -c stdlib.c
 
-stdio.o: stdio.c syscalls.h
+stdio.o: stdio.c
 	$(CC) $(libc_CFLAGS) -c stdio.c
 
 string.o: string.c
 	$(CC) $(libc_CFLAGS) -c string.c
 
-sys/mman.o: sys/mman.c syscalls.h
+sys/mman.o: sys/mman.c
 	$(CC) $(libc_CFLAGS) -c sys/mman.c -o sys/mman.o
 
-sys/select.o: sys/select.c syscalls.h
+sys/select.o: sys/select.c
 	$(CC) $(libc_CFLAGS) -c sys/select.c -o sys/select.o
 
 sys/stat.o: sys/stat.c syscalls.h
@@ -81,13 +81,13 @@ sys/stat.o: sys/stat.c syscalls.h
 sys/statvfs.o: sys/statvfs.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/statvfs.c -o sys/statvfs.o
 
-sys/time.o: sys/time.c syscalls.h
+sys/time.o: sys/time.c
 	$(CC) $(libc_CFLAGS) -c sys/time.c -o sys/time.o
 
 sys/times.o: sys/times.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/times.c -o sys/times.o
 
-sys/utsname.o: sys/utsname.c syscalls.h
+sys/utsname.o: sys/utsname.c
 	$(CC) $(libc_CFLAGS) -c sys/utsname.c -o sys/utsname.o
 
 sys/wait.o: sys/wait.c syscalls.h
@@ -96,13 +96,13 @@ sys/wait.o: sys/wait.c syscalls.h
 syscalls.o: syscalls.S kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S
 	$(AS) $(libc_ASFLAGS) -fPIC -o syscalls.o syscalls.S
 
-time.o: time.c syscalls.h
+time.o: time.c
 	$(CC) $(libc_CFLAGS) -c time.c
 
 unistd.o: unistd.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c unistd.c
 
-utime.o: utime.c syscalls.h
+utime.o: utime.c
 	$(CC) $(libc_CFLAGS) -c utime.c
 
 utmpx.o: utmpx.c
