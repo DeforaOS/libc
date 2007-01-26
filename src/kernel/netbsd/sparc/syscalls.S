@@ -14,13 +14,13 @@ _syscall:
 #define SYSCALL(name) \
 .global name; \
 name:; \
-	mov	SYS_ ## name, %g1; \
-	jmp	_syscall
+	jmp	_syscall; \
+	mov	SYS_ ## name, %g1
 
 
 /* functions */
 /* _exit */
 .global _exit
 _exit:
-	mov	SYS_exit, %g1
 	jmp	_syscall
+	mov	SYS_exit, %g1
