@@ -13,7 +13,7 @@ _syscall:
 	set	-1, %o0
 .errnoret:
 	ret
-	nop
+	restore
 
 
 /* macros */
