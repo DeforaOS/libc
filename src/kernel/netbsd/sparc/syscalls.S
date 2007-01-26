@@ -4,7 +4,7 @@
 
 
 _syscall:
-	ta	8
+	ta	0
 	/* FIXME errno */
 	ret
 	nop
