@@ -5,7 +5,13 @@
 
 _syscall:
 	ta	0
-	/* FIXME errno */
+	bcc	.errnoret
+	nop
+	sub	%g0, %o0, %o0
+	set	errno, %g1
+	st	%o0, [%g1]
+	set	-1, %o0
+.errnoret:
 	ret
 	nop
 
@@ -14,7 +20,7 @@ _syscall:
 #define SYSCALL(name) \
 .global name; \
 name:; \
-	jmp	_syscall; \
+	b	_syscall; \
 	mov	SYS_ ## name, %g1
 
 
@@ -22,5 +28,5 @@ name:; \
 /* _exit */
 .global _exit
 _exit:
-	jmp	_syscall
+	b	_syscall
 	mov	SYS_exit, %g1
