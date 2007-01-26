@@ -12,8 +12,8 @@ _syscall:
 	st	%o0, [%g1]
 	set	-1, %o0
 .errnoret:
-	ret
-	restore
+	retl
+	nop
 
 
 /* macros */
