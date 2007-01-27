@@ -36,12 +36,12 @@ _start:
 /* udiv */
 .global .udiv
 .udiv:
-	ret
+	retl
 	udivcc	%o0, %o1, %o0
 
 
 /* umul */
 .global .umul
 .umul:
-	ret
+	retl
 	umulcc	%o0, %o1, %o0
