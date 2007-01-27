@@ -7,7 +7,6 @@ _syscall:
 	ta	0
 	bcc	.errnoret
 	nop
-	sub	%g0, %o0, %o0
 	set	errno, %g1
 	st	%o0, [%g1]
 	set	-1, %o0
