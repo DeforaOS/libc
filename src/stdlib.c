@@ -193,6 +193,8 @@ void * malloc(size_t size)
 /* realloc */
 void * realloc(void * ptr, size_t size)
 {
+	if(ptr == NULL)
+		return malloc(size);
 	if(size == 0 || size > 4096)
 	{
 		errno = ENOSYS;
