@@ -238,7 +238,7 @@ size_t fread(void * ptr, size_t size, size_t nb, FILE * file)
 			return -1;
 		file->len += len;
 	}
-	cnt = file->len / size;
+	cnt = min(nb, cnt);
 	memcpy(ptr, file->buf, size * cnt);
 	memmove(file->buf, &file->buf[size * cnt], file->len - (size * cnt));
 	file->len -= size * cnt;
