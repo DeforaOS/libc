@@ -24,13 +24,13 @@ typedef id_t pid_t;
 # define WNOHANG	0		/* FIXME */
 # define WUNTRACED	0		/* FIXME */
 
-# define WEXITSTATUS(status)	(0)	/* FIXME */
+# define WEXITSTATUS(status)	((status >> 8) & 0xff)
 # define WIFCONTINUED(status)	(0)	/* FIXME */
-# define WIFEXITED(status)	(0)	/* FIXME */
+# define WIFEXITED(status)	((status & 0x7f) == 0x00)
 # define WIFSIGNALED(status)	(0)	/* FIXME */
-# define WIFSTOPPED(status)	(0)	/* FIXME */
-# define WSTOPSIG(status)	(0)	/* FIXME */
-# define WTERMSIG(status)	(0)	/* FIXME */
+# define WIFSTOPPED(status)	((status & 0x7f) == 0x7f)
+# define WSTOPSIG(status)	((status >> 8) & 0xff)
+# define WTERMSIG(status)	(status & 0x7f)
 
 # define WEXITED	0		/* FIXME */
 # define WSTOPPED	0		/* FIXME */
