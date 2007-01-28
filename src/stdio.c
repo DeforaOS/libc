@@ -371,12 +371,14 @@ int vfprintf(FILE * file, char const * format, va_list arg)
 }
 
 /* _vprintf */
+static int _vprintf_d(print_func func, void * dest, size_t size, size_t * len,
+		long int val);
 static int _vprintf_s(print_func func, void * dest, size_t size, size_t * len,
 		char * str);
 static int _vprintf_p(print_func func, void * dest, size_t size, size_t * len,
 		void * ptr);
 static int _vprintf_u(print_func func, void * dest, size_t size, size_t * len,
-		long unsigned uns);
+		long unsigned int val);
 
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg)
@@ -398,6 +400,12 @@ static int _vprintf(print_func func, void * dest, size_t size,
 			ptr = va_arg(arg, void *);
 			switch(*++p) /* FIXME implement properly */
 			{
+				case 'd':
+					if(_vprintf_d(func, dest, size, &len,
+								(long)ptr)
+							== -1)
+						return -1;
+					break;
 				case 's':
 					if(_vprintf_s(func, dest, size, &len,
 								ptr) == -1)
@@ -419,12 +427,11 @@ static int _vprintf(print_func func, void * dest, size_t size,
 			}
 		}
 		size = size > len ? size - len : 0; /* prevent overflow */
-		if(ret + len <= 0) /* overflowing ret is an error */
+		if((ret+=len) < 0) /* overflowing ret is an error */
 		{
 			errno = ERANGE;
 			return -1;
 		}
-		ret+=len;
 	}
 	if(size > 0 && func(dest, 1, "") != 1) /* end string if possible */
 		return -1;
@@ -436,6 +443,18 @@ static int _fprint(void * dest, size_t size, char const buf[])
 	FILE * fp = dest;
 
 	return fwrite(buf, sizeof(char), size, fp);
+}
+
+static int _vprintf_d(print_func func, void * dest, size_t size, size_t * len,
+		long int val)
+{
+	if(val >= 0)
+		return _vprintf_u(func, dest, size - 1, len, val);
+	if(func(dest, 1, "-") != 1
+			|| _vprintf_u(func, dest, size - 1, len, -val) == -1)
+		return -1;
+	(*len)++;
+	return 0;
 }
 
 static int _vprintf_s(print_func func, void * dest, size_t size, size_t * len,
@@ -465,12 +484,12 @@ static int _vprintf_p(print_func func, void * dest, size_t size, size_t * len,
 }
 
 static int _vprintf_u(print_func func, void * dest, size_t size, size_t * len,
-		long unsigned uns)
+		long unsigned int val)
 {
 	char tmp[19] = "";
 	int l;
 
-	_vprintf_lutoa(tmp, uns, 10); /* XXX assumes tmp is large enough */
+	_vprintf_lutoa(tmp, val, 10); /* XXX assumes tmp is large enough */
 	*len = strlen(tmp);
 	l = min(*len, size);
 	if(func(dest, l, tmp) != l)
@@ -491,6 +510,11 @@ static void _vprintf_lutoa(char * dest, long unsigned n, size_t base)
 	if(base < 2 || base >= sizeof(conv))
 	{
 		dest[0] = '\0';
+		return;
+	}
+	if(n == 0)
+	{
+		strcmp(dest, "0");
 		return;
 	}
 	/* XXX performing twice the divisions is not optimal */
