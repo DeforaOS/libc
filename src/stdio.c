@@ -361,7 +361,7 @@ typedef int (*print_func)(void * dest, size_t size, char const buf[]);
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg);
 static int _fprint(void * dest, size_t size, char const buf[]);
-static void _vfprintf_lutoa(char * dest, long unsigned n, size_t base);
+static void _vprintf_lutoa(char * dest, long unsigned n, size_t base);
 
 int vfprintf(FILE * file, char const * format, va_list arg)
 {
@@ -370,17 +370,20 @@ int vfprintf(FILE * file, char const * format, va_list arg)
 	return _vprintf(_fprint, file, len, format, arg);
 }
 
+/* _vprintf */
+static int _vprintf_s(print_func func, void * dest, size_t size, size_t * len,
+		va_list arg);
+static int _vprintf_p(print_func func, void * dest, size_t size, size_t * len,
+		va_list arg);
+static int _vprintf_u(print_func func, void * dest, size_t size, size_t * len,
+		va_list arg);
+
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg)
 {
 	int ret = 0;
 	char const * p;		/* pointer to current format character */
-	char * str;		/* temporary string pointer */
-	void * ptr;		/* temporary generic pointer */
-	unsigned long uns;	/* temporary unsigned long */
 	size_t len;		/* length of the current element */
-	int l;
-	char tmp[19] = "";
 
 	for(p = format; *p != '\0'; p++)
 	{
@@ -388,37 +391,23 @@ static int _vprintf(print_func func, void * dest, size_t size,
 		{
 			if((len = func(dest, sizeof(char), p)) != sizeof(char))
 				return -1;
-			if(size)
-				size--;
 		}
 		else
-			switch(*++p)
-				/* FIXME implement properly */
+			switch(*++p) /* FIXME implement properly */
 			{
 				case 's':
-					str = va_arg(arg, char *);
-					len = strlen(str);
-					l = min(strlen(str), size);
-					if(func(dest, l, str) != l)
+					if(_vprintf_s(func, dest, size, &len,
+								arg) == -1)
 						return -1;
 					break;
 				case 'p':
-					ptr = va_arg(arg, void *);
-					len = sizeof(void*) * 2 + 2;
-					l = min(len, size);
-					tmp[0] = '0';
-					tmp[1] = 'x';
-					_vfprintf_lutoa(&tmp[2], ptr, 16);
-					if(func(dest, l, tmp) != l)
+					if(_vprintf_p(func, dest, size, &len,
+								arg) == -1)
 						return -1;
 					break;
 				case 'u':
-					uns = va_arg(arg, unsigned long);
-					/* XXX assumes tmp is large enough */
-					_vfprintf_lutoa(tmp, uns, 10);
-					len = strlen(tmp);
-					l = min(len, size);
-					if(func(dest, l, tmp) != l)
+					if(_vprintf_u(func, dest, size, &len,
+								arg) == -1)
 						return -1;
 					break;
 				default:
@@ -445,10 +434,56 @@ static int _fprint(void * dest, size_t size, char const buf[])
 	return fwrite(buf, sizeof(char), size, fp);
 }
 
+static int _vprintf_s(print_func func, void * dest, size_t size, size_t * len,
+		va_list arg)
+{
+	char * str;
+	int l;
+
+	str = va_arg(arg, char *);
+	*len = strlen(str);
+	l = min(strlen(str), size);
+	if(func(dest, l, str) != l)
+		return -1;
+	return 0;
+}
+
+static int _vprintf_p(print_func func, void * dest, size_t size, size_t * len,
+		va_list arg)
+{
+	void * ptr;
+	char tmp[3 + sizeof(void*) + sizeof(void*)] = "0x";
+	int l;
+
+	ptr = va_arg(arg, void *);
+	*len = sizeof(tmp);
+	l = min(sizeof(tmp), size);
+	_vprintf_lutoa(&tmp[2], (long)ptr, 16); /* XXX cast */
+	if(func(dest, l, tmp) != l)
+		return -1;
+	return 0;
+}
+
+static int _vprintf_u(print_func func, void * dest, size_t size, size_t * len,
+		va_list arg)
+{
+	unsigned long uns;
+	char tmp[19] = "";
+	int l;
+
+	uns = va_arg(arg, unsigned long);
+	_vprintf_lutoa(tmp, uns, 10); /* XXX assumes tmp is large enough */
+	*len = strlen(tmp);
+	l = min(*len, size);
+	if(func(dest, l, tmp) != l)
+		return -1;
+	return 0;
+}
+
 /* PRE	dest is long enough
  * POST	2 <= base <= 36		dest is the ascii representation of n
  *	else			dest is an empty string */
-static void _vfprintf_lutoa(char * dest, long unsigned n, size_t base)
+static void _vprintf_lutoa(char * dest, long unsigned n, size_t base)
 {
 	char conv[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 	size_t len;
