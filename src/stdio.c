@@ -361,6 +361,7 @@ typedef int (*print_func)(void * dest, size_t size, char const buf[]);
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg);
 static int _fprint(void * dest, size_t size, char const buf[]);
+static void _vfprintf_lutoa(char * dest, long unsigned n, size_t base);
 
 int vfprintf(FILE * file, char const * format, va_list arg)
 {
@@ -372,37 +373,68 @@ int vfprintf(FILE * file, char const * format, va_list arg)
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg)
 {
-	char const * p;
-	char * str;
-	size_t len;
 	int ret = 0;
+	char const * p;		/* pointer to current format character */
+	char * str;		/* temporary string pointer */
+	void * ptr;		/* temporary generic pointer */
+	unsigned long uns;	/* temporary unsigned long */
+	size_t len;		/* length of the current element */
+	int l;
+	char tmp[19] = "";
 
-	for(p = format; *p != '\0' && size > 0; p++)
+	for(p = format; *p != '\0'; p++)
 	{
 		if(*p != '%')
 		{
 			if((len = func(dest, sizeof(char), p)) != sizeof(char))
 				return -1;
-			size--;
-			ret++;
-			continue;
+			if(size)
+				size--;
 		}
-		/* FIXME implement properly */
-		switch(*++p)
-		{
-			case 's':
-				str = va_arg(arg, char *);
-				len = min(strlen(str), size);
-				if(func(dest, len, str) != len)
+		else
+			switch(*++p)
+				/* FIXME implement properly */
+			{
+				case 's':
+					str = va_arg(arg, char *);
+					len = strlen(str);
+					l = min(strlen(str), size);
+					if(func(dest, l, str) != l)
+						return -1;
+					break;
+				case 'p':
+					ptr = va_arg(arg, void *);
+					len = sizeof(void*) * 2 + 2;
+					l = min(len, size);
+					tmp[0] = '0';
+					tmp[1] = 'x';
+					_vfprintf_lutoa(&tmp[2], ptr, 16);
+					if(func(dest, l, tmp) != l)
+						return -1;
+					break;
+				case 'u':
+					uns = va_arg(arg, unsigned long);
+					/* XXX assumes tmp is large enough */
+					_vfprintf_lutoa(tmp, uns, 10);
+					len = strlen(tmp);
+					l = min(len, size);
+					if(func(dest, l, tmp) != l)
+						return -1;
+					break;
+				default:
+					errno = ENOSYS;
 					return -1;
-				break;
-			default:
-				errno = ENOSYS;
-				return -1;
+			}
+		size = size > len ? size - len : 0; /* prevent overflow */
+		if(ret + len <= 0) /* overflowing ret is an error */
+		{
+			errno = ERANGE;
+			return -1;
 		}
-		size-=len;
 		ret+=len;
 	}
+	if(size > 0 && func(dest, 1, "") != 1) /* end string if possible */
+		return -1;
 	return ret;
 }
 
@@ -411,6 +443,33 @@ static int _fprint(void * dest, size_t size, char const buf[])
 	FILE * fp = dest;
 
 	return fwrite(buf, sizeof(char), size, fp);
+}
+
+/* PRE	dest is long enough
+ * POST	2 <= base <= 36		dest is the ascii representation of n
+ *	else			dest is an empty string */
+static void _vfprintf_lutoa(char * dest, long unsigned n, size_t base)
+{
+	char conv[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+	size_t len;
+	long p = n;
+	size_t i = 0;
+
+	if(base < 2 || base >= sizeof(conv))
+	{
+		dest[0] = '\0';
+		return;
+	}
+	/* XXX performing twice the divisions is not optimal */
+	for(p = n; p > 0; p /= base)
+		len++;
+	for(; n > 0; n /= base)
+	{
+		p = n % base;
+		dest[i++] = conv[p];
+		n -= p;
+	}
+	dest[i] = '\0';
 }
 
 
