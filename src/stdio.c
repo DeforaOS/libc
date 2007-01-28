@@ -372,11 +372,11 @@ int vfprintf(FILE * file, char const * format, va_list arg)
 
 /* _vprintf */
 static int _vprintf_s(print_func func, void * dest, size_t size, size_t * len,
-		va_list arg);
+		char * str);
 static int _vprintf_p(print_func func, void * dest, size_t size, size_t * len,
-		va_list arg);
+		void * ptr);
 static int _vprintf_u(print_func func, void * dest, size_t size, size_t * len,
-		va_list arg);
+		long unsigned uns);
 
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg)
@@ -384,6 +384,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 	int ret = 0;
 	char const * p;		/* pointer to current format character */
 	size_t len;		/* length of the current element */
+	void * ptr;		/* temporary pointer for va_list */
 
 	for(p = format; *p != '\0'; p++)
 	{
@@ -393,27 +394,30 @@ static int _vprintf(print_func func, void * dest, size_t size,
 				return -1;
 		}
 		else
+		{
+			ptr = va_arg(arg, void *);
 			switch(*++p) /* FIXME implement properly */
 			{
 				case 's':
 					if(_vprintf_s(func, dest, size, &len,
-								arg) == -1)
+								ptr) == -1)
 						return -1;
 					break;
 				case 'p':
 					if(_vprintf_p(func, dest, size, &len,
-								arg) == -1)
+								ptr) == -1)
 						return -1;
 					break;
 				case 'u':
 					if(_vprintf_u(func, dest, size, &len,
-								arg) == -1)
+								ptr) == -1)
 						return -1;
 					break;
 				default:
 					errno = ENOSYS;
 					return -1;
 			}
+		}
 		size = size > len ? size - len : 0; /* prevent overflow */
 		if(ret + len <= 0) /* overflowing ret is an error */
 		{
@@ -435,12 +439,10 @@ static int _fprint(void * dest, size_t size, char const buf[])
 }
 
 static int _vprintf_s(print_func func, void * dest, size_t size, size_t * len,
-		va_list arg)
+		char * str)
 {
-	char * str;
 	int l;
 
-	str = va_arg(arg, char *);
 	*len = strlen(str);
 	l = min(strlen(str), size);
 	if(func(dest, l, str) != l)
@@ -449,13 +451,11 @@ static int _vprintf_s(print_func func, void * dest, size_t size, size_t * len,
 }
 
 static int _vprintf_p(print_func func, void * dest, size_t size, size_t * len,
-		va_list arg)
+		void * ptr)
 {
-	void * ptr;
 	char tmp[3 + sizeof(void*) + sizeof(void*)] = "0x";
 	int l;
 
-	ptr = va_arg(arg, void *);
 	*len = sizeof(tmp);
 	l = min(sizeof(tmp), size);
 	_vprintf_lutoa(&tmp[2], (long)ptr, 16); /* XXX cast */
@@ -465,13 +465,11 @@ static int _vprintf_p(print_func func, void * dest, size_t size, size_t * len,
 }
 
 static int _vprintf_u(print_func func, void * dest, size_t size, size_t * len,
-		va_list arg)
+		long unsigned uns)
 {
-	unsigned long uns;
 	char tmp[19] = "";
 	int l;
 
-	uns = va_arg(arg, unsigned long);
 	_vprintf_lutoa(tmp, uns, 10); /* XXX assumes tmp is large enough */
 	*len = strlen(tmp);
 	l = min(*len, size);
