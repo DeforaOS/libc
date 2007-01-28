@@ -185,6 +185,7 @@ char * strerror(int errnum)
 		{ 0,		"Success"		},
 		{ E2BIG,	"Argument list too long"},
 		{ EACCES,	"Permission denied"	},
+		{ ECHILD,	"No child processes"	},
 		{ EINVAL,	einval			},
 		{ ENOMEM,	"Not enough memory"	},
 		{ ENOSYS,	"Not implemented"	},
