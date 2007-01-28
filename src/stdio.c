@@ -379,6 +379,8 @@ static int _vprintf_p(print_func func, void * dest, size_t size, size_t * len,
 		void * ptr);
 static int _vprintf_u(print_func func, void * dest, size_t size, size_t * len,
 		long unsigned int val);
+static int _vprintf_x(print_func func, void * dest, size_t size, size_t * len,
+		long unsigned int val);
 
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg)
@@ -387,45 +389,53 @@ static int _vprintf(print_func func, void * dest, size_t size,
 	char const * p;		/* pointer to current format character */
 	size_t len;		/* length of the current element */
 	void * ptr;		/* temporary pointer for va_list */
+	long val;		/* temporary integer for va_list */
 
 	for(p = format; *p != '\0'; p++)
 	{
-		if(*p != '%')
+		if(*p != '%' || *++p == '%')
 		{
 			if((len = func(dest, sizeof(char), p)) != sizeof(char))
 				return -1;
 		}
 		else
-		{
-			ptr = va_arg(arg, void *);
-			switch(*++p) /* FIXME implement properly */
+			switch(*p) /* FIXME implement properly */
 			{
 				case 'd':
+					val = va_arg(arg, long);
 					if(_vprintf_d(func, dest, size, &len,
-								(long)ptr)
+								val)
 							== -1)
 						return -1;
 					break;
 				case 's':
+					ptr = va_arg(arg, void *);
 					if(_vprintf_s(func, dest, size, &len,
 								ptr) == -1)
 						return -1;
 					break;
 				case 'p':
+					ptr = va_arg(arg, void *);
 					if(_vprintf_p(func, dest, size, &len,
 								ptr) == -1)
 						return -1;
 					break;
 				case 'u':
+					val = va_arg(arg, long);
 					if(_vprintf_u(func, dest, size, &len,
-								ptr) == -1)
+								val) == -1)
+						return -1;
+					break;
+				case 'x':
+					val = va_arg(arg, long);
+					if(_vprintf_x(func, dest, size, &len,
+								val) == -1)
 						return -1;
 					break;
 				default:
 					errno = ENOSYS;
 					return -1;
 			}
-		}
 		size = size > len ? size - len : 0; /* prevent overflow */
 		if((ret+=len) < 0) /* overflowing ret is an error */
 		{
@@ -433,8 +443,6 @@ static int _vprintf(print_func func, void * dest, size_t size,
 			return -1;
 		}
 	}
-	if(size > 0 && func(dest, 1, "") != 1) /* end string if possible */
-		return -1;
 	return ret;
 }
 
@@ -497,15 +505,29 @@ static int _vprintf_u(print_func func, void * dest, size_t size, size_t * len,
 	return 0;
 }
 
+static int _vprintf_x(print_func func, void * dest, size_t size, size_t * len,
+		long unsigned int val)
+{
+	char tmp[sizeof(long) + sizeof(long) + 1] = "";
+	int l;
+
+	_vprintf_lutoa(tmp, val, 16); /* XXX assumes tmp is large enough */
+	*len = strlen(tmp);
+	l = min(*len, size);
+	if(func(dest, l, tmp) != l)
+		return -1;
+	return 0;
+}
+
 /* PRE	dest is long enough
  * POST	2 <= base <= 36		dest is the ascii representation of n
  *	else			dest is an empty string */
 static void _vprintf_lutoa(char * dest, long unsigned n, size_t base)
 {
 	char conv[] = "0123456789abcdefghijklmnopqrstuvwxyz";
-	size_t len;
+	size_t len = 0;
 	long p = n;
-	size_t i = 0;
+	size_t i;
 
 	if(base < 2 || base >= sizeof(conv))
 	{
@@ -514,19 +536,19 @@ static void _vprintf_lutoa(char * dest, long unsigned n, size_t base)
 	}
 	if(n == 0)
 	{
-		strcmp(dest, "0");
+		strcpy(dest, "0");
 		return;
 	}
 	/* XXX performing twice the divisions is not optimal */
 	for(p = n; p > 0; p /= base)
 		len++;
-	for(; n > 0; n /= base)
+	for(i = len; n > 0; n /= base)
 	{
 		p = n % base;
-		dest[i++] = conv[p];
+		dest[--i] = conv[p];
 		n -= p;
 	}
-	dest[i] = '\0';
+	dest[len] = '\0';
 }
 
 
@@ -534,7 +556,15 @@ static void _vprintf_lutoa(char * dest, long unsigned n, size_t base)
 static int _sprint(void * dest, size_t size, char const buf[]);
 int vsnprintf(char * str, size_t size, char const * format, va_list arg)
 {
-	return _vprintf(_sprint, &str, size, format, arg);
+	int ret;
+	size_t i;
+
+	if((ret = _vprintf(_sprint, &str, size, format, arg)) < 0)
+		return ret;
+	i = ret;
+	if(i < size)
+		str[ret] = '\0';
+	return ret;
 }
 
 static int _sprint(void * dest, size_t size, char const buf[])
@@ -550,7 +580,11 @@ static int _sprint(void * dest, size_t size, char const buf[])
 /* vsprintf */
 int vsprintf(char * str, char const * format, va_list arg)
 {
+	int ret;
 	size_t size = -1;
 
-	return _vprintf(_sprint, &str, size, format, arg);
+	if((ret = _vprintf(_sprint, &str, size, format, arg)) < 0)
+		return ret;
+	str[ret] = '\0';
+	return ret;
 }
