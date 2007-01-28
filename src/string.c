@@ -76,9 +76,8 @@ void * memmove(void * dest, void const * src, size_t n)
 /* memset */
 void * memset(void * dest, int c, size_t n)
 {
-	unsigned char * d;
+	unsigned char * d = dest;
 
-	d = dest;
 	while(n--)
 		*d++ = c;
 	return dest;
