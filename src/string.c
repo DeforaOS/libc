@@ -90,14 +90,13 @@ void * memset(void * dest, int c, size_t n)
 /* strcat */
 char * strcat(char * dest, char const * src)
 {
-	char * res;
+	char * ret = dest;
 	
-	res = dest;
 	while(*dest++);
 	while(*src)
 		*dest++ = *src++;
 	*dest = '\0';
-	return res;
+	return ret;
 }
 
 
@@ -133,12 +132,10 @@ int strcmp(char const * s1, char const * s2)
 /* strcpy */
 char * strcpy(char * dest, char const * src)
 {
-	char * res;
+	char * ret = dest;
 
-	res = dest;
-	while(*src)
-		*dest++ = *src++;
-	return res;
+	while((*dest++ = *src++));
+	return ret;
 }
 
 
@@ -220,14 +217,13 @@ size_t strlen(char const * s)
 /* strncat */
 char * strncat(char * dest, char const * src, size_t n)
 {
-	char * res;
+	char * ret = dest;
 
-	res = dest;
 	while(*dest++);
 	while(n-- && *src)
 		*dest++ = *src++;
 	*dest = '\0';
-	return res;
+	return ret;
 }
 
 
@@ -251,12 +247,11 @@ int strncmp(char const * s1, char const * s2, size_t n)
 /* strncpy */
 char * strncpy(char * dest, char const * src, size_t n)
 {
-	char * res;
+	char * ret;
 
-	res = dest;
-	while(n-- && *src)
-		*dest++ = *src++;
-	return res;
+	ret = dest;
+	while(n-- && (*(dest++) = *(src++)));
+	return ret;
 }
 
 
