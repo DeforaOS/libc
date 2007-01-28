@@ -35,12 +35,7 @@ _exit:
 mmap:
 	mov	$SYS_mmap, %eax
 	int	$0x80
-	cmp	$0, %eax
-	jge	.errnoret
 	cmp	$-255, %eax
 	jl	.errnoret
-	neg	%eax
-	mov	%eax, errno
-	mov	$-1, %eax
-	ret
+	jmp	.errno
 #undef SYS_mmap
