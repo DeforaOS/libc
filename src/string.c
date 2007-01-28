@@ -42,11 +42,9 @@ int memcmp(void const * s1, void const * s2, size_t n)
 /* memcpy */
 void * memcpy(void * dest, void const * src, size_t n)
 {
-	int * d;
-	int const * s;
+	char * d = dest;
+	char const * s = src;
 	
-	d = dest;
-	s = src;
 	while(n--)
 		*d++ = *s++;
 	return dest;
