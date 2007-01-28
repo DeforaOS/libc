@@ -557,9 +557,10 @@ static int _sprint(void * dest, size_t size, char const buf[]);
 int vsnprintf(char * str, size_t size, char const * format, va_list arg)
 {
 	int ret;
+	char * p = str;
 	size_t i;
 
-	if((ret = _vprintf(_sprint, &str, size, format, arg)) < 0)
+	if((ret = _vprintf(_sprint, &p, size, format, arg)) < 0)
 		return ret;
 	i = ret;
 	if(i < size)
