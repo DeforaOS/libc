@@ -163,7 +163,7 @@ char * getenv(char const * name)
 	{
 		if(strncmp(*p, name, len) != 0)
 			continue;
-		if(*p[len] != '=')
+		if((*p)[len] != '=')
 			continue;
 		return &(*p[len+1]);
 	}
