@@ -51,8 +51,10 @@ mmap:
 	mov	$SYS_mmap, %eax
 	push	%ebx
 	mov	%esp, %ebx
-	add	$0x0c, %ebx
+	add	$0x08, %ebx
 	int	$0x80
 	pop	%ebx
+	cmp	$-255, %eax
+	jl	.errnoret
 	jmp	.errno
 #undef SYS_mmap
