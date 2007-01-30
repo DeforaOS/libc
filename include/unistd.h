@@ -79,7 +79,7 @@ pid_t getppid(void);
 
 uid_t getuid(void);
 
-int isatty(int fd);
+int isatty(int fildes);
 
 int lchown(char const * filename, uid_t owner, gid_t group);
 
@@ -106,6 +106,8 @@ unsigned int sleep(unsigned int seconds);
 
 int symlink(char const * from, char const * to);
 void sync(void);
+
+char * ttyname(int fildes);
 
 int unlink(char const * filename);
 

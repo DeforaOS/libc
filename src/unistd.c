@@ -158,9 +158,10 @@ static void _getopt_reset(char * const ** oldargv, char * const * argv,
 
 
 /* isatty */
-int isatty(int fd)
-{
+int isatty(int fildes)
 	/* FIXME implement */
+{
+	errno = ENOSYS;
 	return 0;
 }
 
@@ -187,7 +188,8 @@ int isatty(int fd)
 
 
 /* sbrk */
-void * sbrk(unsigned int increment) /* FIXME */
+void * sbrk(unsigned int increment)
+	/* FIXME implement */
 {
 	errno = ENOSYS;
 	return NULL;
@@ -227,6 +229,15 @@ unsigned int sleep(unsigned int seconds)
 
 
 /* sync */
+
+
+/* ttyname */
+char * ttyname(int fildes)
+	/* FIXME implement */
+{
+	errno = ENOSYS;
+	return NULL;
+}
 
 
 /* unlink */
