@@ -6,6 +6,8 @@
 #include "sys/types.h"
 #include "inttypes.h"
 #include "stddef.h"
+#include "stdlib.h"
+#include "string.h"
 #include "time.h"
 #include "errno.h"
 #include "syscalls.h"
@@ -50,9 +52,61 @@ char ** environ;
 
 
 /* execvp */
-int execvp(char const * filename, char const * argv[])
+int execvp(char const * filename, char * const argv[])
 {
-	return execve(filename, argv, environ);
+	char const * path;
+	size_t i = 0;
+	size_t oldi = 0;
+	char * buf = NULL;
+	size_t buf_cnt = 0;
+	size_t len;
+	char * p;
+
+	if(strchr(filename, '/') != NULL)
+		return execve(filename, argv, environ);
+	if((path = getenv("PATH")) != NULL && path[0] != '\0')
+	{
+		len = strlen(filename) + 2;
+		do
+		{
+			if(path[i] != ':')
+				continue;
+			if(i - oldi + len > buf_cnt)
+			{
+				buf_cnt = i - oldi + len;
+				if((p = realloc(buf, buf_cnt)) == NULL)
+				{
+					free(buf);
+					return -1;
+				}
+				buf = p;
+			}
+			strncpy(buf, &path[oldi], i - oldi);
+			buf[i - oldi] = '/';
+			strcpy(&buf[i - oldi + 1], filename);
+			execve(buf, argv, environ);
+			oldi = i+1;
+		}
+		while(path[i++] != '\0');
+		if(errno == ENOEXEC) /* try with the shell */
+		{
+			for(i = 0; argv[i] != NULL; i++);
+			len = (i + 2) * sizeof(char*);
+			if(i > buf_cnt && (p = realloc(buf, len)) == NULL)
+			{
+				free(buf);
+				return -1;
+			}
+			buf = p;
+			((char**)buf)[0] = argv[0]; /* XXX add a variable */
+			((char const **)buf)[1] = filename;
+			for(i = 0; argv[i++] != NULL;)
+				((char**)buf)[i + 1] = argv[i];
+			execv("/bin/sh", (char**)buf);
+		}
+		free(buf);
+	}
+	return -1;
 }
 
 
