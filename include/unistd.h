@@ -60,8 +60,12 @@ int close(int fildes);
 int dup(int fildes);
 int dup2(int fildes1, int fildes2);
 
-int execve(char const * filename, char const * argv[], char const * envp[]);
-int execvp(char const * filename, char const * argv[]);
+int execl(char const * filename, char const * arg, ...);
+int execle(char const * filename, char const * arg, ...);
+int execlp(char const * filename, char const * arg, ...);
+int execv(char const * filename, char * const argv[]);
+int execve(char const * filename, char * const argv[], char * const envp[]);
+int execvp(char const * filename, char * const argv[]);
 
 void _exit(int status);
 
