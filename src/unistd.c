@@ -48,10 +48,19 @@ char ** environ;
 /* dup2 */
 
 
+/* execv */
+int execv(char const * filename, char * const argv[])
+{
+	return execve(filename, argv, environ);
+}
+
+
 /* execve */
 
 
 /* execvp */
+static void _execvp_do(char const * filename, char * const argv[]);
+
 int execvp(char const * filename, char * const argv[])
 {
 	char const * path;
@@ -84,29 +93,35 @@ int execvp(char const * filename, char * const argv[])
 			strncpy(buf, &path[oldi], i - oldi);
 			buf[i - oldi] = '/';
 			strcpy(&buf[i - oldi + 1], filename);
-			execve(buf, argv, environ);
+			_execvp_do(buf, argv);
 			oldi = i+1;
 		}
 		while(path[i++] != '\0');
-		if(errno == ENOEXEC) /* try with the shell */
-		{
-			for(i = 0; argv[i] != NULL; i++);
-			len = (i + 2) * sizeof(char*);
-			if(i > buf_cnt && (p = realloc(buf, len)) == NULL)
-			{
-				free(buf);
-				return -1;
-			}
-			buf = p;
-			((char**)buf)[0] = argv[0]; /* XXX add a variable */
-			((char const **)buf)[1] = filename;
-			for(i = 0; argv[i++] != NULL;)
-				((char**)buf)[i + 1] = argv[i];
-			execv("/bin/sh", (char**)buf);
-		}
 		free(buf);
 	}
 	return -1;
+}
+
+static void _execvp_do(char const * filename, char * const argv[])
+{
+	size_t i;
+	size_t len;
+	char const ** arg;
+
+	execve(filename, argv, environ);
+	if(errno != ENOEXEC)
+		return;
+	/* try with a shell instead */
+	for(i = 0; argv[i] != NULL; i++);
+	len = (i + 2) * sizeof(char*);
+	if((arg = malloc(len)) == NULL)
+		return;
+	arg[0] = argv[0];
+	arg[1] = filename;
+	for(i = 0; argv[i++] != NULL;)
+		arg[i + 1] = argv[i];
+	execv("/bin/sh", (char * const *)arg);
+	free(arg);
 }
 
 
