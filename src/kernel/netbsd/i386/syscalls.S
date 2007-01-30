@@ -30,6 +30,16 @@ _exit:
 	mov	$SYS_exit, %eax
 	jmp	_syscall
 
+/* execve */
+.global execve
+execve:
+	mov	$SYS_execve, %eax
+	int	$0x80
+	mov	%eax, errno
+	mov	$-1, %eax
+	ret
+#undef SYS_execve
+
 /* mmap */
 .global mmap
 mmap:

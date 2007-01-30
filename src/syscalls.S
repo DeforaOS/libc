@@ -126,8 +126,9 @@ SYSCALL(dup)
 #ifdef SYS_dup2
 SYSCALL(dup2)
 #endif
+#ifdef SYS_execve
 SYSCALL(execve)
-/* FIXME SYSCALL(_exit) */
+#endif
 SYSCALL(fork)
 #ifdef SYS_getcwd
 SYSCALL(getcwd)
