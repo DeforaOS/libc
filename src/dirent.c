@@ -62,6 +62,7 @@ DIR * opendir(char const * name)
 
 
 /* readdir */
+#ifdef SYS_getdents
 struct dirent * readdir(DIR * dir)
 {
 	static struct dirent de;
@@ -70,3 +71,4 @@ struct dirent * readdir(DIR * dir)
 		return NULL;
 	return &de;
 }
+#endif
