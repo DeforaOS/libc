@@ -20,7 +20,7 @@ void * memchr(void const * s, int c, size_t n)
 
 	while(n-- && *ls != lc)
 		ls++;
-	return n != 0 ? ls : NULL;
+	return n != 0 ? (void*)ls : NULL; /* XXX */
 }
 
 
@@ -104,8 +104,8 @@ char * strchr(char const * s, int c)
 
 	for(; *s != '\0'; s++)
 		if(*s == u)
-			return s;
-	return u == 0 ? s : NULL;
+			return (char*)s; /* XXX */
+	return u == 0 ? (char*)s : NULL; /* XXX */
 }
 
 
@@ -182,15 +182,31 @@ char * strerror(int errnum)
 		char * errmsg;
 	} err[] =
 	{
-		{ 0,		"Success"		},
-		{ E2BIG,	"Argument list too long"},
-		{ EACCES,	"Permission denied"	},
-		{ ECHILD,	"No child processes"	},
-		{ EINVAL,	einval			},
-		{ ENOEXEC,	"Exec format error"	},
-		{ ENOMEM,	"Not enough memory"	},
-		{ ENOSYS,	"Not implemented"	},
-		{ EXDEV,	"Cross-device link"	}
+		{ 0,		"Success"				},
+		{ E2BIG,	"Argument list too long"		},
+		{ EACCES,	"Permission denied"			},
+		{ EAGAIN,	"Resource temporarily unavailable"	},
+		{ EBADF,	"Bad file descriptor"			},
+		{ EBUSY,	"Device or resource busy"		},
+		{ ECHILD,	"No child processes"			},
+		{ EEXIST,	"File exists"				},
+		{ EFAULT,	"Bad address"				},
+		{ EINTR,	"Interrupted system call"		},
+		{ EINVAL,	einval					},
+		{ EISDIR,	"Is a directory"			},
+		{ ENOBUFS,	"No buffer space available"		},
+		{ ENODEV,	"No such device"			},
+		{ ENOENT,	"No such file or directory"		},
+		{ ENOEXEC,	"Exec format error"			},
+		{ ENOMEM,	"Not enough memory"			},
+		{ ENOSYS,	"Not implemented"			},
+		{ ENOTDIR,	"Not a directory"			},
+		{ ENOTTY,	"Inappropriate ioctl for device"	},
+		{ EPERM,	"Permission denied"			},
+		{ EPIPE,	"Broken pipe"				},
+		{ ERANGE,	"Result too large or too small"		},
+		{ EROFS,	"Read-only filesystem"			},
+		{ EXDEV,	"Cross-device link"			}
 	};
 #define EXLAST EXDEV
 	unsigned int i;
@@ -261,7 +277,7 @@ char * strrchr(char const * s, int c)
 	for(; *s != '\0'; s++)
 		if(*s == c)
 			last = s;
-	return u == 0 ? s : last;
+	return u == 0 ? (char*)s : (char*)last; /* XXX */
 }
 
 
@@ -273,12 +289,12 @@ char * strstr(char const * s1, char const * s2)
 	unsigned int i;
 
 	if(len2 == 0)
-		return s1;
+		return (char*)s1; /* XXX */
 	if(len1 < len2)
 		return NULL;
 	for(i = 0; i < len1 - len2; i++)
 		if(strncmp(&s1[i], s2, len2) == 0)
-			return s1 + i;
+			return (char*)s1 + i; /* XXX */
 	return NULL;
 }
 
