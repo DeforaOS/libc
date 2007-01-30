@@ -62,3 +62,11 @@ DIR * opendir(char const * name)
 
 
 /* readdir */
+struct dirent * readdir(DIR * dir)
+{
+	static struct dirent de;
+
+	if(getdents(dir->fd, &de, sizeof(de)) == -1)
+		return NULL;
+	return &de;
+}
