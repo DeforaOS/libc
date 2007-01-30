@@ -6,6 +6,8 @@
 #ifndef LIBC_SIGNAL_H
 # define LIBC_SIGNAL_H
 
+# include "compat/signal.h"
+
 
 /* types */
 # ifndef id_t
