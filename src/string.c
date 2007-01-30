@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -187,6 +187,7 @@ char * strerror(int errnum)
 		{ EACCES,	"Permission denied"	},
 		{ ECHILD,	"No child processes"	},
 		{ EINVAL,	einval			},
+		{ ENOEXEC,	"Exec format error"	},
 		{ ENOMEM,	"Not enough memory"	},
 		{ ENOSYS,	"Not implemented"	},
 		{ EXDEV,	"Cross-device link"	}
