@@ -64,6 +64,7 @@ DIR * opendir(char const * name)
 /* readdir */
 #ifdef SYS_getdents
 struct dirent * readdir(DIR * dir)
+	/* FIXME only one directory can be read and analyzed at a time */
 {
 	static struct dirent de;
 
