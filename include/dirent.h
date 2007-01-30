@@ -6,7 +6,7 @@
 #ifndef LIBC_DIRENT_H
 # define LIBC_DIRENT_H
 
-# include "limits.h"
+# include "compat/dirent.h"
 
 
 /* types */
@@ -15,12 +15,6 @@
 typedef int ino_t;
 # endif
 typedef struct _DIR DIR;
-
-struct dirent
-{
-	ino_t d_ino;
-	char d_name[NAME_MAX];
-};
 
 
 /* functions */
