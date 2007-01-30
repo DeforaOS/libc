@@ -228,12 +228,10 @@ char * strncat(char * dest, char const * src, size_t n)
 /* strncmp */
 int strncmp(char const * s1, char const * s2, size_t n)
 {
-	unsigned char const * u1;
-	unsigned char const * u2;
+	unsigned char const * u1 = s1;
+	unsigned char const * u2 = s2;
 
-	u1 = s1;
-	u2 = s2;
-	while(n-- && *u1 && *u2 && *u1 == *u2)
+	while(--n && *u1 && *u2 && *u1 == *u2)
 	{
 		*u1++;
 		*u2++;
