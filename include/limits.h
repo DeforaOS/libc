@@ -9,7 +9,10 @@
 
 /* constants */
 # ifndef NAME_MAX
-#  define NAME_MAX 256
+#  define NAME_MAX 256 /* XXX OS dependent */
+# endif
+# ifndef PATH_MAX
+#  define PATH_MAX 1024 /* XXX OS dependent */
 # endif
 
 /* numerical */
