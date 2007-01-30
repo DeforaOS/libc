@@ -371,6 +371,8 @@ int vfprintf(FILE * file, char const * format, va_list arg)
 }
 
 /* _vprintf */
+static int _vprintf_c(print_func func, void * dest, size_t size, size_t * len,
+		long int val);
 static int _vprintf_d(print_func func, void * dest, size_t size, size_t * len,
 		long int val);
 static int _vprintf_s(print_func func, void * dest, size_t size, size_t * len,
@@ -401,11 +403,16 @@ static int _vprintf(print_func func, void * dest, size_t size,
 		else
 			switch(*p) /* FIXME implement properly */
 			{
+				case 'c':
+					val = va_arg(arg, long);
+					if(_vprintf_c(func, dest, size, &len,
+								val) == -1)
+						return -1;
+					break;
 				case 'd':
 					val = va_arg(arg, long);
 					if(_vprintf_d(func, dest, size, &len,
-								val)
-							== -1)
+								val) == -1)
 						return -1;
 					break;
 				case 's':
@@ -451,6 +458,15 @@ static int _fprint(void * dest, size_t size, char const buf[])
 	FILE * fp = dest;
 
 	return fwrite(buf, sizeof(char), size, fp);
+}
+
+static int _vprintf_c(print_func func, void * dest, size_t size, size_t * len,
+		long int val)
+{
+	if(func(dest, 1, &val) != 1)
+		return -1;
+	*len = 1;
+	return 0;
 }
 
 static int _vprintf_d(print_func func, void * dest, size_t size, size_t * len,
