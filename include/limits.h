@@ -8,6 +8,15 @@
 
 
 /* constants */
+/* runtime invariant values */
+# ifndef PAGESIZE
+#  define PAGESIZE 4096 /* XXX OS and architecture dependent */
+# endif
+# ifndef PAGE_SIZE
+#  define PAGE_SIZE PAGE_SIZE
+# endif
+
+/* pathname variable values */
 # ifndef NAME_MAX
 #  define NAME_MAX 256 /* XXX OS dependent */
 # endif
