@@ -85,15 +85,13 @@ SYSCALL(statvfs)
 
 /* sys/time.h */
 SYSCALL(gettimeofday)
+#ifdef SYS_utimes
+SYSCALL(utimes)
+#endif
 
 /* sys/times.h */
 #ifdef SYS_times
 SYSCALL(times)
-#endif
-
-/* sys/utime.h */
-#ifdef SYS_utime
-SYSCALL(utime)
 #endif
 
 /* sys/utsname.h */
@@ -170,3 +168,8 @@ SYSCALL(sync)
 SYSCALL(unlink)
 SYSCALL(vfork)
 SYSCALL(write)
+
+/* utime.h */
+#ifdef SYS_utime
+SYSCALL(utime)
+#endif

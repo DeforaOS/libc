@@ -40,5 +40,6 @@ struct itimerval
 int gettimeofday(struct timeval * tv, void * null);
 int select(int fdcnt, fd_set * rfds, fd_set * wfds, fd_set * efds,
 		struct timeval * timeout);
+int utimes(char const * path, const struct timeval times[2]);
 
 #endif /* !LIBC_SYS_TIME_H */

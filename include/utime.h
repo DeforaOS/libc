@@ -21,6 +21,6 @@ struct utimbuf
 
 
 /* functions */
-int utime(char const * filename, struct utimbuf const * buf);
+int utime(char const * filename, struct utimbuf const * times);
 
 #endif /* !LIBC_UTIME_H */
