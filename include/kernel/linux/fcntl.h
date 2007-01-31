@@ -19,6 +19,8 @@
 # define F_SETOWN	8
 # define F_GETOWN	9
 
+# define FD_CLOEXEC	1
+
 # define O_CREAT	00001
 # define O_EXCL		00002
 # define O_NOCTTY	00004

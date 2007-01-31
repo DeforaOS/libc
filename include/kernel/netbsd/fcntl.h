@@ -19,6 +19,8 @@
 # define F_SETLK	8
 # define F_SETLKW	9
 
+# define FD_CLOEXEC	1
+
 # define O_CREAT	0x0200
 # define O_EXCL		0x0800
 # define O_NOCTTY	0x8000
