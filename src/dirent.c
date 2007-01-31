@@ -4,10 +4,12 @@
 
 
 #include "sys/stat.h"
+#include "errno.h"
 #include "fcntl.h"
 #include "unistd.h"
-#include "errno.h"
 #include "stdlib.h"
+#include "limits.h"
+#include "syscalls.h"
 #include "dirent.h"
 
 
@@ -15,6 +17,7 @@
 struct _DIR
 {
 	int fd;
+	char padding[PAGESIZE - sizeof(int)];
 };
 
 
@@ -36,13 +39,13 @@ int closedir(DIR * dir)
 /* opendir */
 DIR * opendir(char const * name)
 {
+	DIR * dir;
 	int fd;
 	struct stat st;
-	DIR * dir;
 
 	if((fd = open(name, O_RDONLY)) != 0)
 		return NULL;
-	if(fstat(fd, &st) != 0)
+	if(fcntl(fd, F_SETFD, FD_CLOEXEC) != 0 || fstat(fd, &st) != 0)
 	{
 		close(fd);
 		return NULL;
@@ -63,12 +66,13 @@ DIR * opendir(char const * name)
 
 /* readdir */
 #ifdef SYS_getdents
+int getdents(int fd, char * buf, size_t nbuf);
 struct dirent * readdir(DIR * dir)
 	/* FIXME only one directory can be read and analyzed at a time */
 {
 	static struct dirent de;
 
-	if(getdents(dir->fd, &de, sizeof(de)) == -1)
+	if(getdents(dir->fd, (char*)&de, sizeof(de)) == -1)
 		return NULL;
 	return &de;
 }
