@@ -72,36 +72,39 @@ struct stat
 
 
 /* constants */
-# define S_IFMT 0170000
-# define S_IFBLK 0060000
-# define S_IFCHR 0020000
-# define S_IFIFO 0010000
-# define S_IFREG 0100000
-# define S_IFDIR 0040000
-# define S_IFLNK 0120000
-# define S_IFSOCK 0140000
-# define S_IRUSR 0400
-# define S_IWUSR 0200
-# define S_IXUSR 0100
-# define S_IRWXU (S_IRUSR | S_IWUSR | S_IXUSR)
-# define S_IRGRP 040
-# define S_IWGRP 020
-# define S_IXGRP 010
-# define S_IRWXG (S_IRGRP | S_IWGRP | S_IXGRP)
-# define S_IROTH 04
-# define S_IWOTH 02
-# define S_IXOTH 01
-# define S_IRWXO (S_IROTH | S_IWOTH | S_IXOTH)
+# define S_IFMT		0170000
+# define S_IFSOCK	0140000
+# define S_IFLNK	0120000
+# define S_IFREG	0100000
+# define S_IFBLK	0060000
+# define S_IFDIR	0040000
+# define S_IFCHR	0020000
+# define S_IFIFO	0010000
+# define S_ISUID	0004000
+# define S_ISGID	0002000
+# define S_ISVTX	0001000
+# define S_IRUSR	0000400
+# define S_IWUSR	0000200
+# define S_IXUSR	0000100
+# define S_IRWXU	(S_IRUSR | S_IWUSR | S_IXUSR)
+# define S_IRGRP	0000040
+# define S_IWGRP	0000020
+# define S_IXGRP	0000010
+# define S_IRWXG	(S_IRGRP | S_IWGRP | S_IXGRP)
+# define S_IROTH	0000004
+# define S_IWOTH	0000002
+# define S_IXOTH	0000001
+# define S_IRWXO	(S_IROTH | S_IWOTH | S_IXOTH)
 
 
 /* macros */
-# define S_ISBLK(m) (((m) & S_IFBLK) ? 1 : 0)
-# define S_ISCHR(m) (((m) & S_IFCHR) ? 1 : 0)
-# define S_ISDIR(m) (((m) & S_IFDIR) ? 1 : 0)
-# define S_ISFIFO(m) (((m) & S_IFIFO) ? 1 : 0)
-# define S_ISREG(m) (((m) & S_IFREG) ? 1 : 0)
-# define S_ISLNK(m) (((m) & S_IFLNK) ? 1 : 0)
-# define S_ISSOCK(m) (((m) & S_IFSOCK) ? 1 : 0)
+# define S_ISBLK(m)	(((m) & S_IFBLK) ? 1 : 0)
+# define S_ISCHR(m)	(((m) & S_IFCHR) ? 1 : 0)
+# define S_ISDIR(m)	(((m) & S_IFDIR) ? 1 : 0)
+# define S_ISFIFO(m)	(((m) & S_IFIFO) ? 1 : 0)
+# define S_ISREG(m)	(((m) & S_IFREG) ? 1 : 0)
+# define S_ISLNK(m)	(((m) & S_IFLNK) ? 1 : 0)
+# define S_ISSOCK(m)	(((m) & S_IFSOCK) ? 1 : 0)
 
 
 /* functions */
