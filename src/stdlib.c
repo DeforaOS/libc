@@ -165,7 +165,7 @@ char * getenv(char const * name)
 			continue;
 		if((*p)[len] != '=')
 			continue;
-		return &(*p[len+1]);
+		return &((*p)[len+1]);
 	}
 	return NULL;
 }
