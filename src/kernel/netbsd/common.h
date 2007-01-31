@@ -64,6 +64,7 @@
 # define SYS_chown		283
 # define SYS_fchown		284
 # define SYS_lchown		285
+# define SYS_getcwd		296
 # define SYS_statvfs		357
 
 #endif /* !KERNEL_NETBSD_COMMON_H */

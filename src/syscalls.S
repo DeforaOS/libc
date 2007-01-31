@@ -38,6 +38,9 @@
 #ifdef SYS_readdir
 SYSCALL(readdir)
 #endif
+#ifdef SYS_getdents
+SYSCALL(getdents)
+#endif
 
 /* fcntl.h */
 SYSCALL(fcntl)
@@ -130,9 +133,7 @@ SYSCALL(dup2)
 SYSCALL(execve)
 #endif
 SYSCALL(fork)
-#ifdef SYS_getcwd
 SYSCALL(getcwd)
-#endif
 #ifdef SYS_getegid
 SYSCALL(getegid)
 #endif
