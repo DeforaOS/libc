@@ -43,7 +43,7 @@ DIR * opendir(char const * name)
 	int fd;
 	struct stat st;
 
-	if((fd = open(name, O_RDONLY)) != 0)
+	if((fd = open(name, O_RDONLY)) == -1)
 		return NULL;
 	if(fcntl(fd, F_SETFD, FD_CLOEXEC) != 0 || fstat(fd, &st) != 0)
 	{
