@@ -149,7 +149,7 @@ void exit(int status)
 /* free */
 void free(void * ptr)
 {
-	munmap(ptr, 4096);
+	munmap(ptr, 8192);
 }
 
 
@@ -176,12 +176,12 @@ void * malloc(size_t size)
 {
 	void * p;
 
-	if(size == 0 || size > 4096)
+	if(size == 0 || size > 8192)
 	{
 		errno = ENOSYS;
 		return NULL;
 	}
-	size = 4096;
+	size = 8192;
 	if((p = mmap(NULL, size, PROT_READ | PROT_WRITE,
 					MAP_PRIVATE | MAP_ANONYMOUS, -1, 0))
 			== MAP_FAILED)
@@ -195,7 +195,7 @@ void * realloc(void * ptr, size_t size)
 {
 	if(ptr == NULL)
 		return malloc(size);
-	if(size == 0 || size > 4096)
+	if(size == 0 || size > 8192)
 	{
 		errno = ENOSYS;
 		return NULL;
