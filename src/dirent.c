@@ -8,6 +8,7 @@
 #include "fcntl.h"
 #include "unistd.h"
 #include "stdlib.h"
+#include "string.h"
 #include "limits.h"
 #include "syscalls.h"
 #include "dirent.h"
@@ -17,7 +18,8 @@
 struct _DIR
 {
 	int fd;
-	char padding[PAGESIZE - sizeof(int)];
+	char buf[PAGESIZE];
+	size_t len;
 };
 
 
@@ -57,23 +59,44 @@ DIR * opendir(char const * name)
 		return NULL;
 	}
 	if((dir = malloc(sizeof(DIR))) == NULL)
+	{
 		close(fd);
-	else
-		dir->fd = fd;
+		return NULL;
+	}
+	dir->fd = fd;
+	dir->len = 0;
 	return dir;
 }
 
 
 /* readdir */
-#ifdef SYS_getdents
+#if defined(SYS_getdents)
 int getdents(int fd, char * buf, size_t nbuf);
 struct dirent * readdir(DIR * dir)
-	/* FIXME only one directory can be read and analyzed at a time */
 {
 	static struct dirent de;
+	int len;
+	size_t off = sizeof(de) - sizeof(de.d_name);
 
-	if(getdents(dir->fd, (char*)&de, sizeof(de)) == -1)
+	if(dir->len == 0)
+	{
+		if((len = getdents(dir->fd, dir->buf, sizeof(dir->buf))) == -1)
+			return NULL;
+		dir->len = len;
+	}
+	memcpy(&de, dir->buf, off);
+	len = off + de.d_namlen + 1;
+	len += (len % 4 == 0) ? 0 : 4 - (len % 4); /* XXX */
+	if(dir->len < len)
+	{
+		dir->len = 0;
 		return NULL;
+	}
+	memcpy(de.d_name, &dir->buf[off], len - off);
+	dir->len -= len;
+	memmove(dir->buf, &dir->buf[len], dir->len);
 	return &de;
 }
+#elif !defined(SYS_readdir)
+# warning Unsupported platform: readdir() is missing
 #endif
