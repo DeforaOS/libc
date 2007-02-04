@@ -153,6 +153,9 @@ SYSCALL(pipe)
 SYSCALL(read)
 SYSCALL(readlink)
 SYSCALL(rmdir)
+#ifdef SYS_sbrk
+SYSCALL(sbrk)
+#endif
 SYSCALL(setgid)
 #ifdef SYS_setpgid
 SYSCALL(setpgid)

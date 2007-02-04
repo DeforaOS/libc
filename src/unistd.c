@@ -38,7 +38,21 @@ char ** environ;
 
 /* brk */
 #ifndef SYS_brk
-# warning Unsupported platform: brk() is missing
+# ifdef SYS_sbrk
+int brk(void * addr)
+{
+	void * cur;
+
+	cur = sbrk(0);
+	if(cur == addr)
+		return 0;
+	if(sbrk(addr - cur) == -1)
+		return -1;
+	return 0;
+}
+# else /* !SYS_brk && SYS_sbrk */
+#  warning Unsupported platform: brk() is missing
+# endif /* !SYS_brk && !SYS_sbrk */
 #endif
 
 
@@ -80,6 +94,9 @@ int execv(char const * filename, char * const argv[])
 
 
 /* execve */
+#ifndef SYS_execve
+# warning Unsupported platform: execve() is missing
+#endif
 
 
 /* execvp */
@@ -281,12 +298,9 @@ int isatty(int fildes)
 
 
 /* sbrk */
-void * sbrk(unsigned int increment)
-	/* FIXME implement */
-{
-	errno = ENOSYS;
-	return NULL;
-}
+#ifndef SYS_sbrk
+# warning Unsupported platform: sbrk() is missing
+#endif
 
 
 /* setgid */

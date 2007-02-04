@@ -37,6 +37,7 @@
 # define SYS_execve		59
 # define SYS_umask		60
 # define SYS_vfork		66
+# define SYS_sbrk		69
 # define SYS_munmap		73
 # define SYS_setpgid		82
 # define SYS_dup2		90
