@@ -18,7 +18,7 @@ typedef unsigned int size_t;
 # endif
 # ifndef time_t
 #  define time_t time_t
-typedef int time_t;
+typedef long long time_t;
 # endif
 /* FIXME also define clockid_t timer_t */
 
