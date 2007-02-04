@@ -25,27 +25,51 @@ char ** environ;
 
 /* functions */
 /* access */
+#ifndef SYS_access
+# warning Unsupported platform: access() is missing
+#endif
 
 
 /* alarm */
+#ifndef SYS_alarm
+# warning Unsupported platform: alarm() is missing
+#endif
 
 
 /* brk */
+#ifndef SYS_brk
+# warning Unsupported platform: brk() is missing
+#endif
 
 
 /* chdir */
+#ifndef SYS_chdir
+# warning Unsupported platform: chdir() is missing
+#endif
 
 
 /* chown */
+#ifndef SYS_chown
+# warning Unsupported platform: chown() is missing
+#endif
 
 
 /* close */
+#ifndef SYS_close
+# warning Unsupported platform: close() is missing
+#endif
 
 
 /* dup */
+#ifndef SYS_dup
+# warning Unsupported platform: dup() is missing
+#endif
 
 
 /* dup2 */
+#ifndef SYS_dup2
+# warning Unsupported platform: dup2() is missing
+#endif
 
 
 /* execv */
