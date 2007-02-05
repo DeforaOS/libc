@@ -9,3 +9,6 @@
 
 /* functions */
 /* times */
+#ifndef SYS_times
+# warning Unsupported platform: times() is missing
+#endif

@@ -9,7 +9,8 @@
 
 
 /* statvfs */
-#if defined(SYS_statfs)
+#if !defined(SYS_statvfs)
+# if defined(SYS_statfs)
 typedef long fsid_t;
 struct statfs
 {
@@ -41,6 +42,7 @@ int statvfs(char const * path, struct statvfs * buf)
 	buf->f_namemax = fs.f_namelen;
 	return 0;
 }
-#elif !defined(SYS_statvfs)
-# warning Unsupported architecture (missing statvfs and no statfs)
+# else /* !SYS_statvfs && !SYS_statfs */
+#  warning Unsupported platform: statvfs() is missing
+# endif
 #endif
