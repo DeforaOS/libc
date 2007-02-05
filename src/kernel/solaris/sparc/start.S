@@ -3,9 +3,9 @@
 
 
 
-/* FIXME implement */
 _start:
 	/* terminate stack */
+	mov	%g0, %fp
 
 	/* argc, argv, arge, environ */
 
