@@ -11,6 +11,8 @@
 #  include "kernel/linux/sys/stat.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/stat.h"
+# elif defined(__sun__)
+#  include "kernel/solaris/sys/stat.h"
 # else
 #  warning Unsupported platform
 # endif
