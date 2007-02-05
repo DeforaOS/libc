@@ -3,8 +3,8 @@
 
 
 
-#ifndef LIBC_KERNEL_NETBSD_SYS_TIMES_H
-# define LIBC_KERNEL_NETBSD_SYS_TIMES_H
+#ifndef LIBC_KERNEL_LINUX_SYS_TIMES_H
+# define LIBC_KERNEL_LINUX_SYS_TIMES_H
 
 
 /* types */
@@ -13,4 +13,4 @@
 typedef unsigned int clock_t;
 # endif
 
-#endif /* !LIBC_KERNEL_NETBSD_SYS_TIMES_H */
+#endif /* !LIBC_KERNEL_LINUX_SYS_TIMES_H */

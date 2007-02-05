@@ -3,8 +3,8 @@
 
 
 
-#ifndef LIBC_KERNEL_NETBSD_ERRNO_H
-# define LIBC_KERNEL_NETBSD_ERRNO_H
+#ifndef LIBC_KERNEL_SOLARIS_ERRNO_H
+# define LIBC_KERNEL_SOLARIS_ERRNO_H
 
 
 /* constants */
@@ -33,4 +33,4 @@
 # define ENOSYS		89
 # define ENOBUFS	132
 
-#endif /* !LIBC_KERNEL_NETBSD_ERRNO_H */
+#endif /* !LIBC_KERNEL_SOLARIS_ERRNO_H */

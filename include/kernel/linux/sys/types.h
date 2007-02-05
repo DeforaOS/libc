@@ -3,8 +3,8 @@
 
 
 
-#ifndef LIBC_KERNEL_NETBSD_SYS_TYPES_H
-# define LIBC_KERNEL_NETBSD_SYS_TYPES_H
+#ifndef LIBC_KERNEL_LINUX_SYS_TYPES_H
+# define LIBC_KERNEL_LINUX_SYS_TYPES_H
 
 
 /* types */
@@ -37,4 +37,4 @@ typedef int off_t;
 typedef unsigned int time_t;
 # endif
 
-#endif /* !LIBC_KERNEL_NETBSD_SYS_TYPES_H */
+#endif /* !LIBC_KERNEL_LINUX_SYS_TYPES_H */

@@ -3,8 +3,8 @@
 
 
 
-#ifndef LIBC_KERNEL_NETBSD_SYS_MMAN_H
-# define LIBC_KERNEL_NETBSD_SYS_MMAN_H
+#ifndef LIBC_KERNEL_SOLARIS_SYS_MMAN_H
+# define LIBC_KERNEL_SOLARIS_SYS_MMAN_H
 
 
 /* types */
@@ -25,4 +25,4 @@ typedef long off_t;
 # define MAP_FIXED	0x10
 # define MAP_ANONYMOUS	0x100
 
-#endif /* !LIBC_KERNEL_NETBSD_SYS_MMAN_H */
+#endif /* !LIBC_KERNEL_SOLARIS_SYS_MMAN_H */
