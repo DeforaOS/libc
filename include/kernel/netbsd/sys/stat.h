@@ -8,10 +8,9 @@
 
 
 /* types */
-/* FIXME need a compatibility layer for types */
 # ifndef blkcnt_t
 #  define blkcnt_t blkcnt_t
-typedef int blkcnt_t;
+typedef unsigned long long blkcnt_t;
 # endif
 # ifndef blksize_t
 #  define blksize_t blksize_t
@@ -39,11 +38,11 @@ typedef int nlink_t;
 # endif
 # ifndef off_t
 #  define off_t off_t
-typedef int off_t;
+typedef long long off_t;
 # endif
 # ifndef time_t
 #  define time_t time_t
-typedef long long time_t;
+typedef int time_t;
 # endif
 
 # ifndef gid_t

@@ -6,31 +6,13 @@
 #ifndef LIBC_SYS_TYPES_H
 # define LIBC_SYS_TYPES_H
 
+# include "compat/sys/types.h"
+
 
 /* types */
-# ifndef blkcnt_t
-#  define blkcnt_t blkcnt_t
-typedef int blkcnt_t;
-# endif
 # ifndef blksize_t
 #  define blksize_t blksize_t
 typedef int blksize_t;
-# endif
-# ifndef clock_t
-#  define clock_t clock_t
-typedef int clock_t;
-# endif
-# ifndef dev_t
-#  define dev_t dev_t
-typedef int dev_t;
-# endif
-# ifndef fsblkcnt_t
-#  define fsblkcnt_t fsblkcnt_t
-typedef unsigned long fsblkcnt_t;
-# endif
-# ifndef fsfilcnt_t
-#  define fsfilcnt_t fsfilcnt_t
-typedef unsigned long fsfilcnt_t;
 # endif
 # ifndef id_t
 #  define id_t id_t
@@ -48,21 +30,13 @@ typedef int mode_t;
 #  define nlink_t nlink_t
 typedef int nlink_t;
 # endif
-# ifndef off_t
-#  define off_t off_t
-typedef int off_t;
-# endif
 # ifndef size_t
 #  define size_t size_t
-typedef unsigned int size_t;
+typedef unsigned long size_t;
 # endif
 # ifndef ssize_t
 #  define ssize_t ssize_t
-typedef int ssize_t;
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef long long time_t;
+typedef long ssize_t;
 # endif
 
 # ifndef gid_t

@@ -18,10 +18,6 @@ typedef int id_t;
 #  define mode_t mode_t
 typedef int mode_t;
 # endif
-# ifndef off_t
-#  define off_t off_t
-typedef int off_t;
-# endif
 # ifndef pid_t
 #  define pid_t pid_t
 typedef id_t pid_t;

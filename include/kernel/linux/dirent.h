@@ -6,13 +6,13 @@
 #ifndef LIBC_KERNEL_LINUX_DIRENT_H
 # define LIBC_KERNEL_LINUX_DIRENT_H
 
-# ifndef off_t /* XXX */
+
+/* types */
+# ifndef off_t
 #  define off_t off_t
 typedef int off_t;
 # endif
 
-
-/* types */
 struct dirent
 {
 	ino_t d_ino;

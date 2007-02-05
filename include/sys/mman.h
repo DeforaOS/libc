@@ -14,13 +14,9 @@
 #  define mode_t mode_t
 typedef int mode_t;
 # endif
-# ifndef off_t
-#  define off_t off_t
-typedef int off_t;
-# endif
 # ifndef size_t
 #  define size_t size_t
-typedef unsigned int size_t;
+typedef unsigned long size_t;
 # endif
 
 

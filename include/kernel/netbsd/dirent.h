@@ -6,16 +6,14 @@
 #ifndef LIBC_KERNEL_NETBSD_DIRENT_H
 # define LIBC_KERNEL_NETBSD_DIRENT_H
 
-# include <stdint.h> /* XXX */
-
 
 /* types */
 struct dirent
 {
-	uint32_t d_fileno;
-	uint16_t d_reclen;
-	uint8_t d_type;
-	uint8_t d_namlen;
+	ino_t d_ino;
+	unsigned short int d_reclen;
+	unsigned char d_type;
+	unsigned char d_namlen;
 	char d_name[256]; /* NAME_MAX + 1 */
 };
 

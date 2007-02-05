@@ -7,6 +7,13 @@
 # define LIBC_KERNEL_LINUX_FCNTL_H
 
 
+/* types */
+# ifndef off_t
+#  define off_t off_t
+typedef int off_t;
+# endif
+
+
 /* constants */
 # define F_DUPFD	0
 # define F_GETFD	1

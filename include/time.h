@@ -6,19 +6,13 @@
 #ifndef LIBC_TIME_H
 # define LIBC_TIME_H
 
+# include "compat/time.h"
+
 
 /* types */
-# ifndef clock_t
-#  define clock_t clock_t
-typedef int clock_t;
-# endif
 # ifndef size_t
 #  define size_t size_t
-typedef unsigned int size_t;
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef long long time_t;
+typedef unsigned long size_t;
 # endif
 /* FIXME also define clockid_t timer_t */
 
