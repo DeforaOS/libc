@@ -5,10 +5,14 @@
 
 #include "sys/time.h"
 #include "stdlib.h"
+#include "syscalls.h"
 #include "time.h"
 
 
 /* nanosleep */
+#ifndef SYS_nanosleep
+# warning Unsupported platform: nanosleep() is missing
+#endif
 
 
 /* time */

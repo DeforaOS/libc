@@ -166,10 +166,10 @@ static void _execvp_do(char const * filename, char * const argv[])
 }
 
 
-/* _exit */
-
-
 /* fork */
+#ifndef SYS_fork
+# warning Unsupported platform: fork() is missing
+#endif
 
 
 /* getcwd */
@@ -296,24 +296,45 @@ int isatty(int fildes)
 
 
 /* lchown */
+#ifndef SYS_lchown
+# warning Unsupported platform: lchown() is missing
+#endif
 
 
 /* link */
+#ifndef SYS_link
+# warning Unsupported platform: link() is missing
+#endif
 
 
 /* nice */
+#ifndef SYS_nice
+# warning Unsupported platform: nice() is missing
+#endif
 
 
 /* pipe */
+#ifndef SYS_pipe
+# warning Unsupported platform: pipe() is missing
+#endif
 
 
 /* read */
+#ifndef SYS_read
+# warning Unsupported platform: read() is missing
+#endif
 
 
 /* readlink */
+#ifndef SYS_readlink
+# warning Unsupported platform: readlink() is missing
+#endif
 
 
 /* rmdir */
+#ifndef SYS_rmdir
+# warning Unsupported platform: rmdir() is missing
+#endif
 
 
 /* sbrk */
@@ -323,12 +344,21 @@ int isatty(int fildes)
 
 
 /* setgid */
+#ifndef SYS_setgid
+# warning Unsupported platform: setgid() is missing
+#endif
 
 
 /* setpgid */
+#ifndef SYS_setpgid
+# warning Unsupported platform: setpgid() is missing
+#endif
 
 
 /* setregid */
+#ifndef SYS_setregid
+# warning Unsupported platform: setregid() is missing
+#endif
 
 
 /* setreuid */

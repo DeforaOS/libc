@@ -10,6 +10,7 @@
 #include "stdlib.h"
 #include "string.h"
 #include "limits.h"
+#include "syscalls.h"
 #include "stdio.h"
 
 #define min(a, b) ((a) > (b) ? (b) : (a))
@@ -328,6 +329,9 @@ int puts(char const * string)
 
 
 /* rename */
+#ifndef SYS_rename
+# warning Unsupported platform: rename() is missing
+#endif
 
 
 /* snprintf */

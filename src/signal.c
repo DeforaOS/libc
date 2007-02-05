@@ -3,7 +3,11 @@
 
 
 
+#include "syscalls.h"
 #include "signal.h"
 
 
 /* kill */
+#ifndef SYS_kill
+# warning Unsupported platform: kill() is missing
+#endif
