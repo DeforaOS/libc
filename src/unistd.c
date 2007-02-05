@@ -50,9 +50,9 @@ int brk(void * addr)
 		return -1;
 	return 0;
 }
-# else /* !SYS_brk && SYS_sbrk */
+# else /* !SYS_brk && !SYS_sbrk */
 #  warning Unsupported platform: brk() is missing
-# endif /* !SYS_brk && !SYS_sbrk */
+# endif
 #endif
 
 
@@ -173,15 +173,27 @@ static void _execvp_do(char const * filename, char * const argv[])
 
 
 /* getcwd */
+#ifndef SYS_getcwd
+# warning Unsupported platform: getcwd() is missing
+#endif
 
 
 /* getegid */
+#ifndef SYS_getegid
+# warning Unsupported platform: getegid() is missing
+#endif
 
 
 /* geteuid */
+#ifndef SYS_geteuid
+# warning Unsupported platform: geteuid() is missing
+#endif
 
 
 /* getgid */
+#ifndef SYS_getgid
+# warning Unsupported platform: getgid() is missing
+#endif
 
 
 /* getopt */
@@ -203,8 +215,7 @@ int getopt(int argc, char * const argv[], char const * optstring)
 	if(argv != oldargv) /* reset state */
 		_getopt_reset(&oldargv, argv, &i);
 	if(optind == argc || (i == 0 && argv[optind][0] != '-'))
-		/* there is nothing to parse */
-		return -1;
+		return -1; /* there is nothing to parse */
 	if(argv[optind][++i] == '\0')
 	{
 		if(++optind == argc) /* every argument had options */
@@ -259,19 +270,27 @@ static void _getopt_reset(char * const ** oldargv, char * const * argv,
 
 
 /* getpid */
+#ifndef SYS_getpid
+# warning Unsupported platform: getpid() is missing
+#endif
 
 
 /* getppid */
+#ifndef SYS_getppid
+# warning Unsupported platform: getppid() is missing
+#endif
 
 
 /* getuid */
+#ifndef SYS_getuid
+# warning Unsupported platform: getuid() is missing
+#endif
 
 
 /* isatty */
 int isatty(int fildes)
-	/* FIXME implement */
 {
-	errno = ENOSYS;
+	errno = ENOSYS; /* FIXME implement */
 	return 0;
 }
 
@@ -340,9 +359,8 @@ unsigned int sleep(unsigned int seconds)
 
 /* ttyname */
 char * ttyname(int fildes)
-	/* FIXME implement */
 {
-	errno = ENOSYS;
+	errno = ENOSYS; /* FIXME not implemented */
 	return NULL;
 }
 
