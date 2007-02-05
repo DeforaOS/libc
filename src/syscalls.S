@@ -63,6 +63,12 @@ SYSCALL(mmap)
 #endif
 SYSCALL(munmap)
 
+/* sys/resource.h */
+SYSCALL(getpriority)
+SYSCALL(getrlimit)
+SYSCALL(setpriority)
+SYSCALL(setrlimit)
+
 /* sys/select.h */
 #ifdef SYS_select
 SYSCALL(select)

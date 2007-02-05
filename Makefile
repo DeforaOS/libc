@@ -33,6 +33,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/stdio.c \
 		$(PACKAGE)-$(VERSION)/src/string.c \
 		$(PACKAGE)-$(VERSION)/src/sys/mman.c \
+		$(PACKAGE)-$(VERSION)/src/sys/resource.c \
 		$(PACKAGE)-$(VERSION)/src/sys/select.c \
 		$(PACKAGE)-$(VERSION)/src/sys/stat.c \
 		$(PACKAGE)-$(VERSION)/src/sys/statvfs.c \
@@ -94,6 +95,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/stdlib.h \
 		$(PACKAGE)-$(VERSION)/include/string.h \
 		$(PACKAGE)-$(VERSION)/include/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/sys/statvfs.h \
 		$(PACKAGE)-$(VERSION)/include/sys/times.h \
