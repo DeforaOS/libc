@@ -58,6 +58,7 @@
 # define SYS_nanosleep		199
 # define SYS_setreuid		202
 # define SYS_setregid		203
+# define SYS_getcwd		229
 /* FIXME
 # define SYS_geteuid		25
 # define SYS_getppid		39
