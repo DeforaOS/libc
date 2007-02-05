@@ -3,7 +3,7 @@
 
 
 
-.section .text
+.text
 
 
 /* Linux */
@@ -28,6 +28,11 @@
 #  warning Unsupported NetBSD architecture
 # endif
 # include "kernel/netbsd/common.S"
+
+/* Solaris */
+#elif defined(__sun__)
+# include "kernel/solaris/sparc/syscalls.S"
+# include "kernel/solaris/common.h"
 
 /* Unknown */
 #else

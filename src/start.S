@@ -3,7 +3,7 @@
 
 
 
-.section .text
+.text
 
 
 /* _start */
