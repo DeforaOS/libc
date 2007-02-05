@@ -25,7 +25,7 @@ typedef unsigned long fsblkcnt_t;
 typedef unsigned long fsfilcnt_t;
 # endif
 # ifndef ino_t
-#  define ino_t
+#  define ino_t ino_t
 typedef long ino_t;
 #endif
 # ifndef off_t
