@@ -66,6 +66,7 @@ SYSCALL(munmap)
 /* sys/resource.h */
 SYSCALL(getpriority)
 SYSCALL(getrlimit)
+SYSCALL(getrusage)
 SYSCALL(setpriority)
 SYSCALL(setrlimit)
 

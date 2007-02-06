@@ -13,15 +13,24 @@
 # warning Unsupported platform: getpriority() is missing
 #endif
 
+
 /* getrlimit */
 #ifndef SYS_getrlimit
 # warning Unsupported platform: getrlimit() is missing
 #endif
 
+
+/* getrusage */
+#ifndef SYS_getrusage
+# warning Unsupported platform: getrusage() is missing
+#endif
+
+
 /* setpriority */
 #ifndef SYS_setpriority
 # warning Unsupported platform: setpriority() is missing
 #endif
+
 
 /* setrlimit */
 #ifndef SYS_setrlimit

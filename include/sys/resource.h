@@ -19,6 +19,7 @@ typedef int id_t;
 /* functions */
 int getpriority(int which, id_t who);
 int getrlimit(int resource, struct rlimit * rlp);
+int getrusage(int who, struct rusage * rup);
 int setpriority(int which, id_t who, int value);
 int setrlimit(int resource, const struct rlimit * rlp);
 

@@ -41,6 +41,7 @@
 # define SYS_getppid		64
 # define SYS_setsid		66
 # define SYS_setrlimit		75
+# define SYS_getrusage		77
 # define SYS_gettimeofday	78
 # define SYS_select		82
 # define SYS_symlink		83

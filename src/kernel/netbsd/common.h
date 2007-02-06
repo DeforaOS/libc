@@ -46,6 +46,7 @@
 # define SYS_setpriority	96
 # define SYS_getpriority	100
 # define SYS_gettimeofday	116
+# define SYS_getrusage		117
 # define SYS_setreuid		126
 # define SYS_setregid		127
 # define SYS_mkfifo		132
