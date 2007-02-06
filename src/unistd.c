@@ -308,9 +308,22 @@ int isatty(int fildes)
 
 
 /* nice */
-#ifndef SYS_nice
-# warning Unsupported platform: nice() is missing
-#endif
+#if !defined(SYS_nice)
+# if defined(SYS_setpriority)
+#  include "sys/resource.h"
+int nice(int inc)
+{
+	int prio;
+
+	errno = 0;
+	if((prio = getpriority(PRIO_PROCESS, 0)) == -1 && errno != 0)
+		return -1;
+	return setpriority(PRIO_PROCESS, 0, prio + inc);
+}
+# else
+#  warning Unsupported platform: nice() is missing
+# endif
+#endif /* !SYS_nice */
 
 
 /* pipe */
