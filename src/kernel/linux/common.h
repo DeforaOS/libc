@@ -71,5 +71,6 @@
 # define SYS_chown		212
 # define SYS_setuid		213
 # define SYS_setgid		214
+# define SYS_utimes		271
 
 #endif /* !KERNEL_LINUX_COMMON_H */
