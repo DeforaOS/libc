@@ -375,12 +375,21 @@ int nice(int inc)
 
 
 /* setreuid */
+#ifndef SYS_setreuid
+# warning Unsupported platform: setreuid() is missing
+#endif
 
 
 /* setsid */
+#ifndef SYS_setsid
+# warning Unsupported platform: setsid() is missing
+#endif
 
 
 /* setuid */
+#ifndef SYS_setuid
+# warning Unsupported platform: setuid() is missing
+#endif
 
 
 /* sleep */
@@ -395,9 +404,15 @@ unsigned int sleep(unsigned int seconds)
 
 
 /* symlink */
+#ifndef SYS_symlink
+# warning Unsupported platform: symlink() is missing
+#endif
 
 
 /* sync */
+#ifndef SYS_sync
+# warning Unsupported platform: sync() is missing
+#endif
 
 
 /* ttyname */
@@ -409,9 +424,18 @@ char * ttyname(int fildes)
 
 
 /* unlink */
+#ifndef SYS_unlink
+# warning Unsupported platform: unlink() is missing
+#endif
 
 
 /* vfork */
+#ifndef SYS_vfork
+# warning Unsupported platform: vfork() is missing
+#endif
 
 
 /* write */
+#ifndef SYS_write
+# warning Unsupported platform: write() is missing
+#endif
