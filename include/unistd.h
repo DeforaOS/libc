@@ -34,17 +34,21 @@ typedef unsigned int size_t;
 typedef int ssize_t;
 # endif
 
+# ifndef id_t
+#  define id_t id_t
+typedef int id_t;
+# endif
 # ifndef gid_t
 #  define gid_t gid_t
-typedef int gid_t;
+typedef id_t gid_t;
 # endif
 # ifndef pid_t
 #  define pid_t pid_t
-typedef int pid_t;
+typedef id_t pid_t;
 # endif
 # ifndef uid_t
 #  define uid_t uid_t
-typedef int uid_t;
+typedef id_t uid_t;
 # endif
 
 

@@ -6,13 +6,10 @@
 #ifndef LIBC_UTIME_H
 # define LIBC_UTIME_H
 
+# include "compat/sys/time.h"
+
 
 /* types */
-# ifndef time_t
-#  define time_t time_t
-typedef long long time_t;
-# endif
-
 struct utimbuf
 {
 	time_t actime;

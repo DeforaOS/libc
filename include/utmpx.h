@@ -6,23 +6,25 @@
 #ifndef LIBC_UTMPX_H
 # define LIBC_UTMPX_H
 
+# include "compat/sys/time.h"
+
 # define _UTMPX_USER_SIZE	32
 # define _UTMPX_ID_SIZE		4
 # define _UTMPX_LINE_SIZE	32
 
 
 /* types */
+# ifndef id_t
+#  define id_t id_t
+typedef int id_t;
+# endif
 # ifndef pid_t
 #  define pid_t pid_t
-typedef int pid_t;
+typedef id_t pid_t;
 # endif
 # ifndef suseconds_t
 #  define suseconds_t suseconds_t
 typedef int suseconds_t;
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef long long time_t;
 # endif
 #ifndef timeval
 # define timeval timeval
