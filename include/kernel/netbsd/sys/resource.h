@@ -68,4 +68,7 @@ struct rusage
 # define PRIO_PGRP	1
 # define PRIO_USER	2
 
+# define RUSAGE_SELF		0
+# define RUSAGE_CHILDREN	-1
+
 #endif /* !LIBC_KERNEL_NETBSD_SYS_RESOURCE_H */

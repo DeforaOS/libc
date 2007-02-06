@@ -20,6 +20,6 @@ struct tms
 
 
 /* function */
-clock_t times(struct tms * buf);
+clock_t times(struct tms * tmsp);
 
 #endif /* !LIBC_SYS_TIMES_H */
