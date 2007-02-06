@@ -46,7 +46,7 @@ int brk(void * addr)
 	cur = sbrk(0);
 	if(cur == addr)
 		return 0;
-	if(sbrk(addr - cur) == -1)
+	if(sbrk(addr - cur) == (void*)-1)
 		return -1;
 	return 0;
 }

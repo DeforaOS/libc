@@ -15,4 +15,13 @@ typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
 
+# ifndef intptr_t
+#  define intptr_t intptr_t
+typedef signed long intptr_t;
+# endif
+# ifndef uintptr_t
+#  define uintptr_t uintptr_t
+typedef unsigned long uintptr_t;
+# endif
+
 #endif /* !LIBC_STDINT_H */

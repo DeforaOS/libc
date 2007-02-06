@@ -21,6 +21,10 @@ enum { SEEK_CUR, SEEK_END, SEEK_SET };
 
 
 /* types */
+# ifndef intptr_t
+#  define intptr_t intptr_t
+typedef signed long intptr_t;
+# endif
 # ifndef size_t
 #  define size_t size_t
 typedef unsigned int size_t;
@@ -52,7 +56,7 @@ extern int optind, opterr, optopt;
 /* functions */
 int access(char const * filename, int mode);
 unsigned int alarm(unsigned int seconds);
-int brk(void * end_data_segment);
+int brk(void * addr);
 int chdir(char const * filename);
 int chown(char const * filename, uid_t owner, gid_t group);
 int close(int fildes);
@@ -95,7 +99,7 @@ ssize_t read(int fildes, void * buf, size_t count);
 ssize_t readlink(char const * filename, char * buf, size_t bufsiz);
 int rmdir(char const * filename);
 
-void * sbrk(size_t increment);
+void * sbrk(intptr_t increment);
 
 int setgid(gid_t gid);
 int setpgid(pid_t pid, pid_t pgid);
