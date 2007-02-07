@@ -26,7 +26,7 @@ typedef unsigned int id_t;
 # endif
 # ifndef ino_t
 #  define ino_t ino_t
-typedef unsigned long ino_t;
+typedef unsigned long long ino_t;
 # endif
 # ifndef mode_t
 #  define mode_t mode_t
@@ -58,24 +58,24 @@ struct stat
 {
 	dev_t st_dev;
 	char _padding1[10];
-	ino_t st_ino;
+	long _padding2;
 	mode_t st_mode;
 	nlink_t st_nlink;
 	uid_t st_uid;
 	gid_t st_gid;
 	dev_t st_rdev;
-	char _padding2[10];
+	char _padding3[10];
 	off_t st_size;
 	blksize_t st_blksize;
 	blkcnt_t st_blocks;
-	long _padding3;
+	long _padding4;
 	time_t st_atime;
-	int _padding4;
-	time_t st_mtime;
 	int _padding5;
+	time_t st_mtime;
+	int _padding6;
 	time_t st_ctime;
-	unsigned long _padding6;
-	unsigned long long _padding7;
+	unsigned long _padding7;
+	ino_t st_ino;
 };
 
 #endif /* !LIBC_KERNEL_LINUX_SYS_STAT_H */

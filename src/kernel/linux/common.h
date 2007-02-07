@@ -46,7 +46,6 @@
 # define SYS_select		82
 # define SYS_symlink		83
 # define SYS_readlink		85
-# define SYS_readdir		89
 # define SYS_mmap		90
 # define SYS_munmap		91
 # define SYS_getpriority	96
@@ -71,6 +70,7 @@
 # define SYS_chown		212
 # define SYS_setuid		213
 # define SYS_setgid		214
+# define SYS_getdents		220
 # define SYS_utimes		271
 
 #endif /* !KERNEL_LINUX_COMMON_H */
