@@ -75,26 +75,31 @@ int getdents(int fd, char * buf, size_t nbuf);
 struct dirent * readdir(DIR * dir)
 {
 	static struct dirent de;
-	int len;
-	size_t off = sizeof(de) - sizeof(de.d_name);
+	size_t len;
+	const size_t off = sizeof(de) - sizeof(de.d_name);
 
-	if(dir->len == 0)
+	for(;;)
 	{
-		if((len = getdents(dir->fd, dir->buf, sizeof(dir->buf))) == -1)
+		if(dir->len == 0)
+		{
+			if((len = getdents(dir->fd, dir->buf, sizeof(dir->buf)))
+					== (size_t)-1)
+				return NULL;
+			dir->len = len;
+		}
+		memcpy(&de, dir->buf, off);
+		len = de.d_reclen;
+		if(len > sizeof(de) || len > dir->len)
+		{
+			dir->len = 0;
 			return NULL;
-		dir->len = len;
+		}
+		memcpy(de.d_name, &dir->buf[off], len - off);
+		dir->len -= len;
+		memmove(dir->buf, &dir->buf[len], dir->len);
+		if(de.d_ino != 0)
+			break;
 	}
-	memcpy(&de, dir->buf, off);
-	len = off + de.d_namlen + 1;
-	len += (len % 4 == 0) ? 0 : 4 - (len % 4); /* XXX */
-	if(dir->len < len)
-	{
-		dir->len = 0;
-		return NULL;
-	}
-	memcpy(de.d_name, &dir->buf[off], len - off);
-	dir->len -= len;
-	memmove(dir->buf, &dir->buf[len], dir->len);
 	return &de;
 }
 #elif !defined(SYS_readdir)
