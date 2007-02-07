@@ -83,7 +83,7 @@ struct dirent * readdir(DIR * dir)
 		if(dir->len == 0)
 		{
 			if((len = getdents(dir->fd, dir->buf, sizeof(dir->buf)))
-					== (size_t)-1)
+					== (size_t)-1) /* XXX cast */
 				return NULL;
 			dir->len = len;
 		}
