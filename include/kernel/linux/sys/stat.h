@@ -26,7 +26,7 @@ typedef unsigned int id_t;
 # endif
 # ifndef ino_t
 #  define ino_t ino_t
-typedef unsigned long long ino_t;
+typedef unsigned long ino_t;
 # endif
 # ifndef mode_t
 #  define mode_t mode_t
@@ -75,7 +75,7 @@ struct stat
 	int _padding5;
 	time_t st_ctime;
 	unsigned long _padding6;
-	ino_t _padding7;
+	unsigned long long _padding7;
 };
 
 #endif /* !LIBC_KERNEL_LINUX_SYS_STAT_H */
