@@ -410,24 +410,24 @@ static int _vprintf(print_func func, void * dest, size_t size,
 	return ret;
 }
 
-static void _format_lutoa(char * dest, long unsigned n, size_t base);
+static void _format_lutoa(char * dest, unsigned long n, size_t base);
 static int _format_c(print_func func, void * dest, size_t * len, char * chrp);
 static int _format_d(print_func func, void * dest, size_t size, size_t * len,
-		long int * ptr);
+		long long * ptr);
 static int _format_s(print_func func, void * dest, size_t size, size_t * len,
 		char * str);
 static int _format_p(print_func func, void * dest, size_t size, size_t * len,
 		void * ptr);
 static int _format_u(print_func func, void * dest, size_t size, size_t * len,
-		long unsigned int * ptr);
+		unsigned long long * ptr);
 static int _format_x(print_func func, void * dest, size_t size, size_t * len,
-		long unsigned int * ptr);
+		unsigned long long * ptr);
 static int _vprintf_format(print_func func, void * dest, size_t size,
 		char const ** p, size_t * len, va_list * arg)
 {
 	char c;
 	char * str;
-	long int i;
+	long long int i;
 	void * ptr;
 	int lng = 0;
 
@@ -459,8 +459,9 @@ static int _vprintf_format(print_func func, void * dest, size_t size,
 					return -1;
 				break;
 			case 'd':
-				i = lng > 0 ? va_arg(*arg, long int)
-					: va_arg(*arg, int);
+				i = lng > 1 ? va_arg(*arg, long long int)
+					: (lng == 1 ? va_arg(*arg, long int)
+							: va_arg(*arg, int));
 				if(_format_d(func, dest, size, len, &i) == -1)
 					return -1;
 				break;
@@ -475,14 +476,16 @@ static int _vprintf_format(print_func func, void * dest, size_t size,
 					return -1;
 				break;
 			case 'u':
-				i = lng > 0 ? va_arg(*arg, long int)
-					: va_arg(*arg, int);
+				i = lng > 1 ? va_arg(*arg, long long int)
+					: (lng == 1 ? va_arg(*arg, long int)
+							: va_arg(*arg, int));
 				if(_format_u(func, dest, size, len, &i) == -1)
 					return -1;
 				break;
 			case 'x':
-				i = lng > 0 ? va_arg(*arg, long int)
-					: va_arg(*arg, int);
+				i = lng > 1 ? va_arg(*arg, long long int)
+					: (lng == 1 ? va_arg(*arg, long int)
+							: va_arg(*arg, int));
 				if(_format_x(func, dest, size, len, &i) == -1)
 					return -1;
 				break;
@@ -504,9 +507,9 @@ static int _format_c(print_func func, void * dest, size_t * len, char * chrp)
 }
 
 static int _format_d(print_func func, void * dest, size_t size, size_t * len,
-		long int * ptr)
+		long long * ptr)
 {
-	long int val;
+	long long val;
 
 	if(*ptr >= 0)
 		return _format_u(func, dest, size - 1, len, ptr);
@@ -545,7 +548,7 @@ static int _format_p(print_func func, void * dest, size_t size, size_t * len,
 }
 
 static int _format_u(print_func func, void * dest, size_t size, size_t * len,
-		long unsigned int * ptr)
+		unsigned long long * ptr)
 {
 	char tmp[19] = "";
 	int l;
@@ -559,7 +562,7 @@ static int _format_u(print_func func, void * dest, size_t size, size_t * len,
 }
 
 static int _format_x(print_func func, void * dest, size_t size, size_t * len,
-		long unsigned int * ptr)
+		unsigned long long * ptr)
 {
 	char tmp[sizeof(long) + sizeof(long) + 1] = "";
 	int l;
@@ -575,7 +578,7 @@ static int _format_x(print_func func, void * dest, size_t size, size_t * len,
 /* PRE	dest is long enough
  * POST	2 <= base <= 36		dest is the ascii representation of n
  *	else			dest is an empty string */
-static void _format_lutoa(char * dest, long unsigned n, size_t base)
+static void _format_lutoa(char * dest, unsigned long n, size_t base)
 {
 	char conv[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 	size_t len = 0;
