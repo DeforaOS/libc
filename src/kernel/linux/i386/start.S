@@ -4,23 +4,23 @@
 
 
 _start:
-	pop	%ecx		/* argc */
+	pop	%eax		/* argc */
 	mov	%esp, %ebx	/* argv */
-	mov	%esp, %eax	/* envp */
-	add	$4, %eax
-	add	%ecx, %eax
-	add	%ecx, %eax
-	add	%ecx, %eax
-	add	%ecx, %eax
-	mov	%eax, environ
+	push	%eax
+	mov	%ebx, %ecx	/* envp */
+	add	$4, %ecx
+	add	%eax, %ecx
+	add	%eax, %ecx
+	add	%eax, %ecx
+	add	%eax, %ecx
+	mov	%ecx, environ	/* environ */
 	xor	%ebp, %ebp	/* stack */
 	push	%ebp
-	push	%ebp
-	push	%ebp
+	push	%esp
 	mov	%esp, %ebp
-	push	%eax
+	push	%ecx		/* main */
 	push	%ebx
-	push	%ecx
+	push	%eax
 	call	main
 	push	%eax
 	call	exit
