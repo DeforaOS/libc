@@ -64,12 +64,15 @@ struct stat
 	gid_t st_gid;
 	dev_t st_rdev;
 	time_t st_atime;
+	time_t padding1;
 	time_t st_mtime;
+	time_t padding2;
 	time_t st_ctime;
+	time_t padding3;
 	off_t st_size;
 	blkcnt_t st_blocks;
 	blksize_t st_blksize;
-	char padding[32];
+	char padding4[24];
 };
 
 #endif /* !LIBC_KERNEL_NETBSD_SYS_STAT_H */
