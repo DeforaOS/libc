@@ -14,15 +14,15 @@ typedef unsigned long blkcnt_t;
 # endif
 # ifndef blksize_t
 #  define blksize_t blksize_t
-typedef long blksize_t;
+typedef unsigned long blksize_t;
 # endif
 # ifndef dev_t
 #  define dev_t dev_t
-typedef long dev_t;
+typedef unsigned long dev_t;
 # endif
 # ifndef id_t
 #  define id_t id_t
-typedef int id_t;
+typedef unsigned int id_t;
 # endif
 # ifndef ino_t
 #  define ino_t ino_t
@@ -30,11 +30,11 @@ typedef long ino_t;
 # endif
 # ifndef mode_t
 #  define mode_t mode_t
-typedef int mode_t;
+typedef unsigned int mode_t;
 # endif
 # ifndef nlink_t
 #  define nlink_t nlink_t
-typedef int nlink_t;
+typedef unsigned int nlink_t;
 # endif
 # ifndef off_t
 #  define off_t off_t

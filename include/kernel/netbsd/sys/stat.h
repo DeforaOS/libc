@@ -18,11 +18,11 @@ typedef int blksize_t;
 # endif
 # ifndef dev_t
 #  define dev_t dev_t
-typedef int dev_t;
+typedef unsigned int dev_t;
 # endif
 # ifndef id_t
 #  define id_t id_t
-typedef int id_t;
+typedef unsigned int id_t;
 # endif
 # ifndef ino_t
 #  define ino_t ino_t

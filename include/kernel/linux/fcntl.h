@@ -10,7 +10,7 @@
 /* types */
 # ifndef off_t
 #  define off_t off_t
-typedef int off_t;
+typedef long long off_t;
 # endif
 
 

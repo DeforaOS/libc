@@ -12,7 +12,7 @@
 /* types */
 # ifndef id_t
 #  define id_t id_t
-typedef int id_t;
+typedef unsigned int id_t;
 # endif
 # ifndef pid_t
 #  define pid_t pid_t

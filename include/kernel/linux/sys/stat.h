@@ -10,35 +10,35 @@
 /* types */
 # ifndef blkcnt_t
 #  define blkcnt_t blkcnt_t
-typedef unsigned int blkcnt_t;
+typedef unsigned long blkcnt_t;
 # endif
 # ifndef blksize_t
 #  define blksize_t blksize_t
-typedef int blksize_t;
+typedef unsigned long blksize_t;
 # endif
 # ifndef dev_t
 #  define dev_t dev_t
-typedef unsigned long long dev_t;
+typedef unsigned short int dev_t;
 #endif
 # ifndef id_t
 #  define id_t id_t
-typedef int id_t;
+typedef unsigned int id_t;
 # endif
 # ifndef ino_t
 #  define ino_t ino_t
-typedef int ino_t;
+typedef unsigned long long ino_t;
 # endif
 # ifndef mode_t
 #  define mode_t mode_t
-typedef int mode_t;
+typedef unsigned int mode_t;
 # endif
 # ifndef nlink_t
 #  define nlink_t nlink_t
-typedef int nlink_t;
+typedef unsigned int nlink_t;
 # endif
 # ifndef off_t
 #  define off_t off_t
-typedef int off_t;
+typedef long long off_t;
 # endif
 # ifndef time_t
 #  define time_t time_t
@@ -57,21 +57,25 @@ typedef id_t uid_t;
 struct stat
 {
 	dev_t st_dev;
-	short int padding1;
+	char _padding1[10];
 	ino_t st_ino;
 	mode_t st_mode;
 	nlink_t st_nlink;
 	uid_t st_uid;
 	gid_t st_gid;
 	dev_t st_rdev;
-	short int padding2;
+	char _padding2[10];
 	off_t st_size;
 	blksize_t st_blksize;
 	blkcnt_t st_blocks;
+	long _padding3;
 	time_t st_atime;
+	int _padding4;
 	time_t st_mtime;
+	int _padding5;
 	time_t st_ctime;
-	char padding[8];
+	unsigned long _padding6;
+	ino_t _padding7;
 };
 
 #endif /* !LIBC_KERNEL_LINUX_SYS_STAT_H */

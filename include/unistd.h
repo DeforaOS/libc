@@ -31,12 +31,12 @@ typedef unsigned int size_t;
 # endif
 # ifndef ssize_t
 #  define ssize_t ssize_t
-typedef int ssize_t;
+typedef signed int ssize_t;
 # endif
 
 # ifndef id_t
 #  define id_t id_t
-typedef int id_t;
+typedef unsigned int id_t;
 # endif
 # ifndef gid_t
 #  define gid_t gid_t

@@ -18,7 +18,7 @@ typedef unsigned int clock_t;
 # endif
 # ifndef dev_t
 #  define dev_t dev_t
-typedef int dev_t;
+typedef unsigned int dev_t;
 # endif
 # ifndef fsblkcnt_t
 #  define fsblkcnt_t fsblkcnt_t

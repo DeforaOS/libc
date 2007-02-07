@@ -10,7 +10,7 @@
 /* types */
 # ifndef id_t
 #  define id_t id_t
-typedef int id_t;
+typedef unsigned int id_t;
 # endif
 typedef enum { P_ALL, P_PID, P_PGID } idtype_t;
 # ifndef pid_t
