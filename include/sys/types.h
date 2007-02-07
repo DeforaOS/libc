@@ -18,10 +18,6 @@ typedef unsigned int blksize_t;
 #  define id_t id_t
 typedef unsigned int id_t;
 # endif
-# ifndef ino_t
-#  define ino_t ino_t
-typedef unsigned int ino_t;
-# endif
 # ifndef mode_t
 #  define mode_t mode_t
 typedef unsigned int mode_t;

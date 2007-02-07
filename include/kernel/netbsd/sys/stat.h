@@ -26,7 +26,7 @@ typedef unsigned int id_t;
 # endif
 # ifndef ino_t
 #  define ino_t ino_t
-typedef int ino_t;
+typedef unsigned int ino_t;
 # endif
 # ifndef mode_t
 #  define mode_t mode_t
