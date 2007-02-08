@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -156,14 +156,17 @@ void free(void * ptr)
 /* getenv */
 char * getenv(char const * name)
 {
-	int len = strlen(name);
+	size_t len = strlen(name);
 	char ** p;
 
+	if(strchr(name, '=') != NULL) /* XXX not required in the standard */
+	{
+		errno = EINVAL;
+		return NULL;
+	}
 	for(p = environ; *p != NULL; p++)
 	{
-		if(strncmp(*p, name, len) != 0)
-			continue;
-		if((*p)[len] != '=')
+		if(strncmp(*p, name, len) != 0 || (*p)[len] != '=')
 			continue;
 		return &((*p)[len+1]);
 	}
@@ -178,7 +181,7 @@ void * malloc(size_t size)
 
 	if(size == 0 || size > 8192)
 	{
-		errno = ENOSYS;
+		errno = ENOMEM;
 		return NULL;
 	}
 	size = 8192;
@@ -197,7 +200,7 @@ void * realloc(void * ptr, size_t size)
 		return malloc(size);
 	if(size == 0 || size > 8192)
 	{
-		errno = ENOSYS;
+		errno = ENOMEM;
 		return NULL;
 	}
 	return ptr;
@@ -205,17 +208,93 @@ void * realloc(void * ptr, size_t size)
 
 
 /* setenv */
+static int _setenv_do(char const * name, char const * value, int overwrite);
+
 int setenv(char const * name, char const * value, int overwrite)
 {
-	if(getenv(name) != NULL)
+	if(name == NULL || name[0] == '\0' || strchr(name, '=') != NULL
+			|| value == NULL)
 	{
+		errno = EINVAL;
+		return -1;
+	}
+	return _setenv_do(name, value, overwrite);
+}
+
+/* _setenv_do
+ * sets or unsets variables in the environment
+ * PRE	name is a valid name for an environment variable
+ * POST the environ global variable is allocated on the heap if not already
+ * 	0  if value is NULL the name variable is unset
+ * 	0  if value is not NULL the variable was updated if overwrite > 0
+ * 	-1 an error occured */
+static char ** _setenv_init(size_t * cnt);
+
+static int _setenv_do(char const * name, char const * value, int overwrite)
+{
+	static char ** env = NULL;
+	static size_t env_cnt;
+	size_t nlen = strlen(name);
+	size_t vlen = (value == NULL) ? 0 : strlen(value);
+	char ** p;
+	char * pos;
+
+	if(env == NULL && (env = _setenv_init(&env_cnt)) == NULL)
+		return -1;
+	for(p = env; (pos = *p) != NULL; p++)
+	{
+		if(strncmp(pos, name, nlen) != 0 || pos[nlen] != '=')
+			continue;
 		if(overwrite == 0)
 			return 0;
-		unsetenv(name);
+		if(value == NULL) /* unset variable */
+		{
+			for(free(pos); *p != NULL; p++)
+				*p = *(p + 1);
+			env_cnt--; /* may want to realloc(env) here */
+			return 0;
+		}
+		if(strlen(pos + nlen + 1) >= vlen) /* if we can avoid realloc */
+		{
+			strcpy(pos + nlen + 1, value);
+			return 0;
+		}
+		if((pos = realloc(pos, nlen + vlen + 2)) == NULL)
+			return -1;
+		strcpy(&pos[nlen+1], value);
+		return 0;
 	}
-	/* FIXME implement */
-	errno = ENOSYS;
-	return -1;
+	if(value == NULL) /* variable is already unset */
+		return 0;
+	if((p = realloc(env, (env_cnt + 2) * sizeof(*env))) == NULL)
+		return -1;
+	env = p;
+	environ = env;
+	if((env[env_cnt] = malloc(nlen + vlen + 2)) == NULL)
+		return -1;
+	sprintf(env[env_cnt++], "%s=%s", name, value); /* strcpy instead? */
+	return 0;
+}
+
+static char ** _setenv_init(size_t * cnt)
+{
+	char ** env;
+	size_t i;
+
+	for(*cnt = 0; environ[*cnt] != NULL; (*cnt)++);
+	if((env = malloc((*cnt + 1) * sizeof(*env))) == NULL)
+		return NULL;
+	for(i = 0; i < *cnt; i++)
+		if((env[i] = strdup(environ[i])) == NULL)
+		{
+			while(i != 0)
+				free(env[--i]);
+			free(env);
+			return NULL;
+		}
+	env[i] = NULL;
+	environ = env;
+	return env;
 }
 
 
@@ -318,14 +397,10 @@ unsigned long strtoul(char const * str, char ** endptr, int base)
 /* unsetenv */
 int unsetenv(char const * name)
 {
-	if(name == NULL || *name == '\0' || strchr(name, '=') != NULL)
+	if(name == NULL || name[0] == '\0' || strchr(name, '=') != NULL)
 	{
 		errno = EINVAL;
 		return -1;
 	}
-	if(getenv(name) == NULL)
-		return 0;
-	/* FIXME implement */
-	errno = ENOSYS;
-	return -1;
+	return _setenv_do(name, NULL, 1);
 }
