@@ -31,12 +31,16 @@ int atexit(void (*function)(void))
 static int _atexit_do(AtexitFunction function, void (*callback)(void))
 {
 	static AtexitCallback * cb = NULL;
-	static int cb_size = 0;
-	static int cb_pos = 0;
+	static size_t cb_size = 0;
+	static size_t cb_pos = 0;
 	void * p;
 
 	if(cb == NULL && cb_size == 0)
-		cb = malloc(32 * sizeof(void*));
+	{
+		if((cb = malloc(32 * sizeof(*cb))) == NULL)
+			return -1;
+		cb_size = 32;
+	}
 	switch(function)
 	{
 		case AF_EXEC:
@@ -51,10 +55,11 @@ static int _atexit_do(AtexitFunction function, void (*callback)(void))
 		case AF_REGISTER:
 			if(cb_pos == cb_size)
 			{
-				if((p = realloc(cb, (cb_size+1)*sizeof(void*)))
+				if((p = realloc(cb, (cb_size+4) * sizeof(*cb)))
 						== NULL)
 					return -1;
 				cb = p;
+				cb_size+=4;
 			}
 			cb[cb_pos++] = callback;
 			break;
@@ -276,6 +281,7 @@ static int _setenv_do(char const * name, char const * value, int overwrite)
 	return 0;
 }
 
+static void _init_atexit(void);
 static char ** _setenv_init(size_t * cnt)
 {
 	char ** env;
@@ -294,7 +300,18 @@ static char ** _setenv_init(size_t * cnt)
 		}
 	env[i] = NULL;
 	environ = env;
+	_atexit_do(AF_REGISTER, _init_atexit);
 	return env;
+}
+
+static void _init_atexit(void)
+{
+	char ** p;
+
+	for(p = environ; *p != NULL; p++)
+		free(*p);
+	free(environ);
+	environ = NULL;
 }
 
 
