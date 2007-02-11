@@ -5,9 +5,8 @@
 
 _syscall:
 	int	$0x80
+	jnc	.errnoret
 .errno:
-	cmp	$0, %eax
-	jge	.errnoret
 	neg	%eax
 	mov	%eax, errno
 	mov	$-1, %eax
@@ -24,6 +23,15 @@ name:; \
 
 
 /* functions */
+/* _brk */
+.global _brk
+_brk:
+	mov	$SYS_brk, %eax
+	int	$0x80
+	jc	.errno
+	ret
+#undef SYS_brk
+
 /* _exit */
 .global _exit
 _exit:
@@ -39,13 +47,3 @@ execve:
 	mov	$-1, %eax
 	ret
 #undef SYS_execve
-
-/* mmap */
-.global mmap
-mmap:
-	mov	$SYS_mmap, %eax
-	int	$0x80
-	cmp	$-255, %eax
-	jl	.errnoret
-	jmp	.errno
-#undef SYS_mmap

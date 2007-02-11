@@ -37,22 +37,23 @@ char ** environ;
 
 
 /* brk */
-#ifndef SYS_brk
-# ifdef SYS_sbrk
+#if defined(SYS_brk)
+extern int _brk(void * addr); /* XXX in-kernel prototype */
+int brk(void * addr)
+{
+	return _brk(addr) != -1 ? 0 : -1;
+}
+#elif defined(SYS_sbrk) /* !SYS_brk && SYS_sbrk */
 int brk(void * addr)
 {
 	void * cur;
 
-	cur = sbrk(0);
-	if(cur == addr)
-		return 0;
-	if(sbrk(addr - cur) == (void*)-1)
+	if((cur = sbrk(NULL)) == (void*)-1)
 		return -1;
-	return 0;
+	return sbrk(addr - cur) != (void*)-1 ? 0 : -1;
 }
-# else /* !SYS_brk && !SYS_sbrk */
-#  warning Unsupported platform: brk() is missing
-# endif
+#else /* !SYS_brk && !SYS_sbrk */
+# warning Unsupported platform: brk() is missing
 #endif
 
 
@@ -351,7 +352,41 @@ int nice(int inc)
 
 
 /* sbrk */
-#ifndef SYS_sbrk
+#if defined(SYS_sbrk)
+extern void * _sbrk(intptr_t increment); /* XXX in-kernel prototype */
+# if defined(SYS_brk) /* SYS_sbrk && SYS_brk */
+extern int _brk(void * addr); /* XXX in-kernel prototype */
+void * sbrk(intptr_t increment) /* _brk is used to actually allocate memory */
+{
+	void * cur;
+
+	if((cur = _sbrk(0)) == (void*)-1 || increment == 0)
+		return cur;
+	return _brk(cur + increment) != (void*)-1 ? cur : (void*)-1;
+}
+# else /* SYS_sbrk && !SYS_brk */
+void * sbrk(intptr_t increment)
+{
+	return _sbrk(increment);
+}
+# endif
+#elif defined(SYS_brk) /* !SYS_sbrk && SYS_brk */
+extern int _brk(void * addr); /* XXX in-kernel prototype */
+extern void * end;
+void * sbrk(intptr_t increment)
+{
+	static void * cur = &end;
+	void * ptr;
+
+	if(increment == 0)
+		return cur;
+	if(_brk(cur + increment) == -1)
+		return (void*)-1;
+	ptr = cur;
+	cur += increment;
+	return ptr;
+}
+#else /* !SYS_sbrk && !SYS_brk */
 # warning Unsupported platform: sbrk() is missing
 #endif
 

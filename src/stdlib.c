@@ -4,19 +4,32 @@
 
 
 #include "sys/mman.h"
+#include "assert.h"
 #include "unistd.h"
 #include "string.h"
 #include "ctype.h"
 #include "errno.h"
 #include "limits.h"
 #include "stdio.h"
+#include "stdint.h"
 #include "stdlib.h"
 
 #define min(a, b) (((a) > (b)) ? (b) : (a))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+
+
+/* types */
+typedef struct _Alloc
+{
+	size_t size;
+	struct _Alloc * prev;
+	struct _Alloc * next;
+} Alloc;
 
 
 /* variables */
 extern char ** environ;
+static Alloc _alloc = { 0, NULL, NULL };
 
 
 /* atexit */
@@ -132,11 +145,14 @@ long long atoll(char const * nptr)
 void * calloc(size_t nmemb, size_t size)
 {
 	void * ptr;
+	size_t sz = nmemb * size;
 
-	if((ptr = malloc(nmemb * size)) == NULL)
+	assert(nmemb + size < max(nmemb, size)); /* int overflow checks */
+	assert(sz >= nmemb + size - 1);
+	if((ptr = malloc(sz)) == NULL)
 		return NULL;
-	memset(ptr, 0, nmemb * size);
-	return ptr;
+	memset(ptr, 0, sz);
+	return NULL;
 }
 
 
@@ -154,7 +170,20 @@ void exit(int status)
 /* free */
 void free(void * ptr)
 {
-	munmap(ptr, 8192);
+	Alloc * a = (Alloc*)((char*)ptr - sizeof(*a));
+	Alloc * b;
+
+	if(ptr == NULL)
+		return;
+	b = a->prev;
+	b->next = a->next;
+	if(a->next != NULL) /* return if memory is alloc'd past a */
+	{
+		a->next->prev = b;
+		return;
+	}
+	if(sbrk(a->size + sizeof(*a)) == (void*)-1) /* XXX cast */
+		b->size += sizeof(*a) + a->size;
 }
 
 
@@ -182,33 +211,55 @@ char * getenv(char const * name)
 /* malloc */
 void * malloc(size_t size)
 {
-	void * p;
+	Alloc * a;
+	Alloc * b;
+	uintptr_t inc;
 
-	if(size == 0 || size > 8192)
+	for(a = &_alloc; a->next != NULL; a = a->next) /* search space */
+		if(size >= a->next - a + sizeof(*a) + a->size + sizeof(*a))
+		{
+			b = (Alloc*)((char*)a + sizeof(*a) + a->size);
+			b->size = size;
+			b->prev = a;
+			b->next = a->next;
+			a->next = b;
+			return (char*)b + sizeof(*b);
+		}
+	if((inc = ((sizeof(*b) + size) | 0xff) + 1) < size) /* int overflow */
 	{
 		errno = ENOMEM;
 		return NULL;
 	}
-	size = 8192;
-	if((p = mmap(NULL, size, PROT_READ | PROT_WRITE,
-					MAP_PRIVATE | MAP_ANONYMOUS, -1, 0))
-			== MAP_FAILED)
+	if((b = sbrk(inc)) == (void*)-1) /* XXX cast, increase process size */
 		return NULL;
-	return p;
+	b->size = inc - sizeof(*b);
+	b->prev = a;
+	b->next = NULL;
+	a->next = b;
+	return (char*)b + sizeof(*b);
 }
 
 
 /* realloc */
 void * realloc(void * ptr, size_t size)
 {
+	Alloc * a = (Alloc*)((char*)ptr - sizeof(*a));
+	void * p;
+
 	if(ptr == NULL)
 		return malloc(size);
-	if(size == 0 || size > 8192)
+	if(size == a->size)
+		return ptr;
+	if(size < a->size || (char*)a->next - (char*)a - sizeof(*a) >= size)
 	{
-		errno = ENOMEM;
-		return NULL;
+		a->size = size;
+		return ptr;
 	}
-	return ptr;
+	if((p = malloc(size)) == NULL)
+		return NULL;
+	memcpy(p, ptr, min(a->size, size));
+	free(ptr);
+	return p;
 }
 
 
@@ -357,7 +408,7 @@ static unsigned long _strtoul(char const * str, char ** endptr, int base,
 	if(*p == '\0')
 	{
 		if(endptr != NULL)
-			*endptr = p;
+			*endptr = (char*)p; /* XXX cast */
 		errno = ERANGE;
 		return 0;
 	}
@@ -399,7 +450,7 @@ static unsigned long _strtoul(char const * str, char ** endptr, int base,
 		/* FIXME add integer overflow detection code */
 	}
 	if(endptr != NULL)
-		*endptr = p;
+		*endptr = (char*)p; /* XXX cast */
 	return ret;
 }
 
