@@ -173,6 +173,12 @@ static void _execvp_do(char const * filename, char * const argv[])
 #endif
 
 
+/* fsync */
+#ifndef SYS_fsync
+# warning Unsupported platform: fsync() is missing
+#endif
+
+
 /* getcwd */
 #ifndef SYS_getcwd
 # warning Unsupported platform: getcwd() is missing

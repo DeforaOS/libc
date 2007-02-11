@@ -143,6 +143,9 @@ SYSCALL(dup2)
 SYSCALL(execve)
 #endif
 SYSCALL(fork)
+#ifdef SYS_fsync
+SYSCALL(fsync)
+#endif
 SYSCALL(getcwd)
 #ifdef SYS_getegid
 SYSCALL(getegid)

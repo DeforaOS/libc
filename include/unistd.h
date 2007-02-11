@@ -79,6 +79,8 @@ void _exit(int status);
 
 pid_t fork(void);
 
+int fsync(int fildes);
+
 char * getcwd(char * buf, size_t size);
 gid_t getegid(void);
 uid_t geteuid(void);

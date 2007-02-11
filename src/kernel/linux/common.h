@@ -52,6 +52,7 @@
 # define SYS_setpriority	97
 # define SYS_statfs		99
 # define SYS_wait4		114
+# define SYS_fsync		118
 # define SYS_uname		122
 # define SYS_nanosleep		162
 # define SYS_getcwd		183
