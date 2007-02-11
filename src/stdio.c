@@ -20,7 +20,7 @@
 struct _FILE
 {
 	int fildes;
-	char flags;
+	int flags;
 	unsigned char buf[BUFSIZ];
 	unsigned int len;
 	unsigned int pos;
