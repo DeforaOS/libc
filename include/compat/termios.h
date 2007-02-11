@@ -7,7 +7,9 @@
 # define LIBC_COMPAT_TERMIOS_H
 
 
-# if defined(__NetBSD__)
+# if defined(__linux__)
+#  include "kernel/linux/termios.h"
+# elif defined(__NetBSD__)
 #  include "kernel/netbsd/termios.h"
 # else
 #  warning Unsupported platform
