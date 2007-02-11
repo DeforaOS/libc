@@ -220,23 +220,23 @@ void * malloc(size_t size)
 		{
 			b = (Alloc*)((char*)a + sizeof(*a) + a->size);
 			b->size = size;
-			b->prev = a;
-			b->next = a->next;
-			a->next = b;
-			return (char*)b + sizeof(*b);
+			break;
 		}
-	if((inc = ((sizeof(*b) + size) | 0xff) + 1) < size) /* int overflow */
-	{
-		errno = ENOMEM;
-		return NULL;
+	if(a->next == NULL)
+	{	/* check for integer overflow */
+		if((inc = ((sizeof(*b) + size) | 0xff) + 1) < size)
+		{
+			errno = ENOMEM;
+			return NULL;
+		} /* increase process size */
+		if((b = sbrk(inc)) == (void*)-1) /* XXX cast */
+			return NULL;
+		b->size = inc - sizeof(*b);
 	}
-	if((b = sbrk(inc)) == (void*)-1) /* XXX cast, increase process size */
-		return NULL;
-	b->size = inc - sizeof(*b);
 	b->prev = a;
-	b->next = NULL;
+	b->next = a->next;
 	a->next = b;
-	return (char*)b + sizeof(*b);
+	return (char*)b + sizeof(*b); /* XXX cast */
 }
 
 
