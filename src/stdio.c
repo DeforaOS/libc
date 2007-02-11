@@ -111,24 +111,20 @@ int fileno(FILE * file)
 static int _fopen_mode(char const * mode);
 FILE * fopen(char const * path, char const * mode)
 {
-	FILE * fp;
+	FILE * file;
 
-	if((fp = malloc(sizeof(FILE))) == NULL)
+	if((file = malloc(sizeof(FILE))) == NULL)
 		return NULL;
-	if((fp->flags = _fopen_mode(mode)) == -1)
+	if((file->flags = _fopen_mode(mode)) == -1
+			|| (file->fildes = open(path, file->flags)) < 0)
 	{
-		free(fp);
+		free(file);
 		return NULL;
 	}
-	if((fp->fildes = open(path, fp->flags)) != 0)
-	{
-		free(fp);
-		return NULL;
-	}
-	fp->len = 0;
-	fp->pos = 0;
-	fp->eof = 0;
-	return fp;
+	file->len = 0;
+	file->pos = 0;
+	file->eof = 0;
+	return file;
 }
 
 /* PRE
@@ -244,6 +240,32 @@ size_t fread(void * ptr, size_t size, size_t nb, FILE * file)
 	memmove(file->buf, &file->buf[size * cnt], file->len - (size * cnt));
 	file->len -= size * cnt;
 	return cnt;
+}
+
+
+/* freopen */
+FILE * freopen(char const * path, char const * mode, FILE * file)
+{
+	int flags;
+
+	fflush(file);
+	if(path == NULL)
+	{
+		if((flags = _fopen_mode(mode)) == -1)
+		{
+			if(fcntl(file->fildes, F_SETFL, flags) == -1)
+				return NULL;
+			file->flags = flags;
+			return file;
+		}
+	}
+	close(file->fildes);
+	clearerr(file);
+	if((flags = _fopen_mode(mode)) == -1
+			|| (file->fildes = open(path, file->flags)) < 0)
+		return NULL;
+	file->flags = flags;
+	return file;
 }
 
 

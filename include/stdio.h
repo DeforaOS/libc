@@ -46,6 +46,7 @@ int fprintf(FILE * file, char const * format, ...);
 int fputc(int c, FILE * file);
 int fputs(char const * str, FILE * file);
 size_t fread(void * ptr, size_t size, size_t nb, FILE * file);
+FILE * freopen(char const * path, char const * mode, FILE * file);
 size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file);
 int getc(FILE * file);
 int getchar(void);
