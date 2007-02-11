@@ -5,20 +5,16 @@
 
 _syscall:
 	push	%ebx
-	push	%ecx
-	push	%edx
 	push	%esi
 	push	%edi
-	mov	0x18(%esp), %ebx
-	mov	0x1c(%esp), %ecx
-	mov	0x20(%esp), %edx
-	mov	0x24(%esp), %esi
-	mov	0x28(%esp), %edi
+	mov	0x10(%esp), %ebx
+	mov	0x14(%esp), %ecx
+	mov	0x18(%esp), %edx
+	mov	0x1c(%esp), %esi
+	mov	0x20(%esp), %edi
 	int	$0x80
 	pop	%edi
 	pop	%esi
-	pop	%edx
-	pop	%ecx
 	pop	%ebx
 .errno:
 	cmp	$0, %eax
@@ -39,6 +35,13 @@ name:; \
 
 
 /* functions */
+/* _brk */
+.global _brk
+_brk:
+	mov	$SYS_brk, %eax
+	jmp	_syscall
+#undef SYS_brk
+
 /* _exit */
 .global _exit
 _exit:
