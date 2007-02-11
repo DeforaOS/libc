@@ -6,10 +6,11 @@
 #include "sys/types.h"
 #include "inttypes.h"
 #include "stddef.h"
+#include "errno.h"
 #include "stdlib.h"
 #include "string.h"
+#include "termios.h"
 #include "time.h"
-#include "errno.h"
 #include "syscalls.h"
 #include "unistd.h"
 
@@ -297,8 +298,9 @@ static void _getopt_reset(char * const ** oldargv, char * const * argv,
 /* isatty */
 int isatty(int fildes)
 {
-	errno = ENOSYS; /* FIXME implement */
-	return 0;
+	struct termios t;
+
+	return tcgetattr(fildes, &t) == 0 ? 1 : 0;
 }
 
 

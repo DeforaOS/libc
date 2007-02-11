@@ -34,6 +34,7 @@
 # define SYS_pipe		42
 # define SYS_times		43
 # define SYS_brk		45
+# define SYS_ioctl		54
 # define SYS_fcntl		55
 # define SYS_setpgid		57
 # define SYS_umask		60

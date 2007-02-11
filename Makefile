@@ -32,6 +32,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/stdlib.c \
 		$(PACKAGE)-$(VERSION)/src/stdio.c \
 		$(PACKAGE)-$(VERSION)/src/string.c \
+		$(PACKAGE)-$(VERSION)/src/stropts.c \
 		$(PACKAGE)-$(VERSION)/src/sys/mman.c \
 		$(PACKAGE)-$(VERSION)/src/sys/resource.c \
 		$(PACKAGE)-$(VERSION)/src/sys/select.c \
@@ -42,6 +43,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/sys/utsname.c \
 		$(PACKAGE)-$(VERSION)/src/sys/wait.c \
 		$(PACKAGE)-$(VERSION)/src/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/termios.c \
 		$(PACKAGE)-$(VERSION)/src/time.c \
 		$(PACKAGE)-$(VERSION)/src/unistd.c \
 		$(PACKAGE)-$(VERSION)/src/utime.c \

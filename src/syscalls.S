@@ -57,6 +57,9 @@ SYSCALL(kill)
 /* stdio.h */
 SYSCALL(rename)
 
+/* stropts.h */
+SYSCALL(ioctl)
+
 /* sys/mman.h */
 #ifdef SYS_mmap
 SYSCALL(mmap)
