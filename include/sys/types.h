@@ -26,6 +26,10 @@ typedef unsigned int mode_t;
 #  define nlink_t nlink_t
 typedef unsigned int nlink_t;
 # endif
+# ifndef pid_t
+#  define pid_t pid_t
+typedef signed int pid_t;
+# endif
 # ifndef size_t
 #  define size_t size_t
 typedef unsigned long size_t;
@@ -38,10 +42,6 @@ typedef signed long ssize_t;
 # ifndef gid_t
 #  define gid_t gid_t
 typedef id_t gid_t;
-# endif
-# ifndef pid_t
-#  define pid_t pid_t
-typedef id_t pid_t;
 # endif
 # ifndef uid_t
 #  define uid_t uid_t
