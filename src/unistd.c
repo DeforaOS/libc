@@ -121,7 +121,7 @@ int execvp(char const * filename, char * const argv[])
 		len = strlen(filename) + 2;
 		do
 		{
-			if(path[i] != ':')
+			if(path[i] != ':' && path[i] != '\0')
 				continue;
 			if(i - oldi + len > buf_cnt)
 			{
