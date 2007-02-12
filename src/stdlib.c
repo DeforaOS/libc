@@ -182,8 +182,7 @@ void free(void * ptr)
 		a->next->prev = b;
 		return;
 	}
-	if(sbrk(a->size + sizeof(*a)) == (void*)-1) /* XXX cast */
-		b->size += sizeof(*a) + a->size;
+	sbrk(-(a->size + sizeof(*a)));
 }
 
 
@@ -211,20 +210,28 @@ char * getenv(char const * name)
 /* malloc */
 void * malloc(size_t size)
 {
-	Alloc * a;
+	Alloc * a = &_alloc;
 	Alloc * b;
-	uintptr_t inc;
+	intptr_t inc = size;
 
-	for(a = &_alloc; a->next != NULL; a = a->next) /* search space */
-		if(size >= a->next - a + sizeof(*a) + a->size + sizeof(*a))
-		{
-			b = (Alloc*)((char*)a + sizeof(*a) + a->size);
-			b->size = size;
-			break;
-		}
-	if(a->next == NULL)
-	{	/* check for integer overflow */
-		if((inc = ((sizeof(*b) + size) | 0xff) + 1) < size)
+	if(inc < 0 || (inc += sizeof(*b)) <= 0) /* signedness check */
+	{
+		errno = ENOMEM;
+		return NULL;
+	}
+	if(_alloc.next != NULL) /* look for available space */
+		for(a = _alloc.next; a->next != NULL; a = a->next)
+			if(inc <= (char*)(a->next) - (char*)a - sizeof(*a)
+					- a->size)
+			{
+				b = (Alloc*)((char*)a + sizeof(*a) + a->size);
+				b->size = size;
+				a->next->prev = b;
+				break;
+			}
+	if(a->next == NULL) /* allocate memory */
+	{	/* check for integer overflow, add some overhead */
+		if((inc = (inc | 0xff) + 1) < 0)
 		{
 			errno = ENOMEM;
 			return NULL;
