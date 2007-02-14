@@ -24,6 +24,13 @@ name:; \
 
 
 /* functions */
+/* _brk */
+.global _brk
+_brk:
+	b	_syscall
+	mov	SYS_brk, %g1
+#undef SYS_brk
+
 /* _exit */
 .global _exit
 _exit:
