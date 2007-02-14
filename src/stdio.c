@@ -302,7 +302,7 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 /* fwrite */
 size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 {
-	char * p = (char*)ptr;
+	char const * p = (char const *)ptr;
 	size_t i;
 	size_t j;
 	size_t len;
