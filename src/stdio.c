@@ -41,6 +41,66 @@ FILE * stderr = &_stderr;
 
 
 /* functions */
+/* private */
+/* PRE
+ * POST
+ * 	-1	error
+ * 	else	corresponding mode */
+static int _fopen_mode(char const * mode)
+{
+	int flags;
+
+	if(*mode == 'r')
+	{
+		flags = O_RDONLY;
+		if(*++mode == 'b')
+			++mode;
+		if(*mode == '\0')
+			return flags;
+		if(*mode == '+' && ++mode)
+			flags = O_RDWR;
+		if(*mode == 'b')
+			++mode;
+	}
+	else if(*mode == 'w')
+	{
+		flags = O_WRONLY | O_CREAT;
+		if(*++mode == 'b')
+			++mode;
+		if(*mode == '\0')
+			return flags;
+		if(*mode == '+' && ++mode)
+			flags = O_RDWR | O_CREAT;
+		if(*mode == 'b')
+			++mode;
+	}
+	else if(*mode == 'a')
+	{
+		flags = O_APPEND;
+		if(*++mode == 'b')
+			++mode;
+		if(*mode == '\0')
+			return flags;
+		if(*mode == '+' && ++mode)
+			flags |= O_CREAT;
+		if(*mode == 'b')
+			++mode;
+	}
+	else
+	{
+		errno = EINVAL;
+		return -1;
+	}
+	if(*mode != '\0')
+	{
+		errno = EINVAL;
+		return -1;
+	}
+	return flags;
+}
+
+
+/* public */
 /* clearerr */
 void clearerr(FILE * file)
 {
@@ -59,7 +119,25 @@ int fclose(FILE * file)
 }
 
 
-/* fdopen FIXME implement */
+/* fdopen */
+FILE * fdopen(int fildes, char const * mode)
+{
+	FILE * file;
+
+	if((file = malloc(sizeof(FILE))) == NULL)
+		return NULL;
+	if((file->flags = _fopen_mode(mode)) == -1)
+	{
+		free(file);
+		return NULL;
+	}
+	file->fildes = fildes;
+	file->len = 0;
+	file->pos = 0;
+	file->eof = 0;
+	file->fb = !isatty(file->fildes) ? FB_FULL : FB_NONE;
+	return file;
+}
 
 
 /* feof */
@@ -114,7 +192,6 @@ int fileno(FILE * file)
 
 
 /* fopen */
-static int _fopen_mode(char const * mode);
 FILE * fopen(char const * path, char const * mode)
 {
 	FILE * file;
@@ -132,57 +209,6 @@ FILE * fopen(char const * path, char const * mode)
 	file->eof = 0;
 	file->fb = !isatty(file->fildes) ? FB_FULL : FB_NONE;
 	return file;
-}
-
-/* PRE
- * POST
- * 	-1	error
- * 	else	corresponding mode */
-static int _fopen_mode(char const * mode)
-{
-	int flags;
-
-	if(*mode == 'r')
-	{
-		flags = O_RDONLY;
-		if(*++mode == 'b')
-			++mode;
-		if(*mode == '\0')
-			return flags;
-		if(*mode == '+' && ++mode)
-			flags = O_RDWR;
-		if(*mode == 'b')
-			++mode;
-	}
-	else if(*mode == 'w')
-	{
-		flags = O_WRONLY | O_CREAT;
-		if(*++mode == 'b')
-			++mode;
-		if(*mode == '\0')
-			return flags;
-		if(*mode == '+' && ++mode)
-			flags = O_RDWR | O_CREAT;
-		if(*mode == 'b')
-			++mode;
-	}
-	else if(*mode == 'a')
-	{
-		flags = O_APPEND;
-		if(*++mode == 'b')
-			++mode;
-		if(*mode == '\0')
-			return flags;
-		if(*mode == '+' && ++mode)
-			flags |= O_CREAT;
-		if(*mode == 'b')
-			++mode;
-	}
-	else
-		return -1;
-	if(*mode != '\0')
-		return -1;
-	return flags;
 }
 
 
