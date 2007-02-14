@@ -17,8 +17,6 @@
 
 
 /* types */
-typedef enum _FILEBuffering { FB_FULL, FB_LINE, FB_NONE } FILEBuffering;
-
 struct _FILE
 {
 	int fildes;
@@ -27,16 +25,15 @@ struct _FILE
 	unsigned int len;
 	unsigned int pos;
 	char eof;
-	FILEBuffering fb;
 };
 
 
 /* variables */
-static FILE _stdin = { 0, O_RDONLY, { 0 }, 0, 0, 0, FB_FULL };
+static FILE _stdin = { 0, O_RDONLY, { 0 }, 0, 0, 0 };
 FILE * stdin = &_stdin;
-static FILE _stdout = { 1, O_WRONLY, { 0 }, 0, 0, 0, FB_LINE };
+static FILE _stdout = { 1, O_WRONLY, { 0 }, 0, 0, 0 };
 FILE * stdout = &_stdout;
-static FILE _stderr = { 2, O_WRONLY, { 0 }, 0, 0, 0, FB_NONE };
+static FILE _stderr = { 2, O_WRONLY, { 0 }, 0, 0, 0 };
 FILE * stderr = &_stderr;
 
 
@@ -135,7 +132,6 @@ FILE * fdopen(int fildes, char const * mode)
 	file->len = 0;
 	file->pos = 0;
 	file->eof = 0;
-	file->fb = !isatty(file->fildes) ? FB_FULL : FB_NONE;
 	return file;
 }
 
@@ -209,7 +205,6 @@ FILE * fopen(char const * path, char const * mode)
 	file->len = 0;
 	file->pos = 0;
 	file->eof = 0;
-	file->fb = !isatty(file->fildes) ? FB_FULL : FB_NONE;
 	return file;
 }
 
@@ -300,7 +295,6 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 			|| (file->fildes = open(path, file->flags)) < 0)
 		return NULL;
 	file->flags = flags;
-	file->fb = !isatty(file->fildes) ? FB_FULL : FB_NONE;
 	return file;
 }
 
