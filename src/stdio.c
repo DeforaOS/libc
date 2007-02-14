@@ -17,6 +17,8 @@
 
 
 /* types */
+typedef enum _FILEBuffering { FB_FULL, FB_LINE, FB_NONE } FILEBuffering;
+
 struct _FILE
 {
 	int fildes;
@@ -25,15 +27,16 @@ struct _FILE
 	unsigned int len;
 	unsigned int pos;
 	char eof;
+	FILEBuffering fb;
 };
 
 
 /* variables */
-static FILE _stdin = { 0, O_RDONLY, { 0 }, 0, 0, 0 };
+static FILE _stdin = { 0, O_RDONLY, { 0 }, 0, 0, 0, FB_FULL };
 FILE * stdin = &_stdin;
-static FILE _stdout = { 1, O_WRONLY, { 0 }, 0, 0, 0 };
+static FILE _stdout = { 1, O_WRONLY, { 0 }, 0, 0, 0, FB_LINE };
 FILE * stdout = &_stdout;
-static FILE _stderr = { 2, O_WRONLY, { 0 }, 0, 0, 0 };
+static FILE _stderr = { 2, O_WRONLY, { 0 }, 0, 0, 0, FB_NONE };
 FILE * stderr = &_stderr;
 
 
@@ -54,6 +57,9 @@ int fclose(FILE * file)
 	close(file->fildes);
 	return res;
 }
+
+
+/* fdopen FIXME implement */
 
 
 /* feof */
@@ -124,6 +130,7 @@ FILE * fopen(char const * path, char const * mode)
 	file->len = 0;
 	file->pos = 0;
 	file->eof = 0;
+	file->fb = !isatty(file->fildes) ? FB_FULL : FB_NONE;
 	return file;
 }
 
@@ -272,23 +279,26 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 /* fwrite */
 size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 {
-	size_t pos;
-	ssize_t len;
+	char * p = (char*)ptr;
+	size_t i;
+	size_t j;
+	size_t len;
+	ssize_t w;
 
-	for(pos = 0; pos < size * nb; pos+=len)
-	{
-		len = min(BUFSIZ - file->len, (size * nb) - pos);
-		memcpy(&file->buf[file->len], ptr + pos, len);
-		file->len+=len;
-		if(file->len != BUFSIZ)
-			return nb;
-		if((len = write(file->fildes, file->buf, file->len)) == 0)
-			return pos / size;
-		if(len == -1)
-			return -1;
-		memmove(file->buf, &file->buf[len], BUFSIZ - len);
-		file->len-=len;
-	}
+	for(i = 0; i < nb; i++)
+		for(j = 0; j < size; j+=len)
+		{
+			len = min(BUFSIZ - file->len, size - j);
+			memcpy(&file->buf[file->len], p, len);
+			p += len;
+			file->len += len;
+			if(file->len != BUFSIZ) /* buffer is not full */
+				continue;
+			if((w = write(file->fildes, file->buf, BUFSIZ)) == -1)
+				return i;
+			memmove(file->buf, &file->buf[w], BUFSIZ - w);
+			file->len -= w;
+		}
 	return nb;
 }
 
