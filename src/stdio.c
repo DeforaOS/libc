@@ -153,17 +153,19 @@ int fflush(FILE * file)
 	ssize_t count;
 
 	if(file->flags & O_RDONLY)
+	{
+		file->len = 0;
+		file->pos = 0;
 		return 0;
+	}
 	else if(file->flags & O_RDWR)
 	{
 		errno = ENOSYS;
 		return EOF;
 	}
-	if((count = file->len - file->pos) == 0)
-		return 0;
-	/* FIXME should loop until completion or an error occurs */
-	if(write(file->fildes, file->buf, count) != count)
-		return EOF;
+	for(; file->len > 0; file->len -= count)
+		if((count = write(file->fildes, file->buf, count)) == -1)
+			return EOF;
 	return 0;
 }
 
@@ -298,6 +300,7 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 			|| (file->fildes = open(path, file->flags)) < 0)
 		return NULL;
 	file->flags = flags;
+	file->fb = !isatty(file->fildes) ? FB_FULL : FB_NONE;
 	return file;
 }
 
