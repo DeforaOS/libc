@@ -17,6 +17,8 @@
 
 
 /* types */
+typedef enum _FILEDirection { FD_READ = 0, FD_WRITE = 1 } FILEDirection;
+
 struct _FILE
 {
 	int fildes;
@@ -25,15 +27,16 @@ struct _FILE
 	unsigned int len;
 	unsigned int pos;
 	char eof;
+	FILEDirection dir;
 };
 
 
 /* variables */
-static FILE _stdin = { 0, O_RDONLY, { 0 }, 0, 0, 0 };
+static FILE _stdin = { 0, O_RDONLY, { 0 }, 0, 0, 0, FD_READ };
 FILE * stdin = &_stdin;
-static FILE _stdout = { 1, O_WRONLY, { 0 }, 0, 0, 0 };
+static FILE _stdout = { 1, O_WRONLY, { 0 }, 0, 0, 0, FD_WRITE };
 FILE * stdout = &_stdout;
-static FILE _stderr = { 2, O_WRONLY, { 0 }, 0, 0, 0 };
+static FILE _stderr = { 2, O_WRONLY, { 0 }, 0, 0, 0, FD_WRITE };
 FILE * stderr = &_stderr;
 
 
@@ -108,11 +111,11 @@ void clearerr(FILE * file)
 /* fclose */
 int fclose(FILE * file)
 {
-	int res;
+	int ret;
 	
-	res = fflush(file);
+	ret = fflush(file);
 	close(file->fildes);
-	return res;
+	return ret;
 }
 
 
@@ -146,22 +149,22 @@ int feof(FILE * file)
 /* fflush */
 int fflush(FILE * file)
 {
-	ssize_t count;
+	ssize_t w;
 
-	if(file->flags & O_RDONLY)
+	if(file->dir == FD_READ)
 	{
 		file->len = 0;
 		file->pos = 0;
 		return 0;
 	}
-	else if(file->flags & O_RDWR)
-	{
-		errno = ENOSYS;
+	else if(file->dir != FD_WRITE)
 		return EOF;
-	}
-	for(; file->len > 0; file->len -= count)
-		if((count = write(file->fildes, file->buf, count)) == -1)
+	for(; file->pos < file->len; file->pos += w)
+		if((w = write(file->fildes, &file->buf[file->pos],
+						file->len - file->pos)) == -1)
 			return EOF;
+	file->pos = 0;
+	file->len = 0;
 	return 0;
 }
 
@@ -205,6 +208,7 @@ FILE * fopen(char const * path, char const * mode)
 	file->len = 0;
 	file->pos = 0;
 	file->eof = 0;
+	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
 	return file;
 }
 
@@ -247,29 +251,36 @@ int fputs(char const * str, FILE * file)
 /* fread */
 size_t fread(void * ptr, size_t size, size_t nb, FILE * file)
 {
-	ssize_t len;
-	size_t cnt;
+	char * p = (char*)ptr;
+	size_t i;
+	size_t j;
+	size_t len;
+	ssize_t r;
 
-	if(size > BUFSIZ)
+	if(file->dir != FD_READ)
 	{
-		/* FIXME buffer can't handle this, call read repetedly */
-		errno = ENOBUFS;
-		return -1;
+		if(fflush(file) != 0)
+			return 0;
+		else
+			file->dir = FD_READ;
 	}
-	for(cnt = file->len / size; cnt < nb; cnt = file->len / size)
-	{
-		if((len = read(file->fildes, &file->buf[file->len],
-				BUFSIZ - file->len)) == 0)
-			break;
-		if(len == -1)
-			return -1;
-		file->len += len;
-	}
-	cnt = min(nb, cnt);
-	memcpy(ptr, file->buf, size * cnt);
-	memmove(file->buf, &file->buf[size * cnt], file->len - (size * cnt));
-	file->len -= size * cnt;
-	return cnt;
+	for(i = 0; i < nb; i++)
+		for(j = 0; j < size; j += len)
+		{
+			if(file->pos == file->len)
+			{
+				if((r = read(file->fildes, file->buf, BUFSIZ))
+						<= 0)
+					return i;
+				file->pos = 0;
+				file->len = r;
+			}
+			len = min(file->len - file->pos, size - j);
+			memcpy(p, &file->buf[file->pos], len);
+			file->pos += len;
+			p += len;
+		}
+	return i;
 }
 
 
@@ -308,19 +319,32 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 	size_t len;
 	ssize_t w;
 
+	if(file->dir != FD_WRITE)
+	{
+		if(fflush(file) != 0)
+			return 0;
+		else
+			file->dir = FD_WRITE;
+	}
 	for(i = 0; i < nb; i++)
 		for(j = 0; j < size; j+=len)
 		{
-			len = min(BUFSIZ - file->len, size - j);
+			len = min(BUFSIZ - file->len - file->pos, size - j);
 			memcpy(&file->buf[file->len], p, len);
 			p += len;
 			file->len += len;
 			if(file->len != BUFSIZ) /* buffer is not full */
 				continue;
-			if((w = write(file->fildes, file->buf, BUFSIZ)) == -1)
+			if((w = write(file->fildes, &file->buf[file->pos],
+							BUFSIZ)) == -1)
 				return i;
-			memmove(file->buf, &file->buf[w], BUFSIZ - w);
-			file->len -= w;
+			if(w != BUFSIZ)
+			{
+				file->pos = w;
+				continue;
+			}
+			file->pos = 0;
+			file->len = 0;
 		}
 	return nb;
 }
