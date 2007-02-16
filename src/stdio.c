@@ -32,11 +32,11 @@ struct _FILE
 
 
 /* variables */
-static FILE _stdin = { 0, O_RDONLY, { 0 }, 0, 0, 0, FD_READ };
+static FILE _stdin = { STDIN_FILENO, O_RDONLY, { 0 }, 0, 0, 0, FD_READ };
 FILE * stdin = &_stdin;
-static FILE _stdout = { 1, O_WRONLY, { 0 }, 0, 0, 0, FD_WRITE };
+static FILE _stdout = { STDOUT_FILENO, O_WRONLY, { 0 }, 0, 0, 0, FD_WRITE };
 FILE * stdout = &_stdout;
-static FILE _stderr = { 2, O_WRONLY, { 0 }, 0, 0, 0, FD_WRITE };
+static FILE _stderr = { STDERR_FILENO, O_WRONLY, { 0 }, 0, 0, 0, FD_WRITE };
 FILE * stderr = &_stderr;
 
 
