@@ -17,6 +17,10 @@
 
 
 /* types */
+typedef enum _FILEBuffering
+{
+	FB_BUFFERED, FB_UNBUFFERED, FB_LINE
+} FILEBuffering;
 typedef enum _FILEDirection { FD_READ = 0, FD_WRITE = 1 } FILEDirection;
 
 struct _FILE
@@ -27,16 +31,28 @@ struct _FILE
 	unsigned int len;
 	unsigned int pos;
 	char eof;
+	FILEBuffering fbuf;
 	FILEDirection dir;
 };
 
 
 /* variables */
-static FILE _stdin = { STDIN_FILENO, O_RDONLY, { 0 }, 0, 0, 0, FD_READ };
+static FILE _stdin =
+{
+	STDIN_FILENO, O_RDONLY, { 0 }, 0, 0, 0, FB_BUFFERED, FD_READ
+};
 FILE * stdin = &_stdin;
-static FILE _stdout = { STDOUT_FILENO, O_WRONLY, { 0 }, 0, 0, 0, FD_WRITE };
+
+static FILE _stdout =
+{
+	STDOUT_FILENO, O_WRONLY, { 0 }, 0, 0, 0, FB_LINE, FD_WRITE
+};
 FILE * stdout = &_stdout;
-static FILE _stderr = { STDERR_FILENO, O_WRONLY, { 0 }, 0, 0, 0, FD_WRITE };
+
+static FILE _stderr =
+{
+	STDERR_FILENO, O_WRONLY, { 0 }, 0, 0, 0, FB_UNBUFFERED, FD_WRITE
+};
 FILE * stderr = &_stderr;
 
 
@@ -349,6 +365,21 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 			file->pos = 0;
 			file->len = 0;
 		}
+	if(file->fbuf == FB_BUFFERED)
+		return nb;
+	else if(file->fbuf == FB_LINE)
+	{
+		j = file->pos;
+		for(i = j; i < file->len; i++)
+			if(file->buf[i] == '\n')
+				j = i;
+	}
+	else /* file is unbuffered */
+		j = file->len;
+	for(; file->pos < j; file->pos += w) /* empty buffer if necessary */
+		if((w = write(file->fildes, &file->buf[file->pos],
+						j - file->pos)) == -1)
+			break; /* XXX should we report/remember the error? */
 	return nb;
 }
 
