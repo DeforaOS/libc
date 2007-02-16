@@ -152,6 +152,7 @@ FILE * fdopen(int fildes, char const * mode)
 	file->pos = 0;
 	file->eof = 0;
 	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
+	file->fbuf = isatty(file->fildes) ? FB_UNBUFFERED : FB_BUFFERED;
 	return file;
 }
 
@@ -226,6 +227,7 @@ FILE * fopen(char const * path, char const * mode)
 	file->pos = 0;
 	file->eof = 0;
 	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
+	file->fbuf = isatty(file->fildes) ? FB_UNBUFFERED : FB_BUFFERED;
 	return file;
 }
 
@@ -325,6 +327,7 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 		return NULL;
 	file->flags = flags;
 	file->dir = flags & O_WRONLY ? FD_WRITE : FD_READ;
+	file->fbuf = isatty(file->fildes) ? FB_UNBUFFERED : FB_BUFFERED;
 	return file;
 }
 
@@ -342,8 +345,7 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 	{
 		if(fflush(file) != 0)
 			return 0;
-		else
-			file->dir = FD_WRITE;
+		file->dir = FD_WRITE;
 	}
 	for(i = 0; i < nb; i++)
 		for(j = 0; j < size; j+=len)
