@@ -25,7 +25,7 @@ typedef enum _FILEDirection { FD_READ = 0, FD_WRITE = 1 } FILEDirection;
 
 struct _FILE
 {
-	int fildes;
+	int fd;
 	int flags;
 	unsigned char buf[BUFSIZ];
 	unsigned int len;
@@ -130,13 +130,13 @@ int fclose(FILE * file)
 	int ret;
 	
 	ret = fflush(file);
-	close(file->fildes);
+	close(file->fd);
 	return ret;
 }
 
 
 /* fdopen */
-FILE * fdopen(int fildes, char const * mode)
+FILE * fdopen(int fd, char const * mode)
 {
 	FILE * file;
 
@@ -147,12 +147,12 @@ FILE * fdopen(int fildes, char const * mode)
 		free(file);
 		return NULL;
 	}
-	file->fildes = fildes;
+	file->fd = fd;
 	file->len = 0;
 	file->pos = 0;
 	file->eof = 0;
 	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
-	file->fbuf = isatty(file->fildes) ? FB_UNBUFFERED : FB_BUFFERED;
+	file->fbuf = isatty(file->fd) ? FB_UNBUFFERED : FB_BUFFERED;
 	return file;
 }
 
@@ -178,7 +178,7 @@ int fflush(FILE * file)
 	else if(file->dir != FD_WRITE)
 		return EOF;
 	for(; file->pos < file->len; file->pos += w)
-		if((w = write(file->fildes, &file->buf[file->pos],
+		if((w = write(file->fd, &file->buf[file->pos],
 						file->len - file->pos)) == -1)
 			return EOF;
 	file->pos = 0;
@@ -206,7 +206,7 @@ int fileno(FILE * file)
 		errno = EBADF;
 		return -1;
 	}
-	return file->fildes;
+	return file->fd;
 }
 
 
@@ -218,7 +218,7 @@ FILE * fopen(char const * path, char const * mode)
 	if((file = malloc(sizeof(FILE))) == NULL)
 		return NULL;
 	if((file->flags = _fopen_mode(mode)) == -1
-			|| (file->fildes = open(path, file->flags)) < 0)
+			|| (file->fd = open(path, file->flags)) < 0)
 	{
 		free(file);
 		return NULL;
@@ -227,7 +227,7 @@ FILE * fopen(char const * path, char const * mode)
 	file->pos = 0;
 	file->eof = 0;
 	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
-	file->fbuf = isatty(file->fildes) ? FB_UNBUFFERED : FB_BUFFERED;
+	file->fbuf = isatty(file->fd) ? FB_UNBUFFERED : FB_BUFFERED;
 	return file;
 }
 
@@ -288,8 +288,7 @@ size_t fread(void * ptr, size_t size, size_t nb, FILE * file)
 		{
 			if(file->pos == file->len)
 			{
-				if((r = read(file->fildes, file->buf, BUFSIZ))
-						<= 0)
+				if((r = read(file->fd, file->buf, BUFSIZ)) <= 0)
 					return i;
 				file->pos = 0;
 				file->len = r;
@@ -313,21 +312,21 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 	{
 		if((flags = _fopen_mode(mode)) == -1)
 		{
-			if(fcntl(file->fildes, F_SETFL, flags) == -1)
+			if(fcntl(file->fd, F_SETFL, flags) == -1)
 				return NULL;
 			file->flags = flags;
 			file->dir = flags & O_WRONLY ? FD_WRITE : FD_READ;
 			return file;
 		}
 	}
-	close(file->fildes);
+	close(file->fd);
 	clearerr(file);
 	if((flags = _fopen_mode(mode)) == -1
-			|| (file->fildes = open(path, file->flags)) < 0)
+			|| (file->fd = open(path, file->flags)) < 0)
 		return NULL;
 	file->flags = flags;
 	file->dir = flags & O_WRONLY ? FD_WRITE : FD_READ;
-	file->fbuf = isatty(file->fildes) ? FB_UNBUFFERED : FB_BUFFERED;
+	file->fbuf = isatty(file->fd) ? FB_UNBUFFERED : FB_BUFFERED;
 	return file;
 }
 
@@ -356,9 +355,8 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 			file->len += len;
 			if(file->len != BUFSIZ) /* buffer is not full */
 				continue;
-			if((w = write(file->fildes, &file->buf[file->pos],
-							BUFSIZ - file->pos))
-					== -1)
+			if((w = write(file->fd, &file->buf[file->pos], BUFSIZ
+							- file->pos)) == -1)
 				return i;
 			if(w != BUFSIZ - (ssize_t)file->pos) /* XXX cast */
 				file->pos = w; /* buffer is not empty */
@@ -380,8 +378,8 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 	else /* file is unbuffered */
 		j = file->len;
 	for(; file->pos < j; file->pos += w) /* empty buffer if necessary */
-		if((w = write(file->fildes, &file->buf[file->pos],
-						j - file->pos)) == -1)
+		if((w = write(file->fd, &file->buf[file->pos], j - file->pos))
+				== -1)
 			break; /* XXX should we report/remember the error? */
 	return nb;
 }
