@@ -135,6 +135,7 @@ FILE * fdopen(int fildes, char const * mode)
 	file->len = 0;
 	file->pos = 0;
 	file->eof = 0;
+	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
 	return file;
 }
 
@@ -297,6 +298,7 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 			if(fcntl(file->fildes, F_SETFL, flags) == -1)
 				return NULL;
 			file->flags = flags;
+			file->dir = flags & O_WRONLY ? FD_WRITE : FD_READ;
 			return file;
 		}
 	}
@@ -306,6 +308,7 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 			|| (file->fildes = open(path, file->flags)) < 0)
 		return NULL;
 	file->flags = flags;
+	file->dir = flags & O_WRONLY ? FD_WRITE : FD_READ;
 	return file;
 }
 
@@ -329,7 +332,7 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 	for(i = 0; i < nb; i++)
 		for(j = 0; j < size; j+=len)
 		{
-			len = min(BUFSIZ - file->len - file->pos, size - j);
+			len = min(BUFSIZ - file->len, size - j);
 			memcpy(&file->buf[file->len], p, len);
 			p += len;
 			file->len += len;
@@ -338,7 +341,7 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 			if((w = write(file->fildes, &file->buf[file->pos],
 							BUFSIZ)) == -1)
 				return i;
-			if(w != BUFSIZ)
+			if(w != BUFSIZ) /* short write */
 			{
 				file->pos = w;
 				continue;
