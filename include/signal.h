@@ -16,7 +16,7 @@ typedef unsigned int id_t;
 # endif
 # ifndef pid_t
 #  define pid_t pid_t
-typedef id_t pid_t;
+typedef signed int pid_t;
 # endif
 # ifndef uid_t
 #  define uid_t uid_t

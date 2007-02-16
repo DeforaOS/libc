@@ -15,7 +15,7 @@ typedef unsigned int id_t;
 typedef enum { P_ALL, P_PID, P_PGID } idtype_t;
 # ifndef pid_t
 #  define pid_t pid_t
-typedef id_t pid_t;
+typedef signed int pid_t;
 # endif
 /* FIXME rusage */
 

@@ -25,6 +25,10 @@ enum { SEEK_CUR, SEEK_END, SEEK_SET };
 #  define intptr_t intptr_t
 typedef signed long intptr_t;
 # endif
+# ifndef pid_t
+#  define pid_t pid_t
+typedef signed int pid_t;
+# endif
 # ifndef size_t
 #  define size_t size_t
 typedef unsigned int size_t;
@@ -41,10 +45,6 @@ typedef unsigned int id_t;
 # ifndef gid_t
 #  define gid_t gid_t
 typedef id_t gid_t;
-# endif
-# ifndef pid_t
-#  define pid_t pid_t
-typedef id_t pid_t;
 # endif
 # ifndef uid_t
 #  define uid_t uid_t

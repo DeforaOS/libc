@@ -20,7 +20,7 @@ typedef int mode_t;
 # endif
 # ifndef pid_t
 #  define pid_t pid_t
-typedef id_t pid_t;
+typedef signed int pid_t;
 # endif
 
 
