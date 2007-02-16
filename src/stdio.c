@@ -357,19 +357,20 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 			if(file->len != BUFSIZ) /* buffer is not full */
 				continue;
 			if((w = write(file->fildes, &file->buf[file->pos],
-							BUFSIZ)) == -1)
+							BUFSIZ - file->pos))
+					== -1)
 				return i;
-			if(w != BUFSIZ) /* short write */
+			if(w != BUFSIZ - (ssize_t)file->pos) /* XXX cast */
+				file->pos = w; /* buffer is not empty */
+			else /* buffer is empty */
 			{
-				file->pos = w;
-				continue;
+				file->pos = 0;
+				file->len = 0;
 			}
-			file->pos = 0;
-			file->len = 0;
 		}
 	if(file->fbuf == FB_BUFFERED)
 		return nb;
-	else if(file->fbuf == FB_LINE)
+	if(file->fbuf == FB_LINE)
 	{
 		j = file->pos;
 		for(i = j; i < file->len; i++)
