@@ -36,13 +36,13 @@
 
 
 /* macros */
-# define S_ISBLK(m)	(((m) & S_IFBLK) ? 1 : 0)
-# define S_ISCHR(m)	(((m) & S_IFCHR) ? 1 : 0)
-# define S_ISDIR(m)	(((m) & S_IFDIR) ? 1 : 0)
-# define S_ISFIFO(m)	(((m) & S_IFIFO) ? 1 : 0)
-# define S_ISREG(m)	(((m) & S_IFREG) ? 1 : 0)
-# define S_ISLNK(m)	(((m) & S_IFLNK) ? 1 : 0)
-# define S_ISSOCK(m)	(((m) & S_IFSOCK) ? 1 : 0)
+# define S_ISBLK(m)	(((m) & S_IFBLK) == S_IFBLK)
+# define S_ISCHR(m)	(((m) & S_IFCHR) == S_IFCHR)
+# define S_ISDIR(m)	(((m) & S_IFDIR) == S_IFDIR)
+# define S_ISFIFO(m)	(((m) & S_IFIFO) == S_IFIFO)
+# define S_ISREG(m)	(((m) & S_IFREG) == S_IFREG)
+# define S_ISLNK(m)	(((m) & S_IFLNK) == S_IFLNK)
+# define S_ISSOCK(m)	(((m) & S_IFSOCK) == S_IFSOCK)
 
 
 /* functions */
