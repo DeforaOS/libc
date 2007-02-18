@@ -44,7 +44,11 @@ struct itimespec
 
 /* functions */
 struct tm * localtime(time_t const * t);
+struct tm * localtime_r(time_t const * t, struct tm * ret);
 int nanosleep(struct timespec * requested, struct timespec * remaining);
+size_t strftime(char * s, size_t maxsize, char const * format,
+		struct tm * timep);
 time_t time(time_t * t);
+void tzset(void);
 
 #endif /* !LIBC_TIME_H */
