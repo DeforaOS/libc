@@ -65,6 +65,8 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.h \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sys/sysctl.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/Makefile \
@@ -96,33 +98,83 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/stdio.h \
 		$(PACKAGE)-$(VERSION)/include/stdlib.h \
 		$(PACKAGE)-$(VERSION)/include/string.h \
+		$(PACKAGE)-$(VERSION)/include/stropts.h \
+		$(PACKAGE)-$(VERSION)/include/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/sys/statvfs.h \
+		$(PACKAGE)-$(VERSION)/include/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/sys/wait.h \
+		$(PACKAGE)-$(VERSION)/include/termios.h \
 		$(PACKAGE)-$(VERSION)/include/time.h \
 		$(PACKAGE)-$(VERSION)/include/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/utime.h \
+		$(PACKAGE)-$(VERSION)/include/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/project.conf \
 		$(PACKAGE)-$(VERSION)/include/compat/Makefile \
+		$(PACKAGE)-$(VERSION)/include/compat/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/compat/errno.h \
+		$(PACKAGE)-$(VERSION)/include/compat/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/compat/signal.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/time.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/times.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/compat/termios.h \
+		$(PACKAGE)-$(VERSION)/include/compat/time.h \
 		$(PACKAGE)-$(VERSION)/include/compat/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/errno.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/signal.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/times.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/termios.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/errno.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/signal.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/times.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/termios.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/dirent.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/errno.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/times.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/types.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/project.conf
 	$(RM) $(PACKAGE)-$(VERSION)

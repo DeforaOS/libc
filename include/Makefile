@@ -1,4 +1,4 @@
-SUBDIRS	= compat kernel/linux kernel/netbsd
+SUBDIRS	= compat kernel/linux kernel/netbsd kernel/solaris
 
 
 all: subdirs
