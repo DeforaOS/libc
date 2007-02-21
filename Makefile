@@ -165,7 +165,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/Makefile \
-		$(PACKAGE)-$(VERSION)/include/kernel/solaris/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/stat.h \
