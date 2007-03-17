@@ -175,11 +175,11 @@ char * strdup(char const * s)
 /* strerror */
 char * strerror(int errnum)
 {
-	static char einval[] = "Invalid argument";
-	struct
+	static char ret[256];
+	static const struct
 	{
 		int errno;
-		char * errmsg;
+		const char * errmsg;
 	} err[] =
 	{
 		{ 0,		"Success"				},
@@ -192,7 +192,7 @@ char * strerror(int errnum)
 		{ EEXIST,	"File exists"				},
 		{ EFAULT,	"Bad address"				},
 		{ EINTR,	"Interrupted system call"		},
-		{ EINVAL,	einval					},
+		{ EINVAL,	"Invalid argument"			},
 		{ EISDIR,	"Is a directory"			},
 		{ ENOBUFS,	"No buffer space available"		},
 		{ ENODEV,	"No such device"			},
@@ -206,15 +206,21 @@ char * strerror(int errnum)
 		{ EPIPE,	"Broken pipe"				},
 		{ ERANGE,	"Result too large or too small"		},
 		{ EROFS,	"Read-only filesystem"			},
-		{ EXDEV,	"Cross-device link"			}
+		{ EXDEV,	"Cross-device link"			},
+		{ -1,		NULL					}
 	};
-#define EXLAST EXDEV
 	unsigned int i;
 
-	for(i = 0; err[i].errno != EXLAST; i++)
+	for(i = 0; err[i].errmsg != NULL; i++)
 		if(err[i].errno == errnum)
-			return err[i].errmsg;
-	return einval;
+		{
+			strncpy(ret, err[i].errmsg, sizeof(ret) - 2);
+			ret[sizeof(ret) - 1] = '\0';
+			return ret;
+		}
+	strncpy(ret, "Unknown error", sizeof(ret) - 2);
+	ret[sizeof(ret) - 1] = '\0';
+	return ret;
 }
 
 
