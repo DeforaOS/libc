@@ -7,7 +7,6 @@ _syscall:
 	int	$0x80
 	jnc	.errnoret
 .errno:
-	neg	%eax
 	mov	%eax, errno
 	mov	$-1, %eax
 .errnoret:
