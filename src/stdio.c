@@ -542,6 +542,7 @@ static int _vprintf_format(print_func func, void * dest, size_t size,
 	char c;
 	char * str;
 	long long int i;
+	unsigned long long int u;
 	void * ptr;
 	int lng = 0;
 
@@ -590,17 +591,23 @@ static int _vprintf_format(print_func func, void * dest, size_t size,
 					return -1;
 				break;
 			case 'u':
-				i = lng > 1 ? va_arg(*arg, long long int)
-					: (lng == 1 ? va_arg(*arg, long int)
-							: va_arg(*arg, int));
-				if(_format_u(func, dest, size, len, &i) == -1)
+				u = lng > 1
+					? va_arg(*arg, unsigned long long int)
+					: (lng == 1 ? va_arg(*arg, unsigned long
+								int)
+							: va_arg(*arg,
+								unsigned int));
+				if(_format_u(func, dest, size, len, &u) == -1)
 					return -1;
 				break;
 			case 'x':
-				i = lng > 1 ? va_arg(*arg, long long int)
-					: (lng == 1 ? va_arg(*arg, long int)
-							: va_arg(*arg, int));
-				if(_format_x(func, dest, size, len, &i) == -1)
+				u = lng > 1
+					? va_arg(*arg, unsigned long long int)
+					: (lng == 1 ? va_arg(*arg, unsigned long
+								int)
+							: va_arg(*arg,
+								unsigned int));
+				if(_format_x(func, dest, size, len, &u) == -1)
 					return -1;
 				break;
 			default:
@@ -623,13 +630,16 @@ static int _format_c(print_func func, void * dest, size_t * len, char * chrp)
 static int _format_d(print_func func, void * dest, size_t size, size_t * len,
 		long long * ptr)
 {
-	long long val;
+	unsigned long long uval;
 
 	if(*ptr >= 0)
-		return _format_u(func, dest, size - 1, len, ptr);
-	val = -(*ptr);
+	{
+		uval = *ptr;
+		return _format_u(func, dest, size - 1, len, &uval);
+	}
+	uval = -(*ptr);
 	if(func(dest, 1, "-") != 1
-			|| _format_u(func, dest, size - 1, len, &val) == -1)
+			|| _format_u(func, dest, size - 1, len, &uval) == -1)
 		return -1;
 	(*len)++;
 	return 0;
