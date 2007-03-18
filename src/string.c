@@ -115,8 +115,8 @@ int strcmp(char const * s1, char const * s2)
 	unsigned char const * u1;
 	unsigned char const * u2;
 
-	u1 = s1;
-	u2 = s2;
+	u1 = (unsigned char const *)s1;
+	u2 = (unsigned char const *)s2;
 	while(*u1 && *u2 && *u1 == *u2)
 	{
 		u1++;
@@ -178,7 +178,7 @@ char * strerror(int errnum)
 	static char ret[256];
 	static const struct
 	{
-		int errno;
+		const int errno;
 		const char * errmsg;
 	} err[] =
 	{
@@ -251,13 +251,15 @@ char * strncat(char * dest, char const * src, size_t n)
 /* strncmp */
 int strncmp(char const * s1, char const * s2, size_t n)
 {
-	unsigned char const * u1 = s1;
-	unsigned char const * u2 = s2;
+	unsigned char const * u1;
+	unsigned char const * u2;
 
+	u1 = (unsigned char const *)s1;
+	u2 = (unsigned char const *)s2;
 	while(--n && *u1 && *u2 && *u1 == *u2)
 	{
-		*u1++;
-		*u2++;
+		u1++;
+		u2++;
 	}
 	return *u1 - *u2;
 }
