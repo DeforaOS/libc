@@ -221,7 +221,7 @@ void * malloc(size_t size)
 	}
 	if(_alloc.next != NULL) /* look for available space */
 		for(a = _alloc.next; a->next != NULL; a = a->next)
-			if(inc <= (char*)(a->next) - (char*)a - sizeof(*a)
+			if(inc <= (char *)(a->next) - (char *)a - sizeof(*a)
 					- a->size)
 			{
 				b = (Alloc*)((char*)a + sizeof(*a) + a->size);
