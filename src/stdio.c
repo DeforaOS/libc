@@ -562,6 +562,7 @@ static int _vprintf_format(print_func func, void * dest, size_t size,
 			case '9':
 			case ' ':
 			case '.':
+			case '-':
 				(*p)++;
 				continue;
 			case 'l':
