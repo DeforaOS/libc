@@ -744,7 +744,7 @@ int vsnprintf(char * str, size_t size, char const * format, va_list arg)
 	if((ret = _vprintf(_sprint, &p, size, format, arg)) < 0)
 		return ret;
 	i = ret;
-	if(i < size)
+	if(i < size) /* FIXME should always terminate the string */
 		str[ret] = '\0';
 	return ret;
 }
