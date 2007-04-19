@@ -31,7 +31,7 @@ int statvfs(char const * path, struct statvfs * buf)
 
 	if(statfs(path, &fs) != 0)
 		return -1;
-	memset(buf, sizeof(*buf), 0);
+	memset(buf, 0, sizeof(*buf));
 	buf->f_bsize = fs.f_bsize;
 	buf->f_blocks = fs.f_blocks;
 	buf->f_bfree = fs.f_bfree;
