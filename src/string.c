@@ -164,7 +164,8 @@ char * strdup(char const * s)
 	size_t len;
 	char * str;
 
-	len = strlen(s) + 1;
+	if((len = strlen(s) + 1) == 0)
+		return NULL;
 	if((str = malloc(sizeof(char) * len)) == NULL)
 		return NULL;
 	strcpy(str, s);
