@@ -32,6 +32,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/stdlib.c \
 		$(PACKAGE)-$(VERSION)/src/stdio.c \
 		$(PACKAGE)-$(VERSION)/src/string.c \
+		$(PACKAGE)-$(VERSION)/src/strings.c \
 		$(PACKAGE)-$(VERSION)/src/stropts.c \
 		$(PACKAGE)-$(VERSION)/src/sys/mman.c \
 		$(PACKAGE)-$(VERSION)/src/sys/resource.c \
@@ -98,6 +99,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/stdio.h \
 		$(PACKAGE)-$(VERSION)/include/stdlib.h \
 		$(PACKAGE)-$(VERSION)/include/string.h \
+		$(PACKAGE)-$(VERSION)/include/strings.h \
 		$(PACKAGE)-$(VERSION)/include/stropts.h \
 		$(PACKAGE)-$(VERSION)/include/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/sys/mman.h \
