@@ -198,6 +198,36 @@ int fgetc(FILE * file)
 }
 
 
+/* fgets */
+char * fgets(char * str, int size, FILE * fp)
+{
+	int i;
+	int c;
+
+	if(size < 0)
+	{
+		errno = EINVAL;
+		return NULL;
+	}
+	for(i = 0; i + 1 < size; i++)
+	{
+		if((c = fgetc(fp)) == EOF)
+		{
+			if(i == 0 || !feof(fp))
+				return NULL;
+			break;
+		}
+		str[i] = c;
+		if(c == '\n')
+			break;
+	}
+	if(++i >= size)
+		return NULL;
+	str[i] = '\0';
+	return str;
+}
+
+
 /* fileno */
 int fileno(FILE * file)
 {
@@ -288,8 +318,13 @@ size_t fread(void * ptr, size_t size, size_t nb, FILE * file)
 		{
 			if(file->pos == file->len)
 			{
-				if((r = read(file->fd, file->buf, BUFSIZ)) <= 0)
+				if((r = read(file->fd, file->buf, BUFSIZ)) < 0)
 					return i;
+				else if(r == 0)
+				{
+					file->eof = 1;
+					return i;
+				}
 				file->pos = 0;
 				file->len = r;
 			}
