@@ -25,8 +25,8 @@ typedef unsigned int time_t;
 # define timeval timeval
 struct timeval
 {
-	        time_t tv_sec;
-		        suseconds_t tv_usec;
+	time_t tv_sec;
+	suseconds_t tv_usec;
 };
 # endif
 
@@ -67,5 +67,8 @@ struct rusage
 # define PRIO_PROCESS	0
 # define PRIO_PGRP	1
 # define PRIO_USER	2
+
+# define RUSAGE_SELF		0
+# define RUSAGE_CHILDREN	-1
 
 #endif /* !LIBC_KERNEL_LINUX_SYS_RESOURCE_H */
