@@ -64,7 +64,7 @@ struct rusage
 
 
 /* constants */
-# define PRIO_PROCESS	0 
+# define PRIO_PROCESS	0
 # define PRIO_PGRP	1
 # define PRIO_USER	2
 
