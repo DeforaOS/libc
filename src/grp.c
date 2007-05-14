@@ -19,8 +19,9 @@ static FILE * _fp = NULL;
 /* endgrent */
 void endgrent(void)
 {
-	if(_fp != NULL)
-		fclose(_fp);
+	if(_fp == NULL)
+		return;
+	fclose(_fp);
 	_fp = NULL;
 }
 
@@ -40,12 +41,15 @@ struct group * getgrent(void)
 		endgrent();
 		return NULL;
 	}
-	s = buf;
-	if((t = strchr(buf, ':')) == NULL)
+	s = buf; /* read the group's name */
+	if((t = strchr(s, ':')) == NULL)
 		return NULL;
 	*t = '\0';
 	ret.gr_name = s;
-	s = ++t;
+	s = ++t; /* skip the group's password */
+	if((t = strchr(s, ':')) == NULL)
+		return NULL;
+	s = ++t; /* read the group's id */
 	if((t = strchr(s, ':')) == NULL)
 		return NULL;
 	ret.gr_gid = atoi(s);
