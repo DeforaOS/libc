@@ -53,6 +53,7 @@ int getc(FILE * file);
 int getchar(void);
 void perror(char const * str);
 int printf(char const * format, ...);
+int putc(int c, FILE * file);
 int putchar(int c);
 int puts(char const * string);
 int rename(char const * from, char const * to);
