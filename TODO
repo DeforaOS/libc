@@ -1,4 +1,3 @@
-- use kernel-specific headers when appropriate
 - string.c:
   * factorize code? (strchr/strrchr/memchr)
 
