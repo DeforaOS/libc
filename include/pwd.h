@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -34,5 +34,9 @@ struct passwd
 /* functions */
 struct passwd * getpwnam(char const * name);
 struct passwd * getpwuid(uid_t uid);
+
+struct passwd * getpwent(void);
+void endpwent(void);
+void setpwent(void);
 
 #endif /* !LIBC_PWD_H */
