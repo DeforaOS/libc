@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006 The DeforaOS Project */
+/* Copyright (c) 2007 The DeforaOS Project */
 
 
 
@@ -27,5 +27,9 @@ struct group
 /* functions */
 struct group * getgrgid(gid_t gid);
 struct group * getgrnam(char const * name);
+
+struct group * getgrent(void);
+void endgrent(void);
+void setgrent(void);
 
 #endif /* !LIBC_GRP_H */
