@@ -628,7 +628,7 @@ static int _vprintf_format(print_func func, void * dest, size_t size,
 				(*p)++;
 				continue;
 			case 'c':
-				c = va_arg(*arg, char);
+				c = va_arg(*arg, int);
 				if(_format_c(func, dest, len, &c) == -1)
 					return -1;
 				break;
