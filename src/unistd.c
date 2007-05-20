@@ -461,6 +461,8 @@ unsigned int sleep(unsigned int seconds)
 /* ttyname */
 char * ttyname(int fildes)
 {
+	if(isatty(fildes) != 1)
+		return NULL;
 	errno = ENOSYS; /* FIXME not implemented */
 	return NULL;
 }
