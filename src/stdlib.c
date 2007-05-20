@@ -333,7 +333,8 @@ static int _setenv_do(char const * name, char const * value, int overwrite)
 	environ = env;
 	if((env[env_cnt] = malloc(nlen + vlen + 2)) == NULL)
 		return -1;
-	sprintf(env[env_cnt++], "%s=%s", name, value); /* strcpy instead? */
+	sprintf(env[env_cnt++], "%s=%s", name, value);
+	env[env_cnt] = NULL;
 	return 0;
 }
 
