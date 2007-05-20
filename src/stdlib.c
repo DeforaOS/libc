@@ -212,13 +212,15 @@ void * malloc(size_t size)
 {
 	Alloc * a = &_alloc;
 	Alloc * b;
-	intptr_t inc = ((size + sizeof(*b)) | 0x7) + 1; /* align on 64 bits */
+	intptr_t inc;
 
-	if(size > INT_MAX - (sizeof(*b) | 0xf))
+	if(size >= INT_MAX - sizeof(*b) - 0x8)
 	{
 		errno = ENOMEM;
 		return NULL;
 	}
+	size = (size | 0x7) + 1; /* round up to 64 bits */
+	inc = size + sizeof(*b);
 	if(_alloc.next != NULL) /* look for available space */
 		for(a = _alloc.next; a->next != NULL; a = a->next)
 			if(inc <= (char *)(a->next) - (char *)a - sizeof(*a)
@@ -233,7 +235,7 @@ void * malloc(size_t size)
 	{
 		if((b = sbrk(inc)) == (void*)-1) /* XXX cast */
 			return NULL;
-		b->size = inc - sizeof(*b);
+		b->size = size;
 	}
 	b->prev = a;
 	b->next = a->next;
