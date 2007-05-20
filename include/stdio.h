@@ -38,6 +38,7 @@ void clearerr(FILE * file);
 int fclose(FILE * file);
 FILE * fdopen(int fildes, char const * mode);
 int feof(FILE * file);
+int ferror(FILE * file);
 int fflush(FILE * file);
 int fgetc(FILE * file);
 char * fgets(char * str, int size, FILE * file);
