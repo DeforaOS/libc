@@ -212,9 +212,9 @@ void * malloc(size_t size)
 {
 	Alloc * a = &_alloc;
 	Alloc * b;
-	intptr_t inc = size;
+	intptr_t inc = ((size + sizeof(*b)) | 0x7) + 1; /* align on 64 bits */
 
-	if(inc < 0 || (inc += sizeof(*b)) <= 0) /* signedness check */
+	if(size > INT_MAX - (sizeof(*b) | 0xf))
 	{
 		errno = ENOMEM;
 		return NULL;
@@ -229,13 +229,8 @@ void * malloc(size_t size)
 				a->next->prev = b;
 				break;
 			}
-	if(a->next == NULL) /* allocate memory */
-	{	/* check for integer overflow, add some overhead */
-		if((inc = (inc | 0xff) + 1) < 0)
-		{
-			errno = ENOMEM;
-			return NULL;
-		} /* increase process size */
+	if(a->next == NULL) /* increase process size to allocate memory */
+	{
 		if((b = sbrk(inc)) == (void*)-1) /* XXX cast */
 			return NULL;
 		b->size = inc - sizeof(*b);
@@ -243,7 +238,7 @@ void * malloc(size_t size)
 	b->prev = a;
 	b->next = a->next;
 	a->next = b;
-	return (char*)b + sizeof(*b); /* XXX cast */
+	return (char*)b + sizeof(*b);
 }
 
 
