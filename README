@@ -11,5 +11,5 @@ $ make CFLAGS="-nostdinc -g -O2" all
 With GCC (tested on Debian GNU/Linux):
 $ make CFLAGS="-W -Wall -ansi -g -O2 -nostdinc -I /usr/local/include/libc" \
     LDFLAGS="-nostdlib -L /usr/local/lib -l c" all
-assuming libc headers are accessible in /usr/local/include/libc, and libc
-binaries are accessible in /usr/local/lib.
+assuming the headers are accessible in /usr/local/include/libc, and the
+libraries are accessible in /usr/local/lib.
