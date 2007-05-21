@@ -255,7 +255,8 @@ void * realloc(void * ptr, size_t size)
 	if(size == a->size)
 		return ptr;
 	size = (size | 0xf) + 1; /* round up to 64 bits */
-	if(size < a->size || (char*)a->next - (char*)a - sizeof(*a) >= size)
+	if(size < a->size || (a->next != NULL && (char*)a->next - (char*)a
+				- sizeof(*a) >= size))
 	{
 		a->size = size;
 		return ptr;
