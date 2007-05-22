@@ -21,7 +21,7 @@ typedef long long off_t;
 struct dirent
 {
 	ino_t d_ino;
-	off_t d_off;
+	off_t _padding;
 	unsigned short d_reclen;
 	unsigned char d_type;
 	char d_name[256]; /* NAME_MAX + 1 */

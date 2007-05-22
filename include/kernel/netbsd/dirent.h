@@ -18,7 +18,7 @@ struct dirent
 	ino_t d_ino;
 	unsigned short int d_reclen;
 	unsigned char d_type;
-	unsigned char d_namlen;
+	unsigned char _padding;
 	char d_name[256]; /* NAME_MAX + 1 */
 };
 
