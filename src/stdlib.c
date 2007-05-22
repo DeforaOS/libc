@@ -84,9 +84,10 @@ static int _atexit_do(AtexitFunction function, void (*callback)(void))
 /* atoi */
 int atoi(char const * str)
 {
-	int res = 0;
+	int ret = 0;
 	int pos = 1;
 
+	for(; isspace(*str); str++);
 	if(*str == '-')
 	{
 		pos = -1;
@@ -94,50 +95,52 @@ int atoi(char const * str)
 	}
 	while(*str >= '0' && *str <= '9')
 	{
-		res *= 10;
-		res += pos * (*str++ - '0');
+		ret *= 10;
+		ret += pos * (*str++ - '0');
 	}
-	return res;
+	return ret;
 }
 
 
 /* atol */
 long atol(char const * str)
 {
-	long res = 0;
+	long ret = 0;
 	int pos = 1;
 
+	for(; isspace(*str); str++);
 	if(*str == '-')
 	{
 		pos = -1;
 		str++;
 	}
-	while(*str)
+	while(*str >= '0' && *str <= '9')
 	{
-		res *= 10;
-		res += pos * (*str++ - '0');
+		ret *= 10;
+		ret += pos * (*str++ - '0');
 	}
-	return res;
+	return ret;
 }
 
 
 /* atol */
 long long atoll(char const * nptr)
 {
-	long long res = 0;
+	long long ret = 0;
 	int pos = 1;
 
+	for(; isspace(*nptr); nptr++);
 	if(*nptr == '-')
 	{
 		pos = -1;
 		nptr++;
 	}
-	while(*nptr)
+	while(*nptr >= '0' && *nptr <= '9')
 	{
-		res *= 10;
-		res += pos * (*nptr++ - '0');
+		ret *= 10;
+		ret += pos * (*nptr++ - '0');
 	}
-	return res;
+	return ret;
 }
 
 
