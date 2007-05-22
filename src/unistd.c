@@ -3,9 +3,11 @@
 
 
 
+#include "sys/stat.h"
 #include "sys/types.h"
 #include "inttypes.h"
 #include "stddef.h"
+#include "dirent.h"
 #include "errno.h"
 #include "stdlib.h"
 #include "string.h"
@@ -461,9 +463,37 @@ unsigned int sleep(unsigned int seconds)
 /* ttyname */
 char * ttyname(int fildes)
 {
+	static char buf[260]; /* XXX strlen(_PATH_DEV) + NAME_MAX + 2 */
+	struct stat st;
+	dev_t rdev;
+	DIR * dir;
+	struct dirent * de;
+
 	if(isatty(fildes) != 1)
 		return NULL;
-	errno = ENOSYS; /* FIXME not implemented */
+	if(fstat(fildes, &st) != 0)
+		return NULL;
+	if(!S_ISCHR(st.st_mode))
+	{
+		errno = ENOTTY;
+		return NULL;
+	}
+	if((dir = opendir("/dev")) == NULL)
+		return NULL;
+	rdev = st.st_rdev;
+	strcpy(buf, "/dev/");
+	while((de = readdir(dir)) != NULL)
+	{
+		strcpy(&buf[5], de->d_name);
+		if(stat(buf, &st) != 0)
+			continue;
+		if(rdev != st.st_rdev)
+			continue;
+		closedir(dir);
+		return buf;
+	}
+	closedir(dir);
+	errno = ENOTTY;
 	return NULL;
 }
 
