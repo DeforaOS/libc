@@ -63,16 +63,36 @@ struct stat
 	uid_t st_uid;
 	gid_t st_gid;
 	dev_t st_rdev;
+#ifdef _LP64
+	int _padding1;
+#endif
 	time_t st_atime;
-	time_t padding1;
+#ifdef _LP64
+	int _padding2;
+#endif
+	long _padding3;
 	time_t st_mtime;
-	time_t padding2;
+#ifdef _LP64
+	int _padding4;
+#endif
+	long _padding5;
 	time_t st_ctime;
-	time_t padding3;
+#ifdef _LP64
+	int _padding6;
+#endif
+	long _padding7;
 	off_t st_size;
 	blkcnt_t st_blocks;
 	blksize_t st_blksize;
-	char padding4[24];
+	char _padding8[12];
+	time_t _padding9;
+#ifdef _LP64
+	int _padding10;
+#endif
+	long _padding11;
+#ifndef _LP64
+	int _padding12;
+#endif
 };
 
 #endif /* !LIBC_KERNEL_NETBSD_SYS_STAT_H */
