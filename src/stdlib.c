@@ -92,7 +92,7 @@ int atoi(char const * str)
 		pos = -1;
 		str++;
 	}
-	while(*str)
+	while(*str >= '0' && *str <= '9')
 	{
 		res *= 10;
 		res += pos * (*str++ - '0');
