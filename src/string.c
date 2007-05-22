@@ -54,17 +54,17 @@ void * memcpy(void * dest, void const * src, size_t n)
 /* memmove */
 void * memmove(void * dest, void const * src, size_t n)
 {
+	char * d = dest;
+	char const * s = src;
+
 	if(n == 0 || dest == src)
 		return dest;
-	if(dest + n < src || dest > src + n)
+	if(d + n < s || d > s + n)
 		return memcpy(dest, src, n);
-	if(src < dest)
+	if(s < d)
 	{
-		int * d;
-		int const * s;
-
-		d = dest + n - 1;
-		s = src + n - 1;
+		d += n - 1;
+		s += n - 1;
 		while(n--)
 			*d-- = *s--;
 		return dest;
@@ -215,11 +215,11 @@ char * strerror(int errnum)
 	for(i = 0; err[i].errmsg != NULL; i++)
 		if(err[i].errno == errnum)
 		{
-			strncpy(ret, err[i].errmsg, sizeof(ret) - 2);
+			strncpy(ret, err[i].errmsg, sizeof(ret) - 1);
 			ret[sizeof(ret) - 1] = '\0';
 			return ret;
 		}
-	strncpy(ret, "Unknown error", sizeof(ret) - 2);
+	strncpy(ret, "Unknown error", sizeof(ret) - 1);
 	ret[sizeof(ret) - 1] = '\0';
 	return ret;
 }
