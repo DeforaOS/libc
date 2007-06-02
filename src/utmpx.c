@@ -27,7 +27,9 @@ struct utmpx * getutxent(void)
 {
 	static struct utmpx ret;
 
-	if(_fp == NULL && (_fp = fopen("/var/run/utmpx", "r")) == NULL)
+	if(_fp == NULL
+			&& (_fp = fopen("/var/run/utmpx", "r")) == NULL
+			&& (_fp = fopen("/var/run/utmp", "r")) == NULL)
 		return NULL;
 	if(fread(&ret, 1, sizeof(ret), _fp) != 1)
 	{
