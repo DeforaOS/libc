@@ -133,6 +133,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/compat/termios.h \
 		$(PACKAGE)-$(VERSION)/include/compat/time.h \
+		$(PACKAGE)-$(VERSION)/include/compat/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/compat/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/dirent.h \
@@ -149,6 +150,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/termios.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/dirent.h \
@@ -165,6 +167,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/termios.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/errno.h \
