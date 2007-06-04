@@ -44,7 +44,7 @@ struct utmpx
 	char _padding1[4];
 	char _padding2[0]; /* FIXME struct sockaddr_storage */
 	struct timeval ut_tv;
-	char _padding3[40];
+	char _padding3[168];
 };
 
 #endif /* !LIBC_KERNEL_NETBSD_UTMPX_H */
