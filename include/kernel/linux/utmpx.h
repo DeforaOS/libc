@@ -44,7 +44,7 @@ struct utmpx
 	char _padding1[4]; /* FIXME struct exit_status */
 	long int _padding2;
 	struct timeval ut_tv;
-	char _padding3[24];
+	char _padding3[36];
 };
 
 #endif /* !LIBC_KERNEL_LINUX_UTMPX_H */
