@@ -180,6 +180,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
+		$(PACKAGE)-$(VERSION)/COPYING \
 		$(PACKAGE)-$(VERSION)/project.conf
 	$(RM) $(PACKAGE)-$(VERSION)
 
