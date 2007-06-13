@@ -45,3 +45,12 @@ _start:
 .umul:
 	retl
 	umulcc	%o0, %o1, %o0
+
+
+/* urem */
+.global .urem
+.urem:
+	udivcc	%o0, %o1, %o2		/* c = a / b */
+	umulcc	%o1, %o2, %o1		/* b = b * c */
+	retl
+	subcc	%o0, %o1, %o0		/* a = a - b */
