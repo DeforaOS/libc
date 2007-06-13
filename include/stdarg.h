@@ -20,7 +20,8 @@ typedef void * va_list;
 #  define va_arg(ap, type)	((ap) += sizeof(type), \
 		*(type*)((void*)ap - sizeof(type)))
 #  define va_end(ap)
-# elif defined(__sparc64__)	/* XXX compiler dependent */
+# elif defined(__sparc64__) \
+	|| defined(__sparc__)	/* XXX compiler dependent */
 #  define va_start(ap, arg)	__builtin_va_start(ap, arg)
 #  define va_arg(ap, type)	__builtin_va_arg(ap, type)
 #  define va_end(ap)		__builtin_va_end(ap)
