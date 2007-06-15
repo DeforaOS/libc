@@ -122,6 +122,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/compat/errno.h \
 		$(PACKAGE)-$(VERSION)/include/compat/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/compat/limits.h \
 		$(PACKAGE)-$(VERSION)/include/compat/signal.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mman.h \
@@ -139,6 +140,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/limits.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/signal.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/mman.h \
@@ -156,6 +158,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/limits.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/signal.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/mman.h \
