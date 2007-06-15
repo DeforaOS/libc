@@ -26,6 +26,7 @@
 #include "string.h"
 #include "termios.h"
 #include "time.h"
+#include "limits.h"
 #include "syscalls.h"
 #include "unistd.h"
 
@@ -216,6 +217,37 @@ static void _execvp_do(char const * filename, char * const argv[])
 /* getgid */
 #ifndef SYS_getgid
 # warning Unsupported platform: getgid() is missing
+#endif
+
+
+/* getlogin */
+char * getlogin(void)
+{
+	static char login[LOGIN_NAME_MAX + 1];
+
+	if(getlogin_r(login, sizeof(login)) != 0)
+		return NULL;
+	return login;
+}
+
+
+/* getlogin_r */
+#ifndef SYS_getlogin_r
+# include "pwd.h"
+int getlogin_r(char * buf, size_t size)
+{
+	struct passwd * pw;
+
+	if((pw = getpwuid(getuid())) == NULL) /* FIXME maybe not re-entrant */
+		return 1;
+	if(strlen(pw->pw_name) + 1 > size)
+	{
+		errno = ERANGE;
+		return 1;
+	}
+	strcpy(buf, pw->pw_name);
+	return 0;
+}
 #endif
 
 

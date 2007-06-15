@@ -99,6 +99,9 @@ gid_t getegid(void);
 uid_t geteuid(void);
 gid_t getgid(void);
 
+char * getlogin(void);
+int getlogin_r(char * buf, size_t size);
+
 int getopt(int argc, char * const argv[], char const * optstring);
 
 pid_t getpid(void);

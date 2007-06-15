@@ -170,6 +170,9 @@ SYSCALL(getegid)
 SYSCALL(geteuid)
 #endif
 SYSCALL(getgid)
+#ifdef SYS_getlogin_r
+SYSCALL(getlogin_r)
+#endif
 SYSCALL(getpid)
 #ifdef SYS_getppid
 SYSCALL(getppid)

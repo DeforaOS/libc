@@ -46,6 +46,7 @@
 # define SYS_pipe		42
 # define SYS_getegid		43
 # define SYS_getgid		47
+# define SYS_getlogin_r		49
 # define SYS_ioctl		54
 # define SYS_symlink		57
 # define SYS_readlink		58
