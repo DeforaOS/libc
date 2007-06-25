@@ -396,6 +396,15 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 }
 
 
+/* fseek */
+int fseek(FILE * file, long offset, int whence)
+{
+	if(fflush(file) != 0)
+		return 1;
+	return lseek(file->fd, offset, whence) != -1 ? 0 : -1;
+}
+
+
 /* fwrite */
 size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 {

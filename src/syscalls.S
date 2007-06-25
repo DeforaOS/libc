@@ -93,6 +93,7 @@ SYSCALL(select)
 
 /* sys/stat.h */
 SYSCALL(chmod)
+SYSCALL(fchmod)
 SYSCALL(fstat)
 SYSCALL(lstat)
 SYSCALL(mkdir)
@@ -158,6 +159,8 @@ SYSCALL(dup2)
 #ifdef SYS_execve
 SYSCALL(execve)
 #endif
+SYSCALL(fchdir)
+SYSCALL(fchown)
 SYSCALL(fork)
 #ifdef SYS_fsync
 SYSCALL(fsync)
@@ -180,6 +183,7 @@ SYSCALL(getppid)
 SYSCALL(getuid)
 SYSCALL(lchown)
 SYSCALL(link)
+SYSCALL(lseek)
 #ifdef SYS_nice
 SYSCALL(nice)
 #endif

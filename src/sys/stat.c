@@ -26,6 +26,12 @@
 #endif
 
 
+/* fchmod */
+#ifndef SYS_fchmod
+# warning Unsupported platform: fchmod() is missing
+#endif
+
+
 /* fstat */
 #ifndef SYS_fstat
 # warning Unsupported platform: fstat() is missing

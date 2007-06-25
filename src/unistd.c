@@ -184,6 +184,18 @@ static void _execvp_do(char const * filename, char * const argv[])
 }
 
 
+/* fchdir */
+#ifndef SYS_fchdir
+# warning Unsupported platform: fchdir() is missing
+#endif
+
+
+/* fchown */
+#ifndef SYS_fchown
+# warning Unsupported platform: fchown() is missing
+#endif
+
+
 /* fork */
 #ifndef SYS_fork
 # warning Unsupported platform: fork() is missing
@@ -360,6 +372,12 @@ int isatty(int fildes)
 /* link */
 #ifndef SYS_link
 # warning Unsupported platform: link() is missing
+#endif
+
+
+/* lseek */
+#ifndef SYS_lseek
+# warning Unsupported platform: lseek() is missing
 #endif
 
 

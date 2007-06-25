@@ -19,18 +19,17 @@
 #ifndef LIBC_UNISTD_H
 # define LIBC_UNISTD_H
 
+# include "compat/unistd.h"
+
 
 /* constants */
 /* for access() */
 enum { F_OK, R_OK, W_OK, X_OK };
 
-/* for lseek() and fcntl() */
-enum { SEEK_CUR, SEEK_END, SEEK_SET };
-
 /* file streams */
-# define STDERR_FILENO 2
-# define STDIN_FILENO 0
-# define STDOUT_FILENO 1
+# define STDIN_FILENO	0
+# define STDOUT_FILENO	1
+# define STDERR_FILENO	2
 
 
 /* types */
@@ -90,6 +89,10 @@ int execvp(char const * filename, char * const argv[]);
 
 void _exit(int status);
 
+int fchown(int fildes, uid_t uid, gid_t gid);
+
+int fchdir(int fildes);
+
 pid_t fork(void);
 
 int fsync(int fildes);
@@ -114,6 +117,8 @@ int isatty(int fildes);
 int lchown(char const * filename, uid_t owner, gid_t group);
 
 int link(char const * from, char const * to);
+
+off_t lseek(int fildes, off_t offset, int whence);
 
 int nice(int inc);
 
