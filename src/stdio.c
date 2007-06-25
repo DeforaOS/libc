@@ -274,7 +274,7 @@ FILE * fopen(char const * path, char const * mode)
 	if((file = malloc(sizeof(FILE))) == NULL)
 		return NULL;
 	if((file->flags = _fopen_mode(mode)) == -1
-			|| (file->fd = open(path, file->flags)) < 0)
+			|| (file->fd = open(path, file->flags, 0777)) < 0)
 	{
 		free(file);
 		return NULL;
@@ -387,7 +387,7 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 	close(file->fd);
 	clearerr(file);
 	if((flags = _fopen_mode(mode)) == -1
-			|| (file->fd = open(path, file->flags)) < 0)
+			|| (file->fd = open(path, file->flags, 0777)) < 0)
 		return NULL;
 	file->flags = flags;
 	file->dir = flags & O_WRONLY ? FD_WRITE : FD_READ;
