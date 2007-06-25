@@ -61,6 +61,7 @@ struct itimespec
 
 /* functions */
 clock_t clock(void);
+struct tm * gmtime(time_t const * t);
 struct tm * localtime(time_t const * t);
 struct tm * localtime_r(time_t const * t, struct tm * ret);
 int nanosleep(struct timespec * requested, struct timespec * remaining);
