@@ -10,6 +10,8 @@
 #  include "kernel/linux/common.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/common.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/common.h"
 # elif defined(__sun__)
 #  include "kernel/solaris/common.h"
 # else

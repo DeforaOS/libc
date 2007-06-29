@@ -42,10 +42,23 @@
 # endif
 # include "kernel/netbsd/common.S"
 
+/* OpenBSD */
+#elif defined(__OpenBSD__)
+# include "kernel/openbsd/common.h"
+# if defined(__arm__)
+#  include "kernel/openbsd/arm/syscalls.S"
+# else /* !__arm__ */
+#  warning Unsupported OpenBSD architecture
+# endif
+
 /* Solaris */
 #elif defined(__sun__)
-# include "kernel/solaris/sparc/syscalls.S"
 # include "kernel/solaris/common.h"
+# if defined(__i386__)
+#  include "kernel/solaris/sparc/syscalls.S"
+# else
+#  warning Unsupported Solaris architecture
+# endif
 
 /* Unknown */
 #else
