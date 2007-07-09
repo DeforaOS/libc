@@ -132,32 +132,35 @@ int execvp(char const * filename, char * const argv[])
 
 	if(strchr(filename, '/') != NULL)
 		return execve(filename, argv, environ);
-	if((path = getenv("PATH")) != NULL && path[0] != '\0')
+	if((path = getenv("PATH")) == NULL
+			|| path[0] == '\0')
 	{
-		len = strlen(filename) + 2;
-		do
-		{
-			if(path[i] != ':' && path[i] != '\0')
-				continue;
-			if(i - oldi + len > buf_cnt)
-			{
-				buf_cnt = i - oldi + len;
-				if((p = realloc(buf, buf_cnt)) == NULL)
-				{
-					free(buf);
-					return -1;
-				}
-				buf = p;
-			}
-			strncpy(buf, &path[oldi], i - oldi);
-			buf[i - oldi] = '/';
-			strcpy(&buf[i - oldi + 1], filename);
-			_execvp_do(buf, argv);
-			oldi = i+1;
-		}
-		while(path[i++] != '\0');
-		free(buf);
+		errno = ENOENT;
+		return -1;
 	}
+	len = strlen(filename) + 2;
+	do
+	{
+		if(path[i] != ':' && path[i] != '\0')
+			continue;
+		if(i - oldi + len > buf_cnt)
+		{
+			buf_cnt = i - oldi + len;
+			if((p = realloc(buf, buf_cnt)) == NULL)
+			{
+				free(buf);
+				return -1;
+			}
+			buf = p;
+		}
+		strncpy(buf, &path[oldi], i - oldi);
+		buf[i - oldi] = '/';
+		strcpy(&buf[i - oldi + 1], filename);
+		_execvp_do(buf, argv);
+		oldi = i + 1;
+	}
+	while(path[i++] != '\0');
+	free(buf);
 	return -1;
 }
 
