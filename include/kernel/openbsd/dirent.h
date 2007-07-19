@@ -16,18 +16,23 @@
 
 
 
-#ifndef LIBC_COMPAT_UNISTD_H
-# define LIBC_COMPAT_UNISTD_H
+#ifndef LIBC_KERNEL_OPENBSD_DIRENT_H
+# define LIBC_KERNEL_OPENBSD_DIRENT_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/unistd.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/unistd.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/unistd.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef ino_t
+#  define ino_t ino_t
+typedef unsigned int ino_t;
 # endif
 
-#endif /* !LIBC_COMPAT_UNISTD_H */
+struct dirent
+{
+	ino_t d_ino;
+	unsigned short int d_reclen;
+	unsigned char d_type;
+	unsigned char _padding;
+	char d_name[256]; /* NAME_MAX + 1 */
+};
+
+#endif /* !LIBC_KERNEL_OPENBSD_DIRENT_H */

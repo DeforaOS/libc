@@ -24,6 +24,8 @@
 #  include "kernel/linux/sys/types.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/types.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/sys/types.h"
 # elif defined(__sun__)
 #  include "kernel/solaris/sys/types.h"
 # else

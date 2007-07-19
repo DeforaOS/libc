@@ -24,6 +24,8 @@
 #  include "kernel/linux/limits.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/limits.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/limits.h"
 # else
 #  warning Unsupported platform
 # endif

@@ -16,18 +16,29 @@
 
 
 
-#ifndef LIBC_COMPAT_UNISTD_H
-# define LIBC_COMPAT_UNISTD_H
+#ifndef LIBC_KERNEL_OPENBSD_SIGNAL_H
+# define LIBC_KERNEL_OPENBSD_SIGNAL_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/unistd.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/unistd.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/unistd.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+# define SIGHUP		1
+# define SIGINT		2
+# define SIGQUIT	3
+# define SIGILL		4
+# define SIGTRAP	5
+# define SIGABRT	6
+# define SIGIOT		6
+# define SIGFPE		8
+# define SIGKILL	9
+# define SIGBUS		10
+# define SIGSEGV	11
+# define SIGPIPE	13
+# define SIGALRM	14
+# define SIGTERM	15
+# define SIGSTOP	17
+# define SIGCONT	19
+# define SIGCHLD	20
+# define SIGUSR1	30
+# define SIGUSR2	31
 
-#endif /* !LIBC_COMPAT_UNISTD_H */
+#endif /* !LIBC_KERNEL_OPENBSD_SIGNAL_H */

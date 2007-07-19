@@ -24,6 +24,8 @@
 #  include "kernel/linux/dirent.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/dirent.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/dirent.h"
 # else
 #  warning Unsupported platform
 # endif

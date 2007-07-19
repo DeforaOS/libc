@@ -16,18 +16,25 @@
 
 
 
-#ifndef LIBC_COMPAT_UNISTD_H
-# define LIBC_COMPAT_UNISTD_H
+#ifndef LIBC_KERNEL_OPENBSD_TERMIOS_H
+# define LIBC_KERNEL_OPENBSD_TERMIOS_H
+
+# define NCCS 20
 
 
-# if defined(__linux__)
-#  include "kernel/linux/unistd.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/unistd.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/unistd.h"
-# else
-#  warning Unsupported platform
-# endif
+/* types */
+typedef unsigned char cc_t;
+typedef unsigned int speed_t;
+typedef unsigned int tcflag_t;
 
-#endif /* !LIBC_COMPAT_UNISTD_H */
+struct termios
+{
+	tcflag_t c_iflag;
+	tcflag_t c_oflag;
+	tcflag_t c_cflag;
+	tcflag_t c_lflag;
+	cc_t c_cc[NCCS];
+	int _padding[2];
+};
+
+#endif /* !LIBC_KERNEL_OPENBSD_TERMIOS_H */

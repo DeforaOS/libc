@@ -24,6 +24,8 @@
 #  include "kernel/linux/sys/time.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/time.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/sys/time.h"
 # elif defined(__sun__)
 #  include "kernel/solaris/sys/time.h"
 # else

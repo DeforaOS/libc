@@ -16,18 +16,26 @@
 
 
 
-#ifndef LIBC_COMPAT_UNISTD_H
-# define LIBC_COMPAT_UNISTD_H
+#ifndef LIBC_KERNEL_OPENBSD_UNISTD_H
+# define LIBC_KERNEL_OPENBSD_UNISTD_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/unistd.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/unistd.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/unistd.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef off_t
+#  define off_t off_t
+typedef long long off_t;
 # endif
 
-#endif /* !LIBC_COMPAT_UNISTD_H */
+
+/* constants */
+# ifndef SEEK_SET
+#  define SEEK_SET	0
+# endif
+# ifndef SEEK_CUR
+#  define SEEK_CUR	1
+# endif
+# ifndef SEEK_END
+#  define SEEK_END	2
+# endif
+
+#endif /* !LIBC_KERNEL_OPENBSD_UNISTD_H */

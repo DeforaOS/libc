@@ -16,18 +16,14 @@
 
 
 
-#ifndef LIBC_COMPAT_UNISTD_H
-# define LIBC_COMPAT_UNISTD_H
+#ifndef LIBC_KERNEL_OPENBSD_SYS_TIMES_H
+# define LIBC_KERNEL_OPENBSD_SYS_TIMES_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/unistd.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/unistd.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/unistd.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef clock_t
+#  define clock_t clock_t
+typedef unsigned int clock_t;
 # endif
 
-#endif /* !LIBC_COMPAT_UNISTD_H */
+#endif /* !LIBC_KERNEL_OPENBSD_SYS_TIMES_H */

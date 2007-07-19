@@ -24,6 +24,8 @@
 #  include "kernel/linux/fcntl.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/fcntl.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/fcntl.h"
 # else
 #  warning Unsupported platform
 # endif

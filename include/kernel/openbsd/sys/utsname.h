@@ -16,18 +16,17 @@
 
 
 
-#ifndef LIBC_COMPAT_UNISTD_H
-# define LIBC_COMPAT_UNISTD_H
+#ifndef LIBC_KERNEL_NETBSD_SYS_UTSNAME_H
+# define LIBC_KERNEL_NETBSD_SYS_UTSNAME_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/unistd.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/unistd.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/unistd.h"
-# else
-#  warning Unsupported platform
-# endif
+/* struct utsname */
+# define _UTSNAME_SIZE			256
+# define _UTSNAME_SYSNAME_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_NODENAME_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_RELEASE_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_VERSION_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_MACHINE_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_PADDING_SIZE		_UTSNAME_SIZE
 
-#endif /* !LIBC_COMPAT_UNISTD_H */
+#endif /* !LIBC_KERNEL_NETBSD_SYS_UTSNAME_H */

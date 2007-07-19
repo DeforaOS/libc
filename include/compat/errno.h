@@ -24,6 +24,8 @@
 #  include "kernel/linux/errno.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/errno.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/errno.h"
 # elif defined(__sun__)
 #  include "kernel/solaris/errno.h"
 # else

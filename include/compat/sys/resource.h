@@ -24,6 +24,8 @@
 #  include "kernel/linux/sys/resource.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/resource.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/sys/resource.h"
 # else
 #  warning Unsupported platform
 # endif

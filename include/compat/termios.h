@@ -24,6 +24,8 @@
 #  include "kernel/linux/termios.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/termios.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/termios.h"
 # else
 #  warning Unsupported platform
 # endif
