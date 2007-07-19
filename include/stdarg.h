@@ -33,7 +33,8 @@ typedef void * va_list;
 #  define va_arg(ap, type)	((ap) += sizeof(type), \
 		*(type*)((void*)ap - sizeof(type)))
 #  define va_end(ap)
-# elif defined(__mips__) \
+# elif defined(__arm__) \
+	|| defined(__mips__) \
 	|| defined(__sparc64__) \
 	|| defined(__sparc__)	/* XXX compiler dependent */
 #  define va_start(ap, arg)	__builtin_va_start(ap, arg)
