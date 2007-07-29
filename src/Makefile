@@ -102,7 +102,7 @@ sys/utsname.o: sys/utsname.c
 sys/wait.o: sys/wait.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c sys/wait.c -o sys/wait.o
 
-syscalls.o: syscalls.S kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/netbsd/common.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S
+syscalls.o: syscalls.S kernel/linux/common.h kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/netbsd/common.h kernel/netbsd/common.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S
 	$(AS) $(libc_ASFLAGS) -o syscalls.o syscalls.S
 
 termios.o: termios.c syscalls.h
