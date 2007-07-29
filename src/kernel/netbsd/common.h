@@ -82,7 +82,6 @@
 # define SYS_nanosleep		240
 # define SYS_rename		270
 # define SYS_getdents		272
-# define SYS_lchmod		274
 # define SYS_stat		278
 # define SYS_fstat		279
 # define SYS_lstat		280

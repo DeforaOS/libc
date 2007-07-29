@@ -108,6 +108,7 @@ SYSCALL(select)
 SYSCALL(chmod)
 SYSCALL(fchmod)
 SYSCALL(fstat)
+SYSCALL(lchmod)
 SYSCALL(lstat)
 SYSCALL(mkdir)
 #ifdef SYS_mkfifo
