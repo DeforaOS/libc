@@ -134,6 +134,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/compat/termios.h \
 		$(PACKAGE)-$(VERSION)/include/compat/time.h \
+		$(PACKAGE)-$(VERSION)/include/compat/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/compat/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/compat/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/Makefile \
@@ -170,8 +171,27 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/termios.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/dirent.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/errno.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/limits.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/signal.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/ioctl.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/times.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/types.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/termios.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/unistd.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/mman.h \
