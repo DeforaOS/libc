@@ -19,6 +19,7 @@
 #include "sys/mman.h"
 #include "sys/stat.h"
 #include "assert.h"
+#include "fcntl.h"
 #include "unistd.h"
 #include "string.h"
 #include "ctype.h"
@@ -270,9 +271,19 @@ char * mktemp(char * template)
 
 	for(i = strlen(template); i-- > 0 && template[i] == 'X';)
 		template[i] = rand() % 256;
-	if(lstat(template, &st) == 0 || errno != ENOENT)
-		return NULL;
-	return template;
+	if(lstat(template, &st) != 0)
+		return errno == ENOENT ? template : NULL;
+	errno = EEXIST;
+	return NULL;
+}
+
+
+/* mkstemp */
+int mkstemp(char * template)
+{
+	if(mktemp(template) == NULL)
+		return -1;
+	return open(template, O_WRONLY | O_CREAT | O_EXCL, 0666);
 }
 
 

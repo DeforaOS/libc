@@ -35,6 +35,7 @@ void free(void * ptr);
 char * getenv(char const * name);
 void * malloc(size_t size);
 char * mktemp(char * template);
+int mkstemp(char * template);
 int rand(void);
 void * realloc(void * ptr, size_t size);
 int setenv(char const * name, char const * value, int overwrite);
