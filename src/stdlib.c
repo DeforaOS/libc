@@ -17,6 +17,7 @@
 
 
 #include "sys/mman.h"
+#include "sys/stat.h"
 #include "assert.h"
 #include "unistd.h"
 #include "string.h"
@@ -43,6 +44,7 @@ typedef struct _Alloc
 /* variables */
 extern char ** environ;
 static Alloc _alloc = { 0, NULL, NULL };
+static unsigned int _seed = 1;
 
 
 /* atexit */
@@ -260,6 +262,28 @@ void * malloc(size_t size)
 }
 
 
+/* mktemp */
+char * mktemp(char * template)
+{
+	size_t i;
+	struct stat st;
+
+	for(i = strlen(template); i-- > 0 && template[i] == 'X';)
+		template[i] = rand() % 256;
+	if(lstat(template, &st) == 0 || errno != ENOENT)
+		return NULL;
+	return template;
+}
+
+
+/* rand */
+int rand(void)
+{
+	_seed *= 0x23456789; /* FIXME totally poor randomness */
+	return _seed % RAND_MAX;
+}
+
+
 /* realloc */
 void * realloc(void * ptr, size_t size)
 {
@@ -386,6 +410,13 @@ static void _init_atexit(void)
 		free(*p);
 	free(environ);
 	environ = NULL;
+}
+
+
+/* srand */
+void srand(unsigned int seed)
+{
+	_seed = seed;
 }
 
 

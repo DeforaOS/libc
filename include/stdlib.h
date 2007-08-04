@@ -22,6 +22,10 @@
 # include "stddef.h"
 
 
+/* constants */
+# define RAND_MAX 32767
+
+
 /* functions */
 int atoi(char const * str);
 long atol(char const * str);
@@ -30,8 +34,11 @@ void exit(int status);
 void free(void * ptr);
 char * getenv(char const * name);
 void * malloc(size_t size);
+char * mktemp(char * template);
+int rand(void);
 void * realloc(void * ptr, size_t size);
 int setenv(char const * name, char const * value, int overwrite);
+void srand(unsigned seed);
 long strtol(char const * str, char ** endptr, int base);
 unsigned long strtoul(char const * str, char ** endptr, int base);
 int unsetenv(char const * name);
