@@ -270,7 +270,7 @@ char * mktemp(char * template)
 	struct stat st;
 
 	for(i = strlen(template); i-- > 0 && template[i] == 'X';)
-		template[i] = rand() % 256;
+		template[i] = rand() % 256; /* FIXME not printable or null */
 	if(lstat(template, &st) != 0)
 		return errno == ENOENT ? template : NULL;
 	errno = EEXIST;
