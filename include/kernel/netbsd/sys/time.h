@@ -25,5 +25,13 @@
 #  define time_t time_t
 typedef unsigned int time_t;
 # endif
+#ifndef timeval
+# define timeval timeval
+struct timeval
+{
+	long tv_sec;
+	long tv_usec;
+};
+#endif
 
 #endif /* !LIBC_KERNEL_NETBSD_SYS_TIME_H */

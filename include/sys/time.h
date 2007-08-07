@@ -31,14 +31,6 @@ typedef struct _fd_set fd_set;
 #  define suseconds_t suseconds_t
 typedef int suseconds_t;
 # endif
-#ifndef timeval
-# define timeval timeval
-struct timeval
-{
-	time_t tv_sec;
-	suseconds_t tv_usec;
-};
-#endif
 
 struct itimerval
 {
