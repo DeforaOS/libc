@@ -16,35 +16,20 @@
 
 
 
-#ifndef LIBC_SYS_SELECT_H
-# define LIBC_SYS_SELECT_H
-
-# include "compat/sys/select.h"
+#ifndef LIBC_COMPAT_SYS_SELECT_H
+# define LIBC_COMPAT_SYS_SELECT_H
 
 
-/* types */
-# ifndef fd_set
-#  define fd_set fd_set
-typedef struct _fd_set fd_set;
-# endif
-# ifndef suseconds_t
-#  define suseconds_t suseconds_t
-typedef int suseconds_t;
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef long long time_t;
+# if defined(__linux__)
+#  include "kernel/linux/sys/select.h"
+# elif defined(__NetBSD__)
+#  include "kernel/netbsd/sys/select.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/sys/select.h"
+# elif defined(__sun__)
+#  include "kernel/solaris/sys/select.h"
+# else
+#  warning Unsupported platform
 # endif
 
-struct itimerval
-{
-	struct timeval it_interval;
-	struct timeval it_value;
-};
-
-
-/* functions */
-int select(int fdcnt, fd_set * rfds, fd_set * wfds, fd_set * efds,
-		struct timeval * timeout);
-
-#endif /* !LIBC_SYS_SELECT_H */
+#endif /* !LIBC_COMPAT_SYS_SELECT_H */

@@ -38,8 +38,8 @@ typedef unsigned int time_t;
 # define timeval timeval
 struct timeval
 {
-	time_t tv_sec;
-	suseconds_t tv_usec;
+	long tv_sec;
+	long tv_usec;
 };
 # endif
 
