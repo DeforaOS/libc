@@ -21,6 +21,10 @@
 
 
 /* types */
+# ifndef suseconds_t
+#  define suseconds_t suseconds_t
+typedef int suseconds_t;
+# endif
 # ifndef time_t
 #  define time_t time_t
 typedef unsigned long time_t;

@@ -27,10 +27,6 @@
 #  define fd_set fd_set
 typedef struct _fd_set fd_set;
 # endif
-# ifndef suseconds_t
-#  define suseconds_t suseconds_t
-typedef int suseconds_t;
-# endif
 
 struct itimerval
 {
