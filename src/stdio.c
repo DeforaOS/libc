@@ -554,6 +554,27 @@ int sprintf(char * str, char const * format, ...)
 }
 
 
+/* tmpfile */
+FILE * tmpfile(void)
+{
+	char * path;
+	int fd;
+	FILE * fp;
+
+	if((path = mktemp("/tmp/tmp.XXXXXX")) == NULL)
+		return NULL;
+	if((fd = open(path, O_WRONLY | O_CREAT | O_EXCL, 0666)) < 0)
+		return NULL;
+	if(unlink(path) != 0
+			|| (fp = fdopen(fd, "w+")) == NULL)
+	{
+		close(fd);
+		return NULL;
+	}
+	return fp;
+}
+
+
 /* vfprintf */
 typedef int (*print_func)(void * dest, size_t size, const char * buf);
 static int _fprint(void * dest, size_t size, const char * buf);
