@@ -32,3 +32,23 @@ int raise(int sig)
 {
 	return kill(getpid(), sig);
 }
+
+
+/* sigaction */
+#ifndef SYS_sigaction
+# warning Unsupported platform: sigaction() is missing
+#endif
+
+
+/* signal */
+void (*signal(int sig, void (*func)(int)))
+{
+	struct sigaction sa;
+	struct sigaction osa;
+
+	sa.sa_handler = func;
+	sigemptyset(&sa.sa_mask);
+	if(sigaction(sig, &sa, &osa) != 0)
+		return SIG_ERR;
+	return osa.sa_handler;
+}

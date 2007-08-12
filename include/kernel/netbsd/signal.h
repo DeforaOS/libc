@@ -20,6 +20,35 @@
 # define LIBC_KERNEL_NETBSD_SIGNAL_H
 
 
+/* types */
+#ifndef pid_t
+# define pid_t pid_t
+typedef signed int pid_t;
+#endif
+
+typedef union /* FIXME to be completed */
+{
+	char _padding1[128];
+	int _padding2[4];
+	int _padding3[5];
+} siginfo_t;
+
+typedef struct { unsigned int bits[4]; } sigset_t;
+
+struct sigaction
+{
+	union
+	{
+		void (*sa_handler)(int);
+		void (*sa_sigaction)(int, siginfo_t *, void *);
+	} _sa_u;
+	sigset_t sa_mask;
+	int sa_flags;
+};
+# define sa_handler _sa_u.sa_handler
+# define sa_sigaction _sa_u.sa_sigaction
+
+
 /* constants */
 # define SIGHUP		1
 # define SIGINT		2
@@ -40,5 +69,12 @@
 # define SIGCHLD	20
 # define SIGUSR1	30
 # define SIGUSR2	31
+
+# define SIG_ERR	((void (*)(int)) -1)
+
+
+/* macros */
+# define sigemptyset(s) ((s)->bits[0] = 0, (s)->bits[1] = 0, (s)->bits[2] = 0, \
+		(s)->bits[3] = 0)
 
 #endif /* !LIBC_KERNEL_NETBSD_SIGNAL_H */
