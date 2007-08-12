@@ -28,9 +28,12 @@ typedef signed int pid_t;
 
 typedef union /* FIXME to be completed */
 {
-	char _padding1[128];
-	int _padding2[4];
-	int _padding3[5];
+	char _padding0[128];
+	int si_signo;
+	int si_code;
+	int si_errno;
+	int _padding1;
+	int _padding2[5];
 } siginfo_t;
 
 typedef struct { unsigned int bits[4]; } sigset_t;

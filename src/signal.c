@@ -41,6 +41,7 @@ int raise(int sig)
 
 
 /* signal */
+#ifndef SYS_signal
 void (*signal(int sig, void (*func)(int)))
 {
 	struct sigaction sa;
@@ -52,3 +53,4 @@ void (*signal(int sig, void (*func)(int)))
 		return SIG_ERR;
 	return osa.sa_handler;
 }
+#endif /* !SYS_signal */

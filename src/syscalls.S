@@ -79,6 +79,9 @@ SYSCALL(open)
 
 /* signal.h */
 SYSCALL(kill)
+#ifdef SYS_signal
+SYSCALL(signal)
+#endif
 #ifdef SYS_sigaction
 SYSCALL(sigaction)
 #endif
