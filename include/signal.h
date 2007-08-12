@@ -35,24 +35,12 @@ typedef signed int pid_t;
 #  define uid_t uid_t
 typedef id_t uid_t;
 # endif
-# ifndef siginfo_t
-#  define siginfo_t siginfo_t
-typedef struct
-{
-	int si_signo;
-	int si_code;
-	int si_errno;
-	pid_t si_pid;
-	uid_t si_uid;
-	void * si_addr;
-	int si_status;
-	long si_band;
-} siginfo_t;
-# endif
 
 
 /* functions */
 int kill(pid_t pid, int sig);
 int raise(int sig);
+int sigaction(int sig, const struct sigaction * act, struct sigaction * oact);
+void (*signal(int sig, void (*func)(int)));
 
 #endif /* !LIBC_SIGNAL_H */

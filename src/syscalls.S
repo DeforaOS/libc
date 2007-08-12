@@ -79,6 +79,9 @@ SYSCALL(open)
 
 /* signal.h */
 SYSCALL(kill)
+#ifdef SYS_sigaction
+SYSCALL(sigaction)
+#endif
 
 /* stdio.h */
 SYSCALL(rename)

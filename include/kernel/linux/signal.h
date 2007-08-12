@@ -20,6 +20,13 @@
 # define LIBC_KERNEL_LINUX_SIGNAL_H
 
 
+/* types */
+#ifndef pid_t
+# define pid_t pid_t
+typedef signed int pid_t;
+#endif
+
+
 /* constants */
 # define SIGHUP		1
 # define SIGINT		2
