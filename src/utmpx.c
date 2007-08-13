@@ -17,6 +17,7 @@
 
 
 #include "stdio.h"
+#include "string.h"
 #include "utmpx.h"
 
 
@@ -54,8 +55,34 @@ struct utmpx * getutxent(void)
 }
 
 
-/* getutxline */
+/* getutxid */
 /* FIXME implement */
+
+
+/* getutxline */
+struct utmpx * getutxline(struct utmpx const * line)
+{
+	static struct utmpx ret;
+
+	if(_fp == NULL
+			&& (_fp = fopen("/var/run/utmpx", "r")) == NULL
+			&& (_fp = fopen("/var/run/utmp", "r")) == NULL)
+		return NULL;
+	for(;;)
+	{
+		if(fread(&ret, sizeof(ret), 1, _fp) != 1)
+		{
+			fclose(_fp);
+			_fp = NULL;
+			return NULL;
+		}
+		if(ret.ut_type != LOGIN_PROCESS && ret.ut_type != USER_PROCESS)
+			continue;
+		if(strcmp(ret.ut_line, line->ut_line) == 0)
+			break;
+	}
+	return &ret;
+}
 
 
 /* pututxline */
