@@ -56,7 +56,38 @@ struct utmpx * getutxent(void)
 
 
 /* getutxid */
-/* FIXME implement */
+struct utmpx * getutxid(struct utmpx const * id)
+{
+	static struct utmpx ret;
+
+	if(_fp == NULL
+			&& (_fp = fopen("/var/run/utmpx", "r")) == NULL
+			&& (_fp = fopen("/var/run/utmp", "r")) == NULL)
+		return NULL;
+	for(;;)
+	{
+		if(fread(&ret, sizeof(ret), 1, _fp) != 1)
+		{
+			fclose(_fp);
+			_fp = NULL;
+			return NULL;
+		}
+		if((ret.ut_type == BOOT_TIME || ret.ut_type == OLD_TIME
+					|| ret.ut_type == NEW_TIME)
+				&& ret.ut_type == id->ut_type)
+			break;
+		if((ret.ut_type == INIT_PROCESS || ret.ut_type == LOGIN_PROCESS
+					|| ret.ut_type == USER_PROCESS
+					|| ret.ut_type == DEAD_PROCESS)
+				&& (id->ut_type == INIT_PROCESS
+					|| id->ut_type == LOGIN_PROCESS
+					|| id->ut_type == OLD_TIME
+					|| id->ut_type == NEW_TIME)
+				&& ret.ut_id == id->ut_id)
+			break;
+	}
+	return &ret;
+}
 
 
 /* getutxline */
