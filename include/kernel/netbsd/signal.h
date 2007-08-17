@@ -77,7 +77,9 @@ struct sigaction
 
 
 /* macros */
-# define sigemptyset(s) ((s)->bits[0] = 0, (s)->bits[1] = 0, (s)->bits[2] = 0, \
-		(s)->bits[3] = 0)
+# define sigemptyset(s) ((s)->bits[0] = 0x00000000, (s)->bits[1] = 0x00000000, \
+		(s)->bits[2] = 0x00000000, (s)->bits[3] = 0x00000000)
+# define sigfillset(s) ((s)->bits[0] = 0xffffffff, (s)->bits[1] = 0xffffffff, \
+		(s)->bits[2] = 0xffffffff, (s)->bits[3] = 0xffffffff)
 
 #endif /* !LIBC_KERNEL_NETBSD_SIGNAL_H */
