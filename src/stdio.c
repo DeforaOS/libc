@@ -192,6 +192,11 @@ int fflush(FILE * file)
 {
 	ssize_t w;
 
+	if(file == NULL)
+	{
+		errno = ENOSYS; /* FIXME implement */
+		return -1;
+	}
 	if(file->dir == FD_READ)
 	{
 		file->len = 0;
