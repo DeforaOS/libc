@@ -1,5 +1,5 @@
 PACKAGE	= libc
-VERSION	= 0.0.1
+VERSION	= 0.0.2
 SUBDIRS	= src include
 RM	= rm -f
 LN	= ln -sf
@@ -127,6 +127,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/times.h \
@@ -146,6 +147,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/times.h \
@@ -164,6 +166,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/times.h \
@@ -183,6 +186,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/times.h \
@@ -195,6 +199,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/times.h \
