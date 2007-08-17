@@ -155,6 +155,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/termios.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/Makefile \
