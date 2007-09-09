@@ -30,6 +30,7 @@
 int atoi(char const * str);
 long atol(char const * str);
 long long atoll(char const * nptr);
+void * calloc(size_t nmemb, size_t size);
 void exit(int status);
 void free(void * ptr);
 char * getenv(char const * name);
