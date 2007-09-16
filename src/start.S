@@ -48,6 +48,14 @@
 # endif
 # include "kernel/netbsd/start.S"
 
+/* OpenBSD */
+#elif defined(__OpenBSD__)
+# if defined(__i386__)
+#  include "kernel/openbsd/i386/start.S"
+# else /* !__i386__ */
+#  warning Unsupported OpenBSD architecture
+# endif
+
 /* Solaris */
 #elif defined(__sun__)
 # if defined(__sparc__)
