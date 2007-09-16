@@ -53,6 +53,7 @@
 # define SYS_execve		59
 # define SYS_umask		60
 # define SYS_vfork		66
+# define SYS_brk		69
 # define SYS_munmap		73
 # define SYS_getpgrp		81
 # define SYS_dup2		90
