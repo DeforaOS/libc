@@ -34,8 +34,8 @@
 typedef struct _FILE FILE;
 
 # ifndef va_list
-#  define va_list va_list
 #  if defined(__i386__)
+#   define va_list va_list
 typedef void * va_list;
 #  elif defined(__amd64__) \
 	|| defined(__arm__) \
@@ -45,6 +45,7 @@ typedef void * va_list;
 #   define va_list		__builtin_va_list
 #  else
 #   warning Unsupported architecture
+#   define va_list va_list
 typedef void * va_list;
 #  endif
 # endif

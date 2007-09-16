@@ -20,12 +20,27 @@
 # define LIBC_STDARG_H
 
 
-/* macros */
-# if defined(__i386__)
-#  ifndef va_list
+/* types */
+# ifndef va_list
+#  if defined(__i386__)
+#   define va_list va_list
+typedef void * va_list;
+#  elif defined(__amd64__) \
+	|| defined(__arm__) \
+	|| defined(__mips__) \
+	|| defined(__sparc__) \
+	|| defined(__sparc64__)	/* XXX compiler dependent */
+#   define va_list		__builtin_va_list
+#  else
+#   warning Unsupported architecture
 #   define va_list va_list
 typedef void * va_list;
 #  endif
+# endif
+
+
+/* macros */
+# if defined(__i386__)
 #  define va_start(ap, arg)	(ap) = ((char*)&arg) + 4
 #  define va_arg(ap, type)	((ap) += sizeof(type), \
 		*(type*)((void*)ap - sizeof(type)))
