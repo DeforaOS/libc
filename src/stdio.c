@@ -634,6 +634,8 @@ static void _format_lutoa(char * dest, unsigned long n, size_t base);
 static int _format_c(print_func func, void * dest, size_t * len, char * chrp);
 static int _format_d(print_func func, void * dest, size_t size, size_t * len,
 		long long * ptr);
+static int _format_o(print_func func, void * dest, size_t size, size_t * len,
+		unsigned long long * ptr);
 static int _format_s(print_func func, void * dest, size_t size, size_t * len,
 		char * str);
 static int _format_p(print_func func, void * dest, size_t size, size_t * len,
@@ -687,14 +689,24 @@ static int _vprintf_format(print_func func, void * dest, size_t size,
 				if(_format_d(func, dest, size, len, &i) == -1)
 					return -1;
 				break;
-			case 's':
-				str = va_arg(arg, char*);
-				if(_format_s(func, dest, size, len, str) == -1)
+			case 'o':
+				u = lng > 1
+					? va_arg(arg, unsigned long long int)
+					: (lng == 1 ? va_arg(arg, unsigned long
+								int)
+							: va_arg(arg,
+								unsigned int));
+				if(_format_o(func, dest, size, len, &u) == -1)
 					return -1;
 				break;
 			case 'p':
 				ptr = va_arg(arg, void*);
 				if(_format_p(func, dest, size, len, ptr) == -1)
+					return -1;
+				break;
+			case 's':
+				str = va_arg(arg, char*);
+				if(_format_s(func, dest, size, len, str) == -1)
 					return -1;
 				break;
 			case 'u':
@@ -749,6 +761,20 @@ static int _format_d(print_func func, void * dest, size_t size, size_t * len,
 			|| _format_u(func, dest, size - 1, len, &uval) == -1)
 		return -1;
 	(*len)++;
+	return 0;
+}
+
+static int _format_o(print_func func, void * dest, size_t size, size_t * len,
+		unsigned long long * ptr)
+{
+	char tmp[22] = "";
+	int l;
+
+	_format_lutoa(tmp, *ptr, 8); /* XXX assumes tmp is large enough */
+	*len = strlen(tmp);
+	l = min(*len, size);
+	if(func(dest, l, tmp) != l)
+		return -1;
 	return 0;
 }
 
