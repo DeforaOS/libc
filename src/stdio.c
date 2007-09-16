@@ -588,9 +588,9 @@ static int _vprintf(print_func func, void * dest, size_t size,
 
 int vfprintf(FILE * file, char const * format, va_list arg)
 {
-	size_t len = -1;
+	size_t size = -1;
 
-	return _vprintf(_fprint, file, len, format, arg);
+	return _vprintf(_fprint, file, size, format, arg);
 }
 
 static int _fprint(void * dest, size_t size, char const buf[])
@@ -602,7 +602,7 @@ static int _fprint(void * dest, size_t size, char const buf[])
 
 /* _vprintf */
 static int _vprintf_format(print_func func, void * dest, size_t size,
-		char const ** p, size_t * len, va_list * arg);
+		char const ** p, size_t * len, va_list arg);
 
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg)
@@ -618,7 +618,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 			if((len = func(dest, sizeof(char), p)) != sizeof(char))
 				return -1;
 		}
-		else if(_vprintf_format(func, dest, size, &p, &len, &arg) != 0)
+		else if(_vprintf_format(func, dest, size, &p, &len, arg) != 0)
 				return -1;
 		size = size > len ? size - len : 0; /* prevent overflow */
 		if((ret += len) < 0) /* overflowing ret is an error */
@@ -643,7 +643,7 @@ static int _format_u(print_func func, void * dest, size_t size, size_t * len,
 static int _format_x(print_func func, void * dest, size_t size, size_t * len,
 		unsigned long long * ptr);
 static int _vprintf_format(print_func func, void * dest, size_t size,
-		char const ** p, size_t * len, va_list * arg)
+		char const ** p, size_t * len, va_list arg)
 {
 	char c;
 	char * str;
@@ -676,43 +676,43 @@ static int _vprintf_format(print_func func, void * dest, size_t size,
 				(*p)++;
 				continue;
 			case 'c':
-				c = va_arg(*arg, int);
+				c = va_arg(arg, int);
 				if(_format_c(func, dest, len, &c) == -1)
 					return -1;
 				break;
 			case 'd':
-				i = lng > 1 ? va_arg(*arg, long long int)
-					: (lng == 1 ? va_arg(*arg, long int)
-							: va_arg(*arg, int));
+				i = lng > 1 ? va_arg(arg, long long int)
+					: (lng == 1 ? va_arg(arg, long int)
+							: va_arg(arg, int));
 				if(_format_d(func, dest, size, len, &i) == -1)
 					return -1;
 				break;
 			case 's':
-				str = va_arg(*arg, char*);
+				str = va_arg(arg, char*);
 				if(_format_s(func, dest, size, len, str) == -1)
 					return -1;
 				break;
 			case 'p':
-				ptr = va_arg(*arg, void*);
+				ptr = va_arg(arg, void*);
 				if(_format_p(func, dest, size, len, ptr) == -1)
 					return -1;
 				break;
 			case 'u':
 				u = lng > 1
-					? va_arg(*arg, unsigned long long int)
-					: (lng == 1 ? va_arg(*arg, unsigned long
+					? va_arg(arg, unsigned long long int)
+					: (lng == 1 ? va_arg(arg, unsigned long
 								int)
-							: va_arg(*arg,
+							: va_arg(arg,
 								unsigned int));
 				if(_format_u(func, dest, size, len, &u) == -1)
 					return -1;
 				break;
 			case 'x':
 				u = lng > 1
-					? va_arg(*arg, unsigned long long int)
-					: (lng == 1 ? va_arg(*arg, unsigned long
+					? va_arg(arg, unsigned long long int)
+					: (lng == 1 ? va_arg(arg, unsigned long
 								int)
-							: va_arg(*arg,
+							: va_arg(arg,
 								unsigned int));
 				if(_format_x(func, dest, size, len, &u) == -1)
 					return -1;
