@@ -22,7 +22,7 @@ all: subdirs $(TARGETS)
 subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
-libc_OBJS = ctype.o dirent.o errno.o fcntl.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/mman.o sys/resource.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o termios.o time.o unistd.o utime.o utmpx.o
+libc_OBJS = ctype.o dirent.o errno.o fcntl.o fnmatch.o grp.o libgen.o pwd.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/mman.o sys/resource.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o termios.o time.o unistd.o utime.o utmpx.o
 libc_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS) -fPIC
 libc_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
 
@@ -47,6 +47,9 @@ errno.o: errno.c
 
 fcntl.o: fcntl.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c fcntl.c
+
+fnmatch.o: fnmatch.c
+	$(CC) $(libc_CFLAGS) -c fnmatch.c
 
 grp.o: grp.c
 	$(CC) $(libc_CFLAGS) -c grp.c
