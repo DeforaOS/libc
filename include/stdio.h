@@ -35,7 +35,18 @@ typedef struct _FILE FILE;
 
 # ifndef va_list
 #  define va_list va_list
+#  if defined(__i386__)
 typedef void * va_list;
+#  elif defined(__amd64__) \
+	|| defined(__arm__) \
+	|| defined(__mips__) \
+	|| defined(__sparc__) \
+	|| defined(__sparc64__)	/* XXX compiler dependent */
+#   define va_list		__builtin_va_list
+#  else
+#   warning Unsupported architecture
+typedef void * va_list;
+#  endif
 # endif
 
 
