@@ -30,7 +30,11 @@ _start:
 	add	%rax, %rcx
 	add	%rax, %rcx
 	add	%rax, %rcx
-	mov	%rcx, environ	/* environ	*/
+#ifdef PIC			/* environ	*/
+	mov	%rcx, environ@GOT(%rip)
+#else
+	mov	%rcx, environ
+#endif
 	xor	%rbp, %rbp	/* stack	*/
 	mov	%rax, %rdi	/* main		*/
 	mov	%rbx, %rsi

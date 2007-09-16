@@ -20,7 +20,11 @@ _syscall:
 	syscall
 	jnc	.errnoret
 .errno:
+#ifdef PIC
 	mov	%rax, errno@GOT(%rip)
+#else
+	mov	%rax, errno
+#endif
 	mov	$-1, %rax
 .errnoret:
 	ret
@@ -29,6 +33,7 @@ _syscall:
 /* macros */
 #define SYSCALL(name) \
 .global name; \
+.type name,@function; \
 name:; \
 	mov	$SYS_ ## name, %rax; \
 	jmp	_syscall
@@ -37,6 +42,7 @@ name:; \
 /* functions */
 /* _brk */
 .global _brk
+.type _brk,@function
 _brk:
 	mov	$SYS_brk, %rax
 	syscall
@@ -46,16 +52,22 @@ _brk:
 
 /* _exit */
 .global _exit
+.type _exit,@function
 _exit:
 	mov	$SYS_exit, %rax
 	jmp	_syscall
 
 /* execve */
 .global execve
+.type execve,@function
 execve:
 	mov	$SYS_execve, %rax
 	syscall
+#ifdef PIC
 	mov	%rax, errno@GOT(%rip)
+#else
+	mov	%rax, errno
+#endif
 	mov	$-1, %rax
 	ret
 #undef SYS_execve
