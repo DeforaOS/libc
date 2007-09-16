@@ -1,4 +1,4 @@
-SUBDIRS	= kernel/linux kernel/netbsd
+SUBDIRS	= kernel/linux kernel/netbsd kernel/openbsd
 TARGETS	= libc.a libc.so start.o
 PREFIX	= /usr/local
 DESTDIR	= 

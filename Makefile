@@ -86,6 +86,13 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/common.h \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/project.conf \
 		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \
