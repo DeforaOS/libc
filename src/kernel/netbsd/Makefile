@@ -1,4 +1,4 @@
-SUBDIRS	= i386 sparc sparc64
+SUBDIRS	= amd64 i386 sparc sparc64
 
 
 all: subdirs
