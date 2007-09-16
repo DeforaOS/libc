@@ -49,14 +49,16 @@
 # include "kernel/openbsd/common.h"
 # if defined(__arm__)
 #  include "kernel/openbsd/arm/syscalls.S"
-# else /* !__arm__ */
+# elif defined(__i386__)
+#  include "kernel/openbsd/i386/syscalls.S"
+# else /* !__arm__ && !__i386__ */
 #  warning Unsupported OpenBSD architecture
 # endif
 
 /* Solaris */
 #elif defined(__sun__)
 # include "kernel/solaris/common.h"
-# if defined(__i386__)
+# if defined(__sparc__)
 #  include "kernel/solaris/sparc/syscalls.S"
 # else
 #  warning Unsupported Solaris architecture
