@@ -26,6 +26,28 @@
 typedef signed int pid_t;
 #endif
 
+typedef struct
+{
+	int si_signo;
+	int si_code;
+	int si_error;
+	/* FIXME to be completed */
+} siginfo_t;
+
+typedef unsigned int sigset_t;
+
+struct sigaction
+{
+	union
+	{
+		void    (*sa_handler)(int);
+		void    (*sa_sigaction)(int, siginfo_t *, void *);
+	} _sa_u;
+	sigset_t sa_mask;
+	int sa_flags;
+};
+# define sa_handler _sa_u.sa_handler
+# define sa_sigaction _sa_u.sa_sigaction
 
 /* constants */
 # define SIGHUP		1
@@ -47,5 +69,7 @@ typedef signed int pid_t;
 # define SIGCHLD	20
 # define SIGUSR1	30
 # define SIGUSR2	31
+
+# define SIG_ERR	((void (*)(int)) -1)
 
 #endif /* !LIBC_KERNEL_OPENBSD_SIGNAL_H */
