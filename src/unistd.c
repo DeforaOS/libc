@@ -553,7 +553,7 @@ char * ttyname(int fildes)
 		strcpy(&buf[5], de->d_name);
 		if(stat(buf, &st) != 0)
 			continue;
-		if(rdev != st.st_rdev)
+		if(S_ISBLK(st.st_mode) || rdev != st.st_rdev)
 			continue;
 		closedir(dir);
 		return buf;
