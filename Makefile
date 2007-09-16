@@ -70,6 +70,10 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sys/sysctl.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/amd64/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/amd64/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/amd64/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/amd64/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/i386/syscalls.S \
