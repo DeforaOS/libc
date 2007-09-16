@@ -20,7 +20,7 @@ _syscall:
 	syscall
 	jnc	.errnoret
 .errno:
-	mov	%rax, errno
+	mov	%rax, errno@GOT(%rip)
 	mov	$-1, %rax
 .errnoret:
 	ret
@@ -55,7 +55,7 @@ _exit:
 execve:
 	mov	$SYS_execve, %rax
 	syscall
-	mov	%rax, errno
+	mov	%rax, errno@GOT(%rip)
 	mov	$-1, %rax
 	ret
 #undef SYS_execve
