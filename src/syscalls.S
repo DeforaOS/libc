@@ -33,7 +33,9 @@
 /* NetBSD */
 #elif defined(__NetBSD__)
 # include "kernel/netbsd/common.h"
-# if defined(__i386__)
+# if defined(__amd64__)
+#  include "kernel/netbsd/amd64/syscalls.S"
+# elif defined(__i386__)
 #  include "kernel/netbsd/i386/syscalls.S"
 # elif defined(__sparc__)
 #  include "kernel/netbsd/sparc/syscalls.S"
@@ -155,7 +157,7 @@ SYSCALL(wait)
 SYSCALL(waitpid)
 #elif defined(SYS_wait4)
 SYSCALL(wait4)
-#endif /* !SYS_waitpid && SYS_wait4) */
+#endif /* !(SYS_waitpid && SYS_wait4) */
 
 /* time.h */
 SYSCALL(nanosleep)

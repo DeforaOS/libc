@@ -35,7 +35,9 @@
 
 /* NetBSD */
 #elif defined(__NetBSD__)
-# if defined(__i386__)
+# if defined(__amd64__)
+#  include "kernel/netbsd/amd64/start.S"
+# elif defined(__i386__)
 #  include "kernel/netbsd/i386/start.S"
 # elif defined(__sparc64__)
 #  include "kernel/netbsd/sparc64/start.S"
