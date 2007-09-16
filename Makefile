@@ -93,6 +93,13 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/solaris/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/solaris/common.h \
+		$(PACKAGE)-$(VERSION)/src/kernel/solaris/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/project.conf \
 		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \
