@@ -76,6 +76,9 @@ SYSCALL(readdir)
 #ifdef SYS_getdents
 SYSCALL(getdents)
 #endif
+#ifdef SYS_getdirentries
+SYSCALL(getdirentries)
+#endif
 
 /* fcntl.h */
 SYSCALL(fcntl)
