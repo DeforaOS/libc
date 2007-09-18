@@ -50,9 +50,10 @@
 
 /* OpenBSD */
 #elif defined(__OpenBSD__)
-# if defined(__i386__)
+# if defined(__arm__)
+# elif defined(__i386__)
 #  include "kernel/openbsd/i386/start.S"
-# else /* !__i386__ */
+# else /* !__arm__ && !__i386__ */
 #  warning Unsupported OpenBSD architecture
 # endif
 
