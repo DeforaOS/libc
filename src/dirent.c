@@ -60,7 +60,8 @@ DIR * opendir(char const * name)
 
 	if((fd = open(name, O_RDONLY)) < 0)
 		return NULL;
-	if(fcntl(fd, F_SETFD, FD_CLOEXEC) != 0 || fstat(fd, &st) != 0)
+	if(fcntl(fd, F_SETFD, FD_CLOEXEC) != 0
+			|| fstat(fd, &st) != 0)
 	{
 		close(fd);
 		return NULL;
@@ -83,8 +84,10 @@ DIR * opendir(char const * name)
 
 
 /* readdir */
-#if defined(SYS_getdents)
+#if defined(SYS_getdents) || defined(SYS_getdirentries)
 int getdents(int fd, char * buf, size_t nbuf);
+int getdirentries(int fd, char * buf, size_t nbuf, char * basep);
+
 struct dirent * readdir(DIR * dir)
 {
 	static struct dirent de;
@@ -95,7 +98,11 @@ struct dirent * readdir(DIR * dir)
 	{
 		if(dir->len == 0)
 		{
+#ifdef SYS_getdents
 			if((len = getdents(dir->fd, dir->buf, sizeof(dir->buf)))
+#else /* SYS_getdirentries */
+			if((len = getdirentries(dir->fd, dir->buf, sizeof(dir->buf), NULL))
+#endif
 					== (size_t)-1) /* XXX cast */
 				return NULL;
 			dir->len = len;
