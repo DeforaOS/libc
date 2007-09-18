@@ -16,25 +16,35 @@
 
 
 
-_start:
-	/* terminate stack */
-
-	/* argc, argv, arge, environ */
-
-	/* main */
-	call	main
-
-	/* exit */
-	call	exit
-
-	/* crash */
+_syscall:
+	swi
+	/* FIXME implement
+	bcc	.errnoret
+	set	errno, %g1
+	st	%o0, [%g1]
+	set	-1, %o0
+.errnoret: */
 	mov	%pc, %lr
 
 
-/* other essential functions */
-/* udiv */
-.global __udivsi3
-.type __udivsi3,@function
-__udivsi3:
-	udivcc	%o0, %o1, %o0
-	mov	%pc, %lr
+/* macros */
+#define SYSCALL(name) \
+.global name; \
+name:; \
+	b	_syscall; \
+	mov	%ip, $SYS_ ## name
+
+
+/* functions */
+/* _brk */
+.global _brk
+_brk:
+	mov	%ip, $SYS_brk
+	b	_syscall
+#undef SYS_brk
+
+/* _exit */
+.global _exit
+_exit:
+	mov	%ip, $SYS_exit
+	b	_syscall
