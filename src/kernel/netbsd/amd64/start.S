@@ -41,6 +41,6 @@ _start:
 	mov	%rcx, %rdx
 	call	main
 	mov	%rax, %rdi	/* exit		*/
-	push	%eax
+	push	%rax
 	call	exit
 	hlt
