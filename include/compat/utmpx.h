@@ -24,6 +24,8 @@
 #  include "kernel/linux/utmpx.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/utmpx.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/utmpx.h"
 # else
 #  warning Unsupported platform
 # endif
