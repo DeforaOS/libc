@@ -16,6 +16,7 @@
 
 
 
+#include "errno.h"
 #include "../syscalls.h"
 #include "sys/stat.h"
 
@@ -41,6 +42,11 @@
 /* lstat */
 #ifndef SYS_lstat
 # warning Unsupported platform: lstat() is missing
+int lstat(char const * pathname, struct stat * st)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -72,6 +78,11 @@ int mkfifo(char const * path, mode_t mode)
 /* stat */
 #ifndef SYS_stat
 # warning Unsupported platform: stat() is missing
+int stat(char const * pathname, struct stat * st)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
