@@ -20,16 +20,10 @@ _start:
 	pop	%rax		/* argc		*/
 	mov	%rsp, %rbx	/* argv		*/
 	push	%rax
-	mov	%rbx, %rcx	/* envp		*/
+	mov	%rax, %rcx	/* envp		*/
+	shl	$3, %rcx
 	add	$8, %rcx
-	add	%rax, %rcx
-	add	%rax, %rcx
-	add	%rax, %rcx
-	add	%rax, %rcx
-	add	%rax, %rcx
-	add	%rax, %rcx
-	add	%rax, %rcx
-	add	%rax, %rcx
+	add	%rbx, %rcx
 #ifdef PIC			/* environ	*/
 	mov	%rcx, environ@GOT(%rip)
 #else
