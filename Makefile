@@ -89,6 +89,10 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/arm/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/arm/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/arm/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/arm/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/syscalls.S \
@@ -100,7 +104,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/project.conf \
-		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \
 		$(PACKAGE)-$(VERSION)/include/dirent.h \
@@ -137,6 +140,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/utime.h \
 		$(PACKAGE)-$(VERSION)/include/utmpx.h \
+		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/project.conf \
 		$(PACKAGE)-$(VERSION)/include/compat/Makefile \
 		$(PACKAGE)-$(VERSION)/include/compat/dirent.h \
