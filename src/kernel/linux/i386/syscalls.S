@@ -42,6 +42,7 @@ _syscall:
 /* macros */
 #define SYSCALL(name) \
 .global name; \
+.type name,@function; \
 name:; \
 	mov	$SYS_ ## name, %eax; \
 	jmp	_syscall
@@ -50,6 +51,7 @@ name:; \
 /* functions */
 /* _brk */
 .global _brk
+.type _brk,@function
 _brk:
 	mov	$SYS_brk, %eax
 	jmp	_syscall
@@ -57,12 +59,14 @@ _brk:
 
 /* _exit */
 .global _exit
+.type _exit,@function
 _exit:
 	mov	$SYS_exit, %eax
 	jmp	_syscall
 
 /* mmap */
 .global mmap
+.type mmap,@function
 mmap:
 	mov	$SYS_mmap, %eax
 	push	%ebx
