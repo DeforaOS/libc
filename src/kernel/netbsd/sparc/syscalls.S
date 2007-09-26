@@ -31,6 +31,7 @@ _syscall:
 /* macros */
 #define SYSCALL(name) \
 .global name; \
+.type name,@function; \
 name:; \
 	b	_syscall; \
 	mov	SYS_ ## name, %g1
@@ -39,6 +40,7 @@ name:; \
 /* functions */
 /* _brk */
 .global _brk
+.type _brk,@function
 _brk:
 	b	_syscall
 	mov	SYS_brk, %g1
@@ -46,6 +48,7 @@ _brk:
 
 /* _exit */
 .global _exit
+.type _exit,@function
 _exit:
 	b	_syscall
 	mov	SYS_exit, %g1
