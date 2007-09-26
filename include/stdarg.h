@@ -46,11 +46,11 @@ typedef void * va_list;
 		*(type*)((void*)ap - sizeof(type)))
 #  define va_copy(copy, arg)	(copy) = (arg)	/* FIXME not tested */
 #  define va_end(ap)
-# elif defined(__amd64__) \
+# elif defined(__amd64__)	/* XXX compiler dependent */ \
 	|| defined(__arm__) \
 	|| defined(__mips__) \
 	|| defined(__sparc__) \
-	|| defined(__sparc64__)	/* XXX compiler dependent */
+	|| defined(__sparc64__)
 #  define va_start(ap, arg)	__builtin_va_start((ap), (arg))
 #  define va_arg		__builtin_va_arg
 #  define va_copy		__builtin_va_copy
