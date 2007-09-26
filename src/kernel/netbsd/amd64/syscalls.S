@@ -21,7 +21,7 @@ _syscall:
 	jnc	.errnoret
 .errno:
 #ifdef PIC
-	mov	%rax, errno@GOT(%rip)
+	mov	%rax, errno@GOTPCREL(%rip)
 #else
 	mov	%rax, errno
 #endif
