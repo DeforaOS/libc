@@ -19,6 +19,10 @@
 .text
 
 
+/* common */
+#include "common.h"
+
+
 /* Linux */
 #if defined(__linux__)
 # include "kernel/linux/common.h"

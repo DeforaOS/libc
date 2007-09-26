@@ -23,6 +23,10 @@
 .global _start
 
 
+/* common */
+#include "common.h"
+
+
 /* Linux */
 #if defined(__linux__)
 # if defined(__i386__)
