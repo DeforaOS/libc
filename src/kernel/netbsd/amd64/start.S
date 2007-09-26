@@ -17,24 +17,20 @@
 
 
 _start:
-	pop	%rax		/* argc		*/
-	mov	%rsp, %rbx	/* argv		*/
-	push	%rax
-	mov	%rax, %rcx	/* envp		*/
-	shl	$3, %rcx
-	add	$8, %rcx
-	add	%rbx, %rcx
+	pop	%rdi		/* argc		*/
+	mov	%rsp, %rsi	/* argv		*/
+	push	%rdi
+	mov	%rdi, %rdx	/* envp		*/
+	shl	$3, %rdx
+	add	$8, %rdx
+	add	%rsi, %rdx
 #ifdef PIC			/* environ	*/
-	mov	%rcx, environ@GOT(%rip)
+	mov	%rdx, environ@GOT(%rip)
 #else
-	mov	%rcx, environ
+	mov	%rdx, environ
 #endif
 	xor	%rbp, %rbp	/* stack	*/
-	mov	%rax, %rdi	/* main		*/
-	mov	%rbx, %rsi
-	mov	%rcx, %rdx
 	call	main
 	mov	%rax, %rdi	/* exit		*/
-	push	%rax
 	call	exit
 	hlt
