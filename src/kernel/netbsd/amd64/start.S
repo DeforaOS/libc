@@ -25,7 +25,7 @@ _start:
 	add	$8, %rdx
 	add	%rsi, %rdx
 #ifdef PIC			/* environ	*/
-	mov	%rdx, environ@GOT(%rip)
+	mov	%rdx, environ@GOTPCREL(%rip)
 #else
 	mov	%rdx, environ
 #endif
