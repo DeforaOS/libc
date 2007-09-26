@@ -35,6 +35,6 @@ _start:
 	push	%ebx
 	push	%eax
 	call	main
-	push	%eax
+	push	%eax		/* exit */
 	call	exit
 	hlt
