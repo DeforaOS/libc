@@ -43,7 +43,7 @@ typedef void * va_list;
 # if defined(__i386__)
 #  define va_start(ap, arg)	(ap) = ((char*)&arg) + 4
 #  define va_arg(ap, type)	((ap) += sizeof(type), \
-		*(type*)((void*)ap - sizeof(type)))
+		*(type*)((void*)(ap) - sizeof(type)))
 #  define va_copy(copy, arg)	(copy) = (arg)	/* FIXME not tested */
 #  define va_end(ap)
 # elif defined(__amd64__)	/* XXX compiler dependent */ \
