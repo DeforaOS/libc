@@ -55,6 +55,7 @@
 /* OpenBSD */
 #elif defined(__OpenBSD__)
 # if defined(__arm__)
+#  include "kernel/openbsd/arm/start.S"
 # elif defined(__i386__)
 #  include "kernel/openbsd/i386/start.S"
 # else /* !__arm__ && !__i386__ */
