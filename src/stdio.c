@@ -588,9 +588,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 
 int vfprintf(FILE * file, char const * format, va_list arg)
 {
-	size_t size = -1;
-
-	return _vprintf(_fprint, file, size, format, arg);
+	return _vprintf(_fprint, file, ~0, format, arg);
 }
 
 static int _fprint(void * dest, size_t size, char const buf[])
