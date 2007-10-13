@@ -915,9 +915,9 @@ static int _format_x(print_func func, void * dest, size_t size, size_t * len,
  *	else			dest is an empty string */
 static void _format_lutoa(char * dest, unsigned long n, size_t base)
 {
-	char conv[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+	static char const conv[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 	size_t len = 0;
-	long p = n;
+	unsigned long p = n;
 	size_t i;
 
 	if(base < 2 || base >= sizeof(conv))
