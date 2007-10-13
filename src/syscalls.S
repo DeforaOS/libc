@@ -109,6 +109,14 @@ SYSCALL(mmap)
 #endif
 SYSCALL(munmap)
 
+/* sys/mount.h */
+#ifdef SYS_mount
+SYSCALL(mount)
+#endif
+#ifdef SYS_unmount
+SYSCALL(unmount)
+#endif
+
 /* sys/resource.h */
 SYSCALL(getpriority)
 SYSCALL(getrlimit)

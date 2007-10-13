@@ -35,6 +35,7 @@
 # define SYS_chmod		15
 # define SYS_brk		17
 # define SYS_getpid		20
+# define SYS_unmount		22
 # define SYS_setuid		23
 # define SYS_getuid		24
 # define SYS_geteuid		25
@@ -91,5 +92,6 @@
 # define SYS_getcwd		296
 # define SYS_sigaction		340
 # define SYS_statvfs		357
+# define SYS_mount		410
 
 #endif /* !KERNEL_NETBSD_COMMON_H */

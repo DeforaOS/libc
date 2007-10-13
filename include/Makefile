@@ -1,4 +1,6 @@
 SUBDIRS	= compat kernel/linux kernel/netbsd kernel/openbsd kernel/solaris
+PREFIX	= /usr/local
+DESTDIR	= 
 RM	= rm -f
 MKDIR	= mkdir -p
 INSTALL	= install
@@ -41,6 +43,7 @@ install: all
 	$(INSTALL) -m 0644 stropts.h $(DESTDIR)$(INCLUDEDIR)/stropts.h
 	$(INSTALL) -m 0644 sys/ioctl.h $(DESTDIR)$(INCLUDEDIR)/sys/ioctl.h
 	$(INSTALL) -m 0644 sys/mman.h $(DESTDIR)$(INCLUDEDIR)/sys/mman.h
+	$(INSTALL) -m 0644 sys/mount.h $(DESTDIR)$(INCLUDEDIR)/sys/mount.h
 	$(INSTALL) -m 0644 sys/resource.h $(DESTDIR)$(INCLUDEDIR)/sys/resource.h
 	$(INSTALL) -m 0644 sys/select.h $(DESTDIR)$(INCLUDEDIR)/sys/select.h
 	$(INSTALL) -m 0644 sys/stat.h $(DESTDIR)$(INCLUDEDIR)/sys/stat.h
@@ -80,6 +83,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/stropts.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/ioctl.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/mman.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/mount.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/resource.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/select.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/stat.h
