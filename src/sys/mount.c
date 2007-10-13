@@ -33,6 +33,13 @@ int mount(char const * type, char const * dir, int flags, const void * data,
 }
 # else
 #  warning Unsupported platform: mount() is missing
+#  include "errno.h"
+int mount(char const * type, char const * dir, int flags, const void * data,
+		size_t data_len)
+{
+	errno = ENOSYS;
+	return -1;
+}
 # endif
 #endif
 
@@ -40,4 +47,10 @@ int mount(char const * type, char const * dir, int flags, const void * data,
 /* umount */
 #ifndef SYS_unmount
 # warning Unsupported platform: unmount() is missing
+# include "errno.h"
+int unmount(char const * dir, int flags)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
