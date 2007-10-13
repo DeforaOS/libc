@@ -45,11 +45,4 @@
 # define MF_RDONLY	0x00000001
 # define MF_SYNC	0x00000002
 
-
-/* types */
-# ifndef size_t
-#  define size_t size_t
-typedef unsigned long size_t;
-# endif
-
 #endif /* !LIBC_KERNEL_NETBSD_SYS_MOUNT_H */

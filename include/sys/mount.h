@@ -19,6 +19,13 @@
 #ifndef LIBC_SYS_MOUNT_H
 # define LIBC_SYS_MOUNT_H
 
+
+/* types */
+# ifndef size_t
+#  define size_t size_t
+typedef unsigned long size_t;
+# endif
+
 # include "../compat/sys/mount.h"
 
 
