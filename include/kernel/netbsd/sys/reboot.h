@@ -23,7 +23,7 @@
 /* constants */
 /* reboot flag */
 # define RF_HALT	0x00000008
-# define RF_POWERDOWN	0x00000808
+# define RF_POWEROFF	0x00000808
 # define RF_REBOOT	0x00000000
 
 #endif /* !LIBC_KERNEL_NETBSD_SYS_REBOOT_H */

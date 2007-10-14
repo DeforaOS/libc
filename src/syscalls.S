@@ -117,6 +117,11 @@ SYSCALL(mount)
 SYSCALL(unmount)
 #endif
 
+/* sys/reboot.h */
+#ifdef SYS_reboot
+SYSCALL(reboot)
+#endif
+
 /* sys/resource.h */
 SYSCALL(getpriority)
 SYSCALL(getrlimit)

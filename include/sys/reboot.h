@@ -19,7 +19,7 @@
 #ifndef LIBC_SYS_REBOOT_H
 # define LIBC_SYS_REBOOT_H
 
-# include "../compat/sys/mount.h"
+# include "../compat/sys/reboot.h"
 
 
 /* functions */
