@@ -37,6 +37,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/stropts.c \
 		$(PACKAGE)-$(VERSION)/src/sys/mman.c \
 		$(PACKAGE)-$(VERSION)/src/sys/mount.c \
+		$(PACKAGE)-$(VERSION)/src/sys/reboot.c \
 		$(PACKAGE)-$(VERSION)/src/sys/resource.c \
 		$(PACKAGE)-$(VERSION)/src/sys/select.c \
 		$(PACKAGE)-$(VERSION)/src/sys/stat.c \
@@ -125,6 +126,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/sys/mount.h \
+		$(PACKAGE)-$(VERSION)/include/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/sys/stat.h \
@@ -150,6 +152,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mount.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/stat.h \
@@ -191,6 +194,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/mount.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/stat.h \

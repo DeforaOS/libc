@@ -80,6 +80,7 @@
 # define SYS_mmap		197
 # define SYS_lseek		199
 # define SYS_sysctl		202
+# define SYS_reboot		208
 # define SYS_nanosleep		240
 # define SYS_rename		270
 # define SYS_getdents		272
