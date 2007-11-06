@@ -31,8 +31,8 @@ _syscall:
 #define SYSCALL(name) \
 .global name; \
 name:; \
-	b	_syscall; \
-	mov	%ip, $SYS_ ## name
+	mov	%ip, $SYS_ ## name; \
+	b	_syscall;
 
 
 /* functions */
