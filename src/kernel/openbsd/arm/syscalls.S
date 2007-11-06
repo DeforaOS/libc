@@ -31,7 +31,7 @@ _syscall:
 #define SYSCALL(name) \
 .global name; \
 name:; \
-	mov	%ip, $SYS_ ## name; \
+	ldr	%ip, =SYS_ ## name; \
 	b	_syscall;
 
 
@@ -39,12 +39,12 @@ name:; \
 /* _brk */
 .global _brk
 _brk:
-	mov	%ip, $SYS_brk
+	ldr	%ip, =SYS_brk
 	b	_syscall
 #undef SYS_brk
 
 /* _exit */
 .global _exit
 _exit:
-	mov	%ip, $SYS_exit
+	ldr	%ip, =SYS_exit
 	b	_syscall
