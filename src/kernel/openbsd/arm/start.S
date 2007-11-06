@@ -16,25 +16,43 @@
 
 
 
-_start:
-	/* terminate stack */
+.weak exit				/* apparently necessary */
 
-	/* argc, argv, arge, environ */
+
+_start:
+.type _start,#function
+	/* terminate stack */
+	mov	fp, $0
+
+	/* argc, argv, arge */
+	ldr	r0, [sp]		/* argc */
+	add	r1, sp, $4		/* argv */
+	add	r2, r0, $1		/* arge */
+	add	r2, r2, r2
+	add	r2, r2, r2
+	/* FIXME implement environ */
 
 	/* main */
-	call	main
+	bl	main
 
 	/* exit */
-	call	exit
+	bl	exit
 
+exit:
 	/* crash */
 	mov	%pc, %lr
 
 
 /* other essential functions */
+/* FIXME actually implement all of them */
 /* udiv */
 .global __udivsi3
-.type __udivsi3,@function
+.type __udivsi3,#function
 __udivsi3:
-	udivcc	%o0, %o1, %o0
+
+/* umod */
+.global __umodsi3
+.type __umodsi3,#function
+__umodsi3:
+	/* FIXME implement */
 	mov	%pc, %lr
