@@ -747,6 +747,15 @@ static int _vprintf(print_func func, void * dest, size_t size,
 						return -1;
 					break;
 				}
+				else if(p[i] == 'z')
+				{
+					if(lng != 0)
+					{
+						errno = EINVAL;
+						return -1;
+					}
+					lng = 1;
+				}
 				else
 				{
 					errno = EINVAL;
