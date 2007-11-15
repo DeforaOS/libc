@@ -43,7 +43,9 @@ int memcmp(void const * s1, void const * s2, size_t n)
 	unsigned char const * u1 = s1;
 	unsigned char const * u2 = s2;
 
-	while(n-- && *u1 == *u2)
+	if(n == 0)
+		return 0;
+	while(--n && *u1 == *u2)
 	{
 		u1++;
 		u2++;
