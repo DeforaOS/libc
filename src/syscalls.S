@@ -104,8 +104,17 @@ SYSCALL(rename)
 SYSCALL(ioctl)
 
 /* sys/mman.h */
+#ifdef SYS_mlock
+SYSCALL(mlock)
+#endif
 #ifdef SYS_mmap
 SYSCALL(mmap)
+#endif
+#ifdef SYS_mprotect
+SYSCALL(mprotect)
+#endif
+#ifdef SYS_munlock
+SYSCALL(munlock)
 #endif
 SYSCALL(munmap)
 

@@ -24,7 +24,7 @@
 /* mlock */
 #ifndef SYS_mlock
 # warning Unsupported platform: mlock() is missing
-int mlock(const void * addr, size_t len)
+int mlock(const void * addr, size_t length)
 {
 	errno = ENOSYS;
 	return -1;
@@ -35,7 +35,19 @@ int mlock(const void * addr, size_t len)
 /* mmap */
 #ifndef SYS_mmap
 # warning Unsupported platform: mmap() is missing
-void * mmap(void * addr, size_t len, int prot, int flags, int fd, off_t offset)
+void * mmap(void * addr, size_t length, int prot, int flags, int fd,
+		off_t offset)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
+/* mprotect */
+#ifndef SYS_mprotect
+# warning Unsupported platform: mprotect() is missing
+int mprotect(void * addr, size_t length, int prot)
 {
 	errno = ENOSYS;
 	return -1;
@@ -46,7 +58,7 @@ void * mmap(void * addr, size_t len, int prot, int flags, int fd, off_t offset)
 /* munlock */
 #ifndef SYS_munlock
 # warning Unsupported platform: munlock() is missing
-int munlock(const void * addr, size_t len)
+int munlock(const void * addr, size_t length)
 {
 	errno = ENOSYS;
 	return -1;
@@ -57,7 +69,7 @@ int munlock(const void * addr, size_t len)
 /* munmap */
 #ifndef SYS_munmap
 # warning Unsupported platform: munmap() is missing
-int munmap(void * addr, size_t len)
+int munmap(void * addr, size_t length)
 {
 	errno = ENOSYS;
 	return -1;
