@@ -38,7 +38,9 @@ typedef unsigned long size_t;
 
 
 /* functions */
-void * mmap(void *, size_t, int, int, int, off_t);
-int munmap(void *, size_t);
+int mlock(const void * addr, size_t len);
+void * mmap(void * addr, size_t len, int prot, int flags, int fd, off_t offset);
+int munlock(const void * addr, size_t len);
+int munmap(void * addr, size_t len);
 
 #endif /* !LIBC_SYS_MMAN_H */

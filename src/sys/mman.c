@@ -21,13 +21,45 @@
 #include "sys/mman.h"
 
 
+/* mlock */
+#ifndef SYS_mlock
+# warning Unsupported platform: mlock() is missing
+int mlock(const void * addr, size_t len)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* mmap */
 #ifndef SYS_mmap
 # warning Unsupported platform: mmap() is missing
+void * mmap(void * addr, size_t len, int prot, int flags, int fd, off_t offset)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
+/* munlock */
+#ifndef SYS_munlock
+# warning Unsupported platform: munlock() is missing
+int munlock(const void * addr, size_t len)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* munmap */
 #ifndef SYS_munmap
 # warning Unsupported platform: munmap() is missing
+int munmap(void * addr, size_t len)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
