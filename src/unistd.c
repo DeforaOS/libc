@@ -19,6 +19,7 @@
 #include "sys/stat.h"
 #include "sys/types.h"
 #include "inttypes.h"
+#include "stdarg.h"
 #include "stddef.h"
 #include "dirent.h"
 #include "errno.h"
@@ -102,6 +103,89 @@ int brk(void * addr)
 #ifndef SYS_dup2
 # warning Unsupported platform: dup2() is missing
 #endif
+
+
+/* execl */
+int execl(char const * filename, char * const arg, ...)
+{
+	int ret = 0;
+	va_list ap;
+	char const ** argv = NULL;
+	size_t argv_cnt = 0;
+	char * p = arg;
+	char const ** q;
+
+	va_start(ap, arg);
+	do
+	{
+		if((q = realloc(argv, sizeof(*argv) * (argv_cnt + 2))) == NULL)
+			return -1;
+		argv = q;
+		argv[argv_cnt++] = p;
+	}
+	while((p = va_arg(ap, char *)) != NULL);
+	va_end(ap);
+	argv[argv_cnt] = NULL;
+	ret = execv(filename, argv);
+	free(argv);
+	return ret;
+}
+
+
+/* execle */
+int execle(char const * filename, char * const arg, ...)
+{
+	int ret = 0;
+	va_list ap;
+	char const ** argv = NULL;
+	size_t argv_cnt = 0;
+	char * p = arg;
+	char const ** q;
+	char ** envp;
+
+	va_start(ap, arg);
+	do
+	{
+		if((q = realloc(argv, sizeof(*argv) * (argv_cnt + 1))) == NULL)
+			return -1;
+		argv = q;
+		argv[argv_cnt++] = p;
+	}
+	while((p = va_arg(ap, char *)) != NULL);
+	va_end(ap);
+	envp = (char **)argv[--argv_cnt];
+	argv[argv_cnt] = NULL;
+	ret = execve(filename, argv, envp);
+	free(argv);
+	return ret;
+}
+
+
+/* execlp */
+int execlp(char const * filename, char * const arg, ...)
+{
+	int ret = 0;
+	va_list ap;
+	char const ** argv = NULL;
+	size_t argv_cnt = 0;
+	char * p = arg;
+	char const ** q;
+
+	va_start(ap, arg);
+	do
+	{
+		if((q = realloc(argv, sizeof(*argv) * (argv_cnt + 2))) == NULL)
+			return -1;
+		argv = q;
+		argv[argv_cnt++] = p;
+	}
+	while((p = va_arg(ap, char *)) != NULL);
+	va_end(ap);
+	argv[argv_cnt] = NULL;
+	ret = execvp(filename, argv);
+	free(argv);
+	return ret;
+}
 
 
 /* execv */
@@ -524,6 +608,34 @@ unsigned int sleep(unsigned int seconds)
 #ifndef SYS_sync
 # warning Unsupported platform: sync() is missing
 #endif
+
+
+/* sysconf */
+#ifdef __NetBSD__
+# include "kernel/netbsd/sys/sysctl.h"
+long sysconf(int name)
+{
+	int mib[2];
+	size_t len;
+	struct clockinfo ci;
+
+	switch(name)
+	{
+		case _SC_CLK_TCK:
+			mib[0] = CTL_KERN;
+			mib[1] = KERN_CLOCKRATE;
+			len = sizeof(struct clockinfo);
+			return sysctl(mib, 2, &ci, &len, NULL, 0) != -1
+				? ci.hz : -1;
+	}
+#else
+long sysconf(int name)
+{
+# warning Unsupported platform: sysconf() is missing
+#endif
+	errno = ENOSYS;
+	return -1;
+}
 
 
 /* ttyname */

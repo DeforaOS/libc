@@ -76,76 +76,50 @@ int brk(void * addr);
 int chdir(char const * filename);
 int chown(char const * filename, uid_t owner, gid_t group);
 int close(int fildes);
-
 int dup(int fildes);
 int dup2(int fildes1, int fildes2);
-
-int execl(char const * filename, char const * arg, ...);
-int execle(char const * filename, char const * arg, ...);
-int execlp(char const * filename, char const * arg, ...);
+int execl(char const * filename, char * const arg, ...);
+int execle(char const * filename, char * const arg, ...);
+int execlp(char const * filename, char * const arg, ...);
 int execv(char const * filename, char * const argv[]);
 int execve(char const * filename, char * const argv[], char * const envp[]);
 int execvp(char const * filename, char * const argv[]);
-
 void _exit(int status);
-
 int fchown(int fildes, uid_t uid, gid_t gid);
-
 int fchdir(int fildes);
-
 pid_t fork(void);
-
 int fsync(int fildes);
-
 char * getcwd(char * buf, size_t size);
 gid_t getegid(void);
 uid_t geteuid(void);
 gid_t getgid(void);
-
 char * getlogin(void);
 int getlogin_r(char * buf, size_t size);
-
 int getopt(int argc, char * const argv[], char const * optstring);
-
 pid_t getpid(void);
 pid_t getppid(void);
-
 uid_t getuid(void);
-
 int isatty(int fildes);
-
 int lchown(char const * filename, uid_t owner, gid_t group);
-
 int link(char const * from, char const * to);
-
 off_t lseek(int fildes, off_t offset, int whence);
-
 int nice(int inc);
-
 ssize_t read(int fildes, void * buf, size_t count);
 ssize_t readlink(char const * filename, char * buf, size_t bufsiz);
 int rmdir(char const * filename);
-
 void * sbrk(intptr_t increment);
-
 int setgid(gid_t gid);
 int setpgid(pid_t pid, pid_t pgid);
-
 int setregid(gid_t rgid, gid_t egid);
 int setreuid(uid_t ruid, uid_t euid);
 pid_t setsid(void);
-
 int setuid(uid_t uid);
-
 unsigned int sleep(unsigned int seconds);
-
 int symlink(char const * from, char const * to);
 void sync(void);
-
+long sysconf(int name);
 char * ttyname(int fildes);
-
 int unlink(char const * filename);
-
 pid_t vfork(void);
 ssize_t write(int fildes, const void * buf, size_t count);
 
