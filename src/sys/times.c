@@ -34,12 +34,18 @@ clock_t times(struct tms * tmsp) /* FIXME should be in ticks */
 
 	if(gettimeofday(&tv, NULL) != 0 || getrusage(RUSAGE_SELF, &ru) == -1)
 		return -1;
-	tmsp->tms_utime = ru.ru_utime.tv_sec;
-	tmsp->tms_stime = ru.ru_stime.tv_sec;
+	if(tmsp != NULL)
+	{
+		tmsp->tms_utime = ru.ru_utime.tv_sec;
+		tmsp->tms_stime = ru.ru_stime.tv_sec;
+	}
 	if(getrusage(RUSAGE_CHILDREN, &ru) == -1)
 		return -1;
-	tmsp->tms_cutime = tmsp->tms_utime + ru.ru_utime.tv_sec;
-	tmsp->tms_cstime = tmsp->tms_stime + ru.ru_stime.tv_sec;
+	if(tmsp != NULL)
+	{
+		tmsp->tms_cutime = tmsp->tms_utime + ru.ru_utime.tv_sec;
+		tmsp->tms_cstime = tmsp->tms_stime + ru.ru_stime.tv_sec;
+	}
 	return tv.tv_sec != (clock_t)-1 ? tv.tv_sec : 0;
 }
 # else /* !SYS_times && !(SYS_gettimeofday && SYS_getrusage) */
