@@ -26,6 +26,15 @@
 typedef unsigned int size_t;
 # endif
 
+struct clockinfo
+{
+	int hz;
+	int tick;
+	int tickadj;
+	int stathz;
+	int profhz;
+};
+
 
 /* constants */
 # ifndef NULL
@@ -40,6 +49,7 @@ typedef unsigned int size_t;
 # define KERN_OSRELEASE	2
 # define KERN_VERSION	4
 # define KERN_HOSTNAME	10
+# define KERN_CLOCKRATE	12
 
 # define HW_MACHINE	1
 
