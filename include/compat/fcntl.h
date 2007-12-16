@@ -22,6 +22,8 @@
 
 # if defined(__linux__)
 #  include "kernel/linux/fcntl.h"
+# elif defined(__FreeBSD__)
+#  include "kernel/freebsd/fcntl.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/fcntl.h"
 # elif defined(__OpenBSD__)

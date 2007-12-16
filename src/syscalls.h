@@ -8,6 +8,8 @@
 
 # if defined(__linux__)
 #  include "kernel/linux/common.h"
+# elif defined(__FreeBSD__)
+#  include "kernel/freebsd/common.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/common.h"
 # elif defined(__OpenBSD__)

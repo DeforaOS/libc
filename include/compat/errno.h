@@ -22,6 +22,8 @@
 
 # if defined(__linux__)
 #  include "kernel/linux/errno.h"
+# elif defined(__FreeBSD__)
+#  include "kernel/freebsd/errno.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/errno.h"
 # elif defined(__OpenBSD__)

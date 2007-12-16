@@ -16,22 +16,35 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_TYPES_H
-# define LIBC_COMPAT_SYS_TYPES_H
+#ifndef LIBC_KERNEL_FREEBSD_ERRNO_H
+# define LIBC_KERNEL_FREEBSD_ERRNO_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/types.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/types.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/types.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/types.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/sys/types.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+# define EPERM		1
+# define ENOENT		2
+# define EINTR		4
+# define EIO		5
+# define E2BIG		7
+# define ENOEXEC	8
+# define EBADF		9
+# define ECHILD		10
+# define ENOMEM		12
+# define EACCES		13
+# define EFAULT		14
+# define EBUSY		16
+# define EEXIST		17
+# define EXDEV		18
+# define ENODEV		19
+# define ENOTDIR	20
+# define EISDIR		21
+# define EINVAL		22
+# define ENOTTY		25
+# define EROFS		30
+# define EPIPE		32
+# define ERANGE		34
+# define EAGAIN		35
+# define ENOBUFS	55
+# define ENOSYS		78
 
-#endif /* !LIBC_COMPAT_SYS_TYPES_H */
+#endif /* !LIBC_KERNEL_FREEBSD_ERRNO_H */

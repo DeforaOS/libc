@@ -22,6 +22,8 @@
 
 # if defined(__linux__)
 #  include "kernel/linux/unistd.h"
+# elif defined(__FreeBSD__)
+#  include "kernel/freebsd/unistd.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/unistd.h"
 # elif defined(__OpenBSD__)
