@@ -22,6 +22,8 @@
 
 # if defined(__linux__)
 #  include "kernel/linux/limits.h"
+# elif defined(__FreeBSD__)
+#  include "kernel/freebsd/limits.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/limits.h"
 # elif defined(__OpenBSD__)
