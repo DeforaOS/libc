@@ -22,6 +22,8 @@
 
 # if defined(__linux__)
 #  include "kernel/linux/sys/times.h"
+# elif defined(__FreeBSD__)
+#  include "kernel/freebsd/sys/times.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/times.h"
 # elif defined(__OpenBSD__)

@@ -16,22 +16,30 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_TIME_H
-# define LIBC_COMPAT_SYS_TIME_H
+#ifndef LIBC_KERNEL_FREEBSD_SYS_TIME_H
+# define LIBC_KERNEL_FREEBSD_SYS_TIME_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/time.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/time.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/time.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/time.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/sys/time.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef suseconds_t
+#  define suseconds_t suseconds_t
+typedef long suseconds_t;
 # endif
+# ifndef time_t
+#  define time_t time_t
+typedef unsigned int time_t;
+# endif
+#ifndef timeval
+# define timeval timeval
+struct timeval
+{
+#ifdef __arm__
+	time_t tv_sec;
+#else
+	long tv_sec;
+#endif
+	suseconds_t tv_usec;
+};
+#endif
 
-#endif /* !LIBC_COMPAT_SYS_TIME_H */
+#endif /* !LIBC_KERNEL_FREEBSD_SYS_TIME_H */

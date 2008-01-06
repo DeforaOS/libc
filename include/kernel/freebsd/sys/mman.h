@@ -16,22 +16,26 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_TIME_H
-# define LIBC_COMPAT_SYS_TIME_H
+#ifndef LIBC_KERNEL_FREEBSD_SYS_MMAN_H
+# define LIBC_KERNEL_FREEBSD_SYS_MMAN_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/time.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/time.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/time.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/time.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/sys/time.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef off_t
+#  define off_t off_t
+typedef long long off_t;
 # endif
 
-#endif /* !LIBC_COMPAT_SYS_TIME_H */
+
+/* constants */
+# define PROT_NONE	0x0
+# define PROT_READ	0x1
+# define PROT_WRITE	0x2
+# define PROT_EXEC	0x4
+
+# define MAP_SHARED	0x0001
+# define MAP_PRIVATE	0x0002
+# define MAP_FIXED	0x0010
+# define MAP_ANONYMOUS	0x1000
+
+#endif /* !LIBC_KERNEL_FREEBSD_SYS_MMAN_H */

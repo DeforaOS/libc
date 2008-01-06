@@ -22,6 +22,8 @@
 
 # if defined(__linux__)
 #  include "kernel/linux/sys/stat.h"
+# elif defined(__FreeBSD__)
+#  include "kernel/freebsd/sys/stat.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/stat.h"
 # elif defined(__OpenBSD__)
