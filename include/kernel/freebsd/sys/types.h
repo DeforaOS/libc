@@ -27,7 +27,7 @@ typedef unsigned long long blkcnt_t;
 # endif
 # ifndef clock_t
 #  define clock_t clock_t
-typedef unsigned int clock_t;
+typedef unsigned long clock_t;
 # endif
 # ifndef dev_t
 #  define dev_t dev_t
