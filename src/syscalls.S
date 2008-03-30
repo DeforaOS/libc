@@ -34,6 +34,15 @@
 #  warning Unsupported Linux architecture
 # endif
 
+/* FreeBSD */
+#elif defined(__FreeBSD__)
+# include "kernel/freebsd/common.h"
+# if defined(__i386__)
+#  include "kernel/freebsd/i386/syscalls.S"
+# else
+#  warning Unsupported FreeBSD architecture
+# endif
+
 /* NetBSD */
 #elif defined(__NetBSD__)
 # include "kernel/netbsd/common.h"

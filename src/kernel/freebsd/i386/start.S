@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -13,23 +13,30 @@
  * You should have received a copy of the Creative Commons Attribution-
  * NonCommercial-ShareAlike 3.0 along with libc; if not, browse to
  * http://creativecommons.org/licenses/by-nc-sa/3.0/ */
+/* FIXME:
+   - directly taken from the one for NetBSD */
 
 
 
-#ifndef LIBC_COMPAT_UTMPX_H
-# define LIBC_COMPAT_UTMPX_H
-
-
-# if defined(__linux__)
-#  include "kernel/linux/utmpx.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/utmpx.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/utmpx.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/utmpx.h"
-# else
-#  warning Unsupported platform
-# endif
-
-#endif /* !LIBC_COMPAT_UTMPX_H */
+_start:
+	pop	%eax		/* argc */
+	mov	%esp, %ebx	/* argv */
+	push	%eax
+	mov	%ebx, %ecx	/* envp */
+	add	$4, %ecx
+	add	%eax, %ecx
+	add	%eax, %ecx
+	add	%eax, %ecx
+	add	%eax, %ecx
+	mov	%ecx, environ	/* environ */
+	xor	%ebp, %ebp	/* stack */
+	push	%ebp
+	push	%esp
+	mov	%esp, %ebp
+	push	%ecx		/* main */
+	push	%ebx
+	push	%eax
+	call	main
+	push	%eax		/* exit */
+	call	exit
+	hlt

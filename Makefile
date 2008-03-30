@@ -68,6 +68,13 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/common.h \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.S \

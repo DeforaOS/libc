@@ -21,10 +21,10 @@
 
 
 /* types */
-#ifndef pid_t
-# define pid_t pid_t
+# ifndef pid_t
+#  define pid_t pid_t
 typedef signed int pid_t;
-#endif
+# endif
 
 typedef union /* FIXME to be completed */
 {

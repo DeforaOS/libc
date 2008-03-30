@@ -37,6 +37,14 @@
 #  warning Unsupported Linux architecture
 # endif
 
+/* FreeBSD */
+#elif defined(__FreeBSD__)
+# if defined(__i386__)
+#  include "kernel/freebsd/i386/start.S"
+# else /* !__i386__ */
+#  warning Unsupported FreeBSD architecture
+# endif
+
 /* NetBSD */
 #elif defined(__NetBSD__)
 # if defined(__amd64__)
@@ -47,7 +55,7 @@
 #  include "kernel/netbsd/sparc64/start.S"
 # elif defined(__sparc__)
 #  include "kernel/netbsd/sparc/start.S"
-# else /* !__i386__ && !__sparc__ */
+# else /* !__amd64__ && !__i386__ && !__sparc__ && !__sparc64__ */
 #  warning Unsupported NetBSD architecture
 # endif
 # include "kernel/netbsd/start.S"

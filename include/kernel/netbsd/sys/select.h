@@ -21,13 +21,13 @@
 
 
 /* types */
-#ifndef timeval
-# define timeval timeval
+# ifndef timeval
+#  define timeval timeval
 struct timeval
 {
 	long tv_sec;
 	long tv_usec;
 };
-#endif
+# endif
 
 #endif /* !LIBC_KERNEL_NETBSD_SYS_SELECT_H */

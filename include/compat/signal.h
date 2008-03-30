@@ -22,6 +22,8 @@
 
 # if defined(__linux__)
 #  include "kernel/linux/signal.h"
+# elif defined(__FreeBSD__)
+#  include "kernel/freebsd/signal.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/signal.h"
 # elif defined(__OpenBSD__)
