@@ -21,6 +21,14 @@
 
 
 /* types */
+# ifndef fd_set
+#  define fd_set fd_set
+typedef struct _fd_set
+{
+	int fds_bits[8];
+} fd_set;
+# endif
+
 # ifndef timeval
 #  define timeval timeval
 struct timeval
@@ -29,5 +37,16 @@ struct timeval
 	long tv_usec;
 };
 # endif
+
+
+/* macros */
+# define FD_CLR(fd, fdset)	\
+	((fdset)->fds_bits[(fd) / 32] &= ~(1 << ((fd) % 8)))
+# define FD_ISSET(fd, fdset)	\
+	((fdset)->fds_bits[(fd) / 32] & (1 << ((fd) % 8)))
+# define FD_SET(fd, fdset)	\
+	((fdset)->fds_bits[(fd) / 32] |= (1 << ((fd) % 8)))
+# define FD_ZERO(fdset)		\
+	memset(fdset, 0, sizeof(fd_set))
 
 #endif /* !LIBC_KERNEL_NETBSD_SYS_SELECT_H */
