@@ -244,6 +244,11 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/arpa/inet.h \
+		$(PACKAGE)-$(VERSION)/include/socket/netdb.h \
+		$(PACKAGE)-$(VERSION)/include/socket/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/COPYING \
 		$(PACKAGE)-$(VERSION)/config.h \
