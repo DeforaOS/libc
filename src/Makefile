@@ -6,12 +6,12 @@ LIBDIR	= $(PREFIX)/lib
 CC	= cc
 CPPFLAGS= -I ../include -nostdinc
 CFLAGSF	= -W
-CFLAGS	= -Wall -g -ansi
+CFLAGS	= -Wall -g -ansi -fno-builtin
 AS	= $(CC)
 ASFLAGS	= -W -Wall -g -ansi -c
 AR	= ar -rc
 RANLIB	= ranlib
-LD	= ld -shared
+LD	= $(CC) -shared
 RM	= rm -f
 MKDIR	= mkdir -p
 INSTALL	= install
@@ -79,37 +79,37 @@ stropts.o: stropts.c
 	$(CC) $(libc_CFLAGS) -c stropts.c
 
 sys/mman.o: sys/mman.c syscalls.h
-	$(CC) $(libc_CFLAGS) -c sys/mman.c -o sys/mman.o
+	$(CC) $(libc_CFLAGS) -o sys/mman.o -c sys/mman.c
 
 sys/mount.o: sys/mount.c syscalls.h
-	$(CC) $(libc_CFLAGS) -c sys/mount.c -o sys/mount.o
+	$(CC) $(libc_CFLAGS) -o sys/mount.o -c sys/mount.c
 
 sys/reboot.o: sys/reboot.c
-	$(CC) $(libc_CFLAGS) -c sys/reboot.c -o sys/reboot.o
+	$(CC) $(libc_CFLAGS) -o sys/reboot.o -c sys/reboot.c
 
 sys/resource.o: sys/resource.c syscalls.h
-	$(CC) $(libc_CFLAGS) -c sys/resource.c -o sys/resource.o
+	$(CC) $(libc_CFLAGS) -o sys/resource.o -c sys/resource.c
 
 sys/select.o: sys/select.c
-	$(CC) $(libc_CFLAGS) -c sys/select.c -o sys/select.o
+	$(CC) $(libc_CFLAGS) -o sys/select.o -c sys/select.c
 
 sys/stat.o: sys/stat.c syscalls.h
-	$(CC) $(libc_CFLAGS) -c sys/stat.c -o sys/stat.o
+	$(CC) $(libc_CFLAGS) -o sys/stat.o -c sys/stat.c
 
 sys/statvfs.o: sys/statvfs.c syscalls.h
-	$(CC) $(libc_CFLAGS) -c sys/statvfs.c -o sys/statvfs.o
+	$(CC) $(libc_CFLAGS) -o sys/statvfs.o -c sys/statvfs.c
 
 sys/time.o: sys/time.c
-	$(CC) $(libc_CFLAGS) -c sys/time.c -o sys/time.o
+	$(CC) $(libc_CFLAGS) -o sys/time.o -c sys/time.c
 
 sys/times.o: sys/times.c syscalls.h
-	$(CC) $(libc_CFLAGS) -c sys/times.c -o sys/times.o
+	$(CC) $(libc_CFLAGS) -o sys/times.o -c sys/times.c
 
 sys/utsname.o: sys/utsname.c
-	$(CC) $(libc_CFLAGS) -c sys/utsname.c -o sys/utsname.o
+	$(CC) $(libc_CFLAGS) -o sys/utsname.o -c sys/utsname.c
 
 sys/wait.o: sys/wait.c syscalls.h
-	$(CC) $(libc_CFLAGS) -c sys/wait.c -o sys/wait.o
+	$(CC) $(libc_CFLAGS) -o sys/wait.o -c sys/wait.c
 
 syscalls.o: syscalls.S common.h kernel/linux/common.h kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/freebsd/common.h kernel/freebsd/i386/syscalls.S kernel/netbsd/common.h kernel/netbsd/common.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S ../config.h
 	$(AS) $(libc_ASFLAGS) -o syscalls.o syscalls.S
