@@ -53,6 +53,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/utime.c \
 		$(PACKAGE)-$(VERSION)/src/utmpx.c \
 		$(PACKAGE)-$(VERSION)/src/start.S \
+		$(PACKAGE)-$(VERSION)/src/socket/arpa/inet.c \
+		$(PACKAGE)-$(VERSION)/src/socket/netdb.c \
+		$(PACKAGE)-$(VERSION)/src/socket/sys/socket.c \
 		$(PACKAGE)-$(VERSION)/src/Makefile \
 		$(PACKAGE)-$(VERSION)/src/common.h \
 		$(PACKAGE)-$(VERSION)/src/syscalls.h \

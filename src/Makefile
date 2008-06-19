@@ -1,10 +1,10 @@
 SUBDIRS	= kernel/linux kernel/freebsd kernel/netbsd kernel/openbsd kernel/solaris
-TARGETS	= libc.a libc.so start.o
+TARGETS	= libc.a libc.so start.o libsocket.a libsocket.so
 PREFIX	= /usr/local
 DESTDIR	= 
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
-CPPFLAGS= -I ../include -nostdinc
+CPPFLAGS= -I ../include -I ../include/socket -nostdinc
 CFLAGSF	= -W
 CFLAGS	= -Wall -g -ansi -fno-builtin
 AS	= $(CC)
@@ -35,6 +35,16 @@ libc.so: $(libc_OBJS)
 
 start.o_OBJS = start.o
 start.o_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
+
+libsocket_OBJS = socket/arpa/inet.o socket/netdb.o socket/sys/socket.o
+libsocket_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+
+libsocket.a: $(libsocket_OBJS)
+	$(AR) libsocket.a $(libsocket_OBJS)
+	$(RANLIB) libsocket.a
+
+libsocket.so: $(libsocket_OBJS)
+	$(LD) -o libsocket.so $(libsocket_OBJS)
 
 ctype.o: ctype.c
 	$(CC) $(libc_CFLAGS) -c ctype.c
@@ -132,13 +142,22 @@ utmpx.o: utmpx.c
 start.o: start.S common.h kernel/linux/i386/start.S kernel/linux/sparc/start.S kernel/netbsd/amd64/start.S kernel/netbsd/i386/start.S kernel/netbsd/sparc64/start.S kernel/netbsd/sparc/start.S ../config.h
 	$(AS) $(start.o_ASFLAGS) -o start.o start.S
 
+socket/arpa/inet.o: socket/arpa/inet.c
+	$(CC) $(libsocket_CFLAGS) -o socket/arpa/inet.o -c socket/arpa/inet.c
+
+socket/netdb.o: socket/netdb.c
+	$(CC) $(libsocket_CFLAGS) -o socket/netdb.o -c socket/netdb.c
+
+socket/sys/socket.o: socket/sys/socket.c
+	$(CC) $(libsocket_CFLAGS) -o socket/sys/socket.o -c socket/sys/socket.c
+
 clean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
-	$(RM) $(libc_OBJS) $(start.o_OBJS)
+	$(RM) $(libc_OBJS) $(start.o_OBJS) $(libsocket_OBJS)
 
 distclean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
-	$(RM) $(libc_OBJS) $(start.o_OBJS)
+	$(RM) $(libc_OBJS) $(start.o_OBJS) $(libsocket_OBJS)
 	$(RM) $(TARGETS)
 
 install: all
