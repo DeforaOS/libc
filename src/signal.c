@@ -26,7 +26,7 @@
 # warning Unsupported platform: kill() is missing
 int kill(pid_t pid, int sig)
 {
-	errno = EINVAL;
+	errno = ENOSYS;
 	return -1;
 }
 #endif
@@ -44,7 +44,7 @@ int raise(int sig)
 # warning Unsupported platform: sigaction() is missing
 int sigaction(int sig, const struct sigaction * act, struct sigaction * oact)
 {
-	errno = EINVAL;
+	errno = ENOSYS;
 	return -1;
 }
 #endif
@@ -55,7 +55,7 @@ int sigaction(int sig, const struct sigaction * act, struct sigaction * oact)
 # warning Unsupported platform: sigprocmask() is missing
 int sigprocmask(int how, const sigset_t * set, sigset_t * oset)
 {
-	errno = EINVAL;
+	errno = ENOSYS;
 	return -1;
 }
 #endif
