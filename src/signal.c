@@ -24,6 +24,11 @@
 /* kill */
 #ifndef SYS_kill
 # warning Unsupported platform: kill() is missing
+int kill(pid_t pid, int sig)
+{
+	errno = EINVAL;
+	return -1;
+}
 #endif
 
 
@@ -37,6 +42,22 @@ int raise(int sig)
 /* sigaction */
 #ifndef SYS_sigaction
 # warning Unsupported platform: sigaction() is missing
+int sigaction(int sig, const struct sigaction * act, struct sigaction * oact)
+{
+	errno = EINVAL;
+	return -1;
+}
+#endif
+
+
+/* sigprocmask */
+#ifndef SYS_sigprocmask
+# warning Unsupported platform: sigprocmask() is missing
+int sigprocmask(int how, const sigset_t * set, sigset_t * oset)
+{
+	errno = EINVAL;
+	return -1;
+}
 #endif
 
 

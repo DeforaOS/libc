@@ -75,4 +75,8 @@ struct sigaction
 
 # define SIG_ERR	((void (*)(int)) -1)
 
+# define SIG_BLOCK	0
+# define SIG_UNBLOCK	1
+# define SIG_SETMASK	2
+
 #endif /* !LIBC_KERNEL_LINUX_SIGNAL_H */

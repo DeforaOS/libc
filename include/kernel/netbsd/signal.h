@@ -75,6 +75,10 @@ struct sigaction
 
 # define SIG_ERR	((void (*)(int)) -1)
 
+# define SIG_BLOCK	1
+# define SIG_UNBLOCK	2
+# define SIG_SETMASK	3
+
 
 /* macros */
 # define sigemptyset(s) ((s)->bits[0] = 0x00000000, (s)->bits[1] = 0x00000000, \

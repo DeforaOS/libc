@@ -105,6 +105,9 @@ SYSCALL(signal)
 #ifdef SYS_sigaction
 SYSCALL(sigaction)
 #endif
+#ifdef SYS_sigprocmask
+SYSCALL(sigprocmask)
+#endif
 
 /* stdio.h */
 SYSCALL(rename)

@@ -41,6 +41,7 @@ typedef id_t uid_t;
 int kill(pid_t pid, int sig);
 int raise(int sig);
 int sigaction(int sig, const struct sigaction * act, struct sigaction * oact);
+int sigprocmask(int how, const sigset_t * set, sigset_t * oset);
 void (*signal(int sig, void (*func)(int)));
 
 #endif /* !LIBC_SIGNAL_H */
