@@ -37,6 +37,7 @@ name:; \
 	mov	SYS_ ## name, %g1
 
 
+#ifdef KERNEL_NETBSD_COMMON_H	/* XXX for libsocket */
 /* functions */
 /* _brk */
 .global _brk
@@ -52,3 +53,4 @@ _brk:
 _exit:
 	b	_syscall
 	mov	SYS_exit, %g1
+#endif
