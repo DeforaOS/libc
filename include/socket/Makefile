@@ -1,3 +1,4 @@
+SUBDIRS	= arpa netinet sys
 PREFIX	= /usr/local
 DESTDIR	= 
 RM	= rm -f
@@ -6,26 +7,24 @@ INSTALL	= install
 INCLUDEDIR= $(PREFIX)/include
 
 
-all:
+all: subdirs
+
+subdirs:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
 clean:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
 
-distclean: clean
+distclean:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
 
 install: all
-	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 arpa/inet.h $(DESTDIR)$(INCLUDEDIR)/arpa/inet.h
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 netdb.h $(DESTDIR)$(INCLUDEDIR)/netdb.h
-	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 netinet/in.h $(DESTDIR)$(INCLUDEDIR)/netinet/in.h
-	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 sys/socket.h $(DESTDIR)$(INCLUDEDIR)/sys/socket.h
 
 uninstall:
-	$(RM) $(DESTDIR)$(INCLUDEDIR)/arpa/inet.h
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/netdb.h
-	$(RM) $(DESTDIR)$(INCLUDEDIR)/netinet/in.h
-	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/socket.h
 
-.PHONY: all clean distclean install uninstall
+.PHONY: all subdirs clean distclean install uninstall
