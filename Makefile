@@ -138,19 +138,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/string.h \
 		$(PACKAGE)-$(VERSION)/include/strings.h \
 		$(PACKAGE)-$(VERSION)/include/stropts.h \
-		$(PACKAGE)-$(VERSION)/include/sys/ioctl.h \
-		$(PACKAGE)-$(VERSION)/include/sys/mman.h \
-		$(PACKAGE)-$(VERSION)/include/sys/mount.h \
-		$(PACKAGE)-$(VERSION)/include/sys/reboot.h \
-		$(PACKAGE)-$(VERSION)/include/sys/resource.h \
-		$(PACKAGE)-$(VERSION)/include/sys/select.h \
-		$(PACKAGE)-$(VERSION)/include/sys/stat.h \
-		$(PACKAGE)-$(VERSION)/include/sys/statvfs.h \
-		$(PACKAGE)-$(VERSION)/include/sys/time.h \
-		$(PACKAGE)-$(VERSION)/include/sys/times.h \
-		$(PACKAGE)-$(VERSION)/include/sys/types.h \
-		$(PACKAGE)-$(VERSION)/include/sys/utsname.h \
-		$(PACKAGE)-$(VERSION)/include/sys/wait.h \
 		$(PACKAGE)-$(VERSION)/include/termios.h \
 		$(PACKAGE)-$(VERSION)/include/time.h \
 		$(PACKAGE)-$(VERSION)/include/unistd.h \
@@ -252,12 +239,33 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/project.conf \
-		$(PACKAGE)-$(VERSION)/include/socket/arpa/inet.h \
 		$(PACKAGE)-$(VERSION)/include/socket/netdb.h \
-		$(PACKAGE)-$(VERSION)/include/socket/netinet/in.h \
-		$(PACKAGE)-$(VERSION)/include/socket/sys/socket.h \
 		$(PACKAGE)-$(VERSION)/include/socket/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/arpa/inet.h \
+		$(PACKAGE)-$(VERSION)/include/socket/arpa/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/arpa/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/netinet/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/netinet/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/sys/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/sys/project.conf \
+		$(PACKAGE)-$(VERSION)/include/sys/ioctl.h \
+		$(PACKAGE)-$(VERSION)/include/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/sys/mount.h \
+		$(PACKAGE)-$(VERSION)/include/sys/reboot.h \
+		$(PACKAGE)-$(VERSION)/include/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/sys/select.h \
+		$(PACKAGE)-$(VERSION)/include/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/sys/statvfs.h \
+		$(PACKAGE)-$(VERSION)/include/sys/time.h \
+		$(PACKAGE)-$(VERSION)/include/sys/times.h \
+		$(PACKAGE)-$(VERSION)/include/sys/types.h \
+		$(PACKAGE)-$(VERSION)/include/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/sys/wait.h \
+		$(PACKAGE)-$(VERSION)/include/sys/Makefile \
+		$(PACKAGE)-$(VERSION)/include/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/COPYING \
 		$(PACKAGE)-$(VERSION)/config.h \
