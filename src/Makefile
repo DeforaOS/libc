@@ -4,7 +4,7 @@ PREFIX	= /usr/local
 DESTDIR	= 
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
-CPPFLAGS= -I ../include -I ../include/socket -nostdinc
+CPPFLAGS= -I ../include -nostdinc
 CFLAGSF	= -W
 CFLAGS	= -Wall -g -ansi -fno-builtin
 AS	= $(CC)
@@ -37,7 +37,7 @@ start.o_OBJS = start.o
 start.o_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
 
 libsocket_OBJS = socket/arpa/inet.o socket/netdb.o socket/sys/socket.o socket/syscalls.o
-libsocket_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+libsocket_CFLAGS = $(CPPFLAGS) -I ../include/socket $(CFLAGSF) $(CFLAGS)
 libsocket_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
 
 libsocket.a: $(libsocket_OBJS)
