@@ -53,10 +53,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/utime.c \
 		$(PACKAGE)-$(VERSION)/src/utmpx.c \
 		$(PACKAGE)-$(VERSION)/src/start.S \
-		$(PACKAGE)-$(VERSION)/src/socket/arpa/inet.c \
-		$(PACKAGE)-$(VERSION)/src/socket/netdb.c \
-		$(PACKAGE)-$(VERSION)/src/socket/sys/socket.c \
-		$(PACKAGE)-$(VERSION)/src/socket/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/Makefile \
 		$(PACKAGE)-$(VERSION)/src/common.h \
 		$(PACKAGE)-$(VERSION)/src/syscalls.h \
@@ -115,6 +111,10 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/arpa/inet.c \
+		$(PACKAGE)-$(VERSION)/src/socket/netdb.c \
+		$(PACKAGE)-$(VERSION)/src/socket/sys/socket.c \
+		$(PACKAGE)-$(VERSION)/src/socket/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/socket/project.conf \
