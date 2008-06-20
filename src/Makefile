@@ -1,4 +1,4 @@
-SUBDIRS	= kernel/linux kernel/freebsd kernel/netbsd kernel/openbsd kernel/solaris
+SUBDIRS	= kernel/linux kernel/freebsd kernel/netbsd kernel/openbsd kernel/solaris socket
 TARGETS	= libc.a libc.so start.o libsocket.a libsocket.so
 PREFIX	= /usr/local
 DESTDIR	= 
@@ -36,8 +36,9 @@ libc.so: $(libc_OBJS)
 start.o_OBJS = start.o
 start.o_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
 
-libsocket_OBJS = socket/arpa/inet.o socket/netdb.o socket/sys/socket.o
+libsocket_OBJS = socket/arpa/inet.o socket/netdb.o socket/sys/socket.o socket/syscalls.o
 libsocket_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+libsocket_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
 
 libsocket.a: $(libsocket_OBJS)
 	$(AR) libsocket.a $(libsocket_OBJS)
@@ -148,8 +149,11 @@ socket/arpa/inet.o: socket/arpa/inet.c
 socket/netdb.o: socket/netdb.c
 	$(CC) $(libsocket_CFLAGS) -o socket/netdb.o -c socket/netdb.c
 
-socket/sys/socket.o: socket/sys/socket.c
+socket/sys/socket.o: socket/sys/socket.c kernel/netbsd/socket.h socket/syscalls.h
 	$(CC) $(libsocket_CFLAGS) -o socket/sys/socket.o -c socket/sys/socket.c
+
+socket/syscalls.o: socket/syscalls.S
+	$(AS) $(libsocket_ASFLAGS) -o socket/syscalls.o socket/syscalls.S
 
 clean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
