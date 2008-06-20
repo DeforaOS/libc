@@ -115,6 +115,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/socket/project.conf \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
@@ -255,6 +256,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/netdb.h \
 		$(PACKAGE)-$(VERSION)/include/socket/netinet/in.h \
 		$(PACKAGE)-$(VERSION)/include/socket/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/COPYING \
