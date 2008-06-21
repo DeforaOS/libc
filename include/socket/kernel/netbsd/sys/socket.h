@@ -16,16 +16,24 @@
 
 
 
-#ifndef LIBSOCKET_NETINET_IN_H
-# define LIBSOCKET_NETINET_IN_H
-
-# include <sys/socket.h>
-# include <inttypes.h>
-# include "compat/netinet/in.h"
+#ifndef LIBSOCKET_KERNEL_NETBSD_SYS_SOCKET_H
+# define LIBSOCKET_KERNEL_NETBSD_SYS_SOCKET_H
 
 
-/* constants */
-# define INADDR_ANY		0x00000000
-# define INADDR_BROADCAST	0xffffffff
+/* types */
+# ifndef sa_family_t
+#  define sa_family_t sa_family_t
+typedef unsigned int sa_family_t;
+# endif
 
-#endif /* !LIBSOCKET_NETINET_IN_H */
+# ifndef sockaddr
+#  define sockaddr sockaddr
+struct sockaddr
+{
+	unsigned char sa_len;
+	sa_family_t sa_family;
+	char sa_data[14];
+};
+# endif
+
+#endif /* !LIBSOCKET_KERNEL_NETBSD_SYS_SOCKET_H */

@@ -16,16 +16,14 @@
 
 
 
-#ifndef LIBSOCKET_NETINET_IN_H
-# define LIBSOCKET_NETINET_IN_H
-
-# include <sys/socket.h>
-# include <inttypes.h>
-# include "compat/netinet/in.h"
+#ifndef LIBSOCKET_COMPAT_SYS_SOCKET_H
+# define LIBSOCKET_COMPAT_SYS_SOCKET_H
 
 
-/* constants */
-# define INADDR_ANY		0x00000000
-# define INADDR_BROADCAST	0xffffffff
+# if defined(__NetBSD__)
+#  include "kernel/netbsd/sys/socket.h"
+# else
+#  warning Unsupported platform
+# endif
 
-#endif /* !LIBSOCKET_NETINET_IN_H */
+#endif /* !LIBSOCKET_COMPAT_SYS_SOCKET_H */

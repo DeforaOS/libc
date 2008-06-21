@@ -16,8 +16,10 @@
 
 
 
-#ifndef LIBC_SYS_SOCKET_H
-# define LIBC_SYS_SOCKET_H
+#ifndef LIBSOCKET_SYS_SOCKET_H
+# define LIBSOCKET_SYS_SOCKET_H
+
+# include "compat/sys/socket.h"
 
 
 /* types */
@@ -86,4 +88,4 @@ ssize_t recv(int fd, void * buf, size_t len, int flags);
 ssize_t send(int fd, const void * buf, size_t len, int flags);
 int socket(int domain, int type, int protocol);
 
-#endif /* !LIBC_SYS_SOCKET_H */
+#endif /* !LIBSOCKET_SYS_SOCKET_H */

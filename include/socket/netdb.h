@@ -16,8 +16,8 @@
 
 
 
-#ifndef LIBC_NETDB_H
-# define LIBC_NETDB_H
+#ifndef LIBSOCKET_NETDB_H
+# define LIBSOCKET_NETDB_H
 
 # include <netinet/in.h>
 
@@ -50,4 +50,4 @@ struct servent
 /* functions */
 struct servent * getservbyname(const char * name, const char * protocol);
 
-#endif /* !LIBC_NETDB_H */
+#endif /* !LIBSOCKET_NETDB_H */
