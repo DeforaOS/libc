@@ -72,6 +72,15 @@ struct tm * localtime_r(time_t const * t, struct tm * ret)
 }
 
 
+/* mktime */
+time_t mktime(struct tm * timep)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
+}
+
+
 /* nanosleep */
 #ifndef SYS_nanosleep
 # warning Unsupported platform: nanosleep() is missing
