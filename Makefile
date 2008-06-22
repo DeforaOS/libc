@@ -145,7 +145,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/project.conf \
-		$(PACKAGE)-$(VERSION)/include/compat/Makefile \
 		$(PACKAGE)-$(VERSION)/include/compat/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/compat/errno.h \
 		$(PACKAGE)-$(VERSION)/include/compat/fcntl.h \
@@ -166,6 +165,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/time.h \
 		$(PACKAGE)-$(VERSION)/include/compat/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/compat/utmpx.h \
+		$(PACKAGE)-$(VERSION)/include/compat/Makefile \
 		$(PACKAGE)-$(VERSION)/include/compat/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/dirent.h \
