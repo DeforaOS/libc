@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -37,7 +37,6 @@ name:; \
 	mov	SYS_ ## name, %g1
 
 
-#ifdef KERNEL_NETBSD_COMMON_H	/* XXX for libsocket */
 /* functions */
 /* _brk */
 .global _brk
@@ -53,4 +52,3 @@ _brk:
 _exit:
 	b	_syscall
 	mov	SYS_exit, %g1
-#endif

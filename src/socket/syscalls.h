@@ -3,13 +3,15 @@
 
 
 
-#ifndef SOCKET_SYSCALLS_H
-# define SOCKET_SYSCALLS_H
+#ifndef LIBSOCKET_SYSCALLS_H
+# define LIBSOCKET_SYSCALLS_H
 
-# if defined(__NetBSD__)
+# if defined(__linux__)
+#  include "../kernel/linux/socket.h"
+# elif defined(__NetBSD__)
 #  include "../kernel/netbsd/socket.h"
 # else
 #  warning Unsupported platform
 # endif
 
-#endif /* !SOCKET_SYSCALLS_H */
+#endif /* !LIBSOCKET_SYSCALLS_H */

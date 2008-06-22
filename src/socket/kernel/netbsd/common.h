@@ -16,8 +16,8 @@
 
 
 
-#ifndef KERNEL_NETBSD_SOCKET_H
-# define KERNEL_NETBSD_SOCKET_H
+#ifndef LIBSOCKET_KERNEL_NETBSD_COMMON_H
+# define LIBSOCKET_KERNEL_NETBSD_COMMON_H
 
 
 # define SYS_accept		30
@@ -25,4 +25,4 @@
 # define SYS_listen		106
 # define SYS_socket		394
 
-#endif /* !KERNEL_NETBSD_SOCKET_H */
+#endif /* !LIBSOCKET_KERNEL_NETBSD_COMMON_H */

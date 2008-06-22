@@ -16,45 +16,11 @@
 
 
 
-.text
+#ifndef SOCKET_KERNEL_LINUX_COMMON_H
+# define SOCKET_KERNEL_LINUX_COMMON_H
 
 
-/* common */
-#include "../common.h"
+# define SYS_socket		1
+# define SYS_socketcall		102
 
-
-/* Linux */
-#if defined(__linux__)
-# if defined(__i386__)
-#  include "kernel/linux/i386/syscalls.S"
-# else
-#  warning Unsupported Linux architecture
-# endif
-
-/* NetBSD */
-#elif defined(__NetBSD__)
-# include "../kernel/netbsd/socket.h"
-# if defined(__sparc__)
-#  include "kernel/netbsd/sparc/syscalls.S"
-# else
-#  warning Unsupported NetBSD architecture
-# endif
-
-/* Unknown */
-#else
-# error Unsupported platform
-#endif
-
-/* sys/socket.h */
-#ifdef SYS_accept
-SYSCALL(accept)
-#endif
-#ifdef SYS_bind
-SYSCALL(bind)
-#endif
-#ifdef SYS_listen
-SYSCALL(listen)
-#endif
-#ifdef SYS_socket
-SYSCALL(socket)
-#endif
+#endif /* !KERNEL_SOCKET_LINUX_COMMON_H */
