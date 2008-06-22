@@ -64,6 +64,7 @@ clock_t clock(void);
 struct tm * gmtime(time_t const * t);
 struct tm * localtime(time_t const * t);
 struct tm * localtime_r(time_t const * t, struct tm * ret);
+time_t mktime(struct tm * timep);
 int nanosleep(struct timespec * requested, struct timespec * remaining);
 size_t strftime(char * s, size_t maxsize, char const * format,
 		struct tm * timep);
