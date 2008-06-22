@@ -27,7 +27,7 @@ typedef int suseconds_t;
 # endif
 # ifndef time_t
 #  define time_t time_t
-typedef unsigned int time_t;
+typedef int time_t;
 # endif
 #ifndef timeval
 # define timeval timeval

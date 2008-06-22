@@ -55,7 +55,7 @@ typedef long off_t;
 # endif
 # ifndef time_t
 #  define time_t time_t
-typedef unsigned long time_t;
+typedef long time_t;
 # endif
 
 # ifndef gid_t
