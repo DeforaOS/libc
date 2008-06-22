@@ -38,4 +38,6 @@ typedef long long off_t;
 #  define SEEK_END	2
 # endif
 
+# define _SC_CLK_TCK	2
+
 #endif /* !LIBC_KERNEL_LINUX_UNISTD_H */
