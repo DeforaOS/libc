@@ -21,6 +21,11 @@
 
 
 # define SYS_socket		1
+# define SYS_bind		2
+# define SYS_listen		4
+# define SYS_accept		5
+# define SYS_recv		9
+# define SYS_send		10
 # define SYS_socketcall		102
 
 #endif /* !KERNEL_SOCKET_LINUX_COMMON_H */
