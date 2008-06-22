@@ -84,6 +84,7 @@
 # define SYS_mlock		203
 # define SYS_munlock		204
 # define SYS_reboot		208
+# define SYS_poll		209
 # define SYS_nanosleep		240
 # define SYS_rename		270
 # define SYS_getdents		272

@@ -28,6 +28,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/fnmatch.c \
 		$(PACKAGE)-$(VERSION)/src/grp.c \
 		$(PACKAGE)-$(VERSION)/src/libgen.c \
+		$(PACKAGE)-$(VERSION)/src/poll.c \
 		$(PACKAGE)-$(VERSION)/src/pwd.c \
 		$(PACKAGE)-$(VERSION)/src/signal.c \
 		$(PACKAGE)-$(VERSION)/src/stdlib.c \

@@ -97,6 +97,11 @@ SYSCALL(getdirentries)
 SYSCALL(fcntl)
 SYSCALL(open)
 
+/* poll.h */
+#ifdef SYS_poll
+SYSCALL(poll)
+#endif
+
 /* signal.h */
 SYSCALL(kill)
 #ifdef SYS_signal
