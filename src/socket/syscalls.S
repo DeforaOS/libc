@@ -33,7 +33,7 @@
 
 /* NetBSD */
 #elif defined(__NetBSD__)
-# include "../kernel/netbsd/socket.h"
+# include "kernel/netbsd/common.h"
 # if defined(__sparc__)
 #  include "kernel/netbsd/sparc/syscalls.S"
 # else

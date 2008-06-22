@@ -7,9 +7,9 @@
 # define LIBSOCKET_SYSCALLS_H
 
 # if defined(__linux__)
-#  include "../kernel/linux/socket.h"
+#  include "kernel/linux/common.h"
 # elif defined(__NetBSD__)
-#  include "../kernel/netbsd/socket.h"
+#  include "kernel/netbsd/common.h"
 # else
 #  warning Unsupported platform
 # endif
