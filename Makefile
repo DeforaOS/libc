@@ -128,6 +128,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/inttypes.h \
 		$(PACKAGE)-$(VERSION)/include/libgen.h \
 		$(PACKAGE)-$(VERSION)/include/limits.h \
+		$(PACKAGE)-$(VERSION)/include/poll.h \
 		$(PACKAGE)-$(VERSION)/include/pwd.h \
 		$(PACKAGE)-$(VERSION)/include/signal.h \
 		$(PACKAGE)-$(VERSION)/include/stdarg.h \
@@ -167,7 +168,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/compat/Makefile \
 		$(PACKAGE)-$(VERSION)/include/compat/project.conf \
-		$(PACKAGE)-$(VERSION)/include/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/fcntl.h \
@@ -186,6 +186,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/utmpx.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/dirent.h \

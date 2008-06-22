@@ -41,6 +41,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/limits.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 poll.h $(DESTDIR)$(INCLUDEDIR)/poll.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 pwd.h $(DESTDIR)$(INCLUDEDIR)/pwd.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/signal.h
@@ -83,6 +85,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/inttypes.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/libgen.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/limits.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/pwd.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/signal.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/stdarg.h
