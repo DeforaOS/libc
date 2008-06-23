@@ -82,7 +82,7 @@
 
 /* Unknown */
 #else
-# error Unsupported platform
+# warning Unsupported platform
 #endif
 #ifndef SYSCALL
 # define SYSCALL(name)
