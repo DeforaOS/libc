@@ -44,6 +44,10 @@
 #else
 # error Unsupported platform
 #endif
+#ifndef SYSCALL
+# define SYSCALL(name)
+#endif
+
 
 /* sys/socket.h */
 #ifdef SYS_accept

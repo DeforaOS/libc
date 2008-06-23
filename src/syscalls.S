@@ -55,6 +55,9 @@
 # else
 #  warning Unsupported NetBSD architecture
 # endif
+# ifndef SYSCALL
+#  define SYSCALL(name)
+# endif
 # include "kernel/netbsd/common.S"
 
 /* OpenBSD */
@@ -81,6 +84,10 @@
 #else
 # error Unsupported platform
 #endif
+#ifndef SYSCALL
+# define SYSCALL(name)
+#endif
+
 
 /* dirent.h */
 #ifdef SYS_readdir
