@@ -33,13 +33,19 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 fnmatch.h $(DESTDIR)$(INCLUDEDIR)/fnmatch.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 glob.h $(DESTDIR)$(INCLUDEDIR)/glob.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 grp.h $(DESTDIR)$(INCLUDEDIR)/grp.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 iconv.h $(DESTDIR)$(INCLUDEDIR)/iconv.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 inttypes.h $(DESTDIR)$(INCLUDEDIR)/inttypes.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 libgen.h $(DESTDIR)$(INCLUDEDIR)/libgen.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/limits.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 locale.h $(DESTDIR)$(INCLUDEDIR)/locale.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 poll.h $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
@@ -81,10 +87,13 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/errno.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/fcntl.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/fnmatch.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/glob.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/grp.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/iconv.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/inttypes.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/libgen.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/limits.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/locale.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/pwd.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/signal.h

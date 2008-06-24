@@ -125,10 +125,13 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/errno.h \
 		$(PACKAGE)-$(VERSION)/include/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/fnmatch.h \
+		$(PACKAGE)-$(VERSION)/include/glob.h \
 		$(PACKAGE)-$(VERSION)/include/grp.h \
+		$(PACKAGE)-$(VERSION)/include/iconv.h \
 		$(PACKAGE)-$(VERSION)/include/inttypes.h \
 		$(PACKAGE)-$(VERSION)/include/libgen.h \
 		$(PACKAGE)-$(VERSION)/include/limits.h \
+		$(PACKAGE)-$(VERSION)/include/locale.h \
 		$(PACKAGE)-$(VERSION)/include/poll.h \
 		$(PACKAGE)-$(VERSION)/include/pwd.h \
 		$(PACKAGE)-$(VERSION)/include/signal.h \
