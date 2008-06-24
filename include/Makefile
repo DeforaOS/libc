@@ -78,6 +78,8 @@ install: all
 	$(INSTALL) -m 0644 utime.h $(DESTDIR)$(INCLUDEDIR)/utime.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 utmpx.h $(DESTDIR)$(INCLUDEDIR)/utmpx.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 wchar.h $(DESTDIR)$(INCLUDEDIR)/wchar.h
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
@@ -110,5 +112,6 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/unistd.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/utime.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/utmpx.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/wchar.h
 
 .PHONY: all subdirs clean distclean install uninstall

@@ -148,6 +148,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/utime.h \
 		$(PACKAGE)-$(VERSION)/include/utmpx.h \
+		$(PACKAGE)-$(VERSION)/include/wchar.h \
 		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/project.conf \
 		$(PACKAGE)-$(VERSION)/include/compat/dirent.h \
