@@ -25,7 +25,10 @@
 #  define size_t size_t
 typedef unsigned int size_t;
 # endif
+# ifndef wchar_t
+#  define wchar_t wchar_t
 typedef char wchar_t;
+# endif
 
 
 /* constants */

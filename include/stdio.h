@@ -31,7 +31,10 @@
 
 
 /* types */
+# ifndef FILE
+#  define FILE FILE
 typedef struct _FILE FILE;
+# endif
 
 # ifndef va_list
 #  if defined(__i386__)
