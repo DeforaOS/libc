@@ -79,7 +79,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.S \
-		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/socket.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sys/sysctl.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/project.conf \
@@ -247,13 +246,41 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/project.conf \
+		$(PACKAGE)-$(VERSION)/include/net/if.h \
+		$(PACKAGE)-$(VERSION)/include/net/Makefile \
+		$(PACKAGE)-$(VERSION)/include/net/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/netdb.h \
 		$(PACKAGE)-$(VERSION)/include/socket/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/arpa/inet.h \
 		$(PACKAGE)-$(VERSION)/include/socket/arpa/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/arpa/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/compat/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/compat/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/netinet/tcp.h \
 		$(PACKAGE)-$(VERSION)/include/socket/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/netinet/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/sys/socket.h \
