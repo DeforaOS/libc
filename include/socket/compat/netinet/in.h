@@ -20,7 +20,9 @@
 # define LIBSOCKET_COMPAT_NETINET_IN_H
 
 
-# if defined(__NetBSD__)
+# if defined(__linux__)
+#  include "kernel/linux/netinet/in.h"
+# elif defined(__NetBSD__)
 #  include "kernel/netbsd/netinet/in.h"
 # else
 #  warning Unsupported platform

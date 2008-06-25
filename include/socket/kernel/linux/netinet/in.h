@@ -16,16 +16,43 @@
 
 
 
-#ifndef LIBSOCKET_COMPAT_SYS_SOCKET_H
-# define LIBSOCKET_COMPAT_SYS_SOCKET_H
+#ifndef LIBSOCKET_KERNEL_LINUX_NETINET_IN_H
+# define LIBSOCKET_KERNEL_LINUX_NETINET_IN_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/socket.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/socket.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef in_addr_t
+#  define in_addr_t in_addr_t
+typedef uint32_t in_addr_t;
 # endif
 
-#endif /* !LIBSOCKET_COMPAT_SYS_SOCKET_H */
+# ifndef in_port_t
+#  define in_port_t in_port_t
+typedef uint16_t in_port_t;
+#endif
+
+# ifndef in_addr
+#  define in_addr in_addr
+struct in_addr
+{
+	in_addr_t s_addr;
+};
+# endif
+
+# ifndef sockaddr_in
+#  define sockaddr_in sockaddr_in
+struct sockaddr_in
+{
+	sa_family_t sin_family;
+	in_port_t sin_port;
+	struct in_addr sin_addr;
+	char _padding[8];		/* FIXME not checked */
+};
+# endif
+
+
+/* constants */
+# define INADDR_ANY		0x00000000
+# define INADDR_BROADCAST	0xffffffff
+
+#endif /* !LIBSOCKET_NETINET_IN_H */
