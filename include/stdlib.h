@@ -27,6 +27,7 @@
 
 
 /* functions */
+void abort(void);
 int atoi(char const * str);
 long atol(char const * str);
 long long atoll(char const * nptr);
