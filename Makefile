@@ -120,6 +120,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/socket/project.conf \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
+		$(PACKAGE)-$(VERSION)/include/complex.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \
 		$(PACKAGE)-$(VERSION)/include/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/errno.h \

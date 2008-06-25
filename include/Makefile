@@ -23,6 +23,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 assert.h $(DESTDIR)$(INCLUDEDIR)/assert.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 complex.h $(DESTDIR)$(INCLUDEDIR)/complex.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 ctype.h $(DESTDIR)$(INCLUDEDIR)/ctype.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 dirent.h $(DESTDIR)$(INCLUDEDIR)/dirent.h
@@ -86,6 +88,7 @@ install: all
 uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/assert.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/complex.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/ctype.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/dirent.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/errno.h
