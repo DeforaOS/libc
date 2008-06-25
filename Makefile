@@ -118,6 +118,18 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/socket/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/common.h \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/i386/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/i386/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/i386/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/common.h \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/project.conf \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
 		$(PACKAGE)-$(VERSION)/include/complex.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \

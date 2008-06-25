@@ -1,3 +1,4 @@
+SUBDIRS	= kernel/linux kernel/netbsd
 TARGETS	= libsocket.a libsocket.so
 PREFIX	= /usr/local
 DESTDIR	= 
@@ -16,7 +17,10 @@ MKDIR	= mkdir -p
 INSTALL	= install
 
 
-all: $(TARGETS)
+all: subdirs $(TARGETS)
+
+subdirs:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
 libsocket_OBJS = arpa/inet.o netdb.o sys/socket.o syscalls.o
 libsocket_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -42,13 +46,18 @@ syscalls.o: syscalls.S kernel/linux/common.h kernel/linux/i386/syscalls.S kernel
 	$(AS) $(libsocket_ASFLAGS) -o syscalls.o syscalls.S
 
 clean:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
 	$(RM) $(libsocket_OBJS)
 
-distclean: clean
+distclean:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
+	$(RM) $(libsocket_OBJS)
 	$(RM) $(TARGETS)
 
 install: all
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 
 uninstall:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
 
-.PHONY: all clean distclean install uninstall
+.PHONY: all subdirs clean distclean install uninstall
