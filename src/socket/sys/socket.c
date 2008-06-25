@@ -77,19 +77,65 @@ ssize_t recv(int fd, void * buf, size_t len, int flags)
 #endif
 
 
+/* recvfrom */
+#ifndef SYS_recvfrom
+# warning Unsupported platform: recvfrom() is missing
+# ifdef SYS_recv
+ssize_t recvfrom(int fd, void * buf, size_t len, int flags,
+		struct sockaddr * addr, socklen_t * addrlen)
+{
+	if(addr == NULL)
+		return recv(fd, buf, len, flags);
+	errno = ENOSYS;
+	return -1;
+}
+# else
+ssize_t recvfrom(int fd, void * buf, size_t len, int flags,
+		struct sockaddr * addr, socklen_t * addrlen)
+{
+	errno = ENOSYS;
+	return -1;
+}
+# endif
+#endif
+
+
 /* send */
 #ifndef SYS_send
 # ifdef SYS_sendto
-# else
 ssize_t send(int fd, const void * buf, size_t len, int flags)
 {
 	return sendto(fd, buf, len, flags, NULL, 0);
 }
+# else
 #  warning Unsupported platform: send() is missing
 ssize_t send(int fd, const void * buf, size_t len, int flags)
 {
 	if(flags == 0)
 		return write(fd, buf, len);
+	errno = ENOSYS;
+	return -1;
+}
+# endif
+#endif
+
+
+/* sendto */
+#ifndef SYS_sendto
+# warning Unsupported platform: sendto() is missing
+# ifdef SYS_send
+ssize_t sendto(int fd, const void * buf, size_t len, int flags,
+		struct sockaddr * addr, socklen_t addrlen)
+{
+	if(addr == NULL)
+		return send(fd, buf, len, flags);
+	errno = ENOSYS;
+	return -1;
+}
+# else
+ssize_t sendto(int fd, const void * buf, size_t len, int flags,
+		struct sockaddr * addr, socklen_t addrlen)
+{
 	errno = ENOSYS;
 	return -1;
 }
