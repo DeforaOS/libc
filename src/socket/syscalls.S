@@ -59,6 +59,18 @@ SYSCALL(bind)
 #ifdef SYS_listen
 SYSCALL(listen)
 #endif
+#ifdef SYS_recv
+SYSCALL(recv)
+#endif
+#ifdef SYS_recvfrom
+SYSCALL(recvfrom)
+#endif
+#ifdef SYS_send
+SYSCALL(send)
+#endif
+#ifdef SYS_sendto
+SYSCALL(sendto)
+#endif
 #ifdef SYS_socket
 SYSCALL(socket)
 #endif

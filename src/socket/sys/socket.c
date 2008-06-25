@@ -18,6 +18,7 @@
 
 #include "sys/types.h"
 #include "unistd.h"
+#include "stddef.h"
 #include "errno.h"
 #include "../syscalls.h"
 #include "sys/socket.h"
@@ -58,7 +59,13 @@ int listen(int fd, int backlog)
 
 /* recv */
 #ifndef SYS_recv
-# warning Unsupported platform: recv() is missing
+# ifdef SYS_recvfrom
+ssize_t recv(int fd, void * buf, size_t len, int flags)
+{
+	return recvfrom(fd, buf, len, flags, NULL, NULL);
+}
+# else
+#  warning Unsupported platform: recv() is missing
 ssize_t recv(int fd, void * buf, size_t len, int flags)
 {
 	if(flags == 0)
@@ -66,12 +73,19 @@ ssize_t recv(int fd, void * buf, size_t len, int flags)
 	errno = ENOSYS;
 	return -1;
 }
+# endif
 #endif
 
 
 /* send */
 #ifndef SYS_send
-# warning Unsupported platform: send() is missing
+# ifdef SYS_sendto
+# else
+ssize_t send(int fd, const void * buf, size_t len, int flags)
+{
+	return sendto(fd, buf, len, flags, NULL, 0);
+}
+#  warning Unsupported platform: send() is missing
 ssize_t send(int fd, const void * buf, size_t len, int flags)
 {
 	if(flags == 0)
@@ -79,6 +93,7 @@ ssize_t send(int fd, const void * buf, size_t len, int flags)
 	errno = ENOSYS;
 	return -1;
 }
+# endif
 #endif
 
 
