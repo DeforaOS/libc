@@ -39,10 +39,10 @@ arpa/inet.o: arpa/inet.c
 netdb.o: netdb.c
 	$(CC) $(libsocket_CFLAGS) -c netdb.c
 
-sys/socket.o: sys/socket.c
+sys/socket.o: sys/socket.c kernel/linux/common.h kernel/netbsd/common.h syscalls.h
 	$(CC) $(libsocket_CFLAGS) -o sys/socket.o -c sys/socket.c
 
-syscalls.o: syscalls.S kernel/linux/common.h kernel/linux/i386/syscalls.S kernel/netbsd/common.h kernel/netbsd/sparc/syscalls.S
+syscalls.o: syscalls.S kernel/linux/common.h kernel/linux/i386/syscalls.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/common.h kernel/netbsd/sparc/syscalls.S
 	$(AS) $(libsocket_ASFLAGS) -o syscalls.o syscalls.S
 
 clean:

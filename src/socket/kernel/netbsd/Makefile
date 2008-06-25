@@ -1,4 +1,4 @@
-SUBDIRS	= sparc
+SUBDIRS	= amd64 sparc
 
 
 all: subdirs

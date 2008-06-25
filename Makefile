@@ -127,6 +127,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/common.h \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/amd64/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/amd64/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/amd64/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/project.conf \
