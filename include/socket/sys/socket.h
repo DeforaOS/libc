@@ -23,23 +23,9 @@
 
 
 /* types */
-# ifndef sa_family_t
-#  define sa_family_t sa_family_t
-typedef unsigned int sa_family_t;
-# endif
-
 # ifndef socklen_t
 #  define socklen_t socklen_t
 typedef int socklen_t;
-# endif
-
-# ifndef sockaddr
-#  define sockaddr sockaddr
-struct sockaddr
-{
-	sa_family_t sa_family;
-	char sa_data[];
-};
 # endif
 
 #ifndef sockaddr_storage

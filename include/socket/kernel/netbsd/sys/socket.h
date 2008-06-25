@@ -23,7 +23,7 @@
 /* types */
 # ifndef sa_family_t
 #  define sa_family_t sa_family_t
-typedef unsigned int sa_family_t;
+typedef unsigned char sa_family_t;
 # endif
 
 # ifndef sockaddr
