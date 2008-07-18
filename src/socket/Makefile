@@ -57,8 +57,13 @@ distclean:
 
 install: all
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
+	$(MKDIR) $(DESTDIR)$(LIBDIR)
+	$(INSTALL) -m 0644 libsocket.a $(DESTDIR)$(LIBDIR)/libsocket.a
+	$(INSTALL) -m 0755 libsocket.so $(DESTDIR)$(LIBDIR)/libsocket.so
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
+	$(RM) $(DESTDIR)$(LIBDIR)/libsocket.a
+	$(RM) $(DESTDIR)$(LIBDIR)/libsocket.so
 
 .PHONY: all subdirs clean distclean install uninstall
