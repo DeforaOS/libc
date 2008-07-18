@@ -172,6 +172,12 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/compat/limits.h \
 		$(PACKAGE)-$(VERSION)/include/compat/signal.h \
+		$(PACKAGE)-$(VERSION)/include/compat/termios.h \
+		$(PACKAGE)-$(VERSION)/include/compat/time.h \
+		$(PACKAGE)-$(VERSION)/include/compat/unistd.h \
+		$(PACKAGE)-$(VERSION)/include/compat/utmpx.h \
+		$(PACKAGE)-$(VERSION)/include/compat/Makefile \
+		$(PACKAGE)-$(VERSION)/include/compat/project.conf \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mount.h \
@@ -183,12 +189,8 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/utsname.h \
-		$(PACKAGE)-$(VERSION)/include/compat/termios.h \
-		$(PACKAGE)-$(VERSION)/include/compat/time.h \
-		$(PACKAGE)-$(VERSION)/include/compat/unistd.h \
-		$(PACKAGE)-$(VERSION)/include/compat/utmpx.h \
-		$(PACKAGE)-$(VERSION)/include/compat/Makefile \
-		$(PACKAGE)-$(VERSION)/include/compat/project.conf \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/Makefile \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/fcntl.h \
