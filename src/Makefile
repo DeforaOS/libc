@@ -4,7 +4,8 @@ PREFIX	= /usr/local
 DESTDIR	= 
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
-CPPFLAGS= -I ../include -nostdinc
+CPPFLAGSF= -nostdinc -I ../include
+CPPFLAGS=
 CFLAGSF	= -W
 CFLAGS	= -Wall -g -ansi -fno-builtin
 AS	= $(CC)
@@ -23,8 +24,8 @@ subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
 libc_OBJS = ctype.o dirent.o errno.o fcntl.o fnmatch.o grp.o libgen.o poll.o pwd.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/mman.o sys/mount.o sys/reboot.o sys/resource.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o termios.o time.o unistd.o utime.o utmpx.o
-libc_CFLAGS = $(CPPFLAGS) $(CFLAGSF) $(CFLAGS) -fPIC
-libc_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
+libc_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS) -fPIC
+libc_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
 libc.a: $(libc_OBJS)
 	$(AR) libc.a $(libc_OBJS)
@@ -34,7 +35,7 @@ libc.so: $(libc_OBJS)
 	$(LD) -o libc.so $(libc_OBJS)
 
 start.o_OBJS = start.o
-start.o_ASFLAGS = $(CPPFLAGS) $(ASFLAGS)
+start.o_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
 ctype.o: ctype.c
 	$(CC) $(libc_CFLAGS) -c ctype.c
