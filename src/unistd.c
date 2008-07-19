@@ -90,6 +90,11 @@ int brk(void * addr)
 /* close */
 #ifndef SYS_close
 # warning Unsupported platform: close() is missing
+int close(int fildes)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -286,6 +291,11 @@ static void _execvp_do(char const * filename, char * const argv[])
 /* fork */
 #ifndef SYS_fork
 # warning Unsupported platform: fork() is missing
+pid_t fork(void)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -465,6 +475,11 @@ int isatty(int fildes)
 /* lseek */
 #ifndef SYS_lseek
 # warning Unsupported platform: lseek() is missing
+off_t lseek(int fildes, off_t offset, int whence)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -679,16 +694,31 @@ char * ttyname(int fildes)
 /* unlink */
 #ifndef SYS_unlink
 # warning Unsupported platform: unlink() is missing
+int unlink(char const * filename)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* vfork */
 #ifndef SYS_vfork
 # warning Unsupported platform: vfork() is missing
+pid_t vfork(void)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* write */
 #ifndef SYS_write
 # warning Unsupported platform: write() is missing
+ssize_t write(int fildes, const void * buf, size_t count)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
