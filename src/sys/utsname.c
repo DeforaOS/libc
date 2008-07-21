@@ -16,13 +16,16 @@
 
 
 
+#include "errno.h"
+#include "../syscalls.h"
 #include "sys/utsname.h"
 
 
 /* functions */
 /* uname */
-#if defined(__NetBSD__)
-# include "../kernel/netbsd/sys/sysctl.h"
+#if defined(SYS_sysctl) && defined(CTL_KERN) && defined(KERN_OSTYPE) \
+	&& defined(KERN_HOSTNAME) && defined(KERN_OSRELEASE) \
+	&& defined(KERN_VERSION) && defined(CTL_HW) && defined(HW_MACHINE)
 int uname(struct utsname * name)
 {
 	int mib[2];
@@ -52,4 +55,11 @@ int uname(struct utsname * name)
 		return -1;
 	return 0;
 }
-#endif /* __NetBSD__ */
+#elif !defined(SYS_uname)
+# warning Unsupported platform: uname() is missing
+int uname(struct utsname * name)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif

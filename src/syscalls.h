@@ -12,6 +12,7 @@
 #  include "kernel/freebsd/common.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/common.h"
+#  include "kernel/netbsd/sys/sysctl.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/common.h"
 # elif defined(__sun__)

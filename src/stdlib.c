@@ -22,6 +22,7 @@
 #include "fcntl.h"
 #include "unistd.h"
 #include "string.h"
+#include "signal.h"
 #include "ctype.h"
 #include "errno.h"
 #include "limits.h"
@@ -46,6 +47,15 @@ typedef struct _Alloc
 extern char ** environ;
 static Alloc _alloc = { 0, NULL, NULL };
 static unsigned int _seed = 1;
+
+
+/* functions */
+/* abort */
+void abort(void)
+{
+	/* FIXME complete */
+	raise(SIGABRT);
+}
 
 
 /* atexit */

@@ -259,7 +259,9 @@ SYSCALL(getppid)
 SYSCALL(getuid)
 SYSCALL(lchown)
 SYSCALL(link)
+#ifdef SYS_lseek
 SYSCALL(lseek)
+#endif
 #ifdef SYS_nice
 SYSCALL(nice)
 #endif

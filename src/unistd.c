@@ -329,6 +329,22 @@ pid_t fork(void)
 #endif
 
 
+/* gethostname */
+int gethostname(char * buf, size_t size)
+{
+#if defined(SYS_sysctl) && defined(CTL_KERN) && defined(KERN_HOSTNAME)
+	int mib[2] = { CTL_KERN, KERN_HOSTNAME };
+
+	if(sysctl(mib, 2, buf, &size, NULL, 0) != 0)
+		return -1;
+	return 0;
+#else
+	errno = ENOSYS;
+	return -1;
+#endif
+}
+
+
 /* getlogin */
 char * getlogin(void)
 {

@@ -65,6 +65,11 @@ int mkfifo(char const * path, mode_t mode)
 }
 # else /* !SYS_mkfifo && !SYS_mknod */
 #  warning Unsupported platform: mkfifo() is missing
+int mkfifo(char const * path, mode_t mode)
+{
+	errno = ENOSYS;
+	return -1;
+}
 # endif
 #endif /* !SYS_mkfifo */
 
@@ -72,6 +77,11 @@ int mkfifo(char const * path, mode_t mode)
 /* mknod */
 #ifndef SYS_mknod
 # warning Unsupported platform: mknod() is missing
+int mknod(char const * name, mode_t mode, dev_t dev)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
