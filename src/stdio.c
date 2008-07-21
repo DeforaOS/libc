@@ -89,8 +89,6 @@ static int _fopen_mode(char const * mode)
 			return flags;
 		if(*mode == '+' && ++mode)
 			flags = O_RDWR;
-		if(*mode == 'b')
-			++mode;
 	}
 	else if(*mode == 'w')
 	{
@@ -101,8 +99,6 @@ static int _fopen_mode(char const * mode)
 			return flags;
 		if(*mode == '+' && ++mode)
 			flags = O_RDWR | O_CREAT;
-		if(*mode == 'b')
-			++mode;
 	}
 	else if(*mode == 'a')
 	{
@@ -113,14 +109,14 @@ static int _fopen_mode(char const * mode)
 			return flags;
 		if(*mode == '+' && ++mode)
 			flags |= O_CREAT;
-		if(*mode == 'b')
-			++mode;
 	}
 	else
 	{
 		errno = EINVAL;
 		return -1;
 	}
+	if(*mode == 'b')
+		++mode;
 	if(*mode != '\0')
 	{
 		errno = EINVAL;
@@ -954,6 +950,7 @@ static void _format_lutoa(char * dest, unsigned long n, size_t base)
 
 /* vsnprintf */
 static int _sprint(void * dest, size_t size, const char * buf);
+
 int vsnprintf(char * str, size_t size, char const * format, va_list arg)
 {
 	int ret;
@@ -963,8 +960,10 @@ int vsnprintf(char * str, size_t size, char const * format, va_list arg)
 	if((ret = _vprintf(_sprint, &p, size, format, arg)) < 0)
 		return ret;
 	i = ret;
-	if(i < size) /* FIXME should always terminate the string */
+	if(i < size)
 		str[ret] = '\0';
+	else if(size > 0)
+		str[size - 1] = '\0';
 	return ret;
 }
 
