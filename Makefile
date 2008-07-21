@@ -191,6 +191,27 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/project.conf \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/dirent.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/errno.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/limits.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/signal.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/termios.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/unistd.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/utmpx.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/project.conf \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/resource.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/select.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/times.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/types.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/fcntl.h \
