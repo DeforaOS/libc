@@ -50,6 +50,8 @@
 #  include "kernel/netbsd/amd64/syscalls.S"
 # elif defined(__i386__)
 #  include "kernel/netbsd/i386/syscalls.S"
+# elif defined(__sparc64__)
+#  include "kernel/netbsd/sparc64/syscalls.S"
 # elif defined(__sparc__)
 #  include "kernel/netbsd/sparc/syscalls.S"
 # else
