@@ -22,7 +22,7 @@ _syscall:
 	nop
 	set	errno, %g1
 	st	%o0, [%g1]
-	set	-1, %o0
+	set	0xffffffff, %o0
 .errnoret:
 	retl
 	nop
