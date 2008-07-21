@@ -157,5 +157,6 @@ uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
 	$(RM) $(DESTDIR)$(LIBDIR)/libc.a
 	$(RM) $(DESTDIR)$(LIBDIR)/libc.so
+	$(RM) $(DESTDIR)$(LIBDIR)/start.o
 
 .PHONY: all subdirs clean distclean install uninstall
