@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -17,6 +17,7 @@
 
 
 _syscall:
+	mov	%rcx, %r10
 	syscall
 	jnc	.errnoret
 .errno:
@@ -50,12 +51,14 @@ _brk:
 	ret
 #undef SYS_brk
 
+
 /* _exit */
 .global _exit
 .type _exit,@function
 _exit:
 	mov	$SYS_exit, %rax
 	jmp	_syscall
+
 
 /* execve */
 .global execve
