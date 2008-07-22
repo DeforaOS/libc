@@ -40,11 +40,13 @@
 # define EISDIR		21
 # define EINVAL		22
 # define ENOTTY		25
+# define ENOSPC		28
 # define EROFS		30
 # define EPIPE		32
 # define ERANGE		34
 # define EAGAIN		35
 # define ENOBUFS	55
+# define ELOOP		62
 # define ENOSYS		78
 
 #endif /* !LIBC_KERNEL_NETBSD_ERRNO_H */

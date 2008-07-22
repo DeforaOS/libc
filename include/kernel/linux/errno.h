@@ -41,10 +41,12 @@
 # define EISDIR		21
 # define EINVAL		22
 # define ENOTTY		25
+# define ENOSPC		28
 # define EROFS		30
 # define EPIPE		32
 # define ERANGE		34
 # define ENOSYS		38
+# define ELOOP		40
 # define ENOBUFS	105
 
 #endif /* !LIBC_KERNEL_LINUX_ERRNO_H */
