@@ -23,6 +23,6 @@
 
 
 /* variables */
-extern unsigned int errno;
+extern int errno;
 
 #endif /* !LIBC_ERRNO_H */
