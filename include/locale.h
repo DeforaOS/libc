@@ -50,6 +50,7 @@ struct lconv
 	char p_sign_posn;
 	char * thousands_sep;
 };
+# endif
 
 
 /* constants */
