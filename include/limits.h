@@ -40,15 +40,50 @@
 # endif
 
 /* numerical */
-/* FIXME architecture dependent */
+# ifndef CHAR_BIT
+#  define CHAR_BIT 8
+# endif
+# ifndef CHAR_MAX
+#  define CHAR_MAX SCHAR_MAX
+# endif
+# ifndef CHAR_MIN
+#  define CHAR_MIN SCHAR_MIN
+# endif
 # ifndef INT_MAX
 #  define INT_MAX 0x7fffffff
 # endif
 # ifndef LONG_MAX
-#  define LONG_MAX 0x7fffffff
+#  ifdef _LP64 /* FIXME probably sometimes wrong */
+#   define LONG_MAX 0x7fffffffffffffff
+#  else
+#   define LONG_MAX 0x7fffffff
+#  endif
 # endif
 # ifndef LONG_MIN
-#  define LONG_MIN (-0x7fffffff-1)
+#  ifdef _LP64 /* FIXME probably sometimes wrong */
+#   define LONG_MIN 0x8000000000000000
+#  else
+#   define LONG_MIN -0x80000000
+#  endif
+# endif
+# ifndef SCHAR_MAX
+#  define SCHAR_MAX 127
+# endif
+# ifndef SCHAR_MIN
+#  define SCHAR_MIN -128
+# endif
+# ifndef UCHAR_MAX
+#  define UCHAR_MAX 255
+# endif
+# ifndef UINT_MAX
+#  define UINT_MAX 0xffffffff
+# endif
+# ifndef ULONG_MAX
+#  ifdef _LP64 /* FIXME probably sometimes wrong */
+#   define ULONG_MAX 0xffffffffffffffff
+#  else
+#   define ULONG_MAX 0xffffffff
+#  endif
 # endif
 
 #endif /* !LIBC_LIMITS_H */
