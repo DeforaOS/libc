@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -20,7 +20,9 @@
 # define LIBC_COMPAT_SYS_MOUNT_H
 
 
-# if defined(__NetBSD__)
+# if defined(__linux__)
+#  include "kernel/linux/sys/mount.h"
+# elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/mount.h"
 # else
 #  warning Unsupported platform
