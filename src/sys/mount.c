@@ -22,25 +22,14 @@
 
 /* mount */
 #ifndef SYS_mount
-# if defined(SYS__mount) && defined(__Linux__)
-extern int _mount(char const * source, char const * target, char const * type,
-		unsigned long mountflags, const void * data);
-
-int mount(char const * type, char const * dir, int flags, const void * data,
-		size_t data_len)
-{
-	return _mount(, dir, type, flags, data);
-}
-# else
-#  warning Unsupported platform: mount() is missing
-#  include "errno.h"
+# warning Unsupported platform: mount() is missing
+# include "errno.h"
 int mount(char const * type, char const * dir, int flags, const void * data,
 		size_t data_len)
 {
 	errno = ENOSYS;
 	return -1;
 }
-# endif
 #endif
 
 
