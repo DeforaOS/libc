@@ -18,6 +18,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
 	$(INSTALL) -m 0644 mman.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/mman.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
+	$(INSTALL) -m 0644 mount.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/mount.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
 	$(INSTALL) -m 0644 resource.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/resource.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
 	$(INSTALL) -m 0644 select.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/select.h
@@ -35,6 +37,7 @@ install: all
 uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/ioctl.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/mman.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/mount.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/resource.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/select.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/stat.h
