@@ -26,6 +26,8 @@
 # define SYS_accept		5
 # define SYS_recv		9
 # define SYS_send		10
+# define SYS_sendto		11
+# define SYS_recvfrom		12
 # define SYS_socketcall		102
 
 #endif /* !KERNEL_SOCKET_LINUX_COMMON_H */
