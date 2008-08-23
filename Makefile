@@ -121,6 +121,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/common.h \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/arm/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/arm/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/arm/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/i386/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/i386/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/i386/project.conf \
