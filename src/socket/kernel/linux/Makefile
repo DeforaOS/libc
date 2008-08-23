@@ -1,4 +1,4 @@
-SUBDIRS	= i386
+SUBDIRS	= arm i386
 
 
 all: subdirs
