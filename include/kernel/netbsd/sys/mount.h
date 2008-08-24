@@ -32,6 +32,7 @@
 # define MT_MSDOS	"msdos"
 # define MT_NFS		"nfs"
 # define MT_NTFS	"ntfs"
+# define MT_PROCFS	"procfs"
 # define MT_SMBFS	"smbfs"
 # define MT_TMPFS	"tmpfs"
 # define MT_UFS		MT_FFS
