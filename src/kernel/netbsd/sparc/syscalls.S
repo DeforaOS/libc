@@ -46,6 +46,7 @@ _brk:
 	mov	SYS_brk, %g1
 #undef SYS_brk
 
+
 /* _exit */
 .global _exit
 .type _exit,@function
