@@ -25,7 +25,9 @@
 
 /* Linux */
 #if defined(__linux__)
-# if defined(__i386__)
+# if defined(__arm__)
+#  include "kernel/linux/arm/syscalls.S"
+# elif defined(__i386__)
 #  include "kernel/linux/i386/syscalls.S"
 # else
 #  warning Unsupported Linux architecture
