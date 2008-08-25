@@ -30,17 +30,22 @@
 #   define Elf_Ehdr Elf32_Ehdr
 #   define Elf_Shdr Elf32_Shdr
 #   define Elf_Phdr Elf32_Phdr
+#   define Elf_Sym  Elf32_Sym
 #   define Elf_Word Elf32_Word
 #  elif ELFSIZE == 64
 #   define ELFCLASS ELFCLASS64
 #   define Elf_Ehdr Elf64_Ehdr
 #   define Elf_Shdr Elf64_Shdr
 #   define Elf_Phdr Elf64_Phdr
+#   define Elf_Sym  Elf64_Sym
 #   define Elf_Word Elf64_Word
 #  endif /* ELFSIZE == 64 */
 # endif /* ELFSIZE */
 
-/* Elf32*/
+/* common */
+typedef uint8_t Elf_Byte;
+
+/* Elf32 */
 typedef uint32_t Elf32_Addr;
 typedef uint16_t Elf32_Half;
 typedef uint32_t Elf32_Off;
@@ -142,6 +147,13 @@ typedef struct _Elf64_Ehdr
 } Elf64_Ehdr;
 
 /* Elf_Shdr */
+/* type */
+# define SHT_NULL	0
+# define SHT_PROGBIGS	1
+# define SHT_SYMTAB	2
+# define SHT_STRTAB	3
+# define SHT_DYNSYM	11
+
 typedef struct _Elf32_Shdr
 {
 	Elf32_Word sh_name;
@@ -209,5 +221,27 @@ typedef struct _Elf64_Phdr
 	Elf64_Xword p_memsz;
 	Elf64_Xword p_align;
 } Elf64_Phdr;
+
+
+/* Elf_Sym */
+typedef struct _Elf32_Sym
+{
+	Elf32_Word st_name;
+	Elf32_Word st_value;
+	Elf32_Word st_size;
+	Elf_Byte st_info;
+	Elf_Byte st_other;
+	Elf32_Half st_shndx;
+} Elf32_Sym;
+
+typedef struct _Elf64_Sym
+{
+	Elf64_Half st_name;
+	Elf_Byte st_info;
+	Elf_Byte st_other;
+	Elf64_Quarter st_shndx;
+	Elf64_Addr st_value;
+	Elf64_Xword st_size;
+} Elf64_Sym;
 
 #endif /* !LIBC_ELF_H */
