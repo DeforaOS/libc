@@ -29,7 +29,9 @@
 
 /* Linux */
 #if defined(__linux__)
-# if defined(__i386__)
+# if defined(__arm__)
+#  include "kernel/linux/arm/start.S"
+# elif defined(__i386__)
 #  include "kernel/linux/i386/start.S"
 # elif defined(__sparc__)
 #  include "kernel/linux/sparc/start.S"

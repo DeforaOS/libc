@@ -26,7 +26,9 @@
 /* Linux */
 #if defined(__linux__)
 # include "kernel/linux/common.h"
-# if defined(__i386__)
+# if defined(__arm__)
+#  include "kernel/linux/arm/syscalls.S"
+# elif defined(__i386__)
 #  include "kernel/linux/i386/syscalls.S"
 # elif defined(__sparc__)
 #  include "kernel/linux/sparc/syscalls.S"
