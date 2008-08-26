@@ -60,6 +60,7 @@ typedef enum _DLError
 {
 	DE_E_NO_ERROR = 0,
 	/* from errno */
+	DE_E_INVAL,
 	DE_E_ISDIR,
 	DE_E_NOENT,
 	DE_E_NOMEM,
@@ -285,6 +286,9 @@ static int _dl_error_set_errno(int ret)
 {
 	switch(errno)
 	{
+		case EINVAL:
+			_dl_errno = DE_E_INVAL;
+			break;
 		case EISDIR:
 			_dl_errno = DE_E_ISDIR;
 			break;
