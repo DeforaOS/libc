@@ -58,6 +58,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/common.h \
 		$(PACKAGE)-$(VERSION)/src/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/project.conf \
+		$(PACKAGE)-$(VERSION)/src/dl/dlfcn.c \
+		$(PACKAGE)-$(VERSION)/src/dl/Makefile \
+		$(PACKAGE)-$(VERSION)/src/dl/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/project.conf \
