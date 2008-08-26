@@ -36,18 +36,6 @@
 #include <elf.h>
 #include "dlfcn.h"
 
-#if 0
-void * memmem(char * block, size_t blen, char * pattern, size_t plen)
-{
-	char * p;
-
-	for(p = block; p + plen < block + blen; p++)
-		if(memcmp(p, pattern, plen) == 0)
-			return p;
-	return NULL;
-}
-#endif
-
 
 /* private */
 /* types */
