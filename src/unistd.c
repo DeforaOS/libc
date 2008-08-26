@@ -642,10 +642,18 @@ unsigned int sleep(unsigned int seconds)
 
 
 /* sysconf */
-#ifdef __NetBSD__
-# include "kernel/netbsd/sys/sysctl.h"
 long sysconf(int name)
 {
+#if defined(__Linux__)
+	switch(name)
+	{
+		case _SC_CLK_TCK:
+			return 100;
+		case _SC_PAGESIZE:
+			return 4096;
+	}
+#elif defined(__NetBSD__)
+# include "kernel/netbsd/sys/sysctl.h"
 	int mib[2];
 	size_t len;
 	struct clockinfo ci;
@@ -666,8 +674,6 @@ long sysconf(int name)
 				? name : -1;
 	}
 #else
-long sysconf(int name)
-{
 # warning Unsupported platform: sysconf() is missing
 #endif
 	errno = ENOSYS;
