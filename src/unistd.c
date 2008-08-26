@@ -658,6 +658,12 @@ long sysconf(int name)
 			len = sizeof(struct clockinfo);
 			return sysctl(mib, 2, &ci, &len, NULL, 0) != -1
 				? ci.hz : -1;
+		case _SC_PAGESIZE:
+			mib[0] = CTL_HW;
+			mib[1] = HW_PAGESIZE;
+			len = sizeof(name);
+			return sysctl(mib, 2, &name, &len, NULL, 0) != -1
+				? name : -1;
 	}
 #else
 long sysconf(int name)

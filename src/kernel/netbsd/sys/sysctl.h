@@ -52,6 +52,7 @@ struct clockinfo
 # define KERN_CLOCKRATE	12
 
 # define HW_MACHINE	1
+# define HW_PAGESIZE	7
 
 
 /* functions */
