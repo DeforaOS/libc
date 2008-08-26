@@ -339,6 +339,7 @@ int gethostname(char * buf, size_t size)
 		return -1;
 	return 0;
 #else
+# warning Unsupported platform: gethostname() is missing
 	errno = ENOSYS;
 	return -1;
 #endif
@@ -644,7 +645,7 @@ unsigned int sleep(unsigned int seconds)
 /* sysconf */
 long sysconf(int name)
 {
-#if defined(__Linux__)
+#if defined(__linux__)
 	switch(name)
 	{
 		case _SC_CLK_TCK:
