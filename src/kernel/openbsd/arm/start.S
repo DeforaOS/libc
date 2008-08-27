@@ -41,18 +41,3 @@ _start:
 exit:
 	/* crash */
 	mov	%pc, %lr
-
-
-/* other essential functions */
-/* FIXME actually implement all of them */
-/* udiv */
-.global __udivsi3
-.type __udivsi3,#function
-__udivsi3:
-
-/* umod */
-.global __umodsi3
-.type __umodsi3,#function
-__umodsi3:
-	/* FIXME implement */
-	mov	%pc, %lr
