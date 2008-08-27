@@ -27,7 +27,6 @@ _syscall:
 	str	%r0, [%r1]
 	mov	%r0, #-1
 .errnoret:
-	/* mvn	%r0, #0xf0000000 */
 	mov	%pc, %lr
 
 
