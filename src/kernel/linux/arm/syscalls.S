@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -19,10 +19,15 @@
 _syscall:
 	svc	0x00000000
 	mov	%r7, %ip
-	cmn	r0, =0x1000
-	bxcc	%lr
+	cmp	%r0, #0
+	bge	.errnoret
+	mov	%r1, #0
+	sub	%r0, %r1, %r0
+	ldr	%r1, =errno
+	str	%r0, [%r1]
+	mov	%r0, #-1
 .errnoret:
-	mvn	%r0, =0xf000
+	/* mvn	%r0, #0xf0000000 */
 	mov	%pc, %lr
 
 
@@ -31,7 +36,7 @@ _syscall:
 .global name; \
 name:; \
 	mov	%ip, %r7; \
-	mov	%r7, =SYS_ ## name; \
+	ldr	%r7, =SYS_ ## name; \
 	b	_syscall;
 
 
@@ -39,12 +44,14 @@ name:; \
 /* _brk */
 .global _brk
 _brk:
-	ldr	%ip, =SYS_brk
+	mov	%ip, %r7
+	ldr	%r7, =SYS_brk
 	b	_syscall
 #undef SYS_brk
 
 /* _exit */
 .global _exit
 _exit:
-	ldr	%ip, =SYS_exit
+	mov	%ip, %r7
+	ldr	%r7, =SYS_exit
 	b	_syscall
