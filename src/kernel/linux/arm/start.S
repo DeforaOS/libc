@@ -30,7 +30,8 @@ _start:
 	add	r2, r0, $1		/* arge */
 	add	r2, r2, r2
 	add	r2, r2, r2
-	/* FIXME implement environ */
+	add	r2, r1, r2
+	/* FIXME implement errno */
 
 	/* main */
 	bl	main

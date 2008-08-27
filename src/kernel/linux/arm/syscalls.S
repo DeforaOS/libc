@@ -17,13 +17,12 @@
 
 
 _syscall:
-	swi
-	/* FIXME implement
-	bcc	.errnoret
-	set	errno, %g1
-	st	%o0, [%g1]
-	set	-1, %o0
-.errnoret: */
+	svc	0x00000000
+	mov	%r7, %ip
+	cmn	r0, =0x1000
+	bxcc	%lr
+.errnoret:
+	mvn	%r0, =0xf000
 	mov	%pc, %lr
 
 
@@ -31,7 +30,8 @@ _syscall:
 #define SYSCALL(name) \
 .global name; \
 name:; \
-	ldr	%ip, =SYS_ ## name; \
+	mov	%ip, %r7; \
+	mov	%r7, =SYS_ ## name; \
 	b	_syscall;
 
 
