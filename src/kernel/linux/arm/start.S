@@ -17,21 +17,23 @@
 
 
 .weak exit				/* apparently necessary */
+.extern environ
 
 
 _start:
 .type _start,#function
 	/* terminate stack */
-	mov	fp, $0
+	mov	%fp, $0
 
 	/* argc, argv, arge */
-	ldr	r0, [sp]		/* argc */
-	add	r1, sp, $4		/* argv */
-	add	r2, r0, $1		/* arge */
-	add	r2, r2, r2
-	add	r2, r2, r2
-	add	r2, r1, r2
-	/* FIXME implement errno */
+	ldr	%r0, [%sp]		/* argc */
+	add	%r1, %sp, $4		/* argv */
+	add	%r2, %r0, $1		/* arge */
+	add	%r2, %r2, %r2
+	add	%r2, %r2, %r2
+	add	%r2, %r1, %r2
+	ldr	%r3, =environ
+	str	%r2, [%r3]
 
 	/* main */
 	bl	main
