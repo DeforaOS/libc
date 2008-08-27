@@ -39,5 +39,6 @@ typedef long long off_t;
 # endif
 
 # define _SC_CLK_TCK	2
+# define _SC_PAGESIZE	3
 
 #endif /* !LIBC_KERNEL_LINUX_UNISTD_H */
