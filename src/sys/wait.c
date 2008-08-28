@@ -33,6 +33,7 @@ pid_t wait(int * status)
 #if !defined(SYS_waitpid) && defined(SYS_wait4)
 # include "stdlib.h"
 pid_t wait4(pid_t pid, int * status, int options, void * rusage);
+
 pid_t waitpid(pid_t pid, int * status, int options)
 {
 	return wait4(pid, status, options, NULL);
