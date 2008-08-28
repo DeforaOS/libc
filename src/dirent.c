@@ -87,10 +87,14 @@ DIR * opendir(char const * name)
 #if defined(SYS_getdents) || defined(SYS_getdirentries)
 int getdents(int fd, char * buf, size_t nbuf);
 int getdirentries(int fd, char * buf, size_t nbuf, char * basep);
+# ifdef SYS_getdentries
+#  define getdents(fd, buf, size) getdirentries(fd, buf, size, NULL)
+# endif
 
 struct dirent * readdir(DIR * dir)
 {
 	static struct dirent de;
+	ssize_t slen;
 	size_t len;
 	const size_t off = sizeof(de) - sizeof(de.d_name);
 
@@ -98,18 +102,15 @@ struct dirent * readdir(DIR * dir)
 	{
 		if(dir->len == 0)
 		{
-#ifdef SYS_getdents
-			if((len = getdents(dir->fd, dir->buf, sizeof(dir->buf)))
-#else /* SYS_getdirentries */
-			if((len = getdirentries(dir->fd, dir->buf, sizeof(dir->buf), NULL))
-#endif
-					== (size_t)-1) /* XXX cast */
+			if((slen = getdents(dir->fd, dir->buf, sizeof(
+								dir->buf))) < 0)
 				return NULL;
+			len = slen;
 			dir->len = len;
 		}
 		memcpy(&de, dir->buf, off);
 		len = de.d_reclen;
-		if(len > sizeof(de) || len > dir->len)
+		if(len > sizeof(de) || len > dir->len || len <= off)
 		{
 			dir->len = 0;
 			return NULL;
@@ -124,4 +125,9 @@ struct dirent * readdir(DIR * dir)
 }
 #elif !defined(SYS_readdir)
 # warning Unsupported platform: readdir() is missing
+struct dirent * readdir(DIR * dir)
+{
+	errno = ENOSYS;
+	return NULL;
+}
 #endif
