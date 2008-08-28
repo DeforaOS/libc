@@ -33,11 +33,19 @@ typedef long long off_t;
 # pragma pack(1)
 struct dirent
 {
+# ifdef __arm__
+	unsigned long d_ino;
+	unsigned long d_off;
+	unsigned char d_reclen;
+	unsigned char d_type;
+	char d_name[256]; /* NAME_MAX + 1 */
+# else
 	ino_t d_ino;
 	off_t _padding;
 	unsigned short d_reclen;
 	unsigned char d_type;
 	char d_name[256]; /* NAME_MAX + 1 */
+# endif
 };
 # pragma pack()
 
