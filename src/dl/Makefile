@@ -18,7 +18,7 @@ INSTALL	= install
 all: $(TARGETS)
 
 libdl_OBJS = dlfcn.o
-libdl_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+libdl_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS) -fPIC
 
 libdl.a: $(libdl_OBJS)
 	$(AR) libdl.a $(libdl_OBJS)
