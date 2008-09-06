@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -77,6 +77,7 @@ int fputc(int c, FILE * file);
 int fputs(char const * str, FILE * file);
 size_t fread(void * ptr, size_t size, size_t nb, FILE * file);
 FILE * freopen(char const * path, char const * mode, FILE * file);
+int fscanf(FILE * fp, char const * format, ...);
 int fseek(FILE * file, long offset, int whence);
 size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file);
 int getc(FILE * file);

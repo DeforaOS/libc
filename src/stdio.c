@@ -397,6 +397,15 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 }
 
 
+/* fscanf */
+int fscanf(FILE * fp, char const * format, ...)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return EOF;
+}
+
+
 /* fseek */
 int fseek(FILE * file, long offset, int whence)
 {
