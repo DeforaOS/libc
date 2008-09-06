@@ -43,6 +43,7 @@ struct clockinfo
 
 /* sysctl name */
 # define CTL_KERN	1
+# define CTL_VM		2
 # define CTL_HW		6
 
 # define KERN_OSTYPE	1
@@ -50,6 +51,8 @@ struct clockinfo
 # define KERN_VERSION	4
 # define KERN_HOSTNAME	10
 # define KERN_CLOCKRATE	12
+
+# define VM_LOADAVG	2
 
 # define HW_MACHINE	1
 # define HW_PAGESIZE	7

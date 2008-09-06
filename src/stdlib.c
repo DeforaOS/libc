@@ -239,8 +239,45 @@ char * getenv(char const * name)
 /* getloadavg */
 int getloadavg(double loadavg[], int nelem)
 {
+#if defined(__NetBSD__)
+# include "kernel/netbsd/sys/sysctl.h"
+	int mib[2] = { CTL_VM, VM_LOADAVG };
+	size_t len;
+	struct loadavg
+	{
+		uint32_t lo_avg[3];
+		long lo_scale;
+	} lo;
+	int i;
+
+	len = sizeof(lo);
+	if(sysctl(mib, 2, &lo, &len, NULL, 0) != sizeof(lo))
+		return -1;
+	for(i = 0; i < nelem && i < 3; i++)
+		loadavg[i] = lo.lo_avg[i];
+	return i;
+#elif defined(__linux__)
+	FILE * fp;
+	double lo[3];
+	int i;
+
+	if((fp = fopen("/proc/loadavg", "r")) == NULL)
+		return -1;
+	if(fscanf(fp, "%f %f %f %d/%d %d", &lo[0], &lo[1], &lo[2], &i, &i, &i)
+			!= 6)
+	{
+		fclose(fp);
+		return -1;
+	}
+	fclose(fp);
+	for(i = 0; i < nelem && i < 3; i++)
+		loadavg[i] = lo[i];
+	return i;
+#else
+# warning Unsupported platform: getloadavg() is missing
 	errno = ENOSYS;
 	return -1;
+#endif
 }
 
 
