@@ -37,7 +37,12 @@ distclean: clean
 	$(RM) $(TARGETS)
 
 install: all
+	$(MKDIR) $(DESTDIR)$(LIBDIR)
+	$(INSTALL) -m 0644 libdl.a $(DESTDIR)$(LIBDIR)/libdl.a
+	$(INSTALL) -m 0755 libdl.so $(DESTDIR)$(LIBDIR)/libdl.so
 
 uninstall:
+	$(RM) $(DESTDIR)$(LIBDIR)/libdl.a
+	$(RM) $(DESTDIR)$(LIBDIR)/libdl.so
 
 .PHONY: all clean distclean install uninstall
