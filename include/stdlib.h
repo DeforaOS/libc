@@ -38,6 +38,7 @@ void * calloc(size_t nmemb, size_t size);
 void exit(int status);
 void free(void * ptr);
 char * getenv(char const * name);
+int getloadavg(double loadavg[], int nelem);
 void * malloc(size_t size);
 char * mktemp(char * template);
 int mkstemp(char * template);

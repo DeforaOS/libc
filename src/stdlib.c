@@ -236,6 +236,14 @@ char * getenv(char const * name)
 }
 
 
+/* getloadavg */
+int getloadavg(double loadavg[], int nelem)
+{
+	errno = ENOSYS;
+	return -1;
+}
+
+
 /* malloc */
 void * malloc(size_t size)
 {
