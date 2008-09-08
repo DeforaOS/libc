@@ -25,9 +25,11 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/dirent.c \
 		$(PACKAGE)-$(VERSION)/src/errno.c \
 		$(PACKAGE)-$(VERSION)/src/fcntl.c \
+		$(PACKAGE)-$(VERSION)/src/float.c \
 		$(PACKAGE)-$(VERSION)/src/fnmatch.c \
 		$(PACKAGE)-$(VERSION)/src/grp.c \
 		$(PACKAGE)-$(VERSION)/src/libgen.c \
+		$(PACKAGE)-$(VERSION)/src/math.c \
 		$(PACKAGE)-$(VERSION)/src/poll.c \
 		$(PACKAGE)-$(VERSION)/src/pwd.c \
 		$(PACKAGE)-$(VERSION)/src/signal.c \
@@ -145,12 +147,14 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/errno.h \
 		$(PACKAGE)-$(VERSION)/include/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/float.h \
 		$(PACKAGE)-$(VERSION)/include/fnmatch.h \
 		$(PACKAGE)-$(VERSION)/include/glob.h \
 		$(PACKAGE)-$(VERSION)/include/grp.h \
 		$(PACKAGE)-$(VERSION)/include/iconv.h \
 		$(PACKAGE)-$(VERSION)/include/inttypes.h \
 		$(PACKAGE)-$(VERSION)/include/libgen.h \
+		$(PACKAGE)-$(VERSION)/include/math.h \
 		$(PACKAGE)-$(VERSION)/include/limits.h \
 		$(PACKAGE)-$(VERSION)/include/locale.h \
 		$(PACKAGE)-$(VERSION)/include/poll.h \
