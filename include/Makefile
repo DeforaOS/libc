@@ -33,6 +33,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 fcntl.h $(DESTDIR)$(INCLUDEDIR)/fcntl.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 float.h $(DESTDIR)$(INCLUDEDIR)/float.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 fnmatch.h $(DESTDIR)$(INCLUDEDIR)/fnmatch.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 glob.h $(DESTDIR)$(INCLUDEDIR)/glob.h
@@ -44,6 +46,8 @@ install: all
 	$(INSTALL) -m 0644 inttypes.h $(DESTDIR)$(INCLUDEDIR)/inttypes.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 libgen.h $(DESTDIR)$(INCLUDEDIR)/libgen.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 math.h $(DESTDIR)$(INCLUDEDIR)/math.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/limits.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
@@ -93,12 +97,14 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/dirent.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/errno.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/fcntl.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/float.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/fnmatch.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/glob.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/grp.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/iconv.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/inttypes.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/libgen.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/math.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/limits.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/locale.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/poll.h
