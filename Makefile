@@ -205,6 +205,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/project.conf \
+		$(PACKAGE)-$(VERSION)/include/dl/dlfcn.h \
+		$(PACKAGE)-$(VERSION)/include/dl/Makefile \
+		$(PACKAGE)-$(VERSION)/include/dl/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/fcntl.h \

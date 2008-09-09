@@ -1,4 +1,4 @@
-SUBDIRS	= compat kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris net socket sys
+SUBDIRS	= compat dl kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris net socket sys
 PREFIX	= /usr/local
 DESTDIR	= 
 RM	= rm -f
