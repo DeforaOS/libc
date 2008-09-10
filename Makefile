@@ -57,7 +57,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/utmpx.c \
 		$(PACKAGE)-$(VERSION)/src/start.S \
 		$(PACKAGE)-$(VERSION)/src/Makefile \
-		$(PACKAGE)-$(VERSION)/src/common.h \
 		$(PACKAGE)-$(VERSION)/src/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/project.conf \
 		$(PACKAGE)-$(VERSION)/src/dl/dlfcn.c \
@@ -365,7 +364,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/COPYING \
-		$(PACKAGE)-$(VERSION)/config.h \
 		$(PACKAGE)-$(VERSION)/project.conf
 	$(RM) $(PACKAGE)-$(VERSION)
 
