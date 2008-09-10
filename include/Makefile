@@ -57,6 +57,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 pwd.h $(DESTDIR)$(INCLUDEDIR)/pwd.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 search.h $(DESTDIR)$(INCLUDEDIR)/search.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/signal.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 stdarg.h $(DESTDIR)$(INCLUDEDIR)/stdarg.h
@@ -111,6 +113,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/locale.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/pwd.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/search.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/signal.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/stdarg.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/stdbool.h
