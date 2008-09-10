@@ -664,7 +664,7 @@ long sysconf(int name)
 		case _SC_CLK_TCK:
 			mib[0] = CTL_KERN;
 			mib[1] = KERN_CLOCKRATE;
-			len = sizeof(struct clockinfo);
+			len = sizeof(ci);
 			return sysctl(mib, 2, &ci, &len, NULL, 0) != -1
 				? ci.hz : -1;
 		case _SC_PAGESIZE:
