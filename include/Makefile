@@ -61,6 +61,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 stdarg.h $(DESTDIR)$(INCLUDEDIR)/stdarg.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 stdbool.h $(DESTDIR)$(INCLUDEDIR)/stdbool.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 stddef.h $(DESTDIR)$(INCLUDEDIR)/stddef.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 stdint.h $(DESTDIR)$(INCLUDEDIR)/stdint.h
@@ -111,6 +113,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/pwd.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/signal.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/stdarg.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/stdbool.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/stddef.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/stdint.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/stdio.h

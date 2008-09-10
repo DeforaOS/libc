@@ -164,6 +164,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/pwd.h \
 		$(PACKAGE)-$(VERSION)/include/signal.h \
 		$(PACKAGE)-$(VERSION)/include/stdarg.h \
+		$(PACKAGE)-$(VERSION)/include/stdbool.h \
 		$(PACKAGE)-$(VERSION)/include/stddef.h \
 		$(PACKAGE)-$(VERSION)/include/stdint.h \
 		$(PACKAGE)-$(VERSION)/include/stdio.h \
