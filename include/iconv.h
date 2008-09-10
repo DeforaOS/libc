@@ -19,6 +19,9 @@
 #ifndef LIBC_ICONV_H
 # define LIBC_ICONV_H
 
+
+/* types */
 /* FIXME implement */
+typedef struct _iconv_t * iconv_t;
 
 #endif /* !LIBC_ICONV_H */
