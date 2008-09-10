@@ -30,7 +30,15 @@ _start:
 	mov	%rdx, environ
 #endif
 	xor	%rbp, %rbp	/* stack	*/
+#ifdef PIC
+	call	main@GOTPCREL(%rip)
+#else
 	call	main
+#endif
 	mov	%rax, %rdi	/* exit		*/
+#ifdef PIC
+	call	exit@GOTPCREL(%rip)
+#else
 	call	exit
+#endif
 	hlt
