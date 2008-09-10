@@ -162,6 +162,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/locale.h \
 		$(PACKAGE)-$(VERSION)/include/poll.h \
 		$(PACKAGE)-$(VERSION)/include/pwd.h \
+		$(PACKAGE)-$(VERSION)/include/search.h \
 		$(PACKAGE)-$(VERSION)/include/signal.h \
 		$(PACKAGE)-$(VERSION)/include/stdarg.h \
 		$(PACKAGE)-$(VERSION)/include/stdbool.h \
