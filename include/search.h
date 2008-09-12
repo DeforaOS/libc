@@ -47,12 +47,12 @@ void * lsearch(const void * key, void * base, size_t * nelp,
 		size_t width, int (*compar)(const void *, const void *));
 void remque(void * elem);
 void * tdelete(const void * key, void ** rootp,
-		int(*compar)(const void *, const void *));
+		int (*compar)(const void *, const void *));
 void * tfind(const void * key, void * const * rootp,
-		int(*compar)(const void *, const void *));
+		int (*compar)(const void *, const void *));
 void * tsearch(const void * key, void ** rootp,
-		int(*compar)(const void *, const void *));
+		int (*compar)(const void *, const void *));
 void twalk(const void * root,
-		void (*action)(const void *, VISIT, int ));
+		void (*action)(const void *, VISIT, int));
 
 #endif /* !LIBC_SEARCH_H */
