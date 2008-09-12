@@ -34,6 +34,7 @@ char * strcpy(char * dest, char const * src);
 size_t strcspn(char const * s1, char const * s2);
 char * strdup(char const * s);
 char * strerror(int errnum);
+int strerror_r(int errnum, char * strerrbuf, size_t buflen);
 size_t strlen(char const * s);
 char * strncat(char * dest, char const * src, size_t n);
 int strncmp(char const * s1, char const * s2, size_t n);
