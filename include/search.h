@@ -20,6 +20,39 @@
 # define LIBC_SEARCH_H
 
 
-/* FIXME implement */
+/* types */
+typedef enum { FIND, ENTER } ACTION;
+typedef enum { preorder, postorder, endorder, leaf } VISIT;
+
+typedef struct _ENTRY
+{
+	char * key;
+	void * data;
+} ENTRY;
+
+# ifndef size_t
+#  define size_t size_t
+typedef unsigned long size_t;
+# endif
+
+
+/* functions */
+int hcreate(size_t nel);
+void hdestroy(void);
+ENTRY * hsearch(ENTRY item, ACTION action);
+void insque(void * elem, void * pred);
+void * lfind(const void * key, const void * base, size_t * nelp,
+		size_t width, int (*compar)(const void *, const void *));
+void * lsearch(const void * key, void * base, size_t * nelp,
+		size_t width, int (*compar)(const void *, const void *));
+void remque(void * elem);
+void * tdelete(const void * key, void ** rootp,
+		int(*compar)(const void *, const void *));
+void * tfind(const void * key, void * const * rootp,
+		int(*compar)(const void *, const void *));
+void * tsearch(const void * key, void ** rootp,
+		int(*compar)(const void *, const void *));
+void twalk(const void * root,
+		void (*action)(const void *, VISIT, int ));
 
 #endif /* !LIBC_SEARCH_H */
