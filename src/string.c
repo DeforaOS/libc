@@ -192,6 +192,16 @@ char * strdup(char const * s)
 char * strerror(int errnum)
 {
 	static char ret[256];
+
+	if(strerror_r(errnum, ret, sizeof(ret)) != 0)
+		return NULL;
+	return ret;
+}
+
+
+/* strerror_r */
+int strerror_r(int errnum, char * strerrbuf, size_t buflen)
+{
 	static const struct
 	{
 		const int errno;
@@ -230,13 +240,13 @@ char * strerror(int errnum)
 	for(i = 0; err[i].errmsg != NULL; i++)
 		if(err[i].errno == errnum)
 		{
-			strncpy(ret, err[i].errmsg, sizeof(ret) - 1);
-			ret[sizeof(ret) - 1] = '\0';
-			return ret;
+			strncpy(strerrbuf, err[i].errmsg, buflen - 1);
+			strerrbuf[buflen - 1] = '\0';
+			return 0;
 		}
-	strncpy(ret, "Unknown error", sizeof(ret) - 1);
-	ret[sizeof(ret) - 1] = '\0';
-	return ret;
+	strncpy(strerrbuf, "Unknown error", buflen - 1);
+	strerrbuf[buflen - 1] = '\0';
+	return 0;
 }
 
 
