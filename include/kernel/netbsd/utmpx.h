@@ -19,10 +19,6 @@
 #ifndef LIBC_KERNEL_NETBSD_UTMPX_H
 # define LIBC_KERNEL_NETBSD_UTMPX_H
 
-# define _UTMPX_ID_SIZE		4
-# define _UTMPX_LINE_SIZE	32
-# define _UTMPX_USER_SIZE	32
-
 
 /* types */
 # ifndef id_t
@@ -46,12 +42,17 @@ struct timeval
 };
 #endif
 
+# define _UTMPX_HOST_SIZE	256
+# define _UTMPX_ID_SIZE		4
+# define _UTMPX_LINE_SIZE	32
+# define _UTMPX_USER_SIZE	32
 struct utmpx
 {
 	char ut_user[_UTMPX_USER_SIZE];
 	char ut_id[_UTMPX_ID_SIZE];
 	char ut_line[_UTMPX_LINE_SIZE];
-	char _padding0[258];
+	char ut_host[_UTMPX_HOST_SIZE];
+	char _padding0[2];
 	unsigned short int ut_type; /* XXX uint16_t */
 	pid_t ut_pid;
 	char _padding1[4];

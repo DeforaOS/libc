@@ -19,10 +19,6 @@
 #ifndef LIBC_KERNEL_LINUX_UTMPX_H
 # define LIBC_KERNEL_LINUX_UTMPX_H
 
-# define _UTMPX_ID_SIZE		4
-# define _UTMPX_LINE_SIZE	32
-# define _UTMPX_USER_SIZE	32
-
 
 /* types */
 # ifndef id_t
@@ -46,6 +42,10 @@ struct timeval
 };
 #endif
 
+# define _UTMPX_HOST_SIZE	256
+# define _UTMPX_ID_SIZE		4
+# define _UTMPX_LINE_SIZE	32
+# define _UTMPX_USER_SIZE	32
 struct utmpx
 {
 	short int ut_type;
@@ -53,7 +53,7 @@ struct utmpx
 	char ut_line[_UTMPX_LINE_SIZE];
 	char ut_id[_UTMPX_ID_SIZE];
 	char ut_user[_UTMPX_USER_SIZE];
-	char _padding0[256];
+	char ut_host[_UTMPX_HOST_SIZE];
 	char _padding1[4]; /* FIXME struct exit_status */
 	long int _padding2;
 	struct timeval ut_tv;
