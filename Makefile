@@ -156,10 +156,12 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/grp.h \
 		$(PACKAGE)-$(VERSION)/include/iconv.h \
 		$(PACKAGE)-$(VERSION)/include/inttypes.h \
+		$(PACKAGE)-$(VERSION)/include/langinfo.h \
 		$(PACKAGE)-$(VERSION)/include/libgen.h \
-		$(PACKAGE)-$(VERSION)/include/math.h \
 		$(PACKAGE)-$(VERSION)/include/limits.h \
 		$(PACKAGE)-$(VERSION)/include/locale.h \
+		$(PACKAGE)-$(VERSION)/include/math.h \
+		$(PACKAGE)-$(VERSION)/include/nl_types.h \
 		$(PACKAGE)-$(VERSION)/include/poll.h \
 		$(PACKAGE)-$(VERSION)/include/pwd.h \
 		$(PACKAGE)-$(VERSION)/include/search.h \
