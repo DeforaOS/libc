@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -242,16 +242,15 @@ int getloadavg(double loadavg[], int nelem)
 #if defined(__NetBSD__)
 # include "kernel/netbsd/sys/sysctl.h"
 	int mib[2] = { CTL_VM, VM_LOADAVG };
-	size_t len;
 	struct loadavg
 	{
 		uint32_t lo_avg[3];
 		long lo_scale;
 	} lo;
+	size_t len = sizeof(lo);
 	int i;
 
-	len = sizeof(lo);
-	if(sysctl(mib, 2, &lo, &len, NULL, 0) != sizeof(lo))
+	if(sysctl(mib, 2, &lo, &len, NULL, 0) != 0)
 		return -1;
 	for(i = 0; i < nelem && i < 3; i++)
 		loadavg[i] = lo.lo_avg[i];
@@ -263,8 +262,8 @@ int getloadavg(double loadavg[], int nelem)
 
 	if((fp = fopen("/proc/loadavg", "r")) == NULL)
 		return -1;
-	if(fscanf(fp, "%f %f %f %d/%d %d", &lo[0], &lo[1], &lo[2], &i, &i, &i)
-			!= 6)
+	if(fscanf(fp, "%lf %lf %lf %d/%d %d", &lo[0], &lo[1], &lo[2], &i, &i,
+				&i) != 6)
 	{
 		fclose(fp);
 		return -1;
