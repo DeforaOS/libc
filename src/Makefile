@@ -23,7 +23,7 @@ all: subdirs $(TARGETS)
 subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
-libc_OBJS = ctype.o dirent.o errno.o fcntl.o float.o fnmatch.o grp.o libgen.o math.o poll.o pwd.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/mman.o sys/mount.o sys/reboot.o sys/resource.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o termios.o time.o unistd.o utime.o utmpx.o
+libc_OBJS = ctype.o dirent.o errno.o fcntl.o float.o fnmatch.o grp.o libgen.o math.o poll.o pwd.o search.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/mman.o sys/mount.o sys/reboot.o sys/resource.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o termios.o time.o unistd.o utime.o utmpx.o
 libc_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 libc_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
@@ -69,6 +69,9 @@ poll.o: poll.c
 
 pwd.o: pwd.c
 	$(CC) $(libc_CFLAGS) -c pwd.c
+
+search.o: search.c
+	$(CC) $(libc_CFLAGS) -c search.c
 
 signal.o: signal.c
 	$(CC) $(libc_CFLAGS) -c signal.c
