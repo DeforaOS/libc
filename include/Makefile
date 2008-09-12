@@ -45,13 +45,17 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 inttypes.h $(DESTDIR)$(INCLUDEDIR)/inttypes.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 libgen.h $(DESTDIR)$(INCLUDEDIR)/libgen.h
+	$(INSTALL) -m 0644 langinfo.h $(DESTDIR)$(INCLUDEDIR)/langinfo.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 math.h $(DESTDIR)$(INCLUDEDIR)/math.h
+	$(INSTALL) -m 0644 libgen.h $(DESTDIR)$(INCLUDEDIR)/libgen.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/limits.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 locale.h $(DESTDIR)$(INCLUDEDIR)/locale.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 math.h $(DESTDIR)$(INCLUDEDIR)/math.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 nl_types.h $(DESTDIR)$(INCLUDEDIR)/nl_types.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 poll.h $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
@@ -107,10 +111,12 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/grp.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/iconv.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/inttypes.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/langinfo.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/libgen.h
-	$(RM) $(DESTDIR)$(INCLUDEDIR)/math.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/limits.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/locale.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/math.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/nl_types.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/pwd.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/search.h
