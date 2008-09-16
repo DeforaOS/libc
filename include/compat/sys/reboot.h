@@ -20,7 +20,9 @@
 # define LIBC_COMPAT_SYS_REBOOT_H
 
 
-# if defined(__NetBSD__)
+# if defined(__linux__)
+#  include "kernel/linux/sys/reboot.h"
+# elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/reboot.h"
 # else
 #  warning Unsupported platform
