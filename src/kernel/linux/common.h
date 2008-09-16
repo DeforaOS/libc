@@ -64,6 +64,7 @@
 # define SYS_select		82
 # define SYS_symlink		83
 # define SYS_readlink		85
+# define SYS_reboot		88
 # define SYS_mmap		90
 # define SYS_munmap		91
 # define SYS_fchmod		94
