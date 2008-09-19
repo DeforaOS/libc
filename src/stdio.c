@@ -585,6 +585,27 @@ FILE * tmpfile(void)
 }
 
 
+/* ungetc */
+int ungetc(int c, FILE * file)
+{
+	if(c == EOF || c < 0)
+	{
+		errno = EINVAL;
+		return EOF;
+	}
+	if(file->len == sizeof(file->buf))
+	{
+		errno = ENOBUFS;
+		return EOF;
+	}
+	memmove(&file->buf[file->pos + 1], &file->buf[file->pos], file->len
+			- file->pos);
+	file->buf[file->pos] = c; /* XXX c may be silently truncated */
+	file->len++;
+	return file->buf[file->pos];
+}
+
+
 /* vfprintf */
 typedef int (*print_func)(void * dest, size_t size, const char * buf);
 static int _fprint(void * dest, size_t size, const char * buf);
