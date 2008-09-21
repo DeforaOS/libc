@@ -38,4 +38,7 @@ typedef long long off_t;
 #  define SEEK_END	2
 # endif
 
+# define _SC_CLK_TCK	3
+# define _SC_PAGESIZE	47
+
 #endif /* !LIBC_KERNEL_FREEBSD_UNISTD_H */
