@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -47,6 +47,17 @@ int sigaction(int sig, const struct sigaction * act, struct sigaction * oact)
 {
 	errno = ENOSYS;
 	return -1;
+}
+#endif
+
+
+/* sigemptyset */
+#ifndef SYS_sigemptyset
+int sigemptyset(sigset_t * set)
+{
+	/* XXX untested */
+	memset(set, 0, sizeof(*set));
+	return 0;
 }
 #endif
 
