@@ -98,3 +98,36 @@ mount:
 	mov	%edx, 0x04(%esp)
 	jmp	_syscall
 #undef SYS_mount
+
+
+/* setjmp */
+.global setjmp
+.type setjmp,@function
+setjmp:
+	/* XXX from dietlibc */
+	mov	0x00(%esp), %ecx
+	lea	0x04(%esp), %edx
+	mov	(%edx), %eax
+	pushl	$0x00
+	push	%eax
+	call	_sigsetjmp_do
+	add	$0x08, %esp
+	ret
+
+
+/* sigsetjmp */
+.global sigsetjmp
+.type sigsetjmp,@function
+sigsetjmp:
+	/* XXX from dietlibc */
+	mov	0x00(%esp), %ecx
+	lea	0x04(%esp), %edx
+	mov	(%edx), %eax
+_sigsetjmp_do:
+	mov	%ebx, (0x00)(%eax)
+	mov	%esi, (0x04)(%eax)
+	mov	%edi, (0x08)(%eax)
+	mov	%ebp, (0x0c)(%eax)
+	mov	%edx, (0x10)(%eax)
+	mov	%ecx, (0x14)(%eax)
+	jmp	_sigjmp_save
