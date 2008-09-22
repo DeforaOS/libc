@@ -52,7 +52,7 @@ int sigaction(int sig, const struct sigaction * act, struct sigaction * oact)
 
 
 /* sigemptyset */
-#ifndef SYS_sigemptyset
+#ifndef sigemptyset
 int sigemptyset(sigset_t * set)
 {
 	/* XXX untested */
