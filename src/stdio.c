@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -975,6 +975,13 @@ static void _format_lutoa(char * dest, unsigned long n, size_t base)
 		n -= p;
 	}
 	dest[len] = '\0';
+}
+
+
+/* vprintf */
+int vprintf(char const * format, va_list arg)
+{
+	return _vprintf(_fprint, stdout, ~0, format, arg);
 }
 
 
