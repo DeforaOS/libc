@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -23,6 +23,7 @@
 
 
 /* functions */
+void * memchr(void const * s, int c, size_t n);
 int memcmp(void const * s1, void const * s2, size_t n);
 void * memcpy(void * dest, void const * src, size_t n);
 void * memmove(void * dest, void const * src, size_t n);
