@@ -19,18 +19,29 @@
 #ifndef LIBC_SETJMP_H
 # define LIBC_SETJMP_H
 
+/* XXX hack to define sigset_t */
+# include "compat/signal.h"
+
 
 /* types */
-# if defined(__i386__)
-typedef long jmp_buf[6];
-# elif defined(__amd64__)
-typedef long jmp_buf[8];
+/* XXX from dietlibc */
+# if defined(__amd64__)
+typedef long __jmp_buf[8];
+# elif defined(__i386__)
+typedef long __jmp_buf[6];
 # else
 #  warning Unsupported platform
+typedef long __jmp_buf[1];
+# endif
+
 typedef struct _jmp_buf
 {
-} jmp_buf;
-# endif
+	/* XXX the order matters, refer to dietlibc for details */
+	__jmp_buf __jmpbuf;
+	int __mask_was_saved;
+	sigset_t __saved_mask;
+} jmp_buf[1];
+typedef jmp_buf sigjmp_buf;
 
 
 /* functions */
