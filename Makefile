@@ -28,7 +28,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/float.c \
 		$(PACKAGE)-$(VERSION)/src/fnmatch.c \
 		$(PACKAGE)-$(VERSION)/src/grp.c \
+		$(PACKAGE)-$(VERSION)/src/iconv.c \
 		$(PACKAGE)-$(VERSION)/src/libgen.c \
+		$(PACKAGE)-$(VERSION)/src/locale.c \
 		$(PACKAGE)-$(VERSION)/src/math.c \
 		$(PACKAGE)-$(VERSION)/src/poll.c \
 		$(PACKAGE)-$(VERSION)/src/pwd.c \
