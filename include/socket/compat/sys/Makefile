@@ -13,10 +13,10 @@ clean:
 distclean: clean
 
 install: all
-	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
-	$(INSTALL) -m 0644 socket.h $(DESTDIR)$(INCLUDEDIR)/sys/socket.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
+	$(INSTALL) -m 0644 socket.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/socket.h
 
 uninstall:
-	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/socket.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/sys/socket.h
 
 .PHONY: all clean distclean install uninstall
