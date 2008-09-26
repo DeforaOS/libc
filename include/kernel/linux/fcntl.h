@@ -41,20 +41,20 @@ typedef long long off_t;
 
 # define FD_CLOEXEC	1
 
-# define O_CREAT	00001
-# define O_EXCL		00002
-# define O_NOCTTY	00004
-# define O_TRUNC	01000
+# define O_RDONLY	000000
+# define O_WRONLY	000001
+# define O_RDWR		000002
+
+# define O_CREAT	000100
+# define O_EXCL		000200
+# define O_NOCTTY	000400
+# define O_TRUNC	001000
 
 # define O_APPEND	002000
 # define O_NONBLOCK	004000
 # define O_SYNC		010000
 # define O_DSYNC	O_SYNC
 # define O_RSYNC	O_SYNC
-
-# define O_RDONLY	0
-# define O_WRONLY	1
-# define O_RDWR		2
 
 # define O_ACCMODE	(O_WRONLY | O_RDWR)
 
