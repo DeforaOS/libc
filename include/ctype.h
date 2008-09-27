@@ -31,6 +31,7 @@ int isprint(int c);
 # define ispunct(c) (isprint(c) && (!(isspace(c) || isalnum(c))))
 int isspace(int c);
 int isupper(int c);
+int isxdigit(int c);
 int tolower(int c);
 # define _tolower(c) (c + 'a' - 'A')
 int toupper(int c);
