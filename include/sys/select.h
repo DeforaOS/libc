@@ -27,12 +27,14 @@
 #  define fd_set fd_set
 typedef struct _fd_set fd_set;
 # endif
-
+# ifndef itimerval
+#  define itimerval itimerval
 struct itimerval
 {
 	struct timeval it_interval;
 	struct timeval it_value;
 };
+# endif
 
 
 /* functions */
