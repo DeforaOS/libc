@@ -35,6 +35,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/poll.c \
 		$(PACKAGE)-$(VERSION)/src/pwd.c \
 		$(PACKAGE)-$(VERSION)/src/search.c \
+		$(PACKAGE)-$(VERSION)/src/setjmp.c \
 		$(PACKAGE)-$(VERSION)/src/signal.c \
 		$(PACKAGE)-$(VERSION)/src/stdlib.c \
 		$(PACKAGE)-$(VERSION)/src/stdio.c \
