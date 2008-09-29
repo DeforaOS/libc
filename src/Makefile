@@ -23,7 +23,7 @@ all: subdirs $(TARGETS)
 subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
-libc_OBJS = ctype.o dirent.o errno.o fcntl.o float.o fnmatch.o grp.o iconv.o libgen.o locale.o math.o poll.o pwd.o search.o setjmp.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/mman.o sys/mount.o sys/reboot.o sys/resource.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o termios.o time.o unistd.o utime.o utmpx.o
+libc_OBJS = ctype.o dirent.o errno.o fcntl.o float.o fnmatch.o grp.o iconv.o langinfo.o libgen.o locale.o math.o poll.o pwd.o search.o setjmp.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/mman.o sys/mount.o sys/reboot.o sys/resource.o sys/select.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o termios.o time.o unistd.o utime.o utmpx.o
 libc_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 libc_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
@@ -60,6 +60,9 @@ grp.o: grp.c
 
 iconv.o: iconv.c
 	$(CC) $(libc_CFLAGS) -c iconv.c
+
+langinfo.o: langinfo.c
+	$(CC) $(libc_CFLAGS) -c langinfo.c
 
 libgen.o: libgen.c
 	$(CC) $(libc_CFLAGS) -c libgen.c
