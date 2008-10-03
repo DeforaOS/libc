@@ -32,7 +32,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/langinfo.c \
 		$(PACKAGE)-$(VERSION)/src/libgen.c \
 		$(PACKAGE)-$(VERSION)/src/locale.c \
-		$(PACKAGE)-$(VERSION)/src/math.c \
 		$(PACKAGE)-$(VERSION)/src/poll.c \
 		$(PACKAGE)-$(VERSION)/src/pwd.c \
 		$(PACKAGE)-$(VERSION)/src/search.c \
@@ -124,6 +123,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/project.conf \
+		$(PACKAGE)-$(VERSION)/src/math/math.c \
+		$(PACKAGE)-$(VERSION)/src/math/Makefile \
+		$(PACKAGE)-$(VERSION)/src/math/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/arpa/inet.c \
 		$(PACKAGE)-$(VERSION)/src/socket/netdb.c \
 		$(PACKAGE)-$(VERSION)/src/socket/sys/socket.c \
@@ -165,7 +167,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/libgen.h \
 		$(PACKAGE)-$(VERSION)/include/limits.h \
 		$(PACKAGE)-$(VERSION)/include/locale.h \
-		$(PACKAGE)-$(VERSION)/include/math.h \
 		$(PACKAGE)-$(VERSION)/include/nl_types.h \
 		$(PACKAGE)-$(VERSION)/include/poll.h \
 		$(PACKAGE)-$(VERSION)/include/pwd.h \
@@ -318,6 +319,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/project.conf \
+		$(PACKAGE)-$(VERSION)/include/math/math.h \
+		$(PACKAGE)-$(VERSION)/include/math/Makefile \
+		$(PACKAGE)-$(VERSION)/include/math/project.conf \
 		$(PACKAGE)-$(VERSION)/include/net/if.h \
 		$(PACKAGE)-$(VERSION)/include/net/Makefile \
 		$(PACKAGE)-$(VERSION)/include/net/project.conf \
