@@ -1,4 +1,4 @@
-SUBDIRS	= compat dl kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris net socket sys
+SUBDIRS	= compat dl kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris math net socket sys
 PREFIX	= /usr/local
 DESTDIR	= 
 RM	= rm -f
@@ -52,8 +52,6 @@ install: all
 	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/limits.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 locale.h $(DESTDIR)$(INCLUDEDIR)/locale.h
-	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 math.h $(DESTDIR)$(INCLUDEDIR)/math.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 nl_types.h $(DESTDIR)$(INCLUDEDIR)/nl_types.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
@@ -117,7 +115,6 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/libgen.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/limits.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/locale.h
-	$(RM) $(DESTDIR)$(INCLUDEDIR)/math.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/nl_types.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/pwd.h
