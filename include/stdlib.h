@@ -31,6 +31,7 @@
 
 /* functions */
 void abort(void);
+int abs(int x);
 int atoi(char const * str);
 long atol(char const * str);
 long long atoll(char const * nptr);
@@ -39,6 +40,8 @@ void exit(int status);
 void free(void * ptr);
 char * getenv(char const * name);
 int getloadavg(double loadavg[], int nelem);
+long labs(long x);
+long long llabs(long long x);
 void * malloc(size_t size);
 char * mktemp(char * template);
 int mkstemp(char * template);
@@ -48,6 +51,7 @@ int setenv(char const * name, char const * value, int overwrite);
 void srand(unsigned seed);
 long strtol(char const * str, char ** endptr, int base);
 unsigned long strtoul(char const * str, char ** endptr, int base);
+int system(char const * command);
 int unsetenv(char const * name);
 
 #endif /* !LIBC_STDLIB_H */
