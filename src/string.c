@@ -302,6 +302,20 @@ char * strncpy(char * dest, char const * src, size_t n)
 }
 
 
+/* strpbrk */
+char * strpbrk(char const * s1, char const * s2)
+{
+	char const * p;
+	char const * q;
+
+	for(p = s1; *p != '\0'; p++)
+		for(q = s2; *q != '\0'; q++)
+			if(*p == *q)
+				return (char*)p;
+	return NULL;
+}
+
+
 /* strrchr */
 char * strrchr(char const * s, int c)
 {
