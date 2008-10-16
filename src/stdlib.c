@@ -58,6 +58,13 @@ void abort(void)
 }
 
 
+/* abs */
+int abs(int x)
+{
+	return (x >= 0) ? x : -x;
+}
+
+
 /* atexit */
 typedef enum _AtexitFunction { AF_EXEC, AF_PURGE, AF_REGISTER } AtexitFunction;
 typedef void (*AtexitCallback)(void);
@@ -277,6 +284,20 @@ int getloadavg(double loadavg[], int nelem)
 	errno = ENOSYS;
 	return -1;
 #endif
+}
+
+
+/* labs */
+long labs(long x)
+{
+	return (x >= 0) ? x : -x;
+}
+
+
+/* llabs */
+long long llabs(long long x)
+{
+	return (x >= 0) ? x : -x;
 }
 
 
@@ -578,6 +599,27 @@ static unsigned long _strtoul(char const * str, char ** endptr, int base,
 unsigned long strtoul(char const * str, char ** endptr, int base)
 {
 	return _strtoul(str, endptr, base, NULL);
+}
+
+
+/* system */
+int system(char const * command)
+{
+	pid_t pid;
+	pid_t p;
+
+	/* FIXME also block some signals etc */
+	if((pid = fork()) == -1)
+		return -1;
+	if(pid == 0)
+	{
+		execl("/bin/sh", "sh", "-c", command, NULL);
+		_exit(127);
+	}
+	for(;;)
+		if((p = waitpid(pid, NULL, 0)) != -1 || errno != EINTR)
+			break;
+	return (p == pid) ? 0 : -1;
 }
 
 
