@@ -30,9 +30,17 @@ typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
 typedef unsigned long long uint64_t;
 
+# ifndef intmax_t
+#  define intmax_t intmax_t
+typedef long intmax_t;
+# endif
 # ifndef intptr_t
 #  define intptr_t intptr_t
 typedef signed long intptr_t;
+# endif
+# ifndef uintmax_t
+#  define uintmax_t uintmax_t
+typedef unsigned long uintmax_t;
 # endif
 # ifndef uintptr_t
 #  define uintptr_t uintptr_t
