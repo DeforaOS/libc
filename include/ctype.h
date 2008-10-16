@@ -26,6 +26,7 @@
 int isascii(int c);
 int isblank(int c);
 int isdigit(int c);
+int isgraph(int c);
 int islower(int c);
 int isprint(int c);
 # define ispunct(c) (isprint(c) && (!(isspace(c) || isalnum(c))))
