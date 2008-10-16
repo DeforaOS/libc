@@ -39,7 +39,7 @@ struct statvfs
 };
 
 /* functions */
-int statvfs(char const * path, struct statvfs * buf);
 int fstatvfs(int fd, struct statvfs * buf);
+int statvfs(char const * path, struct statvfs * buf);
 
 #endif /* !LIBC_SYS_STATVFS_H */
