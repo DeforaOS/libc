@@ -40,6 +40,7 @@ size_t strlen(char const * s);
 char * strncat(char * dest, char const * src, size_t n);
 int strncmp(char const * s1, char const * s2, size_t n);
 char * strncpy(char * dest, char const * src, size_t n);
+char * strpbrk(char const * s1, char const * s2);
 char * strrchr(char const * s, int c);
 char * strstr(char const * s1, char const * s2);
 char * strtok(char * s1, char const * s2);
