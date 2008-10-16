@@ -21,8 +21,4 @@
 
 # include <stdint.h>
 
-
-/* types */
-typedef unsigned long uintmax_t;
-
 #endif /* !LIBC_INTTYPES_H */
