@@ -342,6 +342,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/un.h \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/Makefile \
@@ -350,6 +351,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/un.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/Makefile \
@@ -358,6 +360,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/un.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/netinet/in.h \
@@ -365,6 +368,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/netinet/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/sys/un.h \
 		$(PACKAGE)-$(VERSION)/include/socket/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/sys/ioctl.h \
