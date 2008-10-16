@@ -26,6 +26,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
 	$(INSTALL) -m 0644 select.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/select.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
+	$(INSTALL) -m 0644 shm.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/shm.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
 	$(INSTALL) -m 0644 stat.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/stat.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
 	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/time.h
@@ -43,6 +45,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/reboot.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/resource.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/select.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/shm.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/stat.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/time.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/times.h

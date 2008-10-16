@@ -26,6 +26,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 select.h $(DESTDIR)$(INCLUDEDIR)/sys/select.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
+	$(INSTALL) -m 0644 shm.h $(DESTDIR)$(INCLUDEDIR)/sys/shm.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 stat.h $(DESTDIR)$(INCLUDEDIR)/sys/stat.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 statvfs.h $(DESTDIR)$(INCLUDEDIR)/sys/statvfs.h
@@ -47,6 +49,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/reboot.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/resource.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/select.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/shm.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/stat.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/statvfs.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/time.h

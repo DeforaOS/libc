@@ -208,6 +208,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/select.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/times.h \
@@ -232,6 +233,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/select.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/times.h \
@@ -256,6 +258,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/select.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/times.h \
@@ -280,6 +283,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/select.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/times.h \
@@ -301,6 +305,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/select.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/times.h \
@@ -368,6 +373,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/sys/select.h \
+		$(PACKAGE)-$(VERSION)/include/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/sys/statvfs.h \
 		$(PACKAGE)-$(VERSION)/include/sys/time.h \
