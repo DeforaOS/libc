@@ -50,5 +50,6 @@
 # define ENOSYS		38
 # define ELOOP		40
 # define ENOBUFS	105
+# define ETIMEDOUT	110
 
 #endif /* !LIBC_KERNEL_LINUX_ERRNO_H */
