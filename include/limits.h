@@ -50,10 +50,10 @@
 #  define CHAR_MIN SCHAR_MIN
 # endif
 # ifndef SHRT_MAX
-#  define SHR_MAX 0x7fff
+#  define SHRT_MAX 0x7fff
 # endif
 # ifndef SHRT_MIN
-#  define SHR_MIN -0x7fff
+#  define SHRT_MIN -0x7fff
 # endif
 # ifndef INT_MIN
 #  define INT_MIN -0x7fffffff
