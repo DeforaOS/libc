@@ -31,6 +31,10 @@ typedef unsigned int blksize_t;
 #  define id_t id_t
 typedef unsigned int id_t;
 # endif
+# ifndef key_t
+#  define key_t key_t
+typedef long key_t;
+# endif
 # ifndef mode_t
 #  define mode_t mode_t
 typedef unsigned int mode_t;
