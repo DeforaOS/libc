@@ -55,11 +55,11 @@
 # ifndef SHRT_MIN
 #  define SHRT_MIN -0x7fff
 # endif
-# ifndef INT_MIN
-#  define INT_MIN -0x7fffffff
-# endif
 # ifndef INT_MAX
 #  define INT_MAX 0x7fffffff
+# endif
+# ifndef INT_MIN
+#  define INT_MIN -0x7fffffff
 # endif
 # ifndef LONG_MAX
 #  ifdef _LP64 /* FIXME probably sometimes wrong */
