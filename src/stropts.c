@@ -16,6 +16,7 @@
 
 
 
+#include "errno.h"
 #include "syscalls.h"
 #include "stropts.h"
 
@@ -23,4 +24,9 @@
 /* ioctl */
 #ifndef SYS_ioctl
 # warning Unsupported platform: ioctl() is missing
+int ioctl(int fildes, int request, ...)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
