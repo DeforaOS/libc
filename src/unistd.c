@@ -308,6 +308,11 @@ pid_t fork(void)
 /* getcwd */
 #ifndef SYS_getcwd
 # warning Unsupported platform: getcwd() is missing
+char * getcwd(char * buf, size_t size)
+{
+	errno = ENOSYS;
+	return NULL;
+}
 #endif
 
 
@@ -466,6 +471,14 @@ static void _getopt_reset(char * const ** oldargv, char * const * argv,
 #ifndef SYS_getuid
 # warning Unsupported platform: getuid() is missing
 #endif
+
+
+/* getwd */
+char * getwd(char * buf)
+{
+	/* XXX this is a potential security flaw */
+	return getcwd(buf, PATH_MAX);
+}
 
 
 /* isatty */
