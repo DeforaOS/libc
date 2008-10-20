@@ -14,16 +14,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 
-#ifndef LIBC_COMPAT_STROPTS_H
-# define LIBC_COMPAT_STROPTS_H
+
+#ifndef LIBC_KERNEL_NETBSD_STROPTS_H
+# define LIBC_KERNEL_NETBSD_STROPTS_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/stropts.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/stropts.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+# define I_PUSH		-1	/* XXX not implemented */
 
-#endif /* !LIBC_COMPAT_STROPTS_H */
+#endif /* !LIBC_KERNEL_NETBSD_STROPTS_H */
