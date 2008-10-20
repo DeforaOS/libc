@@ -31,6 +31,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd
 	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/signal.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd
+	$(INSTALL) -m 0644 stdio.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/stdio.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd
 	$(INSTALL) -m 0644 termios.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/termios.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd
 	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/time.h
@@ -46,6 +48,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/fcntl.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/limits.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/signal.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/stdio.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/termios.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/time.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/unistd.h

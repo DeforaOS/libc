@@ -31,6 +31,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
 	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/compat/signal.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
+	$(INSTALL) -m 0644 stdio.h $(DESTDIR)$(INCLUDEDIR)/compat/stdio.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
 	$(INSTALL) -m 0644 termios.h $(DESTDIR)$(INCLUDEDIR)/compat/termios.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
 	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/compat/time.h
@@ -46,6 +48,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/fcntl.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/limits.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/signal.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/stdio.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/termios.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/time.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/unistd.h

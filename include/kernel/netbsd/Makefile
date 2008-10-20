@@ -31,6 +31,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
 	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/signal.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
+	$(INSTALL) -m 0644 stdio.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/stdio.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
 	$(INSTALL) -m 0644 stropts.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/stropts.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
 	$(INSTALL) -m 0644 termios.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/termios.h
@@ -48,6 +50,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/fcntl.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/limits.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/signal.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/stdio.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/stropts.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/termios.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/time.h
