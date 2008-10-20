@@ -16,8 +16,8 @@
 
 
 
-#ifndef LIBC_MATH_H
-# define LIBC_MATH_H
+#ifndef LIBM_MATH_H
+# define LIBM_MATH_H
 
 
 /* functions */
@@ -26,4 +26,4 @@ int isinf(float x);
 int isnan(float x);
 double pow(double x, double y);
 
-#endif /* !LIBC_MATH_H */
+#endif /* !LIBM_MATH_H */
