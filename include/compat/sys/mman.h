@@ -27,7 +27,7 @@
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/mman.h"
 # elif defined(__OpenBSD__)
-#  include "kernel/netbsd/sys/mman.h"
+#  include "kernel/openbsd/sys/mman.h"
 # elif defined(__sun__)
 #  include "kernel/solaris/sys/mman.h"
 # else
