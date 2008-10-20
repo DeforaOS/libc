@@ -21,7 +21,9 @@
 
 
 /* functions */
+double fabs(double);
 int isinf(float x);
 int isnan(float x);
+double pow(double x, double y);
 
 #endif /* !LIBC_MATH_H */
