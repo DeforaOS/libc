@@ -482,6 +482,13 @@ int getc(FILE * file)
 }
 
 
+/* getchar */
+int getchar(void)
+{
+	return fgetc(stdin);
+}
+
+
 /* perror */
 void perror(char const * s)
 {
