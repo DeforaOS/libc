@@ -29,4 +29,8 @@ enum { CODESET };
 /* constants */
 # define CODESET	CODESET
 
+
+/* functions */
+char * nl_langinfo(nl_item item);
+
 #endif /* !LIBC_LANGINFO_H */
