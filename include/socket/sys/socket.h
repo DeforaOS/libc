@@ -77,6 +77,9 @@ ssize_t recvfrom(int fd, void * buf, size_t len, int flags,
 ssize_t send(int fd, const void * buf, size_t len, int flags);
 ssize_t sendto(int fd, const void * buf, size_t len, int flags,
 		struct sockaddr * addr, socklen_t addrlen);
+int setsockopt(int fd, int level, int optname, const void * optval,
+		socklen_t len);
+int shutdown(int fd, int how);
 int socket(int domain, int type, int protocol);
 
 #endif /* !LIBSOCKET_SYS_SOCKET_H */
