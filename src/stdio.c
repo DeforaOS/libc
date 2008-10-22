@@ -415,6 +415,15 @@ int fseek(FILE * file, long offset, int whence)
 }
 
 
+/* ftell */
+long ftell(FILE * file)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
+}
+
+
 /* fwrite */
 size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 {
@@ -539,10 +548,33 @@ int puts(char const * string)
 }
 
 
+/* remove */
+int remove(char const * path)
+{
+	if(unlink(path) == 0)
+		return 0;
+	if(errno == EISDIR && rmdir(path) == 0)
+		return 0;
+	return -1;
+}
+
+
 /* rename */
 #ifndef SYS_rename
 # warning Unsupported platform: rename() is missing
+int rename(char const * from, char const * to)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
+
+
+/* rewind */
+void rewind(FILE * file)
+{
+	/* FIXME implement */
+}
 
 
 /* snprintf */
