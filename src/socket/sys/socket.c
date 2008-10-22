@@ -46,6 +46,17 @@ int bind(int fd, const struct sockaddr * addr, socklen_t len)
 #endif
 
 
+/* connect */
+#ifndef SYS_connect
+# warning Unsupported platform: connect() is missing
+int connect(int fd, const struct sockaddr * addr, socklen_t len)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* listen */
 #ifndef SYS_listen
 # warning Unsupported platform: listen() is missing
@@ -140,6 +151,29 @@ ssize_t sendto(int fd, const void * buf, size_t len, int flags,
 	return -1;
 }
 # endif
+#endif
+
+
+/* setsockopt */
+#ifndef SYS_setsockopt
+# warning Unsupported platform: setsockopt() is missing
+int setsockopt(int fd, int level, int optname, const void * optval,
+		socklen_t len)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
+/* shutdown */
+#ifndef SYS_shutdown
+# warning Unsupported platform: shutdown() is missing
+int shutdown(int fd, int how)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
