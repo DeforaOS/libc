@@ -535,6 +535,11 @@ int nice(int inc)
 /* pipe */
 #ifndef SYS_pipe
 # warning Unsupported platform: pipe() is missing
+int pipe(int fildes[2])
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
