@@ -69,6 +69,7 @@ typedef struct _sockaddr_storage
 /* functions */
 int accept(int fd, struct sockaddr * addr, socklen_t * len);
 int bind(int fd, const struct sockaddr * addr, socklen_t len);
+int connect(int fd, const struct sockaddr * addr, socklen_t len);
 int listen(int fd, int backlog);
 ssize_t recv(int fd, void * buf, size_t len, int flags);
 ssize_t recvfrom(int fd, void * buf, size_t len, int flags,
