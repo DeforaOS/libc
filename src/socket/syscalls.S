@@ -34,6 +34,8 @@
 # include "kernel/netbsd/common.h"
 # if defined(__amd64__)
 #  include "kernel/netbsd/amd64/syscalls.S"
+# elif defined(__i386__)
+#  include "kernel/netbsd/i386/syscalls.S"
 # elif defined(__sparc__)
 #  include "kernel/netbsd/sparc/syscalls.S"
 # else
