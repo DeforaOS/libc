@@ -17,6 +17,7 @@
 
 
 #include "unistd.h"
+#include "string.h"
 #include "errno.h"
 #include "syscalls.h"
 #include "signal.h"
