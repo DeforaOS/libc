@@ -49,4 +49,8 @@ struct timeval
 # define FD_ZERO(fdset)		\
 	memset(fdset, 0, sizeof(fd_set))
 
+
+/* constants */
+# define FD_SETSIZE	256
+
 #endif /* !LIBC_KERNEL_NETBSD_SYS_SELECT_H */
