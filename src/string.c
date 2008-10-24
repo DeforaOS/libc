@@ -104,9 +104,9 @@ char * strcat(char * dest, char const * src)
 {
 	char * ret = dest;
 	
-	while(*dest++);
+	for(; *dest; dest++);
 	while(*src)
-		*dest++ = *src++;
+		*(dest++) = *(src++);
 	*dest = '\0';
 	return ret;
 }
@@ -266,9 +266,9 @@ char * strncat(char * dest, char const * src, size_t n)
 {
 	char * ret = dest;
 
-	while(*dest++);
+	for(; *dest; dest++);
 	while(n-- && *src)
-		*dest++ = *src++;
+		*(dest)++ = *(src++);
 	*dest = '\0';
 	return ret;
 }
