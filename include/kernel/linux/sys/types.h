@@ -45,9 +45,17 @@ typedef unsigned int fsfilcnt_t;
 #  define off_t off_t
 typedef long long off_t;
 # endif
+# ifndef suseconds_t
+#  define suseconds_t suseconds_t
+typedef int suseconds_t;
+# endif
 # ifndef time_t
 #  define time_t time_t
 typedef int time_t;
+# endif
+# ifndef useconds_t
+#  define useconds_t useconds_t
+typedef unsigned int useconds_t;
 # endif
 
 #endif /* !LIBC_KERNEL_LINUX_SYS_TYPES_H */
