@@ -54,4 +54,8 @@ typedef id_t uid_t;
 # define IPC_SET	1
 # define IPC_STAT	2
 
+
+/* functions */
+key_t ftok(const char *, int);
+
 #endif /* !LIBC_SYS_IPC_H */
