@@ -16,6 +16,7 @@
 
 
 
+#include "stddef.h"
 #include "errno.h"
 #include "../syscalls.h"
 #include "sys/shm.h"
