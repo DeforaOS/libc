@@ -21,9 +21,11 @@
 
 
 /* functions */
+double atan2(double y, double x);
 double fabs(double);
 int isinf(float x);
 int isnan(float x);
 double pow(double x, double y);
+double sqrt(double x);
 
 #endif /* !LIBM_MATH_H */
