@@ -749,6 +749,17 @@ int unlink(char const * filename)
 #endif
 
 
+/* usleep */
+int usleep(useconds_t useconds)
+{
+	struct timespec tv;
+
+	tv.tv_sec = 0;
+	tv.tv_nsec = useconds * 1000;
+	return nanosleep(&tv, NULL);
+}
+
+
 /* vfork */
 #ifndef SYS_vfork
 # warning Unsupported platform: vfork() is missing

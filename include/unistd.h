@@ -123,6 +123,7 @@ void sync(void);
 long sysconf(int name);
 char * ttyname(int fildes);
 int unlink(char const * filename);
+int usleep(useconds_t useconds);
 pid_t vfork(void);
 ssize_t write(int fildes, const void * buf, size_t count);
 
