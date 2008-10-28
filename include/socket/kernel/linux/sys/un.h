@@ -26,4 +26,13 @@
 typedef unsigned short int sa_family_t;
 # endif
 
+# ifndef sockaddr_un
+#  define sockaddr_un sockaddr_un
+struct sockaddr_un
+{
+	sa_family_t sun_family;
+	char sun_path[108];
+};
+# endif
+
 #endif /* !LIBSOCKET_KERNEL_LINUX_SYS_UN_H */

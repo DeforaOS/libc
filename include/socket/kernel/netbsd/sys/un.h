@@ -26,4 +26,14 @@
 typedef unsigned char sa_family_t;
 # endif
 
+# ifndef sockaddr_un
+#  define sockaddr_un sockaddr_un
+struct sockaddr_un
+{
+	unsigned char sun_len;
+	sa_family_t sun_family;
+	char sun_path[104];
+};
+# endif
+
 #endif /* !LIBSOCKET_KERNEL_NETBSD_SYS_UN_H */
