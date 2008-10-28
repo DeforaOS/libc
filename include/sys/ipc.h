@@ -50,4 +50,8 @@ typedef id_t uid_t;
 # define IPC_EXCL	02000
 # define IPC_NOWAIT	04000
 
+# define IPC_RMID	0
+# define IPC_SET	1
+# define IPC_STAT	2
+
 #endif /* !LIBC_SYS_IPC_H */
