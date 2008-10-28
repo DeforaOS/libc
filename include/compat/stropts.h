@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 
+
 #ifndef LIBC_COMPAT_STROPTS_H
 # define LIBC_COMPAT_STROPTS_H
 
