@@ -25,6 +25,10 @@
 #  define off_t off_t
 typedef long long off_t;
 # endif
+# ifndef useconds_t
+#  define useconds_t useconds_t
+typedef unsigned int useconds_t;
+# endif
 
 
 /* constants */
