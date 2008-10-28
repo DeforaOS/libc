@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -313,6 +313,23 @@ char * strpbrk(char const * s1, char const * s2)
 			if(*p == *q)
 				return (char*)p;
 	return NULL;
+}
+
+
+/* strspn */
+size_t strspn(char const * s1, char const * s2)
+	/* FIXME not tested */
+{
+	size_t i;
+	char const * p;
+
+	for(i = 0;; i++)
+	{
+		for(p = s2; *p != '\0' && s1[i] != *p; p++);
+		if(*p == '\0')
+			break;
+	}
+	return i;
 }
 
 
