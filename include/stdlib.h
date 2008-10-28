@@ -32,6 +32,7 @@
 /* functions */
 void abort(void);
 int abs(int x);
+double atof(char const * str);
 int atoi(char const * str);
 long atol(char const * str);
 long long atoll(char const * nptr);
@@ -49,6 +50,8 @@ int rand(void);
 void * realloc(void * ptr, size_t size);
 int setenv(char const * name, char const * value, int overwrite);
 void srand(unsigned seed);
+double strtod(char const * str, char ** endptr);
+float strtof(char const * str, char ** endptr);
 long strtol(char const * str, char ** endptr, int base);
 unsigned long strtoul(char const * str, char ** endptr, int base);
 int system(char const * command);
