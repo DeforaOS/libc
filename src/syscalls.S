@@ -167,6 +167,14 @@ SYSCALL(setrlimit)
 SYSCALL(select)
 #endif
 
+/* sys/shm.h */
+#ifdef SYS_shmat
+SYSCALL(shmat)
+#endif
+#ifdef SYS_shmdt
+SYSCALL(shmdt)
+#endif
+
 /* sys/stat.h */
 SYSCALL(chmod)
 SYSCALL(fchmod)
