@@ -20,6 +20,9 @@
 # define LIBC_FLOAT_H
 
 
-/* FIXME complete */
+/* constants */
+# define DBL_MAX_EXP	1024
+
+# define LDBL_MAX_EXP	1024
 
 #endif /* !LIBC_FLOAT_H */
