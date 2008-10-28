@@ -35,4 +35,14 @@ struct sockaddr
 };
 # endif
 
+
+/* constants */
+# define MSG_NOSIGNAL		0x4000
+
+# define SOL_SOCKET		1
+
+# define SHUT_RD		0
+# define SHUT_WR		1
+# define SHUT_RDWR		2
+
 #endif /* !LIBSOCKET_KERNEL_LINUX_SYS_SOCKET_H */
