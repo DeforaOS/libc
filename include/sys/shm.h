@@ -20,13 +20,10 @@
 # define LIBC_SYS_SHM_H
 
 # include "compat/sys/shm.h"
+# include "ipc.h"
 
 
 /* types */
-# ifndef key_t
-#  define key_t key_t
-typedef long key_t;
-# endif
 # ifndef pid_t
 #  define pid_t pid_t
 typedef signed int pid_t;
