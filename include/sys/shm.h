@@ -41,6 +41,10 @@ struct shmid_ds
 # endif
 
 
+/* constants */
+# define SHM_RDONLY		010000
+
+
 /* functions */
 void * shmat(int shmid, const void * shmaddr, int shmflag);
 int shmctl(int shmid, int cmd, struct shmid_ds * buf);
