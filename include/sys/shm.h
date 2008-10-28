@@ -32,12 +32,19 @@ typedef signed int pid_t;
 #  define size_t size_t
 typedef unsigned long size_t;
 # endif
+# ifndef smhid_ds
+#  define shmid_ds shmid_ds
+struct shmid_ds
+{
+	/* FIXME implement */
+};
+# endif
 
 
 /* functions */
-void * shmat(int, const void *, int);
-int shmctl(int, int, struct shmid_ds *);
-int shmdt(const void *);
-int shmget(key_t, size_t, int);
+void * shmat(int shmid, const void * shmaddr, int shmflag);
+int shmctl(int shmid, int cmd, struct shmid_ds * buf);
+int shmdt(const void * shmaddr);
+int shmget(key_t key, size_t size, int shmflag);
 
 #endif /* !LIBC_SYS_SHM_H */

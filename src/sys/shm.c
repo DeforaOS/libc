@@ -16,9 +16,52 @@
 
 
 
+#include "errno.h"
 #include "../syscalls.h"
 #include "sys/shm.h"
 
 
 /* functions */
-/* FIXME implement */
+/* shmat */
+# ifndef SYS_shmat
+# warning Unsupported platform: shmat() is missing
+void * shmat(int shmid, const void * shmaddr, int shmflag)
+{
+	/* FIXME this return value may be considered legitimate */
+	errno = ENOSYS;
+	return NULL;
+}
+#endif
+
+
+/* shmctl */
+# ifndef SYS_shmctl
+# warning Unsupported platform: shmctl() is missing
+int shmctl(int shmid, int cmd, struct shmid_ds * buf)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
+/* shmdt */
+# ifndef SYS_shmdt
+# warning Unsupported platform: shmdt() is missing
+int shmdt(const void * shmaddr)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
+/* shmget */
+# ifndef SYS_shmget
+# warning Unsupported platform: shmget() is missing
+int shmget(key_t key, size_t size, int shmflag)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
