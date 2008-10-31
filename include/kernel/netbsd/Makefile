@@ -29,6 +29,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
 	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/limits.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
+	$(INSTALL) -m 0644 poll.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/poll.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
 	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/signal.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
 	$(INSTALL) -m 0644 stdio.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/stdio.h
@@ -49,6 +51,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/errno.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/fcntl.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/limits.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/poll.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/signal.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/stdio.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/stropts.h

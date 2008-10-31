@@ -29,6 +29,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
 	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/compat/limits.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
+	$(INSTALL) -m 0644 poll.h $(DESTDIR)$(INCLUDEDIR)/compat/poll.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
 	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/compat/signal.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
 	$(INSTALL) -m 0644 stdio.h $(DESTDIR)$(INCLUDEDIR)/compat/stdio.h
@@ -49,6 +51,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/errno.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/fcntl.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/limits.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/poll.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/signal.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/stdio.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/stropts.h

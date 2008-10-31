@@ -29,6 +29,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
 	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/limits.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
+	$(INSTALL) -m 0644 poll.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/poll.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
 	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/signal.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
 	$(INSTALL) -m 0644 stdio.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/stdio.h
@@ -49,6 +51,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/errno.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/fcntl.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/limits.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/poll.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/signal.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/stdio.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/stropts.h
