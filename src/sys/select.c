@@ -16,6 +16,7 @@
 
 
 
+#include "errno.h"
 #include "../syscalls.h"
 #include "sys/select.h"
 
@@ -23,4 +24,10 @@
 /* select */
 #ifndef SYS_select
 # warning Unsupported platform: select() is missing
+int select(int fdcnt, fd_set * rfds, fd_set * wfds, fd_set * efds,
+		struct timeval * timeout)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
