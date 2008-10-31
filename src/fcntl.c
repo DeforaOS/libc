@@ -16,6 +16,7 @@
 
 
 
+#include "errno.h"
 #include "syscalls.h"
 #include "fcntl.h"
 
@@ -24,10 +25,20 @@
 /* fcntl */
 #ifndef SYS_fcntl
 # warning Unsupported platform: fcntl() is missing
+int fcntl(int fd, int cmd, ...)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* open */
 #ifndef SYS_open
 # warning Unsupported platform: open() is missing
+int open(char const * filename, int flags, ...)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
