@@ -16,29 +16,16 @@
 
 
 
-#ifndef LIBC_POLL_H
-# define LIBC_POLL_H
-
-# include "compat/poll.h"
+#ifndef LIBC_COMPAT_POLL_H
+# define LIBC_COMPAT_POLL_H
 
 
-/* types */
-# ifndef pollfd
-#  define pollfd pollfd
-struct pollfd
-{
-	int fd;
-	short int events;
-	short int revents;
-};
-# endif
-# ifndef nfds_t
-#  define nfds_t nfds_t
-typedef unsigned int nfds_t;
+# if defined(__linux__)
+#  include "kernel/linux/stdio.h"
+# elif defined(__NetBSD__)
+#  include "kernel/netbsd/stdio.h"
+# else
+#  warning Unsupported platform
 # endif
 
-
-/* functions */
-int poll(struct pollfd * fds, nfds_t nfds, int timeout);
-
-#endif /* !LIBC_POLL_H */
+#endif /* !LIBC_COMPAT_POLL_H */

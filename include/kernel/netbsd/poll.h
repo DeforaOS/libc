@@ -16,29 +16,20 @@
 
 
 
-#ifndef LIBC_POLL_H
-# define LIBC_POLL_H
-
-# include "compat/poll.h"
+#ifndef LIBC_KERNEL_NETBSD_POLL_H
+# define LIBC_KERNEL_NETBSD_POLL_H
 
 
-/* types */
-# ifndef pollfd
-#  define pollfd pollfd
-struct pollfd
-{
-	int fd;
-	short int events;
-	short int revents;
-};
-# endif
-# ifndef nfds_t
-#  define nfds_t nfds_t
-typedef unsigned int nfds_t;
-# endif
+/* constants */
+# define POLLIN		0x001
+# define POLLPRI	0x002
+# define POLLOUT	0x004
+# define POLLERR	0x008
+# define POLLHUP	0x010
+# define POLLNVAL	0x020
+# define POLLRDNORM	0x040
+# define POLLRDBAND	0x080
+# define POLLWRBAND	0x100
+# define POLLWRNORM	POLLOUT
 
-
-/* functions */
-int poll(struct pollfd * fds, nfds_t nfds, int timeout);
-
-#endif /* !LIBC_POLL_H */
+#endif /* !LIBC_KERNEL_NETBSD_POLL_H */
