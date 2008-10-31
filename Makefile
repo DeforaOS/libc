@@ -226,6 +226,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/dl/dlfcn.h \
+		$(PACKAGE)-$(VERSION)/include/dl/elf.h \
 		$(PACKAGE)-$(VERSION)/include/dl/Makefile \
 		$(PACKAGE)-$(VERSION)/include/dl/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/dirent.h \
