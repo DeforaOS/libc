@@ -7,6 +7,8 @@ CPPFLAGSF= -nostdinc -I ../../include -I ../../include/math
 CPPFLAGS=
 CFLAGSF	= -W
 CFLAGS	= -Wall -g -ansi -ffreestanding
+AS	= $(CC)
+ASFLAGS	= $(CFLAGS) -c
 AR	= ar -rc
 RANLIB	= ranlib
 LD	= $(CC) -shared
@@ -17,8 +19,9 @@ INSTALL	= install
 
 all: $(TARGETS)
 
-libm_OBJS = math.o
-libm_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS) -fPIC
+libm_OBJS = arch.o math.o
+libm_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
+libm_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 
 libm.a: $(libm_OBJS)
 	$(AR) libm.a $(libm_OBJS)
@@ -26,6 +29,9 @@ libm.a: $(libm_OBJS)
 
 libm.so: $(libm_OBJS)
 	$(LD) -o libm.so $(libm_OBJS)
+
+arch.o: arch.S amd64/math.S i386/math.S
+	$(AS) $(libm_ASFLAGS) -o arch.o arch.S
 
 math.o: math.c ../../include/math/math.h
 	$(CC) $(libm_CFLAGS) -c math.c

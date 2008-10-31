@@ -4,7 +4,7 @@ PREFIX	= /usr/local
 DESTDIR	= 
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
-CPPFLAGSF= -nostdinc -I ../../include -I ../../include/socket
+CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/socket
 CPPFLAGS=
 CFLAGSF	= -W
 CFLAGS	= -Wall -g -ansi -ffreestanding
@@ -24,7 +24,7 @@ subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
 libsocket_OBJS = arpa/inet.o netdb.o sys/socket.o syscalls.o
-libsocket_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS) -fPIC
+libsocket_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 libsocket_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
 libsocket.a: $(libsocket_OBJS)
@@ -43,7 +43,7 @@ netdb.o: netdb.c
 sys/socket.o: sys/socket.c kernel/linux/common.h kernel/netbsd/common.h syscalls.h
 	$(CC) $(libsocket_CFLAGS) -o sys/socket.o -c sys/socket.c
 
-syscalls.o: syscalls.S kernel/linux/common.h kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/common.h kernel/netbsd/sparc/syscalls.S
+syscalls.o: syscalls.S kernel/linux/common.h kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/common.h kernel/netbsd/sparc/syscalls.S
 	$(AS) $(libsocket_ASFLAGS) -o syscalls.o syscalls.S
 
 clean:

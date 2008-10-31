@@ -42,11 +42,13 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/string.c \
 		$(PACKAGE)-$(VERSION)/src/strings.c \
 		$(PACKAGE)-$(VERSION)/src/stropts.c \
+		$(PACKAGE)-$(VERSION)/src/sys/ipc.c \
 		$(PACKAGE)-$(VERSION)/src/sys/mman.c \
 		$(PACKAGE)-$(VERSION)/src/sys/mount.c \
 		$(PACKAGE)-$(VERSION)/src/sys/reboot.c \
 		$(PACKAGE)-$(VERSION)/src/sys/resource.c \
 		$(PACKAGE)-$(VERSION)/src/sys/select.c \
+		$(PACKAGE)-$(VERSION)/src/sys/shm.c \
 		$(PACKAGE)-$(VERSION)/src/sys/stat.c \
 		$(PACKAGE)-$(VERSION)/src/sys/statvfs.c \
 		$(PACKAGE)-$(VERSION)/src/sys/time.c \
@@ -123,6 +125,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/project.conf \
+		$(PACKAGE)-$(VERSION)/src/math/arch.S \
 		$(PACKAGE)-$(VERSION)/src/math/math.c \
 		$(PACKAGE)-$(VERSION)/src/math/Makefile \
 		$(PACKAGE)-$(VERSION)/src/math/project.conf \
@@ -148,6 +151,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/amd64/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/amd64/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/amd64/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/i386/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/i386/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/i386/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/project.conf \
@@ -196,6 +202,8 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/compat/limits.h \
 		$(PACKAGE)-$(VERSION)/include/compat/signal.h \
+		$(PACKAGE)-$(VERSION)/include/compat/stdio.h \
+		$(PACKAGE)-$(VERSION)/include/compat/stropts.h \
 		$(PACKAGE)-$(VERSION)/include/compat/termios.h \
 		$(PACKAGE)-$(VERSION)/include/compat/time.h \
 		$(PACKAGE)-$(VERSION)/include/compat/unistd.h \
@@ -224,6 +232,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/limits.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/signal.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/stdio.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/termios.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/unistd.h \
@@ -246,6 +255,8 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/limits.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/signal.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/stdio.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/stropts.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/termios.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/unistd.h \
@@ -271,6 +282,8 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/limits.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/signal.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/stdio.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/stropts.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/termios.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/unistd.h \
@@ -291,15 +304,16 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/project.conf \
-		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/limits.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/signal.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/stdio.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/termios.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/unistd.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/mman.h \

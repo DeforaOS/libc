@@ -3,7 +3,7 @@ PREFIX	= /usr/local
 DESTDIR	= 
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
-CPPFLAGSF= -nostdinc -I ../../include -I ../../include/dl
+CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/dl
 CPPFLAGS=
 CFLAGSF	= -W
 CFLAGS	= -Wall -g -ansi -ffreestanding
@@ -18,7 +18,7 @@ INSTALL	= install
 all: $(TARGETS)
 
 libdl_OBJS = dlfcn.o
-libdl_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS) -fPIC
+libdl_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 
 libdl.a: $(libdl_OBJS)
 	$(AR) libdl.a $(libdl_OBJS)
