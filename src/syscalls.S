@@ -101,6 +101,9 @@ SYSCALL(getdirentries)
 #endif
 
 /* fcntl.h */
+#ifdef SYS_creat
+SYSCALL(creat)
+#endif
 SYSCALL(fcntl)
 SYSCALL(open)
 
