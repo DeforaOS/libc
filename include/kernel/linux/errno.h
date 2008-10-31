@@ -49,6 +49,7 @@
 # define ERANGE		34
 # define ENOSYS		38
 # define ELOOP		40
+# define EADDRINUSE	98
 # define ENOBUFS	105
 # define ETIMEDOUT	110
 
