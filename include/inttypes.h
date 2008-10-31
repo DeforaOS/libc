@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -20,5 +20,29 @@
 # define LIBC_INTTYPES_H
 
 # include <stdint.h>
+
+
+/* types */
+# ifndef imaxdiv_t
+#  define imaxdiv_t imaxdiv_t
+typedef struct _imaxdiv_t
+{
+	int64_t quot;
+	int64_t rem;
+} imaxdiv_t;
+# endif
+# ifndef wchar_t
+#  define wchar_t wchar_t
+typedef char wchar_t;
+# endif
+
+
+/* functions */
+intmax_t imaxabs(intmax_t);
+imaxdiv_t imaxdiv(intmax_t, intmax_t);
+intmax_t strtoimax(const char *, char **, int);
+uintmax_t strtoumax(const char *, char **, int);
+intmax_t wcstoimax(const wchar_t *, wchar_t **, int);
+uintmax_t wcstoumax(const wchar_t *, wchar_t **, int);
 
 #endif /* !LIBC_INTTYPES_H */
