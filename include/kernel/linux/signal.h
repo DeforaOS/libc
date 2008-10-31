@@ -82,4 +82,7 @@ struct sigaction
 # define SIG_UNBLOCK	1
 # define SIG_SETMASK	2
 
+# define SA_RESTART	0
+# define SA_NOCLDSTOP	1
+
 #endif /* !LIBC_KERNEL_LINUX_SIGNAL_H */
