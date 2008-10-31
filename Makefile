@@ -188,6 +188,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/string.h \
 		$(PACKAGE)-$(VERSION)/include/strings.h \
 		$(PACKAGE)-$(VERSION)/include/stropts.h \
+		$(PACKAGE)-$(VERSION)/include/syslog.h \
 		$(PACKAGE)-$(VERSION)/include/termios.h \
 		$(PACKAGE)-$(VERSION)/include/time.h \
 		$(PACKAGE)-$(VERSION)/include/unistd.h \

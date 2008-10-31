@@ -83,6 +83,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 stropts.h $(DESTDIR)$(INCLUDEDIR)/stropts.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 syslog.h $(DESTDIR)$(INCLUDEDIR)/syslog.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 termios.h $(DESTDIR)$(INCLUDEDIR)/termios.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/time.h
@@ -130,6 +132,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/string.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/strings.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/stropts.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/syslog.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/termios.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/time.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/unistd.h
