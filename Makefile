@@ -201,6 +201,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/errno.h \
 		$(PACKAGE)-$(VERSION)/include/compat/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/compat/limits.h \
+		$(PACKAGE)-$(VERSION)/include/compat/poll.h \
 		$(PACKAGE)-$(VERSION)/include/compat/signal.h \
 		$(PACKAGE)-$(VERSION)/include/compat/stdio.h \
 		$(PACKAGE)-$(VERSION)/include/compat/stropts.h \
@@ -254,6 +255,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/limits.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/poll.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/signal.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/stdio.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/stropts.h \
@@ -281,6 +283,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/limits.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/poll.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/signal.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/stdio.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/stropts.h \
