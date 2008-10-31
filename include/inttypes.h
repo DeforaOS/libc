@@ -27,8 +27,8 @@
 #  define imaxdiv_t imaxdiv_t
 typedef struct _imaxdiv_t
 {
-	int64_t quot;
-	int64_t rem;
+	intmax_t quot;
+	intmax_t rem;
 } imaxdiv_t;
 # endif
 # ifndef wchar_t
