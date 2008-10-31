@@ -21,9 +21,9 @@
 
 
 # if defined(__linux__)
-#  include "kernel/linux/stdio.h"
+#  include "kernel/linux/poll.h"
 # elif defined(__NetBSD__)
-#  include "kernel/netbsd/stdio.h"
+#  include "kernel/netbsd/poll.h"
 # else
 #  warning Unsupported platform
 # endif
