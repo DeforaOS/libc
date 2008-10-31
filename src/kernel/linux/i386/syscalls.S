@@ -57,12 +57,18 @@ _brk:
 	jmp	_syscall
 #undef SYS_brk
 
+
 /* _exit */
 .global _exit
 .type _exit,@function
 _exit:
 	mov	$SYS_exit, %eax
 	jmp	_syscall
+
+
+/* _ipc */
+SYSCALL(_ipc)
+
 
 /* mmap */
 .global mmap

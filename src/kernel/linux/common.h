@@ -131,6 +131,7 @@
 #  define SYS_chown		182
 # elif defined(__i386__)
 #  define SYS_waitpid	  	7
+#  define SYS__ipc		117
 #  define SYS_sigprocmask	175
 #  define SYS_stat		195
 #  define SYS_lstat		196
@@ -146,6 +147,12 @@
 #  define SYS_setuid		213
 #  define SYS_setgid		214
 #  define SYS_getdents		220
+
+/* for <sys/shm.h> */
+#  define _IPC_SHMAT		21
+#  define _IPC_SHMDT		22
+#  define _IPC_SHMGET		23
+#  define _IPC_SHMCTL		24
 # endif
 
 #endif /* !KERNEL_LINUX_COMMON_H */
