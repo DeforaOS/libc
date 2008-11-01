@@ -23,6 +23,24 @@
 
 
 /* functions */
+/* gethostbyaddr */
+struct hostent * gethostbyaddr(const void * addr, socklen_t len, int type)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
+}
+
+
+/* gethostbyname */
+struct hostent * gethostbyname(const char * name)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
+}
+
+
 /* getservbyname */
 struct servent * getservbyname(const char * name, const char * protocol)
 {
