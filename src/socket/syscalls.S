@@ -61,6 +61,12 @@ SYSCALL(bind)
 #ifdef SYS_connect
 SYSCALL(connect)
 #endif
+#ifdef SYS_getsockname
+SYSCALL(getsockname)
+#endif
+#ifdef SYS_getsockopt
+SYSCALL(getsockopt)
+#endif
 #ifdef SYS_listen
 SYSCALL(listen)
 #endif

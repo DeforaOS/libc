@@ -70,6 +70,9 @@ typedef struct _sockaddr_storage
 int accept(int fd, struct sockaddr * addr, socklen_t * len);
 int bind(int fd, const struct sockaddr * addr, socklen_t len);
 int connect(int fd, const struct sockaddr * addr, socklen_t len);
+int getsockname(int fd, struct sockaddr * addr, socklen_t * len);
+int getsockopt(int fd, int level, int name, const void * value,
+		socklen_t * len);
 int listen(int fd, int backlog);
 ssize_t recv(int fd, void * buf, size_t len, int flags);
 ssize_t recvfrom(int fd, void * buf, size_t len, int flags,
@@ -77,7 +80,7 @@ ssize_t recvfrom(int fd, void * buf, size_t len, int flags,
 ssize_t send(int fd, const void * buf, size_t len, int flags);
 ssize_t sendto(int fd, const void * buf, size_t len, int flags,
 		struct sockaddr * addr, socklen_t addrlen);
-int setsockopt(int fd, int level, int optname, const void * optval,
+int setsockopt(int fd, int level, int name, const void * value,
 		socklen_t len);
 int shutdown(int fd, int how);
 int socket(int domain, int type, int protocol);
