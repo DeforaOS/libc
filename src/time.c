@@ -45,6 +45,15 @@ clock_t clock(void)
 /* gmtime */
 struct tm * gmtime(time_t const * t)
 {
+	static struct tm ret;
+
+	return gmtime_r(t, &ret);
+}
+
+
+/* gmtime_r */
+struct tm * gmtime_r(time_t const * t, struct tm * ret)
+{
 	/* FIXME implement */
 	errno = ENOSYS;
 	return NULL;

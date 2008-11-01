@@ -62,6 +62,7 @@ struct itimespec
 /* functions */
 clock_t clock(void);
 struct tm * gmtime(time_t const * t);
+struct tm * gmtime_r(time_t const * t, struct tm * ret);
 struct tm * localtime(time_t const * t);
 struct tm * localtime_r(time_t const * t, struct tm * ret);
 time_t mktime(struct tm * timep);
