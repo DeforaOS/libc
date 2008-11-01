@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -80,6 +80,12 @@
 # endif
 # ifndef SCHAR_MIN
 #  define SCHAR_MIN -0x7f
+# endif
+# ifndef SSIZE_MAX
+#  define SSIZE_MAX LONG_MAX
+# endif
+# ifndef SSIZE_MIN
+#  define SSIZE_MIN LONG_MIN
 # endif
 # ifndef UCHAR_MAX
 #  define UCHAR_MAX 0xff
