@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -33,4 +33,13 @@ int tcgetattr(int fildes, struct termios * tp)
 	errno = ENOSYS;
 	return -1;
 #endif
+}
+
+
+/* tcsetattr */
+int tcsetattr(int fildes, int action, const struct termios * tp)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
 }
