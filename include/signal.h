@@ -30,6 +30,10 @@ typedef unsigned int id_t;
 #  define pid_t pid_t
 typedef signed int pid_t;
 # endif
+# ifndef sig_atomic_t
+#  define sig_atomic_t sig_atomic_t
+typedef int sig_atomic_t;
+# endif
 # ifndef uid_t
 #  define uid_t uid_t
 typedef id_t uid_t;
