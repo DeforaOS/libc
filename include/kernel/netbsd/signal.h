@@ -82,6 +82,9 @@ struct sigaction
 # define SIG_UNBLOCK	2
 # define SIG_SETMASK	3
 
+# define SA_RESTART	0x2
+# define SA_NOCLDSTOP	0x8
+
 
 /* macros */
 # define sigemptyset(s) ((s)->bits[0] = 0x00000000, (s)->bits[1] = 0x00000000, \
