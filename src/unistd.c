@@ -51,6 +51,12 @@ char ** environ;
 /* alarm */
 #ifndef SYS_alarm
 # warning Unsupported platform: alarm() is missing
+unsigned int alarm(unsigned int seconds)
+{
+	/* FIXME implement another way */
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
