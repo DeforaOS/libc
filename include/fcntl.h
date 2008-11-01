@@ -37,8 +37,8 @@ typedef signed int pid_t;
 
 
 /* functions */
-int creat(const char *, mode_t);
-int fcntl(int, int, ...);
+int creat(const char * filename, mode_t mode);
+int fcntl(int fd, int cmd, ...);
 int open(char const * filename, int flags, ...);
 
 #endif /* !LIBC_FCNTL_H */
