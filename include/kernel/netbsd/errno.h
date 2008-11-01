@@ -47,6 +47,7 @@
 # define EDOM		33
 # define ERANGE		34
 # define EAGAIN		35
+# define EADDRINUSE	48
 # define ENOBUFS	55
 # define ETIMEDOUT	60
 # define ELOOP		62
