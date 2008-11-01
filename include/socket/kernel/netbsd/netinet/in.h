@@ -51,9 +51,4 @@ struct sockaddr_in
 };
 # endif
 
-
-/* constants */
-# define INADDR_ANY		0x00000000
-# define INADDR_BROADCAST	0xffffffff
-
-#endif /* !LIBSOCKET_NETINET_IN_H */
+#endif /* !LIBSOCKET_KERNEL_NETBSD_NETINET_IN_H */

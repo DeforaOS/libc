@@ -28,4 +28,9 @@
 # define INADDR_ANY		0x00000000
 # define INADDR_BROADCAST	0xffffffff
 
+# define IPPROTO_IP		0
+# define IPPROTO_ICMP		1
+# define IPPROTO_TCP		6
+# define IPPROTO_UDP		17
+
 #endif /* !LIBSOCKET_NETINET_IN_H */
