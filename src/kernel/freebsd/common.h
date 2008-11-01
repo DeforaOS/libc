@@ -92,7 +92,7 @@
 # define SYS_nanosleep		240
 # define SYS_lchown		254
 # define SYS_getcwd		326
-# define SYS_statfs		396
+# define SYS__statfs		396
 # define SYS_sigaction		416
 
 #endif /* !KERNEL_FREEBSD_COMMON_H */

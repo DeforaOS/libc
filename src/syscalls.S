@@ -192,8 +192,8 @@ SYSCALL(stat)
 SYSCALL(umask)
 
 /* sys/statvfs.h */
-#ifdef SYS_statfs
-SYSCALL(statfs)
+#ifdef SYS__statfs
+SYSCALL(_statfs)
 #endif
 #ifdef SYS_statvfs
 SYSCALL(statvfs)

@@ -46,7 +46,7 @@ struct statfs
 	fsid_t f_fsid;
 	long f_namelen;
 };
-int _statfs(char const * path, struct statfs * buf);
+extern int _statfs(char const * path, struct statfs * buf);
 int statvfs(char const * path, struct statvfs * buf)
 {
 	struct statfs fs;
