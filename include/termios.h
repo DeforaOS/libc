@@ -21,6 +21,14 @@
 # include "compat/termios.h"
 
 
+/* constants */
+# define TCSANOW		0
+# define TCSADRAIN		1
+# define TCSAFLUSH		2
+
+# define ECHO			0x8
+
+
 /* functions */
 int tcgetattr(int fildes, struct termios * tp);
 int tcsetattr(int, int, const struct termios * tp);
