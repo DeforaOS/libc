@@ -16,8 +16,8 @@
 
 
 
-#ifndef LIBC_DLFCN_H
-# define LIBC_DLFCN_H
+#ifndef LIBDL_DLFCN_H
+# define LIBDL_DLFCN_H
 
 
 /* constants */
@@ -31,4 +31,4 @@ char * dlerror(void);
 void * dlopen(char const * pathname, int mode);
 void * dlsym(void * handle, char const * name);
 
-#endif /* !LIBC_DLFCN_H */
+#endif /* !LIBDL_DLFCN_H */
