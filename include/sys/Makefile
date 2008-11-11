@@ -38,6 +38,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 types.h $(DESTDIR)$(INCLUDEDIR)/sys/types.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
+	$(INSTALL) -m 0644 uio.h $(DESTDIR)$(INCLUDEDIR)/sys/uio.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 utsname.h $(DESTDIR)$(INCLUDEDIR)/sys/utsname.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 wait.h $(DESTDIR)$(INCLUDEDIR)/sys/wait.h
@@ -55,6 +57,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/time.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/times.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/types.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/uio.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/utsname.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/wait.h
 
