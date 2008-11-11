@@ -16,6 +16,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 ioctl.h $(DESTDIR)$(INCLUDEDIR)/sys/ioctl.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
+	$(INSTALL) -m 0644 ipc.h $(DESTDIR)$(INCLUDEDIR)/sys/ipc.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 mman.h $(DESTDIR)$(INCLUDEDIR)/sys/mman.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 mount.h $(DESTDIR)$(INCLUDEDIR)/sys/mount.h
@@ -46,6 +48,7 @@ install: all
 
 uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/ioctl.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/ipc.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/mman.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/mount.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/reboot.h
