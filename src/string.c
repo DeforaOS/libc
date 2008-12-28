@@ -13,8 +13,6 @@
  * You should have received a copy of the Creative Commons Attribution-
  * NonCommercial-ShareAlike 3.0 along with libc; if not, browse to
  * http://creativecommons.org/licenses/by-nc-sa/3.0/ */
-/* TODO:
- * - implement strnlen() */
 
 
 
