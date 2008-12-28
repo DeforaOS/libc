@@ -13,6 +13,8 @@
  * You should have received a copy of the Creative Commons Attribution-
  * NonCommercial-ShareAlike 3.0 along with libc; if not, browse to
  * http://creativecommons.org/licenses/by-nc-sa/3.0/ */
+/* TODO:
+ * - implement strnlen() */
 
 
 
@@ -299,6 +301,17 @@ char * strncpy(char * dest, char const * src, size_t n)
 	ret = dest;
 	while(n-- && (*(dest++) = *(src++)));
 	return ret;
+}
+
+
+/* strnlen */
+size_t strnlen(char const * s, size_t max)
+{
+	size_t len = 0;
+
+	while(*(s++) && len < max)
+		len++;
+	return len;
 }
 
 
