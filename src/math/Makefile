@@ -22,6 +22,7 @@ all: $(TARGETS)
 libm_OBJS = arch.o math.o
 libm_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 libm_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+libm_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
 libm.a: $(libm_OBJS)
 	$(AR) libm.a $(libm_OBJS)

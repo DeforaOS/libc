@@ -391,6 +391,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/sys/ioctl.h \
+		$(PACKAGE)-$(VERSION)/include/sys/ipc.h \
 		$(PACKAGE)-$(VERSION)/include/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/sys/mount.h \
 		$(PACKAGE)-$(VERSION)/include/sys/reboot.h \
@@ -402,6 +403,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/sys/types.h \
+		$(PACKAGE)-$(VERSION)/include/sys/uio.h \
 		$(PACKAGE)-$(VERSION)/include/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/sys/wait.h \
 		$(PACKAGE)-$(VERSION)/include/sys/Makefile \

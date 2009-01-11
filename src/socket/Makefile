@@ -25,6 +25,7 @@ subdirs:
 
 libsocket_OBJS = arpa/inet.o netdb.o sys/socket.o syscalls.o
 libsocket_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+libsocket_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 libsocket_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
 libsocket.a: $(libsocket_OBJS)

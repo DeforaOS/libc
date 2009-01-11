@@ -19,6 +19,7 @@ all: $(TARGETS)
 
 libdl_OBJS = dlfcn.o
 libdl_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+libdl_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
 libdl.a: $(libdl_OBJS)
 	$(AR) libdl.a $(libdl_OBJS)
