@@ -30,6 +30,8 @@
 #  include "kernel/openbsd/sys/select.h"
 # elif defined(__sun__)
 #  include "kernel/solaris/sys/select.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/sys/select.h"
 # else
 #  warning Unsupported platform
 # endif

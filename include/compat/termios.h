@@ -28,6 +28,8 @@
 #  include "kernel/netbsd/termios.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/termios.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/termios.h"
 # else
 #  warning Unsupported platform
 # endif

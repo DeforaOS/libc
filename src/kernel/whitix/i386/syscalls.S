@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -16,24 +16,45 @@
 
 
 
-#ifndef LIBC_COMPAT_TIME_H
-# define LIBC_COMPAT_TIME_H
+_syscall:
+	mov	%ebp, %edx
+	add	$4, %edx
+	int	$0x30
+.errno:
+	cmp	$0, %eax
+	jge	.errnoret
+	neg	%eax
+	mov	%eax, errno
+	mov	$-1, %eax
+.errnoret:
+	ret
 
 
-# if defined(__linux__)
-#  include "kernel/linux/time.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/time.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/time.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/time.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/time.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/time.h"
-# else
-#  warning Unsupported platform
-# endif
+/* macros */
+#define SYSCALL(name) \
+.global name; \
+.type name,@function; \
+name:; \
+	mov	$SYS_ ## name, %eax; \
+	mov	$SYSL_ ## name, %ecx; \
+	jmp	_syscall
 
-#endif /* !LIBC_COMPAT_TIME_H */
+
+/* functions */
+/* _exit */
+.global _exit
+.type _exit,@function
+_exit:
+	mov	$SYS_exit, %eax
+	mov	$SYSL_exit, %ecx
+	jmp	_syscall
+
+
+/* _sbrk */
+.global _sbrk
+.type _sbrk,@function
+_sbrk:
+	mov	$SYS_sbrk, %eax
+	mov	$SYSL_sbrk, %ecx
+	jmp	_syscall
+#undef SYS_sbrk

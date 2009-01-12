@@ -28,6 +28,8 @@
 #  include "kernel/netbsd/signal.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/signal.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/signal.h"
 # else
 #  warning Unsupported platform
 # endif

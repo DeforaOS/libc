@@ -30,6 +30,8 @@
 #  include "kernel/openbsd/common.h"
 # elif defined(__sun__)
 #  include "kernel/solaris/common.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/common.h"
 # else
 #  warning Unsupported platform
 # endif

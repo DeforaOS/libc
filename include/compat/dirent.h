@@ -28,6 +28,8 @@
 #  include "kernel/netbsd/dirent.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/dirent.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/dirent.h"
 # else
 #  warning Unsupported platform
 # endif

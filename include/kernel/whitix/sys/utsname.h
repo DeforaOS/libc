@@ -16,24 +16,18 @@
 
 
 
-#ifndef LIBC_COMPAT_TIME_H
-# define LIBC_COMPAT_TIME_H
+#ifndef LIBC_KERNEL_WHITIX_SYS_UTSNAME_H
+# define LIBC_KERNEL_WHITIX_SYS_UTSNAME_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/time.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/time.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/time.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/time.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/time.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/time.h"
-# else
-#  warning Unsupported platform
-# endif
+/* FIXME nothing checked */
+/* struct utsname */
+# define _UTSNAME_SIZE			65
+# define _UTSNAME_SYSNAME_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_NODENAME_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_RELEASE_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_VERSION_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_MACHINE_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_PADDING_SIZE		_UTSNAME_SIZE
 
-#endif /* !LIBC_COMPAT_TIME_H */
+#endif /* !LIBC_KERNEL_WHITIX_SYS_UTSNAME_H */

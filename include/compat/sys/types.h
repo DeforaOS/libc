@@ -30,6 +30,8 @@
 #  include "kernel/openbsd/sys/types.h"
 # elif defined(__sun__)
 #  include "kernel/solaris/sys/types.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/sys/types.h"
 # else
 #  warning Unsupported platform
 # endif

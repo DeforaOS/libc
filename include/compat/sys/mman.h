@@ -30,6 +30,8 @@
 #  include "kernel/openbsd/sys/mman.h"
 # elif defined(__sun__)
 #  include "kernel/solaris/sys/mman.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/sys/mman.h"
 # else
 #  warning Unsupported platform
 # endif

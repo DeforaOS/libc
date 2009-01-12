@@ -76,6 +76,14 @@
 #  warning Unsupported Solaris architecture
 # endif
 
+/* Whitix */
+#elif defined(__Whitix__)
+# if defined(__i386__)
+#  include "kernel/whitix/i386/start.S"
+# else
+#  warning Unsupported Whitix architecture
+# endif
+
 /* Unknown */
 #else
 # warning Unsupported kernel and architecture

@@ -28,6 +28,8 @@
 #  include "kernel/netbsd/utmpx.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/utmpx.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/utmpx.h"
 # else
 #  warning Unsupported platform
 # endif

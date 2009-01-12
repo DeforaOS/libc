@@ -30,6 +30,8 @@
 #  include "kernel/openbsd/sys/time.h"
 # elif defined(__sun__)
 #  include "kernel/solaris/sys/time.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/sys/time.h"
 # else
 #  warning Unsupported platform
 # endif

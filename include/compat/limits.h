@@ -28,6 +28,8 @@
 #  include "kernel/netbsd/limits.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/limits.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/limits.h"
 # else
 #  warning Unsupported platform
 # endif

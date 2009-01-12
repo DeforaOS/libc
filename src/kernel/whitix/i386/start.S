@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -16,24 +16,24 @@
 
 
 
-#ifndef LIBC_COMPAT_TIME_H
-# define LIBC_COMPAT_TIME_H
-
-
-# if defined(__linux__)
-#  include "kernel/linux/time.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/time.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/time.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/time.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/time.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/time.h"
-# else
-#  warning Unsupported platform
-# endif
-
-#endif /* !LIBC_COMPAT_TIME_H */
+_start:
+	pop	%eax		/* argc */
+	mov	%esp, %ebx	/* argv */
+	push	%eax
+	mov	%ebx, %ecx	/* envp */
+	add	$4, %ecx
+	add	%eax, %ecx
+	add	%eax, %ecx
+	add	%eax, %ecx
+	add	%eax, %ecx
+	xor	%ebp, %ebp	/* stack */
+	push	%ebp
+	push	%esp
+	mov	%esp, %ebp
+	push	%ecx		/* main */
+	push	%ebx
+	push	%eax
+	call	main
+	push	%eax
+	call	exit
+	hlt
