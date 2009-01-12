@@ -24,6 +24,12 @@
 /* gettimeofday */
 #ifndef SYS_gettimeofday
 # warning Unsupported platform: gettimeofday() is missing
+# include "errno.h"
+int gettimeofday(struct timeval * tv, void * null)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 

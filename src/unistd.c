@@ -90,6 +90,11 @@ int brk(void * addr)
 /* chown */
 #ifndef SYS_chown
 # warning Unsupported platform: chown() is missing
+int chown(char const * filename, uid_t owner, gid_t group)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -209,6 +214,11 @@ int execv(char const * filename, char * const argv[])
 /* execve */
 #ifndef SYS_execve
 # warning Unsupported platform: execve() is missing
+int execve(char const * filename, char * const argv[], char * const envp[])
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -282,15 +292,38 @@ static void _execvp_do(char const * filename, char * const argv[])
 }
 
 
+/* exit */
+#ifndef SYS_exit
+# warning Unsupported platform: exit() is missing
+void _exit(int status)
+{
+	char ** p = NULL;
+
+	/* XXX make it crash */
+	p = *p;
+}
+#endif
+
+
 /* fchdir */
 #ifndef SYS_fchdir
 # warning Unsupported platform: fchdir() is missing
+int fchdir(int fildes)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* fchown */
 #ifndef SYS_fchown
 # warning Unsupported platform: fchown() is missing
+int fchown(int fildes, uid_t uid, gid_t gid)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -308,6 +341,11 @@ pid_t fork(void)
 /* fsync */
 #ifndef SYS_fsync
 # warning Unsupported platform: fsync() is missing
+int fsync(int fildes)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -337,6 +375,11 @@ char * getcwd(char * buf, size_t size)
 /* getgid */
 #ifndef SYS_getgid
 # warning Unsupported platform: getgid() is missing
+gid_t getgid(void)
+{
+	/* XXX not allowed to fail */
+	return 0;
+}
 #endif
 
 
@@ -464,18 +507,33 @@ static void _getopt_reset(char * const ** oldargv, char * const * argv,
 /* getpid */
 #ifndef SYS_getpid
 # warning Unsupported platform: getpid() is missing
+pid_t getpid(void)
+{
+	/* XXX not allowed to fail */
+	return 1;
+}
 #endif
 
 
 /* getppid */
 #ifndef SYS_getppid
 # warning Unsupported platform: getppid() is missing
+pid_t getppid(void)
+{
+	/* XXX not allowed to fail */
+	return 1;
+}
 #endif
 
 
 /* getuid */
 #ifndef SYS_getuid
 # warning Unsupported platform: getuid() is missing
+uid_t getuid(void)
+{
+	/* XXX not allowed to fail */
+	return 0;
+}
 #endif
 
 
@@ -499,12 +557,22 @@ int isatty(int fildes)
 /* lchown */
 #ifndef SYS_lchown
 # warning Unsupported platform: lchown() is missing
+int lchown(char const * filename, uid_t owner, gid_t group)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* link */
 #ifndef SYS_link
 # warning Unsupported platform: link() is missing
+int link(char const * from, char const * to)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -552,18 +620,33 @@ int pipe(int fildes[2])
 /* read */
 #ifndef SYS_read
 # warning Unsupported platform: read() is missing
+ssize_t read(int fildes, void * buf, size_t count)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* readlink */
 #ifndef SYS_readlink
 # warning Unsupported platform: readlink() is missing
+ssize_t readlink(char const * filename, char * buf, size_t bufsiz)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* rmdir */
 #ifndef SYS_rmdir
 # warning Unsupported platform: rmdir() is missing
+int rmdir(char const * filename)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -604,6 +687,11 @@ void * sbrk(intptr_t increment)
 }
 #else /* !SYS_sbrk && !SYS_brk */
 # warning Unsupported platform: sbrk() is missing
+void * sbrk(intptr_t increment)
+{
+	errno = ENOSYS;
+	return (void*)-1;
+}
 #endif
 
 

@@ -30,12 +30,22 @@ pid_t wait(int * status)
 
 
 /* waitpid */
-#if !defined(SYS_waitpid) && defined(SYS_wait4)
-# include "stdlib.h"
+#if !defined(SYS_waitpid)
+# if defined(SYS_wait4)
+#  include "stdlib.h"
 pid_t wait4(pid_t pid, int * status, int options, void * rusage);
 
 pid_t waitpid(pid_t pid, int * status, int options)
 {
 	return wait4(pid, status, options, NULL);
 }
+# else
+#  warning Unsupported platform: waitpid() is missing
+#  include "errno.h"
+pid_t waitpid(pid_t pid, int * status, int options)
+{
+	errno = ENOSYS;
+	return -1;
+}
+# endif
 #endif

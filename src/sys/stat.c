@@ -24,18 +24,33 @@
 /* chmod */
 #ifndef SYS_chmod
 # warning Unsupported platform: chmod() is missing
+int chmod(char const * name, mode_t mode)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* fchmod */
 #ifndef SYS_fchmod
 # warning Unsupported platform: fchmod() is missing
+int fchmod(int fildes, mode_t mode)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* fstat */
 #ifndef SYS_fstat
 # warning Unsupported platform: fstat() is missing
+int fstat(int fildes, struct stat * st)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -53,6 +68,11 @@ int lstat(char const * pathname, struct stat * st)
 /* mkdir */
 #ifndef SYS_mkdir
 # warning Unsupported platform: mkdir() is missing
+int mkdir(char const * name, mode_t mode)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 

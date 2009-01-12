@@ -93,6 +93,11 @@ time_t mktime(struct tm * timep)
 /* nanosleep */
 #ifndef SYS_nanosleep
 # warning Unsupported platform: nanosleep() is missing
+int nanosleep(struct timespec * requested, struct timespec * remaining)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
