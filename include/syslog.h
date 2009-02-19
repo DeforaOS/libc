@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@
 
 /* functions */
 void closelog(void);
-void openlog(const char *ident, int logopt, int facility);
+void openlog(const char * ident, int logopt, int facility);
 int setlogmask(int maskpri);
-void syslog(int priority, const char *message, ... /* arguments */);
+void syslog(int priority, const char * message, ...);
 
 #endif /* LIBC_SYSLOG_H */
