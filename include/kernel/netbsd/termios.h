@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -36,5 +36,13 @@ struct termios
 	cc_t c_cc[NCCS];
 	int _padding[2];
 };
+
+
+/* constants */
+# define TCSANOW		0
+# define TCSADRAIN		1
+# define TCSAFLUSH		2
+
+# define ECHO			0x8
 
 #endif /* !LIBC_KERNEL_NETBSD_TERMIOS_H */
