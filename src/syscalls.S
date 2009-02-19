@@ -54,8 +54,6 @@
 #  include "kernel/netbsd/sparc/syscalls.S"
 # else
 #  warning Unsupported NetBSD architecture
-# endif
-# ifndef SYSCALL
 #  define SYSCALL(name)
 # endif
 # include "kernel/netbsd/common.S"
