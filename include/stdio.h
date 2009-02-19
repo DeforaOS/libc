@@ -26,6 +26,10 @@
 /* size of <stdio.h> buffers */
 # define BUFSIZ 8192
 
+# define _IOFBF	0
+# define _IOLBF	1
+# define _IONBF	2
+
 /* end-of-file return value */
 # define EOF (-1)
 

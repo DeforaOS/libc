@@ -1,18 +1,17 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
-/* libc is not free software; you can redistribute it and/or modify it under
- * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
- * Unported as published by the Creative Commons organization.
+/* This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3 of the License.
  *
- * libc is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE.  See the Creative Commons Attribution-NonCommercial-
- * ShareAlike 3.0 Unported license for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the Creative Commons Attribution-
- * NonCommercial-ShareAlike 3.0 along with libc; if not, browse to
- * http://creativecommons.org/licenses/by-nc-sa/3.0/ */
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 
 
@@ -30,10 +29,6 @@
 
 
 /* types */
-typedef enum _FILEBuffering
-{
-	FB_BUFFERED, FB_UNBUFFERED, FB_LINE
-} FILEBuffering;
 typedef enum _FILEDirection { FD_READ = 0, FD_WRITE = 1 } FILEDirection;
 
 struct _FILE
@@ -45,7 +40,7 @@ struct _FILE
 	unsigned int pos;
 	char eof;
 	char error;
-	FILEBuffering fbuf;
+	int fbuf;
 	FILEDirection dir;
 };
 
@@ -53,19 +48,19 @@ struct _FILE
 /* variables */
 static FILE _stdin =
 {
-	STDIN_FILENO, O_RDONLY, { 0 }, 0, 0, 0, 0, FB_BUFFERED, FD_READ
+	STDIN_FILENO, O_RDONLY, { 0 }, 0, 0, 0, 0, _IOFBF, FD_READ
 };
 FILE * stdin = &_stdin;
 
 static FILE _stdout =
 {
-	STDOUT_FILENO, O_WRONLY, { 0 }, 0, 0, 0, 0, FB_LINE, FD_WRITE
+	STDOUT_FILENO, O_WRONLY, { 0 }, 0, 0, 0, 0, _IOLBF, FD_WRITE
 };
 FILE * stdout = &_stdout;
 
 static FILE _stderr =
 {
-	STDERR_FILENO, O_WRONLY, { 0 }, 0, 0, 0, 0, FB_UNBUFFERED, FD_WRITE
+	STDERR_FILENO, O_WRONLY, { 0 }, 0, 0, 0, 0, _IONBF, FD_WRITE
 };
 FILE * stderr = &_stderr;
 
@@ -164,7 +159,7 @@ FILE * fdopen(int fd, char const * mode)
 	file->eof = 0;
 	file->error = 0;
 	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
-	file->fbuf = isatty(file->fd) ? FB_UNBUFFERED : FB_BUFFERED;
+	file->fbuf = isatty(file->fd) ? _IONBF : _IOFBF;
 	return file;
 }
 
@@ -268,6 +263,7 @@ int fileno(FILE * file)
 
 
 /* fopen */
+/* FIXME factor code with fdopen() */
 FILE * fopen(char const * path, char const * mode)
 {
 	FILE * file;
@@ -285,7 +281,7 @@ FILE * fopen(char const * path, char const * mode)
 	file->eof = 0;
 	file->error = 0;
 	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
-	file->fbuf = isatty(file->fd) ? FB_UNBUFFERED : FB_BUFFERED;
+	file->fbuf = isatty(file->fd) ? _IONBF : _IOFBF;
 	return file;
 }
 
@@ -392,7 +388,7 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 		return NULL;
 	file->flags = flags;
 	file->dir = flags & O_WRONLY ? FD_WRITE : FD_READ;
-	file->fbuf = isatty(file->fd) ? FB_UNBUFFERED : FB_BUFFERED;
+	file->fbuf = isatty(file->fd) ? _IONBF : _IOFBF;
 	return file;
 }
 
@@ -400,9 +396,13 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 /* fscanf */
 int fscanf(FILE * fp, char const * format, ...)
 {
-	/* FIXME implement */
-	errno = ENOSYS;
-	return EOF;
+	int ret;
+	va_list arg;
+
+	va_start(arg, format);
+	ret = vfscanf(fp, format, arg);
+	va_end(arg);
+	return ret;
 }
 
 
@@ -462,9 +462,9 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 				file->len = 0;
 			}
 		}
-	if(file->fbuf == FB_BUFFERED)
+	if(file->fbuf == _IOFBF)
 		return nb;
-	if(file->fbuf == FB_LINE)
+	if(file->fbuf == _IOLBF)
 	{
 		j = file->pos;
 		for(i = j; i < file->len; i++)
@@ -498,6 +498,14 @@ int getchar(void)
 }
 
 
+/* pclose */
+int pclose(FILE * stream)
+{
+	/* FIXME should be specific? */
+	return fclose(stream);
+}
+
+
 /* perror */
 void perror(char const * s)
 {
@@ -505,6 +513,15 @@ void perror(char const * s)
 		fprintf(stderr, "%s%s", s, ": ");
 	fputs(strerror(errno), stderr);
 	fputc('\n', stderr);
+}
+
+
+/* popen */
+FILE * popen(char const * command, char const * mode)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
 }
 
 
@@ -577,6 +594,33 @@ void rewind(FILE * file)
 }
 
 
+/* scanf */
+int scanf(char const * format, ...)
+{
+	int ret;
+	va_list arg;
+
+	va_start(arg, format);
+	ret = vfscanf(stdin, format, arg);
+	va_end(arg);
+	return ret;
+}
+
+
+/* setbuf */
+void setbuf(FILE * file, char * buf)
+{
+	setvbuf(file, buf, (buf != NULL) ? _IOFBF : _IONBF, BUFSIZ);
+}
+
+
+/* setvbuf */
+void setvbuf(FILE * file, char * buf, int type, size_t size)
+{
+	/* FIXME implement */
+}
+
+
 /* snprintf */
 int snprintf(char * str, size_t size, char const * format, ...)
 {
@@ -600,6 +644,15 @@ int sprintf(char * str, char const * format, ...)
 	ret = vsprintf(str, format, arg);
 	va_end(arg);
 	return ret;
+}
+
+
+/* sscanf */
+int sscanf(char const * string, char const * format, ...)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
 }
 
 
@@ -1014,6 +1067,15 @@ static void _format_lutoa(char * dest, unsigned long n, size_t base)
 		n -= p;
 	}
 	dest[len] = '\0';
+}
+
+
+/* vfscanf */
+int vfscanf(FILE * file, char const * format, va_list arg)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
 }
 
 
