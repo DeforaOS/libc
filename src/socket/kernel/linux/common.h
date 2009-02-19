@@ -1,18 +1,17 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
-/* This file is part of DeforaOS System libc */
-/* libc is not free software; you can redistribute it and/or modify it under
- * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
- * Unported as published by the Creative Commons organization.
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* This file is part of RunningBear System libc */
+/* This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3 of the License.
  *
- * libc is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE.  See the Creative Commons Attribution-NonCommercial-
- * ShareAlike 3.0 Unported license for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the Creative Commons Attribution-
- * NonCommercial-ShareAlike 3.0 along with libc; if not, browse to
- * http://creativecommons.org/licenses/by-nc-sa/3.0/ */
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 
 
@@ -22,12 +21,18 @@
 
 # define SYS_socket		1
 # define SYS_bind		2
+# define SYS_connect		3
 # define SYS_listen		4
 # define SYS_accept		5
+# define SYS_getsockname	6
 # define SYS_recv		9
 # define SYS_send		10
 # define SYS_sendto		11
 # define SYS_recvfrom		12
+# define SYS_setsockopt		14
+# define SYS_getsockopt		15
+# define SYS_sendmsg		16
+# define SYS_recvmsg		17
 # define SYS_socketcall		102
 
 #endif /* !KERNEL_SOCKET_LINUX_COMMON_H */
