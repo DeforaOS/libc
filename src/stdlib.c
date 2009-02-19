@@ -1,18 +1,17 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
-/* libc is not free software; you can redistribute it and/or modify it under
- * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
- * Unported as published by the Creative Commons organization.
+/* This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3 of the License.
  *
- * libc is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE.  See the Creative Commons Attribution-NonCommercial-
- * ShareAlike 3.0 Unported license for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the Creative Commons Attribution-
- * NonCommercial-ShareAlike 3.0 along with libc; if not, browse to
- * http://creativecommons.org/licenses/by-nc-sa/3.0/ */
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 
 
@@ -115,6 +114,14 @@ static int _atexit_do(AtexitFunction function, void (*callback)(void))
 }
 
 
+/* atof */
+double atof(char const * str)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+
+
 /* atoi */
 int atoi(char const * str)
 {
@@ -178,13 +185,40 @@ long long atoll(char const * nptr)
 }
 
 
+/* bsearch */
+void * bsearch(const void * key, const void * base, size_t nel,
+		size_t width, int (*compar)(const void *, const void *))
+{
+	/* XXX from dietlibc */
+	size_t m;
+	int tmp;
+	void * p;
+
+	while(nel)
+	{
+		m = nel / 2;
+		p = (void *) (((const char *) base) + (m * width));
+		if((tmp = compar(key, p)) < 0)
+			nel = m;
+		else if(tmp > 0)
+		{
+			base = p + width;
+			nel -= m + 1;
+		}
+		else
+			return p;
+	}
+	return 0;
+}
+
+
 /* calloc */
 void * calloc(size_t nmemb, size_t size)
 {
 	void * ptr;
 	size_t sz = nmemb * size;
 
-	assert(nmemb + size < max(nmemb, size)); /* int overflow checks */
+	assert(nmemb + size >= max(nmemb, size)); /* int overflow checks */
 	assert(sz >= nmemb + size - 1);
 	if((ptr = malloc(sz)) == NULL)
 		return NULL;
@@ -288,6 +322,15 @@ int getloadavg(double loadavg[], int nelem)
 }
 
 
+/* grantpt */
+int grantpt(int fildes)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
+}
+
+
 /* labs */
 long labs(long x)
 {
@@ -360,6 +403,81 @@ int mkstemp(char * template)
 	if(mktemp(template) == NULL)
 		return -1;
 	return open(template, O_WRONLY | O_CREAT | O_EXCL, 0666);
+}
+
+
+/* ptsname */
+char * ptsname(int fildes)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
+}
+
+
+/* putenv */
+int putenv(char * string)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
+}
+
+
+/* qsort */
+static void _qsort_do(char * base, size_t width, size_t l, size_t r,
+		int (*compar)(const void *, const void *));
+static void _qsort_exch(char * base, size_t width, size_t a, size_t b);
+
+void qsort(void * base, size_t nel, size_t width,
+		int (*compar)(const void *, const void *))
+{
+	/* XXX from dietlibc */
+	if(nel > 1)
+		_qsort_do(base, width, 0, nel - 1, compar);
+}
+
+static void _qsort_do(char * base, size_t width, size_t l, size_t r,
+		int (*compar)(const void *, const void *))
+	/* If I put it correctly:
+	 * l is the left cursor
+	 * i is the current position "left-wise"
+	 * j is the current position "right-wise"
+	 * r is the right cursor
+	 * p is the last element */
+{
+	size_t i = l - 1;
+	size_t j = r;
+	void * p = base + r * width;
+
+	if(r <= l)
+		return;
+	for(;; _qsort_exch(base, width, i, j))
+	{
+		while(compar(base + (++i) * width, p) < 0);
+		while(compar(p, base + (--j) * width) < 0)
+			if(j == l)
+				break;
+		if(i >= j)
+			break;
+	}
+	_qsort_exch(base, width, i, r);
+	_qsort_do(base, width, l, i - 1, compar);
+	_qsort_do(base, width, i + 1, r, compar);
+}
+
+static void _qsort_exch(char * base, size_t width, size_t a, size_t b)
+{
+	char * pa = base + a * width;
+	char * pb = base + b * width;
+	char tmp;
+
+	for(; width; width--)
+	{
+		tmp = *(pa++);
+		*pa = *pb;
+		*(pb++) = tmp;
+	}
 }
 
 
@@ -507,6 +625,14 @@ void srand(unsigned int seed)
 }
 
 
+/* strtod */
+double strtod(char const * str, char ** endptr)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+
+
 /* strtol */
 static unsigned long _strtoul(char const * str, char ** endptr, int base,
 		int * neg);
@@ -621,6 +747,15 @@ int system(char const * command)
 		if((p = waitpid(pid, NULL, 0)) != -1 || errno != EINTR)
 			break;
 	return (p == pid) ? 0 : -1;
+}
+
+
+/* unlockpt */
+int unlockpt(int fildes)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
 }
 
 
