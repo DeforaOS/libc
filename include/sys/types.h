@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,5 +63,47 @@ typedef id_t gid_t;
 #  define uid_t uid_t
 typedef id_t uid_t;
 # endif
+
+/* pthread */
+typedef struct _pthread_attr_t
+{
+	/* FIXME implement */
+} pthread_attr_t;
+typedef struct pthread_barrier_t
+{
+	/* FIXME implement */
+} pthread_barrier_t;
+typedef struct _pthread_barrierattr_t
+{
+	/* FIXME implement */
+} pthread_barrierattr_t;
+typedef struct _pthread_cond_t
+{
+	/* FIXME implement */
+} pthread_cond_t;
+typedef struct _pthread_condattr_t
+{
+	/* FIXME implement */
+} pthread_condattr_t;
+typedef unsigned int pthread_key_t;
+typedef struct _pthread_mutex_t
+{
+	/* FIXME implement */
+} pthread_mutex_t;
+typedef struct _pthread_mutexattr_t
+{
+	/* FIXME implement */
+} pthread_mutexattr_t;
+typedef int pthread_once_t;
+typedef struct _pthread_rwlock_t
+{
+	/* FIXME implement */
+} pthread_rwlock_t;
+typedef struct _pthread_rwlockattr_t
+{
+	/* FIXME implement */
+} pthread_rwlockattr_t;
+typedef volatile int pthread_spinlock_t;
+typedef unsigned long pthread_t;
 
 #endif /* !LIBC_SYS_TYPES_H */
