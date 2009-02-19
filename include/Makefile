@@ -1,4 +1,4 @@
-SUBDIRS	= compat dl kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris math net socket sys
+SUBDIRS	= compat dl kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris math net pthread socket sys
 PREFIX	= /usr/local
 DESTDIR	= 
 RM	= rm -f
@@ -58,6 +58,8 @@ install: all
 	$(INSTALL) -m 0644 poll.h $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 pwd.h $(DESTDIR)$(INCLUDEDIR)/pwd.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 sched.h $(DESTDIR)$(INCLUDEDIR)/sched.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 search.h $(DESTDIR)$(INCLUDEDIR)/search.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
@@ -120,6 +122,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/nl_types.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/pwd.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/sched.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/search.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/setjmp.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/signal.h
