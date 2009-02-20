@@ -16,6 +16,7 @@
 
 
 
+#include "stddef.h"
 #include "sys/types.h"
 #include "arpa/inet.h"
 
@@ -42,6 +43,32 @@ uint16_t htons(uint16_t host16)
 	if(*_ptest == 0x12)
 		return host16;
 	return ((host16 & 0xff) << 8) | ((host16 & 0xff00) >> 8);
+}
+
+
+/* inet_addr */
+in_addr_t inet_addr(const char *cp)
+{
+	in_addr_t ret = 0;
+	unsigned long byte;
+	char const * p;
+	int i;
+
+	if(cp == NULL || cp[0] == '\0')
+		return -1;
+	for(i = 0; i < 4; i++)
+	{
+		byte = strtoul(cp, &p, cp);
+		if(*p != '.' && *p != '\0')
+			return -1;
+		if(byte > 0xff)
+			return -1;
+		ret = (ret << 8) | byte;
+		if(*p == '\0')
+			return ret;
+		cp = ++p;
+	}
+	return ret;
 }
 
 

@@ -24,6 +24,7 @@
 /* functions */
 uint32_t htonl(uint32_t host32);
 uint16_t htons(uint16_t host16);
+in_addr_t inet_addr(const char *cp);
 uint32_t ntohl(uint32_t net32);
 uint16_t ntohs(uint16_t net16);
 
