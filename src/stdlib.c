@@ -634,14 +634,15 @@ double strtod(char const * str, char ** endptr)
 
 
 /* strtol */
-static unsigned long _strtoul(char const * str, char ** endptr, int base,
+static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 		int * neg);
+
 long strtol(char const * str, char ** endptr, int base)
 {
 	unsigned long ret;
 	int neg = 0;
 
-	ret = _strtoul(str, endptr, base, &neg);
+	ret = _strtoull(str, endptr, base, &neg);
 	if(neg != 0)
 	{
 		if(ret > (unsigned)LONG_MAX+1)
@@ -659,10 +660,10 @@ long strtol(char const * str, char ** endptr, int base)
 	return ret;
 }
 
-static unsigned long _strtoul(char const * str, char ** endptr, int base,
+static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 		int * neg)
 {
-	unsigned long ret = 0;
+	unsigned long long ret = 0;
 	char const * p;
 	int r;
 
@@ -722,10 +723,42 @@ static unsigned long _strtoul(char const * str, char ** endptr, int base,
 }
 
 
+/* strtoll */
+long long strtoll(char const * str, char ** endptr, int base)
+{
+	unsigned long long ret;
+	int neg = 0;
+
+	ret = _strtoull(str, endptr, base, &neg);
+	if(neg != 0)
+	{
+		if(ret > (unsigned)LONG_MAX+1)
+		{
+			errno = ERANGE;
+			return LONG_MIN;
+		}
+		return -ret;
+	}
+	if(ret > LONG_MAX)
+	{
+		errno = ERANGE;
+		return LONG_MAX;
+	}
+	return ret;
+}
+
+
 /* strtoul */
 unsigned long strtoul(char const * str, char ** endptr, int base)
 {
-	return _strtoul(str, endptr, base, NULL);
+	return _strtoull(str, endptr, base, NULL);
+}
+
+
+/* strtoull */
+unsigned long long strtoull(char const * str, char ** endptr, int base)
+{
+	return _strtoull(str, endptr, base, NULL);
 }
 
 
