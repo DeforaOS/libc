@@ -473,17 +473,7 @@ FILE * popen(char const * command, char const * mode)
 		close(fd[0]);
 	else
 		close(fd[1]);
-	if((file = malloc(sizeof(*file))) == NULL)
-		return NULL;
-	/* FIXME get this done in _file_new() */
-	file->fd = flags & O_WRONLY ? fd[1] : fd[0];
-	file->len = 0;
-	file->pos = 0;
-	file->eof = 0;
-	file->error = 0;
-	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
-	file->fbuf = _IONBF;
-	return file;
+	return _fopen_new(flags & O_WRONLY ? fd[1] : fd[0], flags, _IONBF);
 }
 
 static void _popen_child(char const * command, int flags, int * fd)
