@@ -129,6 +129,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/math/math.c \
 		$(PACKAGE)-$(VERSION)/src/math/Makefile \
 		$(PACKAGE)-$(VERSION)/src/math/project.conf \
+		$(PACKAGE)-$(VERSION)/src/pthread/pthread.c \
+		$(PACKAGE)-$(VERSION)/src/pthread/Makefile \
+		$(PACKAGE)-$(VERSION)/src/pthread/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/arpa/inet.c \
 		$(PACKAGE)-$(VERSION)/src/socket/netdb.c \
 		$(PACKAGE)-$(VERSION)/src/socket/sys/socket.c \
@@ -176,6 +179,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/nl_types.h \
 		$(PACKAGE)-$(VERSION)/include/poll.h \
 		$(PACKAGE)-$(VERSION)/include/pwd.h \
+		$(PACKAGE)-$(VERSION)/include/sched.h \
 		$(PACKAGE)-$(VERSION)/include/search.h \
 		$(PACKAGE)-$(VERSION)/include/setjmp.h \
 		$(PACKAGE)-$(VERSION)/include/signal.h \
@@ -349,6 +353,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/net/if.h \
 		$(PACKAGE)-$(VERSION)/include/net/Makefile \
 		$(PACKAGE)-$(VERSION)/include/net/project.conf \
+		$(PACKAGE)-$(VERSION)/include/pthread/pthread.h \
+		$(PACKAGE)-$(VERSION)/include/pthread/Makefile \
+		$(PACKAGE)-$(VERSION)/include/pthread/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/netdb.h \
 		$(PACKAGE)-$(VERSION)/include/socket/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/project.conf \

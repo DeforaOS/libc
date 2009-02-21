@@ -1,4 +1,4 @@
-SUBDIRS	= dl kernel/linux kernel/freebsd kernel/netbsd kernel/openbsd kernel/solaris math socket
+SUBDIRS	= dl kernel/linux kernel/freebsd kernel/netbsd kernel/openbsd kernel/solaris math pthread socket
 TARGETS	= libc.a libc.so start.o
 PREFIX	= /usr/local
 DESTDIR	= 
@@ -7,7 +7,7 @@ CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../include
 CPPFLAGS=
 CFLAGSF	= -W
-CFLAGS	= -Wall -g -ansi -ffreestanding
+CFLAGS	= -Wall -g -ansi -ffreestanding -DPIC -fPIC
 AS	= $(CC)
 ASFLAGS	= $(CFLAGSF) $(CFLAGS) -c
 AR	= ar -rc
