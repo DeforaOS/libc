@@ -73,3 +73,18 @@ execve:
 	mov	$-1, %rax
 	ret
 #undef SYS_execve
+
+
+/* pipe */
+.global pipe
+.type pipe,@function
+pipe:
+	mov	$SYS_pipe, %rax
+	mov	%rcx, %r10
+	syscall
+	jc	.errno
+	mov	%eax, (%rdi)
+	mov	%edx, 4(%rdi)
+	mov	$0, %rax
+	ret
+#undef SYS_pipe
