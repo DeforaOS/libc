@@ -50,6 +50,8 @@ struct sigaction
 
 # define SIG_ERR	((void (*)(int)) -1)
 
+# define SIG_BLOCK	1
+
 
 /* functions */
 int sigemptyset(sigset_t * set);
