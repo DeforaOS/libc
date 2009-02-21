@@ -146,7 +146,7 @@ FILE * fdopen(int fd, char const * mode)
 {
 	FILE * file;
 
-	if((file = malloc(sizeof(FILE))) == NULL)
+	if((file = malloc(sizeof(*file))) == NULL)
 		return NULL;
 	if((file->flags = _fopen_mode(mode)) == -1)
 	{
@@ -511,17 +511,68 @@ void perror(char const * s)
 {
 	if(s != NULL && *s != '\0')
 		fprintf(stderr, "%s%s", s, ": ");
+	/* strerror() never returns NULL */
 	fputs(strerror(errno), stderr);
 	fputc('\n', stderr);
 }
 
 
 /* popen */
+static void _popen_child(char const * command, int flags, int * fd);
+
 FILE * popen(char const * command, char const * mode)
 {
-	/* FIXME implement */
-	errno = ENOSYS;
-	return NULL;
+	FILE * file;
+	int flags;
+	pid_t pid;
+	int fd[2];
+	int res;
+
+	if((flags = _fopen_mode(mode)) == -1)
+		return NULL;
+	if((res = pipe(fd)) != 0)
+		return NULL;
+	if((pid = fork()) == -1)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		return NULL;
+	}
+	if(pid == 0) /* child */
+		_popen_child(command, flags, fd);
+	if(flags & O_WRONLY)
+		close(fd[0]);
+	else
+		close(fd[1]);
+	if((file = malloc(sizeof(*file))) == NULL)
+		return NULL;
+	/* FIXME get this done in _file_new() */
+	file->fd = flags & O_WRONLY ? fd[1] : fd[0];
+	file->len = 0;
+	file->pos = 0;
+	file->eof = 0;
+	file->error = 0;
+	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
+	file->fbuf = _IONBF;
+	return file;
+}
+
+static void _popen_child(char const * command, int flags, int * fd)
+{
+	if(flags & O_WRONLY)
+	{
+		close(fd[1]);
+		if(dup2(fd[0], 0) == -1)
+			exit(127);
+	}
+	else
+	{
+		close(fd[0]);
+		if(dup2(fd[1], 1) == -1)
+			exit(127);
+	}
+	execlp("/bin/sh", "sh", "-c", command, NULL);
+	exit(127);
 }
 
 
