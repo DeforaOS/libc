@@ -28,6 +28,7 @@
 #define min(a, b) ((a) > (b) ? (b) : (a))
 
 
+/* private */
 /* types */
 typedef enum _FILEDirection { FD_READ = 0, FD_WRITE = 1 } FILEDirection;
 
@@ -65,60 +66,9 @@ static FILE _stderr =
 FILE * stderr = &_stderr;
 
 
-/* functions */
-/* private */
-/* PRE
- * POST
- * 	-1	error
- * 	else	corresponding mode */
-static int _fopen_mode(char const * mode)
-{
-	int flags;
-
-	if(*mode == 'r')
-	{
-		flags = O_RDONLY;
-		if(*++mode == 'b')
-			++mode;
-		if(*mode == '\0')
-			return flags;
-		if(*mode == '+' && ++mode)
-			flags = O_RDWR;
-	}
-	else if(*mode == 'w')
-	{
-		flags = O_WRONLY | O_CREAT;
-		if(*++mode == 'b')
-			++mode;
-		if(*mode == '\0')
-			return flags;
-		if(*mode == '+' && ++mode)
-			flags = O_RDWR | O_CREAT;
-	}
-	else if(*mode == 'a')
-	{
-		flags = O_APPEND;
-		if(*++mode == 'b')
-			++mode;
-		if(*mode == '\0')
-			return flags;
-		if(*mode == '+' && ++mode)
-			flags |= O_CREAT;
-	}
-	else
-	{
-		errno = EINVAL;
-		return -1;
-	}
-	if(*mode == 'b')
-		++mode;
-	if(*mode != '\0')
-	{
-		errno = EINVAL;
-		return -1;
-	}
-	return flags;
-}
+/* prototypes */
+static int _fopen_mode(char const * mode);
+static FILE * _fopen_new(int fd, int flags, int fbuf);
 
 
 /* public */
@@ -144,23 +94,7 @@ int fclose(FILE * file)
 /* fdopen */
 FILE * fdopen(int fd, char const * mode)
 {
-	FILE * file;
-
-	if((file = malloc(sizeof(*file))) == NULL)
-		return NULL;
-	if((file->flags = _fopen_mode(mode)) == -1)
-	{
-		free(file);
-		return NULL;
-	}
-	file->fd = fd;
-	file->len = 0;
-	file->pos = 0;
-	file->eof = 0;
-	file->error = 0;
-	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
-	file->fbuf = isatty(file->fd) ? _IONBF : _IOFBF;
-	return file;
+	return _fopen_new(fd, _fopen_mode(mode), isatty(fd) ? _IONBF : _IOFBF);
 }
 
 
@@ -263,25 +197,20 @@ int fileno(FILE * file)
 
 
 /* fopen */
-/* FIXME factor code with fdopen() */
 FILE * fopen(char const * path, char const * mode)
 {
 	FILE * file;
+	int flags;
+	int fd;
 
-	if((file = malloc(sizeof(FILE))) == NULL)
+	if((flags = _fopen_mode(mode)) == -1
+			|| (fd = open(path, file->flags, 0777)) < 0)
 		return NULL;
-	if((file->flags = _fopen_mode(mode)) == -1
-			|| (file->fd = open(path, file->flags, 0777)) < 0)
+	if((file = _fopen_new(fd, flags, isatty(fd) ? _IONBF : _IOFBF)) == NULL)
 	{
-		free(file);
+		close(fd);
 		return NULL;
 	}
-	file->len = 0;
-	file->pos = 0;
-	file->eof = 0;
-	file->error = 0;
-	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
-	file->fbuf = isatty(file->fd) ? _IONBF : _IOFBF;
 	return file;
 }
 
@@ -1177,4 +1106,82 @@ int vsprintf(char * str, char const * format, va_list arg)
 		return ret;
 	str[ret] = '\0';
 	return ret;
+}
+
+
+/* private */
+/* functions */
+/* fopen_mode */
+/* PRE
+ * POST
+ * 	-1	error
+ * 	else	corresponding mode */
+static int _fopen_mode(char const * mode)
+{
+	int flags;
+
+	if(*mode == 'r')
+	{
+		flags = O_RDONLY;
+		if(*++mode == 'b')
+			++mode;
+		if(*mode == '\0')
+			return flags;
+		if(*mode == '+' && ++mode)
+			flags = O_RDWR;
+	}
+	else if(*mode == 'w')
+	{
+		flags = O_WRONLY | O_CREAT;
+		if(*++mode == 'b')
+			++mode;
+		if(*mode == '\0')
+			return flags;
+		if(*mode == '+' && ++mode)
+			flags = O_RDWR | O_CREAT;
+	}
+	else if(*mode == 'a')
+	{
+		flags = O_APPEND;
+		if(*++mode == 'b')
+			++mode;
+		if(*mode == '\0')
+			return flags;
+		if(*mode == '+' && ++mode)
+			flags |= O_CREAT;
+	}
+	else
+	{
+		errno = EINVAL;
+		return -1;
+	}
+	if(*mode == 'b')
+		++mode;
+	if(*mode != '\0')
+	{
+		errno = EINVAL;
+		return -1;
+	}
+	return flags;
+}
+
+
+/* fopen_new */
+static FILE * _fopen_new(int fd, int flags, int fbuf)
+{
+	FILE * file;
+
+	if(flags == -1)
+		return NULL;
+	if((file = malloc(sizeof(*file))) == NULL)
+		return NULL;
+	file->flags = flags;
+	file->fd = fd;
+	file->len = 0;
+	file->pos = 0;
+	file->eof = 0;
+	file->error = 0;
+	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
+	file->fbuf = fbuf;
+	return file;
 }
