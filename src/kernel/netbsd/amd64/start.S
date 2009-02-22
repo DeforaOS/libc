@@ -30,13 +30,13 @@ _start:
 #endif
 	xor	%rbp, %rbp	/* stack	*/
 #ifdef PIC
-	call	main@GOTPCREL(%rip)
+	call	main@PLT
 #else
 	call	main
 #endif
 	mov	%rax, %rdi	/* exit		*/
 #ifdef PIC
-	call	exit@GOTPCREL(%rip)
+	call	exit@PLT
 #else
 	call	exit
 #endif
