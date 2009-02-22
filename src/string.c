@@ -200,7 +200,10 @@ char * strerror(int errnum)
 	static char ret[256];
 
 	if(strerror_r(errnum, ret, sizeof(ret)) != 0)
-		return NULL;
+	{
+		errno = EINVAL;
+		return ret;
+	}
 	return ret;
 }
 
@@ -243,16 +246,21 @@ int strerror_r(int errnum, char * strerrbuf, size_t buflen)
 	};
 	unsigned int i;
 
+	/* XXX is there a way to call snprintf() only once? */
 	for(i = 0; err[i].errmsg != NULL; i++)
 		if(err[i].errno == errnum)
 		{
 			strncpy(strerrbuf, err[i].errmsg, buflen - 1);
 			strerrbuf[buflen - 1] = '\0';
+			if(snprintf(strerrbuf, buflen, "%s", err[i].errmsg)
+					>= buflen)
+				return ERANGE;
 			return 0;
 		}
-	strncpy(strerrbuf, "Unknown error", buflen - 1);
-	strerrbuf[buflen - 1] = '\0';
-	return 0;
+	if(snprintf(strerrbuf, buflen, "%s%d", "Unknown error: ", errno)
+			>= buflen)
+		return ERANGE;
+	return EINVAL;
 }
 
 
