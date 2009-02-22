@@ -19,7 +19,9 @@
 # define LIBSOCKET_COMPAT_SYS_SOCKET_H
 
 
-# if defined(__linux__)
+# if defined(__FreeBSD__)
+#  include "kernel/freebsd/sys/socket.h"
+# elif defined(__linux__)
 #  include "kernel/linux/sys/socket.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/socket.h"
