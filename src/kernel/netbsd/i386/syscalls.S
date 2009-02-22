@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -48,12 +48,14 @@ _brk:
 	ret
 #undef SYS_brk
 
+
 /* _exit */
 .global _exit
 .type _exit,@function
 _exit:
 	mov	$SYS_exit, %eax
 	jmp	_syscall
+
 
 /* execve */
 .global execve
@@ -65,3 +67,18 @@ execve:
 	mov	$-1, %eax
 	ret
 #undef SYS_execve
+
+
+/* pipe */
+.global pipe
+.type pipe,@function
+pipe:
+	mov	$SYS_pipe, %eax
+	int	$0x80
+	jc	.errno
+	mov	4(%esp), %ecx
+	mov	%eax, (%ecx)
+	mov	%edx, 4(%ecx)
+	mov	$0, %eax
+	ret
+#undef SYS_pipe
