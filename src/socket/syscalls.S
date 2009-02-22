@@ -18,8 +18,17 @@
 .text
 
 
+/* FreeBSD */
+#if defined(__FreeBSD__)
+# include "kernel/freebsd/common.h"
+# if defined(__amd64__)
+#  include "kernel/freebsd/amd64/syscalls.S"
+# else
+#  warning Unsupported FreeBSD architecture
+# endif
+
 /* Linux */
-#if defined(__linux__)
+#elif defined(__linux__)
 # include "kernel/linux/common.h"
 # if defined(__arm__)
 #  include "kernel/linux/arm/syscalls.S"
