@@ -451,7 +451,6 @@ static void _popen_child(char const * command, int flags, int * fd);
 
 FILE * popen(char const * command, char const * mode)
 {
-	FILE * file;
 	int flags;
 	pid_t pid;
 	int fd[2];
