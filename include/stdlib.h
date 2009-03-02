@@ -33,6 +33,7 @@
 /* functions */
 void abort(void);
 int abs(int x);
+int atexit(void (*function)(void));
 double atof(char const * str);
 int atoi(char const * str);
 long atol(char const * str);
