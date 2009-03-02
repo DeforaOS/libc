@@ -69,6 +69,7 @@ int abs(int x)
 typedef enum _AtexitFunction { AF_EXEC, AF_PURGE, AF_REGISTER } AtexitFunction;
 typedef void (*AtexitCallback)(void);
 static int _atexit_do(AtexitFunction function, void (*callback)(void));
+
 int atexit(void (*function)(void))
 {
 	return _atexit_do(AF_REGISTER, function);
