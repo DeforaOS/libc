@@ -36,7 +36,9 @@
 
 /* FreeBSD */
 #elif defined(__FreeBSD__)
-# if defined(__i386__)
+# if defined(__amd64__)
+#  include "kernel/freebsd/amd64/start.S"
+# elif defined(__i386__)
 #  include "kernel/freebsd/i386/start.S"
 # else /* !__i386__ */
 #  warning Unsupported FreeBSD architecture
