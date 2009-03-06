@@ -86,6 +86,10 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/syscalls.S \
@@ -139,6 +143,12 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/socket/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/common.h \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/amd64/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/amd64/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/amd64/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/common.h \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/project.conf \
@@ -371,6 +381,14 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/un.h \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/netinet/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/netinet/project.conf \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/sys/socket.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/sys/Makefile \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/in.h \

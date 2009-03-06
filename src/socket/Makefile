@@ -1,4 +1,4 @@
-SUBDIRS	= kernel/linux kernel/netbsd
+SUBDIRS	= kernel/freebsd kernel/linux kernel/netbsd
 TARGETS	= libsocket.a libsocket.so
 PREFIX	= /usr/local
 DESTDIR	= 
@@ -12,7 +12,7 @@ AS	= $(CC)
 ASFLAGS	= -W -Wall -g -ansi -DPIC -c
 AR	= ar -rc
 RANLIB	= ranlib
-LD	= $(CC) -shared
+LD	= $(CC) -nostdlib -shared
 RM	= rm -f
 MKDIR	= mkdir -p
 INSTALL	= install
