@@ -18,7 +18,9 @@
 #ifndef LIBSOCKET_SYSCALLS_H
 # define LIBSOCKET_SYSCALLS_H
 
-# if defined(__linux__)
+# if defined(__FreeBSD___)
+#  include "kernel/freebsd/common.h"
+# elif defined(__linux__)
 #  include "kernel/linux/common.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/common.h"

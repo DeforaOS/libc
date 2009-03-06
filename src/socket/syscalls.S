@@ -15,12 +15,14 @@
 
 
 
+#include "syscalls.h"
+
+
 .text
 
 
 /* FreeBSD */
 #if defined(__FreeBSD__)
-# include "kernel/freebsd/common.h"
 # if defined(__amd64__)
 #  include "kernel/freebsd/amd64/syscalls.S"
 # else
@@ -29,7 +31,6 @@
 
 /* Linux */
 #elif defined(__linux__)
-# include "kernel/linux/common.h"
 # if defined(__arm__)
 #  include "kernel/linux/arm/syscalls.S"
 # elif defined(__i386__)
@@ -40,7 +41,6 @@
 
 /* NetBSD */
 #elif defined(__NetBSD__)
-# include "kernel/netbsd/common.h"
 # if defined(__amd64__)
 #  include "kernel/netbsd/amd64/syscalls.S"
 # elif defined(__i386__)
