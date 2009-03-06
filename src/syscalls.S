@@ -18,8 +18,19 @@
 .text
 
 
+/* FreeBSD */
+#if defined(__FreeBSD__)
+# include "kernel/freebsd/common.h"
+# if defined(__amd64__)
+#  include "kernel/freebsd/amd64/syscalls.S"
+# elif defined(__i386__)
+#  include "kernel/freebsd/i386/syscalls.S"
+# else /* !amd64 && !i386 */
+#  warning Unsupported FreeBSD architecture
+# endif
+
 /* Linux */
-#if defined(__linux__)
+#elif defined(__linux__)
 # include "kernel/linux/common.h"
 # if defined(__arm__)
 #  include "kernel/linux/arm/syscalls.S"
@@ -27,15 +38,6 @@
 #  include "kernel/linux/i386/syscalls.S"
 # else /* !__arm__ && !__i386__ */
 #  warning Unsupported Linux architecture
-# endif
-
-/* FreeBSD */
-#elif defined(__FreeBSD__)
-# include "kernel/freebsd/common.h"
-# if defined(__i386__)
-#  include "kernel/freebsd/i386/syscalls.S"
-# else
-#  warning Unsupported FreeBSD architecture
 # endif
 
 /* NetBSD */
