@@ -114,10 +114,15 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/arm/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/arm/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/arm/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/arm/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/i386/syscalls.S \
@@ -132,7 +137,16 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/math/arch.S \
 		$(PACKAGE)-$(VERSION)/src/math/math.c \
 		$(PACKAGE)-$(VERSION)/src/math/Makefile \
+		$(PACKAGE)-$(VERSION)/src/math/arch.h \
 		$(PACKAGE)-$(VERSION)/src/math/project.conf \
+		$(PACKAGE)-$(VERSION)/src/math/amd64/Makefile \
+		$(PACKAGE)-$(VERSION)/src/math/amd64/math.h \
+		$(PACKAGE)-$(VERSION)/src/math/amd64/math.S \
+		$(PACKAGE)-$(VERSION)/src/math/amd64/project.conf \
+		$(PACKAGE)-$(VERSION)/src/math/i386/Makefile \
+		$(PACKAGE)-$(VERSION)/src/math/i386/math.h \
+		$(PACKAGE)-$(VERSION)/src/math/i386/math.S \
+		$(PACKAGE)-$(VERSION)/src/math/i386/project.conf \
 		$(PACKAGE)-$(VERSION)/src/pthread/pthread.c \
 		$(PACKAGE)-$(VERSION)/src/pthread/Makefile \
 		$(PACKAGE)-$(VERSION)/src/pthread/project.conf \

@@ -1,3 +1,4 @@
+SUBDIRS	= amd64 i386
 TARGETS	= libm.a libm.so
 PREFIX	= /usr/local
 DESTDIR	= 
@@ -17,7 +18,10 @@ MKDIR	= mkdir -p
 INSTALL	= install
 
 
-all: $(TARGETS)
+all: subdirs $(TARGETS)
+
+subdirs:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
 libm_OBJS = arch.o math.o
 libm_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
@@ -38,18 +42,23 @@ math.o: math.c ../../include/math/math.h
 	$(CC) $(libm_CFLAGS) -c math.c
 
 clean:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
 	$(RM) $(libm_OBJS)
 
-distclean: clean
+distclean:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
+	$(RM) $(libm_OBJS)
 	$(RM) $(TARGETS)
 
 install: all
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 libm.a $(DESTDIR)$(LIBDIR)/libm.a
 	$(INSTALL) -m 0755 libm.so $(DESTDIR)$(LIBDIR)/libm.so
 
 uninstall:
+	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
 	$(RM) $(DESTDIR)$(LIBDIR)/libm.a
 	$(RM) $(DESTDIR)$(LIBDIR)/libm.so
 
-.PHONY: all clean distclean install uninstall
+.PHONY: all subdirs clean distclean install uninstall
