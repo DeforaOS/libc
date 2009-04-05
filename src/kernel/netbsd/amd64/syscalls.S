@@ -31,12 +31,21 @@ _syscall:
 
 
 /* macros */
-#define SYSCALL(name) \
+#ifdef PIC
+# define SYSCALL(name) \
+.global name; \
+.type name,@function; \
+name:; \
+	mov	$SYS_ ## name, %rax; \
+	jmp	_syscall@PLT
+#else
+# define SYSCALL(name) \
 .global name; \
 .type name,@function; \
 name:; \
 	mov	$SYS_ ## name, %rax; \
 	jmp	_syscall
+#endif
 
 
 /* functions */
@@ -56,7 +65,11 @@ _brk:
 .type _exit,@function
 _exit:
 	mov	$SYS_exit, %rax
+#ifdef PIC
+	jmp	_syscall@PLT
+#else
 	jmp	_syscall
+#endif
 
 
 /* execve */
