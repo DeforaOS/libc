@@ -39,7 +39,8 @@ typedef signed int pid_t;
 # define WEXITSTATUS(status)	((status >> 8) & 0xff)
 # define WIFCONTINUED(status)	(0)	/* FIXME */
 # define WIFEXITED(status)	((status & 0x7f) == 0x00)
-# define WIFSIGNALED(status)	(0)	/* FIXME */
+# define WIFSIGNALED(status)	((status & 0x7f) != 0x7f \
+		&& (status & 0x7f) != 0x00)
 # define WIFSTOPPED(status)	((status & 0x7f) == 0x7f)
 # define WSTOPSIG(status)	((status >> 8) & 0xff)
 # define WTERMSIG(status)	(status & 0x7f)
