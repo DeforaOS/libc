@@ -375,8 +375,13 @@ int ilogb(double);
 int ilogbf(float);
 int ilogbl(long double);
 int isinf(float x);
-int isnan(float x);
 #endif
+/* isnan */
+int isnan(float x)
+{
+	/* FIXME implement */
+	return 1;
+}
 
 
 /* j0 */
