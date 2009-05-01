@@ -38,10 +38,30 @@ struct termios
 
 
 /* constants */
-# define TCSANOW		0
-# define TCSADRAIN		1
-# define TCSAFLUSH		2
+# define ISIG			0x0080
+# define ICANON			0x0100
 
-# define ECHO			0x8
+# define INPCK			0x0010
+# define ISTRIP			0x0020
+# define INCLR			0x0040
+# define IGNCR			0x0080
+# define ICRNL			0x0100
+# define IXON			0x0200
+# define IXOFF			0x0400
+# define IXANY			0x0800
+
+# define VEOF			0
+# define VEOL			1
+# define VEOL2			2
+# define VERASE			3
+# define VWERASE		4
+# define VKILL			5
+# define VREPRINT		6
+# define VINTR			8
+# define VQUIT			9
+# define VSUSP			10
+# define VSTART			12
+# define VSTOP			13
+# define VDISCARD		15
 
 #endif /* !LIBC_KERNEL_NETBSD_TERMIOS_H */
