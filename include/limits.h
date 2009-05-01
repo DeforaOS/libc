@@ -103,4 +103,11 @@
 #  endif
 # endif
 
+# ifndef DBL_MAX
+#  define DBL_MAX 1.7976931348623157E+308
+# endif
+# ifndef FLT_MAX
+#  define FLT_MAX 3.40282347E+38
+# endif
+
 #endif /* !LIBC_LIMITS_H */
