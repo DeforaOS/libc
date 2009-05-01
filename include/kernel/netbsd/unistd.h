@@ -42,6 +42,7 @@ typedef unsigned int useconds_t;
 #  define SEEK_END	2
 # endif
 
+# define _SC_OPEN_MAX	5
 # define _SC_PAGESIZE	28
 # define _SC_CLK_TCK	39
 
