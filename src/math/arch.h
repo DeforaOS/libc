@@ -15,6 +15,10 @@
 
 
 
+#ifndef MATH_ARCH_H
+# define MATH_ARCH_H
+
+
 #if defined(__amd64__)
 # include "amd64/math.h"
 #elif defined(__i386__)
@@ -22,3 +26,5 @@
 #else
 # warning "Unsupported platform"
 #endif
+
+#endif /* !MATH_ARCH_H */

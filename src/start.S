@@ -22,8 +22,18 @@
 .global _start
 
 
+/* FreeBSD */
+#if defined(__FreeBSD__)
+# if defined(__amd64__)
+#  include "kernel/freebsd/amd64/start.S"
+# elif defined(__i386__)
+#  include "kernel/freebsd/i386/start.S"
+# else /* !__amd64__ && !__i386__ */
+#  warning Unsupported FreeBSD architecture
+# endif
+
 /* Linux */
-#if defined(__linux__)
+#elif defined(__linux__)
 # if defined(__arm__)
 #  include "kernel/linux/arm/start.S"
 # elif defined(__i386__)
@@ -32,16 +42,6 @@
 #  include "kernel/linux/sparc/start.S"
 # else /* !__arm__ && !__i386__ && !__sparc__ */
 #  warning Unsupported Linux architecture
-# endif
-
-/* FreeBSD */
-#elif defined(__FreeBSD__)
-# if defined(__amd64__)
-#  include "kernel/freebsd/amd64/start.S"
-# elif defined(__i386__)
-#  include "kernel/freebsd/i386/start.S"
-# else /* !__i386__ */
-#  warning Unsupported FreeBSD architecture
 # endif
 
 /* NetBSD */
