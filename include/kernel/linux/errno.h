@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,11 +42,13 @@
 # define EINVAL		22
 # define ENOTTY		25
 # define ENOSPC		28
+# define ESPIPE		29
 # define EROFS		30
 # define EPIPE		32
 # define EDOM		33
 # define ERANGE		34
 # define ENOSYS		38
+# define ENOTEMPTY	39
 # define ELOOP		40
 # define EADDRINUSE	98
 # define ENOBUFS	105

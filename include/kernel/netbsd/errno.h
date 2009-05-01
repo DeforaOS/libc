@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -42,6 +42,7 @@
 # define EINVAL		22
 # define ENOTTY		25
 # define ENOSPC		28
+# define ESPIPE		29
 # define EROFS		30
 # define EPIPE		32
 # define EDOM		33
@@ -51,6 +52,7 @@
 # define ENOBUFS	55
 # define ETIMEDOUT	60
 # define ELOOP		62
+# define ENOTEMPTY	66
 # define ENOSYS		78
 
 #endif /* !LIBC_KERNEL_NETBSD_ERRNO_H */
