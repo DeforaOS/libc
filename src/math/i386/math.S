@@ -1,6 +1,6 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
-/* This file is part of RunningBear System libc */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 3 of the License.
@@ -216,39 +216,6 @@ pow:
 #else
 	jmp __finexp
 #endif
-
-
-/* setjmp */
-.global setjmp
-.type setjmp,@function
-setjmp:
-	/* XXX from dietlibc */
-	mov	0x00(%esp), %ecx
-	lea	0x04(%esp), %edx
-	mov	(%edx), %eax
-	pushl	$0x00
-	push	%eax
-	call	_sigsetjmp_do
-	add	$0x08, %esp
-	ret
-
-
-/* sigsetjmp */
-.global sigsetjmp
-.type sigsetjmp,@function
-sigsetjmp:
-	/* XXX from dietlibc */
-	mov	0x00(%esp), %ecx
-	lea	0x04(%esp), %edx
-	mov	(%edx), %eax
-_sigsetjmp_do:
-	mov	%ebx, (0x00)(%eax)
-	mov	%esi, (0x04)(%eax)
-	mov	%edi, (0x08)(%eax)
-	mov	%ebp, (0x0c)(%eax)
-	mov	%edx, (0x10)(%eax)
-	mov	%ecx, (0x14)(%eax)
-	jmp	_sigjmp_save
 
 
 /* sin */
