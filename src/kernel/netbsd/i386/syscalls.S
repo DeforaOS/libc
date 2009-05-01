@@ -14,7 +14,8 @@
  * NonCommercial-ShareAlike 3.0 along with libc; if not, browse to
  * http://creativecommons.org/licenses/by-nc-sa/3.0/ */
 /* FIXME:
- * - some syscalls may return an additional value into %edx (eg lseek) */
+ * - some syscalls may return an additional value into %edx (eg lseek)
+ * - ftruncate() and truncate() probably need a wrapper (for padding) */
 
 
 
@@ -69,6 +70,35 @@ execve:
 #undef SYS_execve
 
 
+/* longjmp */
+/* XXX from NetBSD's libc without PIC prologue/epilogue */
+.global longjmp
+.type longjmp,@function
+longjmp:
+	mov	4(%esp), %ecx
+	lea	24(%ecx), %edx
+
+	push	$0
+	push	%edx
+	push	$3			/* SIG_SETMASK */
+	call	sigprocmask
+	add	$12, %esp
+
+	mov	4(%esp), %edx
+	mov	8(%esp), %eax
+	mov	0(%edx), %ecx
+	mov	4(%edx), %ebx
+	mov	8(%edx), %esp
+	mov	12(%edx), %ebp
+	mov	16(%edx), %esi
+	mov	20(%edx), %edi
+	test	%eax, %eax
+	jnz	1f
+	incl	%eax
+1:	mov	%ecx, 0(%esp)
+	ret
+
+
 /* pipe */
 .global pipe
 .type pipe,@function
@@ -82,3 +112,29 @@ pipe:
 	mov	$0, %eax
 	ret
 #undef SYS_pipe
+
+
+/* setjmp */
+/* XXX from NetBSD's libc without PIC prologue/epilogue */
+.global setjmp
+.type setjmp,@function
+setjmp:
+	mov	4(%esp), %ecx
+	mov	0(%esp), %edx
+	mov	%edx, 0(%ecx)
+	mov	%ebx, 4(%ecx)
+	mov	%esp, 8(%ecx)
+	mov	%ebp, 12(%ecx)
+	mov	%esi, 16(%ecx)
+	mov	%edi, 20(%ecx)
+
+	lea	24(%ecx), %edx
+
+	push	%edx
+	push	$0
+	push	$0
+	call	sigprocmask
+	add	$12, %esp
+
+	mov	$0, %eax
+	ret
