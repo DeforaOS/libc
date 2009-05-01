@@ -390,6 +390,9 @@ SYSCALL(symlink)
 #ifdef SYS_sync
 SYSCALL(sync)
 #endif
+#ifdef SYS_truncate
+SYSCALL(truncate)
+#endif
 #ifdef SYS_unlink
 SYSCALL(unlink)
 #endif
