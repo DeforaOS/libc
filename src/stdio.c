@@ -204,7 +204,7 @@ FILE * fopen(char const * path, char const * mode)
 	int fd;
 
 	if((flags = _fopen_mode(mode)) == -1
-			|| (fd = open(path, file->flags, 0777)) < 0)
+			|| (fd = open(path, flags, 0777)) < 0)
 		return NULL;
 	if((file = _fopen_new(fd, flags, isatty(fd) ? _IONBF : _IOFBF)) == NULL)
 	{
