@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,10 +79,6 @@ struct rusage
 # define PRIO_PROCESS		0
 # define PRIO_PGRP		1
 # define PRIO_USER		2
-
-# define RLIM_INFINITY		(~0)
-# define RLIMIT_SAVED_CUR	RLIM_INFINITY
-# define RLIMIT_SAVED_MAX	RLIM_INFINITY
 
 # define RUSAGE_SELF		0
 # define RUSAGE_CHILDREN	-1
