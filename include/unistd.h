@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,6 +88,7 @@ int fchdir(int fildes);
 int fchown(int fildes, uid_t uid, gid_t gid);
 pid_t fork(void);
 int fsync(int fildes);
+int ftruncate(int fildes, off_t offset);
 char * getcwd(char * buf, size_t size);
 gid_t getegid(void);
 uid_t geteuid(void);
@@ -120,6 +121,7 @@ unsigned int sleep(unsigned int seconds);
 int symlink(char const * from, char const * to);
 void sync(void);
 long sysconf(int name);
+int truncate(char const * filename, off_t offset);
 char * ttyname(int fildes);
 int unlink(char const * filename);
 int usleep(useconds_t useconds);

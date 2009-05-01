@@ -314,6 +314,9 @@ SYSCALL(fork)
 #ifdef SYS_fsync
 SYSCALL(fsync)
 #endif
+#ifdef SYS_ftruncate
+SYSCALL(ftruncate)
+#endif
 SYSCALL(getcwd)
 #ifdef SYS_getegid
 SYSCALL(getegid)

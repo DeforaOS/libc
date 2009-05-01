@@ -348,6 +348,17 @@ int fsync(int fildes)
 #endif
 
 
+/* ftruncate */
+#ifndef SYS_ftruncate
+# warning Unsupported platform: ftruncate() is missing
+int ftruncate(int fildes, off_t offset)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* getcwd */
 #ifndef SYS_getcwd
 # warning Unsupported platform: getcwd() is missing
@@ -791,6 +802,17 @@ long sysconf(int name)
 	errno = ENOSYS;
 	return -1;
 }
+
+
+/* truncate */
+#ifndef SYS_truncate
+# warning Unsupported platform: truncate() is missing
+int truncate(char const * filename, off_t offset)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
 
 
 /* ttyname */
