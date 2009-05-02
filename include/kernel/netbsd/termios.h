@@ -63,5 +63,7 @@ struct termios
 # define VSTART			12
 # define VSTOP			13
 # define VDISCARD		15
+# define VMIN			16
+# define VTIME			17
 
 #endif /* !LIBC_KERNEL_NETBSD_TERMIOS_H */
