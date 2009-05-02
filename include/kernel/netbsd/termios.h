@@ -43,7 +43,7 @@ struct termios
 
 # define INPCK			0x0010
 # define ISTRIP			0x0020
-# define INCLR			0x0040
+# define INLCR			0x0040
 # define IGNCR			0x0080
 # define ICRNL			0x0100
 # define IXON			0x0200
