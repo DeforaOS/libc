@@ -21,6 +21,13 @@
 # include "compat/ucontext.h"
 
 
+/* types */
+# ifndef ucontext_t
+#  define ucontext_t ucontext_t
+typedef struct _ucontext_t ucontext_t;
+# endif
+
+
 /* functions */
 int getcontext(ucontext_t * context);
 int setcontext(const ucontext_t * context);
