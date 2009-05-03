@@ -41,6 +41,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
 	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/compat/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
+	$(INSTALL) -m 0644 ucontext.h $(DESTDIR)$(INCLUDEDIR)/compat/ucontext.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
 	$(INSTALL) -m 0644 unistd.h $(DESTDIR)$(INCLUDEDIR)/compat/unistd.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
 	$(INSTALL) -m 0644 utmpx.h $(DESTDIR)$(INCLUDEDIR)/compat/utmpx.h
@@ -57,6 +59,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/stropts.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/termios.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/time.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/ucontext.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/unistd.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/utmpx.h
 

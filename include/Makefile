@@ -91,6 +91,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 ucontext.h $(DESTDIR)$(INCLUDEDIR)/ucontext.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 unistd.h $(DESTDIR)$(INCLUDEDIR)/unistd.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 utime.h $(DESTDIR)$(INCLUDEDIR)/utime.h
@@ -138,6 +140,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/syslog.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/termios.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/time.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/ucontext.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/unistd.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/utime.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/utmpx.h

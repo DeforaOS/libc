@@ -41,6 +41,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
 	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
+	$(INSTALL) -m 0644 ucontext.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/ucontext.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
 	$(INSTALL) -m 0644 unistd.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/unistd.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd
 	$(INSTALL) -m 0644 utmpx.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/utmpx.h
@@ -57,6 +59,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/stropts.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/termios.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/time.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/ucontext.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/unistd.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/utmpx.h
 

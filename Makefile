@@ -220,6 +220,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/syslog.h \
 		$(PACKAGE)-$(VERSION)/include/termios.h \
 		$(PACKAGE)-$(VERSION)/include/time.h \
+		$(PACKAGE)-$(VERSION)/include/ucontext.h \
 		$(PACKAGE)-$(VERSION)/include/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/utime.h \
 		$(PACKAGE)-$(VERSION)/include/utmpx.h \
@@ -237,6 +238,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/stropts.h \
 		$(PACKAGE)-$(VERSION)/include/compat/termios.h \
 		$(PACKAGE)-$(VERSION)/include/compat/time.h \
+		$(PACKAGE)-$(VERSION)/include/compat/ucontext.h \
 		$(PACKAGE)-$(VERSION)/include/compat/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/compat/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/compat/Makefile \
@@ -320,6 +322,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/stropts.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/termios.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/ucontext.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/Makefile \
