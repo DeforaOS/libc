@@ -42,7 +42,7 @@ typedef signed int pid_t;
 # endif
 # ifndef size_t
 #  define size_t size_t
-typedef unsigned int size_t;
+typedef unsigned long size_t;
 # endif
 # ifndef ssize_t
 #  define ssize_t ssize_t
