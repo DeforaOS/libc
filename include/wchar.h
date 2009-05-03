@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 
 /* types */
-/* FIXME check if size_t and wchar_t are correct */
+/* FIXME check if wchar_t is correct */
 # ifndef FILE
 #  define FILE FILE
 typedef struct _FILE FILE;
