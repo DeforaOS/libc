@@ -36,7 +36,10 @@ typedef union /* FIXME to be completed */
 	int _padding2[5];
 } siginfo_t;
 
+# ifndef sigset_t
+#  define sigset_t sigset_t
 typedef struct { unsigned int bits[4]; } sigset_t;
+# endif
 
 struct sigaction
 {
@@ -50,6 +53,15 @@ struct sigaction
 };
 # define sa_handler _sa_u.sa_handler
 # define sa_sigaction _sa_u.sa_sigaction
+
+# ifndef stack_t
+#  define stack_t
+typedef struct _stack_t {
+	void * ss_sp;
+	unsigned long ss_size;
+	int ss_flags;
+} stack_t;
+# endif
 
 
 /* constants */

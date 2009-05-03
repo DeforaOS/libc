@@ -58,6 +58,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/termios.c \
 		$(PACKAGE)-$(VERSION)/src/time.c \
+		$(PACKAGE)-$(VERSION)/src/ucontext.c \
 		$(PACKAGE)-$(VERSION)/src/unistd.c \
 		$(PACKAGE)-$(VERSION)/src/utime.c \
 		$(PACKAGE)-$(VERSION)/src/utmpx.c \

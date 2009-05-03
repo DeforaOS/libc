@@ -21,13 +21,29 @@
 
 
 /* types */
+# ifndef sigset_t
+#  define sigset_t sigset_t
+typedef struct { unsigned int bits[4]; } sigset_t;
+# endif
+
+# ifndef stack_t
+#  define stack_t stack_t
+typedef struct {
+	void * ss_sp;
+	unsigned long ss_size;
+	int ss_flags;
+} stack_t;
+# endif
+
 typedef struct _ucontext_t
 {
 	unsigned int uc_flags;
 	struct _ucontext_t * uc_link;
 	sigset_t uc_sigmask;
 	stack_t uc_stack;
+#  if 0 /* FIXME implement */
 	mcontext_t uc_mcontext;
+#  endif
 } ucontext_t;
 
 #endif /* !LIBC_KERNEL_NETBSD_UCONTEXT_H */
