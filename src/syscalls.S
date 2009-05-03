@@ -274,6 +274,14 @@ SYSCALL(wait4)
 SYSCALL(nanosleep)
 #endif
 
+/* ucontext.h */
+#ifdef SYS_getcontext
+SYSCALL(getcontext)
+#endif
+#ifdef SYS_setcontext
+SYSCALL(setcontext)
+#endif
+
 /* unistd.h */
 #ifdef SYS_access
 SYSCALL(access)
