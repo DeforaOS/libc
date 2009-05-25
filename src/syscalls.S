@@ -32,7 +32,9 @@
 /* Linux */
 #elif defined(__linux__)
 # include "kernel/linux/common.h"
-# if defined(__arm__)
+# if defined(__amd64__)
+#  include "kernel/linux/amd64/syscalls.S"
+# elif defined(__arm__)
 #  include "kernel/linux/arm/syscalls.S"
 # elif defined(__i386__)
 #  include "kernel/linux/i386/syscalls.S"
@@ -45,13 +47,15 @@
 # include "kernel/netbsd/common.h"
 # if defined(__amd64__)
 #  include "kernel/netbsd/amd64/syscalls.S"
+# elif defined(__arm__)
+#  include "kernel/netbsd/arm/syscalls.S"
 # elif defined(__i386__)
 #  include "kernel/netbsd/i386/syscalls.S"
 # elif defined(__sparc64__)
 #  include "kernel/netbsd/sparc64/syscalls.S"
 # elif defined(__sparc__)
 #  include "kernel/netbsd/sparc/syscalls.S"
-# else /* !__amd64__ && !__i386__ && !__sparc__ && !__sparc64__ */
+# else /* !__amd64__ && !__arm__ && !__i386__ && !__sparc__ && !__sparc64__ */
 #  warning Unsupported NetBSD architecture
 #  define SYSCALL(name)
 # endif
