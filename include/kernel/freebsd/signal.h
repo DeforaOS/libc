@@ -21,11 +21,6 @@
 
 
 /* types */
-#ifndef pid_t
-# define pid_t pid_t
-typedef signed int pid_t;
-#endif
-
 typedef struct _siginfo_t siginfo_t;
 
 typedef struct { unsigned int bits[4]; } sigset_t;

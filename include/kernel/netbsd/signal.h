@@ -21,11 +21,6 @@
 
 
 /* types */
-# ifndef pid_t
-#  define pid_t pid_t
-typedef signed int pid_t;
-# endif
-
 typedef union /* FIXME to be completed */
 {
 	char _padding0[128];

@@ -20,11 +20,6 @@
 
 
 /* types */
-#ifndef pid_t
-# define pid_t pid_t
-typedef signed int pid_t;
-#endif
-
 typedef struct
 {
 	int si_signo;
