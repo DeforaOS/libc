@@ -48,13 +48,15 @@
 #elif defined(__NetBSD__)
 # if defined(__amd64__)
 #  include "kernel/netbsd/amd64/start.S"
+# elif defined(__arm__)
+#  include "kernel/netbsd/arm/start.S"
 # elif defined(__i386__)
 #  include "kernel/netbsd/i386/start.S"
 # elif defined(__sparc64__)
 #  include "kernel/netbsd/sparc64/start.S"
 # elif defined(__sparc__)
 #  include "kernel/netbsd/sparc/start.S"
-# else /* !__amd64__ && !__i386__ && !__sparc__ && !__sparc64__ */
+# else /* !__amd64__ && !__arm__ && !__i386__ && !__sparc__ && !__sparc64__ */
 #  warning Unsupported NetBSD architecture
 # endif
 # include "kernel/netbsd/start.S"
