@@ -46,6 +46,13 @@ struct servent
 # endif
 
 
+/* constants */
+# define HOST_NOT_FOUND			1
+# define NO_DATA			2
+# define NO_RECOVERY			3
+# define TRY_AGAIN			4
+
+
 /* variables */
 extern int h_errno;
 
