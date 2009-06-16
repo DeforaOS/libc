@@ -694,13 +694,12 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 	}
 	for(; *p != '\0'; p++)
 	{
-		ret *= base;
 		if(*p >= '0' && *p - '0' < min(10, base))
-			ret += *p - '0';
+			ret = (ret * base) + *p - '0';
 		else if(base > 10 && (((r = (*p) - 'a') >= 0 && r < 26)
 				|| ((r = (*p) - 'A') >= 0 && r < 26))
 				&& r < base - 10)
-			ret += r + 10;
+			ret = (ret * base) + r + 10;
 		else
 			break;
 		/* FIXME add integer overflow detection code */
