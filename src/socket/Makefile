@@ -14,6 +14,7 @@ AR	= ar -rc
 RANLIB	= ranlib
 LD	= $(CC) -nostdlib -shared
 RM	= rm -f
+LN	= ln -f
 MKDIR	= mkdir -p
 INSTALL	= install
 
@@ -33,7 +34,7 @@ libsocket.a: $(libsocket_OBJS)
 	$(RANLIB) libsocket.a
 
 libsocket.so: $(libsocket_OBJS)
-	$(LD) -o libsocket.so $(libsocket_OBJS)
+	$(LD) -o libsocket.so -Wl,-soname,libsocket.so.0 $(libsocket_OBJS)
 
 arpa/inet.o: arpa/inet.c
 	$(CC) $(libsocket_CFLAGS) -o arpa/inet.o -c arpa/inet.c
@@ -60,11 +61,15 @@ install: all
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 libsocket.a $(DESTDIR)$(LIBDIR)/libsocket.a
-	$(INSTALL) -m 0755 libsocket.so $(DESTDIR)$(LIBDIR)/libsocket.so
+	$(INSTALL) -m 0755 libsocket.so $(DESTDIR)$(LIBDIR)/libsocket.so.0.0
+	$(LN) -s libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so.0
+	$(LN) -s libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
 	$(RM) $(DESTDIR)$(LIBDIR)/libsocket.a
+	$(RM) $(DESTDIR)$(LIBDIR)/libsocket.so.0.0
+	$(RM) $(DESTDIR)$(LIBDIR)/libsocket.so.0
 	$(RM) $(DESTDIR)$(LIBDIR)/libsocket.so
 
 .PHONY: all subdirs clean distclean install uninstall

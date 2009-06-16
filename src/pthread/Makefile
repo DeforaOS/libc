@@ -11,6 +11,7 @@ AR	= ar -rc
 RANLIB	= ranlib
 LD	= $(CC) -nostdlib -shared
 RM	= rm -f
+LN	= ln -f
 MKDIR	= mkdir -p
 INSTALL	= install
 
@@ -26,7 +27,7 @@ libpthread.a: $(libpthread_OBJS)
 	$(RANLIB) libpthread.a
 
 libpthread.so: $(libpthread_OBJS)
-	$(LD) -o libpthread.so $(libpthread_OBJS)
+	$(LD) -o libpthread.so -Wl,-soname,libpthread.so.0 $(libpthread_OBJS)
 
 pthread.o: pthread.c
 	$(CC) $(libpthread_CFLAGS) -c pthread.c
@@ -40,10 +41,14 @@ distclean: clean
 install: all
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 libpthread.a $(DESTDIR)$(LIBDIR)/libpthread.a
-	$(INSTALL) -m 0755 libpthread.so $(DESTDIR)$(LIBDIR)/libpthread.so
+	$(INSTALL) -m 0755 libpthread.so $(DESTDIR)$(LIBDIR)/libpthread.so.0.0
+	$(LN) -s libpthread.so.0.0 $(DESTDIR)$(LIBDIR)/libpthread.so.0
+	$(LN) -s libpthread.so.0.0 $(DESTDIR)$(LIBDIR)/libpthread.so
 
 uninstall:
 	$(RM) $(DESTDIR)$(LIBDIR)/libpthread.a
+	$(RM) $(DESTDIR)$(LIBDIR)/libpthread.so.0.0
+	$(RM) $(DESTDIR)$(LIBDIR)/libpthread.so.0
 	$(RM) $(DESTDIR)$(LIBDIR)/libpthread.so
 
 .PHONY: all clean distclean install uninstall

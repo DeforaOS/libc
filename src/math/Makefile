@@ -14,6 +14,7 @@ AR	= ar -rc
 RANLIB	= ranlib
 LD	= $(CC) -nostdlib -shared
 RM	= rm -f
+LN	= ln -f
 MKDIR	= mkdir -p
 INSTALL	= install
 
@@ -33,7 +34,7 @@ libm.a: $(libm_OBJS)
 	$(RANLIB) libm.a
 
 libm.so: $(libm_OBJS)
-	$(LD) -o libm.so $(libm_OBJS)
+	$(LD) -o libm.so -Wl,-soname,libm.so.0 $(libm_OBJS)
 
 arch.o: arch.S amd64/math.S i386/math.S
 	$(AS) $(libm_ASFLAGS) -o arch.o arch.S
@@ -54,11 +55,15 @@ install: all
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 libm.a $(DESTDIR)$(LIBDIR)/libm.a
-	$(INSTALL) -m 0755 libm.so $(DESTDIR)$(LIBDIR)/libm.so
+	$(INSTALL) -m 0755 libm.so $(DESTDIR)$(LIBDIR)/libm.so.0.0
+	$(LN) -s libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0
+	$(LN) -s libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
 	$(RM) $(DESTDIR)$(LIBDIR)/libm.a
+	$(RM) $(DESTDIR)$(LIBDIR)/libm.so.0.0
+	$(RM) $(DESTDIR)$(LIBDIR)/libm.so.0
 	$(RM) $(DESTDIR)$(LIBDIR)/libm.so
 
 .PHONY: all subdirs clean distclean install uninstall

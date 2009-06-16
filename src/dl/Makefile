@@ -11,6 +11,7 @@ AR	= ar -rc
 RANLIB	= ranlib
 LD	= $(CC) -nostdlib -shared
 RM	= rm -f
+LN	= ln -f
 MKDIR	= mkdir -p
 INSTALL	= install
 
@@ -26,7 +27,7 @@ libdl.a: $(libdl_OBJS)
 	$(RANLIB) libdl.a
 
 libdl.so: $(libdl_OBJS)
-	$(LD) -o libdl.so $(libdl_OBJS)
+	$(LD) -o libdl.so -Wl,-soname,libdl.so.0 $(libdl_OBJS)
 
 dlfcn.o: dlfcn.c ../../include/dl/dlfcn.h
 	$(CC) $(libdl_CFLAGS) -c dlfcn.c
@@ -40,10 +41,14 @@ distclean: clean
 install: all
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 libdl.a $(DESTDIR)$(LIBDIR)/libdl.a
-	$(INSTALL) -m 0755 libdl.so $(DESTDIR)$(LIBDIR)/libdl.so
+	$(INSTALL) -m 0755 libdl.so $(DESTDIR)$(LIBDIR)/libdl.so.0.0
+	$(LN) -s libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so.0
+	$(LN) -s libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so
 
 uninstall:
 	$(RM) $(DESTDIR)$(LIBDIR)/libdl.a
+	$(RM) $(DESTDIR)$(LIBDIR)/libdl.so.0.0
+	$(RM) $(DESTDIR)$(LIBDIR)/libdl.so.0
 	$(RM) $(DESTDIR)$(LIBDIR)/libdl.so
 
 .PHONY: all clean distclean install uninstall

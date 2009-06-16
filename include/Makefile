@@ -2,6 +2,7 @@ SUBDIRS	= compat dl kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd ker
 PREFIX	= /usr/local
 DESTDIR	= 
 RM	= rm -f
+LN	= ln -f
 MKDIR	= mkdir -p
 INSTALL	= install
 INCLUDEDIR= $(PREFIX)/include

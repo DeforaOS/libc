@@ -2,7 +2,7 @@ PACKAGE	= libc
 VERSION	= 0.0.2
 SUBDIRS	= src include
 RM	= rm -f
-LN	= ln -sf
+LN	= ln -f
 TAR	= tar -czvf
 
 
@@ -19,7 +19,7 @@ distclean:
 
 dist:
 	$(RM) -r $(PACKAGE)-$(VERSION)
-	$(LN) . $(PACKAGE)-$(VERSION)
+	$(LN) -s . $(PACKAGE)-$(VERSION)
 	@$(TAR) $(PACKAGE)-$(VERSION).tar.gz \
 		$(PACKAGE)-$(VERSION)/src/ctype.c \
 		$(PACKAGE)-$(VERSION)/src/dirent.c \
