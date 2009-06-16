@@ -88,18 +88,12 @@ struct hostent * gethostent(void)
 {
 	static struct hostent he = { NULL, NULL, 0, 0, NULL };
 	char const * s;
-	char * addr = NULL;
-	char * name = NULL;
 
 	if(_gethostent_open() != 0)
 		return NULL;
-	_gethostent_free(&he);
 	for(;;)
 	{
-		free(addr);
-		addr = NULL;
-		free(name);
-		name = NULL;
+		_gethostent_free(&he);
 		if(fgets(_buf, sizeof(_buf), _fp) == NULL)
 			break;
 		/* skip whitespaces */
@@ -107,30 +101,29 @@ struct hostent * gethostent(void)
 		/* skip comments */
 		if(*s == '#' || *s == '\n')
 			continue;
-		if((addr = _gethostent_addr(&s)) == NULL)
+		/* read address */
+		if((he.h_addr_list = malloc(2 * sizeof(*he.h_addr_list)))
+				== NULL)
+			continue;
+		he.h_addr_list[1] = NULL;
+		if((he.h_addr_list[0] = _gethostent_addr(&s)) == NULL)
 			continue;
 		if(!isspace(*s))
 			continue;
 		/* skip whitespaces */
 		for(; isspace(*s); s++);
 		/* read hostname */
-		if((name = _gethostent_host(&s)) == NULL)
+		if((he.h_name = _gethostent_host(&s)) == NULL)
 			continue;
 		/* read optional aliases */
 		/* FIXME implement */
 		/* return entry */
-		he.h_name = name;
 		he.h_aliases = NULL;
 		he.h_addrtype = AF_INET;
 		he.h_length = 4;
-		if((he.h_addr_list = malloc(2 * sizeof(*he.h_addr_list)))
-				== NULL)
-			continue;
-		he.h_addr_list[0] = addr;
-		he.h_addr_list[1] = NULL;
 		return &he;
 	}
-	/* not found */
+	/* nothing found */
 	endhostent();
 	return NULL;
 }
