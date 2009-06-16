@@ -637,6 +637,7 @@ double strtod(char const * str, char ** endptr)
 /* strtol */
 static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 		int * neg);
+static int _strtoull_base(char const ** p);
 
 long strtol(char const * str, char ** endptr, int base)
 {
@@ -684,21 +685,7 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 	if((*p == '+' || *p == '-') && *(p++) == '-' && neg != NULL)
 		*neg = 1;
 	if(base == 0)
-	{
-		if(*p == '0')
-		{
-			p++;
-			if(*p == 'x' || *p == 'X')
-			{
-				p++;
-				base = 16;
-			}
-			else
-				base = 8;
-		}
-		else
-			base = 10;
-	}
+		base = _strtoull_base(&p);
 	if(base == 16 && *p == '0')
 	{
 		p++;
@@ -721,6 +708,21 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 	if(endptr != NULL)
 		*endptr = (char*)p; /* XXX cast */
 	return ret;
+}
+
+static int _strtoull_base(char const ** p)
+{
+	if(**p == '0')
+	{
+		(*p)++;
+		if(**p == 'x' || **p == 'X')
+		{
+			(*p)++;
+			return 16;
+		}
+		return 8;
+	}
+	return 10;
 }
 
 
