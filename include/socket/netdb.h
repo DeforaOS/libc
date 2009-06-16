@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,8 +58,11 @@ extern int h_errno;
 
 
 /* functions */
+void endhostent(void);
 struct hostent * gethostbyaddr(const void * addr, socklen_t len, int type);
 struct hostent * gethostbyname(const char * name);
 struct servent * getservbyname(const char * name, const char * protocol);
+struct hostent * gethostent(void);
+void sethostent(int stayopen);
 
 #endif /* !LIBSOCKET_NETDB_H */
