@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -28,6 +28,10 @@
 #  include "kernel/netbsd/stdio.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/stdio.h"
+# elif defined(__sun__)
+#  include "kernel/solaris/stdio.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/stdio.h"
 # else
 #  warning Unsupported platform
 # endif

@@ -20,6 +20,13 @@
 # define LIBC_KERNEL_OPENBSD_STDIO_H
 
 
+/* types */
+# ifndef off_t
+#  define off_t off_t
+typedef long long off_t;
+# endif
+
+
 /* constants */
 # ifndef SEEK_SET
 #  define SEEK_SET	0

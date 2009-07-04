@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* libc is not free software; you can redistribute it and/or modify it under
  * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
@@ -18,6 +18,13 @@
 
 #ifndef LIBC_KERNEL_LINUX_STDIO_H
 # define LIBC_KERNEL_LINUX_STDIO_H
+
+
+/* types */
+# ifndef off_t
+#  define off_t off_t
+typedef long long off_t;
+# endif
 
 
 /* constants */

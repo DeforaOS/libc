@@ -16,26 +16,14 @@
 
 
 
-#ifndef LIBC_KERNEL_NETBSD_STDIO_H
-# define LIBC_KERNEL_NETBSD_STDIO_H
+#ifndef LIBC_KERNEL_WHITIX_STDIO_H
+# define LIBC_KERNEL_WHITIX_STDIO_H
 
 
 /* types */
 # ifndef off_t
 #  define off_t off_t
-typedef long long off_t;
+typedef unsigned int off_t;
 # endif
 
-
-/* constants */
-# ifndef SEEK_SET
-#  define SEEK_SET	0
-# endif
-# ifndef SEEK_CUR
-#  define SEEK_CUR	1
-# endif
-# ifndef SEEK_END
-#  define SEEK_END	2
-# endif
-
-#endif /* !LIBC_KERNEL_NETBSD_STDIO_H */
+#endif /* !LIBC_KERNEL_WHITIX_STDIO_H */
