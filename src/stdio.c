@@ -36,34 +36,16 @@ struct _FILE
 {
 	int fd;
 	int flags;
-	unsigned char buf[BUFSIZ];
-	unsigned int len;
-	unsigned int pos;
+	unsigned char _buf[BUFSIZ];
+	unsigned char * buf;
+	size_t bufsiz;
+	size_t len;
+	size_t pos;
 	char eof;
 	char error;
 	int fbuf;
 	FILEDirection dir;
 };
-
-
-/* variables */
-static FILE _stdin =
-{
-	STDIN_FILENO, O_RDONLY, { 0 }, 0, 0, 0, 0, _IOFBF, FD_READ
-};
-FILE * stdin = &_stdin;
-
-static FILE _stdout =
-{
-	STDOUT_FILENO, O_WRONLY, { 0 }, 0, 0, 0, 0, _IOLBF, FD_WRITE
-};
-FILE * stdout = &_stdout;
-
-static FILE _stderr =
-{
-	STDERR_FILENO, O_WRONLY, { 0 }, 0, 0, 0, 0, _IONBF, FD_WRITE
-};
-FILE * stderr = &_stderr;
 
 
 /* prototypes */
@@ -72,6 +54,30 @@ static FILE * _fopen_new(int fd, int flags, int fbuf);
 
 
 /* public */
+/* variables */
+static FILE _stdin =
+{
+	STDIN_FILENO, O_RDONLY, { 0 }, _stdin._buf, sizeof(_stdin._buf), 0, 0,
+	0, 0, _IOFBF, FD_READ
+};
+FILE * stdin = &_stdin;
+
+static FILE _stdout =
+{
+	STDOUT_FILENO, O_WRONLY, { 0 }, _stdout._buf, sizeof(_stdout._buf), 0,
+	0, 0, 0, _IOLBF, FD_WRITE
+};
+FILE * stdout = &_stdout;
+
+static FILE _stderr =
+{
+	STDERR_FILENO, O_WRONLY, { 0 }, _stderr._buf, sizeof(_stderr._buf), 0,
+	0, 0, 0, _IONBF, FD_WRITE
+};
+FILE * stderr = &_stderr;
+
+
+/* functions */
 /* clearerr */
 void clearerr(FILE * file)
 {
@@ -87,6 +93,7 @@ int fclose(FILE * file)
 	
 	ret = fflush(file);
 	close(file->fd);
+	free(file);
 	return ret;
 }
 
@@ -271,7 +278,8 @@ size_t fread(void * ptr, size_t size, size_t nb, FILE * file)
 		{
 			if(file->pos == file->len)
 			{
-				if((r = read(file->fd, file->buf, BUFSIZ)) < 0)
+				if((r = read(file->fd, file->buf, file->bufsiz))
+						< 0)
 				{
 					file->error = 1;
 					return i;
@@ -338,18 +346,34 @@ int fscanf(FILE * fp, char const * format, ...)
 /* fseek */
 int fseek(FILE * file, long offset, int whence)
 {
+	if(whence != SEEK_CUR && whence != SEEK_END && whence != SEEK_SET)
+	{
+		errno = EINVAL;
+		return -1;
+	}
 	if(fflush(file) != 0)
-		return 1;
+		return -1;
 	return lseek(file->fd, offset, whence) != -1 ? 0 : -1;
+}
+
+
+/* fseeko */
+int fseeko(FILE * file, off_t offset, int whence)
+{
+	/* XXX wrong if sizeof(off_t) > sizeof(long) */
+	return fseek(file, offset, whence);
 }
 
 
 /* ftell */
 long ftell(FILE * file)
 {
-	/* FIXME implement */
-	errno = ENOSYS;
-	return -1;
+	long ret;
+
+	if((ret = lseek(file->fd, SEEK_CUR, 0)) < 0)
+		return -1;
+	/* FIXME not tested */
+	return ret - file->len + file->pos;
 }
 
 
@@ -361,6 +385,7 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 	size_t j;
 	size_t len;
 	ssize_t w;
+	size_t x;
 
 	if(file->dir != FD_WRITE)
 	{
@@ -371,19 +396,19 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 	for(i = 0; i < nb; i++)
 		for(j = 0; j < size; j+=len)
 		{
-			len = min(BUFSIZ - file->len, size - j);
+			len = min(file->bufsiz - file->len, size - j);
 			memcpy(&file->buf[file->len], p, len);
 			p += len;
 			file->len += len;
-			if(file->len != BUFSIZ) /* buffer is not full */
+			if(file->len != file->bufsiz) /* buffer is not full */
 				continue;
-			if((w = write(file->fd, &file->buf[file->pos], BUFSIZ
-							- file->pos)) < 0)
+			x = file->bufsiz - file->pos;
+			if((w = write(file->fd, &file->buf[file->pos], x)) < 0)
 			{
 				file->error = 1;
 				return i;
 			}
-			if(w != BUFSIZ - (ssize_t)file->pos) /* XXX cast */
+			if((size_t)w != x) /* XXX cast */
 				file->pos = w; /* buffer is not empty */
 			else /* buffer is empty */
 			{
@@ -391,16 +416,15 @@ size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file)
 				file->len = 0;
 			}
 		}
-	if(file->fbuf == _IOFBF)
+	if(file->fbuf == _IOFBF) /* fully buffered */
 		return nb;
-	if(file->fbuf == _IOLBF)
-	{
-		j = file->pos;
-		for(i = j; i < file->len; i++)
-			if(file->buf[i] == '\n')
-				j = i;
-	}
-	else /* file is unbuffered */
+	if(file->fbuf == _IOLBF) /* line buffered */
+		for(j = file->len; j > file->pos; j--)
+		{
+			if(file->buf[j - 1] == '\n')
+				break;
+		}
+	else /* unbuffered */
 		j = file->len;
 	for(; file->pos < j; file->pos += w) /* empty buffer if necessary */
 		if((w = write(file->fd, &file->buf[file->pos], j - file->pos))
@@ -430,7 +454,6 @@ int getchar(void)
 /* pclose */
 int pclose(FILE * stream)
 {
-	/* FIXME should be specific? */
 	return fclose(stream);
 }
 
@@ -454,11 +477,10 @@ FILE * popen(char const * command, char const * mode)
 	int flags;
 	pid_t pid;
 	int fd[2];
-	int res;
 
 	if((flags = _fopen_mode(mode)) == -1)
 		return NULL;
-	if((res = pipe(fd)) != 0)
+	if(pipe(fd) != 0)
 		return NULL;
 	if((pid = fork()) == -1)
 	{
@@ -559,7 +581,8 @@ int rename(char const * from, char const * to)
 /* rewind */
 void rewind(FILE * file)
 {
-	/* FIXME implement */
+	if(fseek(file, 0, SEEK_SET) == 0)
+		clearerr(file);
 }
 
 
@@ -584,9 +607,17 @@ void setbuf(FILE * file, char * buf)
 
 
 /* setvbuf */
-void setvbuf(FILE * file, char * buf, int type, size_t size)
+int setvbuf(FILE * file, char * buf, int type, size_t size)
 {
-	/* FIXME implement */
+	if(file->fd < 0 || file->len > 0)
+	{
+		errno = EBADF;
+		return -1;
+	}
+	file->buf = (unsigned char *)buf;
+	file->fbuf = type;
+	file->bufsiz = size;
+	return 0;
 }
 
 
@@ -717,6 +748,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 	char const * p;		/* pointer to current format character */
 	size_t i;
 	size_t len;		/* length to output at current iteration */
+	int l;
 	char flags;
 	size_t width;
 	size_t precision;
@@ -733,7 +765,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 		if(i > 0)
 		{
 			len = min(i, size);
-			if(func(dest, len, p) != len)
+			if((l = func(dest, len, p)) < 0 || l != len)
 				return -1;
 		}
 		else if(*(p++) == '%')
@@ -1165,6 +1197,8 @@ static FILE * _fopen_new(int fd, int flags, int fbuf)
 	if((file = malloc(sizeof(*file))) == NULL)
 		return NULL;
 	file->flags = flags;
+	file->buf = file->_buf;
+	file->bufsiz = sizeof(file->_buf);
 	file->fd = fd;
 	file->len = 0;
 	file->pos = 0;
