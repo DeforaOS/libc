@@ -18,6 +18,7 @@
 #include "ctype.h"
 
 
+/* functions */
 /* isascii */
 int isascii(int c)
 {
@@ -50,8 +51,7 @@ int isdigit(int c)
 /* isgraph */
 int isgraph(int c)
 {
-	/* FIXME implement */
-	return 0;
+	return c > ' ' && c <= '~';
 }
 
 
