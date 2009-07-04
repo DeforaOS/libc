@@ -46,5 +46,5 @@ pid_t waitpid(pid_t pid, int * status, int options)
 	errno = ENOSYS;
 	return -1;
 }
-# endif
-#endif
+# endif /* !SYS_wait4 */
+#endif /* !SYS_waitpid */
