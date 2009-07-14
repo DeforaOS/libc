@@ -32,9 +32,7 @@
 /* Linux */
 #elif defined(__linux__)
 # include "kernel/linux/common.h"
-# if defined(__amd64__)
-#  include "kernel/linux/amd64/syscalls.S"
-# elif defined(__arm__)
+# if defined(__arm__)
 #  include "kernel/linux/arm/syscalls.S"
 # elif defined(__i386__)
 #  include "kernel/linux/i386/syscalls.S"
