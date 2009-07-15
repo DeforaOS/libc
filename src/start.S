@@ -34,7 +34,9 @@
 
 /* Linux */
 #elif defined(__linux__)
-# if defined(__arm__)
+# if defined(__amd64__)
+#  include "kernel/linux/amd64/start.S"
+# elif defined(__arm__)
 #  include "kernel/linux/arm/start.S"
 # elif defined(__i386__)
 #  include "kernel/linux/i386/start.S"
