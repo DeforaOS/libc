@@ -170,7 +170,7 @@
 #  define SYS_setrlimit		160
 #  define SYS_sync		162
 #  define SYS_mount		165
-#  define SYS_umount		166
+#  define SYS_unmount		166
 #  define SYS_reboot		169
 #  define SYS_utimes		235
 # elif defined(__arm__)
