@@ -72,6 +72,10 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/amd64/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/amd64/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/amd64/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/amd64/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/arm/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/arm/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/arm/syscalls.S \
