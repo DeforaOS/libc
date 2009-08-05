@@ -23,12 +23,19 @@
 /* functions */
 /* creat */
 #ifndef SYS_creat
-# warning Unsupported platform: creat() is missing
+# ifdef SYS_open
+int creat(const char * filename, mode_t mode)
+{
+	return open(filename, O_CREAT | O_TRUNC | O_WRONLY, mode);
+}
+# else
+#  warning Unsupported platform: creat() is missing
 int creat(const char * filename, mode_t mode)
 {
 	errno = ENOSYS;
 	return -1;
 }
+# endif
 #endif
 
 
