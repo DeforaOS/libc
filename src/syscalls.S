@@ -246,8 +246,14 @@ SYSCALL(statvfs)
 #endif
 
 /* sys/time.h */
+#ifdef SYS_getitimer
+SYSCALL(getitimer)
+#endif
 #ifdef SYS_gettimeofday
 SYSCALL(gettimeofday)
+#endif
+#ifdef SYS_setitimer
+SYSCALL(setitimer)
 #endif
 #ifdef SYS_utimes
 SYSCALL(utimes)

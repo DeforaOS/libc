@@ -20,11 +20,35 @@
 
 
 /* functions */
+/* getitimer */
+#ifndef SYS_getitimer
+# warning Unsupported platform: getitimer() is missing
+# include "errno.h"
+int getitimer(int which, struct itimerval * value)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* gettimeofday */
 #ifndef SYS_gettimeofday
 # warning Unsupported platform: gettimeofday() is missing
 # include "errno.h"
 int gettimeofday(struct timeval * tv, void * null)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
+/* setitimer */
+#ifndef SYS_setitimer
+# warning Unsupported platform: setitimer() is missing
+# include "errno.h"
+int setitimer(int which, struct itimerval * value, struct itimerval * ovalue)
 {
 	errno = ENOSYS;
 	return -1;

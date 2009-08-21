@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,9 @@ struct itimerval
 
 
 /* functions */
+int getitimer(int which, struct itimerval * value);
 int gettimeofday(struct timeval * tv, void * null);
+int setitimer(int which, struct itimerval * value, struct itimerval * ovalue);
 int utimes(char const * path, const struct timeval times[2]);
 
 #endif /* !LIBC_SYS_TIME_H */
