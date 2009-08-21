@@ -36,7 +36,8 @@ struct itimerval
 /* functions */
 int getitimer(int which, struct itimerval * value);
 int gettimeofday(struct timeval * tv, void * null);
-int setitimer(int which, struct itimerval * value, struct itimerval * ovalue);
+int setitimer(int which, const struct itimerval * value,
+		struct itimerval * ovalue);
 int utimes(char const * path, const struct timeval times[2]);
 
 #endif /* !LIBC_SYS_TIME_H */

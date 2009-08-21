@@ -48,7 +48,8 @@ int gettimeofday(struct timeval * tv, void * null)
 #ifndef SYS_setitimer
 # warning Unsupported platform: setitimer() is missing
 # include "errno.h"
-int setitimer(int which, struct itimerval * value, struct itimerval * ovalue)
+int setitimer(int which, const struct itimerval * value,
+		struct itimerval * ovalue)
 {
 	errno = ENOSYS;
 	return -1;
