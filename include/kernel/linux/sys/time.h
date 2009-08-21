@@ -28,13 +28,19 @@ typedef int suseconds_t;
 #  define time_t time_t
 typedef int time_t;
 # endif
-#ifndef timeval
-# define timeval timeval
+# ifndef timeval
+#  define timeval timeval
 struct timeval
 {
 	time_t tv_sec;
 	suseconds_t tv_usec;
 };
-#endif
+# endif
+
+
+/* constants */
+# define ITIMER_REAL	0
+# define ITIMER_VIRTUAL	1
+# define ITIMER_PROF	2
 
 #endif /* !LIBC_KERNEL_LINUX_SYS_TIME_H */
