@@ -49,13 +49,24 @@ char ** environ;
 
 /* alarm */
 #ifndef SYS_alarm
-# warning Unsupported platform: alarm() is missing
+# ifdef SYS_setitimer
+# include "sys/time.h"
 unsigned int alarm(unsigned int seconds)
 {
-	/* FIXME implement another way */
+	struct itimerval itv;
+
+	memset(&itv, 0, sizeof(itv));
+	itv.it_interval.tv_sec = seconds;
+	return setitimer(ITIMER_REAL, &itv, NULL);
+}
+# else
+#  warning Unsupported platform: alarm() is missing
+unsigned int alarm(unsigned int seconds)
+{
 	errno = ENOSYS;
 	return -1;
 }
+# endif
 #endif
 
 
