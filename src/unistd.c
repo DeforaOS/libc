@@ -759,8 +759,10 @@ void * sbrk(intptr_t increment)
 /* sleep */
 unsigned int sleep(unsigned int seconds)
 {
-	struct timespec ts = { seconds, 0 };
-
+	struct timespec ts;
+	
+	ts.tv_sec = seconds;
+	ts.tv_nsec = 0;
 	if(nanosleep(&ts, &ts) == 0)
 		return 0;
 	return ts.tv_sec;
