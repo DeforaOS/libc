@@ -53,11 +53,15 @@ char ** environ;
 # include "sys/time.h"
 unsigned int alarm(unsigned int seconds)
 {
-	struct itimerval itv;
+	struct itimerval cur;
+	struct itimerval old;
 
-	memset(&itv, 0, sizeof(itv));
-	itv.it_interval.tv_sec = seconds;
-	return setitimer(ITIMER_REAL, &itv, NULL);
+	memset(&cur, 0, sizeof(cur));
+	cur.it_interval.tv_sec = seconds;
+	memset(&old, 0, sizeof(old));
+	if(setitimer(ITIMER_REAL, &cur, &old) != 0)
+		return -1;
+	return old.it_interval.tv_sec;
 }
 # else
 #  warning Unsupported platform: alarm() is missing
