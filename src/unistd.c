@@ -42,8 +42,14 @@ char ** environ;
 
 /* functions */
 /* access */
+/* XXX when wrongly used this is a potential security flaw */
 #ifndef SYS_access
 # warning Unsupported platform: access() is missing
+int access(char const * filename, int mode)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
