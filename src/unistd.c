@@ -104,6 +104,11 @@ int brk(void * addr)
 /* chdir */
 #ifndef SYS_chdir
 # warning Unsupported platform: chdir() is missing
+int chdir(char const * filename)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -132,12 +137,22 @@ int close(int fildes)
 /* dup */
 #ifndef SYS_dup
 # warning Unsupported platform: dup() is missing
+int dup(int fildes)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* dup2 */
 #ifndef SYS_dup2
 # warning Unsupported platform: dup2() is missing
+int dup(int fildes1, int fildes2)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
@@ -729,36 +744,66 @@ void * sbrk(intptr_t increment)
 /* setgid */
 #ifndef SYS_setgid
 # warning Unsupported platform: setgid() is missing
+int setgid(gid_t gid)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* setpgid */
 #ifndef SYS_setpgid
 # warning Unsupported platform: setpgid() is missing
+int setpgid(pid_t pid, pid_t pgid)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* setregid */
 #ifndef SYS_setregid
 # warning Unsupported platform: setregid() is missing
+int setregid(gid_t rgid, gid_t egid)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* setreuid */
 #ifndef SYS_setreuid
 # warning Unsupported platform: setreuid() is missing
+int setreuid(uid_t ruid, uid_t euid)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* setsid */
 #ifndef SYS_setsid
 # warning Unsupported platform: setsid() is missing
+int setsid(void)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* setuid */
 #ifndef SYS_setuid
 # warning Unsupported platform: setuid() is missing
+int setuid(uid_t uid)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
