@@ -201,10 +201,7 @@ char * strerror(int errnum)
 	static char ret[256];
 
 	if(strerror_r(errnum, ret, sizeof(ret)) != 0)
-	{
 		errno = EINVAL;
-		return ret;
-	}
 	return ret;
 }
 
@@ -214,7 +211,7 @@ int strerror_r(int errnum, char * strerrbuf, size_t buflen)
 {
 	static const struct
 	{
-		const int errno;
+		const int errnum;
 		const char * errmsg;
 	} err[] =
 	{
@@ -249,7 +246,7 @@ int strerror_r(int errnum, char * strerrbuf, size_t buflen)
 
 	/* XXX is there a way to call snprintf() only once? */
 	for(i = 0; err[i].errmsg != NULL; i++)
-		if(err[i].errno == errnum)
+		if(err[i].errnum == errnum)
 		{
 			strncpy(strerrbuf, err[i].errmsg, buflen - 1);
 			strerrbuf[buflen - 1] = '\0';
