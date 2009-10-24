@@ -202,7 +202,11 @@ int execle(char const * filename, char * const arg, ...)
 	do
 	{
 		if((q = realloc(argv, sizeof(*argv) * (argv_cnt + 1))) == NULL)
+		{
+			free(argv);
+			va_end(ap);
 			return -1;
+		}
 		argv = q;
 		argv[argv_cnt++] = p;
 	}
@@ -230,7 +234,11 @@ int execlp(char const * filename, char * const arg, ...)
 	do
 	{
 		if((q = realloc(argv, sizeof(*argv) * (argv_cnt + 2))) == NULL)
+		{
+			free(argv);
+			va_end(ap);
 			return -1;
+		}
 		argv = q;
 		argv[argv_cnt++] = p;
 	}
