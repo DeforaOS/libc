@@ -28,6 +28,7 @@ static FILE * _fp = NULL;
 
 
 /* public */
+/* functions */
 /* endpwent */
 void endpwent(void)
 {
@@ -58,9 +59,11 @@ struct passwd * getpwent(void)
 		return NULL;
 	*t = '\0';
 	ret.pw_name = s;
-	s = ++t; /* skip the user's password */
+	s = ++t; /* read the user's password */
 	if((t = strchr(s, ':')) == NULL)
 		return NULL;
+	*t = '\0';
+	ret.pw_gecos = s;
 	s = ++t; /* read the user's id */
 	if((t = strchr(s, ':')) == NULL)
 		return NULL;
