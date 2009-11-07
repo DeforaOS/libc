@@ -56,6 +56,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/sys/utsname.c \
 		$(PACKAGE)-$(VERSION)/src/sys/wait.c \
 		$(PACKAGE)-$(VERSION)/src/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/syslog.c \
 		$(PACKAGE)-$(VERSION)/src/termios.c \
 		$(PACKAGE)-$(VERSION)/src/time.c \
 		$(PACKAGE)-$(VERSION)/src/ucontext.c \

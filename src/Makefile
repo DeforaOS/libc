@@ -24,9 +24,10 @@ all: subdirs $(TARGETS)
 subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
-libc_OBJS = ctype.o dirent.o errno.o fcntl.o float.o fnmatch.o grp.o iconv.o langinfo.o libgen.o locale.o poll.o pwd.o search.o setjmp.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/ipc.o sys/mman.o sys/mount.o sys/reboot.o sys/resource.o sys/select.o sys/shm.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o termios.o time.o ucontext.o unistd.o utime.o utmpx.o
+libc_OBJS = ctype.o dirent.o errno.o fcntl.o float.o fnmatch.o grp.o iconv.o langinfo.o libgen.o locale.o poll.o pwd.o search.o setjmp.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/ipc.o sys/mman.o sys/mount.o sys/reboot.o sys/resource.o sys/select.o sys/shm.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o syslog.o termios.o time.o ucontext.o unistd.o utime.o utmpx.o
 libc_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 libc_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) `$(CC) -print-libgcc-file-name`
+
 libc_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
 libc.a: $(libc_OBJS)
@@ -35,6 +36,7 @@ libc.a: $(libc_OBJS)
 
 libc.so: $(libc_OBJS)
 	$(LD) -o libc.so -Wl,-soname,libc.so.0 $(libc_OBJS) `$(CC) -print-libgcc-file-name`
+
 
 start.o_OBJS = start.o
 start.o_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
@@ -143,6 +145,9 @@ sys/wait.o: sys/wait.c syscalls.h
 
 syscalls.o: syscalls.S kernel/freebsd/common.h kernel/freebsd/i386/syscalls.S kernel/linux/common.h kernel/linux/amd64/syscalls.S kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/netbsd/common.h kernel/netbsd/common.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S kernel/netbsd/sparc64/syscalls.S kernel/openbsd/common.h kernel/openbsd/arm/syscalls.S kernel/openbsd/i386/syscalls.S
 	$(AS) $(libc_ASFLAGS) -o syscalls.o syscalls.S
+
+syslog.o: syslog.c
+	$(CC) $(libc_CFLAGS) -c syslog.c
 
 termios.o: termios.c syscalls.h
 	$(CC) $(libc_CFLAGS) -c termios.c
