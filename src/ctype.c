@@ -91,6 +91,13 @@ int isxdigit(int c)
 }
 
 
+/* toascii */
+int toascii(int c)
+{
+	return c & 0x7f;
+}
+
+
 /* tolower */
 int tolower(int c)
 {
