@@ -204,8 +204,14 @@ SYSCALL(select)
 #ifdef SYS_shmat
 SYSCALL(shmat)
 #endif
+#ifdef SYS_shmctl
+SYSCALL(shmctl)
+#endif
 #ifdef SYS_shmdt
 SYSCALL(shmdt)
+#endif
+#ifdef SYS_shmget
+SYSCALL(shmget)
 #endif
 
 /* sys/stat.h */
