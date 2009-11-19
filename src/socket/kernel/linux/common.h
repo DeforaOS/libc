@@ -1,6 +1,6 @@
 /* $Id$ */
 /* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
-/* This file is part of RunningBear System libc */
+/* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 3 of the License.
@@ -19,20 +19,38 @@
 # define SOCKET_KERNEL_LINUX_COMMON_H
 
 
-# define SYS_socket		1
-# define SYS_bind		2
-# define SYS_connect		3
-# define SYS_listen		4
-# define SYS_accept		5
-# define SYS_getsockname	6
-# define SYS_recv		9
-# define SYS_send		10
-# define SYS_sendto		11
-# define SYS_recvfrom		12
-# define SYS_setsockopt		14
-# define SYS_getsockopt		15
-# define SYS_sendmsg		16
-# define SYS_recvmsg		17
-# define SYS_socketcall		102
+# ifdef __amd64__
+#  define SYS_socket		41
+#  define SYS_connect		42
+#  define SYS_accept		43
+#  define SYS_sendto		44
+#  define SYS_recvfrom		45
+#  define SYS_send		46 /* FIXME is this correct? */
+#  define SYS_sendmsg		46
+#  define SYS_recv		47 /* FIXME is this correct? */
+#  define SYS_recvmsg		47
+#  define SYS_shutdown		48
+#  define SYS_bind		49
+#  define SYS_listen		50
+#  define SYS_getsockname	51
+#  define SYS_setsockopt	54
+#  define SYS_getsockopt	55
+# else
+#  define SYS_socket		1
+#  define SYS_bind		2
+#  define SYS_connect		3
+#  define SYS_listen		4
+#  define SYS_accept		5
+#  define SYS_getsockname	6
+#  define SYS_recv		9
+#  define SYS_send		10
+#  define SYS_sendto		11
+#  define SYS_recvfrom		12
+#  define SYS_setsockopt	14
+#  define SYS_getsockopt	15
+#  define SYS_sendmsg		16
+#  define SYS_recvmsg		17
+#  define SYS_socketcall	102
+# endif
 
 #endif /* !KERNEL_SOCKET_LINUX_COMMON_H */
