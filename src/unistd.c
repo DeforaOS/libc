@@ -832,9 +832,22 @@ unsigned int sleep(unsigned int seconds)
 }
 
 
+/* strsignal */
+char * strsignal(int sig)
+{
+	/* FIXME implement */
+	return NULL;
+}
+
+
 /* symlink */
 #ifndef SYS_symlink
 # warning Unsupported platform: symlink() is missing
+int symlink(char const * from, char const * to)
+{
+	errno = -ENOSYS;
+	return -1;
+}
 #endif
 
 
