@@ -29,7 +29,7 @@ typedef struct
 	int _padding1[5];
 } siginfo_t;
 
-typedef struct { unsigned long bits[16]; } sigset_t;
+typedef struct { unsigned int bits[2]; } sigset_t;
 
 struct sigaction
 {
@@ -78,5 +78,10 @@ struct sigaction
 
 # define SA_RESTART	0
 # define SA_NOCLDSTOP	1
+
+
+/* macros */
+# define sigemptyset(s) ((s)->bits[0] = 0x00000000, (s)->bits[1] = 0x00000000)
+# define sigfillset(s) ((s)->bits[0] = 0xffffffff, (s)->bits[1] = 0xffffffff)
 
 #endif /* !LIBC_KERNEL_LINUX_SIGNAL_H */
