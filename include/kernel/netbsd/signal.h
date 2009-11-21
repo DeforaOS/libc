@@ -50,7 +50,7 @@ struct sigaction
 # define sa_sigaction _sa_u.sa_sigaction
 
 # ifndef stack_t
-#  define stack_t
+#  define stack_t stack_t
 typedef struct _stack_t {
 	void * ss_sp;
 	unsigned long ss_size;
