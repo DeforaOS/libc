@@ -21,12 +21,14 @@
 #include "stdarg.h"
 #include "stddef.h"
 #include "stdlib.h"
+#include "stdio.h"
 #include "dirent.h"
 #include "errno.h"
 #include "string.h"
 #include "termios.h"
 #include "time.h"
 #include "limits.h"
+#include "signal.h"
 #include "syscalls.h"
 #include "unistd.h"
 
@@ -835,7 +837,35 @@ unsigned int sleep(unsigned int seconds)
 /* strsignal */
 char * strsignal(int sig)
 {
-	/* FIXME implement */
+	static const struct
+	{
+		int signal;
+		const char * name;
+	} names[] = {
+		{ SIGABRT,	"SIGABRT"	},
+		{ SIGCONT,	"SIGCONT"	},
+		{ SIGHUP,	"SIGHUP"	},
+		{ SIGILL,	"SIGILL"	},
+		{ SIGINT,	"SIGINT"	},
+		{ SIGKILL,	"SIGKILL"	},
+		{ SIGPIPE,	"SIGPIPE"	},
+		{ SIGQUIT,	"SIGQUIT"	},
+		{ SIGSEGV,	"SIGSEGV"	},
+		{ SIGSEGV,	"SIGSTOP"	},
+		{ SIGTRAP,	"SIGTRAP"	},
+		{ SIGUSR1,	"SIGUSR1"	},
+		{ SIGUSR2,	"SIGUSR2"	},
+		{ 0,		NULL		}
+	};
+	static char buf[8];
+	size_t i;
+
+	for(i = 0; names[i].name != NULL; i++)
+		if(names[i].signal == sig)
+		{
+			snprintf(buf, sizeof(buf), "%s", names[i].name);
+			return buf;
+		}
 	return NULL;
 }
 
