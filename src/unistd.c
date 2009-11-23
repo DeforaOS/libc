@@ -851,7 +851,7 @@ char * strsignal(int sig)
 		{ SIGPIPE,	"SIGPIPE"	},
 		{ SIGQUIT,	"SIGQUIT"	},
 		{ SIGSEGV,	"SIGSEGV"	},
-		{ SIGSEGV,	"SIGSTOP"	},
+		{ SIGSTOP,	"SIGSTOP"	},
 		{ SIGTRAP,	"SIGTRAP"	},
 		{ SIGUSR1,	"SIGUSR1"	},
 		{ SIGUSR2,	"SIGUSR2"	},
