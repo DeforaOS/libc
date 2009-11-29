@@ -46,6 +46,7 @@
 #  define SYS_send		10
 #  define SYS_sendto		11
 #  define SYS_recvfrom		12
+#  define SYS_shutdown		13
 #  define SYS_setsockopt	14
 #  define SYS_getsockopt	15
 #  define SYS_sendmsg		16
