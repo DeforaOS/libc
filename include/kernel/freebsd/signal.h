@@ -39,9 +39,21 @@ struct sigaction
 # define sa_sigaction _sa_u.sa_sigaction
 
 /* constants */
+# define SIGHUP		1
 # define SIGINT		2
+# define SIGQUIT	3
+# define SIGILL		4
+# define SIGTRAP	5
 # define SIGABRT	6
+# define SIGKILL	9
+# define SIGSEGV	11
+# define SIGPIPE	13
 # define SIGTERM	15
+# define SIGSTOP	17
+# define SIGCONT	19
+# define SIGCHLD	20
+# define SIGUSR1	30
+# define SIGUSR2	31
 
 # define SIG_ERR	((void (*)(int)) -1)
 
