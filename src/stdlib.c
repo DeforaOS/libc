@@ -224,7 +224,7 @@ void * calloc(size_t nmemb, size_t size)
 	if((ptr = malloc(sz)) == NULL)
 		return NULL;
 	memset(ptr, 0, sz);
-	return NULL;
+	return ptr;
 }
 
 
