@@ -18,4 +18,5 @@
 #include "errno.h"
 
 
+/* variables */
 int errno = 0;

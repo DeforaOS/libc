@@ -20,6 +20,7 @@
 #include "poll.h"
 
 
+/* functions */
 /* poll */
 #ifndef SYS_poll
 # warning Unsupported platform: poll() is missing

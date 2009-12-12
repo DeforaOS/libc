@@ -19,6 +19,7 @@
 #include "libgen.h"
 
 
+/* functions */
 /* basename */
 char * basename(char * path)
 {

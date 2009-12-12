@@ -28,6 +28,8 @@
 static FILE * _fp = NULL;
 
 
+/* public */
+/* functions */
 /* endgrent */
 void endgrent(void)
 {

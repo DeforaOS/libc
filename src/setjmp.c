@@ -20,6 +20,7 @@
 #include "setjmp.h"
 
 
+/* functions */
 /* setjmp */
 /* XXX from dietlibc */
 int _sigjmp_save(sigjmp_buf env, int savemask);

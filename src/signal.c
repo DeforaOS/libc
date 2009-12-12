@@ -22,6 +22,7 @@
 #include "signal.h"
 
 
+/* functions */
 /* kill */
 #ifndef SYS_kill
 # warning Unsupported platform: kill() is missing

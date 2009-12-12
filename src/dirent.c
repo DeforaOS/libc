@@ -35,6 +35,7 @@ struct _DIR
 };
 
 
+/* functions */
 /* closedir */
 int closedir(DIR * dir)
 {

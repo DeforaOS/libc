@@ -18,6 +18,7 @@
 #include "fnmatch.h"
 
 
+/* functions */
 /* fnmatch */
 static int _fnmatch_class(char const * pattern, char const * str, int flags);
 
