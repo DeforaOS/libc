@@ -1,5 +1,5 @@
 PACKAGE	= libc
-VERSION	= 0.0.3
+VERSION	= 0.0.4
 SUBDIRS	= src include
 RM	= rm -f
 LN	= ln -f
