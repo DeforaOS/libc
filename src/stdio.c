@@ -713,7 +713,7 @@ static int _fprint(void * dest, size_t size, char const buf[])
 {
 	FILE * fp = dest;
 
-	return fwrite(buf, sizeof(char), size, fp);
+	return (fwrite(buf, sizeof(char), size, fp) == size) ? 0 : -1;
 }
 
 /* _vprintf */
@@ -748,7 +748,6 @@ static int _vprintf(print_func func, void * dest, size_t size,
 	char const * p;		/* pointer to current format character */
 	size_t i;
 	size_t len;		/* length to output at current iteration */
-	int l;
 	char flags;
 	size_t width;
 	size_t precision;
@@ -764,8 +763,8 @@ static int _vprintf(print_func func, void * dest, size_t size,
 		for(i = 0; p[i] != '\0' && p[i] != '%'; i++);
 		if(i > 0)
 		{
-			len = min(i, size);
-			if((l = func(dest, len, p)) < 0 || l != len)
+			len = i;
+			if(func(dest, min(i, size), p) != 0)
 				return -1;
 		}
 		else if(*(p++) == '%')
@@ -946,10 +945,8 @@ static int _format_c(print_func func, void * dest, size_t size, size_t * len,
 		*len = 0;
 		return 0;
 	}
-	if(func(dest, 1, chrp) != 1)
-		return -1;
 	*len = 1;
-	return 0;
+	return func(dest, 1, chrp);
 }
 
 static int _format_d(print_func func, void * dest, size_t size, size_t * len,
@@ -963,7 +960,7 @@ static int _format_d(print_func func, void * dest, size_t size, size_t * len,
 		return _format_u(func, dest, size - 1, len, &uval);
 	}
 	uval = -(*ptr);
-	if(func(dest, 1, "-") != 1
+	if(func(dest, 1, "-") != 0
 			|| _format_u(func, dest, size - 1, len, &uval) == -1)
 		return -1;
 	(*len)++;
@@ -974,68 +971,47 @@ static int _format_o(print_func func, void * dest, size_t size, size_t * len,
 		unsigned long long * ptr)
 {
 	char tmp[22] = "";
-	int l;
 
 	_format_lutoa(tmp, *ptr, 8); /* XXX assumes tmp is large enough */
 	*len = strlen(tmp);
-	l = min(*len, size);
-	if(func(dest, l, tmp) != l)
-		return -1;
-	return 0;
+	return func(dest, min(*len, size), tmp);
 }
 
 static int _format_s(print_func func, void * dest, size_t size, size_t * len,
 		char * str)
 {
-	int l;
-
 	*len = strlen(str);
-	l = min(*len, size);
-	if(func(dest, l, str) != l)
-		return -1;
-	return 0;
+	return func(dest, min(*len, size), str);
 }
 
 static int _format_p(print_func func, void * dest, size_t size, size_t * len,
 		void * ptr)
 {
 	char tmp[3 + sizeof(void*) + sizeof(void*)] = "0x";
-	int l;
 
 	*len = sizeof(tmp);
-	l = min(sizeof(tmp), size);
 	_format_lutoa(&tmp[2], (long)ptr, 16); /* XXX cast */
-	if(func(dest, l, tmp) != l)
-		return -1;
-	return 0;
+	return func(dest, min(sizeof(tmp), size), tmp);
 }
 
 static int _format_u(print_func func, void * dest, size_t size, size_t * len,
 		unsigned long long * ptr)
 {
 	char tmp[19] = "";
-	int l;
 
 	_format_lutoa(tmp, *ptr, 10); /* XXX assumes tmp is large enough */
 	*len = strlen(tmp);
-	l = min(*len, size);
-	if(func(dest, l, tmp) != l)
-		return -1;
-	return 0;
+	return func(dest, min(*len, size), tmp);
 }
 
 static int _format_x(print_func func, void * dest, size_t size, size_t * len,
 		unsigned long long * ptr)
 {
 	char tmp[sizeof(long) + sizeof(long) + 1] = "";
-	int l;
 
 	_format_lutoa(tmp, *ptr, 16); /* XXX assumes tmp is large enough */
 	*len = strlen(tmp);
-	l = min(*len, size);
-	if(func(dest, l, tmp) != l)
-		return -1;
-	return 0;
+	return func(dest, min(*len, size), tmp);
 }
 
 /* PRE	dest is long enough
@@ -1110,9 +1086,11 @@ static int _sprint(void * dest, size_t size, char const buf[])
 {
 	char ** str = dest;
 
+	if(*str == NULL)
+		return 0;
 	strncpy(*str, buf, size);
 	*str += size;
-	return size;
+	return 0;
 }
 
 
