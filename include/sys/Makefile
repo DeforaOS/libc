@@ -45,6 +45,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 utsname.h $(DESTDIR)$(INCLUDEDIR)/sys/utsname.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
+	$(INSTALL) -m 0644 vt.h $(DESTDIR)$(INCLUDEDIR)/sys/vt.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 wait.h $(DESTDIR)$(INCLUDEDIR)/sys/wait.h
 
 uninstall:
@@ -63,6 +65,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/types.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/uio.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/utsname.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/vt.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/wait.h
 
 .PHONY: all clean distclean install uninstall

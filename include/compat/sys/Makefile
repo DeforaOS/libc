@@ -38,6 +38,8 @@ install: all
 	$(INSTALL) -m 0644 types.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/types.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
 	$(INSTALL) -m 0644 utsname.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/utsname.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
+	$(INSTALL) -m 0644 vt.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/vt.h
 
 uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/sys/ioctl.h
@@ -52,5 +54,6 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/sys/times.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/sys/types.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/sys/utsname.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/compat/sys/vt.h
 
 .PHONY: all clean distclean install uninstall

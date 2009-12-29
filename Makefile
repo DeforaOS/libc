@@ -263,6 +263,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/vt.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/dl/dlfcn.h \
@@ -347,6 +348,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/vt.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/dirent.h \
@@ -456,6 +458,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/sys/uio.h \
 		$(PACKAGE)-$(VERSION)/include/sys/utsname.h \
+		$(PACKAGE)-$(VERSION)/include/sys/vt.h \
 		$(PACKAGE)-$(VERSION)/include/sys/wait.h \
 		$(PACKAGE)-$(VERSION)/include/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/sys/project.conf \

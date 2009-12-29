@@ -38,6 +38,8 @@ install: all
 	$(INSTALL) -m 0644 types.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/types.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
 	$(INSTALL) -m 0644 utsname.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/utsname.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
+	$(INSTALL) -m 0644 vt.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/vt.h
 
 uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/ioctl.h
@@ -52,5 +54,6 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/times.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/types.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/utsname.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/vt.h
 
 .PHONY: all clean distclean install uninstall
