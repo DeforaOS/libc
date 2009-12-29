@@ -22,18 +22,6 @@
 # include "stddef.h"
 
 
-/* constants */
-/* size of <stdio.h> buffers */
-# define BUFSIZ 8192
-
-# define _IOFBF	0
-# define _IOLBF	1
-# define _IONBF	2
-
-/* end-of-file return value */
-# define EOF (-1)
-
-
 /* types */
 # ifndef FILE
 #  define FILE FILE
@@ -58,6 +46,21 @@ typedef void * va_list;
 # endif
 
 
+/* constants */
+/* size of <stdio.h> buffers */
+# define BUFSIZ 8192
+
+# define _IOFBF	0
+# define _IOLBF	1
+# define _IONBF	2
+
+/* end-of-file return value */
+# define EOF (-1)
+
+/* Maximum size of character array to hold ctermid() output */
+# define L_ctermid	256
+
+
 /* variables */
 /* standard input, output, and error streams */
 extern FILE * stdin;
@@ -67,6 +70,7 @@ extern FILE * stderr;
 
 /* functions */
 void clearerr(FILE * file);
+char * ctermid(char * buf);
 int fclose(FILE * file);
 FILE * fdopen(int fildes, char const * mode);
 int feof(FILE * file);

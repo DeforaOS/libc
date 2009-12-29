@@ -86,6 +86,19 @@ void clearerr(FILE * file)
 }
 
 
+/* ctermid */
+char * ctermid(char * buf)
+{
+	static char const devtty[] = "/dev/tty";
+	static char tty[L_ctermid];
+
+	if(buf == NULL)
+		buf = tty;
+	snprintf(buf, L_ctermid, "%s", devtty);
+	return buf;
+}
+
+
 /* fclose */
 int fclose(FILE * file)
 {
