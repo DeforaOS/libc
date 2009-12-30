@@ -741,6 +741,7 @@ typedef struct _print_args
 	size_t * size;
 } print_args;
 static int _vfprintf_do(print_args * args, char const * buf, size_t len);
+static int _vfprintf_do_do(print_args * args, char const * buf, size_t len);
 #define FLAGS_HASH	0x01
 #define FLAGS_MINUS	0x02
 #define FLAGS_PLUS	0x04
@@ -778,6 +779,9 @@ static int _vprintf(print_func func, void * dest, size_t size,
 	args.size = &size;
 	for(p = format; *p != '\0'; p += i)
 	{
+		args.flags = 0;
+		args.width = 0;
+		args.precision = 0;
 		for(i = 0; p[i] != '\0' && p[i] != '%'; i++);
 		if(i > 0 && _vfprintf_do(&args, p, i) != 0)
 			return -1;
@@ -887,6 +891,17 @@ static int _vprintf(print_func func, void * dest, size_t size,
 }
 
 static int _vfprintf_do(print_args * args, char const * buf, size_t len)
+{
+	size_t i;
+	char padding = args->flags & FLAGS_ZERO ? '0' : ' ';
+
+	for(i = len + 1; i < args->width; i++)
+		if(_vfprintf_do_do(args, &padding, 1) != 0)
+			return -1;
+	return _vfprintf_do_do(args, buf, len);
+}
+
+static int _vfprintf_do_do(print_args * args, char const * buf, size_t len)
 {
 	size_t s;
 
