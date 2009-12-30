@@ -730,8 +730,17 @@ static int _fprint(void * dest, size_t size, char const buf[])
 }
 
 /* _vprintf */
-static int _vfprintf_do(int * ret, print_func func, void * dest, size_t * size,
-		char const * buf, size_t len);
+typedef struct _print_args
+{
+	int ret;
+	int flags;
+	size_t width;
+	size_t precision;
+	print_func func;
+	void * dest;
+	size_t * size;
+} print_args;
+static int _vfprintf_do(print_args * args, char const * buf, size_t len);
 #define FLAGS_HASH	0x01
 #define FLAGS_MINUS	0x02
 #define FLAGS_PLUS	0x04
@@ -741,53 +750,48 @@ static int _vprintf_flags(char const * p, size_t * i);
 static size_t _vprintf_width(char const * p, size_t * i);
 static size_t _vprintf_precision(char const * p, size_t * i);
 static void _format_lutoa(char * dest, unsigned long n, size_t base);
-static int _format_c(int * ret, print_func func, void * dest, size_t * size,
-		char const * chrp);
-static int _format_d(int * ret, print_func func, void * dest, size_t * size,
-		long long * ptr);
-static int _format_o(int * ret, print_func func, void * dest, size_t * size,
-		unsigned long long * ptr);
-static int _format_s(int * ret, print_func func, void * dest, size_t * size,
-		char const * str);
-static int _format_p(int * ret, print_func func, void * dest, size_t * size,
-		void * ptr);
-static int _format_u(int * ret, print_func func, void * dest, size_t * size,
-		unsigned long long * ptr);
-static int _format_x(int * ret, print_func func, void * dest, size_t * size,
-		unsigned long long * ptr);
+static int _format_c(print_args * args, char const * chrp);
+static int _format_d(print_args * args, long long * ptr);
+static int _format_o(print_args * args, unsigned long long * ptr);
+static int _format_s(print_args * args, char const * str);
+static int _format_p(print_args * args, void * ptr);
+static int _format_u(print_args * args, unsigned long long * ptr);
+static int _format_x(print_args * args, unsigned long long * ptr);
 
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg)
 {
-	int ret = 0;
+	print_args args;
 	char const * p;		/* pointer to current format character */
 	size_t i;
-	int flags;
-	size_t width;
-	size_t precision;
 	int lng;
+	int f = 0;
 	char c;
 	char const * str;
 	long long int d;
 	unsigned long long int u;
 	void * ptr;
 
+	args.ret = 0;
+	args.func = func;
+	args.dest = dest;
+	args.size = &size;
 	for(p = format; *p != '\0'; p += i)
 	{
 		for(i = 0; p[i] != '\0' && p[i] != '%'; i++);
-		if(i > 0 && _vfprintf_do(&ret, func, dest, &size, p, i) != 0)
+		if(i > 0 && _vfprintf_do(&args, p, i) != 0)
 			return -1;
 		if(p[i++] != '%')
 			break;
 		if(p[i] == '%')
 		{
-			if(_vfprintf_do(&ret, func, dest, &size, p++, 1) != 0)
+			if(_vfprintf_do(&args, p++, 1) != 0)
 				return -1;
 			continue;
 		}
-		flags = _vprintf_flags(p, &i);
-		width = _vprintf_width(p, &i);
-		precision = _vprintf_precision(p, &i);
+		args.flags = _vprintf_flags(p, &i);
+		args.width = _vprintf_width(p, &i);
+		args.precision = _vprintf_precision(p, &i);
 		for(lng = 0; p[i] != '\0'; i++)
 		{
 			if(p[i] == 'l')
@@ -801,8 +805,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 			else if(p[i] == 'c')
 			{
 				c = va_arg(arg, int);
-				if(_format_c(&ret, func, dest, &size, &c) != 0)
-					return -1;
+				f = _format_c(&args, &c);
 				break;
 			}
 			else if(p[i] == 'd')
@@ -813,8 +816,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 					d = va_arg(arg, long int);
 				else
 					d = va_arg(arg, int);
-				if(_format_d(&ret, func, dest, &size, &d) != 0)
-					return -1;
+				f = _format_d(&args, &d);
 				break;
 			}
 			else if(p[i] == 'o')
@@ -825,22 +827,19 @@ static int _vprintf(print_func func, void * dest, size_t size,
 					u = va_arg(arg, unsigned long int);
 				else
 					u = va_arg(arg, unsigned int);
-				if(_format_o(&ret, func, dest, &size, &u) != 0)
-					return -1;
+				f = _format_o(&args, &u);
 				break;
 			}
 			else if(p[i] == 'p')
 			{
 				ptr = va_arg(arg, void *);
-				if(_format_p(&ret, func, dest, &size, ptr) != 0)
-					return -1;
+				f = _format_p(&args, ptr);
 				break;
 			}
 			else if(p[i] == 's')
 			{
 				str = va_arg(arg, char const *);
-				if(_format_s(&ret, func, dest, &size, str) != 0)
-					return -1;
+				f = _format_s(&args, str);
 				break;
 			}
 			else if(p[i] == 'u')
@@ -851,11 +850,10 @@ static int _vprintf(print_func func, void * dest, size_t size,
 					u = va_arg(arg, unsigned long int);
 				else
 					u = va_arg(arg, unsigned int);
-				if(_format_u(&ret, func, dest, &size, &u) != 0)
-					return -1;
+				f = _format_u(&args, &u);
 				break;
 			}
-			else if(p[i] == 'x')
+			else if(p[i] == 'x' || p[i] == 'X')
 			{
 				if(lng > 1)
 					u = va_arg(arg, unsigned long long int);
@@ -863,8 +861,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 					u = va_arg(arg, unsigned long int);
 				else
 					u = va_arg(arg,	unsigned int);
-				if(_format_x(&ret, func, dest, &size, &u) != 0)
-					return -1;
+				f = _format_x(&args, &u);
 				break;
 			}
 			else if(p[i] == 'z')
@@ -882,26 +879,27 @@ static int _vprintf(print_func func, void * dest, size_t size,
 				return -1;
 			}
 		}
+		if(f != 0)
+			return -1;
 		i++;
 	}
-	return ret;
+	return args.ret;
 }
 
-static int _vfprintf_do(int * ret, print_func func, void * dest, size_t * size,
-		char const * buf, size_t len)
+static int _vfprintf_do(print_args * args, char const * buf, size_t len)
 {
 	size_t s;
 
-	s = min(*size, len);
-	if(func(dest, s, buf) != 0)
+	s = min(*(args->size), len);
+	if(args->func(args->dest, s, buf) != 0)
 		return -1;
-	if((size_t)INT_MAX - len < (size_t)*ret)
+	if((size_t)INT_MAX - len < (size_t)(args->ret))
 	{
 		errno = ERANGE;
 		return -1;
 	}
-	*size -= s;
-	*ret += len;
+	*(args->size) -= s;
+	args->ret += len;
 	return 0;
 }
 
@@ -949,71 +947,63 @@ static size_t _vprintf_precision(char const * p, size_t * i)
 	return _vprintf_width(p, i);
 }
 
-static int _format_c(int * ret, print_func func, void * dest, size_t * size,
-		char const * chrp)
+static int _format_c(print_args * args, char const * chrp)
 {
-	return _vfprintf_do(ret, func, dest, size, chrp, sizeof(*chrp));
+	return _vfprintf_do(args, chrp, sizeof(*chrp));
 }
 
-static int _format_d(int * ret, print_func func, void * dest, size_t * size,
-		long long * ptr)
+static int _format_d(print_args * args, long long * ptr)
 {
 	unsigned long long uval;
 
 	if(*ptr >= 0)
 	{
 		uval = *ptr;
-		return _format_u(ret, func, dest, size, &uval);
+		return _format_u(args, &uval);
 	}
 	uval = -(*ptr);
-	if(_vfprintf_do(ret, func, dest, size, "-", 1) != 0
-			|| _format_u(ret, func, dest, size, &uval) != 0)
+	if(_vfprintf_do(args, "-", 1) != 0 || _format_u(args, &uval) != 0)
 		return -1;
 	return 0;
 }
 
-static int _format_o(int * ret, print_func func, void * dest, size_t * size,
-		unsigned long long * ptr)
+static int _format_o(print_args * args, unsigned long long * ptr)
 {
 	char tmp[22] = "";
 
 	_format_lutoa(tmp, *ptr, 8); /* XXX assumes tmp is large enough */
-	return _vfprintf_do(ret, func, dest, size, tmp, strlen(tmp));
+	return _vfprintf_do(args, tmp, strlen(tmp));
 }
 
-static int _format_s(int * ret, print_func func, void * dest, size_t * size,
-		char const * str)
+static int _format_s(print_args * args, char const * str)
 {
 	if(str == NULL) /* XXX be nice and don't crash */
 		str = "(null)";
-	return _vfprintf_do(ret, func, dest, size, str, strlen(str));
+	return _vfprintf_do(args, str, strlen(str));
 }
 
-static int _format_p(int * ret, print_func func, void * dest, size_t * size,
-		void * ptr)
+static int _format_p(print_args * args, void * ptr)
 {
 	char tmp[3 + sizeof(void*) + sizeof(void*)] = "0x";
 
 	_format_lutoa(&tmp[2], (long)ptr, 16); /* XXX cast */
-	return _vfprintf_do(ret, func, dest, size, tmp, strlen(tmp));
+	return _vfprintf_do(args, tmp, strlen(tmp));
 }
 
-static int _format_u(int * ret, print_func func, void * dest, size_t * size,
-		unsigned long long * ptr)
+static int _format_u(print_args * args, unsigned long long * ptr)
 {
 	char tmp[19] = "";
 
 	_format_lutoa(tmp, *ptr, 10); /* XXX assumes tmp is large enough */
-	return _vfprintf_do(ret, func, dest, size, tmp, strlen(tmp));
+	return _vfprintf_do(args, tmp, strlen(tmp));
 }
 
-static int _format_x(int * ret, print_func func, void * dest, size_t * size,
-		unsigned long long * ptr)
+static int _format_x(print_args * args, unsigned long long * ptr)
 {
 	char tmp[sizeof(long) + sizeof(long) + 1] = "";
 
 	_format_lutoa(tmp, *ptr, 16); /* XXX assumes tmp is large enough */
-	return _vfprintf_do(ret, func, dest, size, tmp, strlen(tmp));
+	return _vfprintf_do(args, tmp, strlen(tmp));
 }
 
 /* PRE	dest is long enough
