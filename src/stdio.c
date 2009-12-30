@@ -1031,7 +1031,7 @@ static void _format_lutoa(char * dest, unsigned long n, size_t base, int upper)
 {
 	static char const convl[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 	static char const convu[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	char const * conv = (upper != 0) ? &convu : &convl;
+	char const * conv = (upper != 0) ? convu : convl;
 	size_t len = 0;
 	unsigned long p;
 	size_t i;
