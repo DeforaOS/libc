@@ -1018,6 +1018,9 @@ static int _format_x(print_args * args, unsigned long long * ptr)
 	char tmp[sizeof(long) + sizeof(long) + 1] = "";
 
 	_format_lutoa(tmp, *ptr, 16); /* XXX assumes tmp is large enough */
+	if((args->flags & FLAGS_HASH) == FLAGS_HASH)
+		if(_vfprintf_do_do(args, "0x", 2) != 0)
+			return -1;
 	return _vfprintf_do(args, tmp, strlen(tmp));
 }
 
