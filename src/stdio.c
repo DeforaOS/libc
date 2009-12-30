@@ -750,14 +750,14 @@ static int _vfprintf_do_do(print_args * args, char const * buf, size_t len);
 static int _vprintf_flags(char const * p, size_t * i);
 static size_t _vprintf_width(char const * p, size_t * i);
 static size_t _vprintf_precision(char const * p, size_t * i);
-static void _format_lutoa(char * dest, unsigned long n, size_t base);
+static void _format_lutoa(char * dest, unsigned long n, size_t base, int upper);
 static int _format_c(print_args * args, char const * chrp);
 static int _format_d(print_args * args, long long * ptr);
 static int _format_o(print_args * args, unsigned long long * ptr);
 static int _format_s(print_args * args, char const * str);
 static int _format_p(print_args * args, void * ptr);
 static int _format_u(print_args * args, unsigned long long * ptr);
-static int _format_x(print_args * args, unsigned long long * ptr);
+static int _format_x(print_args * args, unsigned long long * ptr, int upper);
 
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg)
@@ -865,7 +865,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 					u = va_arg(arg, unsigned long int);
 				else
 					u = va_arg(arg,	unsigned int);
-				f = _format_x(&args, &u);
+				f = _format_x(&args, &u, (p[i] == 'X'));
 				break;
 			}
 			else if(p[i] == 'z')
@@ -986,7 +986,7 @@ static int _format_o(print_args * args, unsigned long long * ptr)
 {
 	char tmp[22] = "";
 
-	_format_lutoa(tmp, *ptr, 8); /* XXX assumes tmp is large enough */
+	_format_lutoa(tmp, *ptr, 8, 0); /* XXX assumes tmp is large enough */
 	return _vfprintf_do(args, tmp, strlen(tmp));
 }
 
@@ -1001,7 +1001,7 @@ static int _format_p(print_args * args, void * ptr)
 {
 	char tmp[3 + sizeof(void*) + sizeof(void*)] = "0x";
 
-	_format_lutoa(&tmp[2], (long)ptr, 16); /* XXX cast */
+	_format_lutoa(&tmp[2], (long)ptr, 16, 0); /* XXX cast */
 	return _vfprintf_do(args, tmp, strlen(tmp));
 }
 
@@ -1009,15 +1009,15 @@ static int _format_u(print_args * args, unsigned long long * ptr)
 {
 	char tmp[19] = "";
 
-	_format_lutoa(tmp, *ptr, 10); /* XXX assumes tmp is large enough */
+	_format_lutoa(tmp, *ptr, 10, 0); /* XXX assumes tmp is large enough */
 	return _vfprintf_do(args, tmp, strlen(tmp));
 }
 
-static int _format_x(print_args * args, unsigned long long * ptr)
+static int _format_x(print_args * args, unsigned long long * ptr, int upper)
 {
 	char tmp[sizeof(long) + sizeof(long) + 1] = "";
 
-	_format_lutoa(tmp, *ptr, 16); /* XXX assumes tmp is large enough */
+	_format_lutoa(tmp, *ptr, 16, upper); /* XXX assumes tmp large enough */
 	if((args->flags & FLAGS_HASH) == FLAGS_HASH)
 		if(_vfprintf_do_do(args, "0x", 2) != 0)
 			return -1;
@@ -1027,14 +1027,16 @@ static int _format_x(print_args * args, unsigned long long * ptr)
 /* PRE	dest is long enough
  * POST	2 <= base <= 36		dest is the ascii representation of n
  *	else			dest is an empty string */
-static void _format_lutoa(char * dest, unsigned long n, size_t base)
+static void _format_lutoa(char * dest, unsigned long n, size_t base, int upper)
 {
-	static char const conv[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+	static char const convl[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+	static char const convu[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	char const * conv = (upper != 0) ? &convu : &convl;
 	size_t len = 0;
 	unsigned long p;
 	size_t i;
 
-	if(base < 2 || base >= sizeof(conv))
+	if(base < 2 || base >= sizeof(convl))
 	{
 		dest[0] = '\0';
 		return;
