@@ -168,7 +168,7 @@ int fgetc(FILE * file)
 {
 	char c;
 
-	if(fread(&c, sizeof(char), 1, file) != 1)
+	if(fread(&c, sizeof(c), 1, file) != 1)
 		return EOF;
 	return c;
 }
@@ -736,6 +736,7 @@ typedef struct _print_args
 	int flags;
 	size_t width;
 	size_t precision;
+	int shrt;
 	print_func func;
 	void * dest;
 	size_t * size;
@@ -782,6 +783,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 		args.flags = 0;
 		args.width = 0;
 		args.precision = 0;
+		args.shrt = 0;
 		for(i = 0; p[i] != '\0' && p[i] != '%'; i++);
 		if(i > 0 && _vfprintf_do(&args, p, i) != 0)
 			return -1;
@@ -822,6 +824,14 @@ static int _vprintf(print_func func, void * dest, size_t size,
 					d = va_arg(arg, int);
 				f = _format_d(&args, &d);
 				break;
+			}
+			else if(p[i] == 'h')
+			{
+				if(++args.shrt > 2)
+				{
+					errno = EINVAL;
+					return -1;
+				}
 			}
 			else if(p[i] == 'o')
 			{
@@ -895,7 +905,7 @@ static int _vfprintf_do(print_args * args, char const * buf, size_t len)
 	size_t i;
 	char padding = args->flags & FLAGS_ZERO ? '0' : ' ';
 
-	for(i = len + 1; i < args->width; i++)
+	for(i = len; i < args->width; i++)
 		if(_vfprintf_do_do(args, &padding, 1) != 0)
 			return -1;
 	return _vfprintf_do_do(args, buf, len);
@@ -1015,9 +1025,14 @@ static int _format_u(print_args * args, unsigned long long * ptr)
 
 static int _format_x(print_args * args, unsigned long long * ptr, int upper)
 {
+	unsigned long u = *ptr;
 	char tmp[sizeof(long) + sizeof(long) + 1] = "";
 
-	_format_lutoa(tmp, *ptr, 16, upper); /* XXX assumes tmp large enough */
+	if(args->shrt == 1)
+		u = u & 0xffff;
+	else if(args->shrt == 2)
+		u = u & 0xff;
+	_format_lutoa(tmp, u, 16, upper); /* XXX assumes tmp large enough */
 	if((args->flags & FLAGS_HASH) == FLAGS_HASH)
 		if(_vfprintf_do_do(args, "0x", 2) != 0)
 			return -1;
