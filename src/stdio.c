@@ -166,7 +166,7 @@ int fflush(FILE * file)
 /* fgetc */
 int fgetc(FILE * file)
 {
-	char c;
+	unsigned char c;
 
 	if(fread(&c, sizeof(c), 1, file) != 1)
 		return EOF;
