@@ -97,12 +97,16 @@
 # define SYS_chown		283
 # define SYS_fchown		284
 # define SYS_lchown		285
+# ifdef __i386__ /* XXX */
+#  define SYS_sigaction		291
+# else
+# define SYS_sigaction		340
+# endif
 # define SYS_sigprocmask	293
 # define SYS_getcwd		296
 # define SYS_shmctl		303
 # define SYS_getcontext		307
 # define SYS_setcontext		308
-# define SYS_sigaction		340
 # define SYS_statvfs		357
 # define SYS_stat		387
 # define SYS_fstat		388
