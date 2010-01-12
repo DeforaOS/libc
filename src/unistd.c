@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -444,12 +444,12 @@ gid_t getgid(void)
 
 
 /* gethostname */
-int gethostname(char * buf, size_t size)
+int gethostname(char * name, size_t size)
 {
 #if defined(SYS_sysctl) && defined(CTL_KERN) && defined(KERN_HOSTNAME)
 	int mib[2] = { CTL_KERN, KERN_HOSTNAME };
 
-	if(sysctl(mib, 2, buf, &size, NULL, 0) != 0)
+	if(sysctl(mib, 2, name, &size, NULL, 0) != 0)
 		return -1;
 	return 0;
 #else
@@ -764,6 +764,23 @@ int setgid(gid_t gid)
 	return -1;
 }
 #endif
+
+
+/* sethostname */
+int sethostname(char const * name, size_t size)
+{
+#if defined(SYS_sysctl) && defined(CTL_KERN) && defined(KERN_HOSTNAME)
+	int mib[2] = { CTL_KERN, KERN_HOSTNAME };
+
+	if(sysctl(mib, 2, NULL, 0, name, size) != 0)
+		return -1;
+	return 0;
+#else
+# warning Unsupported platform: sethostname() is missing
+	errno = ENOSYS;
+	return -1;
+#endif
+}
 
 
 /* setpgid */

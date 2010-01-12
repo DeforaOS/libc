@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,7 +93,7 @@ char * getcwd(char * buf, size_t size);
 gid_t getegid(void);
 uid_t geteuid(void);
 gid_t getgid(void);
-int gethostname(char * buf, size_t size);
+int gethostname(char * name, size_t size);
 char * getlogin(void);
 int getlogin_r(char * buf, size_t size);
 int getopt(int argc, char * const argv[], char const * optstring);
@@ -112,6 +112,7 @@ ssize_t readlink(char const * filename, char * buf, size_t bufsiz);
 int rmdir(char const * filename);
 void * sbrk(intptr_t increment);
 int setgid(gid_t gid);
+int sethostname(char const * name, size_t size);
 int setpgid(pid_t pid, pid_t pgid);
 int setregid(gid_t rgid, gid_t egid);
 int setreuid(uid_t ruid, uid_t euid);
