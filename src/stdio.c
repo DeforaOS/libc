@@ -903,8 +903,18 @@ static int _vprintf(print_func func, void * dest, size_t size,
 static int _vfprintf_do(print_args * args, char const * buf, size_t len)
 {
 	size_t i;
-	char padding = args->flags & FLAGS_ZERO ? '0' : ' ';
+	char padding = ' ';
 
+	if(args->flags & FLAGS_MINUS)
+	{
+		_vfprintf_do_do(args, buf, len);
+		for(i = len; i < args->width; i++)
+			if(_vfprintf_do_do(args, &padding, 1) != 0)
+				return -1;
+		return 0;
+	}
+	if(args->flags & FLAGS_ZERO)
+		padding = '0';
 	for(i = len; i < args->width; i++)
 		if(_vfprintf_do_do(args, &padding, 1) != 0)
 			return -1;
