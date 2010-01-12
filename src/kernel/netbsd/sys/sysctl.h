@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,6 +59,6 @@ struct clockinfo
 
 /* functions */
 int sysctl(int * name, unsigned int namecnt, void * from, size_t * fromsize,
-		void * to, size_t tosize);
+		void const * to, size_t tosize);
 
 #endif /* !KERNEL_NETBSD_SYS_SYSCTL_H */
