@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,7 +95,6 @@ execve:
 .type pipe,@function
 pipe:
 	mov	$SYS_pipe, %rax
-	mov	%rcx, %r10
 	syscall
 	jc	.errno
 	mov	%eax, (%rdi)
