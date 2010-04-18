@@ -447,6 +447,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/sys/ipc.h \
 		$(PACKAGE)-$(VERSION)/include/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/sys/mount.h \
+		$(PACKAGE)-$(VERSION)/include/sys/param.h \
 		$(PACKAGE)-$(VERSION)/include/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/sys/select.h \

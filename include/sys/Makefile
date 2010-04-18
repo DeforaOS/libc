@@ -23,6 +23,8 @@ install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 mount.h $(DESTDIR)$(INCLUDEDIR)/sys/mount.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
+	$(INSTALL) -m 0644 param.h $(DESTDIR)$(INCLUDEDIR)/sys/param.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 reboot.h $(DESTDIR)$(INCLUDEDIR)/sys/reboot.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 resource.h $(DESTDIR)$(INCLUDEDIR)/sys/resource.h
@@ -54,6 +56,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/ipc.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/mman.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/mount.h
+	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/param.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/reboot.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/resource.h
 	$(RM) $(DESTDIR)$(INCLUDEDIR)/sys/select.h
