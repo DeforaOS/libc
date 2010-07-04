@@ -386,11 +386,13 @@ void * malloc(size_t size)
 /* mktemp */
 char * mktemp(char * template)
 {
+	static char const tab[62] = "0123456789abcdefghijklmnopqrstuvwxyz"
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	size_t i;
 	struct stat st;
 
 	for(i = strlen(template); i-- > 0 && template[i] == 'X';)
-		template[i] = (rand() % 0x47) + '0';
+		template[i] = tab[rand() % sizeof(tab)];
 	if(lstat(template, &st) != 0)
 		return errno == ENOENT ? template : NULL;
 	errno = EEXIST;
