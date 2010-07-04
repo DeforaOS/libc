@@ -15,9 +15,9 @@ distclean: clean
 
 install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 in.h $(DESTDIR)$(INCLUDEDIR)/in.h
+	$(INSTALL) -m 0644 -- in.h $(DESTDIR)$(INCLUDEDIR)/in.h
 
 uninstall:
-	$(RM) $(DESTDIR)$(INCLUDEDIR)/in.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/in.h
 
 .PHONY: all clean distclean install uninstall

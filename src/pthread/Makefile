@@ -33,22 +33,22 @@ pthread.o: pthread.c
 	$(CC) $(libpthread_CFLAGS) -c pthread.c
 
 clean:
-	$(RM) $(libpthread_OBJS)
+	$(RM) -- $(libpthread_OBJS)
 
 distclean: clean
-	$(RM) $(TARGETS)
+	$(RM) -- $(TARGETS)
 
 install: all
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 libpthread.a $(DESTDIR)$(LIBDIR)/libpthread.a
-	$(INSTALL) -m 0755 libpthread.so $(DESTDIR)$(LIBDIR)/libpthread.so.0.0
-	$(LN) -s libpthread.so.0.0 $(DESTDIR)$(LIBDIR)/libpthread.so.0
-	$(LN) -s libpthread.so.0.0 $(DESTDIR)$(LIBDIR)/libpthread.so
+	$(INSTALL) -m 0644 -- libpthread.a $(DESTDIR)$(LIBDIR)/libpthread.a
+	$(INSTALL) -m 0755 -- libpthread.so $(DESTDIR)$(LIBDIR)/libpthread.so.0.0
+	$(LN) -s -- libpthread.so.0.0 $(DESTDIR)$(LIBDIR)/libpthread.so.0
+	$(LN) -s -- libpthread.so.0.0 $(DESTDIR)$(LIBDIR)/libpthread.so
 
 uninstall:
-	$(RM) $(DESTDIR)$(LIBDIR)/libpthread.a
-	$(RM) $(DESTDIR)$(LIBDIR)/libpthread.so.0.0
-	$(RM) $(DESTDIR)$(LIBDIR)/libpthread.so.0
-	$(RM) $(DESTDIR)$(LIBDIR)/libpthread.so
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libpthread.a
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libpthread.so.0.0
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libpthread.so.0
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libpthread.so
 
 .PHONY: all clean distclean install uninstall

@@ -15,9 +15,9 @@ distclean: clean
 
 install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 pthread.h $(DESTDIR)$(INCLUDEDIR)/pthread.h
+	$(INSTALL) -m 0644 -- pthread.h $(DESTDIR)$(INCLUDEDIR)/pthread.h
 
 uninstall:
-	$(RM) $(DESTDIR)$(INCLUDEDIR)/pthread.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/pthread.h
 
 .PHONY: all clean distclean install uninstall

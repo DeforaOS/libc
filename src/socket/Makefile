@@ -50,26 +50,26 @@ syscalls.o: syscalls.S kernel/linux/common.h kernel/linux/amd64/syscalls.S kerne
 
 clean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
-	$(RM) $(libsocket_OBJS)
+	$(RM) -- $(libsocket_OBJS)
 
 distclean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
-	$(RM) $(libsocket_OBJS)
-	$(RM) $(TARGETS)
+	$(RM) -- $(libsocket_OBJS)
+	$(RM) -- $(TARGETS)
 
 install: all
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 libsocket.a $(DESTDIR)$(LIBDIR)/libsocket.a
-	$(INSTALL) -m 0755 libsocket.so $(DESTDIR)$(LIBDIR)/libsocket.so.0.0
-	$(LN) -s libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so.0
-	$(LN) -s libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so
+	$(INSTALL) -m 0644 -- libsocket.a $(DESTDIR)$(LIBDIR)/libsocket.a
+	$(INSTALL) -m 0755 -- libsocket.so $(DESTDIR)$(LIBDIR)/libsocket.so.0.0
+	$(LN) -s -- libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so.0
+	$(LN) -s -- libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
-	$(RM) $(DESTDIR)$(LIBDIR)/libsocket.a
-	$(RM) $(DESTDIR)$(LIBDIR)/libsocket.so.0.0
-	$(RM) $(DESTDIR)$(LIBDIR)/libsocket.so.0
-	$(RM) $(DESTDIR)$(LIBDIR)/libsocket.so
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libsocket.a
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libsocket.so.0.0
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libsocket.so.0
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libsocket.so
 
 .PHONY: all subdirs clean distclean install uninstall

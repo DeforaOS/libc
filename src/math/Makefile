@@ -44,26 +44,26 @@ math.o: math.c ../../include/math/math.h
 
 clean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
-	$(RM) $(libm_OBJS)
+	$(RM) -- $(libm_OBJS)
 
 distclean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
-	$(RM) $(libm_OBJS)
-	$(RM) $(TARGETS)
+	$(RM) -- $(libm_OBJS)
+	$(RM) -- $(TARGETS)
 
 install: all
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 libm.a $(DESTDIR)$(LIBDIR)/libm.a
-	$(INSTALL) -m 0755 libm.so $(DESTDIR)$(LIBDIR)/libm.so.0.0
-	$(LN) -s libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0
-	$(LN) -s libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so
+	$(INSTALL) -m 0644 -- libm.a $(DESTDIR)$(LIBDIR)/libm.a
+	$(INSTALL) -m 0755 -- libm.so $(DESTDIR)$(LIBDIR)/libm.so.0.0
+	$(LN) -s -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0
+	$(LN) -s -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
-	$(RM) $(DESTDIR)$(LIBDIR)/libm.a
-	$(RM) $(DESTDIR)$(LIBDIR)/libm.so.0.0
-	$(RM) $(DESTDIR)$(LIBDIR)/libm.so.0
-	$(RM) $(DESTDIR)$(LIBDIR)/libm.so
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libm.a
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libm.so.0.0
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libm.so.0
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libm.so
 
 .PHONY: all subdirs clean distclean install uninstall

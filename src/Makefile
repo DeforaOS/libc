@@ -170,29 +170,29 @@ start.o: start.S kernel/freebsd/i386/start.S kernel/linux/arm/start.S kernel/lin
 
 clean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
-	$(RM) $(libc_OBJS) $(start.o_OBJS)
+	$(RM) -- $(libc_OBJS) $(start.o_OBJS)
 
 distclean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
-	$(RM) $(libc_OBJS) $(start.o_OBJS)
-	$(RM) $(TARGETS)
+	$(RM) -- $(libc_OBJS) $(start.o_OBJS)
+	$(RM) -- $(TARGETS)
 
 install: all
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 libc.a $(DESTDIR)$(LIBDIR)/libc.a
-	$(INSTALL) -m 0755 libc.so $(DESTDIR)$(LIBDIR)/libc.so.0.0
-	$(LN) -s libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so.0
-	$(LN) -s libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so
+	$(INSTALL) -m 0644 -- libc.a $(DESTDIR)$(LIBDIR)/libc.a
+	$(INSTALL) -m 0755 -- libc.so $(DESTDIR)$(LIBDIR)/libc.so.0.0
+	$(LN) -s -- libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so.0
+	$(LN) -s -- libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 start.o $(DESTDIR)$(LIBDIR)/start.o
+	$(INSTALL) -m 0644 -- start.o $(DESTDIR)$(LIBDIR)/start.o
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
-	$(RM) $(DESTDIR)$(LIBDIR)/libc.a
-	$(RM) $(DESTDIR)$(LIBDIR)/libc.so.0.0
-	$(RM) $(DESTDIR)$(LIBDIR)/libc.so.0
-	$(RM) $(DESTDIR)$(LIBDIR)/libc.so
-	$(RM) $(DESTDIR)$(LIBDIR)/start.o
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libc.a
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libc.so.0.0
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libc.so.0
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libc.so
+	$(RM) -- $(DESTDIR)$(LIBDIR)/start.o
 
 .PHONY: all subdirs clean distclean install uninstall

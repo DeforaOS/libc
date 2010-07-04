@@ -18,9 +18,9 @@ distclean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
 
 dist:
-	$(RM) -r $(PACKAGE)-$(VERSION)
-	$(LN) -s . $(PACKAGE)-$(VERSION)
-	@$(TAR) $(PACKAGE)-$(VERSION).tar.gz \
+	$(RM) -r -- $(PACKAGE)-$(VERSION)
+	$(LN) -s -- . $(PACKAGE)-$(VERSION)
+	@$(TAR) $(PACKAGE)-$(VERSION).tar.gz -- \
 		$(PACKAGE)-$(VERSION)/src/ctype.c \
 		$(PACKAGE)-$(VERSION)/src/dirent.c \
 		$(PACKAGE)-$(VERSION)/src/errno.c \
@@ -466,7 +466,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/COPYING \
 		$(PACKAGE)-$(VERSION)/project.conf
-	$(RM) $(PACKAGE)-$(VERSION)
+	$(RM) -- $(PACKAGE)-$(VERSION)
 
 install: all
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done

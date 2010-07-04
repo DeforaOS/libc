@@ -15,9 +15,9 @@ distclean: clean
 
 install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/arpa
-	$(INSTALL) -m 0644 inet.h $(DESTDIR)$(INCLUDEDIR)/arpa/inet.h
+	$(INSTALL) -m 0644 -- inet.h $(DESTDIR)$(INCLUDEDIR)/arpa/inet.h
 
 uninstall:
-	$(RM) $(DESTDIR)$(INCLUDEDIR)/arpa/inet.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/arpa/inet.h
 
 .PHONY: all clean distclean install uninstall

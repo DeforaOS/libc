@@ -33,22 +33,22 @@ dlfcn.o: dlfcn.c ../../include/dl/dlfcn.h
 	$(CC) $(libdl_CFLAGS) -c dlfcn.c
 
 clean:
-	$(RM) $(libdl_OBJS)
+	$(RM) -- $(libdl_OBJS)
 
 distclean: clean
-	$(RM) $(TARGETS)
+	$(RM) -- $(TARGETS)
 
 install: all
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 libdl.a $(DESTDIR)$(LIBDIR)/libdl.a
-	$(INSTALL) -m 0755 libdl.so $(DESTDIR)$(LIBDIR)/libdl.so.0.0
-	$(LN) -s libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so.0
-	$(LN) -s libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so
+	$(INSTALL) -m 0644 -- libdl.a $(DESTDIR)$(LIBDIR)/libdl.a
+	$(INSTALL) -m 0755 -- libdl.so $(DESTDIR)$(LIBDIR)/libdl.so.0.0
+	$(LN) -s -- libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so.0
+	$(LN) -s -- libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so
 
 uninstall:
-	$(RM) $(DESTDIR)$(LIBDIR)/libdl.a
-	$(RM) $(DESTDIR)$(LIBDIR)/libdl.so.0.0
-	$(RM) $(DESTDIR)$(LIBDIR)/libdl.so.0
-	$(RM) $(DESTDIR)$(LIBDIR)/libdl.so
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libdl.a
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libdl.so.0.0
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libdl.so.0
+	$(RM) -- $(DESTDIR)$(LIBDIR)/libdl.so
 
 .PHONY: all clean distclean install uninstall

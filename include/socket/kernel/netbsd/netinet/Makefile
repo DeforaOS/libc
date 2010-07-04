@@ -15,9 +15,9 @@ distclean: clean
 
 install: all
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet
-	$(INSTALL) -m 0644 in.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet/in.h
+	$(INSTALL) -m 0644 -- in.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet/in.h
 
 uninstall:
-	$(RM) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet/in.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet/in.h
 
 .PHONY: all clean distclean install uninstall
