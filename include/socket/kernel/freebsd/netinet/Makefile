@@ -14,10 +14,10 @@ clean:
 distclean: clean
 
 install: all
-	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 -- in.h $(DESTDIR)$(INCLUDEDIR)/in.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/netinet
+	$(INSTALL) -m 0644 -- in.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/netinet/in.h
 
 uninstall:
-	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/in.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/netinet/in.h
 
 .PHONY: all clean distclean install uninstall
