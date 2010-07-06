@@ -14,10 +14,10 @@ clean:
 distclean: clean
 
 install: all
-	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
-	$(INSTALL) -m 0644 -- socket.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/socket.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys
+	$(INSTALL) -m 0644 -- socket.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/socket.h
 
 uninstall:
-	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/socket.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/socket.h
 
 .PHONY: all clean distclean install uninstall
