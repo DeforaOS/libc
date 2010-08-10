@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 # define SYS_getsockopt		118
 # define SYS_sendto		133
 # define SYS_shutdown		134
+# define SYS_socketpair		135
 # define SYS_socket		394
 
 #endif /* !LIBSOCKET_KERNEL_NETBSD_COMMON_H */

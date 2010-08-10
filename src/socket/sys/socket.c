@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -180,6 +180,17 @@ int shutdown(int fd, int how)
 #ifndef SYS_socket
 # warning Unsupported platform: socket() is missing
 int socket(int domain, int type, int protocol)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
+/* socketpair */
+#ifndef SYS_socket
+# warning Unsupported platform: socket() is missing
+int socketpair(int domain, int type, int protocol, int fds[2])
 {
 	errno = ENOSYS;
 	return -1;

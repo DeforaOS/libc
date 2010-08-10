@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,5 +84,6 @@ int setsockopt(int fd, int level, int name, const void * value,
 		socklen_t len);
 int shutdown(int fd, int how);
 int socket(int domain, int type, int protocol);
+int socketpair(int domain, int type, int protocol, int fds[2]);
 
 #endif /* !LIBSOCKET_SYS_SOCKET_H */
