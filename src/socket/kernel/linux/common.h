@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
 #  define SYS_bind		49
 #  define SYS_listen		50
 #  define SYS_getsockname	51
+#  define SYS_socketpair	53
 #  define SYS_setsockopt	54
 #  define SYS_getsockopt	55
 # else
@@ -42,6 +43,7 @@
 #  define SYS_listen		4
 #  define SYS_accept		5
 #  define SYS_getsockname	6
+#  define SYS_socketpair	8
 #  define SYS_recv		9
 #  define SYS_send		10
 #  define SYS_sendto		11
