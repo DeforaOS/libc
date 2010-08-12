@@ -453,13 +453,14 @@ int gethostname(char * name, size_t size)
 	if(sysctl(mib, 2, name, &size, NULL, 0) != 0)
 		return -1;
 	return 0;
-#else
+#elif defined(SYS_uname)
 	struct utsname u;
 
 	if(uname(&u) != 0)
 		return -1;
 	snprintf(name, size, "%s", u.nodename);
 	return 0;
+#else
 # warning Unsupported platform: gethostname() is missing
 	errno = ENOSYS;
 	return -1;
