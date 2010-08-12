@@ -17,6 +17,7 @@
 
 #include "sys/stat.h"
 #include "sys/types.h"
+#include "sys/utsname.h"
 #include "inttypes.h"
 #include "stdarg.h"
 #include "stddef.h"
@@ -453,6 +454,12 @@ int gethostname(char * name, size_t size)
 		return -1;
 	return 0;
 #else
+	struct utsname u;
+
+	if(uname(&u) != 0)
+		return -1;
+	snprintf(name, size, "%s", u.nodename);
+	return 0;
 # warning Unsupported platform: gethostname() is missing
 	errno = ENOSYS;
 	return -1;
