@@ -393,6 +393,9 @@ SYSCALL(sbrk)
 #ifdef SYS_setgid
 SYSCALL(setgid)
 #endif
+#ifdef SYS_sethostname
+SYSCALL(sethostname)
+#endif
 #ifdef SYS_setpgid
 SYSCALL(setpgid)
 #endif

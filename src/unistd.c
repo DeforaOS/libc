@@ -775,20 +775,22 @@ int setgid(gid_t gid)
 
 
 /* sethostname */
+#ifndef SYS_sethostname
 int sethostname(char const * name, size_t size)
 {
-#if defined(SYS_sysctl) && defined(CTL_KERN) && defined(KERN_HOSTNAME)
+# if defined(SYS_sysctl) && defined(CTL_KERN) && defined(KERN_HOSTNAME)
 	int mib[2] = { CTL_KERN, KERN_HOSTNAME };
 
 	if(sysctl(mib, 2, NULL, 0, name, size) != 0)
 		return -1;
 	return 0;
-#else
-# warning Unsupported platform: sethostname() is missing
+# else
+#  warning Unsupported platform: sethostname() is missing
 	errno = ENOSYS;
 	return -1;
-#endif
+# endif
 }
+#endif
 
 
 /* setpgid */

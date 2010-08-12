@@ -59,6 +59,7 @@
 #  define SYS_getppid		64
 #  define SYS_setsid		66
 #  define SYS_sigaction		67
+#  define SYS_sethostname	74
 #  define SYS_gettimeofday	78
 #  define SYS_select		82
 #  define SYS_symlink		83
@@ -176,6 +177,7 @@
 #  define SYS_mount		165
 #  define SYS_unmount		166
 #  define SYS_reboot		169
+#  define SYS_sethostname	170
 #  define SYS_utimes		235
 # elif defined(__arm__)
 #  define SYS_lchown		16
