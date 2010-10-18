@@ -26,6 +26,7 @@
 # ifdef ELFSIZE
 #  if ELFSIZE == 32
 #   define ELFCLASS ELFCLASS32
+#   define Elf_Addr Elf32_Addr
 #   define Elf_Ehdr Elf32_Ehdr
 #   define Elf_Shdr Elf32_Shdr
 #   define Elf_Phdr Elf32_Phdr
@@ -33,6 +34,7 @@
 #   define Elf_Word Elf32_Word
 #  elif ELFSIZE == 64
 #   define ELFCLASS ELFCLASS64
+#   define Elf_Addr Elf64_Addr
 #   define Elf_Ehdr Elf64_Ehdr
 #   define Elf_Shdr Elf64_Shdr
 #   define Elf_Phdr Elf64_Phdr
