@@ -90,6 +90,18 @@ execve:
 #undef SYS_execve
 
 
+/* lseek */
+.global lseek
+.type lseek,@function
+lseek:
+	mov	%rdx, %rcx
+	mov	%rsi, %rdx
+	mov	$0, %rsi
+	mov	$SYS_lseek, %rax
+	jmp	_syscall
+#undef SYS_lseek
+
+
 /* pipe */
 .global pipe
 .type pipe,@function
