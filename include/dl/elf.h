@@ -26,20 +26,28 @@
 # ifdef ELFSIZE
 #  if ELFSIZE == 32
 #   define ELFCLASS ELFCLASS32
+#   define ELF_R_SYM(info) ELF32_R_SYM(info)
+#   define ELF_R_TYPE(info) ELF32_R_TYPE(info)
 #   define ELF_ST_TYPE(info) ELF32_ST_TYPE(info)
 #   define Elf_Addr Elf32_Addr
 #   define Elf_Ehdr Elf32_Ehdr
 #   define Elf_Shdr Elf32_Shdr
 #   define Elf_Phdr Elf32_Phdr
+#   define Elf_Rel  Elf32_Rel
+#   define Elf_Rela Elf32_Rela
 #   define Elf_Sym  Elf32_Sym
 #   define Elf_Word Elf32_Word
 #  elif ELFSIZE == 64
 #   define ELFCLASS ELFCLASS64
+#   define ELF_R_SYM(info) ELF64_R_SYM(info)
+#   define ELF_R_TYPE(info) ELF64_R_TYPE(info)
 #   define ELF_ST_TYPE(info) ELF32_ST_TYPE(info)
 #   define Elf_Addr Elf64_Addr
 #   define Elf_Ehdr Elf64_Ehdr
 #   define Elf_Shdr Elf64_Shdr
 #   define Elf_Phdr Elf64_Phdr
+#   define Elf_Rel  Elf64_Rel
+#   define Elf_Rela Elf64_Rela
 #   define Elf_Sym  Elf64_Sym
 #   define Elf_Word Elf64_Word
 #  endif /* ELFSIZE == 64 */
@@ -61,6 +69,7 @@ typedef uint32_t Elf64_Half;
 typedef uint64_t Elf64_Off;
 typedef uint16_t Elf64_Quarter;
 typedef int32_t Elf64_Shalf;
+typedef int64_t Elf64_Sxword;
 typedef uint32_t Elf64_Word;
 typedef uint64_t Elf64_Xword;
 
@@ -155,6 +164,13 @@ typedef struct _Elf64_Ehdr
 # define SHT_PROGBIGS	1
 # define SHT_SYMTAB	2
 # define SHT_STRTAB	3
+# define SHT_RELA	4
+# define SHT_HASH	5
+# define SHT_DYNAMIC	6
+# define SHT_NOTE	7
+# define SHT_NOBITS	8
+# define SHT_REL	9
+# define SHT_SHLIB	10
 # define SHT_DYNSYM	11
 
 typedef struct _Elf32_Shdr
@@ -225,6 +241,53 @@ typedef struct _Elf64_Phdr
 	Elf64_Xword p_align;
 } Elf64_Phdr;
 
+/* Elf_Rel */
+# define ELF32_R_SYM(info) ((info) >> 8)
+# define ELF32_R_TYPE(info) ((info) & 0xf)
+# define R_386_NONE		0
+# define R_386_32		1
+# define R_386_PC32		2
+# define R_386_GOT32		3
+# define R_386_PLT32		4
+# define R_386_COPY		5
+# define R_386_GLOB_DAT		6
+# define R_386_JMP_SLOT		7
+# define R_386_RELATIVE		8
+# define R_386_GOTOFF		9
+# define R_386_GOTPC		10
+typedef struct _Elf32_Rel
+{
+	Elf32_Addr r_offset;
+	Elf32_Word r_info;
+} Elf32_Rel;
+
+# define ELF64_R_SYM(info) ((info) >> 32)
+# define ELF64_R_TYPE(info) ((info) & 0xffffffff)
+# define R_X86_64_GLOB_DAT	6
+# define R_X86_64_JUMP_SLOT	7
+# define R_X86_64_RELATIVE	8
+typedef struct _Elf64_Rel
+{
+	Elf64_Addr r_offset;
+	Elf64_Xword r_info;
+} Elf64_Rel;
+
+
+/* Elf_Rela */
+typedef struct _Elf32_Rela
+{
+	Elf32_Addr r_offset;
+	Elf32_Word r_info;
+	Elf32_Sword r_addend;
+} Elf32_Rela;
+
+typedef struct _Elf64_Rela
+{
+	Elf64_Addr r_offset;
+	Elf64_Xword r_info;
+	Elf64_Sxword r_addend;
+} Elf64_Rela;
+
 /* Elf_Sym */
 /* info */
 # define ELF32_ST_TYPE(info) (info & 0xf)
@@ -239,6 +302,8 @@ typedef struct _Elf64_Phdr
 # define STT_HIOS	12
 # define STT_LOPROC	13
 # define STT_HIPROC	15
+/* index */
+# define STN_UNDEF	0
 typedef struct _Elf32_Sym
 {
 	Elf32_Word st_name;

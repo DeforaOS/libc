@@ -13,7 +13,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 /* TODO:
-   - call pending dlclose() on exit() */
+ * - implement an helper that does lseek() malloc() and read() at once
+ * - call pending dlclose() on exit() */
 
 
 
@@ -53,6 +54,8 @@ typedef struct _DL
 	/* internals */
 	Elf_Ehdr ehdr;
 	Elf_Shdr * shdr;
+	Elf_Sym * symtab;
+	size_t symtab_cnt;
 } DL;
 
 typedef enum _DLError
@@ -115,6 +118,14 @@ static void _dl_delete(DL * dl);
 static int _dl_error_set(DLError error, int ret);
 static int _dl_error_set_errno(int ret);
 
+/* useful */
+static int _dl_strtab(DL * dl, Elf_Word index, char ** strtab,
+		size_t * strtab_cnt);
+static char const * _dl_strtab_string(char const * strtab, size_t strtab_cnt,
+		Elf64_Xword index);
+static int _dl_symtab(DL * dl, Elf_Word index, Elf_Word type, Elf_Sym ** symtab,
+		size_t * symtab_cnt);
+
 
 /* functions */
 /* dl_new */
@@ -123,6 +134,8 @@ static int _file_read_ehdr(int fd, Elf_Ehdr * ehdr);
 static int _file_read_phdr(int fd, Elf_Phdr * phdr);
 static int _file_mmap(DL * dl, Elf_Phdr * phdr);
 static int _file_prot(unsigned int flags);
+static int _file_symbols(DL * dl);
+static int _file_relocations(DL * dl);
 
 static void * _dl_new(char const * pathname)
 {
@@ -142,6 +155,8 @@ static void * _dl_new(char const * pathname)
 	dl->data_size = 0;
 	dl->data_addr = NULL;
 	dl->shdr = NULL;
+	dl->symtab = NULL;
+	dl->symtab_cnt = 0;
 	if(pathname == NULL)
 		return dl;
 	if(_new_file(dl, pathname) != 0)
@@ -166,7 +181,7 @@ static int _new_file(DL * dl, char const * pathname)
 	if(_file_read_ehdr(dl->fd, &dl->ehdr) != 0)
 		return -1;
 	/* read the program headers */
-	if(lseek(dl->fd, dl->ehdr.e_phoff, SEEK_SET) == -1)
+	if(lseek(dl->fd, dl->ehdr.e_phoff, SEEK_SET) != dl->ehdr.e_phoff)
 		return _dl_error_set_errno(-1);
 	for(i = 0; i < dl->ehdr.e_phnum; i++)
 	{
@@ -180,10 +195,12 @@ static int _new_file(DL * dl, char const * pathname)
 	/* read the section headers */
 	if((len = dl->ehdr.e_shnum * sizeof(*dl->shdr)) < 0) /* XXX relevant? */
 		return _dl_error_set(DE_INVALID_FORMAT, -1);
-	if(lseek(dl->fd, dl->ehdr.e_shoff, SEEK_SET) == -1
+	if(lseek(dl->fd, dl->ehdr.e_shoff, SEEK_SET) != dl->ehdr.e_shoff
 			|| (dl->shdr = malloc(len)) == NULL
 			|| read(dl->fd, dl->shdr, len) != len)
 		return _dl_error_set_errno(-1);
+	if(_file_symbols(dl) != 0 || _file_relocations(dl) != 0)
+		return -1;
 	return 0;
 }
 
@@ -270,12 +287,106 @@ static int _file_prot(unsigned int flags)
 	return prot;
 }
 
+static int _file_symbols(DL * dl)
+{
+	size_t i;
+
+#ifdef DEBUG
+	fprintf(stderr, "DEBUG: %s()\n", __func__);
+#endif
+	for(i = 0; i < dl->ehdr.e_shnum; i++)
+		if(dl->shdr[i].sh_type == SHT_SYMTAB)
+			break;
+	if(i == dl->ehdr.e_shnum)
+		return 0; /* XXX is this an error? */
+	/* FIXME check that there is only one symbol table */
+	return _dl_symtab(dl, i, SHT_SYMTAB, &dl->symtab, &dl->symtab_cnt);
+}
+
+static int _file_relocations(DL * dl)
+{
+	size_t i;
+	Elf_Shdr * shdr;
+	size_t j;
+	Elf_Rela * rela = NULL;
+	Elf_Rel * rel;
+	Elf_Sym * symtab;
+	size_t symtab_cnt;
+	char * strtab;
+	size_t strtab_cnt;
+	Elf_Sym * sym;
+
+#ifdef DEBUG
+	fprintf(stderr, "DEBUG: %s()\n", __func__);
+#endif
+	for(i = 0; i < dl->ehdr.e_shnum; i++)
+	{
+		shdr = &dl->shdr[i];
+		if((shdr->sh_type != SHT_RELA
+					|| shdr->sh_entsize != sizeof(*rela))
+				&& (shdr->sh_type != SHT_REL
+					|| shdr->sh_entsize != sizeof(*rel)))
+			continue;
+		if(lseek(dl->fd, shdr->sh_offset, SEEK_SET) != shdr->sh_offset
+				|| (rela = malloc(shdr->sh_size)) == NULL
+				|| read(dl->fd, rela, shdr->sh_size)
+				!= shdr->sh_size)
+		{
+			_dl_error_set_errno(1);
+			break;
+		}
+		if(_dl_symtab(dl, shdr->sh_link, SHT_DYNSYM, &symtab,
+					&symtab_cnt) != 0)
+			break;
+		if(_dl_strtab(dl, dl->shdr[shdr->sh_link].sh_link, &strtab,
+					&strtab_cnt) != 0)
+		{
+			free(symtab);
+			break;
+		}
+		for(j = 0; j < shdr->sh_size; j+=shdr->sh_entsize)
+		{
+			rel = (Elf_Rel*)(((char*)rela) + j);
+			if(ELF_R_SYM(rel->r_info) >= symtab_cnt)
+				break; /* XXX */
+			sym = &symtab[ELF_R_SYM(rel->r_info)];
+#ifdef DEBUG
+			fprintf(stderr, "DEBUG: %s() Relocating \"%s\"\n",
+					__func__, _dl_strtab_string(strtab,
+						strtab_cnt, sym->st_name));
+#endif
+			switch(ELF_R_TYPE(rel->r_info))
+			{
+#if defined(__amd64__)
+				case R_X86_64_RELATIVE:
+				case R_X86_64_GLOB_DAT:
+					/* FIXME implement */
+					break;
+				case R_X86_64_JUMP_SLOT:
+					/* FIXME implement */
+					break;
+#elif defined(__i386__)
+				case R_386_32:
+				case R_386_PC32:
+					/* FIXME implement */
+					break;
+#endif
+			}
+		}
+		free(strtab);
+		free(symtab);
+	}
+	free(rela);
+	return 0;
+}
+
 
 /* dl_delete */
 static void _dl_delete(DL * dl)
 {
 	free(dl->path);
 	free(dl->shdr);
+	free(dl->symtab);
 	if(dl->text_base != NULL)
 		munmap(dl->text_base, dl->text_size);
 	if(dl->data_base != NULL)
@@ -326,6 +437,73 @@ static int _dl_error_set_errno(int ret)
 }
 
 
+/* dl_strtab */
+static int _dl_strtab(DL * dl, Elf_Word index, char ** strtab,
+		size_t * strtab_cnt)
+{
+	Elf_Shdr * shdr;
+
+	if(index >= dl->ehdr.e_shnum || dl->shdr[index].sh_type != SHT_STRTAB)
+		return -_dl_error_set(DE_INVALID_FORMAT, 1);
+	shdr = &dl->shdr[index];
+	*strtab_cnt = shdr->sh_size;
+	if(lseek(dl->fd, shdr->sh_offset, SEEK_SET) != shdr->sh_offset
+			|| (*strtab = malloc(shdr->sh_size + 1)) == NULL)
+		return -_dl_error_set_errno(1);
+	if(read(dl->fd, *strtab, *strtab_cnt) != *strtab_cnt)
+	{
+		free(*strtab);
+		return -_dl_error_set_errno(1);
+	}
+	(*strtab)[shdr->sh_size] = '\0';
+	return 0;
+}
+
+
+/* dl_strtab_string */
+static char const * _dl_strtab_string(char const * strtab, size_t strtab_cnt,
+		Elf64_Xword index)
+{
+	if(index >= strtab_cnt || strtab == NULL || strtab_cnt == 0)
+	{
+		_dl_error_set(DE_INVALID_FORMAT, 1);
+		return NULL;
+	}
+	if(index == STN_UNDEF)
+		return "";
+	return &strtab[index];
+}
+
+
+/* dl_symtab */
+static int _dl_symtab(DL * dl, Elf_Word index, Elf_Word type, Elf_Sym ** symtab,
+		size_t * symtab_cnt)
+{
+	Elf_Shdr * shdr;
+
+#ifdef DEBUG
+	fprintf(stderr, "DEBUG: %s(%p, %u, %u, symtab, symtab_cnt)\n", __func__,
+			dl, index, type);
+#endif
+	if(index >= dl->ehdr.e_shnum)
+		return -_dl_error_set(DE_INVALID_FORMAT, 1);
+	shdr = &dl->shdr[index];
+	if(shdr->sh_type != type || shdr->sh_entsize != sizeof(**symtab))
+		return -_dl_error_set(DE_INVALID_FORMAT, 1);
+	if(lseek(dl->fd, shdr->sh_offset, SEEK_SET) != shdr->sh_offset)
+		return -_dl_error_set_errno(1);
+	if((*symtab = malloc(shdr->sh_size)) == NULL)
+		return -_dl_error_set_errno(1);
+	if(read(dl->fd, *symtab, shdr->sh_size) != shdr->sh_size)
+	{
+		free(*symtab);
+		return -_dl_error_set_errno(1);
+	}
+	*symtab_cnt = shdr->sh_size / shdr->sh_entsize;
+	return 0;
+}
+
+
 /* public */
 /* dlclose */
 int dlclose(void * handle)
@@ -333,7 +511,7 @@ int dlclose(void * handle)
 	DL * dl = handle;
 
 #ifdef DEBUG
-	fprintf(stderr, "DEBUG: dlclose(%p)\n", handle);
+	fprintf(stderr, "DEBUG: %s(%p)\n", __func__, handle);
 #endif
 	_dl_delete(dl);
 	return 0;
@@ -384,18 +562,16 @@ void * dlopen(char const * pathname, int mode)
 
 
 /* dlsym */
-static char * _sym_read_strtab(int fd, off_t offset, size_t len);
 static void * _sym_lookup(DL * dl, Elf_Shdr * shdr, char const * name,
 		char const * strings, size_t strings_cnt);
 
 void * dlsym(void * handle, char const * name)
 {
-	void * ret = NULL;
 	DL * dl = handle;
+	void * ret;
 	size_t i;
 	size_t len;
 	Elf_Shdr * shdr = dl->shdr;
-	unsigned int strtab;
 	char * strings = NULL;
 
 #ifdef DEBUG
@@ -413,91 +589,54 @@ void * dlsym(void * handle, char const * name)
 		if(shdr[i].sh_type != SHT_SYMTAB)
 			continue;
 		/* sanity checks */
-		strtab = shdr[i].sh_link;
-		if(shdr[i].sh_entsize != sizeof(Elf_Sym)
-				|| shdr[i].sh_link >= dl->ehdr.e_shnum
-				|| shdr[strtab].sh_type != SHT_STRTAB)
+		if(shdr[i].sh_entsize != sizeof(Elf_Sym))
 		{
 			_dl_error_set(DE_INVALID_FORMAT, 0);
 			break;
 		}
 		/* read the complete string section */
-		len = shdr[strtab].sh_size;
-		if((strings = _sym_read_strtab(dl->fd, shdr[strtab].sh_offset,
-						len)) == NULL)
+		if(_dl_strtab(dl, shdr[i].sh_link, &strings, &len) != 0)
 			break;
-		if((ret = _sym_lookup(dl, &shdr[i], name, strings, len))
-				== NULL)
-			break;
+		ret = _sym_lookup(dl, &shdr[i], name, strings, len);
 		free(strings);
-		strings = NULL;
+		if(ret != NULL)
+			return ret;
 	}
-	free(strings);
-	return ret;
-}
-
-static char * _sym_read_strtab(int fd, off_t offset, size_t len)
-{
-	ssize_t slen = len;
-	char * strings;
-
-	if(len >= INT_MAX - 1)
-	{
-		_dl_error_set(DE_INVALID_FORMAT, 0);
-		return NULL;
-	}
-	if(lseek(fd, offset, SEEK_SET) == -1
-			|| (strings = malloc(slen + 1)) == NULL
-			|| read(fd, strings, slen) != slen)
-	{
-		_dl_error_set_errno(0);
-		return NULL;
-	}
-	strings[slen] = '\0';
-	return strings;
+	return NULL;
 }
 
 static void * _sym_lookup(DL * dl, Elf_Shdr * shdr, char const * name,
-		char const * strings, size_t strings_cnt)
+		char const * strtab, size_t strtab_cnt)
 {
 	size_t i;
-	Elf_Sym sym;
+	Elf_Sym * sym;
+	char const * p;
 
-	if(lseek(dl->fd, shdr->sh_offset, SEEK_SET) == -1)
+	for(i = 0; i < dl->symtab_cnt; i++)
 	{
-		_dl_error_set_errno(0);
-		return NULL;
-	}
-	for(i = 0; i < shdr->sh_size / sizeof(sym); i++)
-	{
-		if(read(dl->fd, &sym, sizeof(sym)) != sizeof(sym))
-		{
-			_dl_error_set_errno(0);
+		sym = &dl->symtab[i];
+		if((p = _dl_strtab_string(strtab, strtab_cnt, sym->st_name))
+				== NULL)
 			break;
-		}
-		if(sym.st_name >= strings_cnt)
-		{
-			_dl_error_set(DE_INVALID_FORMAT, 0);
-			break;
-		}
-		if(strcmp(&strings[sym.st_name], name) != 0)
+		if(strcmp(p, name) != 0)
 			continue;
 		/* found the symbol */
-		if(sym.st_shndx >= dl->ehdr.e_shnum)
+		if(sym->st_shndx >= dl->ehdr.e_shnum)
 		{
 			_dl_error_set(DE_INVALID_FORMAT, 0);
 			break;
 		}
 #ifdef DEBUG
-		printf("symbol: %s, section: %u, type=%x, value: 0x%x"
-				", size: 0x%x\n", &strings[sym.st_name],
-				sym.st_shndx, ELF_ST_TYPE(sym.st_info),
-				sym.st_value, sym.st_size);
+		fprintf(stderr, "DEBUG: %s() symbol: %s, section: %u, type=%x"
+				", value: 0x%x, size: 0x%x\n", __func__,
+				&strtab[sym->st_name],
+				sym->st_shndx, ELF_ST_TYPE(sym->st_info),
+				sym->st_value, sym->st_size);
 #endif
 		/* FIXME handle only known types */
-		if(ELF_ST_TYPE(sym.st_info) == STT_FUNC)
-			return (void*)(sym.st_value + dl->text_addr);
-		return (void*)(sym.st_value + dl->data_addr);
+		if(ELF_ST_TYPE(sym->st_info) == STT_FUNC)
+			return (void*)(sym->st_value + dl->text_addr);
+		return (void*)(sym->st_value + dl->data_addr);
 	}
 	_dl_error_set(DE_SYMBOL_NOT_FOUND, 0);
 	return NULL;
