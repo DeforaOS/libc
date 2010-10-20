@@ -67,6 +67,7 @@ typedef enum _DLError
 	DE_E_PERM,
 	/* for dlfcn */
 	DE_INVALID_FORMAT,
+	DE_SYMBOL_NOT_FOUND,
 	DE_UNKNOWN_ERROR
 } DLError;
 #define DE_E_FIRST	DE_NO_ERROR
@@ -348,6 +349,7 @@ char * dlerror(void)
 		char * string;
 	} es[] = {
 		{ DE_INVALID_FORMAT,	"Invalid file format"	},
+		{ DE_SYMBOL_NOT_FOUND,	"Symbol not found"	},
 		{ 0,			"Unknown error"		}
 	};
 	size_t i;
@@ -497,5 +499,6 @@ static void * _sym_lookup(DL * dl, Elf_Shdr * shdr, char const * name,
 			return (void*)(sym.st_value + dl->text_addr);
 		return (void*)(sym.st_value + dl->data_addr);
 	}
+	_dl_error_set(DE_SYMBOL_NOT_FOUND, 0);
 	return NULL;
 }
