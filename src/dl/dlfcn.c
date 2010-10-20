@@ -13,7 +13,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 /* TODO:
- * - implement an helper that does lseek() malloc() and read() at once
  * - call pending dlclose() on exit() */
 
 
@@ -119,6 +118,7 @@ static int _dl_error_set(DLError error, int ret);
 static int _dl_error_set_errno(int ret);
 
 /* useful */
+static void * _dl_load(DL * dl, off_t offset, size_t size);
 static int _dl_strtab(DL * dl, Elf_Word index, char ** strtab,
 		size_t * strtab_cnt);
 static char const * _dl_strtab_string(char const * strtab, size_t strtab_cnt,
@@ -131,7 +131,6 @@ static int _dl_symtab(DL * dl, Elf_Word index, Elf_Word type, Elf_Sym ** symtab,
 /* dl_new */
 static int _new_file(DL * dl, char const * pathname);
 static int _file_read_ehdr(int fd, Elf_Ehdr * ehdr);
-static int _file_read_phdr(int fd, Elf_Phdr * phdr);
 static int _file_mmap(DL * dl, Elf_Phdr * phdr);
 static int _file_prot(unsigned int flags);
 static int _file_symbols(DL * dl);
@@ -169,7 +168,7 @@ static void * _dl_new(char const * pathname)
 
 static int _new_file(DL * dl, char const * pathname)
 {
-	Elf_Phdr phdr;
+	Elf_Phdr * phdr;
 	size_t i;
 	ssize_t len;
 
@@ -181,24 +180,29 @@ static int _new_file(DL * dl, char const * pathname)
 	if(_file_read_ehdr(dl->fd, &dl->ehdr) != 0)
 		return -1;
 	/* read the program headers */
-	if(lseek(dl->fd, dl->ehdr.e_phoff, SEEK_SET) != dl->ehdr.e_phoff)
-		return _dl_error_set_errno(-1);
+	if((phdr = _dl_load(dl, dl->ehdr.e_phoff, sizeof(*phdr)
+					* dl->ehdr.e_phnum)) == NULL)
+		return -1;
 	for(i = 0; i < dl->ehdr.e_phnum; i++)
 	{
-		if(_file_read_phdr(dl->fd, &phdr) != 0)
-			return -1;
-		if(phdr.p_type != PT_LOAD)
+		if(phdr[i].p_type != PT_LOAD)
 			continue;
-		if(_file_mmap(dl, &phdr) != 0)
-			return -1;
+		if(phdr[i].p_filesz > phdr[i].p_memsz)
+		{
+			free(phdr);
+			return _dl_error_set(DE_INVALID_FORMAT, -1);
+		}
+		if(_file_mmap(dl, &phdr[i]) == 0)
+			continue;
+		free(phdr);
+		return -1;
 	}
+	free(phdr);
 	/* read the section headers */
 	if((len = dl->ehdr.e_shnum * sizeof(*dl->shdr)) < 0) /* XXX relevant? */
 		return _dl_error_set(DE_INVALID_FORMAT, -1);
-	if(lseek(dl->fd, dl->ehdr.e_shoff, SEEK_SET) != dl->ehdr.e_shoff
-			|| (dl->shdr = malloc(len)) == NULL
-			|| read(dl->fd, dl->shdr, len) != len)
-		return _dl_error_set_errno(-1);
+	if((dl->shdr = _dl_load(dl, dl->ehdr.e_shoff, len)) == NULL)
+		return -1;
 	if(_file_symbols(dl) != 0 || _file_relocations(dl) != 0)
 		return -1;
 	return 0;
@@ -219,15 +223,6 @@ static int _file_read_ehdr(int fd, Elf_Ehdr * ehdr)
 			|| ehdr->e_shnum == 0
 			|| ehdr->e_shoff < sizeof(ehdr)
 			|| ehdr->e_shentsize != sizeof(Elf_Shdr))
-		return _dl_error_set(DE_INVALID_FORMAT, -1);
-	return 0;
-}
-
-static int _file_read_phdr(int fd, Elf_Phdr * phdr)
-{
-	if(read(fd, phdr, sizeof(*phdr)) != sizeof(*phdr))
-		return _dl_error_set_errno(-1);
-	if(phdr->p_filesz > phdr->p_memsz)
 		return _dl_error_set(DE_INVALID_FORMAT, -1);
 	return 0;
 }
@@ -327,14 +322,9 @@ static int _file_relocations(DL * dl)
 				&& (shdr->sh_type != SHT_REL
 					|| shdr->sh_entsize != sizeof(*rel)))
 			continue;
-		if(lseek(dl->fd, shdr->sh_offset, SEEK_SET) != shdr->sh_offset
-				|| (rela = malloc(shdr->sh_size)) == NULL
-				|| read(dl->fd, rela, shdr->sh_size)
-				!= shdr->sh_size)
-		{
-			_dl_error_set_errno(1);
+		if((rela = _dl_load(dl, shdr->sh_offset, shdr->sh_size))
+				== NULL)
 			break;
-		}
 		if(_dl_symtab(dl, shdr->sh_link, SHT_DYNSYM, &symtab,
 					&symtab_cnt) != 0)
 			break;
@@ -437,6 +427,29 @@ static int _dl_error_set_errno(int ret)
 }
 
 
+/* dl_section */
+static void * _dl_load(DL * dl, off_t offset, size_t size)
+{
+	void * ret;
+	ssize_t ssize;
+
+	if(lseek(dl->fd, offset, SEEK_SET) != offset
+			|| (ret = malloc(size)) == NULL)
+	{
+		_dl_error_set_errno(1);
+		return NULL;
+	}
+	if((ssize = read(dl->fd, ret, size)) <= 0
+			|| (size_t)ssize != size)
+	{
+		free(ret);
+		_dl_error_set_errno(1);
+		return NULL;
+	}
+	return ret;
+}
+
+
 /* dl_strtab */
 static int _dl_strtab(DL * dl, Elf_Word index, char ** strtab,
 		size_t * strtab_cnt)
@@ -446,16 +459,14 @@ static int _dl_strtab(DL * dl, Elf_Word index, char ** strtab,
 	if(index >= dl->ehdr.e_shnum || dl->shdr[index].sh_type != SHT_STRTAB)
 		return -_dl_error_set(DE_INVALID_FORMAT, 1);
 	shdr = &dl->shdr[index];
-	*strtab_cnt = shdr->sh_size;
-	if(lseek(dl->fd, shdr->sh_offset, SEEK_SET) != shdr->sh_offset
-			|| (*strtab = malloc(shdr->sh_size + 1)) == NULL)
-		return -_dl_error_set_errno(1);
-	if(read(dl->fd, *strtab, *strtab_cnt) != *strtab_cnt)
+	if((*strtab = _dl_load(dl, shdr->sh_offset, shdr->sh_size)) == NULL)
+		return -1;
+	if((*strtab)[shdr->sh_size - 1] != '\0')
 	{
 		free(*strtab);
-		return -_dl_error_set_errno(1);
+		return -_dl_error_set(DE_INVALID_FORMAT, 1);
 	}
-	(*strtab)[shdr->sh_size] = '\0';
+	*strtab_cnt = shdr->sh_size;
 	return 0;
 }
 
@@ -490,15 +501,8 @@ static int _dl_symtab(DL * dl, Elf_Word index, Elf_Word type, Elf_Sym ** symtab,
 	shdr = &dl->shdr[index];
 	if(shdr->sh_type != type || shdr->sh_entsize != sizeof(**symtab))
 		return -_dl_error_set(DE_INVALID_FORMAT, 1);
-	if(lseek(dl->fd, shdr->sh_offset, SEEK_SET) != shdr->sh_offset)
-		return -_dl_error_set_errno(1);
-	if((*symtab = malloc(shdr->sh_size)) == NULL)
-		return -_dl_error_set_errno(1);
-	if(read(dl->fd, *symtab, shdr->sh_size) != shdr->sh_size)
-	{
-		free(*symtab);
-		return -_dl_error_set_errno(1);
-	}
+	if((*symtab = _dl_load(dl, shdr->sh_offset, shdr->sh_size)) == NULL)
+		return -1;
 	*symtab_cnt = shdr->sh_size / shdr->sh_entsize;
 	return 0;
 }
