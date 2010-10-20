@@ -102,6 +102,22 @@ lseek:
 #undef SYS_lseek
 
 
+/* mmap */
+.global mmap
+.type mmap,@function
+mmap:
+	sub	$0x10, %rsp
+	mov	%r9, 0x8(%rsp)
+	mov	$0, %r9
+	mov	$SYS_mmap, %rax
+	mov	%rcx, %r10
+	syscall
+	add	$0x10, %rsp
+	jc	.errno
+	ret
+#undef SYS_mmap
+
+
 /* pipe */
 .global pipe
 .type pipe,@function
