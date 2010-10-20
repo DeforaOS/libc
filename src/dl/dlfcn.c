@@ -242,7 +242,7 @@ static int _file_mmap(DL * dl, Elf_Phdr * phdr)
 	len = phdr->p_memsz;
 	offset = phdr->p_offset;
 #ifdef DEBUG
-	fprintf(stderr, "DEBUG: mmap(%p, 0x%zx, %d, %d, %d, 0x%zx)\n", NULL,
+	fprintf(stderr, "DEBUG: mmap(%p, 0x%lx, %d, %d, %d, 0x%lx)\n", NULL,
 			len, prot, MAP_PRIVATE, dl->fd, offset);
 #endif
 	if((*base = mmap(NULL, len, prot, MAP_PRIVATE, dl->fd, offset))
@@ -487,11 +487,14 @@ static void * _sym_lookup(DL * dl, Elf_Shdr * shdr, char const * name,
 			break;
 		}
 #ifdef DEBUG
-		printf("symbol: %s, section: %u, value: 0x%x, size: 0x%x\n",
-				&strings[sym.st_name], sym.st_shndx,
+		printf("symbol: %s, section: %u, type=%x, value: 0x%x"
+				", size: 0x%x\n", &strings[sym.st_name],
+				sym.st_shndx, ELF_ST_TYPE(sym.st_info),
 				sym.st_value, sym.st_size);
 #endif
-		/* FIXME it is relative to the section */
+		/* FIXME handle only known types */
+		if(ELF_ST_TYPE(sym.st_info) == STT_FUNC)
+			return (void*)(sym.st_value + dl->text_addr);
 		return (void*)(sym.st_value + dl->data_addr);
 	}
 	return NULL;

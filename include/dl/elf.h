@@ -26,6 +26,7 @@
 # ifdef ELFSIZE
 #  if ELFSIZE == 32
 #   define ELFCLASS ELFCLASS32
+#   define ELF_ST_TYPE(info) ELF32_ST_TYPE(info)
 #   define Elf_Addr Elf32_Addr
 #   define Elf_Ehdr Elf32_Ehdr
 #   define Elf_Shdr Elf32_Shdr
@@ -34,6 +35,7 @@
 #   define Elf_Word Elf32_Word
 #  elif ELFSIZE == 64
 #   define ELFCLASS ELFCLASS64
+#   define ELF_ST_TYPE(info) ELF32_ST_TYPE(info)
 #   define Elf_Addr Elf64_Addr
 #   define Elf_Ehdr Elf64_Ehdr
 #   define Elf_Shdr Elf64_Shdr
@@ -223,8 +225,20 @@ typedef struct _Elf64_Phdr
 	Elf64_Xword p_align;
 } Elf64_Phdr;
 
-
 /* Elf_Sym */
+/* info */
+# define ELF32_ST_TYPE(info) (info & 0xf)
+/* type */
+# define STT_NOTYPE	0
+# define STT_OBJECT	1
+# define STT_FUNC	2
+# define STT_SECTION	3
+# define STT_FILE	4
+# define STT_NUM	5
+# define STT_LOOS	10
+# define STT_HIOS	12
+# define STT_LOPROC	13
+# define STT_HIPROC	15
 typedef struct _Elf32_Sym
 {
 	Elf32_Word st_name;
