@@ -201,6 +201,36 @@ static char * _gethostent_host(char const ** s)
 }
 
 
+/* hstrerror */
+char * hstrerror(int errnum)
+{
+	static char ret[256];
+	static const struct
+	{
+		const int errnum;
+		const char * errmsg;
+	} err[] =
+	{
+		{ 0,			"Success"			},
+		{ HOST_NOT_FOUND,	"Host not found"		},
+		{ NO_DATA,		"No data"			},
+		{ NO_RECOVERY,		"No recovery"			},
+		{ TRY_AGAIN,		"Try again"			},
+		{ -1,			NULL				}
+	};
+	unsigned int i;
+
+	for(i = 0; err[i].errmsg != NULL; i++)
+		if(err[i].errnum == errnum)
+		{
+			snprintf(ret, sizeof(ret), "%s", err[i].errmsg);
+			return ret;
+		}
+	snprintf(ret, sizeof(ret), "%s%d", "Unknown error: ", errnum);
+	return ret;
+}
+
+
 /* sethostent */
 void sethostent(int stayopen)
 {

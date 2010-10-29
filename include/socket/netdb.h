@@ -63,6 +63,7 @@ struct hostent * gethostbyaddr(const void * addr, socklen_t len, int type);
 struct hostent * gethostbyname(const char * name);
 struct servent * getservbyname(const char * name, const char * protocol);
 struct hostent * gethostent(void);
+char * hstrerror(int errnum);
 void sethostent(int stayopen);
 
 #endif /* !LIBSOCKET_NETDB_H */
