@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -636,6 +636,14 @@ double strtod(char const * str, char ** endptr)
 }
 
 
+/* strtof */
+float strtof(char const * str, char ** endptr)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+
+
 /* strtol */
 static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 		int * neg);
@@ -724,6 +732,14 @@ static int _strtoull_base(char const ** p)
 		return 8;
 	}
 	return 10;
+}
+
+
+/* strtold */
+long double strtold(char const * str, char ** endptr)
+{
+	/* FIXME implement */
+	return 0.0;
 }
 
 
