@@ -62,6 +62,7 @@ void srand(unsigned seed);
 double strtod(char const * str, char ** endptr);
 float strtof(char const * str, char ** endptr);
 long strtol(char const * str, char ** endptr, int base);
+long double strtold(char const * str, char ** endptr);
 long long strtoll(char const * str, char ** endptr, int base);
 unsigned long strtoul(char const * str, char ** endptr, int base);
 unsigned long long strtoull(char const * str, char ** endptr, int base);
