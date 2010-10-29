@@ -23,9 +23,22 @@ _start:
 	shl	$3, %rdx
 	add	$8, %rdx
 	add	%rsi, %rdx
+#ifdef PIC
+	mov	environ@GOTPCREL(%rip), %rcx
+	mov	%rdx, (%rcx)
+#else
 	mov	%rdx, environ
+#endif
 	xor	%rbp, %rbp	/* stack	*/
+#ifdef PIC
+	call	main@PLT
+#else
 	call	main
+#endif
 	mov	%rax, %rdi	/* exit		*/
+#ifdef PIC
+	call	exit@PLT
+#else
 	call	exit
+#endif
 	hlt
