@@ -22,6 +22,7 @@
 #include "fcntl.h"
 #include "unistd.h"
 #include "string.h"
+#include "strings.h"
 #include "signal.h"
 #include "ctype.h"
 #include "errno.h"
