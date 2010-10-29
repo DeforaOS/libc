@@ -631,16 +631,52 @@ void srand(unsigned int seed)
 /* strtod */
 double strtod(char const * str, char ** endptr)
 {
-	/* FIXME implement */
-	return 0.0;
+	/* FIXME really implement */
+	double ret;
+	int res;
+	long i;
+	unsigned long u;
+	char const * p;
+
+	*endptr = (char*)str; /* XXX only good for errors */
+	if((res = sscanf(str, "%ld.%lu", &i, &u)) == 1)
+		ret = i;
+	else if(res == 2 && (p = index(str, '.')) != NULL)
+	{
+		if(i >= 0)
+			ret = i + u / (10.0 * strlen(++p));
+		else
+			ret = i - u / (10.0 * strlen(++p));
+	}
+	else
+		ret = 0.0 / 0.0;
+	return ret;
 }
 
 
 /* strtof */
 float strtof(char const * str, char ** endptr)
 {
-	/* FIXME implement */
-	return 0.0;
+	/* FIXME really implement */
+	float ret;
+	int res;
+	long i;
+	unsigned long u;
+	char const * p;
+
+	*endptr = (char*)str; /* XXX only good for errors */
+	if((res = sscanf(str, "%ld.%lu", &i, &u)) == 1)
+		ret = i;
+	else if(res == 2 && (p = index(str, '.')) != NULL)
+	{
+		if(i >= 0)
+			ret = i + u / (10.0 * strlen(++p));
+		else
+			ret = i - u / (10.0 * strlen(++p));
+	}
+	else
+		ret = 0.0 / 0.0;
+	return ret;
 }
 
 
