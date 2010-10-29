@@ -255,7 +255,7 @@ int strerror_r(int errnum, char * strerrbuf, size_t buflen)
 				return ERANGE;
 			return 0;
 		}
-	if(snprintf(strerrbuf, buflen, "%s%d", "Unknown error: ", errno)
+	if(snprintf(strerrbuf, buflen, "%s%d", "Unknown error: ", errnum)
 			>= buflen)
 		return ERANGE;
 	return EINVAL;
