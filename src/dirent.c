@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ DIR * opendir(char const * name)
 		errno = ENOTDIR;
 		return NULL;
 	}
-	if((dir = malloc(sizeof(DIR))) == NULL)
+	if((dir = malloc(sizeof(*dir))) == NULL)
 	{
 		close(fd);
 		return NULL;
