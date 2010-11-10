@@ -51,6 +51,18 @@ int closedir(DIR * dir)
 }
 
 
+/* dirfd */
+int dirfd(DIR * dir)
+{
+	if(dir == NULL)
+	{
+		errno = EINVAL;
+		return -1;
+	}
+	return dir->fd;
+}
+
+
 /* opendir */
 DIR * opendir(char const * name)
 {

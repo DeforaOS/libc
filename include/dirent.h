@@ -27,6 +27,7 @@ typedef struct _DIR DIR;
 
 /* functions */
 int closedir(DIR * dir);
+int dirfd(DIR * dir);
 DIR * opendir(char const * name);
 struct dirent *readdir(DIR * dir);
 void rewinddir(DIR *);
