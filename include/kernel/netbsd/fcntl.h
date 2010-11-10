@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,5 +73,10 @@ struct flock
 # define O_RDWR		2
 
 # define O_ACCMODE	(O_WRONLY | O_RDWR)
+
+# define LOCK_SH	0x0
+# define LOCK_EX	0x2
+# define LOCK_NB	0x4
+# define LOCK_UN	0x8
 
 #endif /* !LIBC_KERNEL_NETBSD_FCNTL_H */
