@@ -216,6 +216,20 @@ int fileno(FILE * file)
 }
 
 
+/* flock */
+void flockfile(FILE * file)
+{
+	struct flock fl;
+
+	fl.l_start = 0;
+	fl.l_len = 0;
+	fl.l_pid = 0;
+	fl.l_type = F_RDLCK | F_WRLCK;
+	fl.l_whence = SEEK_SET;
+	fcntl(file->fd, F_SETLKW, &fl);
+}
+
+
 /* fopen */
 FILE * fopen(char const * path, char const * mode)
 {
@@ -387,6 +401,34 @@ long ftell(FILE * file)
 		return -1;
 	/* FIXME not tested */
 	return ret - file->len + file->pos;
+}
+
+
+/* ftrylock */
+int ftrylock(FILE * file)
+{
+	struct flock fl;
+
+	fl.l_start = 0;
+	fl.l_len = 0;
+	fl.l_pid = 0;
+	fl.l_type = F_RDLCK | F_WRLCK;
+	fl.l_whence = SEEK_SET;
+	return fcntl(file->fd, F_SETLK, &fl);
+}
+
+
+/* funlockfile */
+void funlockfile(FILE * file)
+{
+	struct flock fl;
+
+	fl.l_start = 0;
+	fl.l_len = 0;
+	fl.l_pid = 0;
+	fl.l_type = F_UNLCK;
+	fl.l_whence = SEEK_SET;
+	fcntl(file->fd, F_SETLKW, &fl);
 }
 
 

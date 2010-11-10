@@ -24,6 +24,19 @@
 #  define off_t off_t
 typedef long long off_t;
 # endif
+# ifndef pid_t
+#  define pid_t pid_t
+typedef signed int pid_t;
+# endif
+
+struct flock
+{
+	short l_type;
+	short l_whence;
+	off_t l_start;
+	off_t l_len;
+	pid_t pid;
+};
 
 
 /* constants */
@@ -39,6 +52,10 @@ typedef long long off_t;
 # define F_GETOWN	9
 
 # define FD_CLOEXEC	1
+
+# define F_RDLCK	0
+# define F_WRLCK	1
+# define F_UNLCK	2
 
 # define O_RDONLY	000000
 # define O_WRONLY	000001
