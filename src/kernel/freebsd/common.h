@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,6 +71,7 @@
 # define SYS_setreuid		126
 # define SYS_setregid		127
 # define SYS_rename		128
+# define SYS_flock		131
 # define SYS_mkfifo		132
 # define SYS_mkdir		136
 # define SYS_rmdir		137
