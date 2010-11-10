@@ -50,6 +50,17 @@ int fcntl(int fd, int cmd, ...)
 #endif
 
 
+/* flock */
+#ifndef SYS_flock
+# warning Unsupported platform: flock() is missing
+int flock(int fd, int operation)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* open */
 #ifndef SYS_open
 # warning Unsupported platform: open() is missing
