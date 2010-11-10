@@ -74,4 +74,9 @@ struct flock
 
 # define O_ACCMODE	(O_WRONLY | O_RDWR)
 
+# define LOCK_SH	0x1
+# define LOCK_EX	0x2
+# define LOCK_NB	0x4
+# define LOCK_UN	0x8
+
 #endif /* !LIBC_KERNEL_LINUX_FCNTL_H */
