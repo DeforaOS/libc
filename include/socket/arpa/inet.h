@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 uint32_t htonl(uint32_t host32);
 uint16_t htons(uint16_t host16);
 in_addr_t inet_addr(const char *cp);
+char * inet_ntoa(struct in_addr in);
 uint32_t ntohl(uint32_t net32);
 uint16_t ntohs(uint16_t net16);
 
