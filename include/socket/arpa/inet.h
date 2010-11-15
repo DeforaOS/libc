@@ -32,6 +32,15 @@ typedef unsigned int uint32_t;
 #endif
 
 
+/* macros */
+/* FIXME really implement htonl() and htons() */
+# define htonl(h)	(h)
+# define htons(h)	(h)
+# define ntohl(h)	htonl(h)
+# define ntohs(h)	htons(h)
+
+
+
 /* functions */
 uint32_t htonl(uint32_t host32);
 uint16_t htons(uint16_t host16);
