@@ -21,6 +21,17 @@
 # include <netinet/in.h>
 
 
+/* types */
+#ifndef uint16_t
+# define uint16_t uint16_t
+typedef unsigned short uint16_t;
+#endif
+#ifndef uint32_t
+# define uint32_t uint32_t
+typedef unsigned int uint32_t;
+#endif
+
+
 /* functions */
 uint32_t htonl(uint32_t host32);
 uint16_t htons(uint16_t host16);
