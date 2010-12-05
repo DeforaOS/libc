@@ -27,7 +27,7 @@ libdl.a: $(libdl_OBJS)
 	$(RANLIB) libdl.a
 
 libdl.so: $(libdl_OBJS)
-	$(LD) -o libdl.so -Wl,-soname,libdl.so.0 $(libdl_OBJS)
+	$(LD) -o libdl.so -Wl,-soname,libdl.so.0 $(libdl_OBJS) $(libdl_LDFLAGS)
 
 dlfcn.o: dlfcn.c ../../include/dl/dlfcn.h ../../include/dl/elf.h
 	$(CC) $(libdl_CFLAGS) -c dlfcn.c

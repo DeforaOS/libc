@@ -34,7 +34,7 @@ libsocket.a: $(libsocket_OBJS)
 	$(RANLIB) libsocket.a
 
 libsocket.so: $(libsocket_OBJS)
-	$(LD) -o libsocket.so -Wl,-soname,libsocket.so.0 $(libsocket_OBJS)
+	$(LD) -o libsocket.so -Wl,-soname,libsocket.so.0 $(libsocket_OBJS) $(libsocket_LDFLAGS)
 
 arpa/inet.o: arpa/inet.c
 	$(CC) $(libsocket_CFLAGS) -o arpa/inet.o -c arpa/inet.c

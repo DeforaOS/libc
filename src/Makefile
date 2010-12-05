@@ -35,7 +35,7 @@ libc.a: $(libc_OBJS)
 	$(RANLIB) libc.a
 
 libc.so: $(libc_OBJS)
-	$(LD) -o libc.so -Wl,-soname,libc.so.0 $(libc_OBJS) `$(CC) -print-libgcc-file-name`
+	$(LD) -o libc.so -Wl,-soname,libc.so.0 $(libc_OBJS) $(libc_LDFLAGS)
 
 start.o_OBJS = start.o
 start.o_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)

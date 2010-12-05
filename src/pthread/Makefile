@@ -27,7 +27,7 @@ libpthread.a: $(libpthread_OBJS)
 	$(RANLIB) libpthread.a
 
 libpthread.so: $(libpthread_OBJS)
-	$(LD) -o libpthread.so -Wl,-soname,libpthread.so.0 $(libpthread_OBJS)
+	$(LD) -o libpthread.so -Wl,-soname,libpthread.so.0 $(libpthread_OBJS) $(libpthread_LDFLAGS)
 
 pthread.o: pthread.c
 	$(CC) $(libpthread_CFLAGS) -c pthread.c

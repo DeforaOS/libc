@@ -34,7 +34,7 @@ libm.a: $(libm_OBJS)
 	$(RANLIB) libm.a
 
 libm.so: $(libm_OBJS)
-	$(LD) -o libm.so -Wl,-soname,libm.so.0 $(libm_OBJS)
+	$(LD) -o libm.so -Wl,-soname,libm.so.0 $(libm_OBJS) $(libm_LDFLAGS)
 
 arch.o: arch.S amd64/math.S i386/math.S
 	$(AS) $(libm_ASFLAGS) -o arch.o arch.S
