@@ -13,7 +13,7 @@ clean:
 
 distclean: clean
 
-install: all
+install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/net
 	$(INSTALL) -m 0644 -- if.h $(DESTDIR)$(INCLUDEDIR)/net/if.h
 

@@ -6,7 +6,7 @@ clean:
 
 distclean: clean
 
-install: all
+install:
 
 uninstall:
 

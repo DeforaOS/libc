@@ -13,7 +13,7 @@ clean:
 
 distclean: clean
 
-install: all
+install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/arpa
 	$(INSTALL) -m 0644 -- inet.h $(DESTDIR)$(INCLUDEDIR)/arpa/inet.h
 

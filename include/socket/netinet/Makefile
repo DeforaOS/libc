@@ -13,7 +13,7 @@ clean:
 
 distclean: clean
 
-install: all
+install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/netinet
 	$(INSTALL) -m 0644 -- in.h $(DESTDIR)$(INCLUDEDIR)/netinet/in.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/netinet

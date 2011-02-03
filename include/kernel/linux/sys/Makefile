@@ -13,7 +13,7 @@ clean:
 
 distclean: clean
 
-install: all
+install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
 	$(INSTALL) -m 0644 -- ioctl.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/ioctl.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys

@@ -38,7 +38,7 @@ clean:
 distclean: clean
 	$(RM) -- $(TARGETS)
 
-install: all
+install: $(TARGETS)
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 -- libpthread.a $(DESTDIR)$(LIBDIR)/libpthread.a
 	$(INSTALL) -m 0755 -- libpthread.so $(DESTDIR)$(LIBDIR)/libpthread.so.0.0

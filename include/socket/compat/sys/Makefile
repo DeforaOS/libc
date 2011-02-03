@@ -13,7 +13,7 @@ clean:
 
 distclean: clean
 
-install: all
+install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
 	$(INSTALL) -m 0644 -- socket.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/socket.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys

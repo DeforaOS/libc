@@ -51,7 +51,7 @@ distclean:
 	$(RM) -- $(libm_OBJS)
 	$(RM) -- $(TARGETS)
 
-install: all
+install: $(TARGETS)
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 -- libm.a $(DESTDIR)$(LIBDIR)/libm.a

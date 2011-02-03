@@ -468,7 +468,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/project.conf
 	$(RM) -- $(PACKAGE)-$(VERSION)
 
-install: all
+install:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 
 uninstall:

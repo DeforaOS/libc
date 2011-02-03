@@ -19,7 +19,7 @@ clean:
 distclean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
 
-install: all
+install:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd
 	$(INSTALL) -m 0644 -- dirent.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/dirent.h

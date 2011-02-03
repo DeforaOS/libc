@@ -13,7 +13,7 @@ clean:
 
 distclean: clean
 
-install: all
+install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
 	$(INSTALL) -m 0644 -- socket.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/socket.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys

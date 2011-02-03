@@ -13,7 +13,7 @@ clean:
 
 distclean: clean
 
-install: all
+install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
 	$(INSTALL) -m 0644 -- ioctl.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/ioctl.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys

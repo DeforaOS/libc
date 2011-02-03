@@ -13,7 +13,7 @@ clean:
 
 distclean: clean
 
-install: all
+install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys
 	$(INSTALL) -m 0644 -- ioctl.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/ioctl.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys
