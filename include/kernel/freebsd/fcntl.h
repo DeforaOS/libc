@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,10 @@ struct flock
 # define F_SETLKW	9
 
 # define FD_CLOEXEC	1
+
+# define F_RDLCK	1
+# define F_UNLCK	2
+# define F_WRLCK	3
 
 # define O_CREAT	0x0200
 # define O_EXCL		0x0800
