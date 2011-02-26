@@ -309,9 +309,8 @@ int strncmp(char const * s1, char const * s2, size_t n)
 /* strncpy */
 char * strncpy(char * dest, char const * src, size_t n)
 {
-	char * ret;
+	char * ret = dest;
 
-	ret = dest;
 	while(n-- && (*(dest++) = *(src++)));
 	return ret;
 }
