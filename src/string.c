@@ -117,7 +117,7 @@ char * strchr(char const * s, int c)
 	unsigned char const * ls;
 	unsigned char lc = c;
 
-	for(ls = s; *ls != '\0'; ls++)
+	for(ls = (unsigned char const *)s; *ls != '\0'; ls++)
 		if(*ls == lc)
 			return (char*)ls;
 	return (lc == '\0') ? (char*)ls : NULL;
