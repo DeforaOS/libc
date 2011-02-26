@@ -114,12 +114,13 @@ char * strcat(char * dest, char const * src)
 /* strchr */
 char * strchr(char const * s, int c)
 {
-	unsigned char u = c;
+	unsigned char const * ls;
+	unsigned char lc = c;
 
-	for(; *s != '\0'; s++)
-		if(*s == u)
-			return (char*)s; /* XXX */
-	return u == 0 ? (char*)s : NULL; /* XXX */
+	for(ls = s; *ls != '\0'; ls++)
+		if(*ls == lc)
+			return (char*)ls;
+	return (lc == '\0') ? (char*)ls : NULL;
 }
 
 
