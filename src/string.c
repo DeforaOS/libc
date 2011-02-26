@@ -368,9 +368,7 @@ char * strrchr(char const * s, int c)
 	for(ls = (unsigned char const *)s; *ls != '\0'; ls++)
 		if(*ls == lc)
 			ret = ls;
-	if(ret != NULL)
-		return ret;
-	return (lc == '\0') ? (char *)ls : NULL;
+	return (char *)((lc == '\0') ? ls : ret);
 }
 
 
