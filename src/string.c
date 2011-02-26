@@ -238,6 +238,9 @@ int strerror_r(int errnum, char * strerrbuf, size_t buflen)
 		{ EPIPE,	"Broken pipe"				},
 		{ ERANGE,	"Result too large or too small"		},
 		{ EROFS,	"Read-only filesystem"			},
+#ifdef ESRCH
+		{ ESRCH,	"No such process"			},
+#endif
 		{ EXDEV,	"Cross-device link"			},
 		{ -1,		NULL					}
 	};
