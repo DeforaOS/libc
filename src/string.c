@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@
 #include "string.h"
 #include "errno.h"
 
-
-/* FIXME */
 #define max(a, b) ((a) > (b) ? (a) : (b))
 
 
@@ -31,9 +29,10 @@ void * memchr(void const * s, int c, size_t n)
 	unsigned char const * ls = s;
 	unsigned char lc = c;
 
-	while(n-- && *ls != lc)
-		ls++;
-	return n != 0 ? (void*)ls : NULL; /* XXX */
+	for(; n--; ls++)
+		if(*ls == lc)
+			return (void*)ls;
+	return NULL;
 }
 
 
