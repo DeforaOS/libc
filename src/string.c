@@ -119,8 +119,8 @@ char * strchr(char const * s, int c)
 
 	for(ls = (unsigned char const *)s; *ls != '\0'; ls++)
 		if(*ls == lc)
-			return (char*)ls;
-	return (lc == '\0') ? (char*)ls : NULL;
+			return (char *)ls;
+	return (lc == '\0') ? (char *)ls : NULL;
 }
 
 
@@ -336,7 +336,7 @@ char * strpbrk(char const * s1, char const * s2)
 	for(p = s1; *p != '\0'; p++)
 		for(q = s2; *q != '\0'; q++)
 			if(*p == *q)
-				return (char*)p;
+				return (char *)p;
 	return NULL;
 }
 
@@ -361,13 +361,16 @@ size_t strspn(char const * s1, char const * s2)
 /* strrchr */
 char * strrchr(char const * s, int c)
 {
-	unsigned char u = c;
-	char const * last = NULL;
+	unsigned char const * ret = NULL;
+	unsigned char const * ls;
+	unsigned char lc = c;
 
-	for(; *s != '\0'; s++)
-		if(*s == c)
-			last = s;
-	return u == 0 ? (char*)s : (char*)last; /* XXX */
+	for(ls = (unsigned char const *)s; *ls != '\0'; ls++)
+		if(*ls == lc)
+			ret = ls;
+	if(ret != NULL)
+		return ret;
+	return (lc == '\0') ? (char *)ls : NULL;
 }
 
 
@@ -379,12 +382,12 @@ char * strstr(char const * s1, char const * s2)
 	unsigned int i;
 
 	if(len2 == 0)
-		return (char*)s1; /* XXX */
+		return (char *)s1; /* XXX */
 	if(len1 < len2)
 		return NULL;
 	for(i = 0; i < len1 - len2; i++)
 		if(strncmp(&s1[i], s2, len2) == 0)
-			return (char*)s1 + i; /* XXX */
+			return (char *)s1 + i; /* XXX */
 	return NULL;
 }
 
