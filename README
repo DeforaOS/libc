@@ -3,14 +3,15 @@ COMPILATION
 
 1. Compilation of libc
 
-With GCC (tested on Debian GNU/Linux):
-$ make CFLAGS="-nostdinc -g -O2" all
+With GCC, this should be enough:
+$ make
 
 2. Compilation of other programs against libc
 
-With GCC (tested on Debian GNU/Linux):
-$ make CPPFLAGS="-nostdinc -I /usr/local/include/libc" \
-	CFLAGS="-W -Wall -ansi -g -O2" \
-	LDFLAGS="-nostdlib -L /usr/local/lib -l c" all
-assuming the headers are accessible in /usr/local/include/libc, and the
-libraries are accessible in /usr/local/lib.
+The following instructions assume that the libc was compiled in the
+/path/to/libc directory.
+
+With GCC:
+$ make CPPFLAGS="-nostdinc -isystem /path/to/libc/include" \
+	LDFLAGS="-nostdlib -L/path/to/libc/src -Wl,-rpath,/path/to/libc/src -lc /path/to/libc/src/start.o" \
+	target
