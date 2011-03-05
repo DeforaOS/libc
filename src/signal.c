@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,14 +53,21 @@ int sigaction(int sig, const struct sigaction * act, struct sigaction * oact)
 
 
 /* sigemptyset */
-#ifndef sigemptyset
+#undef sigemptyset
 int sigemptyset(sigset_t * set)
 {
 	/* XXX untested */
 	memset(set, 0, sizeof(*set));
 	return 0;
 }
-#endif
+
+
+/* sigismember */
+int sigismember(sigset_t * set, int sig)
+{
+	/* FIXME untested */
+	return set->bits[sig / 4] & (sig % 32);
+}
 
 
 /* sigprocmask */
@@ -76,13 +83,19 @@ int sigprocmask(int how, const sigset_t * set, sigset_t * oset)
 
 /* signal */
 #ifndef SYS_signal
+static sigset_t _sigintr;
+
 void (*signal(int sig, void (*func)(int)))
 {
 	struct sigaction sa;
 	struct sigaction osa;
 
+	sa.sa_sigaction = NULL;
 	sa.sa_handler = func;
 	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0; /* XXX ? */
+	if(sigismember(&_sigintr, sig) == 0)
+		sa.sa_flags |= SA_RESTART;
 	if(sigaction(sig, &sa, &osa) != 0)
 		return SIG_ERR;
 	return osa.sa_handler;

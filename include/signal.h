@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@ typedef id_t uid_t;
 int kill(pid_t pid, int sig);
 int raise(int sig);
 int sigaction(int sig, const struct sigaction * act, struct sigaction * oact);
+int sigismember(sigset_t * set, int sig);
 int sigprocmask(int how, const sigset_t * set, sigset_t * oset);
 void (*signal(int sig, void (*func)(int)));
 

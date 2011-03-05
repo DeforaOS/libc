@@ -112,7 +112,7 @@ mmap:
 	mov	$SYS_mmap, %rax
 	mov	%rcx, %r10
 	syscall
-	add	$0x10, %rsp
+	add	$0x10, %rsp /* XXX clears carry flag? */
 	jc	.errno
 	ret
 #undef SYS_mmap
@@ -130,3 +130,33 @@ pipe:
 	mov	$0, %rax
 	ret
 #undef SYS_pipe
+
+
+/* sigaction */
+.global __sigaction_sigtramp
+.type __sigaction_sigtramp,@function
+__sigaction_sigtramp:
+	mov	%r15, %rdi
+	mov	$SYS_setcontext, %rax
+	syscall
+	/* this should never be reached */
+	mov	$-1, %rdi
+	mov	$SYS_exit, %rax
+	syscall
+
+.global sigaction
+.type sigaction,@function
+sigaction:
+	mov	$SYS_sigaction, %rax
+#ifdef PIC
+	lea	__sigaction_sigtramp@PLT, %rcx
+#else
+	lea	__sigaction_sigtramp, %rcx
+#endif
+	mov	$2, %r8
+#ifdef PIC
+	jmp	_syscall@PLT
+#else
+	jmp	_syscall
+#endif
+#undef SYS_sigaction
