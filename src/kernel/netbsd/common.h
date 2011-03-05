@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 # define KERNEL_NETBSD_COMMON_H
 
 
+/* constants */
+/* syscalls */
 # define SYS_exit		1
 # define SYS_fork		2
 # define SYS_read		3
@@ -101,7 +103,7 @@
 # ifdef __i386__ /* XXX */
 #  define SYS_sigaction		291
 # else
-# define SYS_sigaction		340
+#  define SYS_sigaction		340
 # endif
 # define SYS_sigprocmask	293
 # define SYS_getcwd		296
