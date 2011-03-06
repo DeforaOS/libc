@@ -234,6 +234,7 @@ int strerror_r(int errnum, char * strerrbuf, size_t buflen)
 		{ ENOMEM,	"Not enough memory"			},
 		{ ENOSYS,	"Not implemented"			},
 		{ ENOTDIR,	"Not a directory"			},
+		{ ENOTSUP,	"Operation not supported"		},
 		{ ENOTTY,	"Inappropriate ioctl for device"	},
 		{ EPERM,	"Permission denied"			},
 		{ EPIPE,	"Broken pipe"				},

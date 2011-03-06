@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 /* constants */
 # define EPERM		1
 # define ENOENT		2
+# define ESRCH		3
 # define EINTR		4
 # define E2BIG		7
 # define ENOEXEC	8
@@ -42,6 +43,7 @@
 # define EROFS		30
 # define EPIPE		32
 # define ERANGE		34
+# define ENOTSUP	48
 # define ENOSYS		89
 # define ENOBUFS	132
 

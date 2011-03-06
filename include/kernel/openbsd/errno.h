@@ -45,5 +45,6 @@
 # define EAGAIN		35
 # define ENOBUFS	55
 # define ENOSYS		78
+# define ENOTSUP	91
 
 #endif /* !LIBC_KERNEL_OPENBSD_ERRNO_H */

@@ -54,5 +54,6 @@
 # define ELOOP		62
 # define ENOTEMPTY	66
 # define ENOSYS		78
+# define ENOTSUP	86
 
 #endif /* !LIBC_KERNEL_NETBSD_ERRNO_H */

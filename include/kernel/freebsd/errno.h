@@ -44,6 +44,7 @@
 # define EPIPE		32
 # define ERANGE		34
 # define EAGAIN		35
+# define ENOTSUP	45
 # define ENOBUFS	55
 # define ENOSYS		78
 
