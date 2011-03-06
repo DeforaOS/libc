@@ -106,7 +106,7 @@
 #  define SYS_sigaction		340
 # endif
 # define SYS_sigprocmask	293
-# define SYS_getcwd		296
+# define SYS__getcwd		296
 # define SYS_shmctl		303
 # define SYS_getcontext		307
 # define SYS_setcontext		308

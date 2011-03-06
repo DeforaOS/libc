@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -411,7 +411,22 @@ int ftruncate(int fildes, off_t offset)
 
 
 /* getcwd */
-#ifndef SYS_getcwd
+#ifdef SYS__getcwd
+int _getcwd(char * buf, size_t size);
+
+char * getcwd(char * buf, size_t size)
+{
+	if(buf == NULL)
+	{
+		if((buf = malloc(PATH_MAX)) == NULL)
+			return NULL;
+		size = PATH_MAX;
+	}
+	if(_getcwd(buf, size) != 0)
+		return NULL;
+	return buf;
+}
+#else
 # warning Unsupported platform: getcwd() is missing
 char * getcwd(char * buf, size_t size)
 {

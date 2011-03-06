@@ -90,6 +90,6 @@
 # define SYS_stat		291
 # define SYS_fstat		292
 # define SYS_lstat		293
-# define SYS_getcwd		304
+# define SYS__getcwd		304
 
 #endif /* !KERNEL_OPENBSD_COMMON_H */

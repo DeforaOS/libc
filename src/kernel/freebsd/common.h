@@ -91,7 +91,7 @@
 # define SYS_munlock		204
 # define SYS_nanosleep		240
 # define SYS_lchown		254
-# define SYS_getcwd		326
+# define SYS__getcwd		326
 # define SYS__statfs		396
 # define SYS_sigaction		416
 

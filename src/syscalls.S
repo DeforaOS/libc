@@ -346,7 +346,9 @@ SYSCALL(fsync)
 #ifdef SYS_ftruncate
 SYSCALL(ftruncate)
 #endif
-SYSCALL(getcwd)
+#ifdef SYS__getcwd
+SYSCALL(_getcwd)
+#endif
 #ifdef SYS_getegid
 SYSCALL(getegid)
 #endif
