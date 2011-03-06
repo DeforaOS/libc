@@ -422,7 +422,7 @@ char * getcwd(char * buf, size_t size)
 			return NULL;
 		size = PATH_MAX;
 	}
-	if(_getcwd(buf, size) != 0)
+	if(_getcwd(buf, size) < 0)
 		return NULL;
 	return buf;
 }
