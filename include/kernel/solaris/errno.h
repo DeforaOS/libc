@@ -53,7 +53,9 @@
 # define ELOOP		90
 # define ENOTEMPTY	93
 # define EADDRINUSE	125
+# define EADDRNOTAVAIL	126
 # define ENOBUFS	132
 # define ETIMEDOUT	145
+# define ECONNREFUSED	146
 
 #endif /* !LIBC_KERNEL_SOLARIS_ERRNO_H */

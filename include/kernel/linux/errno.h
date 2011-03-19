@@ -53,7 +53,9 @@
 # define ELOOP		40
 # define ENOTSUP	95
 # define EADDRINUSE	98
+# define EADDRNOTAVAIL	99
 # define ENOBUFS	105
 # define ETIMEDOUT	110
+# define ECONNREFUSED	111
 
 #endif /* !LIBC_KERNEL_LINUX_ERRNO_H */

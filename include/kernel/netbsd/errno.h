@@ -52,6 +52,7 @@
 # define EADDRNOTAVAIL	49
 # define ENOBUFS	55
 # define ETIMEDOUT	60
+# define ECONNREFUSED	61
 # define ELOOP		62
 # define ENOTEMPTY	66
 # define ENOSYS		78

@@ -44,7 +44,11 @@
 # define EPIPE		32
 # define ERANGE		34
 # define EAGAIN		35
+# define EADDRINUSE	48
+# define EADDRNOTAVAIL	49
 # define ENOBUFS	55
+# define ETIMEDOUT	60
+# define ECONNREFUSED	61
 # define ENOSYS		78
 # define ENOTSUP	91
 
