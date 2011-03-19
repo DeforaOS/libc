@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,25 +15,41 @@
 
 
 
-#ifndef LIBC_NET_IF_H
-# define LIBC_NET_IF_H
+#include "stddef.h"
+#include "errno.h"
+#include "net/if.h"
 
 
-/* types */
-# ifndef if_nameindex
-#  define if_nameindex if_nameindex
-struct if_nameindex
-{
-	unsigned if_index;
-	char * if_name;
-};
-# endif
-
-
+/* public */
 /* functions */
-unsigned int if_nametoindex(const char * name);
-char * if_indextoname(unsigned int index, char * name);
-struct if_nameindex * if_nameindex(void);
-void if_freenameindex(struct if_nameindex * nameindex);
+/* if_nametoindex */
+unsigned int if_nametoindex(const char * name)
+{
+	/* FIXME implement */
+	return 0;
+}
 
-#endif
+
+/* if_indextoname */
+char * if_indextoname(unsigned int index, char * name)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
+}
+
+
+/* if_nameindex */
+struct if_nameindex * if_nameindex(void)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
+}
+
+
+/* if_freenameindex */
+void if_freenameindex(struct if_nameindex * nameindex)
+{
+	/* FIXME implement */
+}

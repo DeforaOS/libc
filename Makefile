@@ -32,6 +32,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/langinfo.c \
 		$(PACKAGE)-$(VERSION)/src/libgen.c \
 		$(PACKAGE)-$(VERSION)/src/locale.c \
+		$(PACKAGE)-$(VERSION)/src/net/if.c \
 		$(PACKAGE)-$(VERSION)/src/poll.c \
 		$(PACKAGE)-$(VERSION)/src/pwd.c \
 		$(PACKAGE)-$(VERSION)/src/search.c \

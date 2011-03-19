@@ -25,7 +25,7 @@ all: subdirs $(TARGETS)
 subdirs:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
 
-libc_OBJS = ctype.o dirent.o errno.o fcntl.o float.o fnmatch.o grp.o iconv.o langinfo.o libgen.o locale.o poll.o pwd.o search.o setjmp.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/ipc.o sys/mman.o sys/mount.o sys/reboot.o sys/resource.o sys/select.o sys/shm.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o syslog.o termios.o time.o ucontext.o unistd.o utime.o utmpx.o
+libc_OBJS = ctype.o dirent.o errno.o fcntl.o float.o fnmatch.o grp.o iconv.o langinfo.o libgen.o locale.o net/if.o poll.o pwd.o search.o setjmp.o signal.o stdlib.o stdio.o string.o strings.o stropts.o sys/ipc.o sys/mman.o sys/mount.o sys/reboot.o sys/resource.o sys/select.o sys/shm.o sys/stat.o sys/statvfs.o sys/time.o sys/times.o sys/utsname.o sys/wait.o syscalls.o syslog.o termios.o time.o ucontext.o unistd.o utime.o utmpx.o
 libc_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 libc_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) `$(CC) -print-libgcc-file-name`
 libc_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
@@ -72,6 +72,9 @@ libgen.o: libgen.c
 
 locale.o: locale.c
 	$(CC) $(libc_CFLAGS) -c locale.c
+
+net/if.o: net/if.c
+	$(CC) $(libc_CFLAGS) -o net/if.o -c net/if.c
 
 poll.o: poll.c
 	$(CC) $(libc_CFLAGS) -c poll.c
