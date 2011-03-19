@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +49,7 @@
 # define ERANGE		34
 # define EAGAIN		35
 # define EADDRINUSE	48
+# define EADDRNOTAVAIL	49
 # define ENOBUFS	55
 # define ETIMEDOUT	60
 # define ELOOP		62
