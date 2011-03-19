@@ -252,6 +252,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/compat/Makefile \
 		$(PACKAGE)-$(VERSION)/include/compat/project.conf \
+		$(PACKAGE)-$(VERSION)/include/compat/net/if.h \
+		$(PACKAGE)-$(VERSION)/include/compat/net/Makefile \
+		$(PACKAGE)-$(VERSION)/include/compat/net/project.conf \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mount.h \
@@ -337,6 +340,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/net/if.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/net/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/net/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/mount.h \
