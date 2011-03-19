@@ -236,6 +236,7 @@ int strerror_r(int errnum, char * strerrbuf, size_t buflen)
 		{ ENOTDIR,	"Not a directory"			},
 		{ ENOTSUP,	"Operation not supported"		},
 		{ ENOTTY,	"Inappropriate ioctl for device"	},
+		{ ENXIO,	"Device not configured"			},
 		{ EPERM,	"Permission denied"			},
 		{ EPIPE,	"Broken pipe"				},
 		{ ERANGE,	"Result too large or too small"		},
