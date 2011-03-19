@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,27 +15,14 @@
 
 
 
-#ifndef LIBC_NET_IF_H
-# define LIBC_NET_IF_H
-
-# include "compat/net/if.h"
+#ifndef LIBC_COMPAT_NET_IF_H
+# define LIBC_COMPAT_NET_IF_H
 
 
-/* types */
-# ifndef if_nameindex
-#  define if_nameindex if_nameindex
-struct if_nameindex
-{
-	unsigned if_index;
-	char * if_name;
-};
+# if defined(__NetBSD__)
+#  include "kernel/netbsd/net/if.h"
+# else
+#  warning Unsupported platform
 # endif
 
-
-/* functions */
-unsigned int if_nametoindex(const char * name);
-char * if_indextoname(unsigned int index, char * name);
-struct if_nameindex * if_nameindex(void);
-void if_freenameindex(struct if_nameindex * nameindex);
-
-#endif
+#endif /* !LIBC_COMPAT_NET_IF_H */
