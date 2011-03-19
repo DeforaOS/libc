@@ -1,4 +1,4 @@
-SUBDIRS	= sys
+SUBDIRS	= net sys
 PREFIX	= /usr/local
 DESTDIR	= 
 RM	= rm -f

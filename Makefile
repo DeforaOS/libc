@@ -311,6 +311,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/utmpx.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/project.conf \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/net/if.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/net/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/net/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/mount.h \

@@ -15,16 +15,43 @@
 
 
 
-#ifndef LIBC_COMPAT_NET_IF_H
-# define LIBC_COMPAT_NET_IF_H
+#ifndef LIBC_KERNEL_LINUX_NET_IF_H
+# define LIBC_KERNEL_LINUX_NET_IF_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/net/if.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/net/if.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef sa_family_t
+#  define sa_family_t sa_family_t
+typedef unsigned short int sa_family_t;
 # endif
 
-#endif /* !LIBC_COMPAT_NET_IF_H */
+# ifndef sockaddr
+#  define sockaddr sockaddr
+struct sockaddr
+{
+	sa_family_t sa_family;
+	char sa_data[14];
+};
+# endif
+
+# ifndef ifreq
+#  define ifreq ifreq
+#  define IFNAMSIZ 16
+struct ifreq
+{
+	char ifr_name[IFNAMSIZ];
+	union
+	{
+		struct sockaddr ifru_addr;
+		short ifru_flags;
+	} ifr_ifru;
+};
+#  define ifr_addr	ifr_ifru.ifru_addr
+#  define ifr_flags	ifr_ifru.ifru_flags
+# endif
+
+
+/* constants */
+# define SIOCGIFADDR	0x8915
+
+#endif /* !LIBC_KERNEL_LINUX_NET_IF_H */
