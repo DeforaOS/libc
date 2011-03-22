@@ -21,6 +21,7 @@
 
 /* mount */
 #if !defined(SYS_mount) && defined(SYS__mount) /* for Linux */
+# include "stddef.h"
 int _mount(char const * node, char const * dir, char const * type, int flags,
 		char const * data);
 

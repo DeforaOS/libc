@@ -18,6 +18,9 @@
 #ifndef LIBC_KERNEL_LINUX_SYS_MOUNT_H
 # define LIBC_KERNEL_LINUX_SYS_MOUNT_H
 
+# include <sys/stat.h> /* XXX either one should not be included */
+# include <sys/types.h>
+
 
 /* types */
 struct iso_args
