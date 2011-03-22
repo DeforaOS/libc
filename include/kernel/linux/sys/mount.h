@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,33 @@
 
 #ifndef LIBC_KERNEL_LINUX_SYS_MOUNT_H
 # define LIBC_KERNEL_LINUX_SYS_MOUNT_H
+
+
+/* types */
+struct iso_args
+{
+	char options[0];
+};
+
+struct nfs_args
+{
+	char options[0];
+};
+
+struct ntfs_args
+{
+	char options[0];
+};
+
+struct procfs_args
+{
+	char options[0];
+};
+
+struct ufs_args
+{
+	char options[0];
+};
 
 
 /* constants */
