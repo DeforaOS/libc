@@ -22,27 +22,51 @@
 /* types */
 struct iso_args
 {
-	char options[0];
+	char * fspec;
+	int flags;
 };
 
 struct nfs_args
 {
-	char options[0];
+	int version;
+	void * addr;
+	int addrlen;
+	int sotype;
+	int proto;
+	void * fh;
+	int fhsize;
+	int flags;
+	int wsize;
+	int rsize;
+	int readdirsize;
+	int timeo;
+	int retrans;
+	int maxgrouplist;
+	int readahead;
+	int leaseterm;
+	int deadthresh;
+	char * hostname;
 };
 
 struct ntfs_args
 {
-	char options[0];
+	char * fspec;
+	uid_t uid;
+	gid_t gid;
+	mode_t mode;
+	unsigned long flag;
 };
 
 struct procfs_args
 {
-	char options[0];
+	int version;
+	int flags;
 };
+# define PROCFS_ARGS_VERSION 0
 
 struct ufs_args
 {
-	char options[0];
+	char * fspec;
 };
 
 

@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,27 +83,6 @@ mmap:
 	jl	.errnoret
 	jmp	.errno
 #undef SYS_mmap
-
-
-/* mount */
-.global mount
-.type mount,@function
-mount:
-	mov	0x04(%esp), %eax
-	mov	0x0c(%esp), %ecx
-	mov	0x10(%esp), %edx
-	mov	%eax, 0x0c(%esp)
-	mov	%ecx, 0x10(%esp)
-	mov	%edx, 0x04(%esp)
-	mov	$0, %eax
-	mov	%eax, 0x14(%esp)
-	mov	$SYS_mount, %eax
-	cmp	$0, %edx
-	je	_syscall
-	mov	(%edx), %edx
-	mov	%edx, 0x04(%esp)
-	jmp	_syscall
-#undef SYS_mount
 
 
 /* setjmp */

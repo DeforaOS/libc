@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,17 @@
 
 
 /* mount */
-#ifndef SYS_mount
+#if !defined(SYS_mount) && defined(SYS__mount) /* for Linux */
+int _mount(char const * node, char const * dir, char const * type, int flags,
+		char const * data);
+
+int mount(char const * type, char const * dir, int flags, const void * data,
+		size_t data_len)
+{
+	/* FIXME really implement */
+	return _mount(NULL, dir, type, flags, NULL);
+}
+#elif !defined(SYS_mount)
 # warning Unsupported platform: mount() is missing
 # include "errno.h"
 int mount(char const * type, char const * dir, int flags, const void * data,

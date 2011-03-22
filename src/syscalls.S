@@ -171,6 +171,9 @@ SYSCALL(munmap)
 #endif
 
 /* sys/mount.h */
+#ifdef SYS__mount
+SYSCALL(_mount)
+#endif
 #ifdef SYS_mount
 SYSCALL(mount)
 #endif

@@ -55,6 +55,3 @@ _exit:
 	mov	%ip, %r7
 	ldr	%r7, =SYS_exit
 	b	_syscall
-
-
-/* FIXME mount needs to be implemented too (wrong order of arguments) */
