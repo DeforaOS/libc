@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,6 @@
 #  define SYS_getppid		64
 #  define SYS_setsid		66
 #  define SYS_sigaction		67
-#  define SYS_flock		73
 #  define SYS_sethostname	74
 #  define SYS_gettimeofday	78
 #  define SYS_select		82
@@ -80,6 +79,7 @@
 #  define SYS_uname		122
 #  define SYS_mprotect		125
 #  define SYS_fchdir		133
+#  define SYS_flock		143
 #  define SYS_mlock		150
 #  define SYS_munlock		151
 #  define SYS_nanosleep		162
@@ -171,7 +171,6 @@
 #  define SYS_fstatfs		138
 #  define SYS_getpriority	140
 #  define SYS_setpriority	141
-#  define SYS_flock		143
 #  define SYS_mlock		149
 #  define SYS_munlock		150
 #  define SYS_setrlimit		160
