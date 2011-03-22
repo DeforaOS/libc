@@ -50,6 +50,7 @@ struct nfs_args
 	int deadthresh;
 	char * hostname;
 };
+# define NFS_ARGSVERSION 0
 
 struct ntfs_args
 {
