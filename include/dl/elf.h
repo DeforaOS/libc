@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 #   define ELF_R_TYPE(info) ELF32_R_TYPE(info)
 #   define ELF_ST_TYPE(info) ELF32_ST_TYPE(info)
 #   define Elf_Addr Elf32_Addr
+#   define Elf_Dyn  Elf32_Dyn
 #   define Elf_Ehdr Elf32_Ehdr
 #   define Elf_Off  Elf32_Off
 #   define Elf_Phdr Elf32_Phdr
@@ -44,6 +45,7 @@
 #   define ELF_R_TYPE(info) ELF64_R_TYPE(info)
 #   define ELF_ST_TYPE(info) ELF32_ST_TYPE(info)
 #   define Elf_Addr Elf64_Addr
+#   define Elf_Dyn  Elf64_Dyn
 #   define Elf_Ehdr Elf64_Ehdr
 #   define Elf_Off  Elf64_Off
 #   define Elf_Phdr Elf64_Phdr
@@ -325,5 +327,56 @@ typedef struct _Elf64_Sym
 	Elf64_Addr st_value;
 	Elf64_Xword st_size;
 } Elf64_Sym;
+
+/* Elf_Dyn */
+/* tag */
+# define DT_NULL		0
+# define DT_NEEDED		1
+# define DT_PLTRELSZ		2
+# define DT_PLTGOT		3
+# define DT_HASH		4
+# define DT_STRTAB		5
+# define DT_SYMTAB		6
+# define DT_RELA		7
+# define DT_RELASZ		8
+# define DT_RELAENT		9
+# define DT_STRSZ		10
+# define DT_SYMENT		11
+# define DT_INIT		12
+# define DT_FINI		13
+# define DT_SONAME		14
+# define DT_RPATH		15
+# define DT_SYMBOLIC		16
+# define DT_REL			17
+# define DT_RELSZ		18
+# define DT_RELENT		19
+# define DT_PLTREL		20
+# define DT_DEBUG		21
+# define DT_TEXTREL		22
+# define DT_JMPREL		23
+# define DT_BIND_NOW		24
+# define DT_INIT_ARRAY		25
+# define DT_FINI_ARRAY		26
+# define DT_FINI_ARRAYSZ	27
+# define DT_INIT_ARRAYSZ	28
+# define DT_NUM			29
+typedef struct _Elf32_Dyn
+{
+	Elf32_Word d_tag;
+	union
+	{
+		Elf32_Addr d_ptr;
+		Elf32_Word d_val;
+	} d_un;
+} Elf32_Dyn;
+
+typedef struct _Elf64_Dyn {
+	Elf64_Xword d_tag;
+	union
+	{
+		Elf64_Addr d_ptr;
+		Elf64_Xword d_val;
+	} d_un;
+} Elf64_Dyn;
 
 #endif /* !LIBC_ELF_H */
