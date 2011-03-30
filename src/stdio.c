@@ -373,6 +373,13 @@ int fscanf(FILE * fp, char const * format, ...)
 /* fseek */
 int fseek(FILE * file, long offset, int whence)
 {
+	return fseeko(file, offset, whence);
+}
+
+
+/* fseeko */
+int fseeko(FILE * file, off_t offset, int whence)
+{
 	if(whence != SEEK_CUR && whence != SEEK_END && whence != SEEK_SET)
 	{
 		errno = EINVAL;
@@ -380,15 +387,7 @@ int fseek(FILE * file, long offset, int whence)
 	}
 	if(fflush(file) != 0)
 		return -1;
-	return lseek(file->fd, offset, whence) != -1 ? 0 : -1;
-}
-
-
-/* fseeko */
-int fseeko(FILE * file, off_t offset, int whence)
-{
-	/* XXX wrong if sizeof(off_t) > sizeof(long) */
-	return fseek(file, offset, whence);
+	return (lseek(file->fd, offset, whence)) != -1 ? 0 : -1;
 }
 
 
