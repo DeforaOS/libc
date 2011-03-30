@@ -189,7 +189,7 @@ long long atoll(char const * nptr)
 
 /* bsearch */
 void * bsearch(const void * key, const void * base, size_t nel,
-		size_t width, int (*compar)(const void *, const void *))
+		size_t size, int (*compar)(const void *, const void *))
 {
 	/* XXX from dietlibc */
 	size_t m;
@@ -199,12 +199,12 @@ void * bsearch(const void * key, const void * base, size_t nel,
 	while(nel)
 	{
 		m = nel / 2;
-		p = (void *) (((const char *) base) + (m * width));
+		p = (void *) (((const char *) base) + (m * size));
 		if((tmp = compar(key, p)) < 0)
 			nel = m;
 		else if(tmp > 0)
 		{
-			base = (char *)p + width;
+			base = (char *)p + size;
 			nel -= m + 1;
 		}
 		else
@@ -430,19 +430,19 @@ int putenv(char * string)
 
 
 /* qsort */
-static void _qsort_do(char * base, size_t width, size_t l, size_t r,
+static void _qsort_do(char * base, size_t size, size_t l, size_t r,
 		int (*compar)(const void *, const void *));
-static void _qsort_exch(char * base, size_t width, size_t a, size_t b);
+static void _qsort_exch(char * base, size_t size, size_t a, size_t b);
 
-void qsort(void * base, size_t nel, size_t width,
+void qsort(void * base, size_t nel, size_t size,
 		int (*compar)(const void *, const void *))
 {
 	/* XXX from dietlibc */
 	if(nel > 1)
-		_qsort_do(base, width, 0, nel - 1, compar);
+		_qsort_do(base, size, 0, nel - 1, compar);
 }
 
-static void _qsort_do(char * base, size_t width, size_t l, size_t r,
+static void _qsort_do(char * base, size_t size, size_t l, size_t r,
 		int (*compar)(const void *, const void *))
 	/* If I put it correctly:
 	 * l is the left cursor
@@ -453,31 +453,31 @@ static void _qsort_do(char * base, size_t width, size_t l, size_t r,
 {
 	size_t i = l - 1;
 	size_t j = r;
-	void * p = base + r * width;
+	void * p = base + r * size;
 
 	if(r <= l)
 		return;
-	for(;; _qsort_exch(base, width, i, j))
+	for(;; _qsort_exch(base, size, i, j))
 	{
-		while(compar(base + (++i) * width, p) < 0);
-		while(compar(p, base + (--j) * width) < 0)
+		while(compar(base + (++i) * size, p) < 0);
+		while(compar(p, base + (--j) * size) < 0)
 			if(j == l)
 				break;
 		if(i >= j)
 			break;
 	}
-	_qsort_exch(base, width, i, r);
-	_qsort_do(base, width, l, i - 1, compar);
-	_qsort_do(base, width, i + 1, r, compar);
+	_qsort_exch(base, size, i, r);
+	_qsort_do(base, size, l, i - 1, compar);
+	_qsort_do(base, size, i + 1, r, compar);
 }
 
-static void _qsort_exch(char * base, size_t width, size_t a, size_t b)
+static void _qsort_exch(char * base, size_t size, size_t a, size_t b)
 {
-	char * pa = base + a * width;
-	char * pb = base + b * width;
+	char * pa = base + a * size;
+	char * pb = base + b * size;
 	char tmp;
 
-	for(; width; width--)
+	for(; size; size--)
 	{
 		tmp = *(pa++);
 		*pa = *pb;
