@@ -204,7 +204,7 @@ void * bsearch(const void * key, const void * base, size_t nel,
 			nel = m;
 		else if(tmp > 0)
 		{
-			base = p + width;
+			base = (char *)p + width;
 			nel -= m + 1;
 		}
 		else
