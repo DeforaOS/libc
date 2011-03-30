@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -136,10 +136,12 @@ struct ufs_args
 
 /* mount flags */
 # define MF_ASYNC	0x00000040
+# define MF_FORCE	0x00080000
 # define MF_NOATIME	0x04000000
 # define MF_NODEV	0x00000010
 # define MF_NOEXEC	0x00000004
 # define MF_NOSUID	0x00000008
+# define MF_REMOUNT	0x00010000
 # define MF_RDONLY	0x00000001
 # define MF_SYNC	0x00000002
 
