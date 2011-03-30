@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -351,7 +351,7 @@ long long llabs(long long x)
 void * malloc(size_t size)
 {
 	Alloc * a = &_alloc;
-	Alloc * b;
+	Alloc * b = NULL;
 	intptr_t inc;
 
 	if(size >= INT_MAX - sizeof(*b) - 0x8)
@@ -363,24 +363,25 @@ void * malloc(size_t size)
 	inc = size + sizeof(*b);
 	if(_alloc.next != NULL) /* look for available space */
 		for(a = _alloc.next; a->next != NULL; a = a->next)
-			if(inc <= (char *)(a->next) - (char *)a - sizeof(*a)
-					- a->size)
+			if(inc <= (intptr_t)(a->next) - (intptr_t)a
+					- (intptr_t)sizeof(*a)
+					- (intptr_t)a->size)
 			{
 				b = (Alloc*)((char*)a + sizeof(*a) + a->size);
 				b->size = size;
 				a->next->prev = b;
 				break;
 			}
-	if(a->next == NULL) /* increase process size to allocate memory */
+	if(b == NULL) /* increase process size to allocate memory */
 	{
-		if((b = sbrk(inc)) == (void*)-1) /* XXX cast */
+		if((b = sbrk(inc)) == (void *)-1)
 			return NULL;
 		b->size = size;
 	}
 	b->prev = a;
 	b->next = a->next;
 	a->next = b;
-	return (char*)b + sizeof(*b);
+	return (char *)b + sizeof(*b);
 }
 
 
