@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -142,21 +142,18 @@ int fflush(FILE * file)
 		errno = ENOSYS; /* FIXME implement */
 		return -1;
 	}
-	if(file->dir == FD_READ)
+	if(file->dir == FD_WRITE)
 	{
-		file->len = 0;
-		file->pos = 0;
-		return 0;
+		for(; file->pos < file->len; file->pos += w)
+			if((w = write(file->fd, &file->buf[file->pos], file->len
+							- file->pos)) < 0)
+			{
+				file->error = 1;
+				return EOF;
+			}
 	}
-	else if(file->dir != FD_WRITE)
+	else if(file->dir != FD_READ)
 		return EOF;
-	for(; file->pos < file->len; file->pos += w)
-		if((w = write(file->fd, &file->buf[file->pos],
-						file->len - file->pos)) < 0)
-		{
-			file->error = 1;
-			return EOF;
-		}
 	file->pos = 0;
 	file->len = 0;
 	return 0;
