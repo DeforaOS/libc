@@ -89,11 +89,13 @@ struct ufs_args
 
 /* mount flags */
 # define MF_ASYNC	0x00000000
+# define MF_FORCE	0x00000001	/* FIXME only valid for unmount() */
 # define MF_NOATIME	0x00000400
 # define MF_NODEV	0x00000004
 # define MF_NOEXEC	0x00000008
 # define MF_NOSUID	0x00000002
 # define MF_RDONLY	0x00000001
+# define MF_REMOUNT	0x00000020
 # define MF_SYNC	0x00000010
 
 #endif /* !LIBC_KERNEL_LINUX_SYS_MOUNT_H */
