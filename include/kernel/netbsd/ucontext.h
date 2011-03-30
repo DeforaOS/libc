@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,8 @@ typedef struct {
 } stack_t;
 # endif
 
+# ifndef ucontext_t
+#  define ucontext_t ucontext_t
 typedef struct _ucontext_t
 {
 	unsigned int uc_flags;
@@ -44,5 +46,6 @@ typedef struct _ucontext_t
 	mcontext_t uc_mcontext;
 #  endif
 } ucontext_t;
+# endif
 
 #endif /* !LIBC_KERNEL_NETBSD_UCONTEXT_H */
