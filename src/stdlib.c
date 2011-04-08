@@ -249,6 +249,12 @@ void free(void * ptr)
 	if(ptr == NULL)
 		return;
 	b = a->prev;
+	if(b->next != a)
+	{
+		fprintf(stderr, "%s: %p: %s\n", "*** libc", ptr,
+				"Invalid free");
+		return;
+	}
 	b->next = a->next;
 	if(a->next != NULL) /* return if memory is alloc'd past a */
 	{
