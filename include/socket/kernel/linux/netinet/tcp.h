@@ -15,18 +15,11 @@
 
 
 
-#ifndef LIBSOCKET_COMPAT_NETINET_TCP_H
-# define LIBSOCKET_COMPAT_NETINET_TCP_H
+#ifndef LIBSOCKET_KERNEL_LINUX_NETINET_TCP_H
+# define LIBSOCKET_KERNEL_LINUX_NETINET_TCP_H
 
 
-# if defined(__FreeBSD__)
-#  include "kernel/freebsd/netinet/tcp.h"
-# elif defined(__linux__)
-#  include "kernel/linux/netinet/tcp.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/netinet/tcp.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+# define TCP_NODELAY	0x1
 
-#endif /* !LIBSOCKET_COMPAT_NETINET_TCP_H */
+#endif /* !LIBSOCKET_KERNEL_LINUX_NETINET_TCP_H */

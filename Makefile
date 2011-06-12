@@ -432,6 +432,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/tcp.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/socket.h \
