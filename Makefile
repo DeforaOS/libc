@@ -423,6 +423,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/netinet/tcp.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/netinet/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/freebsd/sys/socket.h \
