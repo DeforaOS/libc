@@ -413,6 +413,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/compat/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/tcp.h \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/socket.h \
@@ -439,6 +440,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/in.h \
+		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/tcp.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/socket.h \

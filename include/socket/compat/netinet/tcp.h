@@ -15,9 +15,14 @@
 
 
 
-#ifndef LIBSOCKET_NETINET_TCP_H
-# define LIBSOCKET_NETINET_TCP_H
+#ifndef LIBSOCKET_COMPAT_NETINET_TCP_H
+# define LIBSOCKET_COMPAT_NETINET_TCP_H
 
-# include "compat/netinet/tcp.h"
 
-#endif /* !LIBSOCKET_NETINET_TCP_H */
+# if defined(__NetBSD__)
+#  include "kernel/netbsd/netinet/tcp.h"
+# else
+#  warning Unsupported platform
+# endif
+
+#endif /* !LIBSOCKET_COMPAT_NETINET_TCP_H */

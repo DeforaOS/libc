@@ -15,9 +15,11 @@
 
 
 
-#ifndef LIBSOCKET_NETINET_TCP_H
-# define LIBSOCKET_NETINET_TCP_H
+#ifndef LIBSOCKET_KERNEL_NETBSD_NETINET_TCP_H
+# define LIBSOCKET_KERNEL_NETBSD_NETINET_TCP_H
 
-# include "compat/netinet/tcp.h"
 
-#endif /* !LIBSOCKET_NETINET_TCP_H */
+/* constants */
+# define TCP_NODELAY	0x1
+
+#endif /* !LIBSOCKET_KERNEL_NETBSD_NETINET_TCP_H */
