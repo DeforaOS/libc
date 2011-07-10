@@ -188,6 +188,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/amd64/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/amd64/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/amd64/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/arm/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/arm/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/arm/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/i386/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/i386/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/i386/project.conf \
