@@ -45,7 +45,7 @@ netdb.o: netdb.c
 sys/socket.o: sys/socket.c kernel/linux/common.h kernel/netbsd/common.h syscalls.h
 	$(CC) $(libsocket_CFLAGS) -o sys/socket.o -c sys/socket.c
 
-syscalls.o: syscalls.S kernel/linux/common.h kernel/linux/amd64/syscalls.S kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/common.h kernel/netbsd/sparc/syscalls.S
+syscalls.o: syscalls.S kernel/linux/common.h kernel/linux/amd64/syscalls.S kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/arm/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/common.h kernel/netbsd/sparc/syscalls.S
 	$(AS) $(libsocket_ASFLAGS) -o syscalls.o syscalls.S
 
 clean:
