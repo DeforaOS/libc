@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -188,8 +188,8 @@ int socket(int domain, int type, int protocol)
 
 
 /* socketpair */
-#ifndef SYS_socket
-# warning Unsupported platform: socket() is missing
+#ifndef SYS_socketpair
+# warning Unsupported platform: socketpair() is missing
 int socketpair(int domain, int type, int protocol, int fds[2])
 {
 	errno = ENOSYS;
