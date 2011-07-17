@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #ifndef LIBSOCKET_SYSCALLS_H
 # define LIBSOCKET_SYSCALLS_H
 
-# if defined(__FreeBSD___)
+# if defined(__FreeBSD__)
 #  include "kernel/freebsd/common.h"
 # elif defined(__linux__)
 #  include "kernel/linux/common.h"
