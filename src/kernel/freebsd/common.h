@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,6 +96,8 @@
 # define SYS_sigaction		416
 # define SYS_getcontext		421
 # define SYS_setcontext		422
+# define SYS_truncate		479
+# define SYS_ftruncate		480
 # define SYS_shmctl		512
 
 #endif /* !KERNEL_FREEBSD_COMMON_H */
