@@ -25,6 +25,8 @@
 #if defined(__FreeBSD__)
 # if defined(__amd64__)
 #  include "kernel/freebsd/amd64/syscalls.S"
+# elif defined(__i386__)
+#  include "kernel/freebsd/i386/syscalls.S"
 # else
 #  warning Unsupported FreeBSD architecture
 # endif

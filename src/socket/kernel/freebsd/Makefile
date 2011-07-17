@@ -1,4 +1,4 @@
-SUBDIRS	= amd64
+SUBDIRS	= amd64 i386
 
 
 all: subdirs

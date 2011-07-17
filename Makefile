@@ -170,6 +170,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/amd64/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/amd64/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/amd64/project.conf \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/i386/Makefile \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/i386/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/socket/kernel/freebsd/i386/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/common.h \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/linux/project.conf \
