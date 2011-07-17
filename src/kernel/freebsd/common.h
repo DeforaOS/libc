@@ -94,5 +94,8 @@
 # define SYS__getcwd		326
 # define SYS__statfs		396
 # define SYS_sigaction		416
+# define SYS_getcontext		421
+# define SYS_setcontext		422
+# define SYS_shmctl		512
 
 #endif /* !KERNEL_FREEBSD_COMMON_H */
