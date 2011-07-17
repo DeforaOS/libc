@@ -22,9 +22,12 @@
 # define SYS_recvfrom		29
 # define SYS_accept		30
 # define SYS_socket		97
+# define SYS_connect		98
 # define SYS_bind		104
+# define SYS_setsockopt		105
 # define SYS_listen		106
 # define SYS_sendto		133
+# define SYS_shutdown		134
 # define SYS_socketpair		135
 
 #endif /* !LIBSOCKET_KERNEL_FREEBSD_COMMON_H */
