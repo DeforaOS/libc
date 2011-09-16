@@ -1,6 +1,6 @@
 TARGETS	= libdl.a libdl.so
 PREFIX	= /usr/local
-DESTDIR	= 
+DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/dl -DPIC

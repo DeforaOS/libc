@@ -1,6 +1,6 @@
 SUBDIRS	= sys
 PREFIX	= /usr/local
-DESTDIR	= 
+DESTDIR	=
 RM	= rm -f
 LN	= ln -f
 MKDIR	= mkdir -p

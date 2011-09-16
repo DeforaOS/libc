@@ -1,6 +1,6 @@
 SUBDIRS	= compat dl kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris math net pthread socket sys
 PREFIX	= /usr/local
-DESTDIR	= 
+DESTDIR	=
 RM	= rm -f
 LN	= ln -f
 MKDIR	= mkdir -p

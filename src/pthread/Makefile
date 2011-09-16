@@ -1,6 +1,6 @@
 TARGETS	= libpthread.a libpthread.so
 PREFIX	= /usr/local
-DESTDIR	= 
+DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/pthread -DPIC

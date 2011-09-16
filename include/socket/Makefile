@@ -1,6 +1,6 @@
 SUBDIRS	= arpa compat kernel/freebsd kernel/linux kernel/netbsd netinet sys
 PREFIX	= /usr/local
-DESTDIR	= 
+DESTDIR	=
 RM	= rm -f
 LN	= ln -f
 MKDIR	= mkdir -p

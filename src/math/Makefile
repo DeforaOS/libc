@@ -1,7 +1,7 @@
 SUBDIRS	= amd64 i386
 TARGETS	= libm.a libm.so
 PREFIX	= /usr/local
-DESTDIR	= 
+DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
 AS	= $(CC)
 ASFLAGS	= -W -Wall -g -pedantic -ffreestanding -c
