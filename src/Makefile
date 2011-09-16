@@ -7,17 +7,17 @@ AS	= $(CC)
 ASFLAGS	= -W -fPIC -Wall -g -pedantic -ffreestanding -c
 CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../include -DPIC
-CPPFLAGS=
+CPPFLAGS?=
 CFLAGSF	= -W -fPIC
 CFLAGS	= -Wall -g -pedantic -ffreestanding
-AR	= ar -rc
-RANLIB	= ranlib
-LD	= $(CC) -nostdlib -shared
+AR	?= ar
+RANLIB	?= ranlib
+CCSHARED= $(CC) -nostdlib -shared
 BINDIR	= $(PREFIX)/bin
-RM	= rm -f
-LN	= ln -f
-MKDIR	= mkdir -p
-INSTALL	= install
+RM	?= rm -f
+LN	?= ln -f
+MKDIR	?= mkdir -p
+INSTALL	?= install
 
 
 all: subdirs $(TARGETS)
@@ -31,11 +31,11 @@ libc_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) `$(CC) -print-libgcc-file-name`
 libc_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
 libc.a: $(libc_OBJS)
-	$(AR) libc.a $(libc_OBJS)
+	$(AR) -rc libc.a $(libc_OBJS)
 	$(RANLIB) libc.a
 
 libc.so: $(libc_OBJS)
-	$(LD) -o libc.so -Wl,-soname,libc.so.0 $(libc_OBJS) $(libc_LDFLAGS)
+	$(CCSHARED) -o libc.so -Wl,-soname,libc.so.0 $(libc_OBJS) $(libc_LDFLAGS)
 
 start.o_OBJS = start.o
 start.o_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)

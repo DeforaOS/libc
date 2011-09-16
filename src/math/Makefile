@@ -7,16 +7,16 @@ AS	= $(CC)
 ASFLAGS	= -W -Wall -g -pedantic -ffreestanding -c
 CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/math -DPIC
-CPPFLAGS=
+CPPFLAGS?=
 CFLAGSF	= -W -fPIC
 CFLAGS	= -Wall -g -pedantic -ffreestanding
-AR	= ar -rc
-RANLIB	= ranlib
-LD	= $(CC) -nostdlib -shared
-RM	= rm -f
-LN	= ln -f
-MKDIR	= mkdir -p
-INSTALL	= install
+AR	?= ar
+RANLIB	?= ranlib
+CCSHARED= $(CC) -nostdlib -shared
+RM	?= rm -f
+LN	?= ln -f
+MKDIR	?= mkdir -p
+INSTALL	?= install
 
 
 all: subdirs $(TARGETS)
@@ -30,11 +30,11 @@ libm_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 libm_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
 libm.a: $(libm_OBJS)
-	$(AR) libm.a $(libm_OBJS)
+	$(AR) -rc libm.a $(libm_OBJS)
 	$(RANLIB) libm.a
 
 libm.so: $(libm_OBJS)
-	$(LD) -o libm.so -Wl,-soname,libm.so.0 $(libm_OBJS) $(libm_LDFLAGS)
+	$(CCSHARED) -o libm.so -Wl,-soname,libm.so.0 $(libm_OBJS) $(libm_LDFLAGS)
 
 arch.o: arch.S amd64/math.S i386/math.S
 	$(AS) $(libm_ASFLAGS) -o arch.o arch.S

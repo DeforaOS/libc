@@ -7,16 +7,16 @@ AS	= $(CC)
 ASFLAGS	= -W -Wall -g -pedantic -ffreestanding -c
 CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/socket -DPIC
-CPPFLAGS=
+CPPFLAGS?=
 CFLAGSF	= -W -fPIC
 CFLAGS	= -Wall -g -pedantic -ffreestanding
-AR	= ar -rc
-RANLIB	= ranlib
-LD	= $(CC) -nostdlib -shared
-RM	= rm -f
-LN	= ln -f
-MKDIR	= mkdir -p
-INSTALL	= install
+AR	?= ar
+RANLIB	?= ranlib
+CCSHARED= $(CC) -nostdlib -shared
+RM	?= rm -f
+LN	?= ln -f
+MKDIR	?= mkdir -p
+INSTALL	?= install
 
 
 all: subdirs $(TARGETS)
@@ -30,11 +30,11 @@ libsocket_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 libsocket_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
 libsocket.a: $(libsocket_OBJS)
-	$(AR) libsocket.a $(libsocket_OBJS)
+	$(AR) -rc libsocket.a $(libsocket_OBJS)
 	$(RANLIB) libsocket.a
 
 libsocket.so: $(libsocket_OBJS)
-	$(LD) -o libsocket.so -Wl,-soname,libsocket.so.0 $(libsocket_OBJS) $(libsocket_LDFLAGS)
+	$(CCSHARED) -o libsocket.so -Wl,-soname,libsocket.so.0 $(libsocket_OBJS) $(libsocket_LDFLAGS)
 
 arpa/inet.o: arpa/inet.c
 	$(CC) $(libsocket_CFLAGS) -o arpa/inet.o -c arpa/inet.c

@@ -4,16 +4,16 @@ DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
 CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/pthread -DPIC
-CPPFLAGS=
+CPPFLAGS?=
 CFLAGSF	= -W -fPIC
 CFLAGS	= -Wall -g -pedantic -ffreestanding
-AR	= ar -rc
-RANLIB	= ranlib
-LD	= $(CC) -nostdlib -shared
-RM	= rm -f
-LN	= ln -f
-MKDIR	= mkdir -p
-INSTALL	= install
+AR	?= ar
+RANLIB	?= ranlib
+CCSHARED= $(CC) -nostdlib -shared
+RM	?= rm -f
+LN	?= ln -f
+MKDIR	?= mkdir -p
+INSTALL	?= install
 
 
 all: $(TARGETS)
@@ -23,11 +23,11 @@ libpthread_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 libpthread_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
 libpthread.a: $(libpthread_OBJS)
-	$(AR) libpthread.a $(libpthread_OBJS)
+	$(AR) -rc libpthread.a $(libpthread_OBJS)
 	$(RANLIB) libpthread.a
 
 libpthread.so: $(libpthread_OBJS)
-	$(LD) -o libpthread.so -Wl,-soname,libpthread.so.0 $(libpthread_OBJS) $(libpthread_LDFLAGS)
+	$(CCSHARED) -o libpthread.so -Wl,-soname,libpthread.so.0 $(libpthread_OBJS) $(libpthread_LDFLAGS)
 
 pthread.o: pthread.c
 	$(CC) $(libpthread_CFLAGS) -c pthread.c
