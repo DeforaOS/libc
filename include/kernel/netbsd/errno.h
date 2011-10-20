@@ -48,6 +48,7 @@
 # define EDOM		33
 # define ERANGE		34
 # define EAGAIN		35
+# define EOPNOTSUPP	45
 # define EADDRINUSE	48
 # define EADDRNOTAVAIL	49
 # define ENOBUFS	55
@@ -57,5 +58,6 @@
 # define ENOTEMPTY	66
 # define ENOSYS		78
 # define ENOTSUP	86
+# define EPROTO		96
 
 #endif /* !LIBC_KERNEL_NETBSD_ERRNO_H */

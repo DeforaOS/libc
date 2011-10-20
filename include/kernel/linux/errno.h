@@ -51,6 +51,7 @@
 # define ENOSYS		38
 # define ENOTEMPTY	39
 # define ELOOP		40
+# define EPROTO		71
 # define ENOTSUP	95
 # define EADDRINUSE	98
 # define EADDRNOTAVAIL	99
