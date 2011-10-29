@@ -1,5 +1,5 @@
 SUBDIRS	= kernel/freebsd kernel/linux kernel/netbsd
-TARGETS	= libsocket.a libsocket.so
+TARGETS	= libsocket.a libsocket.so.0.0 libsocket.so.0 libsocket.so
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
@@ -33,8 +33,10 @@ libsocket.a: $(libsocket_OBJS)
 	$(AR) -rc libsocket.a $(libsocket_OBJS)
 	$(RANLIB) libsocket.a
 
-libsocket.so: $(libsocket_OBJS)
-	$(CCSHARED) -o libsocket.so -Wl,-soname,libsocket.so.0 $(libsocket_OBJS) $(libsocket_LDFLAGS)
+libsocket.so.0.0 libsocket.so.0 libsocket.so: $(libsocket_OBJS)
+	$(CCSHARED) -o libsocket.so.0.0 -Wl,-soname,libsocket.so.0 $(libsocket_OBJS) $(libsocket_LDFLAGS)
+	$(LN) -s -- libsocket.so.0.0 libsocket.so.0
+	$(LN) -s -- libsocket.so.0.0 libsocket.so
 
 arpa/inet.o: arpa/inet.c
 	$(CC) $(libsocket_CFLAGS) -o arpa/inet.o -c arpa/inet.c
@@ -61,7 +63,7 @@ install: $(TARGETS)
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 -- libsocket.a $(DESTDIR)$(LIBDIR)/libsocket.a
-	$(INSTALL) -m 0755 -- libsocket.so $(DESTDIR)$(LIBDIR)/libsocket.so.0.0
+	$(INSTALL) -m 0755 -- libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so.0.0
 	$(LN) -s -- libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so.0
 	$(LN) -s -- libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so
 

@@ -1,4 +1,4 @@
-TARGETS	= libpthread.a libpthread.so
+TARGETS	= libpthread.a libpthread.so.0.0 libpthread.so.0 libpthread.so
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
@@ -26,8 +26,10 @@ libpthread.a: $(libpthread_OBJS)
 	$(AR) -rc libpthread.a $(libpthread_OBJS)
 	$(RANLIB) libpthread.a
 
-libpthread.so: $(libpthread_OBJS)
-	$(CCSHARED) -o libpthread.so -Wl,-soname,libpthread.so.0 $(libpthread_OBJS) $(libpthread_LDFLAGS)
+libpthread.so.0.0 libpthread.so.0 libpthread.so: $(libpthread_OBJS)
+	$(CCSHARED) -o libpthread.so.0.0 -Wl,-soname,libpthread.so.0 $(libpthread_OBJS) $(libpthread_LDFLAGS)
+	$(LN) -s -- libpthread.so.0.0 libpthread.so.0
+	$(LN) -s -- libpthread.so.0.0 libpthread.so
 
 pthread.o: pthread.c
 	$(CC) $(libpthread_CFLAGS) -c pthread.c
@@ -41,7 +43,7 @@ distclean: clean
 install: $(TARGETS)
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 -- libpthread.a $(DESTDIR)$(LIBDIR)/libpthread.a
-	$(INSTALL) -m 0755 -- libpthread.so $(DESTDIR)$(LIBDIR)/libpthread.so.0.0
+	$(INSTALL) -m 0755 -- libpthread.so.0.0 $(DESTDIR)$(LIBDIR)/libpthread.so.0.0
 	$(LN) -s -- libpthread.so.0.0 $(DESTDIR)$(LIBDIR)/libpthread.so.0
 	$(LN) -s -- libpthread.so.0.0 $(DESTDIR)$(LIBDIR)/libpthread.so
 

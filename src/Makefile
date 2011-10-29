@@ -1,5 +1,5 @@
 SUBDIRS	= dl kernel/linux kernel/freebsd kernel/netbsd kernel/openbsd kernel/solaris math pthread socket
-TARGETS	= libc.a libc.so start.o
+TARGETS	= libc.a libc.so.0.0 libc.so.0 libc.so start.o
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
@@ -34,8 +34,10 @@ libc.a: $(libc_OBJS)
 	$(AR) -rc libc.a $(libc_OBJS)
 	$(RANLIB) libc.a
 
-libc.so: $(libc_OBJS)
-	$(CCSHARED) -o libc.so -Wl,-soname,libc.so.0 $(libc_OBJS) $(libc_LDFLAGS)
+libc.so.0.0 libc.so.0 libc.so: $(libc_OBJS)
+	$(CCSHARED) -o libc.so.0.0 -Wl,-soname,libc.so.0 $(libc_OBJS) $(libc_LDFLAGS)
+	$(LN) -s -- libc.so.0.0 libc.so.0
+	$(LN) -s -- libc.so.0.0 libc.so
 
 start.o_OBJS = start.o
 start.o_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
@@ -185,7 +187,7 @@ install: $(TARGETS)
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 -- libc.a $(DESTDIR)$(LIBDIR)/libc.a
-	$(INSTALL) -m 0755 -- libc.so $(DESTDIR)$(LIBDIR)/libc.so.0.0
+	$(INSTALL) -m 0755 -- libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so.0.0
 	$(LN) -s -- libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so.0
 	$(LN) -s -- libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so
 	$(MKDIR) $(DESTDIR)$(LIBDIR)

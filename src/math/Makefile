@@ -1,5 +1,5 @@
 SUBDIRS	= amd64 i386
-TARGETS	= libm.a libm.so
+TARGETS	= libm.a libm.so.0.0 libm.so.0 libm.so
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
@@ -33,8 +33,10 @@ libm.a: $(libm_OBJS)
 	$(AR) -rc libm.a $(libm_OBJS)
 	$(RANLIB) libm.a
 
-libm.so: $(libm_OBJS)
-	$(CCSHARED) -o libm.so -Wl,-soname,libm.so.0 $(libm_OBJS) $(libm_LDFLAGS)
+libm.so.0.0 libm.so.0 libm.so: $(libm_OBJS)
+	$(CCSHARED) -o libm.so.0.0 -Wl,-soname,libm.so.0 $(libm_OBJS) $(libm_LDFLAGS)
+	$(LN) -s -- libm.so.0.0 libm.so.0
+	$(LN) -s -- libm.so.0.0 libm.so
 
 arch.o: arch.S amd64/math.S i386/math.S
 	$(AS) $(libm_ASFLAGS) -o arch.o arch.S
@@ -55,7 +57,7 @@ install: $(TARGETS)
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 -- libm.a $(DESTDIR)$(LIBDIR)/libm.a
-	$(INSTALL) -m 0755 -- libm.so $(DESTDIR)$(LIBDIR)/libm.so.0.0
+	$(INSTALL) -m 0755 -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0.0
 	$(LN) -s -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0
 	$(LN) -s -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so
 
