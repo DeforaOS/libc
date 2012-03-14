@@ -29,16 +29,18 @@ static int _ret;
 
 
 /* prototypes */
+#ifdef DEBUG
 static void _jmp_buf_dump(jmp_buf jb);
+#endif
 static void _test1(void);
 static void _test2(void);
 
 
 /* functions */
+#ifdef DEBUG
 /* jmp_buf_dump */
 static void _jmp_buf_dump(jmp_buf jb)
 {
-#ifdef DEBUG
 	size_t i;
 	char const * sep = "";
 
@@ -49,8 +51,8 @@ static void _jmp_buf_dump(jmp_buf jb)
 		sep = " ";
 	}
 	fputs("\n", stderr);
-#endif
 }
+#endif
 
 
 /* test1 */
@@ -89,7 +91,9 @@ int main(void)
 	_ret = 2;
 	if((res = setjmp(_jb)) == 0)
 	{
+#ifdef DEBUG
 		_jmp_buf_dump(_jb);
+#endif
 		_test1();
 	}
 	else if(res == 5)
