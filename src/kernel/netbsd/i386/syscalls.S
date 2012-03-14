@@ -1,18 +1,17 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2006-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
-/* libc is not free software; you can redistribute it and/or modify it under
- * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
- * Unported as published by the Creative Commons organization.
+/* This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3 of the License.
  *
- * libc is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE.  See the Creative Commons Attribution-NonCommercial-
- * ShareAlike 3.0 Unported license for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the Creative Commons Attribution-
- * NonCommercial-ShareAlike 3.0 along with libc; if not, browse to
- * http://creativecommons.org/licenses/by-nc-sa/3.0/ */
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 /* FIXME:
  * - some syscalls may return an additional value into %edx (eg lseek)
  * - ftruncate() and truncate() probably need a wrapper (for padding) */
@@ -71,31 +70,31 @@ execve:
 
 
 /* longjmp */
-/* XXX from NetBSD's libc without PIC prologue/epilogue */
 .global longjmp
 .type longjmp,@function
 longjmp:
-	mov	4(%esp), %ecx
-	lea	24(%ecx), %edx
-
-	push	$0
-	push	%edx
-	push	$3			/* SIG_SETMASK */
-	call	sigprocmask
-	add	$12, %esp
-
-	mov	4(%esp), %edx
-	mov	8(%esp), %eax
-	mov	0(%edx), %ecx
+	push	%ebp
+	mov	%esp, %ebp
+	/* edx = env */
+	mov	8(%ebp), %edx
+	/* eax = val */
+	mov	12(%ebp), %eax
+	/* restore registers */
+	mov	0(%edx), %ecx			/* return address */
+	mov	%ecx, 4(%ebp)
 	mov	4(%edx), %ebx
-	mov	8(%edx), %esp
-	mov	12(%edx), %ebp
+	mov	8(%edx), %esp			/* stack pointer */
+	mov	12(%edx), %ecx
+	mov	%ecx, 0(%ebp)			/* base pointer */
 	mov	16(%edx), %esi
 	mov	20(%edx), %edi
+	/* if(val == 0) val = 1 */
 	test	%eax, %eax
-	jnz	1f
-	incl	%eax
-1:	mov	%ecx, 0(%esp)
+	jnz	_longjmp_return
+	inc	%eax
+_longjmp_return:
+	/* return val */
+	pop	%ebp
 	ret
 
 
@@ -115,26 +114,23 @@ pipe:
 
 
 /* setjmp */
-/* XXX from NetBSD's libc without PIC prologue/epilogue */
 .global setjmp
 .type setjmp,@function
 setjmp:
-	mov	4(%esp), %ecx
-	mov	0(%esp), %edx
-	mov	%edx, 0(%ecx)
-	mov	%ebx, 4(%ecx)
-	mov	%esp, 8(%ecx)
-	mov	%ebp, 12(%ecx)
-	mov	%esi, 16(%ecx)
-	mov	%edi, 20(%ecx)
-
-	lea	24(%ecx), %edx
-
-	push	%edx
-	push	$0
-	push	$0
-	call	sigprocmask
-	add	$12, %esp
-
-	mov	$0, %eax
+	push	%ebp
+	mov	%esp, %ebp
+	/* eax = env */
+	mov	8(%ebp), %eax
+	/* save registers */
+	mov	4(%ebp), %edx			/* return address */
+	mov	%edx, 0(%eax)
+	mov	%ebx, 4(%eax)
+	mov	%ebp, 8(%eax)			/* stack pointer */
+	mov	0(%esp), %edx			/* base pointer */
+	mov	%edx, 12(%eax)
+	mov	%esi, 16(%eax)
+	mov	%edi, 20(%eax)
+	/* return 0 */
+	mov	$0x0, %eax
+	pop	%ebp
 	ret

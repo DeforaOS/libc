@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,38 +18,34 @@
 #ifndef LIBC_SETJMP_H
 # define LIBC_SETJMP_H
 
-/* XXX hack to define sigset_t */
-# include "compat/signal.h"
-
 
 /* types */
-/* XXX from dietlibc */
 # if defined(__amd64__)
-typedef long __jmp_buf[8];
+typedef long jmp_buf[8];
 # elif defined(__i386__)
-typedef long __jmp_buf[6];
+typedef long jmp_buf[6];
 # else
-#  warning Unsupported platform
-typedef long __jmp_buf[1];
+#  warning Unsupported platform: jmp_buf is not defined
 # endif
 
-typedef struct _jmp_buf
-{
-	/* XXX the order matters, refer to dietlibc for details */
-	__jmp_buf __jmpbuf;
-	int __mask_was_saved;
-	sigset_t __saved_mask;
-} jmp_buf[1];
-typedef jmp_buf sigjmp_buf;
+# if defined(__amd64__)
+/* XXX extra data */
+typedef long sigjmp_buf[8];
+# elif defined(__i386__)
+/* XXX extra data */
+typedef long sigjmp_buf[6];
+# else
+#  warning Unsupported platform: sigjmp_buf is not defined
+# endif
 
 
 /* functions */
-void longjmp(jmp_buf, int);
-void siglongjmp(jmp_buf, int);
-void _longjmp(jmp_buf, int);
+void longjmp(jmp_buf env, int);
+void siglongjmp(sigjmp_buf env, int);
+void _longjmp(jmp_buf env, int);
 
-int setjmp(jmp_buf);
-int sigsetjmp(jmp_buf, int);
-int _setjmp(jmp_buf);
+int setjmp(jmp_buf env);
+int sigsetjmp(sigjmp_buf env, int);
+int _setjmp(jmp_buf env);
 
 #endif /* !LIBC_SETJMP_H */
