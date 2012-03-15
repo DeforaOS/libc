@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,22 @@
 #ifndef LIBC_KERNEL_NETBSD_SIGNAL_H
 # define LIBC_KERNEL_NETBSD_SIGNAL_H
 
+# include "../../sys/types.h"
+
 
 /* types */
-typedef union /* FIXME to be completed */
+typedef union
 {
 	char _padding0[128];
-	int si_signo;
-	int si_code;
-	int si_errno;
-	int _padding1;
-	int _padding2[5];
+	struct
+	{
+		int si_signo;
+		int si_code;
+		int si_errno;
+# ifdef _LP64
+		int _padding0;
+# endif
+	} _info;
 } siginfo_t;
 
 # ifndef sigset_t
