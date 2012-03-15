@@ -13,6 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 /* FIXME:
+ * - check errors from sigprocmask()?
  * - some syscalls may return an additional value into %edx (eg lseek)
  * - ftruncate() and truncate() probably need a wrapper (for padding) */
 
@@ -69,16 +70,14 @@ execve:
 #undef SYS_execve
 
 
-/* longjmp */
-.global longjmp
-.type longjmp,@function
-longjmp:
+/* _longjmp */
+.global _longjmp
+.type _longjmp,@function
+_longjmp:
 	push	%ebp
 	mov	%esp, %ebp
 	/* edx = env */
 	mov	8(%ebp), %edx
-	/* eax = val */
-	mov	12(%ebp), %eax
 	/* restore registers */
 	mov	0(%edx), %ecx			/* return address */
 	mov	%ecx, 4(%ebp)
@@ -88,6 +87,48 @@ longjmp:
 	mov	%ecx, 0(%ebp)			/* base pointer */
 	mov	16(%edx), %esi
 	mov	20(%edx), %edi
+	/* eax = val */
+	mov	12(%ebp), %eax
+	/* if(val == 0) val = 1 */
+	test	%eax, %eax
+	jnz	__longjmp_return
+	inc	%eax
+__longjmp_return:
+	/* return val */
+	pop	%ebp
+	ret
+
+
+/* longjmp */
+.global longjmp
+.type longjmp,@function
+longjmp:
+	push	%ebp
+	mov	%esp, %ebp
+	/* edx = env */
+	mov	8(%ebp), %ecx
+	/* restore the signal mask */
+	push	$0x0
+	lea	24(%ecx), %edx
+	push	%edx
+	push	$0x3
+	/* sigprocmask(SIG_SETMASK, &env[6], NULL) */
+	call sigprocmask
+	pop	%edx
+	pop	%edx
+	pop	%edx
+	/* restore registers */
+	mov	%ecx, %edx
+	mov	0(%edx), %ecx			/* return address */
+	mov	%ecx, 4(%ebp)
+	mov	4(%edx), %ebx
+	mov	8(%edx), %esp			/* stack pointer */
+	mov	12(%edx), %ecx
+	mov	%ecx, 0(%ebp)			/* base pointer */
+	mov	16(%edx), %esi
+	mov	20(%edx), %edi
+	/* eax = val */
+	mov	12(%ebp), %eax
 	/* if(val == 0) val = 1 */
 	test	%eax, %eax
 	jnz	_longjmp_return
@@ -113,6 +154,29 @@ pipe:
 #undef SYS_pipe
 
 
+/* _setjmp */
+.global _setjmp
+.type _setjmp,@function
+_setjmp:
+	push	%ebp
+	mov	%esp, %ebp
+	/* eax = env */
+	mov	8(%ebp), %eax
+	/* save registers */
+	mov	4(%ebp), %edx			/* return address */
+	mov	%edx, 0(%eax)
+	mov	%ebx, 4(%eax)
+	mov	%ebp, 8(%eax)			/* stack pointer */
+	mov	0(%esp), %edx			/* base pointer */
+	mov	%edx, 12(%eax)
+	mov	%esi, 16(%eax)
+	mov	%edi, 20(%eax)
+	/* return 0 */
+	mov	$0x0, %eax
+	pop	%ebp
+	ret
+
+
 /* setjmp */
 .global setjmp
 .type setjmp,@function
@@ -130,6 +194,16 @@ setjmp:
 	mov	%edx, 12(%eax)
 	mov	%esi, 16(%eax)
 	mov	%edi, 20(%eax)
+	/* save the signal mask */
+	lea	24(%eax), %edx
+	push	%edx
+	push	$0x0
+	push	$0x0
+	/* sigprocmask(0, NULL, &env[6]) */
+	call	sigprocmask
+	pop	%eax
+	pop	%eax
+	pop	%eax
 	/* return 0 */
 	mov	$0x0, %eax
 	pop	%ebp

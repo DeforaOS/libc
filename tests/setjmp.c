@@ -19,6 +19,7 @@
 #ifdef DEBUG
 # include <stdio.h>
 #endif
+#include <string.h>
 
 
 /* setjmp */
@@ -32,8 +33,10 @@ static int _ret;
 #ifdef DEBUG
 static void _jmp_buf_dump(jmp_buf jb);
 #endif
-static void _test1(void);
-static void _test2(void);
+static void __setjmp_test1(void);
+static void __setjmp_test2(void);
+static void _setjmp_test1(void);
+static void _setjmp_test2(void);
 
 
 /* functions */
@@ -55,19 +58,42 @@ static void _jmp_buf_dump(jmp_buf jb)
 #endif
 
 
-/* test1 */
-static void _test1(void)
+/* _setjmp_test1 */
+static void __setjmp_test1(void)
 {
 #ifdef DEBUG
 	fprintf(stderr, "DEBUG: %s()\n", __func__);
 #endif
 	_ret = 3;
-	_test2();
+	__setjmp_test2();
 }
 
 
-/* test2 */
-static void _test2(void)
+/* _setjmp_test2 */
+static void __setjmp_test2(void)
+{
+#ifdef DEBUG
+	fprintf(stderr, "DEBUG: %s()\n", __func__);
+#endif
+	_ret = 4;
+	_longjmp(_jb, 5);
+	_ret = 6;
+}
+
+
+/* setjmp_test1 */
+static void _setjmp_test1(void)
+{
+#ifdef DEBUG
+	fprintf(stderr, "DEBUG: %s()\n", __func__);
+#endif
+	_ret = 3;
+	_setjmp_test2();
+}
+
+
+/* setjmp_test2 */
+static void _setjmp_test2(void)
 {
 #ifdef DEBUG
 	fprintf(stderr, "DEBUG: %s()\n", __func__);
@@ -89,14 +115,29 @@ int main(void)
 	fprintf(stderr, "DEBUG: %s()\n", __func__);
 #endif
 	_ret = 2;
-	if((res = setjmp(_jb)) == 0)
+	/* _setjmp */
+	if((res = _setjmp(_jb)) == 0)
 	{
 #ifdef DEBUG
 		_jmp_buf_dump(_jb);
 #endif
-		_test1();
+		__setjmp_test1();
 	}
 	else if(res == 5)
 		_ret = 0;
+	/* setjmp */
+	if(_ret == 0)
+	{
+		memset(_jb, 0, sizeof(jmp_buf));
+		if((res = setjmp(_jb)) == 0)
+		{
+#ifdef DEBUG
+			_jmp_buf_dump(_jb);
+#endif
+			_setjmp_test1();
+		}
+		else if(res == 5)
+			_ret = 0;
+	}
 	return _ret;
 }
