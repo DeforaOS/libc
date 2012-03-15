@@ -21,21 +21,13 @@
 
 /* types */
 # if defined(__amd64__)
-typedef long jmp_buf[8 + 4];
+typedef long jmp_buf[9 + 1 + 4];
+typedef jmp_buf sigjmp_buf;
 # elif defined(__i386__)
-typedef long jmp_buf[6 + 4];
+typedef long jmp_buf[6 + 1 + 4];
+typedef jmp_buf sigjmp_buf;
 # else
-#  warning Unsupported platform: jmp_buf is not defined
-# endif
-
-# if defined(__amd64__)
-/* XXX extra data */
-typedef long sigjmp_buf[8 + 4];
-# elif defined(__i386__)
-/* XXX extra data */
-typedef long sigjmp_buf[6 + 4];
-# else
-#  warning Unsupported platform: sigjmp_buf is not defined
+#  warning Unsupported platform: jmp_buf and sigjmp_buf are not defined
 # endif
 
 
@@ -45,7 +37,7 @@ void siglongjmp(sigjmp_buf env, int val);
 void _longjmp(jmp_buf env, int val);
 
 int setjmp(jmp_buf env);
-int sigsetjmp(sigjmp_buf env, int val);
+int sigsetjmp(sigjmp_buf env, int savemask);
 int _setjmp(jmp_buf env);
 
 #endif /* !LIBC_SETJMP_H */
