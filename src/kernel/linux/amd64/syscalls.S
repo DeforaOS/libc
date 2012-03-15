@@ -96,16 +96,12 @@ execve:
 .global _longjmp
 .type _longjmp,@function
 _longjmp:
-	push	%rbp
-	mov	%rsp, %rbp
-
 	/* restore registers */
-	mov	0(%rdi), %rcx			/* return address */
-	mov	%rcx, 8(%rbp)
+	mov	0(%rdi), %rdx			/* return address */
+	mov	%rdx, 0(%rsp)
 	mov	8(%rdi), %rbx
 	mov	16(%rdi), %rsp			/* stack pointer */
-	mov	24(%rdi), %rcx
-	mov	%rcx, 0(%rbp)			/* base pointer */
+	mov	24(%rdi), %rbp			/* base pointer */
 	mov	32(%rdi), %r11			/* %r11 */
 	mov	40(%rdi), %r12			/* %r12 */
 	mov	48(%rdi), %r13			/* %r13 */
@@ -113,13 +109,13 @@ _longjmp:
 	mov	64(%rdi), %r15			/* %r15 */
 
 	/* if(val != 0) goto __longjmp_return; else val++ */
-	test	%rsi, %rsi
+	mov	%esi, %eax
+	test	%eax, %eax
 	jnz	__longjmp_return
 	inc	%eax
 
 	/* return val */
 __longjmp_return:
-	pop	%rbp
 	ret
 
 
@@ -141,6 +137,8 @@ siglongjmp:
 
 	/* restore the signal mask */
 	/* sigprocmask(SIG_SETMASK, &env[10], NULL) */
+	push	%rdi
+	push	%rsi
 	mov	$0x2, %rdi
 	mov	$0x0, %rsi
 	lea	80(%rdi), %rdx
@@ -149,10 +147,11 @@ siglongjmp:
 #else
 	call	sigprocmask
 #endif
+	pop	%rsi
+	pop	%rdi
 
 	/* restore registers */
 _longjmp_registers:
-	/* FIXME %rdi no longer contains env */
 	mov	0(%rdi), %rcx			/* return address */
 	mov	%rcx, 8(%rbp)
 	mov	8(%rdi), %rbx
@@ -166,8 +165,8 @@ _longjmp_registers:
 	mov	64(%rdi), %r15			/* %r15 */
 
 	/* if(val != 0) goto _longjmp_return; else val++ */
-	/* FIXME %rdi no longer contains val */
-	test	%rsi, %rsi
+	mov	%esi, %eax
+	test	%eax, %eax
 	jnz	_longjmp_return
 	inc	%eax
 
