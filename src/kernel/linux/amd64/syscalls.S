@@ -12,6 +12,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
+ /* TODO:
+  * - properly implement {_,,sig}{set,long}jmp() */
 
 
 
@@ -222,16 +224,12 @@ pipe:
 .global _setjmp
 .type _setjmp,@function
 _setjmp:
-	push	%rbp
-	mov	%rsp, %rbp
-
 	/* save registers */
-	mov	8(%rbp), %rsi			/* return address */
+	mov	0(%rsp), %rsi			/* return address */
 	mov	%rsi, 0(%rdi)
 	mov	%rbx, 8(%rdi)			/* %rbx */
-	mov	%rbp, 16(%rdi)			/* stack pointer */
-	mov	0(%rbp), %rsi			/* base pointer */
-	mov	%rsi, 24(%rdi)
+	mov	%rsp, 16(%rdi)			/* stack pointer */
+	mov	%rbp, 24(%rdi)			/* base pointer */
 	mov	%r11, 32(%rdi)			/* %r11 */
 	mov	%r12, 40(%rdi)			/* %r12 */
 	mov	%r13, 48(%rdi)			/* %r13 */
@@ -240,12 +238,10 @@ _setjmp:
 
 	/* the signal mask is not saved */
 	/* env[9] = 0 */
-	lea	72(%rdi), %rsi
-	movq	$0x0, (%rsi)
+	movq	$0x0, 72(%rdi)
 
 	/* return 0 */
 	mov	$0x0, %eax
-	pop	%rbp
 	ret
 
 
@@ -263,20 +259,20 @@ setjmp:
 	mov	%rbp, 16(%rdi)			/* stack pointer */
 	mov	0(%rbp), %rsi			/* base pointer */
 	mov	%rsi, 24(%rdi)
-	mov	%r12, 32(%rdi)			/* %r12 */
-	mov	%r13, 40(%rdi)			/* %r13 */
-	mov	%r14, 48(%rdi)			/* %r14 */
-	mov	%r15, 56(%rdi)			/* %r15 */
+	mov	%r11, 32(%rdi)			/* %r11 */
+	mov	%r12, 40(%rdi)			/* %r12 */
+	mov	%r13, 48(%rdi)			/* %r13 */
+	mov	%r14, 56(%rdi)			/* %r14 */
+	mov	%r15, 64(%rdi)			/* %r15 */
 
 	/* the signal mask is not saved yet */
-	/* env[8] = 0 */
-	lea	64(%rax), %rsi
-	movq	$0x0, (%rsi)
+	/* env[9] = 0 */
+	movq	$0x0, 72(%rdi)
 
 	/* res = sigprocmask(0, NULL, &env[9]) */
 	mov	$0x0, %rdi
 	mov	$0x0, %rsi
-	lea	72(%rax), %rdx
+	lea	80(%rax), %rdx
 #ifdef PIC
 	call	sigprocmask@PLT
 #else
