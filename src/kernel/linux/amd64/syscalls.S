@@ -280,8 +280,7 @@ setjmp:
 	/* if(res == 0) env[9] = 1 */
 	test	%eax, %eax
 	jnz	_setjmp_return
-	mov	72(%rdi), %rsi
-	movq	$0x1, (%rsi)
+	movq	$0x1, 72(%rdi)
 
 	/* return 0 */
 _setjmp_return:
