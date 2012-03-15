@@ -296,3 +296,24 @@ _setjmp_return:
 	mov	$0x0, %eax
 	pop	%rbp
 	ret
+
+
+/* sigsetjmp */
+.global sigsetjmp
+.type sigsetjmp,@function
+sigsetjmp:
+	/* if(savemask == 0) return _setjmp() */
+	test	%edi, %edi
+	jnz	_sigsetjmp_save
+#ifdef PIC
+	jmp	_setjmp@PLT
+#else
+	jmp	_setjmp
+#endif
+_sigsetjmp_save:
+	/* else return setjmp() */
+#ifdef PIC
+	jmp	setjmp@PLT
+#else
+	jmp	setjmp
+#endif
