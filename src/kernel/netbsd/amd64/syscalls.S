@@ -317,7 +317,7 @@ sigaction:
 .type sigsetjmp,@function
 sigsetjmp:
 	/* if(savemask == 0) return _setjmp() */
-	test	%edi, %edi
+	test	%esi, %esi
 	jnz	_sigsetjmp_save
 #ifdef PIC
 	jmp	_setjmp@PLT
