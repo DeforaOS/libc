@@ -249,16 +249,12 @@ _setjmp:
 .global setjmp
 .type setjmp,@function
 setjmp:
-	push	%rbp
-	mov	%rsp, %rbp
-
 	/* save registers */
-	mov	8(%rbp), %rsi			/* return address */
+	mov	0(%rsp), %rsi			/* return address */
 	mov	%rsi, 0(%rdi)
 	mov	%rbx, 8(%rdi)			/* %rbx */
-	mov	%rbp, 16(%rdi)			/* stack pointer */
-	mov	0(%rbp), %rsi			/* base pointer */
-	mov	%rsi, 24(%rdi)
+	mov	%rsp, 16(%rdi)			/* stack pointer */
+	mov	%rbp, 24(%rdi)			/* base pointer */
 	mov	%r11, 32(%rdi)			/* %r11 */
 	mov	%r12, 40(%rdi)			/* %r12 */
 	mov	%r13, 48(%rdi)			/* %r13 */
@@ -270,6 +266,7 @@ setjmp:
 	movq	$0x0, 72(%rdi)
 
 	/* res = sigprocmask(0, NULL, &env[9]) */
+	push	%rdi
 	mov	$0x0, %rdi
 	mov	$0x0, %rsi
 	lea	80(%rax), %rdx
@@ -278,19 +275,18 @@ setjmp:
 #else
 	call	sigprocmask
 #endif
+	pop	%rdi
 
 	/* the signal mask was saved */
 	/* if(res == 0) env[9] = 1 */
 	test	%eax, %eax
 	jnz	_setjmp_return
-	/* FIXME %rdi no longer contains env */
 	mov	72(%rdi), %rsi
 	movq	$0x1, (%rsi)
 
 	/* return 0 */
 _setjmp_return:
 	mov	$0x0, %eax
-	pop	%rbp
 	ret
 
 
