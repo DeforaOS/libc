@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,119 @@ execve:
 #undef SYS_execve
 
 
+/* _longjmp */
+.global _longjmp
+.type _longjmp,@function
+_longjmp:
+	push	%rbp
+	mov	%rsp, %rbp
+
+	/* restore registers */
+	mov	0(%rdi), %rcx			/* return address */
+	mov	%rcx, 8(%rbp)
+	mov	8(%rdi), %rbx
+	mov	16(%rdi), %rsp			/* stack pointer */
+	mov	24(%rdi), %rcx
+	mov	%rcx, 0(%rbp)			/* base pointer */
+	mov	32(%rdi), %r11			/* %r11 */
+	mov	40(%rdi), %r12			/* %r12 */
+	mov	48(%rdi), %r13			/* %r13 */
+	mov	56(%rdi), %r14			/* %r14 */
+	mov	64(%rdi), %r15			/* %r15 */
+
+	/* if(val != 0) goto __longjmp_return; else val++ */
+	test	%rsi, %rsi
+	jnz	__longjmp_return
+	inc	%eax
+
+	/* return val */
+__longjmp_return:
+	pop	%rbp
+	ret
+
+
+/* longjmp */
+.global longjmp
+.type longjmp,@function
+longjmp:
+.global siglongjmp
+.type siglongjmp,@function
+siglongjmp:
+	push	%rbp
+	mov	%rsp, %rbp
+
+	/* if(env[9] == 0) goto _longjmp_registers */
+	lea	72(%rdi), %rdx
+	mov	(%rdx), %rdx
+	test	%rdx, %rdx
+	jz	_longjmp_registers
+
+	/* restore the signal mask */
+	/* sigprocmask(SIG_SETMASK, &env[10], NULL) */
+	mov	$0x2, %rdi
+	mov	$0x0, %rsi
+	lea	80(%rdi), %rdx
+#ifdef PIC
+	call	sigprocmask@PLT
+#else
+	call	sigprocmask
+#endif
+
+	/* restore registers */
+_longjmp_registers:
+	/* FIXME %rdi no longer contains env */
+	mov	0(%rdi), %rcx			/* return address */
+	mov	%rcx, 8(%rbp)
+	mov	8(%rdi), %rbx
+	mov	16(%rdi), %rsp			/* stack pointer */
+	mov	24(%rdi), %rcx
+	mov	%rcx, 0(%rbp)			/* base pointer */
+	mov	32(%rdi), %r11			/* %r11 */
+	mov	40(%rdi), %r12			/* %r12 */
+	mov	48(%rdi), %r13			/* %r13 */
+	mov	56(%rdi), %r14			/* %r14 */
+	mov	64(%rdi), %r15			/* %r15 */
+
+	/* if(val != 0) goto _longjmp_return; else val++ */
+	/* FIXME %rdi no longer contains val */
+	test	%rsi, %rsi
+	jnz	_longjmp_return
+	inc	%eax
+
+	/* return val */
+_longjmp_return:
+	pop	%rbp
+	ret
+
+
+/* lseek */
+.global lseek
+.type lseek,@function
+lseek:
+	mov	%rdx, %rcx
+	mov	%rsi, %rdx
+	mov	$0, %rsi
+	mov	$SYS_lseek, %rax
+	jmp	_syscall
+#undef SYS_lseek
+
+
+/* mmap */
+.global mmap
+.type mmap,@function
+mmap:
+	sub	$0x10, %rsp
+	mov	%r9, 0x8(%rsp)
+	mov	$0, %r9
+	mov	$SYS_mmap, %rax
+	mov	%rcx, %r10
+	syscall
+	add	$0x10, %rsp /* XXX clears carry flag? */
+	jc	.errno
+	ret
+#undef SYS_mmap
+
+
 /* pipe */
 .global pipe
 .type pipe,@function
@@ -103,3 +216,83 @@ pipe:
 	mov	$0, %rax
 	ret
 #undef SYS_pipe
+
+
+/* _setjmp */
+.global _setjmp
+.type _setjmp,@function
+_setjmp:
+	push	%rbp
+	mov	%rsp, %rbp
+
+	/* save registers */
+	mov	8(%rbp), %rsi			/* return address */
+	mov	%rsi, 0(%rdi)
+	mov	%rbx, 8(%rdi)			/* %rbx */
+	mov	%rbp, 16(%rdi)			/* stack pointer */
+	mov	0(%rbp), %rsi			/* base pointer */
+	mov	%rsi, 24(%rdi)
+	mov	%r11, 32(%rdi)			/* %r11 */
+	mov	%r12, 40(%rdi)			/* %r12 */
+	mov	%r13, 48(%rdi)			/* %r13 */
+	mov	%r14, 56(%rdi)			/* %r14 */
+	mov	%r15, 64(%rdi)			/* %r15 */
+
+	/* the signal mask is not saved */
+	/* env[9] = 0 */
+	lea	72(%rdi), %rsi
+	movq	$0x0, (%rsi)
+
+	/* return 0 */
+	mov	$0x0, %eax
+	pop	%rbp
+	ret
+
+
+/* setjmp */
+.global setjmp
+.type setjmp,@function
+setjmp:
+	push	%rbp
+	mov	%rsp, %rbp
+
+	/* save registers */
+	mov	8(%rbp), %rsi			/* return address */
+	mov	%rsi, 0(%rdi)
+	mov	%rbx, 8(%rdi)			/* %rbx */
+	mov	%rbp, 16(%rdi)			/* stack pointer */
+	mov	0(%rbp), %rsi			/* base pointer */
+	mov	%rsi, 24(%rdi)
+	mov	%r12, 32(%rdi)			/* %r12 */
+	mov	%r13, 40(%rdi)			/* %r13 */
+	mov	%r14, 48(%rdi)			/* %r14 */
+	mov	%r15, 56(%rdi)			/* %r15 */
+
+	/* the signal mask is not saved yet */
+	/* env[8] = 0 */
+	lea	64(%rax), %rsi
+	movq	$0x0, (%rsi)
+
+	/* res = sigprocmask(0, NULL, &env[9]) */
+	mov	$0x0, %rdi
+	mov	$0x0, %rsi
+	lea	72(%rax), %rdx
+#ifdef PIC
+	call	sigprocmask@PLT
+#else
+	call	sigprocmask
+#endif
+
+	/* the signal mask was saved */
+	/* if(res == 0) env[9] = 1 */
+	test	%eax, %eax
+	jnz	_setjmp_return
+	/* FIXME %rdi no longer contains env */
+	mov	72(%rdi), %rsi
+	movq	$0x1, (%rsi)
+
+	/* return 0 */
+_setjmp_return:
+	mov	$0x0, %eax
+	pop	%rbp
+	ret
