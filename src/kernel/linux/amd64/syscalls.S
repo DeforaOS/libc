@@ -126,9 +126,6 @@ longjmp:
 .global siglongjmp
 .type siglongjmp,@function
 siglongjmp:
-	push	%rbp
-	mov	%rsp, %rbp
-
 	/* if(env[9] == 0) goto _longjmp_registers */
 	lea	72(%rdi), %rdx
 	mov	(%rdx), %rdx
@@ -152,12 +149,11 @@ siglongjmp:
 
 	/* restore registers */
 _longjmp_registers:
-	mov	0(%rdi), %rcx			/* return address */
-	mov	%rcx, 8(%rbp)
+	mov	0(%rdi), %rdx			/* return address */
+	mov	%rdx, 0(%rsp)
 	mov	8(%rdi), %rbx
 	mov	16(%rdi), %rsp			/* stack pointer */
-	mov	24(%rdi), %rcx
-	mov	%rcx, 0(%rbp)			/* base pointer */
+	mov	24(%rdi), %rbp			/* base pointer */
 	mov	32(%rdi), %r11			/* %r11 */
 	mov	40(%rdi), %r12			/* %r12 */
 	mov	48(%rdi), %r13			/* %r13 */
@@ -172,7 +168,6 @@ _longjmp_registers:
 
 	/* return val */
 _longjmp_return:
-	pop	%rbp
 	ret
 
 
