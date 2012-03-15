@@ -16,7 +16,7 @@
 
 
 FAILED=
-./setjmp		|| FAILED="$FAILED setjmp"
+./setjmp		|| FAILED="$FAILED setjmp($?)"
 [ -z "$FAILED" ]	&& exit 0
 echo "Failed tests:$FAILED" 1>&2
-return 2
+exit 2
