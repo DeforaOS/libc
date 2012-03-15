@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2006-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,6 +69,35 @@ _exit:
 SYSCALL(_ipc)
 
 
+/* longjmp */
+.global longjmp
+.type longjmp,@function
+longjmp:
+	push	%ebp
+	mov	%esp, %ebp
+	/* edx = env */
+	mov	8(%ebp), %edx
+	/* eax = val */
+	mov	12(%ebp), %eax
+	/* restore registers */
+	mov	0(%edx), %ecx			/* return address */
+	mov	%ecx, 4(%ebp)
+	mov	4(%edx), %ebx
+	mov	8(%edx), %esp			/* stack pointer */
+	mov	12(%edx), %ecx
+	mov	%ecx, 0(%ebp)			/* base pointer */
+	mov	16(%edx), %esi
+	mov	20(%edx), %edi
+	/* if(val == 0) val = 1 */
+	test	%eax, %eax
+	jnz	_longjmp_return
+	inc	%eax
+_longjmp_return:
+	/* return val */
+	pop	%ebp
+	ret
+
+
 /* mmap */
 .global mmap
 .type mmap,@function
@@ -89,30 +118,20 @@ mmap:
 .global setjmp
 .type setjmp,@function
 setjmp:
-	/* XXX from dietlibc */
-	mov	0x00(%esp), %ecx
-	lea	0x04(%esp), %edx
-	mov	(%edx), %eax
-	pushl	$0x00
-	push	%eax
-	call	_sigsetjmp_do
-	add	$0x08, %esp
+	push	%ebp
+	mov	%esp, %ebp
+	/* eax = env */
+	mov	8(%ebp), %eax
+	/* save registers */
+	mov	4(%ebp), %edx			/* return address */
+	mov	%edx, 0(%eax)
+	mov	%ebx, 4(%eax)
+	mov	%ebp, 8(%eax)			/* stack pointer */
+	mov	0(%esp), %edx			/* base pointer */
+	mov	%edx, 12(%eax)
+	mov	%esi, 16(%eax)
+	mov	%edi, 20(%eax)
+	/* return 0 */
+	mov	$0x0, %eax
+	pop	%ebp
 	ret
-
-
-/* sigsetjmp */
-.global sigsetjmp
-.type sigsetjmp,@function
-sigsetjmp:
-	/* XXX from dietlibc */
-	mov	0x00(%esp), %ecx
-	lea	0x04(%esp), %edx
-	mov	(%edx), %eax
-_sigsetjmp_do:
-	mov	%ebx, (0x00)(%eax)
-	mov	%esi, (0x04)(%eax)
-	mov	%edi, (0x08)(%eax)
-	mov	%ebp, (0x0c)(%eax)
-	mov	%edx, (0x10)(%eax)
-	mov	%ecx, (0x14)(%eax)
-	jmp	_sigjmp_save
