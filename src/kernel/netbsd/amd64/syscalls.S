@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,6 +12,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
+ /* TODO:
+  * - properly implement {_,,sig}{set,long}jmp() */
 
 
 
@@ -90,6 +92,91 @@ execve:
 #undef SYS_execve
 
 
+/* _longjmp */
+.global _longjmp
+.type _longjmp,@function
+_longjmp:
+	push	%rbp
+	mov	%rsp, %rbp
+
+	/* restore registers */
+	mov	0(%rdi), %rcx			/* return address */
+	mov	%rcx, 8(%rbp)
+	mov	8(%rdi), %rbx
+	mov	16(%rdi), %rsp			/* stack pointer */
+	mov	24(%rdi), %rcx
+	mov	%rcx, 0(%rbp)			/* base pointer */
+	mov	32(%rdi), %r11			/* %r11 */
+	mov	40(%rdi), %r12			/* %r12 */
+	mov	48(%rdi), %r13			/* %r13 */
+	mov	56(%rdi), %r14			/* %r14 */
+	mov	64(%rdi), %r15			/* %r15 */
+
+	/* if(val != 0) goto __longjmp_return; else val++ */
+	test	%rsi, %rsi
+	jnz	__longjmp_return
+	inc	%eax
+
+	/* return val */
+__longjmp_return:
+	pop	%rbp
+	ret
+
+
+/* longjmp */
+.global longjmp
+.type longjmp,@function
+longjmp:
+.global siglongjmp
+.type siglongjmp,@function
+siglongjmp:
+	push	%rbp
+	mov	%rsp, %rbp
+
+	/* if(env[9] == 0) goto _longjmp_registers */
+	lea	72(%rdi), %rdx
+	mov	(%rdx), %rdx
+	test	%rdx, %rdx
+	jz	_longjmp_registers
+
+	/* restore the signal mask */
+	/* sigprocmask(SIG_SETMASK, &env[10], NULL) */
+	mov	$0x3, %rdi
+	mov	$0x0, %rsi
+	lea	80(%rdi), %rdx
+#ifdef PIC
+	call	sigprocmask@PLT
+#else
+	call	sigprocmask
+#endif
+
+	/* restore registers */
+_longjmp_registers:
+	/* FIXME %rdi no longer contains env */
+	mov	0(%rdi), %rcx			/* return address */
+	mov	%rcx, 8(%rbp)
+	mov	8(%rdi), %rbx
+	mov	16(%rdi), %rsp			/* stack pointer */
+	mov	24(%rdi), %rcx
+	mov	%rcx, 0(%rbp)			/* base pointer */
+	mov	32(%rdi), %r11			/* %r11 */
+	mov	40(%rdi), %r12			/* %r12 */
+	mov	48(%rdi), %r13			/* %r13 */
+	mov	56(%rdi), %r14			/* %r14 */
+	mov	64(%rdi), %r15			/* %r15 */
+
+	/* if(val != 0) goto _longjmp_return; else val++ */
+	/* FIXME %rdi no longer contains val */
+	test	%rsi, %rsi
+	jnz	_longjmp_return
+	inc	%eax
+
+	/* return val */
+_longjmp_return:
+	pop	%rbp
+	ret
+
+
 /* lseek */
 .global lseek
 .type lseek,@function
@@ -132,6 +219,86 @@ pipe:
 #undef SYS_pipe
 
 
+/* _setjmp */
+.global _setjmp
+.type _setjmp,@function
+_setjmp:
+	push	%rbp
+	mov	%rsp, %rbp
+
+	/* save registers */
+	mov	8(%rbp), %rsi			/* return address */
+	mov	%rsi, 0(%rdi)
+	mov	%rbx, 8(%rdi)			/* %rbx */
+	mov	%rbp, 16(%rdi)			/* stack pointer */
+	mov	0(%rbp), %rsi			/* base pointer */
+	mov	%rsi, 24(%rdi)
+	mov	%r11, 32(%rdi)			/* %r11 */
+	mov	%r12, 40(%rdi)			/* %r12 */
+	mov	%r13, 48(%rdi)			/* %r13 */
+	mov	%r14, 56(%rdi)			/* %r14 */
+	mov	%r15, 64(%rdi)			/* %r15 */
+
+	/* the signal mask is not saved */
+	/* env[9] = 0 */
+	lea	72(%rdi), %rsi
+	movq	$0x0, (%rsi)
+
+	/* return 0 */
+	mov	$0x0, %eax
+	pop	%rbp
+	ret
+
+
+/* setjmp */
+.global setjmp
+.type setjmp,@function
+setjmp:
+	push	%rbp
+	mov	%rsp, %rbp
+
+	/* save registers */
+	mov	8(%rbp), %rsi			/* return address */
+	mov	%rsi, 0(%rdi)
+	mov	%rbx, 8(%rdi)			/* %rbx */
+	mov	%rbp, 16(%rdi)			/* stack pointer */
+	mov	0(%rbp), %rsi			/* base pointer */
+	mov	%rsi, 24(%rdi)
+	mov	%r12, 32(%rdi)			/* %r12 */
+	mov	%r13, 40(%rdi)			/* %r13 */
+	mov	%r14, 48(%rdi)			/* %r14 */
+	mov	%r15, 56(%rdi)			/* %r15 */
+
+	/* the signal mask is not saved yet */
+	/* env[8] = 0 */
+	lea	64(%rax), %rsi
+	movq	$0x0, (%rsi)
+
+	/* res = sigprocmask(0, NULL, &env[9]) */
+	mov	$0x0, %rdi
+	mov	$0x0, %rsi
+	lea	72(%rax), %rdx
+#ifdef PIC
+	call	sigprocmask@PLT
+#else
+	call	sigprocmask
+#endif
+
+	/* the signal mask was saved */
+	/* if(res == 0) env[9] = 1 */
+	test	%eax, %eax
+	jnz	_setjmp_return
+	/* FIXME %rdi no longer contains env */
+	mov	72(%rdi), %rsi
+	movq	$0x1, (%rsi)
+
+	/* return 0 */
+_setjmp_return:
+	mov	$0x0, %eax
+	pop	%rbp
+	ret
+
+
 /* sigaction */
 .global __sigaction_sigtramp
 .type __sigaction_sigtramp,@function
@@ -160,3 +327,24 @@ sigaction:
 	jmp	_syscall
 #endif
 #undef SYS_sigaction
+
+
+/* sigsetjmp */
+.global sigsetjmp
+.type sigsetjmp,@function
+sigsetjmp:
+	/* if(savemask == 0) return _setjmp() */
+	test	%edi, %edi
+	jnz	_sigsetjmp_save
+#ifdef PIC
+	jmp	_setjmp@PLT
+#else
+	jmp	_setjmp
+#endif
+_sigsetjmp_save:
+	/* else return setjmp() */
+#ifdef PIC
+	jmp	setjmp@PLT
+#else
+	jmp	setjmp
+#endif
