@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -384,7 +384,7 @@ int fseeko(FILE * file, off_t offset, int whence)
 	}
 	if(fflush(file) != 0)
 		return -1;
-	return (lseek(file->fd, offset, whence)) != -1 ? 0 : -1;
+	return (lseek(file->fd, offset, whence) != -1) ? 0 : -1;
 }
 
 
