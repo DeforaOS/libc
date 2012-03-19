@@ -1,4 +1,4 @@
-TARGETS	= setjmp tests
+TARGETS	= setjmp signal tests
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -24,14 +24,24 @@ setjmp_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 setjmp: $(setjmp_OBJS)
 	$(CC) -o setjmp $(setjmp_OBJS) $(setjmp_LDFLAGS)
 
+signal_OBJS = signal.o
+signal_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+signal_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
+
+signal: $(signal_OBJS)
+	$(CC) -o signal $(signal_OBJS) $(signal_LDFLAGS)
+
 tests: setjmp
 	./tests.sh -P "$(PREFIX)" -- "tests"
 
 setjmp.o: setjmp.c ../include/setjmp.h ../src/setjmp.c
 	$(CC) $(setjmp_CFLAGS) -c setjmp.c
 
+signal.o: signal.c ../include/signal.h ../src/signal.c
+	$(CC) $(signal_CFLAGS) -c signal.c
+
 clean:
-	$(RM) -- $(setjmp_OBJS) $(tests_OBJS)
+	$(RM) -- $(setjmp_OBJS) $(signal_OBJS) $(tests_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)

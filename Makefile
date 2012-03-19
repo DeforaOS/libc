@@ -484,6 +484,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/project.conf \
 		$(PACKAGE)-$(VERSION)/tests/setjmp.c \
+		$(PACKAGE)-$(VERSION)/tests/signal.c \
 		$(PACKAGE)-$(VERSION)/tests/Makefile \
 		$(PACKAGE)-$(VERSION)/tests/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
