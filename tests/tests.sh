@@ -16,6 +16,7 @@
 
 
 FAILED=
+./includes		|| FAILED="$FAILED includes(error $?)"
 ./setjmp		|| FAILED="$FAILED setjmp(error $?)"
 ./signal		|| FAILED="$FAILED signal(error $?)"
 [ -z "$FAILED" ]	&& exit 0
