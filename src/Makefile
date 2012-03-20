@@ -171,7 +171,7 @@ utime.o: utime.c
 utmpx.o: utmpx.c
 	$(CC) $(libc_CFLAGS) -c utmpx.c
 
-start.o: start.S kernel/freebsd/i386/start.S kernel/linux/arm/start.S kernel/linux/i386/start.S kernel/linux/sparc/start.S kernel/netbsd/amd64/start.S kernel/netbsd/i386/start.S kernel/netbsd/sparc64/start.S kernel/netbsd/sparc/start.S kernel/openbsd/arm/start.S kernel/openbsd/i386/start.S
+start.o: start.S kernel/freebsd/amd64/start.S kernel/freebsd/i386/start.S kernel/linux/arm/start.S kernel/linux/i386/start.S kernel/linux/sparc/start.S kernel/netbsd/amd64/start.S kernel/netbsd/i386/start.S kernel/netbsd/sparc64/start.S kernel/netbsd/sparc/start.S kernel/openbsd/arm/start.S kernel/openbsd/i386/start.S
 	$(AS) $(start.o_ASFLAGS) -o start.o start.S
 
 clean:

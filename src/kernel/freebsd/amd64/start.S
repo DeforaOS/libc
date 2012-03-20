@@ -1,22 +1,22 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
-/* libc is not free software; you can redistribute it and/or modify it under
- * the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0
- * Unported as published by the Creative Commons organization.
+/* This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3 of the License.
  *
- * libc is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE.  See the Creative Commons Attribution-NonCommercial-
- * ShareAlike 3.0 Unported license for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the Creative Commons Attribution-
- * NonCommercial-ShareAlike 3.0 along with libc; if not, browse to
- * http://creativecommons.org/licenses/by-nc-sa/3.0/ */
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 
 
 _start:
+	/* FIXME this is broken */
 	pop	%rdi		/* argc		*/
 	mov	%rsp, %rsi	/* argv		*/
 	push	%rdi
@@ -31,13 +31,13 @@ _start:
 #endif
 	xor	%rbp, %rbp	/* stack	*/
 #ifdef PIC
-	call	main@GOTPCREL(%rip)
+	call	*main@GOTPCREL(%rip)
 #else
 	call	main
 #endif
 	mov	%rax, %rdi	/* exit		*/
 #ifdef PIC
-	call	exit@GOTPCREL(%rip)
+	call	*exit@GOTPCREL(%rip)
 #else
 	call	exit
 #endif
