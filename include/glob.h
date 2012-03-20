@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,5 +28,6 @@ typedef struct _glob_t
 	char ** gl_pathv;
 	size_t gl_offs;
 } glob_t;
+# endif
 
 #endif /* !LIBC_GLOB_H */
