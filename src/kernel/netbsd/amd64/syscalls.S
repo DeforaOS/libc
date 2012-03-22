@@ -18,7 +18,7 @@
 _syscall:
 	mov	%rcx, %r10
 	syscall
-	jnc	.errnoret
+	jnc	_syscall_return
 .errno:
 #ifdef PIC
 	mov	errno@GOTPCREL(%rip), %rcx
@@ -27,7 +27,7 @@ _syscall:
 	mov	%rax, errno
 #endif
 	mov	$-1, %rax
-.errnoret:
+_syscall_return:
 	ret
 
 
@@ -288,8 +288,8 @@ __sigaction_sigtramp:
 	mov	$SYS_setcontext, %rax
 	syscall
 	/* this should never be reached */
-	mov	$-1, %rdi
 	mov	$SYS_exit, %rax
+	mov	$-1, %rdi
 	syscall
 
 .global sigaction
@@ -297,11 +297,12 @@ __sigaction_sigtramp:
 sigaction:
 	mov	$SYS_sigaction, %rax
 #ifdef PIC
-	lea	__sigaction_sigtramp@PLT, %rcx
+	lea	__sigaction_sigtramp@GOTPCREL(%rip), %rcx
+	mov	(%rcx), %rcx
 #else
 	lea	__sigaction_sigtramp, %rcx
 #endif
-	mov	$2, %r8
+	mov	$0x2, %r8
 #ifdef PIC
 	jmp	_syscall@PLT
 #else
