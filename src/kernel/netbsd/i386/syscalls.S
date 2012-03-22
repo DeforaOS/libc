@@ -21,11 +21,11 @@
 
 _syscall:
 	int	$0x80
-	jnc	.errnoret
+	jnc	_syscall_return
 .errno:
 	mov	%eax, errno
 	mov	$-1, %eax
-.errnoret:
+_syscall_return:
 	ret
 
 
@@ -240,6 +240,29 @@ _setjmp_return:
 	mov	$0x0, %eax
 	pop	%ebp
 	ret
+
+
+/* sigaction */
+.global __sigaction_sigtramp
+.type __sigaction_sigtramp,@function
+__sigaction_sigtramp:
+	lea	12+128(%esp), %eax
+	mov	%eax, 4(%esp)
+	mov	$SYS_setcontext, %eax
+	int	$0x80
+	/* should not happen */
+	movl	$-1, 4(%esp)
+	int	$0x80
+
+.global sigaction
+.type sigaction,@function
+sigaction:
+	lea	__sigaction_sigtramp, %eax
+	mov	%eax, 16(%esp)
+	mov	$SYS_sigaction, %eax
+	movl	$0x2, 20(%esp)
+	jmp	_syscall
+#undef SYS_sigaction
 
 
 /* sigsetjmp */

@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2006-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,11 +100,7 @@
 # define SYS_chown		283
 # define SYS_fchown		284
 # define SYS_lchown		285
-# ifdef __i386__ /* XXX */
-#  define SYS_sigaction		291
-# else
-#  define SYS_sigaction		340
-# endif
+# define SYS_sigaction		340
 # define SYS_sigprocmask	293
 # define SYS__getcwd		296
 # define SYS_shmctl		303
