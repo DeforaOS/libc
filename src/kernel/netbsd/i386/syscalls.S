@@ -113,8 +113,7 @@ siglongjmp:
 	/* eax = env */
 	mov	8(%ebp), %eax
 	/* ecx = env[6] */
-	lea	24(%eax), %ecx
-	mov	(%ecx), %ecx
+	mov	24(%eax), %ecx
 	test	%ecx, %ecx
 	jz	_longjmp_registers
 
