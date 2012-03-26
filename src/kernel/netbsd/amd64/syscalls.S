@@ -95,16 +95,16 @@ execve:
 .type _longjmp,@function
 _longjmp:
 	/* restore registers */
+	mov	64(%rdi), %r15			/* %r15 */
+	mov	56(%rdi), %r14			/* %r14 */
+	mov	48(%rdi), %r13			/* %r13 */
+	mov	40(%rdi), %r12			/* %r12 */
+	mov	32(%rdi), %r11			/* %r11 */
+	mov	24(%rdi), %rbp			/* base pointer */
+	mov	16(%rdi), %rsp			/* stack pointer */
+	mov	8(%rdi), %rbx
 	mov	0(%rdi), %rdx			/* return address */
 	mov	%rdx, 0(%rsp)
-	mov	8(%rdi), %rbx
-	mov	16(%rdi), %rsp			/* stack pointer */
-	mov	24(%rdi), %rbp			/* base pointer */
-	mov	32(%rdi), %r11			/* %r11 */
-	mov	40(%rdi), %r12			/* %r12 */
-	mov	48(%rdi), %r13			/* %r13 */
-	mov	56(%rdi), %r14			/* %r14 */
-	mov	64(%rdi), %r15			/* %r15 */
 
 	/* if(val != 0) goto __longjmp_return; else val++ */
 	mov	%esi, %eax
