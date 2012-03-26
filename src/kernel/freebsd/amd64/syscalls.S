@@ -18,7 +18,7 @@
 _syscall:
 	mov	%rcx, %r10
 	syscall
-	jnc	.errnoret
+	jnc	_syscall_return
 .errno:
 #ifdef PIC
 	mov	%rax, errno@GOTPCREL(%rip)
@@ -26,7 +26,7 @@ _syscall:
 	mov	%rax, errno
 #endif
 	mov	$-1, %rax
-.errnoret:
+_syscall_return:
 	ret
 
 
@@ -110,8 +110,7 @@ longjmp:
 .type siglongjmp,@function
 siglongjmp:
 	/* if(env[9] == 0) goto _longjmp_registers */
-	lea	72(%rdi), %rdx
-	mov	(%rdx), %rdx
+	mov	72(%rdi), %rdx
 	test	%rdx, %rdx
 	jz	_longjmp_registers
 
@@ -119,9 +118,9 @@ siglongjmp:
 	/* sigprocmask(SIG_SETMASK, &env[10], NULL) */
 	push	%rdi
 	push	%rsi
+	lea	80(%rdi), %rdx
 	mov	$0x3, %rdi
 	mov	$0x0, %rsi
-	lea	80(%rdi), %rdx
 #ifdef PIC
 	call	sigprocmask@PLT
 #else
@@ -132,18 +131,18 @@ siglongjmp:
 
 	/* restore registers */
 _longjmp_registers:
+	mov	64(%rdi), %r15			/* %r15 */
+	mov	56(%rdi), %r14			/* %r14 */
+	mov	48(%rdi), %r13			/* %r13 */
+	mov	40(%rdi), %r12			/* %r12 */
+	mov	32(%rdi), %r11			/* %r11 */
+	mov	24(%rdi), %rbp			/* base pointer */
+	mov	16(%rdi), %rsp			/* stack pointer */
+	mov	8(%rdi), %rbx
 	mov	0(%rdi), %rdx			/* return address */
 	mov	%rdx, 0(%rsp)
-	mov	8(%rdi), %rbx
-	mov	16(%rdi), %rsp			/* stack pointer */
-	mov	24(%rdi), %rbp			/* base pointer */
-	mov	32(%rdi), %r11			/* %r11 */
-	mov	40(%rdi), %r12			/* %r12 */
-	mov	48(%rdi), %r13			/* %r13 */
-	mov	56(%rdi), %r14			/* %r14 */
-	mov	64(%rdi), %r15			/* %r15 */
 
-	/* if(val != 0) goto _longjmp_return; else val++ */
+	/* if(val != 0) return val; else val++ */
 	mov	%esi, %eax
 	test	%eax, %eax
 	jnz	_longjmp_return
