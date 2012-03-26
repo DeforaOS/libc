@@ -149,7 +149,7 @@ static void _sigsetjmp_test2(void)
 	fprintf(stderr, "DEBUG: %s()\n", __func__);
 #endif
 	_ret = 4 << 2;
-	siglongjmp(_sjb, 5 << 2);
+	siglongjmp(_sjb, (5 << 2));
 	_ret = 6 << 2;
 }
 
@@ -217,7 +217,7 @@ int main(int argc, char * argv[])
 		printf("%s: %s", argv[0], "Testing sigsetjmp(2/2)\n");
 		_ret = 2;
 		memset(_sjb, 0, sizeof(sigjmp_buf));
-		if((res = sigsetjmp(_sjb, 1)) == 0)
+		if((res = sigsetjmp(_sjb, (5 << 2))) == 0)
 		{
 #ifdef DEBUG
 			_sigjmp_buf_dump(_sjb);
