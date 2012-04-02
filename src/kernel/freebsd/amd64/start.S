@@ -16,13 +16,12 @@
 
 
 _start:
-	/* FIXME this is broken */
-	pop	%rdi		/* argc		*/
-	mov	%rsp, %rsi	/* argv		*/
-	push	%rdi
-	mov	%rdi, %rdx	/* envp		*/
+	/* rdi is &argc, argv is (&argc + 8) */
+	mov	%rdi, %rsi	/* argv = &argc + 1 */
+	mov	(%rdi), %rdi	/* argc */
+	add	$0x08, %rsi
+	mov	%rdi, %rdx	/* envp = (argc << 3) + argv */
 	shl	$3, %rdx
-	add	$8, %rdx
 	add	%rsi, %rdx
 #ifdef PIC			/* environ	*/
 	mov	%rdx, environ@GOTPCREL(%rip)
@@ -31,13 +30,13 @@ _start:
 #endif
 	xor	%rbp, %rbp	/* stack	*/
 #ifdef PIC
-	call	*main@GOTPCREL(%rip)
+	call	main@PLT
 #else
 	call	main
 #endif
 	mov	%rax, %rdi	/* exit		*/
 #ifdef PIC
-	call	*exit@GOTPCREL(%rip)
+	call	exit@PLT
 #else
 	call	exit
 #endif
