@@ -45,7 +45,7 @@ start_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 start: $(start_OBJS)
 	$(CC) -o start $(start_OBJS) $(start_LDFLAGS)
 
-tests: setjmp
+tests: setjmp signal start
 	./tests.sh -P "$(PREFIX)" -- "tests"
 
 includes.o: includes.c ../src/libc.so
