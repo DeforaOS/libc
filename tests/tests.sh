@@ -20,6 +20,7 @@ FAILED=
 ./setjmp		|| FAILED="$FAILED setjmp(error $?)"
 ./signal		|| FAILED="$FAILED signal(error $?)"
 ./start argv1 argv2	|| FAILED="$FAILED start(error $?)"
+./stdint		|| FAILED="$FAILED stdint(error $?)"
 [ -z "$FAILED" ]	&& exit 0
 echo "Failed tests:$FAILED" 1>&2
 #XXX ignore errors for now
