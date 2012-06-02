@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,6 +89,7 @@
 # define SYS_lseek		199
 # define SYS_mlock		203
 # define SYS_munlock		204
+# define SYS_poll		209
 # define SYS_nanosleep		240
 # define SYS_lchown		254
 # define SYS__getcwd		326
