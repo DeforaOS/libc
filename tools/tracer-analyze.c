@@ -16,6 +16,7 @@
 
 
 #include <sys/types.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include "tracer-syscalls.h"
@@ -61,13 +62,13 @@ static void _analyze_print(char const * str);
 
 /* public */
 /* functions */
-void analyze(int number, long arg2)
+void analyze(int number, long arg1, long arg2)
 {
 	size_t i;
 	char buf[256];
-	char const * s = (char const *)arg2;
+	char const * s;
 
-	_analyze_print("tracer - syscall ");
+	_analyze_print("tracer: syscall: ");
 	snprintf(buf, sizeof(buf), "%d", number);
 	for(i = 0; i < sizeof(_syscalls) / sizeof(*_syscalls); i++)
 		if(_syscalls[i].number == number)
@@ -79,16 +80,24 @@ void analyze(int number, long arg2)
 	switch(number)
 	{
 		case SYS_access:
-		case SYS_open:
-			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
+			/* FIXME analyze mode */
+			s = (char const *)arg1;
+			snprintf(buf, sizeof(buf), "(\"%s\", %u)\n", s, arg2);
 			break;
 		case SYS_close:
-		case SYS_ioctl:
 		case SYS_exit:
-			snprintf(buf, sizeof(buf), "(%d)\n", arg2);
+			snprintf(buf, sizeof(buf), "(%d)\n", arg1);
+			break;
+		case SYS_ioctl:
+			snprintf(buf, sizeof(buf), "(%d, %lu)\n", arg1, arg2);
 			break;
 		case SYS_munmap:
-			snprintf(buf, sizeof(buf), "(%p)\n", arg2);
+			snprintf(buf, sizeof(buf), "(%p, %lu)\n", arg1, arg2);
+			break;
+		case SYS_open:
+			/* FIXME analyze flags */
+			s = (char const *)arg1;
+			snprintf(buf, sizeof(buf), "(\"%s\", %u)\n", s, arg2);
 			break;
 		default:
 			snprintf(buf, sizeof(buf), "()\n");
@@ -105,5 +114,5 @@ static void _analyze_print(char const * str)
 	size_t len;
 
 	len = strlen(str);
-	syscall(SYS_write, 0, str, len);
+	syscall(SYS_write, STDERR_FILENO, str, len);
 }

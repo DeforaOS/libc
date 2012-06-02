@@ -31,6 +31,8 @@ __syscall:
 	push	%r9
 	push	%r10
 	push	%r11
+	mov	%rdx, %rcx
+	mov	%rsi, %rdx
 	mov	%rdi, %rsi
 	mov	%rax, %rdi
 	call	analyze@PLT
