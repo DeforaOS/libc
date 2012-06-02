@@ -101,6 +101,12 @@ void analyze(int number, long arg1, long arg2)
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\", %u)\n", s, arg2);
 			break;
+#ifdef SYS_sysctl
+		case SYS_sysctl:
+			/* FIXME analyze the name */
+			snprintf(buf, sizeof(buf), "(%p, %u)\n", arg1, arg2);
+			break;
+#endif
 		default:
 			snprintf(buf, sizeof(buf), "()\n");
 			break;
