@@ -33,26 +33,50 @@ static const struct
 _syscalls[] =
 {
 	{ SYS_access,	"access"	},
+#ifdef SYS_brk
 	{ SYS_brk,	"brk"		},
+#endif
+	{ SYS_chmod,	"chmod"		},
+	{ SYS_chown,	"chown"		},
 	{ SYS_close,	"close"		},
+	{ SYS_dup,	"dup"		},
+	{ SYS_execve,	"execve"	},
 	{ SYS_exit,	"exit"		},
 	{ SYS_fchdir,	"fchdir"	},
+	{ SYS_fchmod,	"fchmod"	},
+	{ SYS_fchown,	"fchown"	},
+	{ SYS_fcntl,	"fcntl"		},
+#ifdef SYS_getdents
 	{ SYS_getdents,	"getdents"	},
+#endif
 	{ SYS_getegid,	"getegid"	},
 	{ SYS_geteuid,	"geteuid"	},
 	{ SYS_getgid,	"getgid"	},
 	{ SYS_getrlimit,"getrlimit"	},
+	{ SYS_getpid,	"getpid"	},
+	{ SYS_getppid,	"getppid"	},
 	{ SYS_getuid,	"getuid"	},
 	{ SYS_ioctl,	"ioctl"		},
+	{ SYS_kill,	"kill"		},
+	{ SYS_lchown,	"lchown"	},
+	{ SYS_mlock,	"mlock"		},
 	{ SYS_mmap,	"mmap"		},
 	{ SYS_mprotect,	"mprotect"	},
 	{ SYS_munmap,	"munmap"	},
 	{ SYS_open,	"open"		},
+	{ SYS_pipe,	"pipe"		},
+	{ SYS_poll,	"poll"		},
 	{ SYS_read,	"read"		},
+	{ SYS_readlink,	"readlink"	},
+	{ SYS_select,	"select"	},
 	{ SYS_setrlimit,"setrlimit"	},
 	{ SYS_sync,	"sync"		},
 #ifdef SYS_sysctl
 	{ SYS_sysctl,	"sysctl"	},
+#endif
+	{ SYS_umask,	"umask"		},
+#ifdef SYS_wait4
+	{ SYS_wait4,	"wait4"		},
 #endif
 	{ SYS_write,	"write"		}
 };
@@ -90,6 +114,10 @@ void analyze(int number, long arg1, long arg2)
 		case SYS_exit:
 			snprintf(buf, sizeof(buf), "(%d)\n", arg1);
 			break;
+		case SYS_execve:
+			/* FIXME analyze the arguments and environment */
+			s = (char const *)arg1;
+			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
 		case SYS_ioctl:
 			snprintf(buf, sizeof(buf), "(%d, %lu)\n", arg1, arg2);
 			break;
