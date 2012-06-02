@@ -31,18 +31,26 @@ static const struct
 }
 _syscalls[] =
 {
+	{ SYS_access,	"access"	},
 	{ SYS_brk,	"brk"		},
 	{ SYS_close,	"close"		},
 	{ SYS_exit,	"exit"		},
 	{ SYS_fchdir,	"fchdir"	},
 	{ SYS_getdents,	"getdents"	},
+	{ SYS_getegid,	"getegid"	},
+	{ SYS_geteuid,	"geteuid"	},
+	{ SYS_getgid,	"getgid"	},
+	{ SYS_getrlimit,"getrlimit"	},
 	{ SYS_getuid,	"getuid"	},
 	{ SYS_ioctl,	"ioctl"		},
 	{ SYS_mmap,	"mmap"		},
+	{ SYS_mprotect,	"mprotect"	},
 	{ SYS_munmap,	"munmap"	},
 	{ SYS_open,	"open"		},
 	{ SYS_read,	"read"		},
+	{ SYS_setrlimit,"setrlimit"	},
 	{ SYS_sync,	"sync"		},
+	{ SYS_sysctl,	"sysctl"	},
 	{ SYS_write,	"write"		}
 };
 
@@ -53,23 +61,37 @@ static void _analyze_print(char const * str);
 
 /* public */
 /* functions */
-void analyze(int number)
+void analyze(int number, long arg2)
 {
 	size_t i;
-	char buf[32];
+	char buf[256];
+	char const * s = (char const *)arg2;
 
-	snprintf(buf, sizeof(buf), "%d\n", number);
+	_analyze_print("tracer - syscall ");
+	snprintf(buf, sizeof(buf), "%d", number);
 	for(i = 0; i < sizeof(_syscalls) / sizeof(*_syscalls); i++)
 		if(_syscalls[i].number == number)
 		{
-			snprintf(buf, sizeof(buf), "%s()\n", _syscalls[i].name);
+			snprintf(buf, sizeof(buf), "%s", _syscalls[i].name);
 			break;
 		}
+	_analyze_print(buf);
 	switch(number)
 	{
-		case SYS_write:
+		case SYS_access:
+		case SYS_open:
+			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
+			break;
+		case SYS_close:
+		case SYS_ioctl:
+		case SYS_exit:
+			snprintf(buf, sizeof(buf), "(%d)\n", arg2);
+			break;
+		case SYS_munmap:
+			snprintf(buf, sizeof(buf), "(%p)\n", arg2);
 			break;
 		default:
+			snprintf(buf, sizeof(buf), "()\n");
 			break;
 	}
 	_analyze_print(buf);

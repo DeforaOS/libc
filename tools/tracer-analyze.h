@@ -19,6 +19,6 @@
 # define LIBC_TRACER_ANALYZE_H
 
 
-void analyze(int number);
+void analyze(int number, long arg2);
 
 #endif /* !LIBC_TRACER_ANALYZE_H */
