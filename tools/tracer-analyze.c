@@ -47,7 +47,9 @@ _syscalls[] =
 	{ SYS_fchmod,		"fchmod"	},
 	{ SYS_fchown,		"fchown"	},
 	{ SYS_fcntl,		"fcntl"		},
+#ifdef SYS_flock
 	{ SYS_flock,		"flock"		},
+#endif
 	{ SYS_fork,		"fork"		},
 	{ SYS_fstat,		"fstat"		},
 	{ SYS_fsync,		"fsync"		},
@@ -69,9 +71,13 @@ _syscalls[] =
 	{ SYS_link,		"link"		},
 	{ SYS_lstat,		"lstat"		},
 	{ SYS_mknod,		"mknod"		},
+#ifdef SYS_mlock
 	{ SYS_mlock,		"mlock"		},
+#endif
 	{ SYS_mmap,		"mmap"		},
+#ifdef SYS_mprotect
 	{ SYS_mprotect,		"mprotect"	},
+#endif
 	{ SYS_munmap,		"munmap"	},
 	{ SYS_open,		"open"		},
 	{ SYS_pipe,		"pipe"		},
