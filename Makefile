@@ -1,6 +1,6 @@
 PACKAGE	= libc
 VERSION	= 0.0.7
-SUBDIRS	= include src tests
+SUBDIRS	= include src tests tools
 RM	?= rm -f
 LN	?= ln -f
 TAR	?= tar -czvf
@@ -490,6 +490,10 @@ dist:
 		$(PACKAGE)-$(VERSION)/tests/stdint.c \
 		$(PACKAGE)-$(VERSION)/tests/Makefile \
 		$(PACKAGE)-$(VERSION)/tests/project.conf \
+		$(PACKAGE)-$(VERSION)/tools/tracer-analyze.c \
+		$(PACKAGE)-$(VERSION)/tools/tracer-syscalls.S \
+		$(PACKAGE)-$(VERSION)/tools/Makefile \
+		$(PACKAGE)-$(VERSION)/tools/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/COPYING \
 		$(PACKAGE)-$(VERSION)/README \
