@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,24 +15,14 @@
 
 
 
-#ifndef LIBC_COMPAT_UNISTD_H
-# define LIBC_COMPAT_UNISTD_H
+#ifndef LIBC_KERNEL_SOLARIS_UNISTD_H
+# define LIBC_KERNEL_SOLARIS_UNISTD_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/unistd.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/unistd.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/unistd.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/unistd.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/unistd.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/unistd.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef useconds_t
+#  define useconds_t useconds_t
+typedef unsigned int useconds_t;
 # endif
 
-#endif /* !LIBC_COMPAT_UNISTD_H */
+#endif /* !LIBC_KERNEL_SOLARIS_UNISTD_H */

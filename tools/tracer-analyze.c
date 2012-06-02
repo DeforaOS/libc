@@ -40,10 +40,14 @@ _syscalls[] =
 	{ SYS_chown,		"chown"		},
 	{ SYS_close,		"close"		},
 	{ SYS_dup,		"dup"		},
+#ifdef SYS_dup2
 	{ SYS_dup2,		"dup2"		},
+#endif
 	{ SYS_execve,		"execve"	},
 	{ SYS_exit,		"_exit"		},
+#ifdef SYS_fchdir
 	{ SYS_fchdir,		"fchdir"	},
+#endif
 	{ SYS_fchmod,		"fchmod"	},
 	{ SYS_fchown,		"fchown"	},
 	{ SYS_fcntl,		"fcntl"		},
@@ -52,20 +56,36 @@ _syscalls[] =
 #endif
 	{ SYS_fork,		"fork"		},
 	{ SYS_fstat,		"fstat"		},
+#ifdef SYS_fsync
 	{ SYS_fsync,		"fsync"		},
+#endif
 #ifdef SYS_getdents
 	{ SYS_getdents,		"getdents"	},
 #endif
+#ifdef SYS_getegid
 	{ SYS_getegid,		"getegid"	},
+#endif
+#ifdef SYS_geteuid
 	{ SYS_geteuid,		"geteuid"	},
+#endif
 	{ SYS_getgid,		"getgid"	},
-	{ SYS_getrlimit,	"getrlimit"	},
 	{ SYS_getpid,		"getpid"	},
+#ifdef SYS_getppid
 	{ SYS_getppid,		"getppid"	},
+#endif
+#ifdef SYS_getpriority
 	{ SYS_getpriority,	"getpriority"	},
+#endif
+#ifdef SYS_getrlimit
+	{ SYS_getrlimit,	"getrlimit"	},
+#endif
+#ifdef SYS_getrusage
 	{ SYS_getrusage,	"getrusage"	},
+#endif
 	{ SYS_getuid,		"getuid"	},
+#ifdef SYS_ioctl
 	{ SYS_ioctl,		"ioctl"		},
+#endif
 	{ SYS_kill,		"kill"		},
 	{ SYS_lchown,		"lchown"	},
 	{ SYS_link,		"link"		},
@@ -86,12 +106,18 @@ _syscalls[] =
 #endif
 	{ SYS_read,		"read"		},
 	{ SYS_readlink,		"readlink"	},
+#ifdef SYS_select
 	{ SYS_select,		"select"	},
+#endif
 	{ SYS_setgid,		"setgid"	},
+#ifdef SYS_setpriority
 	{ SYS_setpriority,	"setpriority"	},
+#endif
 	{ SYS_setregid,		"setregid"	},
 	{ SYS_setreuid,		"setreuid"	},
+#ifdef SYS_setrlimit
 	{ SYS_setrlimit,	"setrlimit"	},
+#endif
 	{ SYS_setuid,		"setuid"	},
 	{ SYS_stat,		"stat"		},
 	{ SYS_symlink,		"symlink"	},
@@ -147,9 +173,11 @@ void analyze(int number, long arg1, long arg2)
 			/* FIXME analyze the arguments and environment */
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
+#ifdef SYS_ioctl
 		case SYS_ioctl:
 			snprintf(buf, sizeof(buf), "(%d, %lu)\n", arg1, arg2);
 			break;
+#endif
 		case SYS_munmap:
 			snprintf(buf, sizeof(buf), "(%p, %lu)\n", arg1, arg2);
 			break;

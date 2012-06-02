@@ -221,6 +221,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/sys/utsname.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/time.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/solaris/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/solaris/project.conf \
 		$(PACKAGE)-$(VERSION)/include/math/math.h \
 		$(PACKAGE)-$(VERSION)/include/math/Makefile \
