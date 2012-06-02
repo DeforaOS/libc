@@ -51,7 +51,9 @@ _syscalls[] =
 	{ SYS_read,	"read"		},
 	{ SYS_setrlimit,"setrlimit"	},
 	{ SYS_sync,	"sync"		},
+#ifdef SYS_sysctl
 	{ SYS_sysctl,	"sysctl"	},
+#endif
 	{ SYS_write,	"write"		}
 };
 
