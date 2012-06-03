@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,16 +22,16 @@
 /* types */
 # ifndef ino_t
 #  define ino_t ino_t
-typedef unsigned int ino_t;
+typedef unsigned long long ino_t;
 # endif
 
 struct dirent
 {
 	ino_t d_ino;
 	unsigned short int d_reclen;
+	unsigned short int _padding0;
 	unsigned char d_type;
-	unsigned char _padding;
-	char d_name[256]; /* NAME_MAX + 1 */
+	char d_name[512]; /* NAME_MAX + 1 */
 };
 
 #endif /* !LIBC_KERNEL_NETBSD_DIRENT_H */

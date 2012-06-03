@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2005-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,8 +98,8 @@ DIR * opendir(char const * name)
 /* readdir */
 #if defined(SYS_getdents) || defined(SYS_getdirentries)
 int getdents(int fd, char * buf, size_t nbuf);
+# ifdef SYS_getdirentries
 int getdirentries(int fd, char * buf, size_t nbuf, char * basep);
-# ifdef SYS_getdentries
 #  define getdents(fd, buf, size) getdirentries(fd, buf, size, NULL)
 # endif
 
