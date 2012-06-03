@@ -28,7 +28,9 @@ int main(int argc, char * argv[], char * envp[])
 	char const * sep;
 
 	printf("%s: %s\n", argv[0], "Testing arguments:");
-	if(strcmp(argv[0], "./start") != 0)
+	if(argv == NULL)
+		ret |= 1;
+	else if(strcmp(argv[0], "./start") != 0)
 		ret |= 2;
 	else if(strcmp(argv[1], "argv1") != 0)
 		ret |= 4;
