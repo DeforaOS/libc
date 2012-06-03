@@ -18,8 +18,46 @@
 .text
 
 
+/* FreeBSD */
+#if defined(__FreeBSD__)
+# if defined(__amd64__)
+__syscall:
+	push	%rdi
+	push	%rsi
+	push	%rax
+	push	%rcx
+	push	%rdx
+	push	%r8
+	push	%r9
+	push	%r10
+	push	%r11
+	mov	%rdx, %rcx
+	mov	%rsi, %rdx
+	mov	%rdi, %rsi
+	mov	%rax, %rdi
+	call	analyze@PLT
+	pop	%r11
+	pop	%r10
+	pop	%r9
+	pop	%r8
+	pop	%rdx
+	pop	%rcx
+	pop	%rax
+	pop	%rsi
+	pop	%rdi
+	jmp	_syscall@PLT
+
+#define SYSCALL(name) \
+.global name; \
+.type name,@function; \
+name:; \
+	mov	$SYS_ ## name, %rax; \
+	jmp	__syscall@PLT
+# else
+#  warning Unsupported FreeBSD architecture
+# endif
 /* NetBSD */
-#if defined(__NetBSD__)
+#elif defined(__NetBSD__)
 # if defined(__amd64__)
 __syscall:
 	push	%rdi
