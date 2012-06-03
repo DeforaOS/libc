@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,6 +97,7 @@ int gethostname(char * name, size_t size);
 char * getlogin(void);
 int getlogin_r(char * buf, size_t size);
 int getopt(int argc, char * const argv[], char const * optstring);
+pid_t getpgrp(void);
 pid_t getpid(void);
 pid_t getppid(void);
 uid_t getuid(void);

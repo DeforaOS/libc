@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -587,13 +587,26 @@ static void _getopt_reset(char * const ** oldargv, char * const * argv,
 }
 
 
+/* getpgrp */
+#ifndef SYS_getpgrp
+# warning Unsupported platform: getpgrp() is missing
+pid_t getpgrp(void)
+{
+	/* XXX not allowed to fail */
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* getpid */
 #ifndef SYS_getpid
 # warning Unsupported platform: getpid() is missing
 pid_t getpid(void)
 {
 	/* XXX not allowed to fail */
-	return 1;
+	errno = ENOSYS;
+	return -1;
 }
 #endif
 

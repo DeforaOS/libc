@@ -55,6 +55,7 @@
 # define SYS_vfork		66
 # define SYS_munmap		73
 # define SYS_mprotect		74
+# define SYS_getpgrp		81
 # define SYS_setpgid		82
 # define SYS_dup2		90
 # define SYS_fcntl		92
