@@ -167,8 +167,13 @@ void analyze(int number, long arg1, long arg2)
 			break;
 		case SYS_close:
 		case SYS_exit:
+#ifdef SYS_fchdir
 		case SYS_fchdir:
+#endif
 		case SYS_fstat:
+#ifdef SYS_fsync
+		case SYS_fsync:
+#endif
 			snprintf(buf, sizeof(buf), "(%d)\n", arg1);
 			break;
 		case SYS_execve:
@@ -176,6 +181,9 @@ void analyze(int number, long arg1, long arg2)
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
 		case SYS_fcntl:
+#ifdef SYS_flock
+		case SYS_flock:
+#endif
 			snprintf(buf, sizeof(buf), "(%d, %d)\n", arg1, arg2);
 			break;
 #ifdef SYS_ioctl
