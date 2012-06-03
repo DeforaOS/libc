@@ -364,6 +364,9 @@ SYSCALL(getgid)
 #ifdef SYS_getlogin_r
 SYSCALL(getlogin_r)
 #endif
+#ifdef SYS_getpgrp
+SYSCALL(getpgrp)
+#endif
 #ifdef SYS_getpid
 SYSCALL(getpid)
 #endif
