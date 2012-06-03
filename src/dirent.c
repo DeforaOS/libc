@@ -16,12 +16,13 @@
 
 
 #include "sys/stat.h"
-#include "errno.h"
 #include "fcntl.h"
 #include "unistd.h"
+#include "stddef.h"
 #include "stdlib.h"
 #include "string.h"
 #include "limits.h"
+#include "errno.h"
 #include "syscalls.h"
 #include "dirent.h"
 
@@ -108,7 +109,7 @@ struct dirent * readdir(DIR * dir)
 	static struct dirent de;
 	ssize_t slen;
 	size_t len;
-	const size_t off = sizeof(de) - sizeof(de.d_name);
+	const size_t off = offsetof(struct dirent, d_name);
 
 	for(;;)
 	{
