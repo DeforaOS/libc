@@ -167,6 +167,8 @@ void analyze(int number, long arg1, long arg2)
 			break;
 		case SYS_close:
 		case SYS_exit:
+		case SYS_fchdir:
+		case SYS_fstat:
 			snprintf(buf, sizeof(buf), "(%d)\n", arg1);
 			break;
 		case SYS_execve:
@@ -178,6 +180,11 @@ void analyze(int number, long arg1, long arg2)
 			snprintf(buf, sizeof(buf), "(%d, %lu)\n", arg1, arg2);
 			break;
 #endif
+		case SYS_lstat:
+		case SYS_stat:
+			s = (char const *)arg1;
+			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
+			break;
 		case SYS_munmap:
 			snprintf(buf, sizeof(buf), "(%p, %lu)\n", arg1, arg2);
 			break;

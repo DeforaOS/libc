@@ -61,3 +61,31 @@ name:; \
 #endif
 
 #include "../src/syscalls.S"
+
+
+/* platform-specific fixes */
+/* NetBSD */
+#if defined(__NetBSD__)
+# if defined(__amd64__)
+/* fstat */
+.global __fstat50
+.type __fstat50,@function
+__fstat50:
+	mov	$SYS_fstat, %rax
+	jmp	__syscall@PLT
+
+/* lstat */
+.global __lstat50
+.type __lstat50,@function
+__lstat50:
+	mov	$SYS_lstat, %rax
+	jmp	__syscall@PLT
+
+/* stat */
+.global __stat50
+.type __stat50,@function
+__stat50:
+	mov	$SYS_stat, %rax
+	jmp	__syscall@PLT
+# endif
+#endif
