@@ -22,7 +22,7 @@
 /* types */
 # ifndef time_t
 #  define time_t time_t
-typedef int time_t;
+typedef long long time_t;
 # endif
 
 #endif /* !LIBC_KERNEL_NETBSD_SYS_SHM_H */

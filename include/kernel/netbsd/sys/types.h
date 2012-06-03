@@ -30,7 +30,7 @@ typedef unsigned int clock_t;
 # endif
 # ifndef dev_t
 #  define dev_t dev_t
-typedef unsigned int dev_t;
+typedef unsigned long long dev_t;
 # endif
 # ifndef fsblkcnt_t
 #  define fsblkcnt_t fsblkcnt_t
@@ -50,7 +50,7 @@ typedef int suseconds_t;
 # endif
 # ifndef time_t
 #  define time_t time_t
-typedef int time_t;
+typedef long long time_t;
 # endif
 # ifndef useconds_t
 #  define useconds_t useconds_t

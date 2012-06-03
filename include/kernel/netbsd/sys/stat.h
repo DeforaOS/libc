@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ typedef unsigned int blksize_t;
 # endif
 # ifndef dev_t
 #  define dev_t dev_t
-typedef unsigned int dev_t;
+typedef unsigned long long dev_t;
 # endif
 # ifndef id_t
 #  define id_t id_t
@@ -38,15 +38,15 @@ typedef unsigned int id_t;
 # endif
 # ifndef ino_t
 #  define ino_t ino_t
-typedef unsigned int ino_t;
+typedef unsigned long long ino_t;
 # endif
 # ifndef mode_t
 #  define mode_t mode_t
-typedef int mode_t;
+typedef unsigned int mode_t;
 # endif
 # ifndef nlink_t
 #  define nlink_t nlink_t
-typedef int nlink_t;
+typedef unsigned int nlink_t;
 # endif
 # ifndef off_t
 #  define off_t off_t
@@ -54,7 +54,7 @@ typedef long long off_t;
 # endif
 # ifndef time_t
 #  define time_t time_t
-typedef int time_t;
+typedef long long time_t;
 # endif
 
 # ifndef gid_t
@@ -71,23 +71,22 @@ struct stat
 	dev_t st_dev;
 	mode_t st_mode;
 	ino_t st_ino;
-	int _padding0;
 	nlink_t st_nlink;
 	uid_t st_uid;
 	gid_t st_gid;
 	dev_t st_rdev;
 	time_t st_atime;
-	long _padding2;
+	long _padding0;
 	time_t st_mtime;
-	long _padding3;
+	long _padding1;
 	time_t st_ctime;
+	long _padding2;
+	time_t _padding3;
 	long _padding4;
-	time_t _padding5;
-	long _padding6;
 	off_t st_size;
 	blkcnt_t st_blocks;
 	blksize_t st_blksize;
-	int _padding7[4];
+	int _padding5[4];
 };
 
 #endif /* !LIBC_KERNEL_NETBSD_SYS_STAT_H */
