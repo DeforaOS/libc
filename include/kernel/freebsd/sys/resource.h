@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ typedef long suseconds_t;
 typedef int time_t;
 # endif
 # ifndef timeval
-# define timeval timeval
+#  define timeval timeval
 struct timeval
 {
 #ifdef __arm__
@@ -80,9 +80,9 @@ struct rusage
 
 
 /* constants */
-# define PRIO_PROCESS	0
-# define PRIO_PGRP	1
-# define PRIO_USER	2
+# define PRIO_PROCESS		0
+# define PRIO_PGRP		1
+# define PRIO_USER		2
 
 # define RUSAGE_SELF		0
 # define RUSAGE_CHILDREN	-1
