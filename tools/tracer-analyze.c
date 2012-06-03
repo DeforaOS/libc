@@ -69,7 +69,9 @@ _syscalls[] =
 	{ SYS_geteuid,		"geteuid"	},
 #endif
 	{ SYS_getgid,		"getgid"	},
+#ifdef SYS_getpgrp
 	{ SYS_getpgrp,		"getpgrp"	},
+#endif
 	{ SYS_getpid,		"getpid"	},
 #ifdef SYS_getppid
 	{ SYS_getppid,		"getppid"	},
@@ -83,6 +85,7 @@ _syscalls[] =
 #ifdef SYS_getrusage
 	{ SYS_getrusage,	"getrusage"	},
 #endif
+	{ SYS_gettimeofday,	"gettimeofday"	},
 	{ SYS_getuid,		"getuid"	},
 #ifdef SYS_ioctl
 	{ SYS_ioctl,		"ioctl"		},
@@ -120,7 +123,9 @@ _syscalls[] =
 #ifdef SYS_setrlimit
 	{ SYS_setrlimit,	"setrlimit"	},
 #endif
+#ifdef SYS_setsid
 	{ SYS_setsid,		"setsid"	},
+#endif
 	{ SYS_setuid,		"setuid"	},
 	{ SYS_stat,		"stat"		},
 	{ SYS_symlink,		"symlink"	},
