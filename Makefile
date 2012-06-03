@@ -1,6 +1,6 @@
 PACKAGE	= libc
 VERSION	= 0.0.7
-SUBDIRS	= include src tests tools
+SUBDIRS	= doc include src tests tools
 RM	?= rm -f
 LN	?= ln -f
 TAR	?= tar -czvf
@@ -21,8 +21,17 @@ dist:
 	$(RM) -r -- $(PACKAGE)-$(VERSION)
 	$(LN) -s -- . $(PACKAGE)-$(VERSION)
 	@$(TAR) $(PACKAGE)-$(VERSION).tar.gz -- \
+		$(PACKAGE)-$(VERSION)/doc/Makefile \
+		$(PACKAGE)-$(VERSION)/doc/gtkdoc.sh \
+		$(PACKAGE)-$(VERSION)/doc/project.conf \
+		$(PACKAGE)-$(VERSION)/doc/gtkdoc/Makefile \
+		$(PACKAGE)-$(VERSION)/doc/gtkdoc/libc-docs.xml \
+		$(PACKAGE)-$(VERSION)/doc/gtkdoc/project.conf \
+		$(PACKAGE)-$(VERSION)/doc/gtkdoc/tmpl/Makefile \
+		$(PACKAGE)-$(VERSION)/doc/gtkdoc/tmpl/project.conf \
 		$(PACKAGE)-$(VERSION)/include/assert.h \
 		$(PACKAGE)-$(VERSION)/include/complex.h \
+		$(PACKAGE)-$(VERSION)/include/cpio.h \
 		$(PACKAGE)-$(VERSION)/include/ctype.h \
 		$(PACKAGE)-$(VERSION)/include/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/errno.h \
@@ -42,6 +51,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/pwd.h \
 		$(PACKAGE)-$(VERSION)/include/sched.h \
 		$(PACKAGE)-$(VERSION)/include/search.h \
+		$(PACKAGE)-$(VERSION)/include/semaphore.h \
 		$(PACKAGE)-$(VERSION)/include/setjmp.h \
 		$(PACKAGE)-$(VERSION)/include/signal.h \
 		$(PACKAGE)-$(VERSION)/include/stdarg.h \
@@ -54,6 +64,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/strings.h \
 		$(PACKAGE)-$(VERSION)/include/stropts.h \
 		$(PACKAGE)-$(VERSION)/include/syslog.h \
+		$(PACKAGE)-$(VERSION)/include/tar.h \
 		$(PACKAGE)-$(VERSION)/include/termios.h \
 		$(PACKAGE)-$(VERSION)/include/time.h \
 		$(PACKAGE)-$(VERSION)/include/ucontext.h \
@@ -490,14 +501,18 @@ dist:
 		$(PACKAGE)-$(VERSION)/tests/start.c \
 		$(PACKAGE)-$(VERSION)/tests/stdint.c \
 		$(PACKAGE)-$(VERSION)/tests/Makefile \
+		$(PACKAGE)-$(VERSION)/tests/tests.sh \
 		$(PACKAGE)-$(VERSION)/tests/project.conf \
 		$(PACKAGE)-$(VERSION)/tools/tracer-analyze.c \
 		$(PACKAGE)-$(VERSION)/tools/tracer-syscalls.S \
 		$(PACKAGE)-$(VERSION)/tools/Makefile \
+		$(PACKAGE)-$(VERSION)/tools/tracer-analyze.h \
+		$(PACKAGE)-$(VERSION)/tools/tracer-syscalls.h \
 		$(PACKAGE)-$(VERSION)/tools/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/COPYING \
 		$(PACKAGE)-$(VERSION)/README \
+		$(PACKAGE)-$(VERSION)/config.sh \
 		$(PACKAGE)-$(VERSION)/project.conf
 	$(RM) -- $(PACKAGE)-$(VERSION)
 

@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+               "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"
+[
+  <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+  <!ENTITY server "www.defora.org/doc/html">
+  <!ENTITY title "DeforaOS libc">
+  <!ENTITY version "0.0.7">
+]>
+<book id="index">
+  <bookinfo>
+    <title>libc Reference Manual</title>
+    <releaseinfo>
+      for libc &version;.
+      The latest version of this documentation can be found on-line at
+      <ulink role="online-location" url="http://&server;/libc/index.html">http://&server;/libc/</ulink>.
+    </releaseinfo>
+  </bookinfo>
+
+  <chapter>
+    <title>&title;</title>
+    <xi:include href="xml/assert.xml"/>
+    <xi:include href="xml/complex.xml"/>
+    <xi:include href="xml/cpio.xml"/>
+    <xi:include href="xml/ctype.xml"/>
+    <xi:include href="xml/dirent.xml"/>
+    <xi:include href="xml/dlfcn.xml"/>
+    <xi:include href="xml/elf.xml"/>
+    <xi:include href="xml/errno.xml"/>
+    <xi:include href="xml/fcntl.xml"/>
+    <xi:include href="xml/float.xml"/>
+    <xi:include href="xml/fnmatch.xml"/>
+    <xi:include href="xml/glob.xml"/>
+    <xi:include href="xml/grp.xml"/>
+    <xi:include href="xml/iconv.xml"/>
+    <xi:include href="xml/if.xml"/>
+    <xi:include href="xml/in.xml"/>
+    <xi:include href="xml/inet.xml"/>
+    <xi:include href="xml/inttypes.xml"/>
+    <xi:include href="xml/ioctl.xml"/>
+    <xi:include href="xml/ipc.xml"/>
+    <xi:include href="xml/langinfo.xml"/>
+    <xi:include href="xml/libgen.xml"/>
+    <xi:include href="xml/limits.xml"/>
+    <xi:include href="xml/locale.xml"/>
+    <xi:include href="xml/math.xml"/>
+    <xi:include href="xml/mman.xml"/>
+    <xi:include href="xml/mount.xml"/>
+    <xi:include href="xml/netdb.xml"/>
+    <xi:include href="xml/nl_types.xml"/>
+    <xi:include href="xml/poll.xml"/>
+    <xi:include href="xml/pthread.xml"/>
+    <xi:include href="xml/pwd.xml"/>
+    <xi:include href="xml/reboot.xml"/>
+    <xi:include href="xml/resource.xml"/>
+    <xi:include href="xml/sched.xml"/>
+    <xi:include href="xml/search.xml"/>
+    <xi:include href="xml/select.xml"/>
+    <xi:include href="xml/semaphore.xml"/>
+    <xi:include href="xml/setjmp.xml"/>
+    <xi:include href="xml/shm.xml"/>
+    <xi:include href="xml/signal.xml"/>
+    <xi:include href="xml/socket.xml"/>
+    <xi:include href="xml/stat.xml"/>
+    <xi:include href="xml/statvfs.xml"/>
+    <xi:include href="xml/stdarg.xml"/>
+    <xi:include href="xml/stdbool.xml"/>
+    <xi:include href="xml/stddef.xml"/>
+    <xi:include href="xml/stdint.xml"/>
+    <xi:include href="xml/stdio.xml"/>
+    <xi:include href="xml/stdlib.xml"/>
+    <xi:include href="xml/string.xml"/>
+    <xi:include href="xml/strings.xml"/>
+    <xi:include href="xml/stropts.xml"/>
+    <xi:include href="xml/syslog.xml"/>
+    <xi:include href="xml/tar.xml"/>
+    <xi:include href="xml/tcp.xml"/>
+    <xi:include href="xml/termios.xml"/>
+    <xi:include href="xml/time.xml"/>
+    <xi:include href="xml/times.xml"/>
+    <xi:include href="xml/types.xml"/>
+    <xi:include href="xml/ucontext.xml"/>
+    <xi:include href="xml/uio.xml"/>
+    <xi:include href="xml/un.xml"/>
+    <xi:include href="xml/unistd.xml"/>
+    <xi:include href="xml/utime.xml"/>
+    <xi:include href="xml/utmpx.xml"/>
+    <xi:include href="xml/utsname.xml"/>
+    <xi:include href="xml/vt.xml"/>
+    <xi:include href="xml/wait.xml"/>
+    <xi:include href="xml/wchar.xml"/>
+
+  </chapter>
+  <index id="api-index-full">
+    <title>API Index</title>
+    <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
+  </index>
+  <index id="deprecated-api-index" role="deprecated">
+    <title>Index of deprecated API</title>
+    <xi:include href="xml/api-index-deprecated.xml"><xi:fallback /></xi:include>
+  </index>
+
+  <xi:include href="xml/annotation-glossary.xml"><xi:fallback /></xi:include>
+</book>
