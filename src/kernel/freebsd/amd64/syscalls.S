@@ -31,12 +31,14 @@ _syscall_return:
 
 
 /* macros */
-#define SYSCALL(name) \
+#ifndef SYSCALL
+# define SYSCALL(name) \
 .global name; \
 .type name,@function; \
 name:; \
 	mov	$SYS_ ## name, %rax; \
 	jmp	_syscall
+#endif
 
 
 /* functions */
