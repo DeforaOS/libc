@@ -69,6 +69,7 @@ _syscalls[] =
 	{ SYS_geteuid,		"geteuid"	},
 #endif
 	{ SYS_getgid,		"getgid"	},
+	{ SYS_getpgrp,		"getpgrp"	},
 	{ SYS_getpid,		"getpid"	},
 #ifdef SYS_getppid
 	{ SYS_getppid,		"getppid"	},
@@ -89,6 +90,7 @@ _syscalls[] =
 	{ SYS_kill,		"kill"		},
 	{ SYS_lchown,		"lchown"	},
 	{ SYS_link,		"link"		},
+	{ SYS_lseek,		"lseek"		},
 	{ SYS_lstat,		"lstat"		},
 	{ SYS_mknod,		"mknod"		},
 #ifdef SYS_mlock
@@ -118,6 +120,7 @@ _syscalls[] =
 #ifdef SYS_setrlimit
 	{ SYS_setrlimit,	"setrlimit"	},
 #endif
+	{ SYS_setsid,		"setsid"	},
 	{ SYS_setuid,		"setuid"	},
 	{ SYS_stat,		"stat"		},
 	{ SYS_symlink,		"symlink"	},
@@ -143,7 +146,7 @@ static void _analyze_print(char const * str);
 
 /* public */
 /* functions */
-void analyze(int number, long arg1, long arg2)
+void analyze(int number, long arg1, long arg2, long arg3)
 {
 	size_t i;
 	char buf[256];
@@ -184,6 +187,7 @@ void analyze(int number, long arg1, long arg2)
 #ifdef SYS_flock
 		case SYS_flock:
 #endif
+		case SYS_kill:
 			snprintf(buf, sizeof(buf), "(%d, %d)\n", arg1, arg2);
 			break;
 #ifdef SYS_ioctl
@@ -191,6 +195,10 @@ void analyze(int number, long arg1, long arg2)
 			snprintf(buf, sizeof(buf), "(%d, %lu)\n", arg1, arg2);
 			break;
 #endif
+		case SYS_lseek:
+			snprintf(buf, sizeof(buf), "(%d, %ld, %d)\n", arg1,
+					arg2, arg3);
+			break;
 		case SYS_lstat:
 		case SYS_stat:
 			s = (char const *)arg1;
