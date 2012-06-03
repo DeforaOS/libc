@@ -26,6 +26,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- complex.h $(DESTDIR)$(INCLUDEDIR)/complex.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 -- cpio.h $(DESTDIR)$(INCLUDEDIR)/cpio.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- ctype.h $(DESTDIR)$(INCLUDEDIR)/ctype.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- dirent.h $(DESTDIR)$(INCLUDEDIR)/dirent.h
@@ -64,6 +66,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- search.h $(DESTDIR)$(INCLUDEDIR)/search.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 -- semaphore.h $(DESTDIR)$(INCLUDEDIR)/semaphore.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- setjmp.h $(DESTDIR)$(INCLUDEDIR)/setjmp.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- signal.h $(DESTDIR)$(INCLUDEDIR)/signal.h
@@ -88,6 +92,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- syslog.h $(DESTDIR)$(INCLUDEDIR)/syslog.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 -- tar.h $(DESTDIR)$(INCLUDEDIR)/tar.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- termios.h $(DESTDIR)$(INCLUDEDIR)/termios.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- time.h $(DESTDIR)$(INCLUDEDIR)/time.h
@@ -108,6 +114,7 @@ uninstall:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/assert.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/complex.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/cpio.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/ctype.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/dirent.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/errno.h
@@ -127,6 +134,7 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/pwd.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/sched.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/search.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/semaphore.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/setjmp.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/signal.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/stdarg.h
@@ -139,6 +147,7 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/strings.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/stropts.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/syslog.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/tar.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/termios.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/time.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/ucontext.h
