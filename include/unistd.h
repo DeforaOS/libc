@@ -115,6 +115,7 @@ void * sbrk(intptr_t increment);
 int setgid(gid_t gid);
 int sethostname(char const * name, size_t size);
 int setpgid(pid_t pid, pid_t pgid);
+int setpgrp(void);
 int setregid(gid_t rgid, gid_t egid);
 int setreuid(uid_t ruid, uid_t euid);
 pid_t setsid(void);

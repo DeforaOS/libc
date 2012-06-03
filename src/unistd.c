@@ -832,6 +832,18 @@ int setpgid(pid_t pid, pid_t pgid)
 #endif
 
 
+/* setpgrp */
+#ifndef SYS_setpgrp
+# warning Unsupported platform: setpgrp() is missing
+pid_t setpgrp(void)
+{
+	/* XXX not allowed to fail */
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* setregid */
 #ifndef SYS_setregid
 # warning Unsupported platform: setregid() is missing
