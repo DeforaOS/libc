@@ -175,6 +175,9 @@ void analyze(int number, long arg1, long arg2)
 			/* FIXME analyze the arguments and environment */
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
+		case SYS_fcntl:
+			snprintf(buf, sizeof(buf), "(%d, %d)\n", arg1, arg2);
+			break;
 #ifdef SYS_ioctl
 		case SYS_ioctl:
 			snprintf(buf, sizeof(buf), "(%d, %lu)\n", arg1, arg2);
