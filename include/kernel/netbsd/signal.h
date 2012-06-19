@@ -81,6 +81,7 @@ typedef struct _stack_t
 # define SIGALRM	14
 # define SIGTERM	15
 # define SIGSTOP	17
+# define SIGTSTP	18
 # define SIGCONT	19
 # define SIGCHLD	20
 # define SIGUSR1	30

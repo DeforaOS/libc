@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,6 +66,7 @@ struct sigaction
 # define SIGCHLD	17
 # define SIGCONT	18
 # define SIGSTOP	19
+# define SIGTSTP	20
 
 # define SIG_DFL	((void (*)(int)) 0)
 # define SIG_ERR	((void (*)(int)) -1)
