@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2005-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,17 +150,6 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				q = _strftime_print(q, &maxsize, &format[pos],
 						1);
 				break;
-			case 'n':
-				q = _strftime_print(q, &maxsize, "\n", 1);
-				break;
-			case 'p':
-				q = _strftime_print(q, &maxsize, (t->tm_hour
-							< 12) ? "a.m." : "p.m.",
-						4);
-				break;
-			case 't':
-				q = _strftime_print(q, &maxsize, "\t", 1);
-				break;
 			/* FIXME implement correctly */
 			case 'b':
 				break;
@@ -169,6 +158,7 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 						t->tm_year / 100);
 				break;
 			case 'D':
+			case 'x':
 				q = _strftime_print_int(q, &maxsize, t->tm_mon);
 				q = _strftime_print(q, &maxsize, "/", 1);
 				q = _strftime_print_int(q, &maxsize,
@@ -198,11 +188,32 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 			case 'M':
 				q = _strftime_print_int(q, &maxsize, t->tm_min);
 				break;
+			case 'm':
+				q = _strftime_print_int(q, &maxsize, t->tm_mon);
+				break;
+			case 'n':
+				q = _strftime_print(q, &maxsize, "\n", 1);
+				break;
+			case 'p':
+				q = _strftime_print(q, &maxsize, (t->tm_hour
+							< 12) ? "a.m." : "p.m.",
+						4);
+				break;
 			case 'S':
 				q = _strftime_print_int(q, &maxsize, t->tm_sec);
 				break;
-			case 'm':
-				q = _strftime_print_int(q, &maxsize, t->tm_mon);
+			case 'T':
+			case 'X':
+				q = _strftime_print_int(q, &maxsize,
+						t->tm_hour);
+				q = _strftime_print(q, &maxsize, ":", 1);
+				q = _strftime_print_int(q, &maxsize,
+						t->tm_min);
+				q = _strftime_print(q, &maxsize, ":", 1);
+				q = _strftime_print_int(q, &maxsize, t->tm_sec);
+				break;
+			case 't':
+				q = _strftime_print(q, &maxsize, "\t", 1);
 				break;
 			case 'u':
 				q = _strftime_print_int(q, &maxsize,
