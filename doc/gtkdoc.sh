@@ -44,7 +44,7 @@ TOUCH="touch"
 #debug
 _debug()
 {
-	echo $@
+	echo $@ 1>&2
 	$@
 }
 
@@ -96,8 +96,7 @@ while [ $# -gt 0 ]; do
 	if [ "$uninstall" -eq 1 ]; then
 		for i in gtkdoc/html/*.*; do
 			file="${i##*/}"
-			echo $DEBUG $RM "$instdir/$MODULE/$file" \
-								|| exit 2
+			$DEBUG $RM "$instdir/$MODULE/$file"	|| exit 2
 		done
 		continue
 	fi
