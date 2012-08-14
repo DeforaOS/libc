@@ -366,6 +366,23 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/dl/dlfcn.c \
 		$(PACKAGE)-$(VERSION)/src/dl/Makefile \
 		$(PACKAGE)-$(VERSION)/src/dl/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/darwin/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/darwin/common.h \
+		$(PACKAGE)-$(VERSION)/src/kernel/darwin/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/darwin/amd64/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/darwin/amd64/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/darwin/amd64/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/common.h \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/project.conf \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/start.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/project.conf \
@@ -385,17 +402,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/project.conf \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/Makefile \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/common.h \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/project.conf \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/Makefile \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/start.S \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/syscalls.S \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/project.conf \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/Makefile \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/start.S \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/syscalls.S \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.S \

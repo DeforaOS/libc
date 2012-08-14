@@ -38,9 +38,18 @@
 #  include "kernel/linux/arm/syscalls.S"
 # elif defined(__i386__)
 #  include "kernel/linux/i386/syscalls.S"
-# else /* !__arm__ && !__i386__ */
+# else /* !__amd64__ && !__arm__ && !__i386__ */
 #  warning Unsupported Linux architecture
 # endif
+
+/* MacOS X */
+#elif defined(__APPLE__)
+# include "kernel/darwin/common.h"
+# if defined(__amd64__)
+#  include "kernel/darwin/amd64/syscalls.S"
+# else /* !__amd64__ */
+#  warning Unsupported Darwin architecture
+#endif
 
 /* NetBSD */
 #elif defined(__NetBSD__)
