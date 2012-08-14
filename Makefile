@@ -112,6 +112,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/dl/elf.h \
 		$(PACKAGE)-$(VERSION)/include/dl/Makefile \
 		$(PACKAGE)-$(VERSION)/include/dl/project.conf \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/errno.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/fcntl.h \
