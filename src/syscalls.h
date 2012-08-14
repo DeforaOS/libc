@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,26 @@
 #ifndef SYSCALLS_H
 # define SYSCALLS_H
 
-# if defined(__linux__)
-#  include "kernel/linux/common.h"
-# elif defined(__FreeBSD__)
+/* FreeBSD */
+# if defined(__FreeBSD__)
 #  include "kernel/freebsd/common.h"
+/* Linux */
+# elif defined(__linux__)
+#  include "kernel/linux/common.h"
+/* MacOS X */
+# elif defined(__APPLE__)
+#  include "kernel/darwin/common.h"
+/* NetBSD */
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/common.h"
 #  include "kernel/netbsd/sys/sysctl.h"
+/* OpenBSD */
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/common.h"
+/* Solaris */
 # elif defined(__sun__)
 #  include "kernel/solaris/common.h"
+/* Whitix */
 # elif defined(__Whitix__)
 #  include "kernel/whitix/common.h"
 # else
