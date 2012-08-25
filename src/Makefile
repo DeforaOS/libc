@@ -147,7 +147,7 @@ sys/utsname.o: sys/utsname.c
 sys/wait.o: sys/wait.c syscalls.h
 	$(CC) $(libc_CFLAGS) -o sys/wait.o -c sys/wait.c
 
-syscalls.o: syscalls.S kernel/freebsd/common.h kernel/freebsd/amd64/syscalls.S kernel/freebsd/i386/syscalls.S kernel/linux/common.h kernel/linux/amd64/syscalls.S kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/netbsd/common.h kernel/netbsd/common.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S kernel/netbsd/sparc64/syscalls.S kernel/openbsd/common.h kernel/openbsd/arm/syscalls.S kernel/openbsd/i386/syscalls.S
+syscalls.o: syscalls.S kernel/darwin/amd64/syscalls.S kernel/freebsd/common.h kernel/freebsd/amd64/syscalls.S kernel/freebsd/i386/syscalls.S kernel/linux/common.h kernel/linux/amd64/syscalls.S kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/netbsd/common.h kernel/netbsd/common.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S kernel/netbsd/sparc64/syscalls.S kernel/openbsd/common.h kernel/openbsd/arm/syscalls.S kernel/openbsd/i386/syscalls.S
 	$(AS) $(libc_ASFLAGS) -o syscalls.o syscalls.S
 
 syslog.o: syslog.c
