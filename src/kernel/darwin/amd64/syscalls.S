@@ -33,34 +33,16 @@ _syscall_return:
 
 /* macros */
 #ifndef SYSCALL
-# ifdef PIC
-#  define SYSCALL(name) \
-.global name; \
-.type name,@function; \
-name:; \
-	mov	$SYS_ ## name, %rax; \
-	add	$0x2000000, %rax; \
-	jmp	_syscall@PLT
-# else
-#  define SYSCALL(name) \
-.global name; \
-.type name,@function; \
+# define SYSCALL(name) \
 name:; \
 	mov	$SYS_ ## name, %rax; \
 	add	$0x2000000, %rax; \
 	jmp	_syscall
-# endif
 #endif
 
 
 /* functions */
 /* _exit */
-.global _exit
-.type _exit,@function
 _exit:
 	mov	$SYS_exit, %rax
-#ifdef PIC
-	jmp	_syscall@PLT
-#else
 	jmp	_syscall
-#endif
