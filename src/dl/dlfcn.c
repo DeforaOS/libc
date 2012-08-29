@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 
 
+#define DEBUG
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -135,6 +136,8 @@ static int _file_mmap(DL * dl, Elf_Phdr * phdr);
 static int _file_prot(unsigned int flags);
 static int _file_symbols(DL * dl);
 static int _file_relocations(DL * dl);
+static void _file_relocations_arch(DL * dl, Elf_Rela * rela, char * strtab,
+		size_t strtab_cnt, Elf_Sym * sym);
 
 static void * _dl_new(char const * pathname)
 {
@@ -303,8 +306,8 @@ static int _file_relocations(DL * dl)
 	size_t i;
 	Elf_Shdr * shdr;
 	size_t j;
-	Elf_Rela * rela = NULL;
-	Elf_Rel * rel;
+	Elf_Rel * rel = NULL;
+	Elf_Rela rela;
 	Elf_Sym * symtab;
 	size_t symtab_cnt;
 	char * strtab;
@@ -317,12 +320,12 @@ static int _file_relocations(DL * dl)
 	for(i = 0; i < dl->ehdr.e_shnum; i++)
 	{
 		shdr = &dl->shdr[i];
-		if((shdr->sh_type != SHT_RELA
-					|| shdr->sh_entsize != sizeof(*rela))
-				&& (shdr->sh_type != SHT_REL
-					|| shdr->sh_entsize != sizeof(*rel)))
+		if((shdr->sh_type != SHT_REL
+					|| shdr->sh_entsize != sizeof(*rel))
+				&& (shdr->sh_type != SHT_RELA
+					|| shdr->sh_entsize != sizeof(rela)))
 			continue;
-		if((rela = _dl_load(dl, shdr->sh_offset, shdr->sh_size))
+		if((rel = _dl_load(dl, shdr->sh_offset, shdr->sh_size))
 				== NULL)
 			break;
 		if(_dl_symtab(dl, shdr->sh_link, SHT_DYNSYM, &symtab,
@@ -334,40 +337,67 @@ static int _file_relocations(DL * dl)
 			free(symtab);
 			break;
 		}
-		for(j = 0; j < shdr->sh_size; j+=shdr->sh_entsize)
+		for(j = 0; j < shdr->sh_size; j += shdr->sh_entsize)
 		{
-			rel = (Elf_Rel*)(((char*)rela) + j);
-			if(ELF_R_SYM(rel->r_info) >= symtab_cnt)
+			rela.r_addend = 0;
+			memcpy(&rela, (char *)rel + j, shdr->sh_entsize);
+			if(ELF_R_SYM(rela.r_info) >= symtab_cnt)
 				break; /* XXX */
-			sym = &symtab[ELF_R_SYM(rel->r_info)];
-#ifdef DEBUG
-			fprintf(stderr, "DEBUG: %s() Relocating \"%s\"\n",
-					__func__, _dl_strtab_string(strtab,
-						strtab_cnt, sym->st_name));
-#endif
-			switch(ELF_R_TYPE(rel->r_info))
-			{
-#if defined(__amd64__)
-				case R_X86_64_RELATIVE:
-				case R_X86_64_GLOB_DAT:
-					/* FIXME implement */
-					break;
-				case R_X86_64_JUMP_SLOT:
-					/* FIXME implement */
-					break;
-#elif defined(__i386__)
-				case R_386_32:
-				case R_386_PC32:
-					/* FIXME implement */
-					break;
-#endif
-			}
+			sym = &symtab[ELF_R_SYM(rela.r_info)];
+			_file_relocations_arch(dl, &rela, strtab, strtab_cnt,
+					sym);
 		}
 		free(strtab);
 		free(symtab);
 	}
-	free(rela);
+	free(rel);
 	return 0;
+}
+
+static void _file_relocations_arch(DL * dl, Elf_Rela * rela, char * strtab,
+		size_t strtab_cnt, Elf_Sym * sym)
+{
+	Elf_Addr * addr;
+
+#if defined(__amd64__)
+	switch(ELF_R_TYPE(rela->r_info))
+	{
+		case R_X86_64_RELATIVE:
+		case R_X86_64_GLOB_DAT:
+			/* FIXME implement */
+			break;
+		case R_X86_64_JUMP_SLOT:
+#ifdef DEBUG
+			fprintf(stderr, "DEBUG: %s() Relocating \"%s\""
+					" (0x%lx 0x%lx 0x%lx)\n",
+					__func__, _dl_strtab_string(strtab,
+						strtab_cnt, sym->st_name),
+					ELF_R_SYM(rela->r_info),
+					rela->r_offset, rela->r_addend);
+			fprintf(stderr, "DEBUG: name 0x%lx value 0x%lx\n",
+					sym->st_name, sym->st_value);
+			fprintf(stderr, "DEBUG: %s() base=0x%lx, addr=0x%lx"
+					", offset=0x%lx\n", __func__,
+					dl->data_base, dl->data_addr,
+					rela->r_offset);
+#endif
+			addr = dl->data_addr + rela->r_offset;
+#ifdef DEBUG
+			fprintf(stderr, "*0x%lx = 0x%lx + 0x%lx\n", addr,
+					dl->data_base, rela->r_addend);
+#endif
+			*addr = dl->text_base + rela->r_addend;
+			break;
+	}
+#elif defined(__i386__)
+	switch(ELF_R_TYPE(rela->r_info))
+	{
+		case R_386_32:
+		case R_386_PC32:
+			/* FIXME implement */
+			break;
+	}
+#endif
 }
 
 
