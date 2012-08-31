@@ -20,6 +20,14 @@
 extern char ** environ;
 
 
+/* usage */
+static int _usage(void)
+{
+	fputs("Usage: start arg1 arg2\n", stderr);
+	return 1;
+}
+
+
 /* main */
 int main(int argc, char * argv[], char * envp[])
 {
@@ -27,6 +35,8 @@ int main(int argc, char * argv[], char * envp[])
 	int i;
 	char const * sep;
 
+	if(argc != 3)
+		return _usage();
 	printf("%s: %s\n", argv[0], "Testing arguments:");
 	if(argv == NULL)
 		ret |= 1;
