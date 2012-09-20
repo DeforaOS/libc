@@ -1,4 +1,4 @@
-TARGETS	= includes setjmp signal start stdint tests
+TARGETS	= includes setjmp signal start stdint tests.txt
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -52,8 +52,8 @@ stdint_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 stdint: $(stdint_OBJS)
 	$(CC) -o stdint $(stdint_OBJS) $(stdint_LDFLAGS)
 
-tests: setjmp signal start stdint
-	./tests.sh -P "$(PREFIX)" -- "tests"
+tests.txt: includes setjmp signal start stdint
+	./tests.sh -P "$(PREFIX)" -- "tests.txt"
 
 includes.o: includes.c ../src/libc.so
 	$(CC) $(includes_CFLAGS) -c includes.c
@@ -71,7 +71,7 @@ stdint.o: stdint.c
 	$(CC) $(stdint_CFLAGS) -c stdint.c
 
 clean:
-	$(RM) -- $(includes_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(start_OBJS) $(stdint_OBJS) $(tests_OBJS)
+	$(RM) -- $(includes_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(start_OBJS) $(stdint_OBJS) $(tests.txt_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)

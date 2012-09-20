@@ -15,13 +15,42 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+#functions
+#usage
+usage()
+{
+	echo "Usage: tests.sh" 1>&2
+	return 1
+}
+
+
+#main
+while getopts "P:" "name"; do
+	case "$name" in
+		P)
+			#XXX ignored
+			;;
+		?)
+			_usage
+			exit $?
+			;;
+	esac
+done
+shift $((OPTIND - 1))
+if [ $# -ne 1 ]; then
+	_usage
+	exit $?
+fi
+target="$1"
+
+> "$target"
 FAILED=
-./includes		|| FAILED="$FAILED includes(error $?)"
-./setjmp		|| FAILED="$FAILED setjmp(error $?)"
-./signal		|| FAILED="$FAILED signal(error $?)"
-./start argv1 argv2	|| FAILED="$FAILED start(error $?)"
-./stdint		|| FAILED="$FAILED stdint(error $?)"
-[ -z "$FAILED" ]	&& exit 0
+./includes		>> "$target"	|| FAILED="$FAILED includes(error $?)"
+./setjmp		>> "$target"	|| FAILED="$FAILED setjmp(error $?)"
+./signal		>> "$target"	|| FAILED="$FAILED signal(error $?)"
+./start argv1 argv2	>> "$target"	|| FAILED="$FAILED start(error $?)"
+./stdint		>> "$target"	|| FAILED="$FAILED stdint(error $?)"
+[ -z "$FAILED" ]			&& exit 0
 echo "Failed tests:$FAILED" 1>&2
 #XXX ignore errors for now
 #exit 2
