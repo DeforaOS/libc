@@ -17,7 +17,7 @@
 
 #functions
 #usage
-usage()
+_usage()
 {
 	echo "Usage: tests.sh" 1>&2
 	return 1
