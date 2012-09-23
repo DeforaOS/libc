@@ -37,6 +37,10 @@ typedef unsigned long size_t;
 #  define wchar_t wchar_t
 typedef char wchar_t;
 # endif
+# ifndef wint_t
+#  define wint_t wint_t
+typedef int wint_t;
+# endif
 
 
 /* constants */
