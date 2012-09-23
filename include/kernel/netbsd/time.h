@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,9 +24,20 @@
 #  define clock_t clock_t
 typedef unsigned int clock_t;
 # endif
+# ifndef clockid_t
+#  define clockid_t clockid_t
+typedef int clockid_t;
+# endif
 # ifndef time_t
 #  define time_t time_t
 typedef int time_t;
 # endif
+
+
+/* constants */
+#define CLOCK_REALTIME	0
+#define CLOCK_MONOTONIC	3
+
+#define TIMER_ABSTIME	1
 
 #endif /* !LIBC_KERNEL_NETBSD_TIME_H */
