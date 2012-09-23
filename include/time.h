@@ -60,6 +60,7 @@ struct itimespec
 
 /* functions */
 clock_t clock(void);
+int clock_getres(clockid_t clock_id, struct timespec * tp);
 int clock_gettime(clockid_t clock_id, struct timespec * tp);
 int clock_settime(clockid_t clock_id, struct timespec * tp);
 struct tm * gmtime(time_t const * t);

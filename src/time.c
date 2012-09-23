@@ -45,6 +45,16 @@ clock_t clock(void)
 }
 
 
+/* clock_getres */
+#ifndef SYS_clock_getres
+int clock_getres(clockid_t clock_id, struct timespec * tp)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* clock_gettime */
 #ifndef SYS_clock_gettime
 int clock_gettime(clockid_t clock_id, struct timespec * tp)

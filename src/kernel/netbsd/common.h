@@ -106,6 +106,7 @@
 # define SYS_getitimer		426
 # define SYS_clock_gettime	427
 # define SYS_clock_settime	428
+# define SYS_clock_getres	429
 # define SYS_nanosleep		430
 # define SYS_stat		439
 # define SYS_fstat		440
