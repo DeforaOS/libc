@@ -50,7 +50,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/poll.h \
 		$(PACKAGE)-$(VERSION)/include/pwd.h \
 		$(PACKAGE)-$(VERSION)/include/regex.h \
-		$(PACKAGE)-$(VERSION)/include/sched.h \
 		$(PACKAGE)-$(VERSION)/include/search.h \
 		$(PACKAGE)-$(VERSION)/include/semaphore.h \
 		$(PACKAGE)-$(VERSION)/include/setjmp.h \
@@ -247,6 +246,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/pthread/pthread.h \
 		$(PACKAGE)-$(VERSION)/include/pthread/Makefile \
 		$(PACKAGE)-$(VERSION)/include/pthread/project.conf \
+		$(PACKAGE)-$(VERSION)/include/rt/sched.h \
+		$(PACKAGE)-$(VERSION)/include/rt/Makefile \
+		$(PACKAGE)-$(VERSION)/include/rt/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/netdb.h \
 		$(PACKAGE)-$(VERSION)/include/socket/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/project.conf \
@@ -463,6 +465,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/pthread/pthread.c \
 		$(PACKAGE)-$(VERSION)/src/pthread/Makefile \
 		$(PACKAGE)-$(VERSION)/src/pthread/project.conf \
+		$(PACKAGE)-$(VERSION)/src/rt/sched.c \
+		$(PACKAGE)-$(VERSION)/src/rt/Makefile \
+		$(PACKAGE)-$(VERSION)/src/rt/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/arpa/inet.c \
 		$(PACKAGE)-$(VERSION)/src/socket/netdb.c \
 		$(PACKAGE)-$(VERSION)/src/socket/sys/socket.c \

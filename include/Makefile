@@ -1,4 +1,4 @@
-SUBDIRS	= compat dl kernel/darwin kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris math net pthread socket sys
+SUBDIRS	= compat dl kernel/darwin kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris math net pthread rt socket sys
 PREFIX	= /usr/local
 DESTDIR	=
 RM	?= rm -f
@@ -63,8 +63,6 @@ install:
 	$(INSTALL) -m 0644 -- pwd.h $(DESTDIR)$(INCLUDEDIR)/pwd.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- regex.h $(DESTDIR)$(INCLUDEDIR)/regex.h
-	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 -- sched.h $(DESTDIR)$(INCLUDEDIR)/sched.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- search.h $(DESTDIR)$(INCLUDEDIR)/search.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
@@ -135,7 +133,6 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/pwd.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/regex.h
-	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/sched.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/search.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/semaphore.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/setjmp.h

@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,11 @@
 
 
 /* types */
+# ifndef pid_t
+#  define pid_t pid_t
+typedef signed int pid_t;
+# endif
+
 struct sched_param
 {
 	int sched_priority;
@@ -29,13 +34,13 @@ struct sched_param
 
 
 /* functions */
-int sched_get_priority_max(int);
-int sched_get_priority_min(int);
-int sched_getparam(pid_t, struct sched_param *);
-int sched_getscheduler(pid_t);
-int sched_rr_get_interval(pid_t, struct timespec *);
-int sched_setparam(pid_t, const struct sched_param *);
-int sched_setscheduler(pid_t, int, const struct sched_param *);
+int sched_get_priority_max(int policy);
+int sched_get_priority_min(int policy);
+int sched_getparam(pid_t pid, struct sched_param * param);
+int sched_getscheduler(pid_t pid);
+int sched_rr_get_interval(pid_t pid, struct timespec * interval);
+int sched_setparam(pid_t pid, const struct sched_param * param);
+int sched_setscheduler(pid_t pid, int policy, const struct sched_param * param);
 int sched_yield(void);
 
 #endif /* !LIBC_SCHED_H */
