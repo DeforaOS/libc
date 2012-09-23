@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,10 @@
 # ifndef clock_t
 #  define clock_t clock_t
 typedef unsigned long clock_t;
+# endif
+# ifndef clockid_t
+#  define clockid_t clockid_t
+typedef int clockid_t;
 # endif
 # ifndef time_t
 #  define time_t time_t
