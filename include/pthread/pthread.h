@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,46 @@
 
 
 /* types */
-/* FIXME include <sys/types.h> here? */
+typedef struct
+{
+	/* FIXME implement */
+} pthread_attr_t;
+typedef struct
+{
+	/* FIXME implement */
+} pthread_barrier_t;
+typedef struct
+{
+	/* FIXME implement */
+} pthread_barrierattr_t;
+typedef struct
+{
+	/* FIXME implement */
+} pthread_cond_t;
+typedef struct
+{
+	/* FIXME implement */
+} pthread_condattr_t;
+typedef unsigned int pthread_key_t;
+typedef struct
+{
+	/* FIXME implement */
+} pthread_mutex_t;
+typedef struct
+{
+	/* FIXME implement */
+} pthread_mutexattr_t;
+typedef int pthread_once_t;
+typedef struct
+{
+	/* FIXME implement */
+} pthread_rwlock_t;
+typedef struct
+{
+	/* FIXME implement */
+} pthread_rwlockattr_t;
+typedef volatile int pthread_spinlock_t;
+typedef unsigned long pthread_t;
 
 
 /* constants */
