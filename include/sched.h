@@ -22,7 +22,10 @@
 
 
 /* types */
-struct sched_param;
+struct sched_param
+{
+	int sched_priority;
+};
 
 
 /* functions */
