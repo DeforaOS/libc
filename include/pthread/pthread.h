@@ -22,46 +22,85 @@
 
 
 /* types */
+# ifndef pthread_attr_t
+#  define pthread_attr_t pthread_attr_t
 typedef struct
 {
 	/* FIXME implement */
 } pthread_attr_t;
+# endif
+# ifndef pthread_barrier_t
+#  define pthread_barrier_t pthread_barrier_t
 typedef struct
 {
 	/* FIXME implement */
 } pthread_barrier_t;
+# endif
+# ifndef pthread_barrierattr_t
+#  define pthread_barrierattr_t pthread_barrierattr_t
 typedef struct
 {
 	/* FIXME implement */
 } pthread_barrierattr_t;
+# endif
+# ifndef pthread_cond_t
+#  define pthread_cond_t pthread_cond_t
 typedef struct
 {
 	/* FIXME implement */
 } pthread_cond_t;
+# endif
+# ifndef pthread_condattr_t
+#  define pthread_condattr_t pthread_condattr_t
 typedef struct
 {
 	/* FIXME implement */
 } pthread_condattr_t;
+# endif
+# ifndef pthread_key_t
+#  define pthread_key_t pthread_key_t
 typedef unsigned int pthread_key_t;
+# endif
+# ifndef pthread_mutex_t
+#  define pthread_mutex_t pthread_mutex_t
 typedef struct
 {
 	/* FIXME implement */
 } pthread_mutex_t;
+# endif
+# ifndef pthread_mutexattr_t
+#  define pthread_mutexattr_t pthread_mutexattr_t
 typedef struct
 {
 	/* FIXME implement */
 } pthread_mutexattr_t;
+# endif
+# ifndef pthread_once_t
+#  define pthread_once_t pthread_once_t
 typedef int pthread_once_t;
+# endif
+# ifndef pthread_rwlock_t
+#  define pthread_rwlock_t pthread_rwlock_t
 typedef struct
 {
 	/* FIXME implement */
 } pthread_rwlock_t;
+# endif
+# ifndef pthread_rwlockattr_t
+#  define pthread_rwlockattr_t pthread_rwlockattr_t
 typedef struct
 {
 	/* FIXME implement */
 } pthread_rwlockattr_t;
+# endif
+# ifndef pthread_spinlock_t
+#  define pthread_spinlock_t pthread_spinlock_t
 typedef volatile int pthread_spinlock_t;
+# endif
+# ifndef pthread_t
+#  define pthread_t pthread_t
 typedef unsigned long pthread_t;
+# endif
 
 
 /* constants */
