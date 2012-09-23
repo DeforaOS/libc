@@ -45,6 +45,24 @@ clock_t clock(void)
 }
 
 
+/* clock_gettime */
+int clock_gettime(clockid_t clock_id, struct timespec * tp)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
+}
+
+
+/* clock_settime */
+int clock_settime(clockid_t clock_id, struct timespec * tp)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
+}
+
+
 /* gmtime */
 struct tm * gmtime(time_t const * t)
 {

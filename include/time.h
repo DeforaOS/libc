@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2005-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,6 +60,8 @@ struct itimespec
 
 /* functions */
 clock_t clock(void);
+int clock_gettime(clockid_t clock_id, struct timespec * tp);
+int clock_settime(clockid_t clock_id, struct timespec * tp);
 struct tm * gmtime(time_t const * t);
 struct tm * gmtime_r(time_t const * t, struct tm * ret);
 struct tm * localtime(time_t const * t);
