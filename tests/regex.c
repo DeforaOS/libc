@@ -22,7 +22,7 @@
 /* regex */
 static void _regex(char const * progname)
 {
-	int error[] =
+	int errors[] =
 	{
 		REG_NOMATCH, REG_BADPAT, REG_ECOLLATE, REG_ECTYPE, REG_EESCAPE,
 		REG_ESUBREG, REG_EBRACK, REG_EPAREN, REG_EBRACE, REG_BADBR,
@@ -32,11 +32,11 @@ static void _regex(char const * progname)
 	size_t size;
 	size_t i;
 
-	for(i = 0; i < sizeof(error) / sizeof(*error); i++)
+	for(i = 0; i < sizeof(errors) / sizeof(*errors); i++)
 	{
-		size = regerror(error[i], NULL, buf, sizeof(buf));
+		size = regerror(errors[i], NULL, buf, sizeof(buf));
 		printf("%s: Testing %s: % 2u \"%s\" (%lu)\n", progname,
-				"regerror()", error[i], buf, size);
+				"regerror()", errors[i], buf, size);
 	}
 }
 
