@@ -303,6 +303,12 @@ SYSCALL(wait4)
 #endif /* !(SYS_waitpid && SYS_wait4) */
 
 /* time.h */
+#ifdef SYS_clock_gettime
+SYSCALL(clock_gettime)
+#endif
+#ifdef SYS_clock_settime
+SYSCALL(clock_settime)
+#endif
 #ifdef SYS_nanosleep
 SYSCALL(nanosleep)
 #endif
