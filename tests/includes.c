@@ -35,6 +35,7 @@
 #include <nl_types.h>
 #include <poll.h>
 #include <pwd.h>
+#include <regex.h>
 #include <sched.h>
 #include <search.h>
 #include <semaphore.h>

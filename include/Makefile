@@ -62,6 +62,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- pwd.h $(DESTDIR)$(INCLUDEDIR)/pwd.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL) -m 0644 -- regex.h $(DESTDIR)$(INCLUDEDIR)/regex.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- sched.h $(DESTDIR)$(INCLUDEDIR)/sched.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
 	$(INSTALL) -m 0644 -- search.h $(DESTDIR)$(INCLUDEDIR)/search.h
@@ -132,6 +134,7 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/nl_types.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/poll.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/pwd.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/regex.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/sched.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/search.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/semaphore.h

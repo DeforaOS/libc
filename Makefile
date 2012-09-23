@@ -49,6 +49,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/nl_types.h \
 		$(PACKAGE)-$(VERSION)/include/poll.h \
 		$(PACKAGE)-$(VERSION)/include/pwd.h \
+		$(PACKAGE)-$(VERSION)/include/regex.h \
 		$(PACKAGE)-$(VERSION)/include/sched.h \
 		$(PACKAGE)-$(VERSION)/include/search.h \
 		$(PACKAGE)-$(VERSION)/include/semaphore.h \
@@ -333,6 +334,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/net/if.c \
 		$(PACKAGE)-$(VERSION)/src/poll.c \
 		$(PACKAGE)-$(VERSION)/src/pwd.c \
+		$(PACKAGE)-$(VERSION)/src/regex.c \
 		$(PACKAGE)-$(VERSION)/src/search.c \
 		$(PACKAGE)-$(VERSION)/src/setjmp.c \
 		$(PACKAGE)-$(VERSION)/src/signal.c \
