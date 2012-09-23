@@ -16,9 +16,32 @@
 
 
 #include "stdio.h"
-#include "string.h"
-#include "errno.h"
 #include "regex.h"
+
+
+/* variables */
+static struct
+{
+	int error;
+	char const * message;
+} _messages[] =
+{
+	{ REG_NOMATCH,	"No match"					},
+	{ REG_BADPAT,	"Invalid regular expression"			},
+	{ REG_ECOLLATE,	"Invalid collating element referenced"		},
+	{ REG_ECTYPE,	"Invalid character class type referenced"	},
+	{ REG_EESCAPE,	"Trailing '\\' in pattern"			},
+	{ REG_ESUBREG,	"Number in \\digit invalid or in error"		},
+	{ REG_EBRACK,	"\"[]\" imbalance"				},
+	{ REG_EPAREN,	"\"\\(\\)\" or \"()\" imbalance"		},
+	{ REG_EBRACE,	"\"\\{\\}\" imbalance"				},
+	{ REG_BADBR,	"Content of \"\\{\\}\" invalid"			},
+	{ REG_ERANGE,	"Invalid endpoint in range expression"		},
+	{ REG_ESPACE,	"Out of memory"					},
+	{ REG_BADRPT,	"'?', '*', or '+' not preceded by valid regular"
+		" expression"						},
+	{ REG_ENOSYS,	"Not implemented"				}
+};
 
 
 /* functions */
@@ -33,11 +56,19 @@ int regcomp(regex_t * regex, const char * pattern, int flags)
 /* regerror */
 size_t regerror(int error, const regex_t * regex, char * buf, size_t buf_cnt)
 {
+	size_t i;
+	char const * message = "Unknown error";
 	int res;
 
-	if((res = snprintf(buf, buf_cnt, "%s", strerror(ENOSYS))) <= 0)
+	for(i = 0; i < sizeof(_messages) / sizeof(*_messages); i++)
+		if(_messages[i].error == error)
+		{
+			message = _messages[i].message;
+			break;
+		}
+	if((res = snprintf(buf, buf_cnt, "%s", message)) <= 0)
 		return 0;
-	return res;
+	return res + 1;
 }
 
 
