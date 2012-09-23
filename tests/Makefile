@@ -55,7 +55,7 @@ stdint: $(stdint_OBJS)
 tests.txt: includes setjmp signal start stdint
 	./tests.sh -P "$(PREFIX)" -- "tests.txt"
 
-includes.o: includes.c ../src/libc.so
+includes.o: includes.c ../src/libc.a
 	$(CC) $(includes_CFLAGS) -c includes.c
 
 setjmp.o: setjmp.c ../include/setjmp.h ../src/setjmp.c
