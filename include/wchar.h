@@ -45,7 +45,10 @@ typedef int wint_t;
 
 /* constants */
 # ifndef NULL
-#  define NULL ((void*)0)
+#  define NULL ((void *)0)
+# endif
+# ifndef WEOF
+#  define WEOF (-1)
 # endif
 
 #endif /* !LIBC_WCHAR_H */
