@@ -1,4 +1,4 @@
-TARGETS	= includes setjmp signal start stdint tests.txt
+TARGETS	= includes regex setjmp signal start stdint tests.txt
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -23,6 +23,13 @@ includes_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
 includes: $(includes_OBJS)
 	$(CC) -o includes $(includes_OBJS) $(includes_LDFLAGS)
+
+regex_OBJS = regex.o
+regex_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+regex_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
+
+regex: $(regex_OBJS)
+	$(CC) -o regex $(regex_OBJS) $(regex_LDFLAGS)
 
 setjmp_OBJS = setjmp.o
 setjmp_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -52,26 +59,29 @@ stdint_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 stdint: $(stdint_OBJS)
 	$(CC) -o stdint $(stdint_OBJS) $(stdint_LDFLAGS)
 
-tests.txt: includes setjmp signal start stdint
+tests.txt: includes regex setjmp signal start stdint
 	./tests.sh -P "$(PREFIX)" -- "tests.txt"
 
-includes.o: includes.c ../src/libc.a
+includes.o: includes.c ../src/libc.a ../src/start.o
 	$(CC) $(includes_CFLAGS) -c includes.c
 
-setjmp.o: setjmp.c ../include/setjmp.h ../src/setjmp.c
+regex.o: regex.c ../src/libc.a ../src/start.o
+	$(CC) $(regex_CFLAGS) -c regex.c
+
+setjmp.o: setjmp.c ../src/libc.a ../src/start.o
 	$(CC) $(setjmp_CFLAGS) -c setjmp.c
 
-signal.o: signal.c ../include/signal.h ../src/signal.c
+signal.o: signal.c ../src/libc.a ../src/start.o
 	$(CC) $(signal_CFLAGS) -c signal.c
 
-start.o: start.c
+start.o: start.c ../src/libc.a ../src/start.o
 	$(CC) $(start_CFLAGS) -c start.c
 
-stdint.o: stdint.c
+stdint.o: stdint.c ../src/libc.a ../src/start.o
 	$(CC) $(stdint_CFLAGS) -c stdint.c
 
 clean:
-	$(RM) -- $(includes_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(start_OBJS) $(stdint_OBJS) $(tests.txt_OBJS)
+	$(RM) -- $(includes_OBJS) $(regex_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(start_OBJS) $(stdint_OBJS) $(tests.txt_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)
