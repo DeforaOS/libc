@@ -19,7 +19,20 @@
 # define LIBC_KERNEL_FREEBSD_SYS_SELECT_H
 
 
+/* constants */
+# define FD_SETSIZE	1024
+
+
 /* types */
+# ifndef fd_set
+#  define fd_set fd_set
+typedef struct _fd_set
+{
+	unsigned long fds_bits[((FD_SETSIZE) + (((sizeof(unsigned long) * 8))
+				- 1)) / ((sizeof(unsigned long) * 8))];
+} fd_set;
+# endif
+
 # ifndef suseconds_t
 #  define suseconds_t suseconds_t
 typedef long suseconds_t;
@@ -40,5 +53,19 @@ struct timeval
 	suseconds_t tv_usec;
 };
 # endif
+
+
+/* macros */
+# define FD_ZERO(fdset)							\
+	do								\
+	{								\
+		fd_set * p = fdset;					\
+		size_t n;						\
+									\
+		while(n < (sizeof(fdset->fds_bits)			\
+					/ sizeof(fdset->fds_bits[0])))	\
+			fdset->fds_bits[n++] = 0;			\
+	}								\
+	while(0)
 
 #endif /* !LIBC_KERNEL_FREEBSD_SYS_SELECT_H */
