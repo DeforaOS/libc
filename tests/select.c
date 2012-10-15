@@ -34,7 +34,8 @@ static int _select(char const * progname)
 	FD_ZERO(&efds);
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
-	select(0, &rfds, &wfds, &efds, &timeout);
+	if(select(0, &rfds, &wfds, &efds, &timeout) != 0)
+		ret = 2;
 	return ret;
 }
 
