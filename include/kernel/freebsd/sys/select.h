@@ -59,12 +59,12 @@ struct timeval
 # define FD_ZERO(fdset)							\
 	do								\
 	{								\
+		size_t n = 0;						\
 		fd_set * p = fdset;					\
-		size_t n;						\
 									\
-		while(n < (sizeof(fdset->fds_bits)			\
-					/ sizeof(fdset->fds_bits[0])))	\
-			fdset->fds_bits[n++] = 0;			\
+		while(n < (sizeof(p->fds_bits)				\
+					/ sizeof(p->fds_bits[0])))	\
+			p->fds_bits[n++] = 0;				\
 	}								\
 	while(0)
 
