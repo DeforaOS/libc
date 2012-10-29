@@ -1,4 +1,4 @@
-TARGETS	= includes regex select setjmp signal start stdint tests.txt
+TARGETS	= includes regex select setjmp signal start stdint tests.log
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -66,8 +66,8 @@ stdint_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 stdint: $(stdint_OBJS)
 	$(CC) -o stdint $(stdint_OBJS) $(stdint_LDFLAGS)
 
-tests.txt: includes regex setjmp signal start stdint
-	./tests.sh -P "$(PREFIX)" -- "tests.txt"
+tests.log: includes regex setjmp signal start stdint
+	./tests.sh -P "$(PREFIX)" -- "tests.log"
 
 includes.o: includes.c ../src/libc.a ../src/start.o
 	$(CC) $(includes_CFLAGS) -c includes.c
@@ -91,7 +91,7 @@ stdint.o: stdint.c ../src/libc.a ../src/start.o
 	$(CC) $(stdint_CFLAGS) -c stdint.c
 
 clean:
-	$(RM) -- $(includes_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(start_OBJS) $(stdint_OBJS) $(tests.txt_OBJS)
+	$(RM) -- $(includes_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(start_OBJS) $(stdint_OBJS) $(tests.log_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)
