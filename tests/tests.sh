@@ -51,6 +51,7 @@ FAILED=
 ./signal		>> "$target"	|| FAILED="$FAILED signal(error $?)"
 ./start argv1 argv2	>> "$target"	|| FAILED="$FAILED start(error $?)"
 ./stdint		>> "$target"	|| FAILED="$FAILED stdint(error $?)"
+./string		>> "$target"	|| FAILED="$FAILED string(error $?)"
 [ -z "$FAILED" ]			&& exit 0
 echo "Failed tests:$FAILED" 1>&2
 #XXX ignore errors for now

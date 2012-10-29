@@ -518,6 +518,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/tests/signal.c \
 		$(PACKAGE)-$(VERSION)/tests/start.c \
 		$(PACKAGE)-$(VERSION)/tests/stdint.c \
+		$(PACKAGE)-$(VERSION)/tests/string.c \
 		$(PACKAGE)-$(VERSION)/tests/Makefile \
 		$(PACKAGE)-$(VERSION)/tests/tests.sh \
 		$(PACKAGE)-$(VERSION)/tests/project.conf \
