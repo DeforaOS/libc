@@ -2,6 +2,7 @@ TARGETS	= includes regex select setjmp signal start stdint string tests.log
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
+SBINDIR	= $(PREFIX)/sbin
 CC	?= cc
 CPPFLAGSF= -nostdinc -isystem ../include -isystem ../include/rt
 CPPFLAGS?=
