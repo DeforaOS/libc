@@ -17,6 +17,7 @@
 
 #include "sys/types.h"
 #include "errno.h"
+#include "../syscalls.h"
 #include "sys/ptrace.h"
 
 

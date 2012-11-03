@@ -38,6 +38,7 @@
 # define SYS_setuid		23
 # define SYS_getuid		24
 # define SYS_geteuid		25
+# define SYS_ptrace		26
 # define SYS_access		33
 # define SYS_sync		36
 # define SYS_kill		37

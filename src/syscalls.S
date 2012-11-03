@@ -190,6 +190,11 @@ SYSCALL(mount)
 SYSCALL(unmount)
 #endif
 
+/* sys/ptrace.h */
+#ifdef SYS_ptrace
+SYSCALL(ptrace)
+#endif
+
 /* sys/reboot.h */
 #ifdef SYS_reboot
 SYSCALL(reboot)
