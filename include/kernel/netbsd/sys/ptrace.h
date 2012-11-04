@@ -15,13 +15,16 @@
 
 
 
-#ifndef LIBC_SYS_PTRACE_H
-# define LIBC_SYS_PTRACE_H
-
-# include "../compat/sys/ptrace.h"
+#ifndef LIBC_KERNEL_NETBSD_SYS_PTRACE_H
+# define LIBC_KERNEL_NETBSD_SYS_PTRACE_H
 
 
-/* functions */
-int ptrace(int request, pid_t pid, void * address, int data);
+/* constants */
+# define PT_TRACE_ME		0
+# define PT_ATTACH		8
+# define PT_DETACH		9
+# define PT_DUMPCORE		12
+# define PT_SYSCALL		14
+# define PT_SYSCALLEMU		15
 
-#endif /* !LIBC_SYS_PTRACE_H */
+#endif /* !LIBC_KERNEL_NETBSD_SYS_PTRACE_H */

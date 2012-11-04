@@ -21,6 +21,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
 	$(INSTALL) -m 0644 -- mount.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/mount.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
+	$(INSTALL) -m 0644 -- ptrace.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/ptrace.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
 	$(INSTALL) -m 0644 -- reboot.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/reboot.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
 	$(INSTALL) -m 0644 -- resource.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/resource.h
@@ -45,6 +47,7 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/ioctl.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/mman.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/mount.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/ptrace.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/reboot.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/resource.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/select.h

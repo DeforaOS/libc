@@ -21,6 +21,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
 	$(INSTALL) -m 0644 -- mount.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/mount.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
+	$(INSTALL) -m 0644 -- ptrace.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/ptrace.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
 	$(INSTALL) -m 0644 -- reboot.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/reboot.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
 	$(INSTALL) -m 0644 -- resource.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/resource.h
@@ -45,6 +47,7 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/ioctl.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/mman.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/mount.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/ptrace.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/reboot.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/resource.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/select.h

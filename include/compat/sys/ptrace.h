@@ -15,13 +15,14 @@
 
 
 
-#ifndef LIBC_SYS_PTRACE_H
-# define LIBC_SYS_PTRACE_H
-
-# include "../compat/sys/ptrace.h"
+#ifndef LIBC_COMPAT_SYS_PTRACE_H
+# define LIBC_COMPAT_SYS_PTRACE_H
 
 
-/* functions */
-int ptrace(int request, pid_t pid, void * address, int data);
+# if defined(__NetBSD__)
+#  include "kernel/netbsd/sys/ptrace.h"
+# else
+#  warning Unsupported platform
+# endif
 
-#endif /* !LIBC_SYS_PTRACE_H */
+#endif /* !LIBC_COMPAT_SYS_PTRACE_H */

@@ -96,6 +96,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/mount.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/ptrace.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/select.h \
@@ -190,6 +191,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/mount.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/ptrace.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/select.h \
