@@ -15,18 +15,14 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_PTRACE_H
-# define LIBC_COMPAT_SYS_PTRACE_H
+#ifndef LIBC_KERNEL_LINUX_SYS_PTRACE_H
+# define LIBC_KERNEL_LINUX_SYS_PTRACE_H
 
 
-# if defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/ptrace.h"
-# elif defined(__linux__)
-#  include "kernel/linux/sys/ptrace.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/ptrace.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+# define PT_TRACE_ME		0
+# define PT_ATTACH		16
+# define PT_DETACH		17
+# define PT_SYSCALL		24
 
-#endif /* !LIBC_COMPAT_SYS_PTRACE_H */
+#endif /* !LIBC_KERNEL_LINUX_SYS_PTRACE_H */

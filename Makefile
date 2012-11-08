@@ -160,6 +160,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/mount.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/ptrace.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/reboot.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/select.h \
