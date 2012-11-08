@@ -46,6 +46,7 @@ target="$1"
 > "$target"
 FAILED=
 ./includes		>> "$target"	|| FAILED="$FAILED includes(error $?)"
+./ptrace		>> "$target"	|| FAILED="$FAILED ptrace(error $?)"
 ./regex			>> "$target"	|| FAILED="$FAILED regex(error $?)"
 ./setjmp		>> "$target"	|| FAILED="$FAILED setjmp(error $?)"
 ./signal		>> "$target"	|| FAILED="$FAILED signal(error $?)"

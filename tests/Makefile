@@ -1,4 +1,4 @@
-TARGETS	= includes regex select setjmp signal start stdint string tests.log
+TARGETS	= includes ptrace regex select setjmp signal start stdint string tests.log
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -24,6 +24,13 @@ includes_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
 includes: $(includes_OBJS)
 	$(CC) -o includes $(includes_OBJS) $(includes_LDFLAGS)
+
+ptrace_OBJS = ptrace.o
+ptrace_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+ptrace_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
+
+ptrace: $(ptrace_OBJS)
+	$(CC) -o ptrace $(ptrace_OBJS) $(ptrace_LDFLAGS)
 
 regex_OBJS = regex.o
 regex_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -80,6 +87,9 @@ tests.log: includes regex setjmp signal start stdint string tests.sh
 includes.o: includes.c ../src/libc.a ../src/start.o
 	$(CC) $(includes_CFLAGS) -c includes.c
 
+ptrace.o: ptrace.c ../src/libc.a ../src/start.o
+	$(CC) $(ptrace_CFLAGS) -c ptrace.c
+
 regex.o: regex.c ../src/libc.a ../src/start.o
 	$(CC) $(regex_CFLAGS) -c regex.c
 
@@ -102,7 +112,7 @@ string.o: string.c ../src/libc.a ../src/start.o
 	$(CC) $(string_CFLAGS) -c string.c
 
 clean:
-	$(RM) -- $(includes_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(start_OBJS) $(stdint_OBJS) $(string_OBJS) $(tests.log_OBJS)
+	$(RM) -- $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(start_OBJS) $(stdint_OBJS) $(string_OBJS) $(tests.log_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)
