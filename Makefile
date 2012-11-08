@@ -129,6 +129,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/ptrace.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/shm.h \

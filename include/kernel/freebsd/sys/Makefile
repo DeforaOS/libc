@@ -17,6 +17,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys
 	$(INSTALL) -m 0644 -- mman.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/mman.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys
+	$(INSTALL) -m 0644 -- ptrace.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/ptrace.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys
 	$(INSTALL) -m 0644 -- resource.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/resource.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys
 	$(INSTALL) -m 0644 -- select.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/select.h
@@ -35,6 +37,7 @@ install:
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/mman.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/ptrace.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/resource.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/select.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/shm.h
