@@ -81,7 +81,7 @@ string_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 string: $(string_OBJS)
 	$(CC) -o string $(string_OBJS) $(string_LDFLAGS)
 
-tests.log: includes regex setjmp signal start stdint string tests.sh
+tests.log: includes ptrace regex setjmp signal start stdint string tests.sh
 	./tests.sh -P "$(PREFIX)" -- "tests.log"
 
 includes.o: includes.c ../src/libc.a ../src/start.o
