@@ -533,7 +533,10 @@ int getopt(int argc, char * const argv[], char const * optstring)
 	if(argv != oldargv) /* reset state */
 		_getopt_reset(&oldargv, argv, &i);
 	if(optind == argc || (i == 0 && argv[optind][0] != '-'))
+	{
+		oldargv = NULL;
 		return -1; /* there is nothing to parse */
+	}
 	if(argv[optind][++i] == '\0')
 	{
 		if(++optind == argc) /* every argument had options */
