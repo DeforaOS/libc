@@ -36,7 +36,7 @@ static int _ptrace(char const * progname)
 	if(ptrace(PT_TRACE_ME, 0, NULL, 0) != 0)
 		return -_error(progname, "PT_TRACE_ME", 1);
 	if(ptrace(PT_ATTACH, getpid(), NULL, 0) != 0
-			&& errno != EBUSY)
+			&& errno != EBUSY && errno != EINVAL)
 		return -_error(progname, "PT_ATTACH", 1);
 	return 0;
 }
