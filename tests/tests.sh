@@ -48,6 +48,7 @@ FAILED=
 ./includes		>> "$target"	|| FAILED="$FAILED includes(error $?)"
 ./ptrace		>> "$target"	|| FAILED="$FAILED ptrace(error $?)"
 ./regex			>> "$target"	|| FAILED="$FAILED regex(error $?)"
+./select		>> "$target"	|| FAILED="$FAILED select(error $?)"
 ./setjmp		>> "$target"	|| FAILED="$FAILED setjmp(error $?)"
 ./signal		>> "$target"	|| FAILED="$FAILED signal(error $?)"
 ./socket		>> "$target"	|| FAILED="$FAILED socket(error $?)"

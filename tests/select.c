@@ -28,7 +28,7 @@ static int _select(char const * progname)
 	fd_set efds;
 	struct timeval timeout;
 
-	printf("%s: Testing %s\n", progname, "select");
+	printf("%s: Testing %s()\n", progname, "select");
 	FD_ZERO(&rfds);
 	FD_ZERO(&wfds);
 	FD_ZERO(&efds);
