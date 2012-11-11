@@ -227,6 +227,7 @@ void analyze(int number, long arg1, long arg2, long arg3)
 	size_t i;
 	char buf[256];
 	char const * s;
+	void * p;
 
 	_analyze_print("tracer: syscall: ");
 	snprintf(buf, sizeof(buf), "%d", number);
@@ -251,7 +252,6 @@ void analyze(int number, long arg1, long arg2, long arg3)
 #ifdef SYS_fchdir
 		case SYS_fchdir:
 #endif
-		case SYS_fstat:
 #ifdef SYS_fsync
 		case SYS_fsync:
 #endif
@@ -261,6 +261,11 @@ void analyze(int number, long arg1, long arg2, long arg3)
 			/* FIXME analyze the arguments and environment */
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
+			break;
+		case SYS_fstat:
+			p = (void *)arg2;
+			snprintf(buf, sizeof(buf), "(%d, %p)\n", arg1, p);
+			break;
 		case SYS_fcntl:
 #ifdef SYS_flock
 		case SYS_flock:
@@ -285,7 +290,8 @@ void analyze(int number, long arg1, long arg2, long arg3)
 		case SYS_lstat:
 		case SYS_stat:
 			s = (char const *)arg1;
-			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
+			p = (void *)arg2;
+			snprintf(buf, sizeof(buf), "(\"%s\", %p)\n", s, p);
 			break;
 		case SYS_munmap:
 			snprintf(buf, sizeof(buf), "(%p, %lu)\n", arg1, arg2);
