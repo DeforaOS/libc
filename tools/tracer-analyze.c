@@ -16,6 +16,7 @@
 
 
 #include <sys/types.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
@@ -24,7 +25,41 @@
 
 
 /* private */
+/* types */
+struct flag
+{
+	unsigned long bits;
+	char const * string;
+};
+
+
 /* constants */
+/* flags */
+static struct flag _flags_access[] =
+{
+	{ R_OK,		"R_OK"	},
+	{ W_OK,		"W_OK"	},
+	{ X_OK,		"X_OK"	},
+	{ 0,		NULL	}
+};
+
+static struct flag _flags_open[] =
+{
+	{ O_RDONLY,	"O_RDONLY"	},
+	{ O_RDWR,	"O_RDWR"	},
+	{ O_WRONLY,	"O_WRONLY"	},
+	{ O_NONBLOCK,	"O_NONBLOCK"	},
+	{ O_APPEND,	"O_APPEND"	},
+	{ O_CREAT,	"O_CREAT"	},
+	{ O_TRUNC,	"O_TRUNC"	},
+	{ O_EXCL,	"O_EXCL"	},
+#ifdef O_CLOEXEC
+	{ O_CLOEXEC,	"O_CLOEXEC"	},
+#endif
+	{ 0,		NULL		}
+};
+
+/* syscalls */
 static const struct
 {
 	int number;
@@ -146,6 +181,8 @@ _syscalls[] =
 
 
 /* prototypes */
+static void _analyze_mask(struct flag * flags, unsigned long mask);
+
 static void _analyze_print(char const * str);
 
 
@@ -169,9 +206,11 @@ void analyze(int number, long arg1, long arg2, long arg3)
 	switch(number)
 	{
 		case SYS_access:
-			/* FIXME analyze mode */
 			s = (char const *)arg1;
-			snprintf(buf, sizeof(buf), "(\"%s\", %u)\n", s, arg2);
+			snprintf(buf, sizeof(buf), "(\"%s\", ", s);
+			_analyze_print(buf);
+			_analyze_mask(_flags_access, arg2);
+			snprintf(buf, sizeof(buf), ")\n");
 			break;
 		case SYS_close:
 		case SYS_exit:
@@ -213,9 +252,11 @@ void analyze(int number, long arg1, long arg2, long arg3)
 			snprintf(buf, sizeof(buf), "(%p, %lu)\n", arg1, arg2);
 			break;
 		case SYS_open:
-			/* FIXME analyze flags */
 			s = (char const *)arg1;
-			snprintf(buf, sizeof(buf), "(\"%s\", %u)\n", s, arg2);
+			snprintf(buf, sizeof(buf), "(\"%s\", ", s);
+			_analyze_print(buf);
+			_analyze_mask(_flags_open, arg2);
+			snprintf(buf, sizeof(buf), ")\n");
 			break;
 #ifdef SYS_sysctl
 		case SYS_sysctl:
@@ -233,6 +274,34 @@ void analyze(int number, long arg1, long arg2, long arg3)
 
 /* private */
 /* functions */
+/* analyze_mask */
+static void _analyze_mask(struct flag * flags, unsigned long mask)
+{
+	char const * sep = "";
+	size_t i;
+	unsigned long m = mask;
+	char buf[32];
+
+	/* print the known flags set for this mask */
+	for(i = 0; flags[i].string != NULL; i++)
+		if((flags[i].bits & mask) == flags[i].bits)
+		{
+			_analyze_print(sep);
+			_analyze_print(flags[i].string);
+			sep = " | ";
+			m -= (flags[i].bits & m);
+		}
+	/* print the remaining part of the mask */
+	if(m != 0)
+	{
+		_analyze_print(sep);
+		snprintf(buf, sizeof(buf), "0x%x", m);
+		_analyze_print(buf);
+	}
+}
+
+
+/* analyze_print */
 static void _analyze_print(char const * str)
 {
 	size_t len;
