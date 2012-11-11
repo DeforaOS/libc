@@ -1,4 +1,4 @@
-TARGETS	= includes ptrace regex select setjmp signal start stdint string tests.log
+TARGETS	= includes ptrace regex select setjmp signal socket start stdint string tests.log
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -8,7 +8,7 @@ CPPFLAGSF= -nostdinc -isystem ../include -isystem ../include/rt
 CPPFLAGS?=
 CFLAGSF	= -W
 CFLAGS	= -Wall -g -O2 -ffreestanding
-LDFLAGSF= -nostdlib -L ../src -Wl,-rpath,$(PWD)/../src -lc ../src/start.o
+LDFLAGSF= -nostdlib -L../src -Wl,-rpath,$(PWD)/../src -lc ../src/start.o
 LDFLAGS	= `$(CC) -print-libgcc-file-name`
 RM	?= rm -f
 LN	?= ln -f
@@ -60,6 +60,13 @@ signal_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 signal: $(signal_OBJS)
 	$(CC) -o signal $(signal_OBJS) $(signal_LDFLAGS)
 
+socket_OBJS = socket.o
+socket_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+socket_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) ../src/socket/libsocket.a
+
+socket: $(socket_OBJS)
+	$(CC) -o socket $(socket_OBJS) $(socket_LDFLAGS)
+
 start_OBJS = start.o
 start_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 start_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
@@ -81,7 +88,7 @@ string_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 string: $(string_OBJS)
 	$(CC) -o string $(string_OBJS) $(string_LDFLAGS)
 
-tests.log: includes ptrace regex setjmp signal start stdint string tests.sh
+tests.log: includes ptrace regex setjmp signal socket start stdint string tests.sh
 	./tests.sh -P "$(PREFIX)" -- "tests.log"
 
 includes.o: includes.c ../src/libc.a ../src/start.o
@@ -102,6 +109,9 @@ setjmp.o: setjmp.c ../src/libc.a ../src/start.o
 signal.o: signal.c ../src/libc.a ../src/start.o
 	$(CC) $(signal_CFLAGS) -c signal.c
 
+socket.o: socket.c ../src/libc.a ../src/start.o
+	$(CC) -isystem ../include/socket $(socket_CFLAGS) -c socket.c
+
 start.o: start.c ../src/libc.a ../src/start.o
 	$(CC) $(start_CFLAGS) -c start.c
 
@@ -112,7 +122,7 @@ string.o: string.c ../src/libc.a ../src/start.o
 	$(CC) $(string_CFLAGS) -c string.c
 
 clean:
-	$(RM) -- $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(start_OBJS) $(stdint_OBJS) $(string_OBJS) $(tests.log_OBJS)
+	$(RM) -- $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(string_OBJS) $(tests.log_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)

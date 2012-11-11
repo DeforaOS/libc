@@ -50,6 +50,7 @@ FAILED=
 ./regex			>> "$target"	|| FAILED="$FAILED regex(error $?)"
 ./setjmp		>> "$target"	|| FAILED="$FAILED setjmp(error $?)"
 ./signal		>> "$target"	|| FAILED="$FAILED signal(error $?)"
+./socket		>> "$target"	|| FAILED="$FAILED socket(error $?)"
 ./start argv1 argv2	>> "$target"	|| FAILED="$FAILED start(error $?)"
 ./stdint		>> "$target"	|| FAILED="$FAILED stdint(error $?)"
 ./string		>> "$target"	|| FAILED="$FAILED string(error $?)"

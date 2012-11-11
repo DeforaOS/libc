@@ -523,6 +523,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/tests/select.c \
 		$(PACKAGE)-$(VERSION)/tests/setjmp.c \
 		$(PACKAGE)-$(VERSION)/tests/signal.c \
+		$(PACKAGE)-$(VERSION)/tests/socket.c \
 		$(PACKAGE)-$(VERSION)/tests/start.c \
 		$(PACKAGE)-$(VERSION)/tests/stdint.c \
 		$(PACKAGE)-$(VERSION)/tests/string.c \
