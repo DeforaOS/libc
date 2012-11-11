@@ -63,6 +63,7 @@ clock_t clock(void);
 int clock_getres(clockid_t clock_id, struct timespec * tp);
 int clock_gettime(clockid_t clock_id, struct timespec * tp);
 int clock_settime(clockid_t clock_id, struct timespec * tp);
+double difftime(time_t time1, time_t time0);
 struct tm * gmtime(time_t const * t);
 struct tm * gmtime_r(time_t const * t, struct tm * ret);
 struct tm * localtime(time_t const * t);

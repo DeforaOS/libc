@@ -75,6 +75,13 @@ int clock_settime(clockid_t clock_id, struct timespec * tp)
 #endif
 
 
+/* difftime */
+double difftime(time_t time1, time_t time0)
+{
+	return (double)time1 - (double)time0;
+}
+
+
 /* gmtime */
 struct tm * gmtime(time_t const * t)
 {
