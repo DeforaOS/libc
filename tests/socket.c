@@ -25,7 +25,7 @@ static int _socket(char const * progname)
 {
 	int fd;
 
-	printf("%s: Testing %s\n", progname, "socket");
+	printf("%s: Testing %s()\n", progname, "socket");
 	if((fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 		return 2;
 	if(close(fd) != 0)
