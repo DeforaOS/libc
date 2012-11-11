@@ -58,5 +58,6 @@
 # define ENOBUFS	105
 # define ETIMEDOUT	110
 # define ECONNREFUSED	111
+# define EINPROGRESS	115
 
 #endif /* !LIBC_KERNEL_LINUX_ERRNO_H */

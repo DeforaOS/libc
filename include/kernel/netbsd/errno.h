@@ -48,6 +48,7 @@
 # define EDOM		33
 # define ERANGE		34
 # define EAGAIN		35
+# define EINPROGRESS	36
 # define EOPNOTSUPP	45
 # define EADDRINUSE	48
 # define EADDRNOTAVAIL	49
