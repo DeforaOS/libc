@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <signal.h>
 #include "tracer-syscalls.h"
 #include "../src/syscalls.h"
 
@@ -29,6 +30,12 @@
 struct flag
 {
 	unsigned long bits;
+	char const * string;
+};
+
+struct value
+{
+	unsigned long value;
 	char const * string;
 };
 
@@ -56,6 +63,32 @@ static struct flag _flags_open[] =
 #ifdef O_CLOEXEC
 	{ O_CLOEXEC,	"O_CLOEXEC"	},
 #endif
+	{ 0,		NULL		}
+};
+
+/* values */
+static struct value _values_signal[] =
+{
+	{ SIGHUP,	"SIGHUP"	},
+	{ SIGINT,	"SIGINT"	},
+	{ SIGQUIT,	"SIGQUIT"	},
+	{ SIGILL,	"SIGILL"	},
+	{ SIGTRAP,	"SIGTRAP"	},
+	{ SIGABRT,	"SIGABRT"	},
+	{ SIGIOT,	"SIGIOT"	},
+	{ SIGFPE,	"SIGFPE"	},
+	{ SIGKILL,	"SIGKILL"	},
+	{ SIGBUS,	"SIGBUS"	},
+	{ SIGSEGV,	"SIGSEGV"	},
+	{ SIGPIPE,	"SIGPIPE"	},
+	{ SIGALRM,	"SIGALRM"	},
+	{ SIGTERM,	"SIGTERM"	},
+	{ SIGSTOP,	"SIGSTOP"	},
+	{ SIGTSTP,	"SIGTSTP"	},
+	{ SIGCONT,	"SIGCONT"	},
+	{ SIGCHLD,	"SIGCHLD"	},
+	{ SIGUSR1,	"SIGUSR1"	},
+	{ SIGUSR2,	"SIGUSR2"	},
 	{ 0,		NULL		}
 };
 
@@ -181,7 +214,8 @@ _syscalls[] =
 
 
 /* prototypes */
-static void _analyze_mask(struct flag * flags, unsigned long mask);
+static void _analyze_print_mask(struct flag * flags, unsigned long mask);
+static void _analyze_print_value(struct value * values, unsigned long value);
 
 static void _analyze_print(char const * str);
 
@@ -209,7 +243,7 @@ void analyze(int number, long arg1, long arg2, long arg3)
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\", ", s);
 			_analyze_print(buf);
-			_analyze_mask(_flags_access, arg2);
+			_analyze_print_mask(_flags_access, arg2);
 			snprintf(buf, sizeof(buf), ")\n");
 			break;
 		case SYS_close:
@@ -231,8 +265,13 @@ void analyze(int number, long arg1, long arg2, long arg3)
 #ifdef SYS_flock
 		case SYS_flock:
 #endif
-		case SYS_kill:
 			snprintf(buf, sizeof(buf), "(%d, %d)\n", arg1, arg2);
+			break;
+		case SYS_kill:
+			snprintf(buf, sizeof(buf), "(%d, ", arg1);
+			_analyze_print(buf);
+			_analyze_print_value(_values_signal, arg2);
+			snprintf(buf, sizeof(buf), ")\n");
 			break;
 #ifdef SYS_ioctl
 		case SYS_ioctl:
@@ -255,7 +294,7 @@ void analyze(int number, long arg1, long arg2, long arg3)
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\", ", s);
 			_analyze_print(buf);
-			_analyze_mask(_flags_open, arg2);
+			_analyze_print_mask(_flags_open, arg2);
 			snprintf(buf, sizeof(buf), ")\n");
 			break;
 #ifdef SYS_sysctl
@@ -274,8 +313,8 @@ void analyze(int number, long arg1, long arg2, long arg3)
 
 /* private */
 /* functions */
-/* analyze_mask */
-static void _analyze_mask(struct flag * flags, unsigned long mask)
+/* analyze_print_mask */
+static void _analyze_print_mask(struct flag * flags, unsigned long mask)
 {
 	char const * sep = "";
 	size_t i;
@@ -291,13 +330,32 @@ static void _analyze_mask(struct flag * flags, unsigned long mask)
 			sep = " | ";
 			m -= (flags[i].bits & m);
 		}
-	/* print the remaining part of the mask */
+	/* print the remaining part of the mask (as hexadecimal) */
 	if(m != 0)
 	{
 		_analyze_print(sep);
 		snprintf(buf, sizeof(buf), "0x%x", m);
 		_analyze_print(buf);
 	}
+}
+
+
+/* analyze_print_value */
+static void _analyze_print_value(struct value * values, unsigned long value)
+{
+	size_t i;
+	char buf[32];
+
+	/* print the value if known */
+	for(i = 0; values[i].string != NULL; i++)
+		if(values[i].value == value)
+		{
+			_analyze_print(values[i].string);
+			return;
+		}
+	/* print the value (as decimal) */
+	snprintf(buf, sizeof(buf), "%u", value);
+	_analyze_print(buf);
 }
 
 
