@@ -27,14 +27,24 @@ static int _ret;
 
 
 /* prototypes */
+static void _on_sigusr1(int signal);
 static void _on_sigusr2(int signal);
 
 
 /* functions */
+/* on_sigusr1 */
+static void _on_sigusr1(int signal)
+{
+	if(_ret == 3)
+		_ret = 0;
+}
+
+
 /* on_sigusr2 */
 static void _on_sigusr2(int signal)
 {
-	_ret = 0;
+	if(_ret == 2)
+		_ret = 3;
 }
 
 
@@ -44,8 +54,10 @@ int main(int argc, char * argv[])
 {
 	_ret = 2;
 	printf("%s: %s", argv[0], "Testing signal()\n");
+	signal(SIGUSR1, _on_sigusr1);
 	signal(SIGUSR2, _on_sigusr2);
 	printf("%s: %s", argv[0], "Testing kill()\n");
 	kill(getpid(), SIGUSR2);
+	kill(getpid(), SIGUSR1);
 	return _ret;
 }
