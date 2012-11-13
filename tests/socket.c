@@ -21,12 +21,12 @@
 
 
 /* socket */
-static int _socket(char const * progname)
+static int _socket(char const * progname, char const * title, int type)
 {
 	int fd;
 
-	printf("%s: Testing %s()\n", progname, "socket");
-	if((fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+	printf("%s: Testing %s(%s)\n", progname, "socket", title);
+	if((fd = socket(AF_INET, type, 0)) < 0)
 		return 2;
 	if(close(fd) != 0)
 		return 2;
@@ -39,6 +39,7 @@ int main(int argc, char * argv[])
 {
 	int ret = 0;
 
-	ret |= _socket(argv[0]);
+	ret |= _socket(argv[0], "1/2", SOCK_DGRAM);
+	ret |= _socket(argv[0], "2/2", SOCK_STREAM);
 	return (ret == 0) ? 0 : 2;
 }
