@@ -187,7 +187,8 @@ static char * _gethostent_host(char const ** s)
 	size_t len = 0;
 	char * p;
 
-	for(; isalnum(**s) || **s == '-' || **s == '.'; (*s)++)
+	for(; isalnum((int)(unsigned char)**s) || **s == '-' || **s == '.';
+			(*s)++)
 	{
 		if((p = realloc(ret, len + 2)) == NULL)
 			break;

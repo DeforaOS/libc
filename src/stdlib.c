@@ -130,7 +130,7 @@ int atoi(char const * str)
 	int ret = 0;
 	int pos = 1;
 
-	for(; isspace(*str); str++);
+	for(; isspace((int)(unsigned char)*str); str++);
 	if(*str == '-')
 	{
 		pos = -1;
@@ -151,7 +151,7 @@ long atol(char const * str)
 	long ret = 0;
 	int pos = 1;
 
-	for(; isspace(*str); str++);
+	for(; isspace((int)(unsigned char)*str); str++);
 	if(*str == '-')
 	{
 		pos = -1;
@@ -172,7 +172,7 @@ long long atoll(char const * nptr)
 	long long ret = 0;
 	int pos = 1;
 
-	for(; isspace(*nptr); nptr++);
+	for(; isspace((int)(unsigned char)*nptr); nptr++);
 	if(*nptr == '-')
 	{
 		pos = -1;
@@ -728,7 +728,7 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 		errno = EINVAL;
 		return 0;
 	}
-	for(p = str; isspace(*p); p++);
+	for(p = str; isspace((int)(unsigned char)*p); p++);
 	if(*p == '\0')
 	{
 		if(endptr != NULL)
