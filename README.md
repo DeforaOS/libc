@@ -20,6 +20,7 @@ programs intended to be portable across Operating Systems.
 libc is part of the DeforaOS Project, and distributed under the terms of the
 GNU General Public License, version 3 (GPLv3).
 
+
 Compiling libc
 --------------
 
@@ -34,6 +35,7 @@ To install libc in a dedicated directory, like `/path/to/libc`:
 _Warning_: unless you know what you are doing, do not install libc in a
            directory where it might conflict with your system's default headers
            and libraries, like `/usr` or even the default `/usr/local`.
+
 
 Compiling programs against libc
 -------------------------------
