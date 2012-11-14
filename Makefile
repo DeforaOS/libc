@@ -318,6 +318,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/sys/stat.h \
 		$(PACKAGE)-$(VERSION)/include/sys/statvfs.h \
+		$(PACKAGE)-$(VERSION)/include/sys/syscall.h \
 		$(PACKAGE)-$(VERSION)/include/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/sys/types.h \
@@ -538,7 +539,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/tools/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/COPYING \
-		$(PACKAGE)-$(VERSION)/README \
+		$(PACKAGE)-$(VERSION)/README.md \
 		$(PACKAGE)-$(VERSION)/config.sh \
 		$(PACKAGE)-$(VERSION)/project.conf
 	$(RM) -- $(PACKAGE)-$(VERSION)
