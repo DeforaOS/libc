@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
 
 
 
-#ifndef KERNEL_OPENBSD_COMMON_H
-# define KERNEL_OPENBSD_COMMON_H
+#ifndef KERNEL_OPENBSD_SYS_SYSCALL_H
+# define KERNEL_OPENBSD_SYS_SYSCALL_H
 
 
 # define SYS_exit		1
@@ -92,4 +92,4 @@
 # define SYS_lstat		293
 # define SYS__getcwd		304
 
-#endif /* !KERNEL_OPENBSD_COMMON_H */
+#endif /* !KERNEL_OPENBSD_SYS_SYSCALL_H */

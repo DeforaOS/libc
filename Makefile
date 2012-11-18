@@ -227,6 +227,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/syscall.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/types.h \
@@ -440,7 +441,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sparc64/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/Makefile \
-		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/arm/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/openbsd/arm/start.S \

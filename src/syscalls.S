@@ -72,7 +72,6 @@
 
 /* OpenBSD */
 #elif defined(__OpenBSD__)
-# include "kernel/openbsd/common.h"
 # if defined(__arm__)
 #  include "kernel/openbsd/arm/syscalls.S"
 # elif defined(__i386__)

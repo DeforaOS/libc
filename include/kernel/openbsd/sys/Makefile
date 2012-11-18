@@ -27,6 +27,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys
 	$(INSTALL) -m 0644 -- stat.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/stat.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys
+	$(INSTALL) -m 0644 -- syscall.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/syscall.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys
 	$(INSTALL) -m 0644 -- time.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys
 	$(INSTALL) -m 0644 -- times.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/times.h
@@ -42,6 +44,7 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/select.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/shm.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/stat.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/syscall.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/time.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/times.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/types.h
