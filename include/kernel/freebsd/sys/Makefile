@@ -27,6 +27,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys
 	$(INSTALL) -m 0644 -- stat.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/stat.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys
+	$(INSTALL) -m 0644 -- syscall.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/syscall.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys
 	$(INSTALL) -m 0644 -- time.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys
 	$(INSTALL) -m 0644 -- times.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/times.h
@@ -42,6 +44,7 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/select.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/shm.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/stat.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/syscall.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/time.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/times.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/types.h

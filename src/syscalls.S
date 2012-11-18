@@ -23,7 +23,6 @@
 
 /* FreeBSD */
 #if defined(__FreeBSD__)
-# include "kernel/freebsd/common.h"
 # if defined(__amd64__)
 #  include "kernel/freebsd/amd64/syscalls.S"
 # elif defined(__i386__)

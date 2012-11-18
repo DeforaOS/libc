@@ -15,8 +15,8 @@
 
 
 
-#ifndef KERNEL_FREEBSD_COMMON_H
-# define KERNEL_FREEBSD_COMMON_H
+#ifndef KERNEL_FREEBSD_SYS_SYSCALL_H
+# define KERNEL_FREEBSD_SYS_SYSCALL_H
 
 
 # define SYS_exit		1
@@ -102,4 +102,4 @@
 # define SYS_ftruncate		480
 # define SYS_shmctl		512
 
-#endif /* !KERNEL_FREEBSD_COMMON_H */
+#endif /* !KERNEL_FREEBSD_SYS_SYSCALL_H */

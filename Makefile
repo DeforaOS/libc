@@ -135,6 +135,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/syscall.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/sys/types.h \
@@ -200,6 +201,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/syscall.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/netbsd/sys/types.h \
@@ -388,7 +390,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/darwin/amd64/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/darwin/amd64/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/Makefile \
-		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/amd64/start.S \
