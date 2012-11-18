@@ -36,6 +36,14 @@ int main(int argc, char * argv[])
 {
 	int ret = 0;
 
+	ret += _stdio(argv[0], "a", O_WRONLY | O_APPEND | O_CREAT);
+	ret += _stdio(argv[0], "ab", O_WRONLY | O_APPEND | O_CREAT);
+	ret += _stdio(argv[0], "a+", O_RDWR | O_APPEND | O_CREAT);
+	ret += _stdio(argv[0], "ab+", O_RDWR | O_APPEND | O_CREAT);
+	ret += _stdio(argv[0], "ax", O_WRONLY | O_APPEND | O_CREAT | O_EXCL);
+	ret += _stdio(argv[0], "abx", O_WRONLY | O_APPEND | O_CREAT | O_EXCL);
+	ret += _stdio(argv[0], "a+x", O_RDWR | O_APPEND | O_CREAT | O_EXCL);
+	ret += _stdio(argv[0], "ab+x", O_RDWR | O_APPEND | O_CREAT | O_EXCL);
 	ret += _stdio(argv[0], "r", O_RDONLY);
 	ret += _stdio(argv[0], "rb", O_RDONLY);
 	ret += _stdio(argv[0], "r+", O_RDWR);

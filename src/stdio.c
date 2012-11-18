@@ -1212,11 +1212,11 @@ static int _fopen_mode(char const * mode)
 	}
 	else if(*mode == 'a')
 	{
-		flags = O_APPEND;
+		flags = O_WRONLY | O_APPEND | O_CREAT;
 		if(*(++mode) == 'b')
 			++mode;
 		if(*mode == '+' && ++mode)
-			flags |= O_CREAT;
+			flags = O_RDWR | O_APPEND | O_CREAT;
 	}
 	else
 	{
