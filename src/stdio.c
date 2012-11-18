@@ -1197,7 +1197,7 @@ static int _fopen_mode(char const * mode)
 	if(*mode == 'r')
 	{
 		flags = O_RDONLY;
-		if(*++mode == 'b')
+		if(*(++mode) == 'b')
 			++mode;
 		if(*mode == '+' && ++mode)
 			flags = O_RDWR;
@@ -1205,7 +1205,7 @@ static int _fopen_mode(char const * mode)
 	else if(*mode == 'w')
 	{
 		flags = O_WRONLY | O_CREAT | O_TRUNC;
-		if(*++mode == 'b')
+		if(*(++mode) == 'b')
 			++mode;
 		if(*mode == '+' && ++mode)
 			flags = O_RDWR | O_CREAT | O_TRUNC;
@@ -1213,7 +1213,7 @@ static int _fopen_mode(char const * mode)
 	else if(*mode == 'a')
 	{
 		flags = O_APPEND;
-		if(*++mode == 'b')
+		if(*(++mode) == 'b')
 			++mode;
 		if(*mode == '+' && ++mode)
 			flags |= O_CREAT;
