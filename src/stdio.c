@@ -1199,8 +1199,6 @@ static int _fopen_mode(char const * mode)
 		flags = O_RDONLY;
 		if(*++mode == 'b')
 			++mode;
-		if(*mode == '\0')
-			return flags;
 		if(*mode == '+' && ++mode)
 			flags = O_RDWR;
 	}
@@ -1209,8 +1207,6 @@ static int _fopen_mode(char const * mode)
 		flags = O_WRONLY | O_CREAT;
 		if(*++mode == 'b')
 			++mode;
-		if(*mode == '\0')
-			return flags;
 		if(*mode == '+' && ++mode)
 			flags = O_RDWR | O_CREAT;
 	}
@@ -1219,8 +1215,6 @@ static int _fopen_mode(char const * mode)
 		flags = O_APPEND;
 		if(*++mode == 'b')
 			++mode;
-		if(*mode == '\0')
-			return flags;
 		if(*mode == '+' && ++mode)
 			flags |= O_CREAT;
 	}
@@ -1229,8 +1223,11 @@ static int _fopen_mode(char const * mode)
 		errno = EINVAL;
 		return -1;
 	}
-	if(*mode == 'b')
-		++mode;
+	for(;; mode++)
+		if(*mode == 'x')
+			flags |= O_EXCL;
+		else if(*mode != 'b')
+			break;
 	if(*mode != '\0')
 	{
 		errno = EINVAL;
