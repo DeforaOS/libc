@@ -15,17 +15,19 @@
 
 
 
+#include <fcntl.h>
 #include <stdio.h>
 #include "../src/stdio.c"
 
 
 /* stdio */
-static int _stdio(char const * progname, char const * mode)
+static int _stdio(char const * progname, char const * mode, int expected)
 {
 	int m = _fopen_mode(mode);
 
-	printf("%s: Testing fopen() mode \"%s\": 0x%x\n", progname, mode, m);
-	return (m != -1) ? 0 : 1;
+	printf("%s: Testing fopen() mode \"%s\": 0x%x (0x%x)\n", progname,
+			mode, m, expected);
+	return (m == expected) ? 0 : 1;
 }
 
 
@@ -34,21 +36,21 @@ int main(int argc, char * argv[])
 {
 	int ret = 0;
 
-	ret += _stdio(argv[0], "r");
-	ret += _stdio(argv[0], "rb");
-	ret += _stdio(argv[0], "r+");
-	ret += _stdio(argv[0], "rb+");
-	ret += _stdio(argv[0], "rx");
-	ret += _stdio(argv[0], "rbx");
-	ret += _stdio(argv[0], "r+x");
-	ret += _stdio(argv[0], "rb+x");
-	ret += _stdio(argv[0], "w");
-	ret += _stdio(argv[0], "wb");
-	ret += _stdio(argv[0], "w+");
-	ret += _stdio(argv[0], "wb+");
-	ret += _stdio(argv[0], "wx");
-	ret += _stdio(argv[0], "wbx");
-	ret += _stdio(argv[0], "w+x");
-	ret += _stdio(argv[0], "wb+x");
+	ret += _stdio(argv[0], "r", O_RDONLY);
+	ret += _stdio(argv[0], "rb", O_RDONLY);
+	ret += _stdio(argv[0], "r+", O_RDWR);
+	ret += _stdio(argv[0], "rb+", O_RDWR);
+	ret += _stdio(argv[0], "rx", O_RDONLY | O_EXCL);
+	ret += _stdio(argv[0], "rbx", O_RDONLY | O_EXCL);
+	ret += _stdio(argv[0], "r+x", O_RDWR | O_EXCL);
+	ret += _stdio(argv[0], "rb+x", O_RDWR | O_EXCL);
+	ret += _stdio(argv[0], "w", O_WRONLY | O_TRUNC | O_CREAT);
+	ret += _stdio(argv[0], "wb", O_WRONLY | O_TRUNC | O_CREAT);
+	ret += _stdio(argv[0], "w+", O_RDWR | O_TRUNC | O_CREAT);
+	ret += _stdio(argv[0], "wb+", O_RDWR | O_TRUNC | O_CREAT);
+	ret += _stdio(argv[0], "wx", O_WRONLY | O_TRUNC | O_CREAT | O_EXCL);
+	ret += _stdio(argv[0], "wbx", O_WRONLY | O_TRUNC | O_CREAT | O_EXCL);
+	ret += _stdio(argv[0], "w+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
+	ret += _stdio(argv[0], "wb+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
 	return (ret == 0) ? 0 : 2;
 }

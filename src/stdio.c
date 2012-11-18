@@ -1204,11 +1204,11 @@ static int _fopen_mode(char const * mode)
 	}
 	else if(*mode == 'w')
 	{
-		flags = O_WRONLY | O_CREAT;
+		flags = O_WRONLY | O_CREAT | O_TRUNC;
 		if(*++mode == 'b')
 			++mode;
 		if(*mode == '+' && ++mode)
-			flags = O_RDWR | O_CREAT;
+			flags = O_RDWR | O_CREAT | O_TRUNC;
 	}
 	else if(*mode == 'a')
 	{
