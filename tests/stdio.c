@@ -40,15 +40,15 @@ int main(int argc, char * argv[])
 	ret += _stdio(argv[0], "rb+");
 	ret += _stdio(argv[0], "rx");
 	ret += _stdio(argv[0], "rbx");
-	ret += _stdio(argv[0], "rx+");
-	ret += _stdio(argv[0], "rbx+");
+	ret += _stdio(argv[0], "r+x");
+	ret += _stdio(argv[0], "rb+x");
 	ret += _stdio(argv[0], "w");
 	ret += _stdio(argv[0], "wb");
 	ret += _stdio(argv[0], "w+");
 	ret += _stdio(argv[0], "wb+");
 	ret += _stdio(argv[0], "wx");
 	ret += _stdio(argv[0], "wbx");
-	ret += _stdio(argv[0], "wx+");
-	ret += _stdio(argv[0], "wbx+");
+	ret += _stdio(argv[0], "w+x");
+	ret += _stdio(argv[0], "wb+x");
 	return (ret == 0) ? 0 : 2;
 }
