@@ -102,6 +102,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/compat/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/compat/sys/syscall.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/compat/sys/types.h \
@@ -417,7 +418,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/sparc/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/Makefile \
-		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/common.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/netbsd/sys/sysctl.h \

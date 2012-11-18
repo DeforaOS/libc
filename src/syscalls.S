@@ -15,6 +15,9 @@
 
 
 
+#include "sys/syscall.h"
+
+
 .text
 
 
@@ -53,7 +56,6 @@
 
 /* NetBSD */
 #elif defined(__NetBSD__)
-# include "kernel/netbsd/common.h"
 # if defined(__amd64__)
 #  include "kernel/netbsd/amd64/syscalls.S"
 # elif defined(__arm__)

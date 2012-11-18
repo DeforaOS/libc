@@ -33,6 +33,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
 	$(INSTALL) -m 0644 -- stat.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/stat.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
+	$(INSTALL) -m 0644 -- syscall.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/syscall.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
 	$(INSTALL) -m 0644 -- time.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
 	$(INSTALL) -m 0644 -- times.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/times.h
@@ -53,6 +55,7 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/select.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/shm.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/stat.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/syscall.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/time.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/times.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/types.h

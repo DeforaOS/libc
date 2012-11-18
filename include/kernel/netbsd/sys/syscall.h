@@ -15,8 +15,8 @@
 
 
 
-#ifndef KERNEL_NETBSD_COMMON_H
-# define KERNEL_NETBSD_COMMON_H
+#ifndef KERNEL_NETBSD_SYS_SYSCALL_H
+# define KERNEL_NETBSD_SYS_SYSCALL_H
 
 
 /* constants */
@@ -117,4 +117,4 @@
 # define SYS_wait4		449
 # define SYS_mknod		450
 
-#endif /* !KERNEL_NETBSD_COMMON_H */
+#endif /* !KERNEL_NETBSD_SYS_SYSCALL_H */

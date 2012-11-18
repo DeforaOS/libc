@@ -39,6 +39,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 -- statvfs.h $(DESTDIR)$(INCLUDEDIR)/sys/statvfs.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
+	$(INSTALL) -m 0644 -- syscall.h $(DESTDIR)$(INCLUDEDIR)/sys/syscall.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 -- time.h $(DESTDIR)$(INCLUDEDIR)/sys/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/sys
 	$(INSTALL) -m 0644 -- times.h $(DESTDIR)$(INCLUDEDIR)/sys/times.h
@@ -66,6 +68,7 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/sys/shm.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/sys/stat.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/sys/statvfs.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/sys/syscall.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/sys/time.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/sys/times.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/sys/types.h

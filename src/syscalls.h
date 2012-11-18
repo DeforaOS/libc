@@ -18,6 +18,8 @@
 #ifndef SYSCALLS_H
 # define SYSCALLS_H
 
+# include "sys/syscall.h"
+
 /* FreeBSD */
 # if defined(__FreeBSD__)
 #  include "kernel/freebsd/common.h"
@@ -29,7 +31,6 @@
 #  include "kernel/darwin/common.h"
 /* NetBSD */
 # elif defined(__NetBSD__)
-#  include "kernel/netbsd/common.h"
 #  include "kernel/netbsd/sys/sysctl.h"
 /* OpenBSD */
 # elif defined(__OpenBSD__)
