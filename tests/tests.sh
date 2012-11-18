@@ -58,5 +58,4 @@ FAILED=
 ./string		>> "$target"	|| FAILED="$FAILED string(error $?)"
 [ -z "$FAILED" ]			&& exit 0
 echo "Failed tests:$FAILED" 1>&2
-#XXX ignore errors for now
-#exit 2
+exit 2
