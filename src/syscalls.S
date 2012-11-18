@@ -33,7 +33,6 @@
 
 /* Linux */
 #elif defined(__linux__)
-# include "kernel/linux/common.h"
 # if defined(__amd64__)
 #  include "kernel/linux/amd64/syscalls.S"
 # elif defined(__arm__)

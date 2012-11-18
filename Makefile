@@ -168,6 +168,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/shm.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/syscall.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/linux/sys/types.h \
@@ -400,7 +401,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/Makefile \
-		$(PACKAGE)-$(VERSION)/src/kernel/linux/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/amd64/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/amd64/start.S \

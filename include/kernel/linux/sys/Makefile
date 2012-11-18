@@ -33,6 +33,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
 	$(INSTALL) -m 0644 -- stat.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/stat.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
+	$(INSTALL) -m 0644 -- syscall.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/syscall.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
 	$(INSTALL) -m 0644 -- time.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
 	$(INSTALL) -m 0644 -- times.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/times.h
@@ -51,6 +53,7 @@ uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/select.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/shm.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/stat.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/syscall.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/time.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/times.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/types.h

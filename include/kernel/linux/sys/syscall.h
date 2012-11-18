@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
 
 
 
-#ifndef KERNEL_LINUX_COMMON_H
-# define KERNEL_LINUX_COMMON_H
+#ifndef KERNEL_LINUX_SYS_SYSCALL_H
+# define KERNEL_LINUX_SYS_SYSCALL_H
 
 
 # ifndef __amd64__ /* amd64 is totally specific */
@@ -230,4 +230,4 @@
 #  define _IPC_SHMCTL		24
 # endif
 
-#endif /* !KERNEL_LINUX_COMMON_H */
+#endif /* !KERNEL_LINUX_SYS_SYSCALL_H */
