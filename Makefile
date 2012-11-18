@@ -527,6 +527,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/tests/socket.c \
 		$(PACKAGE)-$(VERSION)/tests/start.c \
 		$(PACKAGE)-$(VERSION)/tests/stdint.c \
+		$(PACKAGE)-$(VERSION)/tests/stdio.c \
 		$(PACKAGE)-$(VERSION)/tests/string.c \
 		$(PACKAGE)-$(VERSION)/tests/Makefile \
 		$(PACKAGE)-$(VERSION)/tests/tests.sh \

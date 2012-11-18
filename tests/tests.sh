@@ -54,6 +54,7 @@ FAILED=
 ./socket		>> "$target"	|| FAILED="$FAILED socket(error $?)"
 ./start argv1 argv2	>> "$target"	|| FAILED="$FAILED start(error $?)"
 ./stdint		>> "$target"	|| FAILED="$FAILED stdint(error $?)"
+./stdio			>> "$target"	|| FAILED="$FAILED stdio(error $?)"
 ./string		>> "$target"	|| FAILED="$FAILED string(error $?)"
 [ -z "$FAILED" ]			&& exit 0
 echo "Failed tests:$FAILED" 1>&2

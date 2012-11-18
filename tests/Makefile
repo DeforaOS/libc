@@ -1,4 +1,4 @@
-TARGETS	= includes ptrace regex select setjmp signal socket start stdint string tests.log
+TARGETS	= includes ptrace regex select setjmp signal socket start stdint stdio string tests.log
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -81,6 +81,13 @@ stdint_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 stdint: $(stdint_OBJS)
 	$(CC) -o stdint $(stdint_OBJS) $(stdint_LDFLAGS)
 
+stdio_OBJS = stdio.o
+stdio_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+stdio_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
+
+stdio: $(stdio_OBJS)
+	$(CC) -o stdio $(stdio_OBJS) $(stdio_LDFLAGS)
+
 string_OBJS = string.o
 string_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 string_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
@@ -88,7 +95,7 @@ string_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 string: $(string_OBJS)
 	$(CC) -o string $(string_OBJS) $(string_LDFLAGS)
 
-tests.log: includes ptrace regex setjmp signal socket start stdint string tests.sh
+tests.log: includes ptrace regex setjmp signal socket start stdint stdio string tests.sh
 	./tests.sh -P "$(PREFIX)" -- "tests.log"
 
 includes.o: includes.c ../src/libc.a ../src/start.o
@@ -118,11 +125,14 @@ start.o: start.c ../src/libc.a ../src/start.o
 stdint.o: stdint.c ../src/libc.a ../src/start.o
 	$(CC) $(stdint_CFLAGS) -c stdint.c
 
+stdio.o: stdio.c ../src/libc.a ../src/start.o
+	$(CC) $(stdio_CFLAGS) -c stdio.c
+
 string.o: string.c ../src/libc.a ../src/start.o
 	$(CC) $(string_CFLAGS) -c string.c
 
 clean:
-	$(RM) -- $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(string_OBJS) $(tests.log_OBJS)
+	$(RM) -- $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(tests.log_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)
