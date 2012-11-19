@@ -20,29 +20,18 @@
 
 # include "sys/syscall.h"
 
-/* FreeBSD */
-# if defined(__FreeBSD__)
-#  include "kernel/freebsd/common.h"
-/* Linux */
-# elif defined(__linux__)
-#  include "kernel/linux/common.h"
 /* MacOS X */
-# elif defined(__APPLE__)
+# if defined(__APPLE__)
 #  include "kernel/darwin/common.h"
 /* NetBSD */
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/sysctl.h"
-/* OpenBSD */
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/common.h"
 /* Solaris */
 # elif defined(__sun__)
 #  include "kernel/solaris/common.h"
 /* Whitix */
 # elif defined(__Whitix__)
 #  include "kernel/whitix/common.h"
-# else
-#  warning Unsupported platform
 # endif
 
 #endif /* !SYSCALLS_H */
