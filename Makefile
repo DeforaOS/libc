@@ -519,6 +519,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/Makefile \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/project.conf \
+		$(PACKAGE)-$(VERSION)/tests/dlfcn.c \
 		$(PACKAGE)-$(VERSION)/tests/includes.c \
 		$(PACKAGE)-$(VERSION)/tests/ptrace.c \
 		$(PACKAGE)-$(VERSION)/tests/regex.c \

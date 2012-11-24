@@ -45,6 +45,7 @@ target="$1"
 
 > "$target"
 FAILED=
+./dlfcn "../src/libc.so">> "$target"	|| FAILED="$FAILED dlfcn(error $?)"
 ./includes		>> "$target"	|| FAILED="$FAILED includes(error $?)"
 ./ptrace		>> "$target"	|| FAILED="$FAILED ptrace(error $?)"
 ./regex			>> "$target"	|| FAILED="$FAILED regex(error $?)"

@@ -1,4 +1,4 @@
-TARGETS	= includes ptrace regex select setjmp signal socket start stdint stdio string tests.log
+TARGETS	= dlfcn includes ptrace regex select setjmp signal socket start stdint stdio string tests.log
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -17,6 +17,13 @@ INSTALL	?= install
 
 
 all: $(TARGETS)
+
+dlfcn_OBJS = dlfcn.o
+dlfcn_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) -isystem ../include/dl $(CFLAGSF) $(CFLAGS)
+dlfcn_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
+
+dlfcn: $(dlfcn_OBJS)
+	$(CC) -o dlfcn $(dlfcn_OBJS) $(dlfcn_LDFLAGS)
 
 includes_OBJS = includes.o
 includes_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -95,8 +102,11 @@ string_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 string: $(string_OBJS)
 	$(CC) -o string $(string_OBJS) $(string_LDFLAGS)
 
-tests.log: includes ptrace regex setjmp signal socket start stdint stdio string tests.sh
+tests.log: dlfcn includes ptrace regex setjmp signal socket start stdint stdio string tests.sh
 	./tests.sh -P "$(PREFIX)" -- "tests.log"
+
+dlfcn.o: dlfcn.c ../src/dl/libdl.a ../src/libc.a ../src/start.o
+	$(CC) $(dlfcn_CFLAGS) -c dlfcn.c
 
 includes.o: includes.c ../src/libc.a ../src/start.o
 	$(CC) $(includes_CFLAGS) -c includes.c
@@ -132,7 +142,7 @@ string.o: string.c ../src/libc.a ../src/start.o
 	$(CC) $(string_CFLAGS) -c string.c
 
 clean:
-	$(RM) -- $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(tests.log_OBJS)
+	$(RM) -- $(dlfcn_OBJS) $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(tests.log_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)
