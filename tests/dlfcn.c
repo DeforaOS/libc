@@ -24,21 +24,22 @@
 /* dlfcn */
 /* private */
 /* functions */
-static int _dlfcn(char const * progname, char const * soname)
+static int _dlfcn(char const * progname, char const * title,
+		char const * soname)
 {
 	int ret = 0;
 	void * handle;
 	int * p;
 	pid_t (*g)(void);
 
-	printf("%s: Testing %s\n", progname, "dlopen()");
+	printf("%s: Testing %s\n", progname, title);
 	if((handle = dlopen(soname, RTLD_LAZY)) == NULL)
 	{
 		printf("%s: %s\n", progname, dlerror());
 		return -1;
 	}
 	/* checking the value of a known variable */
-	printf("%s: Testing %s\n", progname, "dlsym() (1/2)");
+	printf("%s: Testing %s, %s\n", progname, title, "dlsym() (1/2)");
 	if((p = dlsym(handle, "errno")) == NULL)
 	{
 		printf("%s: %s\n", progname, dlerror());
@@ -50,7 +51,7 @@ static int _dlfcn(char const * progname, char const * soname)
 		ret++;
 	}
 	/* calling a simple syscall */
-	printf("%s: Testing %s\n", progname, "dlsym() (2/2)");
+	printf("%s: Testing %s, %s\n", progname, title, "dlsym() (2/2)");
 	if((g = dlsym(handle, "getpid")) == NULL)
 	{
 		printf("%s: %s\n", progname, dlerror());
@@ -70,9 +71,12 @@ static int _dlfcn(char const * progname, char const * soname)
 /* functions */
 int main(int argc, char * argv[])
 {
+	int ret = 0;
 	char const * soname = argv[0];
 
 	if(argc == 2)
 		soname = argv[1];
-	return (_dlfcn(argv[0], soname) == 0) ? 0 : 2;
+	ret |= _dlfcn(argv[0], "dlopen() (1/2)", soname);
+	ret |= _dlfcn(argv[0], "dlopen() (2/2)", NULL);
+	return (ret == 0) ? 0 : 2;
 }
