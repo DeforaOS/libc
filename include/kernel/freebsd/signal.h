@@ -44,9 +44,13 @@ struct sigaction
 # define SIGILL		4
 # define SIGTRAP	5
 # define SIGABRT	6
+# define SIGIOT		6
+# define SIGFPE		8
 # define SIGKILL	9
+# define SIGBUS		10
 # define SIGSEGV	11
 # define SIGPIPE	13
+# define SIGALRM	14
 # define SIGTERM	15
 # define SIGSTOP	17
 # define SIGTSTP	18
