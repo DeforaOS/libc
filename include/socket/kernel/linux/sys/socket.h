@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,6 +39,8 @@ struct sockaddr
 # define MSG_NOSIGNAL		0x4000
 
 # define SOL_SOCKET		1
+
+# define SOMAXCONN		128
 
 # define SHUT_RD		0
 # define SHUT_WR		1
