@@ -21,6 +21,7 @@
 
 # define SYS_recvfrom		29
 # define SYS_accept		30
+# define SYS_getpeername	31
 # define SYS_getsockname	32
 # define SYS_connect		98
 # define SYS_bind		104

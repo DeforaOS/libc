@@ -33,6 +33,7 @@
 #  define SYS_bind		49
 #  define SYS_listen		50
 #  define SYS_getsockname	51
+#  define SYS_getpeername	52
 #  define SYS_socketpair	53
 #  define SYS_setsockopt	54
 #  define SYS_getsockopt	55
@@ -54,6 +55,7 @@
 #  define SYS_sendmsg		16
 #  define SYS_recvmsg		17
 #  define SYS_socketcall	102
+#  define SYS_getpeername	205
 # endif
 
 #endif /* !KERNEL_SOCKET_LINUX_COMMON_H */

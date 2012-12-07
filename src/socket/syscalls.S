@@ -76,6 +76,9 @@ SYSCALL(bind)
 #ifdef SYS_connect
 SYSCALL(connect)
 #endif
+#ifdef SYS_getpeername
+SYSCALL(getpeername)
+#endif
 #ifdef SYS_getsockname
 SYSCALL(getsockname)
 #endif

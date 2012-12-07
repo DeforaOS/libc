@@ -56,6 +56,17 @@ int connect(int fd, const struct sockaddr * addr, socklen_t len)
 #endif
 
 
+/* getpeername */
+#ifndef SYS_getpeername
+# warning Unsupported platform: getpeername() is missing
+int getpeername(int fd, struct sockaddr * addr, socklen_t * len)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* listen */
 #ifndef SYS_listen
 # warning Unsupported platform: listen() is missing

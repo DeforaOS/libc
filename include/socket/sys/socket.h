@@ -70,6 +70,7 @@ typedef struct _sockaddr_storage
 int accept(int fd, struct sockaddr * addr, socklen_t * len);
 int bind(int fd, const struct sockaddr * addr, socklen_t len);
 int connect(int fd, const struct sockaddr * addr, socklen_t len);
+int getpeername(int fd, struct sockaddr * addr, socklen_t * len);
 int getsockname(int fd, struct sockaddr * addr, socklen_t * len);
 int getsockopt(int fd, int level, int name, const void * value,
 		socklen_t * len);
