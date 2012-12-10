@@ -27,6 +27,12 @@
 #define min(a, b) ((a) < (b) ? (a) : (b))
 
 
+/* public */
+/* variables */
+int getdate_err = 0;
+
+
+/* functions */
 /* clock */
 clock_t clock(void)
 {
@@ -79,6 +85,35 @@ int clock_settime(clockid_t clock_id, struct timespec * tp)
 double difftime(time_t time1, time_t time0)
 {
 	return (double)time1 - (double)time0;
+}
+
+
+/* getdate */
+struct tm * getdate(char const * string)
+{
+	char const * datemsk;
+	FILE * fp;
+	char buf[80];
+
+	if((datemsk = getenv("DATEMSK")) == NULL)
+	{
+		getdate_err = 1;
+		return NULL;
+	}
+	if((fp = fopen(datemsk, "r")) == NULL)
+	{
+		getdate_err = 2;
+		return NULL;
+	}
+	while(fgets(buf, sizeof(buf), fp) != NULL)
+	{
+		/* FIXME really implement */
+	}
+	if(ferror(fp))
+		getdate_err = 5;
+	fclose(fp);
+	errno = ENOSYS;
+	return NULL;
 }
 
 
