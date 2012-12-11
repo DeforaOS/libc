@@ -41,5 +41,5 @@ int main(int argc, char * argv[])
 	int res = 0;
 
 	res += _getdate(argv[0]);
-	return 0;
+	return (res == 0) ? 0 : 2;
 }
