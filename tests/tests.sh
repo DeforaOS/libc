@@ -57,6 +57,7 @@ FAILED=
 ./stdint		>> "$target"	|| FAILED="$FAILED stdint(error $?)"
 ./stdio			>> "$target"	|| FAILED="$FAILED stdio(error $?)"
 ./string		>> "$target"	|| FAILED="$FAILED string(error $?)"
+./time			>> "$target"	|| FAILED="$FAILED time(error $?)"
 [ -z "$FAILED" ]			&& exit 0
 echo "Failed tests:$FAILED" 1>&2
 exit 2

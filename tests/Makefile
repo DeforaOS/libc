@@ -1,4 +1,4 @@
-TARGETS	= dlfcn includes ptrace regex select setjmp signal socket start stdint stdio string tests.log
+TARGETS	= dlfcn includes ptrace regex select setjmp signal socket start stdint stdio string time tests.log
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -102,7 +102,14 @@ string_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 string: $(string_OBJS)
 	$(CC) -o string $(string_OBJS) $(string_LDFLAGS)
 
-tests.log: dlfcn includes ptrace regex setjmp signal socket start stdint stdio string tests.sh
+time_OBJS = time.o
+time_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+time_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
+
+time: $(time_OBJS)
+	$(CC) -o time $(time_OBJS) $(time_LDFLAGS)
+
+tests.log: dlfcn includes ptrace regex setjmp signal socket start stdint stdio string time tests.sh
 	./tests.sh -P "$(PREFIX)" -- "tests.log"
 
 dlfcn.o: dlfcn.c ../src/dl/libdl.a ../src/libc.a ../src/start.o
@@ -141,8 +148,11 @@ stdio.o: stdio.c ../src/libc.a ../src/start.o
 string.o: string.c ../src/libc.a ../src/start.o
 	$(CC) $(string_CFLAGS) -c string.c
 
+time.o: time.c ../src/libc.a ../src/start.o
+	$(CC) $(time_CFLAGS) -c time.c
+
 clean:
-	$(RM) -- $(dlfcn_OBJS) $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(tests.log_OBJS)
+	$(RM) -- $(dlfcn_OBJS) $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)

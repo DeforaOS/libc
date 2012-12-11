@@ -531,6 +531,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/tests/stdint.c \
 		$(PACKAGE)-$(VERSION)/tests/stdio.c \
 		$(PACKAGE)-$(VERSION)/tests/string.c \
+		$(PACKAGE)-$(VERSION)/tests/time.c \
 		$(PACKAGE)-$(VERSION)/tests/Makefile \
 		$(PACKAGE)-$(VERSION)/tests/tests.sh \
 		$(PACKAGE)-$(VERSION)/tests/project.conf \
