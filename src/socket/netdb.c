@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,6 +42,19 @@ void endhostent(void)
 	if(_fp != NULL)
 		fclose(_fp);
 	_fp = NULL;
+}
+
+
+/* freeaddrinfo */
+void freeaddrinfo(struct addrinfo * ai)
+{
+	struct addrinfo * p;
+
+	for(p = ai; p != NULL; p = ai)
+	{
+		ai = p->ai_next;
+		free(p);
+	}
 }
 
 

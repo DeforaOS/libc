@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,21 @@
 
 
 /* types */
+# ifndef addrinfo
+#  define addrinfo addrinfo
+struct addrinfo
+{
+	int ai_flags;
+	int ai_family;
+	int ai_socktype;
+	int ai_protocol;
+	socklen_t ai_addrlen;
+	struct sockaddr * ai_addr;
+	char * ai_canonname;
+	struct addrinfo * ai_next;
+};
+# endif
+
 # ifndef hostent
 #  define hostent hostent
 struct hostent
@@ -59,6 +74,7 @@ extern int h_errno;
 
 /* functions */
 void endhostent(void);
+void freeaddrinfo(struct addrinfo * ai);
 struct hostent * gethostbyaddr(const void * addr, socklen_t len, int type);
 struct hostent * gethostbyname(const char * name);
 struct servent * getservbyname(const char * name, const char * protocol);
