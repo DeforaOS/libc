@@ -77,6 +77,7 @@ time_t mktime(struct tm * timep);
 int nanosleep(struct timespec * requested, struct timespec * remaining);
 size_t strftime(char * s, size_t maxsize, char const * format,
 		struct tm * timep);
+char * strptime(char const * buf, char const * format, struct tm * tm);
 time_t time(time_t * t);
 void tzset(void);
 

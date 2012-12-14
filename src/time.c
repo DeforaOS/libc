@@ -91,9 +91,13 @@ double difftime(time_t time1, time_t time0)
 /* getdate */
 struct tm * getdate(char const * string)
 {
+	struct tm * ret = NULL;
+	static struct tm tm;
 	char const * datemsk;
 	FILE * fp;
 	char buf[80];
+	size_t len;
+	char * p;
 
 	if((datemsk = getenv("DATEMSK")) == NULL)
 	{
@@ -107,13 +111,24 @@ struct tm * getdate(char const * string)
 	}
 	while(fgets(buf, sizeof(buf), fp) != NULL)
 	{
-		/* FIXME really implement */
+		if((len = strlen(buf)) > 0)
+			buf[len - 1] = '\0';
+		memset(&ret, 0, sizeof(ret));
+		if((p = strptime(string, buf, &tm)) != NULL && *p == '\0')
+		{
+			ret = &tm;
+			break;
+		}
 	}
-	if(ferror(fp))
-		getdate_err = 5;
+	if(ret == NULL)
+	{
+		if(ferror(fp))
+			getdate_err = 5;
+		else
+			getdate_err = 7;
+	}
 	fclose(fp);
-	errno = ENOSYS;
-	return NULL;
+	return ret;
 }
 
 
@@ -338,6 +353,15 @@ static char * _strftime_print_int(char * s, size_t * maxsize, int i)
 	if((len = snprintf(buf, sizeof(buf), "%d", i)) <= 0)
 		return s;
 	return _strftime_print(s, maxsize, buf, len);
+}
+
+
+/* strptime */
+char * strptime(char const * buf, char const * format, struct tm * tm)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
 }
 
 
