@@ -58,6 +58,16 @@ void freeaddrinfo(struct addrinfo * ai)
 }
 
 
+/* getaddrinfo */
+int getaddrinfo(char const * nodename, char const * servname,
+		struct addrinfo const * hints, struct addrinfo ** res)
+{
+	/* FIXME really implement */
+	errno = ENOSYS;
+	return -1;
+}
+
+
 /* gethostbyaddr */
 struct hostent * gethostbyaddr(const void * addr, socklen_t len, int type)
 {
@@ -71,12 +81,19 @@ struct hostent * gethostbyaddr(const void * addr, socklen_t len, int type)
 struct hostent * gethostbyname(const char * name)
 {
 	struct hostent * he;
+	struct addrinfo hints;
+	struct addrinfo * ai;
 
 	sethostent(1);
 	while((he = gethostent()) != NULL)
 		if(strcmp(he->h_name, name) == 0)
 			return he;
-	/* FIXME implement */
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_INET;
+	if(getaddrinfo(name, NULL, &hints, &ai) != 0)
+		return -1;
+	/* FIXME implement the rest */
+	freeaddrinfo(ai);
 	errno = ENOSYS;
 	return NULL;
 }
