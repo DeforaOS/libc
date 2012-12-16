@@ -30,6 +30,10 @@ static FILE * _fp = NULL;
 static char _buf[512];
 
 
+/* prototypes */
+static void _hostent_free(struct hostent * he);
+
+
 /* public */
 /* variables */
 int h_errno = 0;
@@ -80,6 +84,7 @@ struct hostent * gethostbyaddr(const void * addr, socklen_t len, int type)
 /* gethostbyname */
 struct hostent * gethostbyname(const char * name)
 {
+	static struct hostent ret = { NULL, NULL, 0, 0, NULL };
 	struct hostent * he;
 	struct addrinfo hints;
 	struct addrinfo * ai;
@@ -91,11 +96,27 @@ struct hostent * gethostbyname(const char * name)
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_INET;
 	if(getaddrinfo(name, NULL, &hints, &ai) != 0)
-		return -1;
-	/* FIXME implement the rest */
+		return NULL;
+	_hostent_free(&ret);
+	ret.h_name = strdup(name);
+	ret.h_aliases = NULL;
+	ret.h_addrtype = ai->ai_family;
+	ret.h_length = ai->ai_addrlen;
+	if((ret.h_addr_list = malloc(2 * sizeof(*ret.h_addr_list))) != NULL)
+	{
+		if((ret.h_addr_list[0] = malloc(ai->ai_addrlen)) != NULL)
+			memcpy(ret.h_addr_list[0], ai->ai_addr, ai->ai_addrlen);
+		ret.h_addr_list[1] = 0;
+	}
 	freeaddrinfo(ai);
-	errno = ENOSYS;
-	return NULL;
+	/* check for errors */
+	if(ret.h_name == NULL || ret.h_addr_list == NULL
+			|| ret.h_addr_list[0] == NULL)
+	{
+		_hostent_free(&ret);
+		return NULL;
+	}
+	return &ret;
 }
 
 
@@ -110,7 +131,6 @@ struct servent * getservbyname(const char * name, const char * protocol)
 
 /* gethostent */
 static int _gethostent_open(void);
-static void _gethostent_free(struct hostent * he);
 static char * _gethostent_addr(char const ** s);
 static char * _gethostent_host(char const ** s);
 
@@ -123,7 +143,7 @@ struct hostent * gethostent(void)
 		return NULL;
 	for(;;)
 	{
-		_gethostent_free(&he);
+		_hostent_free(&he);
 		if(fgets(_buf, sizeof(_buf), _fp) == NULL)
 			break;
 		/* skip whitespaces */
@@ -166,20 +186,6 @@ static int _gethostent_open(void)
 	if(_fp != NULL)
 		return 0;
 	return -1;
-}
-
-static void _gethostent_free(struct hostent * he)
-{
-	char ** p;
-
-	free(he->h_name);
-	for(p = he->h_aliases; p != NULL && *p != NULL; p++)
-		free(*p);
-	free(he->h_aliases);
-	for(p = he->h_addr_list; p != NULL && *p != NULL; p++)
-		free(*p);
-	free(he->h_addr_list);
-	memset(he, 0, sizeof(*he));
 }
 
 static char * _gethostent_addr(char const ** s)
@@ -271,4 +277,22 @@ void sethostent(int stayopen)
 		return;
 	}
 	fseek(_fp, 0, SEEK_SET);
+}
+
+
+/* private */
+/* functions */
+/* hostent_free */
+static void _hostent_free(struct hostent * he)
+{
+	char ** p;
+
+	free(he->h_name);
+	for(p = he->h_aliases; p != NULL && *p != NULL; p++)
+		free(*p);
+	free(he->h_aliases);
+	for(p = he->h_addr_list; p != NULL && *p != NULL; p++)
+		free(*p);
+	free(he->h_addr_list);
+	memset(he, 0, sizeof(*he));
 }
