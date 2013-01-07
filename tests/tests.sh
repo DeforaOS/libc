@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #$Id$
-#Copyright (c) 2012 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org>
 #This file is part of DeforaOS System libc
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
@@ -25,8 +25,12 @@ _usage()
 
 
 #main
-while getopts "P:" "name"; do
+clean=0
+while getopts "cP:" name; do
 	case "$name" in
+		c)
+			clean=1
+			;;
 		P)
 			#XXX ignored
 			;;
@@ -42,6 +46,8 @@ if [ $# -ne 1 ]; then
 	exit $?
 fi
 target="$1"
+
+[ "$clean" -ne 0 ]			&& exit 0
 
 > "$target"
 FAILED=
