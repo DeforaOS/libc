@@ -153,6 +153,7 @@ time.o: time.c ../src/libc.a ../src/start.o
 
 clean:
 	$(RM) -- $(dlfcn_OBJS) $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS)
+	./tests.sh -c -P "$(PREFIX)" -- "tests.log"
 
 distclean: clean
 	$(RM) -- $(TARGETS)

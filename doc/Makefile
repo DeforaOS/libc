@@ -28,10 +28,12 @@ gtkdoc/html.stamp: gtkdoc/libc-docs.xml gtkdoc/sgml.stamp gtkdoc/tmpl.stamp
 clean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
 	$(RM) -- $(gtkdoc/libc.types_OBJS) $(gtkdoc/tmpl.stamp_OBJS) $(gtkdoc/sgml.stamp_OBJS) $(gtkdoc/html.stamp_OBJS)
+	./gtkdoc.sh -c -P "$(PREFIX)" -- "gtkdoc/html.stamp"
 
 distclean:
 	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
 	$(RM) -- $(gtkdoc/libc.types_OBJS) $(gtkdoc/tmpl.stamp_OBJS) $(gtkdoc/sgml.stamp_OBJS) $(gtkdoc/html.stamp_OBJS)
+	./gtkdoc.sh -c -P "$(PREFIX)" -- "gtkdoc/html.stamp"
 	$(RM) -- $(TARGETS)
 
 install: $(TARGETS)
