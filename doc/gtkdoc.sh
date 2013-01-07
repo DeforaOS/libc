@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2012 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -27,6 +27,8 @@
 #variables
 PREFIX="/usr/local"
 . "../config.sh"
+MODULE="$PACKAGE"
+#executables
 DEBUG="_debug"
 GTKDOC_FIXXREF="gtkdoc-fixxref"
 GTKDOC_MKDB="gtkdoc-mkdb"
@@ -35,7 +37,6 @@ GTKDOC_MKTMPL="gtkdoc-mktmpl"
 GTKDOC_SCAN="gtkdoc-scan"
 INSTALL="install -m 0644"
 MKDIR="mkdir -m 0755 -p"
-MODULE="$PACKAGE"
 RM="rm -f"
 TOUCH="touch"
 
@@ -52,16 +53,20 @@ _debug()
 #usage
 _usage()
 {
-	echo "Usage: gtkdoc.sh [-i|-u][-P prefix] target" 1>&2
+	echo "Usage: gtkdoc.sh [-c|-i|-u][-P prefix] target..." 1>&2
 	return 1
 }
 
 
 #main
+clean=0
 install=0
 uninstall=0
-while getopts "iuP:" "name"; do
+while getopts "ciuP:" name; do
 	case "$name" in
+		c)
+			clean=1
+			;;
 		i)
 			uninstall=0
 			install=1
@@ -91,6 +96,9 @@ instdir="$DATADIR/gtk-doc/html"
 while [ $# -gt 0 ]; do
 	target="$1"
 	shift
+
+	#clean
+	[ "$clean" -ne 0 ] && continue
 
 	#uninstall
 	if [ "$uninstall" -eq 1 ]; then
