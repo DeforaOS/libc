@@ -2,18 +2,18 @@ TARGETS	= libdl.a libdl.so.0.0 libdl.so.0 libdl.so
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
-CC	?= cc
+CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/dl -DPIC
-CPPFLAGS?=
+CPPFLAGS=
 CFLAGSF	= -W -fPIC
 CFLAGS	= -Wall -g -O2 -pedantic -ffreestanding
-AR	?= ar
-RANLIB	?= ranlib
+AR	= ar
+RANLIB	= ranlib
 CCSHARED= $(CC) -nostdlib -shared
-RM	?= rm -f
-LN	?= ln -f
-MKDIR	?= mkdir -p
-INSTALL	?= install
+RM	= rm -f
+LN	= ln -f
+MKDIR	= mkdir -p
+INSTALL	= install
 
 
 all: $(TARGETS)

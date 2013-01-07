@@ -3,17 +3,17 @@ PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
 SBINDIR	= $(PREFIX)/sbin
-CC	?= cc
+CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../include -isystem ../include/rt
-CPPFLAGS?=
+CPPFLAGS=
 CFLAGSF	= -W
 CFLAGS	= -Wall -g -O2 -ffreestanding
 LDFLAGSF= -nostdlib -L../src -Wl,-rpath,$(PWD)/../src -lc ../src/start.o
 LDFLAGS	= `$(CC) -print-libgcc-file-name`
-RM	?= rm -f
-LN	?= ln -f
-MKDIR	?= mkdir -p
-INSTALL	?= install
+RM	= rm -f
+LN	= ln -f
+MKDIR	= mkdir -p
+INSTALL	= install
 
 
 all: $(TARGETS)

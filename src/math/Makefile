@@ -5,18 +5,18 @@ DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
 AS	= $(CC)
 ASFLAGS	= -W -Wall -g -pedantic -ffreestanding -c
-CC	?= cc
+CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/math -DPIC
-CPPFLAGS?=
+CPPFLAGS=
 CFLAGSF	= -W -fPIC
 CFLAGS	= -Wall -g -O2 -pedantic -ffreestanding
-AR	?= ar
-RANLIB	?= ranlib
+AR	= ar
+RANLIB	= ranlib
 CCSHARED= $(CC) -nostdlib -shared
-RM	?= rm -f
-LN	?= ln -f
-MKDIR	?= mkdir -p
-INSTALL	?= install
+RM	= rm -f
+LN	= ln -f
+MKDIR	= mkdir -p
+INSTALL	= install
 
 
 all: subdirs $(TARGETS)

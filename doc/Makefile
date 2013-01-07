@@ -2,10 +2,10 @@ SUBDIRS	= gtkdoc
 TARGETS	= gtkdoc/libc.types gtkdoc/tmpl.stamp gtkdoc/sgml.stamp gtkdoc/html.stamp
 PREFIX	= /usr/local
 DESTDIR	=
-RM	?= rm -f
-LN	?= ln -f
-MKDIR	?= mkdir -p
-INSTALL	?= install
+RM	= rm -f
+LN	= ln -f
+MKDIR	= mkdir -p
+INSTALL	= install
 
 
 all: subdirs $(TARGETS)

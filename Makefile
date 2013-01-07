@@ -1,9 +1,9 @@
 PACKAGE	= libc
 VERSION	= 0.0.8
 SUBDIRS	= doc include src tests tools
-RM	?= rm -f
-LN	?= ln -f
-TAR	?= tar -czvf
+RM	= rm -f
+LN	= ln -f
+TAR	= tar -czvf
 
 
 all: subdirs

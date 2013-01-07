@@ -4,18 +4,18 @@ DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
 AS	= $(CC)
 ASFLAGS	= -W -fPIC -Wall -g -pedantic -ffreestanding -c
-CC	?= cc
+CC	= cc
 CPPFLAGSF= -isystem ../include -DPIC
-CPPFLAGS?=
+CPPFLAGS=
 CFLAGSF	= -W -fPIC
 CFLAGS	= -Wall -g -O2 -pedantic -ffreestanding
-AR	?= ar
-RANLIB	?= ranlib
-CCSHARED?= $(CC) -shared
-RM	?= rm -f
-LN	?= ln -f
-MKDIR	?= mkdir -p
-INSTALL	?= install
+AR	= ar
+RANLIB	= ranlib
+CCSHARED= $(CC) -shared
+RM	= rm -f
+LN	= ln -f
+MKDIR	= mkdir -p
+INSTALL	= install
 
 
 all: $(TARGETS)
