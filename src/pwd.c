@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2005-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,7 @@ struct passwd * getpwnam(char const * name)
 {
 	struct passwd * pw;
 
+	setpwent();
 	while((pw = getpwent()) != NULL)
 		if(strcmp(pw->pw_name, name) == 0)
 			break;
@@ -103,6 +104,7 @@ struct passwd * getpwuid(uid_t uid)
 {
 	struct passwd * pw;
 
+	setpwent();
 	while((pw = getpwent()) != NULL)
 		if(pw->pw_uid == uid)
 			break;
@@ -114,5 +116,7 @@ struct passwd * getpwuid(uid_t uid)
 /* setpwent */
 void setpwent(void)
 {
-	/* FIXME implement */
+	if(_fp == NULL)
+		return;
+	rewind(_fp);
 }
