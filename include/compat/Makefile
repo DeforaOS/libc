@@ -3,7 +3,7 @@ PREFIX	= /usr/local
 DESTDIR	=
 RM	= rm -f
 LN	= ln -f
-MKDIR	= mkdir -p
+MKDIR	= mkdir -m 0755 -p
 INSTALL	= install
 INCLUDEDIR= $(PREFIX)/include
 
@@ -11,16 +11,16 @@ INCLUDEDIR= $(PREFIX)/include
 all: subdirs
 
 subdirs:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE)) || exit; done
 
 clean:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) clean) || exit; done
 
 distclean:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) distclean) || exit; done
 
 install:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
 	$(INSTALL) -m 0644 -- dirent.h $(DESTDIR)$(INCLUDEDIR)/compat/dirent.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
@@ -49,7 +49,7 @@ install:
 	$(INSTALL) -m 0644 -- utmpx.h $(DESTDIR)$(INCLUDEDIR)/compat/utmpx.h
 
 uninstall:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/dirent.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/errno.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/fcntl.h

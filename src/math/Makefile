@@ -15,14 +15,14 @@ RANLIB	= ranlib
 CCSHARED= $(CC) -nostdlib -shared
 RM	= rm -f
 LN	= ln -f
-MKDIR	= mkdir -p
+MKDIR	= mkdir -m 0755 -p
 INSTALL	= install
 
 
 all: subdirs $(TARGETS)
 
 subdirs:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE)) || exit; done
 
 libm_OBJS = arch.o math.o
 libm_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
@@ -45,16 +45,16 @@ math.o: math.c ../../include/math/math.h
 	$(CC) $(libm_CFLAGS) -c math.c
 
 clean:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) clean) || exit; done
 	$(RM) -- $(libm_OBJS)
 
 distclean:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) distclean) || exit; done
 	$(RM) -- $(libm_OBJS)
 	$(RM) -- $(TARGETS)
 
 install: $(TARGETS)
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 -- libm.a $(DESTDIR)$(LIBDIR)/libm.a
 	$(INSTALL) -m 0755 -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0.0
@@ -62,7 +62,7 @@ install: $(TARGETS)
 	$(LN) -s -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so
 
 uninstall:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done
 	$(RM) -- $(DESTDIR)$(LIBDIR)/libm.a
 	$(RM) -- $(DESTDIR)$(LIBDIR)/libm.so.0.0
 	$(RM) -- $(DESTDIR)$(LIBDIR)/libm.so.0

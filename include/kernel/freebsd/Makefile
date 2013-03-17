@@ -3,7 +3,7 @@ PREFIX	= /usr/local
 DESTDIR	=
 RM	= rm -f
 LN	= ln -f
-MKDIR	= mkdir -p
+MKDIR	= mkdir -m 0755 -p
 INSTALL	= install
 INCLUDEDIR= $(PREFIX)/include
 
@@ -11,16 +11,16 @@ INCLUDEDIR= $(PREFIX)/include
 all: subdirs
 
 subdirs:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE)) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE)) || exit; done
 
 clean:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) clean) || exit; done
 
 distclean:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) distclean) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) distclean) || exit; done
 
 install:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) install) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd
 	$(INSTALL) -m 0644 -- dirent.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/dirent.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd
@@ -43,7 +43,7 @@ install:
 	$(INSTALL) -m 0644 -- utmpx.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/utmpx.h
 
 uninstall:
-	@for i in $(SUBDIRS); do (cd $$i && $(MAKE) uninstall) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/dirent.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/errno.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/fcntl.h
