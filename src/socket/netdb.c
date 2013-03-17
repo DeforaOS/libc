@@ -28,6 +28,7 @@
 /* variables */
 static FILE * _fp = NULL;
 static char _buf[512];
+static FILE * _fp2 = NULL;
 
 
 /* prototypes */
@@ -120,8 +121,8 @@ struct hostent * gethostbyname(const char * name)
 }
 
 
-/* getservbyname */
-struct servent * getservbyname(const char * name, const char * protocol)
+/* getservent */
+struct servent * getservent(void)
 {
 	/* FIXME implement */
 	errno = ENOSYS;
@@ -129,8 +130,31 @@ struct servent * getservbyname(const char * name, const char * protocol)
 }
 
 
+/* getservbyname */
+struct servent * getservbyname(const char * name, const char * protocol)
+{
+	setservent(1);
+	if(_fp2 == NULL)
+		return NULL;
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
+}
+
+
+/* getservbyport */
+struct servent * getservbyport(int port, const char * protocol)
+{
+	setservent(1);
+	if(_fp2 == NULL)
+		return NULL;
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
+}
+
+
 /* gethostent */
-static int _gethostent_open(void);
 static char * _gethostent_addr(char const ** s);
 static char * _gethostent_host(char const ** s);
 
@@ -139,7 +163,8 @@ struct hostent * gethostent(void)
 	static struct hostent he = { NULL, NULL, 0, 0, NULL };
 	char const * s;
 
-	if(_gethostent_open() != 0)
+	sethostent(1);
+	if(_fp == NULL)
 		return NULL;
 	for(;;)
 	{
@@ -176,16 +201,6 @@ struct hostent * gethostent(void)
 	/* nothing found */
 	endhostent();
 	return NULL;
-}
-
-static int _gethostent_open(void)
-{
-	if(_fp != NULL)
-		return 0;
-	sethostent(1);
-	if(_fp != NULL)
-		return 0;
-	return -1;
 }
 
 static char * _gethostent_addr(char const ** s)
@@ -271,12 +286,39 @@ char * hstrerror(int errnum)
 /* sethostent */
 void sethostent(int stayopen)
 {
-	if(_fp == NULL && (_fp = fopen("/etc/hosts", "r")) == NULL)
+	if(_fp == NULL)
 	{
-		h_errno = NO_DATA;
+		if(stayopen != 0 && (_fp = fopen("/etc/hosts", "r")) == NULL)
+			h_errno = NO_DATA;
 		return;
 	}
-	fseek(_fp, 0, SEEK_SET);
+	if(stayopen == 0)
+	{
+		fclose(_fp);
+		_fp = NULL;
+		return;
+	}
+	rewind(_fp);
+}
+
+
+/* setservent */
+void setservent(int stayopen)
+{
+	if(_fp2 == NULL)
+	{
+		if(stayopen != 0
+				&& (_fp2 = fopen("/etc/services", "r")) == NULL)
+			h_errno = NO_DATA;
+		return;
+	}
+	if(stayopen == 0)
+	{
+		fclose(_fp2);
+		_fp2 = NULL;
+		return;
+	}
+	rewind(_fp2);
 }
 
 
