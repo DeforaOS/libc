@@ -21,31 +21,62 @@
 
 /* prototypes */
 static int _netdb(char const * progname);
-static void _hstrerror(char const * progname, char const * message, int value);
+
+static int _gethostent(void);
+static int _getservent(void);
+static int _hstrerror(char const * progname, char const * message, int value);
 
 
 /* functions */
 /* netdb */
 static int _netdb(char const * progname)
 {
-	struct hostent * he;
+	int ret = 0;
 
 	/* gethostent */
-	while((he = gethostent()) != NULL)
-		printf("%s\n", he->h_name);
+	ret |= _gethostent();
+	/* getservent */
+	ret |= _getservent();
 	/* hstrerror */
-	_hstrerror(progname, "HOST_NOT_FOUND", HOST_NOT_FOUND);
-	_hstrerror(progname, "TRY_AGAIN", TRY_AGAIN);
-	_hstrerror(progname, "NO_RECOVERY", NO_RECOVERY);
-	_hstrerror(progname, "NO_DATA", NO_DATA);
+	ret |= _hstrerror(progname, "HOST_NOT_FOUND", HOST_NOT_FOUND);
+	ret |= _hstrerror(progname, "TRY_AGAIN", TRY_AGAIN);
+	ret |= _hstrerror(progname, "NO_RECOVERY", NO_RECOVERY);
+	ret |= _hstrerror(progname, "NO_DATA", NO_DATA);
+	return 0;
+}
+
+
+/* gethostent */
+static int _gethostent(void)
+{
+	struct hostent * he;
+	unsigned int i;
+
+	for(i = 0; (he = gethostent()) != NULL; i++)
+		printf("%s\n", he->h_name);
+	printf("%u hosts listed\n", i);
+	return 0;
+}
+
+
+/* getservent */
+static int _getservent(void)
+{
+	struct servent * se;
+	unsigned int i;
+
+	for(i = 0; (se = getservent()) != NULL; i++)
+		printf("%s\n", se->s_name);
+	printf("%u services listed\n", i);
 	return 0;
 }
 
 
 /* hstrerror */
-static void _hstrerror(char const * progname, char const * message, int value)
+static int _hstrerror(char const * progname, char const * message, int value)
 {
 	printf("%s: %s: %s\n", progname, message, hstrerror(value));
+	return 0;
 }
 
 
