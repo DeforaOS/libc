@@ -23,6 +23,8 @@
 static int _netdb(char const * progname);
 
 static int _gethostent(void);
+static int _getservbyname(char const * name, char const * protocol);
+static int _getservbyport(int port, char const * protocol);
 static int _getservent(void);
 static int _hstrerror(char const * progname, char const * message, int value);
 
@@ -36,6 +38,8 @@ static int _netdb(char const * progname)
 	/* gethostent */
 	ret |= _gethostent();
 	/* getservent */
+	ret |= _getservbyname("ssh", "tcp");
+	ret |= _getservbyport(22, "tcp");
 	ret |= _getservent();
 	/* hstrerror */
 	ret |= _hstrerror(progname, "HOST_NOT_FOUND", HOST_NOT_FOUND);
@@ -52,9 +56,37 @@ static int _gethostent(void)
 	struct hostent * he;
 	unsigned int i;
 
+	sethostent(1);
 	for(i = 0; (he = gethostent()) != NULL; i++)
 		printf("%s\t%d %d\n", he->h_name, he->h_addrtype, he->h_length);
+	endhostent();
 	printf("%u hosts listed\n", i);
+	return 0;
+}
+
+
+/* getservbyname */
+static int _getservbyname(char const * name, char const * protocol)
+{
+	struct servent * se;
+
+	printf("%s: %s/%s\n", "getservbyname", name, protocol);
+	if((se = getservbyname(name, protocol)) == NULL)
+		return 0;
+	printf("%s\t%d/%s\n", se->s_name, se->s_port, se->s_proto);
+	return 0;
+}
+
+
+/* getservbyport */
+static int _getservbyport(int port, char const * protocol)
+{
+	struct servent * se;
+
+	printf("%s: %d/%s\n", "getservbyport", port, protocol);
+	if((se = getservbyport(port, protocol)) == NULL)
+		return 0;
+	printf("%s\t%d/%s\n", se->s_name, se->s_port, se->s_proto);
 	return 0;
 }
 
@@ -65,8 +97,11 @@ static int _getservent(void)
 	struct servent * se;
 	unsigned int i;
 
+	printf("%s:\n", "getservent");
+	setservent(1);
 	for(i = 0; (se = getservent()) != NULL; i++)
 		printf("%s\t%d/%s\n", se->s_name, se->s_port, se->s_proto);
+	endservent();
 	printf("%u services listed\n", i);
 	return 0;
 }

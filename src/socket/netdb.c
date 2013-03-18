@@ -301,11 +301,13 @@ static char * _getservent_name(char const ** s)
 /* getservbyname */
 struct servent * getservbyname(const char * name, const char * protocol)
 {
+	struct servent * se;
+
 	setservent(1);
-	if(_fp2 == NULL)
-		return NULL;
-	/* FIXME implement */
-	errno = ENOSYS;
+	while((se = getservent()) != NULL)
+		if(strcmp(se->s_name, name) == 0
+				&& strcmp(se->s_proto, protocol) == 0)
+			return se;
 	return NULL;
 }
 
@@ -313,11 +315,12 @@ struct servent * getservbyname(const char * name, const char * protocol)
 /* getservbyport */
 struct servent * getservbyport(int port, const char * protocol)
 {
+	struct servent * se;
+
 	setservent(1);
-	if(_fp2 == NULL)
-		return NULL;
-	/* FIXME implement */
-	errno = ENOSYS;
+	while((se = getservent()) != NULL)
+		if(se->s_port == port && strcmp(se->s_proto, protocol) == 0)
+			return se;
 	return NULL;
 }
 
