@@ -53,7 +53,7 @@ static int _gethostent(void)
 	unsigned int i;
 
 	for(i = 0; (he = gethostent()) != NULL; i++)
-		printf("%s\n", he->h_name);
+		printf("%s\t%d %d\n", he->h_name, he->h_addrtype, he->h_length);
 	printf("%u hosts listed\n", i);
 	return 0;
 }
@@ -66,7 +66,7 @@ static int _getservent(void)
 	unsigned int i;
 
 	for(i = 0; (se = getservent()) != NULL; i++)
-		printf("%s\n", se->s_name);
+		printf("%s\t%d/%s\n", se->s_name, se->s_port, se->s_proto);
 	printf("%u services listed\n", i);
 	return 0;
 }

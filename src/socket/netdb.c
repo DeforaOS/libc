@@ -20,6 +20,7 @@
 #include "stdio.h"
 #include "string.h"
 #include "ctype.h"
+#include "limits.h"
 #include "errno.h"
 #include "netdb.h"
 
@@ -27,12 +28,13 @@
 /* private */
 /* variables */
 static FILE * _fp = NULL;
-static char _buf[512];
 static FILE * _fp2 = NULL;
+static char _buf[512];
 
 
 /* prototypes */
 static void _hostent_free(struct hostent * he);
+static void _servent_free(struct servent * se);
 
 
 /* public */
@@ -47,6 +49,15 @@ void endhostent(void)
 	if(_fp != NULL)
 		fclose(_fp);
 	_fp = NULL;
+}
+
+
+/* endservent */
+void endservent(void)
+{
+	if(_fp2 != NULL)
+		fclose(_fp2);
+	_fp2 = NULL;
 }
 
 
@@ -209,6 +220,7 @@ static char * _gethostent_host(char const ** s)
 	for(; isalnum((int)(unsigned char)**s) || **s == '-' || **s == '.';
 			(*s)++)
 	{
+		/* XXX only realloc() once */
 		if((p = realloc(ret, len + 2)) == NULL)
 			break;
 		ret = p;
@@ -222,11 +234,67 @@ static char * _gethostent_host(char const ** s)
 
 
 /* getservent */
+static char * _getservent_name(char const ** s);
+
 struct servent * getservent(void)
 {
-	/* FIXME implement */
-	errno = ENOSYS;
+	static struct servent se = { NULL, NULL, 0, NULL };
+	char const * s;
+	char * p;
+
+	if(_fp2 == NULL)
+		setservent(1);
+	if(_fp2 == NULL)
+		return NULL;
+	for(;;)
+	{
+		_servent_free(&se);
+		if(fgets(_buf, sizeof(_buf), _fp2) == NULL)
+			break;
+		/* skip whitespaces */
+		for(s = _buf; isspace(*s); s++);
+		/* skip comments */
+		if(*s == '#' || *s == '\n')
+			continue;
+		/* read service */
+		if((se.s_name = _getservent_name(&s)) == NULL)
+			continue;
+		/* skip whitespaces */
+		for(; isspace(*s); s++);
+		/* read port */
+		se.s_port = strtol(s, &p, 10);
+		if(*s == '\0' || *p != '/')
+			continue;
+		/* read protocol */
+		s = p + 1;
+		if((se.s_proto = _getservent_name(&s)) == NULL)
+			continue;
+		return &se;
+	}
+	/* nothing found */
+	endservent();
 	return NULL;
+}
+
+static char * _getservent_name(char const ** s)
+{
+	char * ret = NULL;
+	size_t len = 0;
+	char * p;
+
+	for(; isalnum((int)(unsigned char)**s) || **s == '-' || **s == '.';
+			(*s)++)
+	{
+		/* XXX only realloc() once */
+		if((p = realloc(ret, len + 2)) == NULL)
+			break;
+		ret = p;
+		p[len++] = **s;
+	}
+	if(len == 0)
+		return NULL;
+	ret[len] = '\0';
+	return ret;
 }
 
 
@@ -294,12 +362,9 @@ void sethostent(int stayopen)
 		return;
 	}
 	if(stayopen == 0)
-	{
-		fclose(_fp);
-		_fp = NULL;
-		return;
-	}
-	rewind(_fp);
+		endhostent();
+	else
+		rewind(_fp);
 }
 
 
@@ -314,12 +379,9 @@ void setservent(int stayopen)
 		return;
 	}
 	if(stayopen == 0)
-	{
-		fclose(_fp2);
-		_fp2 = NULL;
-		return;
-	}
-	rewind(_fp2);
+		endservent();
+	else
+		rewind(_fp2);
 }
 
 
@@ -338,4 +400,13 @@ static void _hostent_free(struct hostent * he)
 		free(*p);
 	free(he->h_addr_list);
 	memset(he, 0, sizeof(*he));
+}
+
+
+/* servent_free */
+static void _servent_free(struct servent * se)
+{
+	free(se->s_name);
+	free(se->s_proto);
+	memset(se, 0, sizeof(*se));
 }
