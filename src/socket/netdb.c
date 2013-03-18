@@ -121,39 +121,6 @@ struct hostent * gethostbyname(const char * name)
 }
 
 
-/* getservent */
-struct servent * getservent(void)
-{
-	/* FIXME implement */
-	errno = ENOSYS;
-	return NULL;
-}
-
-
-/* getservbyname */
-struct servent * getservbyname(const char * name, const char * protocol)
-{
-	setservent(1);
-	if(_fp2 == NULL)
-		return NULL;
-	/* FIXME implement */
-	errno = ENOSYS;
-	return NULL;
-}
-
-
-/* getservbyport */
-struct servent * getservbyport(int port, const char * protocol)
-{
-	setservent(1);
-	if(_fp2 == NULL)
-		return NULL;
-	/* FIXME implement */
-	errno = ENOSYS;
-	return NULL;
-}
-
-
 /* gethostent */
 static char * _gethostent_addr(char const ** s);
 static char * _gethostent_host(char const ** s);
@@ -163,7 +130,8 @@ struct hostent * gethostent(void)
 	static struct hostent he = { NULL, NULL, 0, 0, NULL };
 	char const * s;
 
-	sethostent(1);
+	if(_fp == NULL)
+		sethostent(1);
 	if(_fp == NULL)
 		return NULL;
 	for(;;)
@@ -250,6 +218,39 @@ static char * _gethostent_host(char const ** s)
 		return NULL;
 	ret[len] = '\0';
 	return ret;
+}
+
+
+/* getservent */
+struct servent * getservent(void)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
+}
+
+
+/* getservbyname */
+struct servent * getservbyname(const char * name, const char * protocol)
+{
+	setservent(1);
+	if(_fp2 == NULL)
+		return NULL;
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
+}
+
+
+/* getservbyport */
+struct servent * getservbyport(int port, const char * protocol)
+{
+	setservent(1);
+	if(_fp2 == NULL)
+		return NULL;
+	/* FIXME implement */
+	errno = ENOSYS;
+	return NULL;
 }
 
 
