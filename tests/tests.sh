@@ -53,6 +53,7 @@ target="$1"
 FAILED=
 ./dlfcn "../src/libc.so">> "$target"	|| FAILED="$FAILED dlfcn(error $?)"
 ./includes		>> "$target"	|| FAILED="$FAILED includes(error $?)"
+./netdb			>> "$target"	|| FAILED="$FAILED netdb(error $?)"
 ./ptrace		>> "$target"	|| FAILED="$FAILED ptrace(error $?)"
 ./regex			>> "$target"	|| FAILED="$FAILED regex(error $?)"
 ./select		>> "$target"	|| FAILED="$FAILED select(error $?)"

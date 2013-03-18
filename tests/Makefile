@@ -1,4 +1,4 @@
-TARGETS	= dlfcn includes ptrace regex select setjmp signal socket start stdint stdio string time tests.log
+TARGETS	= dlfcn includes netdb ptrace regex select setjmp signal socket start stdint stdio string time tests.log
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -31,6 +31,13 @@ includes_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
 includes: $(includes_OBJS)
 	$(CC) -o includes $(includes_OBJS) $(includes_LDFLAGS)
+
+netdb_OBJS = netdb.o
+netdb_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) -isystem ../include/socket $(CFLAGSF) $(CFLAGS)
+netdb_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) ../src/socket/libsocket.a
+
+netdb: $(netdb_OBJS)
+	$(CC) -o netdb $(netdb_OBJS) $(netdb_LDFLAGS)
 
 ptrace_OBJS = ptrace.o
 ptrace_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -118,6 +125,9 @@ dlfcn.o: dlfcn.c ../src/dl/libdl.a ../src/libc.a ../src/start.o
 includes.o: includes.c ../src/libc.a ../src/start.o
 	$(CC) $(includes_CFLAGS) -c includes.c
 
+netdb.o: netdb.c ../src/libc.a ../src/socket/libsocket.a ../src/start.o
+	$(CC) $(netdb_CFLAGS) -c netdb.c
+
 ptrace.o: ptrace.c ../src/libc.a ../src/start.o
 	$(CC) $(ptrace_CFLAGS) -c ptrace.c
 
@@ -152,7 +162,7 @@ time.o: time.c ../src/libc.a ../src/start.o
 	$(CC) $(time_CFLAGS) -c time.c
 
 clean:
-	$(RM) -- $(dlfcn_OBJS) $(includes_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS)
+	$(RM) -- $(dlfcn_OBJS) $(includes_OBJS) $(netdb_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS)
 	./tests.sh -c -P "$(PREFIX)" -- "tests.log"
 
 distclean: clean
