@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
 
 
 
-#ifndef LIBC_KERNEL_NETBSD_SYS_PTRACE_H
-# define LIBC_KERNEL_NETBSD_SYS_PTRACE_H
+#ifndef LIBC_KERNEL_OPENBSD_SYS_PTRACE_H
+# define LIBC_KERNEL_OPENBSD_SYS_PTRACE_H
 
 
 /* constants */
@@ -24,6 +24,5 @@
 # define PT_CONTINUE		7
 # define PT_ATTACH		9
 # define PT_DETACH		10
-# define PT_SYSCALL		14
 
-#endif /* !LIBC_KERNEL_NETBSD_SYS_PTRACE_H */
+#endif /* !LIBC_KERNEL_OPENBSD_SYS_PTRACE_H */

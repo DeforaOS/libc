@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@
 #  include "kernel/linux/sys/ptrace.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/ptrace.h"
+# elif defined(__OpenBSD__)
+#  include "kernel/openbsd/sys/ptrace.h"
 # else
 #  warning Unsupported platform
 # endif
