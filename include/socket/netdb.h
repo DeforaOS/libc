@@ -74,6 +74,7 @@ extern int h_errno;
 
 /* functions */
 void endhostent(void);
+void endservent(void);
 void freeaddrinfo(struct addrinfo * ai);
 int getaddrinfo(char const * nodename, char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
