@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,5 +36,7 @@ typedef long long off_t;
 # ifndef SEEK_END
 #  define SEEK_END	2
 # endif
+
+# define _SC_PAGESIZE	28
 
 #endif /* !LIBC_KERNEL_OPENBSD_UNISTD_H */
