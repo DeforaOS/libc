@@ -67,4 +67,6 @@ struct sigaction
 
 # define SIG_ERR	((void (*)(int)) -1)
 
+# define SA_RESTART	0x2
+
 #endif /* !LIBC_KERNEL_OPENBSD_SIGNAL_H */
