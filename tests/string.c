@@ -32,7 +32,9 @@ static void _string(char const * progname)
 		EBADF,
 		EBUSY,
 		ECHILD,
+#ifdef EDOM
 		EDOM,
+#endif
 		EEXIST,
 		EFAULT,
 		EINTR,
@@ -43,7 +45,9 @@ static void _string(char const * progname)
 		ENOENT,
 		ENOEXEC,
 		ENOMEM,
+#ifdef ENOSPC
 		ENOSPC,
+#endif
 		ENOSYS,
 		ENOTDIR,
 		ENOTSUP,
@@ -53,8 +57,12 @@ static void _string(char const * progname)
 		EPIPE,
 		ERANGE,
 		EROFS,
+#ifdef ESPIPE
 		ESPIPE,
+#endif
+#ifdef ESRCH
 		ESRCH,
+#endif
 		ETIMEDOUT,
 		EXDEV
 	};
