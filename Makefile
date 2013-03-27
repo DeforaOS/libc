@@ -223,6 +223,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/ioctl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/ptrace.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/resource.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/openbsd/sys/shm.h \

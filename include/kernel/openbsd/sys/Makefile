@@ -19,6 +19,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys
 	$(INSTALL) -m 0644 -- mman.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/mman.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys
+	$(INSTALL) -m 0644 -- ptrace.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/ptrace.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys
 	$(INSTALL) -m 0644 -- resource.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/resource.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys
 	$(INSTALL) -m 0644 -- select.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/select.h
@@ -40,6 +42,7 @@ install:
 uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/ioctl.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/mman.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/ptrace.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/resource.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/select.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/sys/shm.h
