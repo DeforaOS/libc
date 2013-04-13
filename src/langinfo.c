@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,6 @@
 
 
 
-#include "stddef.h"
 #include "langinfo.h"
 
 
@@ -23,6 +22,6 @@
 /* langinfo */
 char * nl_langinfo(nl_item item)
 {
-	/* FIXME implement */
-	return NULL;
+	/* FIXME really implement */
+	return "";
 }
