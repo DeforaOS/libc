@@ -738,11 +738,12 @@ int sscanf(char const * string, char const * format, ...)
 /* tmpfile */
 FILE * tmpfile(void)
 {
+	char template[] = "/tmp/tmp.XXXXXX";
 	char * path;
 	int fd;
 	FILE * file;
 
-	if((path = mktemp("/tmp/tmp.XXXXXX")) == NULL)
+	if((path = mktemp(template)) == NULL)
 		return NULL;
 	if((fd = open(path, O_WRONLY | O_CREAT | O_EXCL, 0666)) < 0)
 		return NULL;
