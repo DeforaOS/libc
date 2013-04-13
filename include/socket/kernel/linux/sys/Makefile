@@ -15,9 +15,9 @@ distclean: clean
 
 install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- socket.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/socket.h
+	$(INSTALL) -m 0644 socket.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/socket.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- un.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/un.h
+	$(INSTALL) -m 0644 un.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/un.h
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/socket.h

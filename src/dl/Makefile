@@ -42,8 +42,8 @@ distclean: clean
 
 install: $(TARGETS)
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 -- libdl.a $(DESTDIR)$(LIBDIR)/libdl.a
-	$(INSTALL) -m 0755 -- libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so.0.0
+	$(INSTALL) -m 0644 libdl.a $(DESTDIR)$(LIBDIR)/libdl.a
+	$(INSTALL) -m 0755 libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so.0.0
 	$(LN) -s -- libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so.0
 	$(LN) -s -- libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so
 

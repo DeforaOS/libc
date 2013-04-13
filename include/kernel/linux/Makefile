@@ -22,29 +22,29 @@ distclean:
 install:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- dirent.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/dirent.h
+	$(INSTALL) -m 0644 dirent.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/dirent.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- errno.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/errno.h
+	$(INSTALL) -m 0644 errno.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/errno.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- fcntl.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/fcntl.h
+	$(INSTALL) -m 0644 fcntl.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/fcntl.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- limits.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/limits.h
+	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/limits.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- poll.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/poll.h
+	$(INSTALL) -m 0644 poll.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/poll.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- signal.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/signal.h
+	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/signal.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- stdio.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/stdio.h
+	$(INSTALL) -m 0644 stdio.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/stdio.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- stropts.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/stropts.h
+	$(INSTALL) -m 0644 stropts.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/stropts.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- termios.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/termios.h
+	$(INSTALL) -m 0644 termios.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/termios.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- time.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/time.h
+	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- unistd.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/unistd.h
+	$(INSTALL) -m 0644 unistd.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/unistd.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux
-	$(INSTALL) -m 0644 -- utmpx.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/utmpx.h
+	$(INSTALL) -m 0644 utmpx.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/utmpx.h
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done

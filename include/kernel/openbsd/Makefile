@@ -22,23 +22,23 @@ distclean:
 install:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd
-	$(INSTALL) -m 0644 -- dirent.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/dirent.h
+	$(INSTALL) -m 0644 dirent.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/dirent.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd
-	$(INSTALL) -m 0644 -- errno.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/errno.h
+	$(INSTALL) -m 0644 errno.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/errno.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd
-	$(INSTALL) -m 0644 -- fcntl.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/fcntl.h
+	$(INSTALL) -m 0644 fcntl.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/fcntl.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd
-	$(INSTALL) -m 0644 -- limits.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/limits.h
+	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/limits.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd
-	$(INSTALL) -m 0644 -- signal.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/signal.h
+	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/signal.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd
-	$(INSTALL) -m 0644 -- stdio.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/stdio.h
+	$(INSTALL) -m 0644 stdio.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/stdio.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd
-	$(INSTALL) -m 0644 -- termios.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/termios.h
+	$(INSTALL) -m 0644 termios.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/termios.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd
-	$(INSTALL) -m 0644 -- time.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/time.h
+	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd
-	$(INSTALL) -m 0644 -- unistd.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/unistd.h
+	$(INSTALL) -m 0644 unistd.h $(DESTDIR)$(INCLUDEDIR)/kernel/openbsd/unistd.h
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done

@@ -193,12 +193,12 @@ distclean:
 install: $(TARGETS)
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 -- libc.a $(DESTDIR)$(LIBDIR)/libc.a
-	$(INSTALL) -m 0755 -- libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so.0.0
+	$(INSTALL) -m 0644 libc.a $(DESTDIR)$(LIBDIR)/libc.a
+	$(INSTALL) -m 0755 libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so.0.0
 	$(LN) -s -- libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so.0
 	$(LN) -s -- libc.so.0.0 $(DESTDIR)$(LIBDIR)/libc.so
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 -- start.o $(DESTDIR)$(LIBDIR)/start.o
+	$(INSTALL) -m 0644 start.o $(DESTDIR)$(LIBDIR)/start.o
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done

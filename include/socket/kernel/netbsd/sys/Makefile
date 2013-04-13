@@ -15,9 +15,9 @@ distclean: clean
 
 install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
-	$(INSTALL) -m 0644 -- socket.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/socket.h
+	$(INSTALL) -m 0644 socket.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/socket.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys
-	$(INSTALL) -m 0644 -- un.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/un.h
+	$(INSTALL) -m 0644 un.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/un.h
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/sys/socket.h

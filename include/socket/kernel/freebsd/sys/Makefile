@@ -15,7 +15,7 @@ distclean: clean
 
 install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys
-	$(INSTALL) -m 0644 -- socket.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/socket.h
+	$(INSTALL) -m 0644 socket.h $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/socket.h
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/freebsd/sys/socket.h

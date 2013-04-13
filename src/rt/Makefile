@@ -42,8 +42,8 @@ distclean: clean
 
 install: $(TARGETS)
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 -- librt.a $(DESTDIR)$(LIBDIR)/librt.a
-	$(INSTALL) -m 0755 -- librt.so.0.0 $(DESTDIR)$(LIBDIR)/librt.so.0.0
+	$(INSTALL) -m 0644 librt.a $(DESTDIR)$(LIBDIR)/librt.a
+	$(INSTALL) -m 0755 librt.so.0.0 $(DESTDIR)$(LIBDIR)/librt.so.0.0
 	$(LN) -s -- librt.so.0.0 $(DESTDIR)$(LIBDIR)/librt.so.0
 	$(LN) -s -- librt.so.0.0 $(DESTDIR)$(LIBDIR)/librt.so
 

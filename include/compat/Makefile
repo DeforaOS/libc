@@ -22,31 +22,31 @@ distclean:
 install:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- dirent.h $(DESTDIR)$(INCLUDEDIR)/compat/dirent.h
+	$(INSTALL) -m 0644 dirent.h $(DESTDIR)$(INCLUDEDIR)/compat/dirent.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- errno.h $(DESTDIR)$(INCLUDEDIR)/compat/errno.h
+	$(INSTALL) -m 0644 errno.h $(DESTDIR)$(INCLUDEDIR)/compat/errno.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- fcntl.h $(DESTDIR)$(INCLUDEDIR)/compat/fcntl.h
+	$(INSTALL) -m 0644 fcntl.h $(DESTDIR)$(INCLUDEDIR)/compat/fcntl.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- limits.h $(DESTDIR)$(INCLUDEDIR)/compat/limits.h
+	$(INSTALL) -m 0644 limits.h $(DESTDIR)$(INCLUDEDIR)/compat/limits.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- poll.h $(DESTDIR)$(INCLUDEDIR)/compat/poll.h
+	$(INSTALL) -m 0644 poll.h $(DESTDIR)$(INCLUDEDIR)/compat/poll.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- signal.h $(DESTDIR)$(INCLUDEDIR)/compat/signal.h
+	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/compat/signal.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- stdio.h $(DESTDIR)$(INCLUDEDIR)/compat/stdio.h
+	$(INSTALL) -m 0644 stdio.h $(DESTDIR)$(INCLUDEDIR)/compat/stdio.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- stropts.h $(DESTDIR)$(INCLUDEDIR)/compat/stropts.h
+	$(INSTALL) -m 0644 stropts.h $(DESTDIR)$(INCLUDEDIR)/compat/stropts.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- termios.h $(DESTDIR)$(INCLUDEDIR)/compat/termios.h
+	$(INSTALL) -m 0644 termios.h $(DESTDIR)$(INCLUDEDIR)/compat/termios.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- time.h $(DESTDIR)$(INCLUDEDIR)/compat/time.h
+	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/compat/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- ucontext.h $(DESTDIR)$(INCLUDEDIR)/compat/ucontext.h
+	$(INSTALL) -m 0644 ucontext.h $(DESTDIR)$(INCLUDEDIR)/compat/ucontext.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- unistd.h $(DESTDIR)$(INCLUDEDIR)/compat/unistd.h
+	$(INSTALL) -m 0644 unistd.h $(DESTDIR)$(INCLUDEDIR)/compat/unistd.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat
-	$(INSTALL) -m 0644 -- utmpx.h $(DESTDIR)$(INCLUDEDIR)/compat/utmpx.h
+	$(INSTALL) -m 0644 utmpx.h $(DESTDIR)$(INCLUDEDIR)/compat/utmpx.h
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done

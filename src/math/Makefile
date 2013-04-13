@@ -56,8 +56,8 @@ distclean:
 install: $(TARGETS)
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 -- libm.a $(DESTDIR)$(LIBDIR)/libm.a
-	$(INSTALL) -m 0755 -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0.0
+	$(INSTALL) -m 0644 libm.a $(DESTDIR)$(LIBDIR)/libm.a
+	$(INSTALL) -m 0755 libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0.0
 	$(LN) -s -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0
 	$(LN) -s -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so
 

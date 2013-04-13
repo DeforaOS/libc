@@ -62,8 +62,8 @@ distclean:
 install: $(TARGETS)
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 -- libsocket.a $(DESTDIR)$(LIBDIR)/libsocket.a
-	$(INSTALL) -m 0755 -- libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so.0.0
+	$(INSTALL) -m 0644 libsocket.a $(DESTDIR)$(LIBDIR)/libsocket.a
+	$(INSTALL) -m 0755 libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so.0.0
 	$(LN) -s -- libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so.0
 	$(LN) -s -- libsocket.so.0.0 $(DESTDIR)$(LIBDIR)/libsocket.so
 

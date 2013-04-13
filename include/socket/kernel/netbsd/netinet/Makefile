@@ -15,9 +15,9 @@ distclean: clean
 
 install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet
-	$(INSTALL) -m 0644 -- in.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet/in.h
+	$(INSTALL) -m 0644 in.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet/in.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet
-	$(INSTALL) -m 0644 -- tcp.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet/tcp.h
+	$(INSTALL) -m 0644 tcp.h $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet/tcp.h
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/netbsd/netinet/in.h

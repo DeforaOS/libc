@@ -15,7 +15,7 @@ distclean: clean
 
 install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/net
-	$(INSTALL) -m 0644 -- if.h $(DESTDIR)$(INCLUDEDIR)/net/if.h
+	$(INSTALL) -m 0644 if.h $(DESTDIR)$(INCLUDEDIR)/net/if.h
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/net/if.h

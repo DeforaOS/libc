@@ -15,33 +15,33 @@ distclean: clean
 
 install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- ioctl.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/ioctl.h
+	$(INSTALL) -m 0644 ioctl.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/ioctl.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- mman.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/mman.h
+	$(INSTALL) -m 0644 mman.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/mman.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- mount.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/mount.h
+	$(INSTALL) -m 0644 mount.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/mount.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- ptrace.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/ptrace.h
+	$(INSTALL) -m 0644 ptrace.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/ptrace.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- reboot.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/reboot.h
+	$(INSTALL) -m 0644 reboot.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/reboot.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- resource.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/resource.h
+	$(INSTALL) -m 0644 resource.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/resource.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- select.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/select.h
+	$(INSTALL) -m 0644 select.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/select.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- shm.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/shm.h
+	$(INSTALL) -m 0644 shm.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/shm.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- stat.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/stat.h
+	$(INSTALL) -m 0644 stat.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/stat.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- syscall.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/syscall.h
+	$(INSTALL) -m 0644 syscall.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/syscall.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- time.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/time.h
+	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/time.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- times.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/times.h
+	$(INSTALL) -m 0644 times.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/times.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- types.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/types.h
+	$(INSTALL) -m 0644 types.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/types.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys
-	$(INSTALL) -m 0644 -- utsname.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/utsname.h
+	$(INSTALL) -m 0644 utsname.h $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/utsname.h
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/linux/sys/ioctl.h

@@ -15,9 +15,9 @@ distclean: clean
 
 install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
-	$(INSTALL) -m 0644 -- socket.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/socket.h
+	$(INSTALL) -m 0644 socket.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/socket.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/compat/sys
-	$(INSTALL) -m 0644 -- un.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/un.h
+	$(INSTALL) -m 0644 un.h $(DESTDIR)$(INCLUDEDIR)/compat/sys/un.h
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/compat/sys/socket.h

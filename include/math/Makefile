@@ -15,7 +15,7 @@ distclean: clean
 
 install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 -- math.h $(DESTDIR)$(INCLUDEDIR)/math.h
+	$(INSTALL) -m 0644 math.h $(DESTDIR)$(INCLUDEDIR)/math.h
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/math.h

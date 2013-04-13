@@ -22,7 +22,7 @@ distclean:
 install:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
-	$(INSTALL) -m 0644 -- netdb.h $(DESTDIR)$(INCLUDEDIR)/netdb.h
+	$(INSTALL) -m 0644 netdb.h $(DESTDIR)$(INCLUDEDIR)/netdb.h
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done
