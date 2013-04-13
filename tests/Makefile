@@ -123,7 +123,7 @@ time_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 time: $(time_OBJS)
 	$(CC) -o time $(time_OBJS) $(time_LDFLAGS)
 
-tests.log: dlfcn includes ptrace regex setjmp signal socket start stdint stdio string time tests.sh
+tests.log: dlfcn includes langinfo ptrace regex setjmp signal socket start stdint stdio string time tests.sh
 	./tests.sh -P "$(PREFIX)" -- "tests.log"
 
 dlfcn.o: dlfcn.c ../src/dl/libdl.a ../src/libc.a ../src/start.o
