@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,8 @@ typedef unsigned int pthread_key_t;
 #  define pthread_mutex_t pthread_mutex_t
 typedef struct
 {
-	/* FIXME implement */
+	/* FIXME really implement */
+	unsigned int data;
 } pthread_mutex_t;
 # endif
 # ifndef pthread_mutexattr_t
@@ -105,6 +106,8 @@ typedef unsigned long pthread_t;
 
 /* constants */
 enum { PTHREAD_CREATE_JOINABLE, PTHREAD_CREATE_DETACHED };
+
+# define PTHREAD_MUTEX_INITIALIZER	{ 0 }
 
 
 /* functions */
