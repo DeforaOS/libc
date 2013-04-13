@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,15 @@ int pthread_attr_getdetachstate(const pthread_attr_t * attr, int * state)
 }
 
 
+/* pthread_attr_getstacksize */
+int pthread_attr_getstacksize(const pthread_attr_t * attr, size_t * stacksize)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
+}
+
+
 /* pthread_attr_init */
 int pthread_attr_init(pthread_attr_t * attr)
 {
@@ -49,6 +58,15 @@ int pthread_attr_init(pthread_attr_t * attr)
 
 /* pthread_attr_setdetachstate */
 int pthread_attr_setdetachstate(pthread_attr_t * attr, int state)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
+}
+
+
+/* pthread_attr_setstacksize */
+int pthread_attr_setstacksize(pthread_attr_t * attr, size_t stacksize)
 {
 	/* FIXME implement */
 	errno = ENOSYS;

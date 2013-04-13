@@ -114,8 +114,10 @@ enum { PTHREAD_CREATE_JOINABLE, PTHREAD_CREATE_DETACHED };
 int pthread_atfork(void (*)(void), void (*)(void), void(*)(void));
 int pthread_attr_destroy(pthread_attr_t *);
 int pthread_attr_getdetachstate(const pthread_attr_t *, int *);
+int pthread_attr_getstacksize(const pthread_attr_t *, size_t *);
 int pthread_attr_init(pthread_attr_t *);
 int pthread_attr_setdetachstate(pthread_attr_t *, int);
+int pthread_attr_setstacksize(pthread_attr_t *, size_t);
 int pthread_barrier_destroy(pthread_barrier_t *);
 int pthread_barrier_init(pthread_barrier_t *, const pthread_barrierattr_t *,
 		unsigned);
