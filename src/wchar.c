@@ -15,7 +15,33 @@
 
 
 
+#include "errno.h"
 #include "wchar.h"
 
 
 /* public */
+/* functions */
+size_t mbrtowc(wchar_t * pwc, const char * s, size_t n, mbstate_t * ps)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return (size_t)-1;
+}
+
+
+/* mbstowcs */
+size_t mbstowcs(wchar_t * pwcs, const char * s, size_t n)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return (size_t)-1;
+}
+
+
+/* mbtowc */
+int mbtowc(wchar_t * pwc, const char * s, size_t n)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return -1;
+}

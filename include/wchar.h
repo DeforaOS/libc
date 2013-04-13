@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,10 @@ typedef struct _FILE FILE;
 # endif
 # ifndef mbstate_t
 #  define mbstate_t mbstate_t
-typedef struct _mbstate_t mbstate_t;
+typedef struct _mbstate_t
+{
+	char data[128];
+} mbstate_t;
 # endif
 # ifndef size_t
 #  define size_t size_t
@@ -50,5 +53,11 @@ typedef int wint_t;
 # ifndef WEOF
 #  define WEOF (-1)
 # endif
+
+
+/* functions */
+size_t mbrtowc(wchar_t * pwc, const char * s, size_t n, mbstate_t * ps);
+size_t mbstowcs(wchar_t * pwcs, const char * s, size_t n);
+int mbtowc(wchar_t * pwc, const char * s, size_t n);
 
 #endif /* !LIBC_WCHAR_H */
