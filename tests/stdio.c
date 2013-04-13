@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,8 @@
 
 
 /* stdio */
-static int _stdio(char const * progname, char const * mode, int expected)
+/* fopen */
+static int _fopen(char const * progname, char const * mode, int expected)
 {
 	int m = _fopen_mode(mode);
 
@@ -31,34 +32,48 @@ static int _stdio(char const * progname, char const * mode, int expected)
 }
 
 
+/* tmpfile */
+static int _tmpfile(char const * progname)
+{
+	FILE * fp;
+
+	printf("%s: Testing tmpfile()\n", progname);
+	if((fp = tmpfile()) == NULL)
+		return 1;
+	fclose(fp);
+	return 0;
+}
+
+
 /* main */
 int main(int argc, char * argv[])
 {
 	int ret = 0;
 
-	ret += _stdio(argv[0], "a", O_WRONLY | O_APPEND | O_CREAT);
-	ret += _stdio(argv[0], "ab", O_WRONLY | O_APPEND | O_CREAT);
-	ret += _stdio(argv[0], "a+", O_RDWR | O_APPEND | O_CREAT);
-	ret += _stdio(argv[0], "ab+", O_RDWR | O_APPEND | O_CREAT);
-	ret += _stdio(argv[0], "ax", O_WRONLY | O_APPEND | O_CREAT | O_EXCL);
-	ret += _stdio(argv[0], "abx", O_WRONLY | O_APPEND | O_CREAT | O_EXCL);
-	ret += _stdio(argv[0], "a+x", O_RDWR | O_APPEND | O_CREAT | O_EXCL);
-	ret += _stdio(argv[0], "ab+x", O_RDWR | O_APPEND | O_CREAT | O_EXCL);
-	ret += _stdio(argv[0], "r", O_RDONLY);
-	ret += _stdio(argv[0], "rb", O_RDONLY);
-	ret += _stdio(argv[0], "r+", O_RDWR);
-	ret += _stdio(argv[0], "rb+", O_RDWR);
-	ret += _stdio(argv[0], "rx", O_RDONLY | O_EXCL);
-	ret += _stdio(argv[0], "rbx", O_RDONLY | O_EXCL);
-	ret += _stdio(argv[0], "r+x", O_RDWR | O_EXCL);
-	ret += _stdio(argv[0], "rb+x", O_RDWR | O_EXCL);
-	ret += _stdio(argv[0], "w", O_WRONLY | O_TRUNC | O_CREAT);
-	ret += _stdio(argv[0], "wb", O_WRONLY | O_TRUNC | O_CREAT);
-	ret += _stdio(argv[0], "w+", O_RDWR | O_TRUNC | O_CREAT);
-	ret += _stdio(argv[0], "wb+", O_RDWR | O_TRUNC | O_CREAT);
-	ret += _stdio(argv[0], "wx", O_WRONLY | O_TRUNC | O_CREAT | O_EXCL);
-	ret += _stdio(argv[0], "wbx", O_WRONLY | O_TRUNC | O_CREAT | O_EXCL);
-	ret += _stdio(argv[0], "w+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
-	ret += _stdio(argv[0], "wb+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
+	ret += _fopen(argv[0], "a", O_WRONLY | O_APPEND | O_CREAT);
+	ret += _fopen(argv[0], "ab", O_WRONLY | O_APPEND | O_CREAT);
+	ret += _fopen(argv[0], "a+", O_RDWR | O_APPEND | O_CREAT);
+	ret += _fopen(argv[0], "ab+", O_RDWR | O_APPEND | O_CREAT);
+	ret += _fopen(argv[0], "ax", O_WRONLY | O_APPEND | O_CREAT | O_EXCL);
+	ret += _fopen(argv[0], "abx", O_WRONLY | O_APPEND | O_CREAT | O_EXCL);
+	ret += _fopen(argv[0], "a+x", O_RDWR | O_APPEND | O_CREAT | O_EXCL);
+	ret += _fopen(argv[0], "ab+x", O_RDWR | O_APPEND | O_CREAT | O_EXCL);
+	ret += _fopen(argv[0], "r", O_RDONLY);
+	ret += _fopen(argv[0], "rb", O_RDONLY);
+	ret += _fopen(argv[0], "r+", O_RDWR);
+	ret += _fopen(argv[0], "rb+", O_RDWR);
+	ret += _fopen(argv[0], "rx", O_RDONLY | O_EXCL);
+	ret += _fopen(argv[0], "rbx", O_RDONLY | O_EXCL);
+	ret += _fopen(argv[0], "r+x", O_RDWR | O_EXCL);
+	ret += _fopen(argv[0], "rb+x", O_RDWR | O_EXCL);
+	ret += _fopen(argv[0], "w", O_WRONLY | O_TRUNC | O_CREAT);
+	ret += _fopen(argv[0], "wb", O_WRONLY | O_TRUNC | O_CREAT);
+	ret += _fopen(argv[0], "w+", O_RDWR | O_TRUNC | O_CREAT);
+	ret += _fopen(argv[0], "wb+", O_RDWR | O_TRUNC | O_CREAT);
+	ret += _fopen(argv[0], "wx", O_WRONLY | O_TRUNC | O_CREAT | O_EXCL);
+	ret += _fopen(argv[0], "wbx", O_WRONLY | O_TRUNC | O_CREAT | O_EXCL);
+	ret += _fopen(argv[0], "w+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
+	ret += _fopen(argv[0], "wb+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
+	ret += _tmpfile(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
