@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,13 +94,17 @@ int ftrylock(FILE * file);
 void funlockfile(FILE * file);
 size_t fwrite(void const * ptr, size_t size, size_t nb, FILE * file);
 int getc(FILE * file);
+int getc_unlocked(FILE * file);
 int getchar(void);
+int getchar_unlocked(void);
 int pclose(FILE * stream);
 void perror(char const * str);
 FILE * popen(char const * command, char const * mode);
 int printf(char const * format, ...);
 int putc(int c, FILE * file);
+int putc_unlocked(int c, FILE * file);
 int putchar(int c);
+int putchar_unlocked(int c);
 int puts(char const * string);
 int remove(char const * path);
 int rename(char const * from, char const * to);

@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2004-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -495,10 +495,24 @@ int getc(FILE * file)
 }
 
 
+/* getc_unlocked */
+int getc_unlocked(FILE * file)
+{
+	return getc(file);
+}
+
+
 /* getchar */
 int getchar(void)
 {
 	return fgetc(stdin);
+}
+
+
+/* getchar_unlocked */
+int getchar_unlocked(void)
+{
+	return getchar();
 }
 
 
@@ -581,9 +595,16 @@ int printf(char const * format, ...)
 
 
 /* putc */
-int putc(int c, FILE * fp)
+int putc(int c, FILE * file)
 {
-	return fputc(c, fp);
+	return fputc(c, file);
+}
+
+
+/* putc_unlocked */
+int putc_unlocked(int c, FILE * file)
+{
+	return putc(c, file);
 }
 
 
@@ -591,6 +612,13 @@ int putc(int c, FILE * fp)
 int putchar(int c)
 {
 	return fputc(c, stdout);
+}
+
+
+/* putchar_unlocked */
+int putchar_unlocked(int c)
+{
+	return putchar(c);
 }
 
 
