@@ -172,7 +172,7 @@ int fgetc(FILE * file)
 
 
 /* fgets */
-char * fgets(char * str, int size, FILE * fp)
+char * fgets(char * str, int size, FILE * file)
 {
 	int i;
 	int c;
@@ -184,9 +184,9 @@ char * fgets(char * str, int size, FILE * fp)
 	}
 	for(i = 0; i + 1 < size; i++)
 	{
-		if((c = fgetc(fp)) == EOF)
+		if((c = fgetc(file)) == EOF)
 		{
-			if(i == 0 || !feof(fp))
+			if(i == 0 || !feof(file))
 				return NULL;
 			break;
 		}
@@ -355,13 +355,13 @@ FILE * freopen(char const * path, char const * mode, FILE * file)
 
 
 /* fscanf */
-int fscanf(FILE * fp, char const * format, ...)
+int fscanf(FILE * file, char const * format, ...)
 {
 	int ret;
 	va_list arg;
 
 	va_start(arg, format);
-	ret = vfscanf(fp, format, arg);
+	ret = vfscanf(file, format, arg);
 	va_end(arg);
 	return ret;
 }
@@ -740,19 +740,19 @@ FILE * tmpfile(void)
 {
 	char * path;
 	int fd;
-	FILE * fp;
+	FILE * file;
 
 	if((path = mktemp("/tmp/tmp.XXXXXX")) == NULL)
 		return NULL;
 	if((fd = open(path, O_WRONLY | O_CREAT | O_EXCL, 0666)) < 0)
 		return NULL;
 	if(unlink(path) != 0
-			|| (fp = fdopen(fd, "w+")) == NULL)
+			|| (file = fdopen(fd, "w+")) == NULL)
 	{
 		close(fd);
 		return NULL;
 	}
-	return fp;
+	return file;
 }
 
 
@@ -790,9 +790,9 @@ int vfprintf(FILE * file, char const * format, va_list arg)
 
 static int _fprint(void * dest, size_t size, char const buf[])
 {
-	FILE * fp = dest;
+	FILE * file = dest;
 
-	return (fwrite(buf, sizeof(char), size, fp) == size) ? 0 : -1;
+	return (fwrite(buf, sizeof(char), size, file) == size) ? 0 : -1;
 }
 
 /* _vprintf */
