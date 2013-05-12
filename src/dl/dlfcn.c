@@ -456,7 +456,8 @@ static int _dl_error_set_errno(int ret)
 }
 
 
-/* dl_section */
+/* useful */
+/* dl_load */
 static void * _dl_load(DL * dl, off_t offset, size_t size)
 {
 	void * ret;
