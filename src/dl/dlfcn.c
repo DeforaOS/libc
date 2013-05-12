@@ -651,14 +651,14 @@ static void * _sym_lookup(DL * dl, Elf_Shdr * shdr, char const * name,
 		sym = &dl->symtab[i];
 		if((p = _dl_strtab_string(strtab, strtab_cnt, sym->st_name))
 				== NULL)
-			break;
+			return NULL;
 		if(strcmp(p, name) != 0)
 			continue;
 		/* found the symbol */
 		if(sym->st_shndx >= dl->ehdr.e_shnum)
 		{
 			_dl_error_set(DE_INVALID_FORMAT, 0);
-			break;
+			return NULL;
 		}
 #ifdef DEBUG
 		fprintf(stderr, "DEBUG: %s() symbol: %s, section: %u, type=%x"
