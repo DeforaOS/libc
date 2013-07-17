@@ -16,6 +16,7 @@
 
 
 #include <fcntl.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include "../src/stdio.c"
 
