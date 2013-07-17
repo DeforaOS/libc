@@ -67,6 +67,17 @@ struct servent
 # define NO_RECOVERY			3
 # define TRY_AGAIN			4
 
+# define EAI_AGAIN			1
+# define EAI_BADFLAGS			2
+# define EAI_FAIL			3
+# define EAI_FAMILY			4
+# define EAI_MEMORY			5
+# define EAI_NONAME			6
+# define EAI_OVERFLOW			7
+# define EAI_SERVICE			8
+# define EAI_SOCKTYPE			9
+# define EAI_SYSTEM			10
+
 
 /* variables */
 extern int h_errno;
@@ -76,6 +87,7 @@ extern int h_errno;
 void endhostent(void);
 void endservent(void);
 void freeaddrinfo(struct addrinfo * ai);
+const char * gai_strerror(int ecode);
 int getaddrinfo(char const * nodename, char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
 struct hostent * gethostbyaddr(const void * addr, socklen_t len, int type);

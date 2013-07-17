@@ -74,6 +74,37 @@ void freeaddrinfo(struct addrinfo * ai)
 }
 
 
+/* gai_strerror */
+const char * gai_strerror(int ecode)
+{
+	static const struct
+	{
+		const int errnum;
+		const char * errmsg;
+	} err[] =
+	{
+		{ 0,		"Success"				},
+		{ EAI_AGAIN,	"Temporary failure in name resolution"	},
+		{ EAI_BADFLAGS,	"Invalid value for the flags"		},
+		{ EAI_FAIL,	"Non-recoverable error"			},
+		{ EAI_FAMILY,	"Address family not recognized"		},
+		{ EAI_MEMORY,	"Memory allocation failure"		},
+		{ EAI_NONAME,	"The name did not resolve"		},
+		{ EAI_OVERFLOW,	"Argument buffer overflowed"		},
+		{ EAI_SERVICE,	"Service not recognized"		},
+		{ EAI_SOCKTYPE,	"Socket type not recognized"		},
+		{ EAI_SYSTEM,	"System error"				},
+		{ -1,		NULL					}
+	};
+	unsigned int i;
+
+	for(i = 0; err[i].errmsg != NULL; i++)
+		if(err[i].errnum == ecode)
+			return err[i].errmsg;
+	return "Unknown error";
+}
+
+
 /* getaddrinfo */
 int getaddrinfo(char const * nodename, char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res)

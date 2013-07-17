@@ -22,6 +22,8 @@
 /* prototypes */
 static int _netdb(char const * progname);
 
+static int _gai_strerror(char const * progname, char const * message,
+		int value);
 static int _gethostent(void);
 static int _getservbyname(char const * name, char const * protocol);
 static int _getservbyport(int port, char const * protocol);
@@ -46,6 +48,26 @@ static int _netdb(char const * progname)
 	ret |= _hstrerror(progname, "TRY_AGAIN", TRY_AGAIN);
 	ret |= _hstrerror(progname, "NO_RECOVERY", NO_RECOVERY);
 	ret |= _hstrerror(progname, "NO_DATA", NO_DATA);
+	/* gai_strerror */
+	ret |= _gai_strerror(progname, "EAI_AGAIN", EAI_AGAIN);
+	ret |= _gai_strerror(progname, "EAI_BADFLAGS", EAI_BADFLAGS);
+	ret |= _gai_strerror(progname, "EAI_FAIL", EAI_FAIL);
+	ret |= _gai_strerror(progname, "EAI_FAMILY", EAI_FAMILY);
+	ret |= _gai_strerror(progname, "EAI_MEMORY", EAI_MEMORY);
+	ret |= _gai_strerror(progname, "EAI_NONAME", EAI_NONAME);
+	ret |= _gai_strerror(progname, "EAI_OVERFLOW", EAI_OVERFLOW);
+	ret |= _gai_strerror(progname, "EAI_SERVICE", EAI_SERVICE);
+	ret |= _gai_strerror(progname, "EAI_SOCKTYPE", EAI_SOCKTYPE);
+	ret |= _gai_strerror(progname, "EAI_SYSTEM", EAI_SYSTEM);
+	return 0;
+}
+
+
+/* gai_strerror */
+static int _gai_strerror(char const * progname, char const * message,
+		int value)
+{
+	printf("%s: %s: %s\n", progname, message, gai_strerror(value));
 	return 0;
 }
 
