@@ -92,6 +92,9 @@ int getaddrinfo(char const * nodename, char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
 struct hostent * gethostbyaddr(const void * addr, socklen_t len, int type);
 struct hostent * gethostbyname(const char * name);
+int getnameinfo(const struct sockaddr * sa, socklen_t salen, char * node,
+		socklen_t nodelen, char * service, socklen_t servicelen,
+		int flags);
 struct servent * getservbyname(const char * name, const char * protocol);
 struct servent * getservbyport(int port, const char * protocol);
 struct servent * getservent(void);

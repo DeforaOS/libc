@@ -264,6 +264,17 @@ static char * _gethostent_host(char const ** s)
 }
 
 
+/* getnameinfo */
+int getnameinfo(const struct sockaddr * sa, socklen_t salen, char * node,
+		socklen_t nodelen, char * service, socklen_t servicelen,
+		int flags)
+{
+	/* FIXME implement */
+	errno = ENOSYS;
+	return EAI_SYSTEM;
+}
+
+
 /* getservent */
 static char * _getservent_name(char const ** s);
 
