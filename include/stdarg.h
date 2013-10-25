@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2005-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ typedef void * va_list;
 #  define va_arg		__builtin_va_arg
 #  define va_copy		__builtin_va_copy
 #  define va_end(ap)		__builtin_va_end((ap))
-# else /* !__i386__ */
+# else
 #  warning Unsupported architecture
 #  define va_start(ap, arg)
 #  define va_arg(ap, type) (type)(ap)
