@@ -16,8 +16,9 @@
 
 
 #include <sys/wait.h>
-#include <unistd.h>
 #include <stdio.h>
+#include <time.h>
+#include <unistd.h>
 #include "../src/unistd.c"
 
 
@@ -49,11 +50,26 @@ static int _fork(char const * progname)
 }
 
 
+/* sleep */
+static int _sleep(char const * progname)
+{
+	time_t before;
+	time_t after;
+
+	printf("%s: Testing sleep()\n", progname);
+	before = time(NULL);
+	sleep(1);
+	after = time(NULL);
+	return (after == before + 1) ? 0 : -1;
+}
+
+
 /* main */
 int main(int argc, char * argv[])
 {
 	int ret = 0;
 
 	ret += _fork(argv[0]);
+	ret += _sleep(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
