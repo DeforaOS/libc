@@ -22,7 +22,7 @@
 /* langinfo */
 static int _langinfo(char const * progname, nl_item item)
 {
-	printf("%s: nl_langinfo(%lu) returns %s\n", progname,
+	printf("%s: nl_langinfo(%lu) returns \"%s\"\n", progname, item,
 			nl_langinfo(item));
 	return 0;
 }
