@@ -16,6 +16,43 @@
 
 
 #functions
+#fail
+_fail()
+{
+	test="$1"
+
+	shift
+	echo -n "$test:" 1>&2
+	"./$test" "$@" >> "$target"
+	res=$?
+	if [ $res -ne 0 ]; then
+		echo " FAILED (expected, error $res)" 1>&2
+	else
+		echo " PASS (unexpected)" 1>&2
+	fi
+}
+
+
+#test
+_test()
+{
+	test="$1"
+
+	shift
+	echo -n "$test:" 1>&2
+	"./$test" "$@" >> "$target"
+	res=$?
+	if [ $res -ne 0 ]; then
+		echo " FAILED" 1>&2
+		FAILED="$FAILED $test(error $res)"
+		return 2
+	else
+		echo " PASS" 1>&2
+		return 0
+	fi
+}
+
+
 #usage
 _usage()
 {
@@ -51,22 +88,26 @@ target="$1"
 
 > "$target"
 FAILED=
-./dlfcn "../src/libc.so">> "$target"	|| FAILED="$FAILED dlfcn(error $?)"
-./includes		>> "$target"	|| FAILED="$FAILED includes(error $?)"
-./langinfo		>> "$target"	|| FAILED="$FAILED langinfo(error $?)"
-./netdb			>> "$target"	|| FAILED="$FAILED netdb(error $?)"
-./ptrace		>> "$target"	|| FAILED="$FAILED ptrace(error $?)"
-./regex			>> "$target"	|| FAILED="$FAILED regex(error $?)"
-./select		>> "$target"	|| FAILED="$FAILED select(error $?)"
-./setjmp		>> "$target"	|| FAILED="$FAILED setjmp(error $?)"
-./signal		>> "$target"	|| FAILED="$FAILED signal(error $?)"
-./socket		>> "$target"	|| FAILED="$FAILED socket(error $?)"
-./start argv1 argv2	>> "$target"	|| FAILED="$FAILED start(error $?)"
-./stdint		>> "$target"	|| FAILED="$FAILED stdint(error $?)"
-./stdio			>> "$target"	|| FAILED="$FAILED stdio(error $?)"
-./string		>> "$target"	|| FAILED="$FAILED string(error $?)"
-./time			>> "$target"	|| FAILED="$FAILED time(error $?)"
-./unistd		>> "$target"	|| FAILED="$FAILED unistd(error $?)"
-[ -z "$FAILED" ]			&& exit 0
-echo "Failed tests:$FAILED" 1>&2
-exit 2
+echo "Performing tests:" 1>&2
+_test "includes"
+_test "langinfo"
+_test "netdb"
+_test "ptrace"
+_test "regex"
+_test "select"
+_test "setjmp"
+_test "signal"
+_test "socket"
+_test "start" argv1 argv2
+_test "stdint"
+_test "stdio"
+_test "string"
+_test "time"
+_test "unistd"
+echo "Expected failures:" 1>&2
+_fail "dlfcn" "../src/libc.so"
+if [ -n "$FAILED" ]; then
+	echo "Failed tests:$FAILED" 1>&2
+	exit 2
+fi
+echo "All tests completed" 1>&2
