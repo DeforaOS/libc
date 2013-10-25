@@ -51,16 +51,20 @@ static int _fork(char const * progname)
 
 
 /* sleep */
-static int _sleep(char const * progname)
+static int _sleep(char const * progname, unsigned int t)
 {
 	time_t before;
 	time_t after;
+	int res;
 
 	printf("%s: Testing sleep()\n", progname);
 	before = time(NULL);
-	sleep(1);
+	res = sleep(t);
 	after = time(NULL);
-	return (after == before + 1) ? 0 : -1;
+	if(res == 0)
+		return (after - before == t) ? 0 : -1;
+	/* XXX ignore other cases (signal deliveries...) */
+	return 0;
 }
 
 
@@ -70,6 +74,7 @@ int main(int argc, char * argv[])
 	int ret = 0;
 
 	ret += _fork(argv[0]);
-	ret += _sleep(argv[0]);
+	ret += _sleep(argv[0], 0);
+	ret += _sleep(argv[0], 1);
 	return (ret == 0) ? 0 : 2;
 }
