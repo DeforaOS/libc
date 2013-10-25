@@ -15,6 +15,11 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+#variables
+#executables
+DATE="date"
+
+
 #functions
 #fail
 _fail()
@@ -23,12 +28,14 @@ _fail()
 
 	shift
 	echo -n "$test:" 1>&2
-	"./$test" "$@" >> "$target"
+	(echo ""
+	echo "Testing: ./$test" "$@"
+	"./$test" "$@") >> "$target" 2>&1
 	res=$?
 	if [ $res -ne 0 ]; then
-		echo " FAILED (expected, error $res)" 1>&2
+		echo " FAILED (error $res)" 1>&2
 	else
-		echo " PASS (unexpected)" 1>&2
+		echo " PASS" 1>&2
 	fi
 }
 
@@ -40,7 +47,9 @@ _test()
 
 	shift
 	echo -n "$test:" 1>&2
-	"./$test" "$@" >> "$target"
+	(echo ""
+	echo "Testing: ./$test" "$@"
+	"./$test" "$@") >> "$target" 2>&1
 	res=$?
 	if [ $res -ne 0 ]; then
 		echo " FAILED" 1>&2
@@ -56,7 +65,7 @@ _test()
 #usage
 _usage()
 {
-	echo "Usage: tests.sh" 1>&2
+	echo "Usage: tests.sh [-c][P prefix]" 1>&2
 	return 1
 }
 
@@ -86,7 +95,7 @@ target="$1"
 
 [ "$clean" -ne 0 ]			&& exit 0
 
-> "$target"
+$DATE > "$target"
 FAILED=
 echo "Performing tests:" 1>&2
 _test "includes"
