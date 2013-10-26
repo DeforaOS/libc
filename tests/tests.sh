@@ -65,7 +65,7 @@ _test()
 #usage
 _usage()
 {
-	echo "Usage: tests.sh [-c][P prefix]" 1>&2
+	echo "Usage: tests.sh [-c][-P prefix]" 1>&2
 	return 1
 }
 
