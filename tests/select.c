@@ -48,7 +48,7 @@ static int _select2(char const * progname, unsigned int t)
 	time_t before;
 	time_t after;
 
-	printf("%s: Testing %s() (sleeping)\n", progname, "select");
+	printf("%s: Testing %s() (sleeping %us)\n", progname, "select", t);
 	timeout.tv_sec = t;
 	timeout.tv_usec = 0;
 	before = time(NULL);
