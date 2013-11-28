@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@ static int _ret;
 static void _on_sigusr1(int signal);
 static void _on_sigusr2(int signal);
 
+static int _error(char const * progname, char const * message, int ret);
+
 
 /* functions */
 /* on_sigusr1 */
@@ -48,16 +50,29 @@ static void _on_sigusr2(int signal)
 }
 
 
+/* error */
+static int _error(char const * progname, char const * message, int ret)
+{
+	fprintf(stderr, "%s: ", progname);
+	perror(message);
+	return ret;
+}
+
+
 /* public */
 /* functions */
 int main(int argc, char * argv[])
 {
 	_ret = 2;
 	printf("%s: %s", argv[0], "Testing signal()\n");
-	signal(SIGUSR1, _on_sigusr1);
-	signal(SIGUSR2, _on_sigusr2);
+	if(signal(SIGUSR1, _on_sigusr1) == SIG_ERR)
+		_error(argv[0], "signal", 2);
+	if(signal(SIGUSR2, _on_sigusr2) == SIG_ERR)
+		_error(argv[0], "signal", 2);
 	printf("%s: %s", argv[0], "Testing kill()\n");
-	kill(getpid(), SIGUSR2);
-	kill(getpid(), SIGUSR1);
+	if(kill(getpid(), SIGUSR2) != 0)
+		_error(argv[0], "kill", 2);
+	if(kill(getpid(), SIGUSR1) != 0)
+		_error(argv[0], "kill", 2);
 	return _ret;
 }
