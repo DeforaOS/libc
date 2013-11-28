@@ -22,13 +22,36 @@
 
 /* pselect */
 #ifndef SYS_pselect
-# warning Unsupported platform: pselect() is missing
+# ifdef SYS_select
+int pselect(int fdcnt, fd_set * rfds, fd_set * wfds, fd_set * efds,
+		const struct timespec * timeout, const sigset_t * sigmask)
+{
+	struct timeval tv;
+	struct timeval * tvp = NULL;
+
+	if(timeout != NULL)
+	{
+		tv.tv_sec = timeout->tv_sec;
+		tv.tv_usec = timeout->tv_nsec * 1000;
+		tvp = &tv;
+	}
+	if(sigmask != NULL)
+	{
+		/* FIXME implement equivalent functionality */
+		errno = ENOSYS;
+		return -1;
+	}
+	return select(fdcnt, rfds, wfds, efds, tvp);
+}
+# else
+#  warning Unsupported platform: pselect() is missing
 int pselect(int fdcnt, fd_set * rfds, fd_set * wfds, fd_set * efds,
 		const struct timespec * timeout, const sigset_t * sigmask)
 {
 	errno = ENOSYS;
 	return -1;
 }
+# endif
 #endif
 
 
