@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,16 +33,16 @@ typedef int suseconds_t;
 # endif
 # ifndef time_t
 #  define time_t time_t
-typedef unsigned int time_t;
+typedef long time_t;
 # endif
-#ifndef timeval
-# define timeval timeval
+# ifndef timeval
+#  define timeval timeval
 struct timeval
 {
 	time_t tv_sec;
 	suseconds_t tv_usec;
 };
-#endif
+# endif
 
 
 /* macros */
