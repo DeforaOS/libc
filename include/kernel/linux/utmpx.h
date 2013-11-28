@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ typedef signed int pid_t;
 # endif
 # ifndef suseconds_t
 #  define suseconds_t suseconds_t
-typedef int suseconds_t;
+typedef long suseconds_t;
 # endif
 #ifndef timeval
 # define timeval timeval
