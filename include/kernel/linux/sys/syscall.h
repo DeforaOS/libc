@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2011-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,6 +89,7 @@
 #  define SYS_vfork		190
 #  define SYS_getrlimit		191
 #  define SYS_utimes		271
+#  define SYS_pselect		308
 # endif
  
 /* architecture specific */
@@ -222,6 +223,7 @@
 #  define SYS_setuid		213
 #  define SYS_setgid		214
 #  define SYS_getdents		220
+#  define SYS_pselect		270
 
 /* for <sys/shm.h> */
 #  define _IPC_SHMAT		21
