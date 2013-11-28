@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,9 +33,10 @@ static int _error(char const * progname, char const * message, int ret);
 /* ptrace */
 static int _ptrace(char const * progname)
 {
-	if(ptrace(PT_TRACE_ME, 0, NULL, 0) != 0)
+	errno = 0;
+	if(ptrace(PT_TRACE_ME, 0, NULL, 0) != 0 && errno != 0)
 		return -_error(progname, "PT_TRACE_ME", 1);
-	if(ptrace(PT_ATTACH, getpid(), NULL, 0) != 0
+	if(ptrace(PT_ATTACH, getpid(), NULL, 0) != 0 && errno != 0
 			&& errno != EBUSY && errno != EINVAL)
 		return -_error(progname, "PT_ATTACH", 1);
 	return 0;
