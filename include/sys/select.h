@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 # define LIBC_SYS_SELECT_H
 
 # include "compat/sys/select.h"
+# include "compat/signal.h" /* XXX should not have to be included */
 
 
 /* types */
@@ -34,9 +35,19 @@ struct itimerval
 	struct timeval it_value;
 };
 # endif
+# ifndef timespec
+#  define timespec timespec
+struct timespec
+{
+	time_t tv_sec;
+	long tv_nsec;
+};
+# endif
 
 
 /* functions */
+int pselect(int fdcnt, fd_set * rfds, fd_set * wfds, fd_set * efds,
+		const struct timespec * timeout, const sigset_t * sigmask);
 int select(int fdcnt, fd_set * rfds, fd_set * wfds, fd_set * efds,
 		struct timeval * timeout);
 

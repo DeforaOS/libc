@@ -103,7 +103,6 @@ _test "langinfo"
 _test "netdb"
 _test "ptrace"
 _test "regex"
-_test "select"
 _test "setjmp"
 _test "signal"
 _test "socket"
@@ -115,6 +114,7 @@ _test "time"
 _test "unistd"
 echo "Expected failures:" 1>&2
 _fail "dlfcn" "../src/libc.so"
+_fail "select"
 if [ -n "$FAILED" ]; then
 	echo "Failed tests:$FAILED" 1>&2
 	exit 2

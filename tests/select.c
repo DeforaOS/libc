@@ -20,6 +20,45 @@
 #include <time.h>
 
 
+/* pselect */
+static int _pselect(char const * progname)
+{
+	int ret = 0;
+	fd_set rfds;
+	fd_set wfds;
+	fd_set efds;
+	struct timespec timeout;
+
+	printf("%s: Testing %s()\n", progname, "pselect");
+	FD_ZERO(&rfds);
+	FD_ZERO(&wfds);
+	FD_ZERO(&efds);
+	timeout.tv_sec = 0;
+	timeout.tv_nsec = 0;
+	if(pselect(0, &rfds, &wfds, &efds, &timeout, NULL) != 0)
+		ret = 2;
+	return ret;
+}
+
+
+/* pselect2 */
+static int _pselect2(char const * progname, unsigned int t)
+{
+	struct timespec timeout;
+	time_t before;
+	time_t after;
+
+	printf("%s: Testing %s() (sleeping %us)\n", progname, "select2", t);
+	timeout.tv_sec = t;
+	timeout.tv_nsec = 0;
+	before = time(NULL);
+	if(pselect(0, NULL, NULL, NULL, &timeout, NULL) != 0)
+		return 2;
+	after = time(NULL);
+	return (after - before == t) ? 0 : 2;
+}
+
+
 /* select */
 static int _select(char const * progname)
 {
@@ -64,6 +103,9 @@ int main(int argc, char * argv[])
 {
 	int ret = 0;
 
+	ret |= _pselect(argv[0]);
+	ret |= _pselect2(argv[0], 0);
+	ret |= _pselect2(argv[0], 1);
 	ret |= _select(argv[0]);
 	ret |= _select2(argv[0], 0);
 	ret |= _select2(argv[0], 1);
