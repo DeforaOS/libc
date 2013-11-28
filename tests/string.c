@@ -20,8 +20,27 @@
 #include <errno.h>
 
 
-/* string */
-static void _string(char const * progname)
+/* memchr */
+static int _memchr(void)
+{
+	int ret = 0;
+	char const search[] = "sear\xff\xfe\x7f\x7e\x00\x01ch";
+	size_t i;
+	void * p;
+
+	for(i = 0; i < sizeof(search); i++)
+	{
+		p = memchr(search, search[i], sizeof(search));
+		if(p == NULL || strcmp(p, &search[i]) != 0)
+			ret += 1;
+	}
+	ret += memchr(search, 'z', sizeof(search)) == NULL ? 0 : 1;
+	return ret;
+}
+
+
+/* strerror */
+static void _strerror(char const * progname)
 {
 	int errors[] =
 	{
@@ -77,6 +96,9 @@ static void _string(char const * progname)
 /* main */
 int main(int argc, char * argv[])
 {
-	_string(argv[0]);
-	return 0;
+	int ret = 0;
+
+	ret += _memchr();
+	_strerror(argv[0]);
+	return (ret == 0) ? 0 : 2;
 }
