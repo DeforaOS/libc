@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 #include <sys/select.h>
 #include <stdio.h>
+#include <time.h>
 
 
 /* select */
@@ -40,11 +41,31 @@ static int _select(char const * progname)
 }
 
 
+/* select2 */
+static int _select2(char const * progname, unsigned int t)
+{
+	struct timeval timeout;
+	time_t before;
+	time_t after;
+
+	printf("%s: Testing %s() (sleeping)\n", progname, "select");
+	timeout.tv_sec = t;
+	timeout.tv_usec = 0;
+	before = time(NULL);
+	if(select(0, NULL, NULL, NULL, &timeout) != 0)
+		return 2;
+	after = time(NULL);
+	return (after - before == t) ? 0 : 2;
+}
+
+
 /* main */
 int main(int argc, char * argv[])
 {
 	int ret = 0;
 
 	ret |= _select(argv[0]);
+	ret |= _select2(argv[0], 0);
+	ret |= _select2(argv[0], 1);
 	return (ret == 0) ? 0 : 2;
 }
