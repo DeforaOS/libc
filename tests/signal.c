@@ -69,10 +69,17 @@ int main(int argc, char * argv[])
 		_error(argv[0], "signal", 2);
 	if(signal(SIGUSR2, _on_sigusr2) == SIG_ERR)
 		_error(argv[0], "signal", 2);
+	if(signal(SIGKILL, SIG_IGN) != SIG_ERR)
+		fprintf(stderr, "%s: %s: %s\n", argv[0], "signal",
+				"Should not allow ignoring SIGKILL");
+	if(signal(SIGTERM, SIG_IGN) == SIG_ERR)
+		_error(argv[0], "signal", 2);
 	printf("%s: %s", argv[0], "Testing kill()\n");
 	if(kill(getpid(), SIGUSR2) != 0)
 		_error(argv[0], "kill", 2);
 	if(kill(getpid(), SIGUSR1) != 0)
+		_error(argv[0], "kill", 2);
+	if(kill(getpid(), SIGTERM) != 0)
 		_error(argv[0], "kill", 2);
 	return _ret;
 }
