@@ -217,6 +217,9 @@ SYSCALL(setrlimit)
 #endif
 
 /* sys/select.h */
+#ifdef SYS_pselect
+SYSCALL(pselect)
+#endif
 #ifdef SYS_select
 SYSCALL(select)
 #endif
