@@ -20,10 +20,18 @@
 #include <time.h>
 
 
+/* prototypes */
+static int _pselect(char const * progname);
+static int _pselect2(char const * progname, unsigned int t);
+static int _select(char const * progname);
+static int _select2(char const * progname, unsigned int t);
+static int _error(char const * progname, char const * message, int ret);
+
+
+/* functions */
 /* pselect */
 static int _pselect(char const * progname)
 {
-	int ret = 0;
 	fd_set rfds;
 	fd_set wfds;
 	fd_set efds;
@@ -36,8 +44,8 @@ static int _pselect(char const * progname)
 	timeout.tv_sec = 0;
 	timeout.tv_nsec = 0;
 	if(pselect(0, &rfds, &wfds, &efds, &timeout, NULL) != 0)
-		ret = 2;
-	return ret;
+		return _error(progname, "pselect", 2);
+	return 0;
 }
 
 
@@ -53,7 +61,7 @@ static int _pselect2(char const * progname, unsigned int t)
 	timeout.tv_nsec = 0;
 	before = time(NULL);
 	if(pselect(0, NULL, NULL, NULL, &timeout, NULL) != 0)
-		return 2;
+		return _error(progname, "pselect", 2);
 	after = time(NULL);
 	return (after - before == t) ? 0 : 2;
 }
@@ -62,7 +70,6 @@ static int _pselect2(char const * progname, unsigned int t)
 /* select */
 static int _select(char const * progname)
 {
-	int ret = 0;
 	fd_set rfds;
 	fd_set wfds;
 	fd_set efds;
@@ -75,8 +82,8 @@ static int _select(char const * progname)
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
 	if(select(0, &rfds, &wfds, &efds, &timeout) != 0)
-		ret = 2;
-	return ret;
+		return _error(progname, "select", 2);
+	return 0;
 }
 
 
@@ -92,9 +99,18 @@ static int _select2(char const * progname, unsigned int t)
 	timeout.tv_usec = 0;
 	before = time(NULL);
 	if(select(0, NULL, NULL, NULL, &timeout) != 0)
-		return 2;
+		return _error(progname, "select", 2);
 	after = time(NULL);
 	return (after - before == t) ? 0 : 2;
+}
+
+
+/* error */
+static int _error(char const * progname, char const * message, int ret)
+{
+	fprintf(stderr, "%s: ", progname);
+	perror(message);
+	return ret;
 }
 
 
