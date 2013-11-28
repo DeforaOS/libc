@@ -123,7 +123,7 @@ time_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 time: $(time_OBJS)
 	$(CC) -o time $(time_OBJS) $(time_LDFLAGS)
 
-tests.log: dlfcn includes langinfo netdb ptrace regex setjmp signal socket start stdint stdio string time tests.sh unistd
+tests.log: dlfcn includes langinfo netdb ptrace regex select setjmp signal socket start stdint stdio string time tests.sh unistd
 	./tests.sh -P "$(PREFIX)" -- "tests.log"
 
 unistd_OBJS = unistd.o
