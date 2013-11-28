@@ -21,13 +21,14 @@
 
 
 /* memchr */
-static int _memchr(void)
+static int _memchr(char const * progname)
 {
 	int ret = 0;
 	char const search[] = "sear\xff\xfe\x7f\x7e\x00\x01ch";
 	size_t i;
 	void * p;
 
+	printf("%s: Testing %s\n", progname, "memchr()");
 	for(i = 0; i < sizeof(search); i++)
 	{
 		p = memchr(search, search[i], sizeof(search));
@@ -98,7 +99,7 @@ int main(int argc, char * argv[])
 {
 	int ret = 0;
 
-	ret += _memchr();
+	ret += _memchr(argv[0]);
 	_strerror(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
