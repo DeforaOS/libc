@@ -39,11 +39,11 @@ static int _getdate(char const * progname)
 
 	printf("%s: Testing getdate()\n", progname);
 	if(unsetenv("DATEMSK") != 0)
-		return 1;
+		return -1;
 	if(getdate(date) != NULL)
-		return 1;
+		return -1;
 	if(getdate_err != 1)
-		return 1;
+		return -1;
 	return 0;
 }
 
