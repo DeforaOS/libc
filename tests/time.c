@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,24 @@
 #include <time.h>
 
 
+/* clock */
+static int _clock(char const * progname)
+{
+	clock_t c;
+
+	printf("%s: Testing clock()\n", progname);
+	if((c = clock()) < 0)
+		return -1;
+	return 0;
+}
+
+
 /* getdate */
 static int _getdate(char const * progname)
 {
 	char const date[] = "1970-01-01 00:00:00";
 
+	printf("%s: Testing getdate()\n", progname);
 	if(unsetenv("DATEMSK") != 0)
 		return 1;
 	if(getdate(date) != NULL)
@@ -40,6 +53,7 @@ int main(int argc, char * argv[])
 {
 	int res = 0;
 
+	res += _clock(argv[0]);
 	res += _getdate(argv[0]);
 	return (res == 0) ? 0 : 2;
 }
