@@ -1,4 +1,4 @@
-TARGETS	= dlfcn includes langinfo netdb ptrace regex select setjmp signal socket start stdint stdio string time tests.log unistd
+TARGETS	= dlfcn fnmatch includes langinfo netdb ptrace regex select setjmp signal socket start stdint stdio string time tests.log unistd
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -24,6 +24,13 @@ dlfcn_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
 dlfcn: $(dlfcn_OBJS)
 	$(CC) -o dlfcn $(dlfcn_OBJS) $(dlfcn_LDFLAGS)
+
+fnmatch_OBJS = fnmatch.o
+fnmatch_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+fnmatch_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
+
+fnmatch: $(fnmatch_OBJS)
+	$(CC) -o fnmatch $(fnmatch_OBJS) $(fnmatch_LDFLAGS)
 
 includes_OBJS = includes.o
 includes_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -123,7 +130,7 @@ time_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 time: $(time_OBJS)
 	$(CC) -o time $(time_OBJS) $(time_LDFLAGS)
 
-tests.log: dlfcn includes langinfo netdb ptrace regex select setjmp signal socket start stdint stdio string time tests.sh unistd
+tests.log: dlfcn fnmatch includes langinfo netdb ptrace regex select setjmp signal socket start stdint stdio string time tests.sh unistd
 	./tests.sh -P "$(PREFIX)" -- "tests.log"
 
 unistd_OBJS = unistd.o
@@ -135,6 +142,9 @@ unistd: $(unistd_OBJS)
 
 dlfcn.o: dlfcn.c ../src/dl/libdl.a ../src/libc.a ../src/start.o
 	$(CC) $(dlfcn_CFLAGS) -c dlfcn.c
+
+fnmatch.o: fnmatch.c ../src/libc.a ../src/start.o
+	$(CC) $(fnmatch_CFLAGS) -c fnmatch.c
 
 includes.o: includes.c ../src/libc.a ../src/start.o
 	$(CC) $(includes_CFLAGS) -c includes.c
@@ -160,7 +170,7 @@ setjmp.o: setjmp.c ../src/libc.a ../src/start.o
 signal.o: signal.c ../src/libc.a ../src/start.o
 	$(CC) $(signal_CFLAGS) -c signal.c
 
-socket.o: socket.c ../src/libc.a ../src/start.o
+socket.o: socket.c ../src/socket/libsocket.a ../src/libc.a ../src/start.o
 	$(CC) -isystem ../include/socket $(socket_CFLAGS) -c socket.c
 
 start.o: start.c ../src/libc.a ../src/start.o
@@ -182,7 +192,7 @@ unistd.o: unistd.c
 	$(CC) $(unistd_CFLAGS) -c unistd.c
 
 clean:
-	$(RM) -- $(dlfcn_OBJS) $(includes_OBJS) $(langinfo_OBJS) $(netdb_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS) $(unistd_OBJS)
+	$(RM) -- $(dlfcn_OBJS) $(fnmatch_OBJS) $(includes_OBJS) $(langinfo_OBJS) $(netdb_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS) $(unistd_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)
