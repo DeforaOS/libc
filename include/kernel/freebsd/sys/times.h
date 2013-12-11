@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 /* types */
 # ifndef clock_t
 #  define clock_t clock_t
-typedef unsigned long clock_t;
+typedef int clock_t;
 # endif
 
 #endif /* !LIBC_KERNEL_FREEBSD_SYS_TIMES_H */
