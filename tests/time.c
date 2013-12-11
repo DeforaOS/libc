@@ -26,7 +26,7 @@ static int _clock(char const * progname)
 	clock_t c;
 
 	printf("%s: Testing clock()\n", progname);
-	if((c = clock()) < 0)
+	if((c = clock()) == (clock_t)-1)
 		return -1;
 	return 0;
 }

@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2005-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2005-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,13 +40,13 @@ clock_t clock(void)
 	struct rusage ru;
 
 	if(getrusage(RUSAGE_SELF, &ru) != 0)
-		return -1;
+		return (clock_t)-1;
 	return ((ru.ru_utime.tv_sec + ru.ru_stime.tv_sec) * CLOCKS_PER_SEC)
 		+ ((ru.ru_utime.tv_usec + ru.ru_stime.tv_usec)
 				* (CLOCKS_PER_SEC / 1000000));
 #else
 	errno = ENOSYS;
-	return -1;
+	return (clock_t)-1;
 #endif
 }
 
