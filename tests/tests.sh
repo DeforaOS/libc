@@ -111,10 +111,10 @@ _test "start" argv1 argv2
 _test "stdint"
 _test "stdio"
 _test "string"
-_test "time"
 _test "unistd"
 echo "Expected failures:" 1>&2
 _fail "dlfcn" "../src/libc.so"
+_fail "time"
 if [ -n "$FAILED" ]; then
 	echo "Failed tests:$FAILED" 1>&2
 	exit 2

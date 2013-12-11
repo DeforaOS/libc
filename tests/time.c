@@ -48,6 +48,23 @@ static int _getdate(char const * progname)
 }
 
 
+/* mktime */
+static int _mktime(char const * progname)
+{
+	time_t t = 0;
+	struct tm tm;
+
+	printf("%s: Testing mktime()\n", progname);
+	tzset();
+	if(localtime_r(&t, &tm) == NULL)
+		return -1;
+	if((t = mktime(&tm)) == (time_t)-1
+			|| t != 0)
+		return -1;
+	return 0;
+}
+
+
 /* main */
 int main(int argc, char * argv[])
 {
@@ -55,5 +72,6 @@ int main(int argc, char * argv[])
 
 	res += _clock(argv[0]);
 	res += _getdate(argv[0]);
+	res += _mktime(argv[0]);
 	return (res == 0) ? 0 : 2;
 }
