@@ -121,11 +121,15 @@ static int _getpwent_r(struct passwd * pw, char * buffer, size_t bufsize,
 	*result = NULL;
 	if(_fp == NULL && (_fp = fopen("/etc/passwd", "r")) == NULL)
 		return -1;
-	if(fgets(buffer, bufsize, _fp) == NULL)
+	do
 	{
-		endpwent();
-		return -1;
+		if(fgets(buffer, bufsize, _fp) == NULL)
+		{
+			endpwent();
+			return -1;
+		}
 	}
+	while(buffer[0] == '#');
 	s = buffer;
 	/* check that the record is complete */
 	if(strchr(s, '\n') == NULL)
