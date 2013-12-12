@@ -527,6 +527,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/tests/langinfo.c \
 		$(PACKAGE)-$(VERSION)/tests/netdb.c \
 		$(PACKAGE)-$(VERSION)/tests/ptrace.c \
+		$(PACKAGE)-$(VERSION)/tests/pwd.c \
 		$(PACKAGE)-$(VERSION)/tests/regex.c \
 		$(PACKAGE)-$(VERSION)/tests/select.c \
 		$(PACKAGE)-$(VERSION)/tests/setjmp.c \

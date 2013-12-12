@@ -1,4 +1,4 @@
-TARGETS	= dlfcn fnmatch includes langinfo netdb ptrace regex select setjmp signal socket start stdint stdio string time tests.log unistd
+TARGETS	= dlfcn fnmatch includes langinfo netdb ptrace pwd regex select setjmp signal socket start stdint stdio string time tests.log unistd
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -59,6 +59,13 @@ ptrace_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
 ptrace: $(ptrace_OBJS)
 	$(CC) -o ptrace $(ptrace_OBJS) $(ptrace_LDFLAGS)
+
+pwd_OBJS = pwd.o
+pwd_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+pwd_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
+
+pwd: $(pwd_OBJS)
+	$(CC) -o pwd $(pwd_OBJS) $(pwd_LDFLAGS)
 
 regex_OBJS = regex.o
 regex_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -130,7 +137,7 @@ time_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 time: $(time_OBJS)
 	$(CC) -o time $(time_OBJS) $(time_LDFLAGS)
 
-tests.log: dlfcn fnmatch includes langinfo netdb ptrace regex select setjmp signal socket start stdint stdio string time tests.sh unistd
+tests.log: dlfcn fnmatch includes langinfo netdb ptrace pwd regex select setjmp signal socket start stdint stdio string time tests.sh unistd
 	./tests.sh -P "$(PREFIX)" -- "tests.log"
 
 unistd_OBJS = unistd.o
@@ -157,6 +164,9 @@ netdb.o: netdb.c ../src/libc.a ../src/socket/libsocket.a ../src/start.o
 
 ptrace.o: ptrace.c ../src/libc.a ../src/start.o
 	$(CC) $(ptrace_CFLAGS) -c ptrace.c
+
+pwd.o: pwd.c ../src/libc.a ../src/start.o
+	$(CC) $(pwd_CFLAGS) -c pwd.c
 
 regex.o: regex.c ../src/libc.a ../src/start.o
 	$(CC) $(regex_CFLAGS) -c regex.c
@@ -192,7 +202,7 @@ unistd.o: unistd.c
 	$(CC) $(unistd_CFLAGS) -c unistd.c
 
 clean:
-	$(RM) -- $(dlfcn_OBJS) $(fnmatch_OBJS) $(includes_OBJS) $(langinfo_OBJS) $(netdb_OBJS) $(ptrace_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS) $(unistd_OBJS)
+	$(RM) -- $(dlfcn_OBJS) $(fnmatch_OBJS) $(includes_OBJS) $(langinfo_OBJS) $(netdb_OBJS) $(ptrace_OBJS) $(pwd_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS) $(unistd_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)
