@@ -81,6 +81,9 @@ struct passwd * getpwent(void)
 	*t = '\0';
 	ret.pw_dir = s;
 	ret.pw_shell = ++t;
+	if((t = strchr(t, '\n')) == NULL)
+		return NULL;
+	*t = '\0';
 	return &ret;
 }
 
