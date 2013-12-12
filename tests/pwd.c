@@ -19,6 +19,22 @@
 #include <pwd.h>
 
 
+/* getpwent */
+static int _getpwent(char const * progname)
+{
+	struct passwd * pw;
+
+	setpwent();
+	printf("%s: Testing getpwent()\n", progname);
+	while((pw = getpwent()) != NULL)
+		printf("%s: Testing getpwent(): %s (%u:%u) %s\n", progname,
+				pw->pw_name, pw->pw_uid, pw->pw_gid,
+				pw->pw_shell);
+	endpwent();
+	return 0;
+}
+
+
 /* getpwnam */
 static int _getpwnam(char const * progname)
 {
@@ -38,5 +54,6 @@ int main(int argc, char * argv[])
 	int res = 0;
 
 	res += _getpwnam(argv[0]);
+	res += _getpwent(argv[0]);
 	return (res == 0) ? 0 : 2;
 }
