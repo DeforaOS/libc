@@ -19,12 +19,18 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
+#include "errno.h"
 #include "pwd.h"
 
 
 /* private */
 /* variables */
 static FILE * _fp = NULL;
+
+
+/* prototypes */
+static int _getpwent_r(struct passwd * pw, char * buffer, size_t bufsize,
+		struct passwd ** result);
 
 
 /* public */
@@ -42,49 +48,12 @@ void endpwent(void)
 /* getpwent */
 struct passwd * getpwent(void)
 {
-	static struct passwd ret;
+	struct passwd * ret;
+	static struct passwd pw;
 	static char buf[512];
-	char * s;
-	char * t;
 
-	if(_fp == NULL && (_fp = fopen("/etc/passwd", "r")) == NULL)
-		return NULL;
-	if(fgets(buf, sizeof(buf), _fp) == NULL)
-	{
-		endpwent();
-		return NULL;
-	}
-	s = buf; /* read the user's name */
-	if((t = strchr(s, ':')) == NULL)
-		return NULL;
-	*t = '\0';
-	ret.pw_name = s;
-	s = ++t; /* read the user's password */
-	if((t = strchr(s, ':')) == NULL)
-		return NULL;
-	*t = '\0';
-	ret.pw_gecos = s;
-	s = ++t; /* read the user's id */
-	if((t = strchr(s, ':')) == NULL)
-		return NULL;
-	ret.pw_uid = atoi(s);
-	s = ++t; /* read the user's group id */
-	if((t = strchr(s, ':')) == NULL)
-		return NULL;
-	ret.pw_gid = atoi(s);
-	s = ++t; /* skip the user's description */
-	if((t = strchr(s, ':')) == NULL)
-		return NULL;
-	s = ++t; /* read the user's home directory */
-	if((t = strchr(s, ':')) == NULL)
-		return NULL;
-	*t = '\0';
-	ret.pw_dir = s;
-	ret.pw_shell = ++t;
-	if((t = strchr(t, '\n')) == NULL)
-		return NULL;
-	*t = '\0';
-	return &ret;
+	_getpwent_r(&pw, buf, sizeof(buf), &ret);
+	return ret;
 }
 
 
@@ -99,6 +68,22 @@ struct passwd * getpwnam(char const * name)
 			break;
 	endpwent();
 	return pw;
+}
+
+
+/* getpwnam_r */
+int getpwnam_r(char const * name, struct passwd * pw, char * buffer,
+		size_t bufsize, struct passwd ** result)
+{
+	int ret;
+
+	setpwent();
+	while((ret = _getpwent_r(pw, buffer, bufsize, result)) == 0
+			&& result != NULL)
+		if(strcmp(pw->pw_name, name) == 0)
+			break;
+	endpwent();
+	return ret;
 }
 
 
@@ -122,4 +107,67 @@ void setpwent(void)
 	if(_fp == NULL)
 		return;
 	rewind(_fp);
+}
+
+
+/* private */
+/* getpwent_r */
+static int _getpwent_r(struct passwd * pw, char * buffer, size_t bufsize,
+		struct passwd ** result)
+{
+	char * s;
+	char * t;
+
+	*result = NULL;
+	if(_fp == NULL && (_fp = fopen("/etc/passwd", "r")) == NULL)
+		return -1;
+	if(fgets(buffer, bufsize, _fp) == NULL)
+	{
+		endpwent();
+		return -1;
+	}
+	s = buffer;
+	/* check that the record is complete */
+	if(strchr(s, '\n') == NULL)
+	{
+		errno = ERANGE;
+		return -1;
+	}
+	/* read the user's name */
+	if((t = strchr(s, ':')) == NULL)
+		return -1;
+	*t = '\0';
+	pw->pw_name = s;
+	/* read the user's password */
+	s = ++t;
+	if((t = strchr(s, ':')) == NULL)
+		return -1;
+	*t = '\0';
+	pw->pw_gecos = s;
+	/* read the user's id */
+	s = ++t;
+	if((t = strchr(s, ':')) == NULL)
+		return -1;
+	pw->pw_uid = atoi(s);
+	/* read the user's group id */
+	s = ++t;
+	if((t = strchr(s, ':')) == NULL)
+		return -1;
+	pw->pw_gid = atoi(s);
+	/* skip the user's description */
+	s = ++t;
+	if((t = strchr(s, ':')) == NULL)
+		return -1;
+	/* read the user's home directory */
+	s = ++t;
+	if((t = strchr(s, ':')) == NULL)
+		return -1;
+	*t = '\0';
+	pw->pw_dir = s;
+	pw->pw_shell = ++t;
+	if((t = strchr(t, '\n')) == NULL)
+		return -1;
+	*t = '\0';
+	*result = pw;
+	return 0;
 }

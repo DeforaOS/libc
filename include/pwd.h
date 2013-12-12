@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2005-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,8 @@ struct passwd
 
 /* functions */
 struct passwd * getpwnam(char const * name);
+int getpwnam_r(char const * name, struct passwd * pw, char * buffer,
+		size_t bufsize, struct passwd ** result);
 struct passwd * getpwuid(uid_t uid);
 
 struct passwd * getpwent(void);
