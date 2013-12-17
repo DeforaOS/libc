@@ -534,6 +534,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/tests/signal.c \
 		$(PACKAGE)-$(VERSION)/tests/socket.c \
 		$(PACKAGE)-$(VERSION)/tests/start.c \
+		$(PACKAGE)-$(VERSION)/tests/stdarg.c \
 		$(PACKAGE)-$(VERSION)/tests/stdint.c \
 		$(PACKAGE)-$(VERSION)/tests/stdio.c \
 		$(PACKAGE)-$(VERSION)/tests/string.c \
