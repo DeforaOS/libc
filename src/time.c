@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2005-2013 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2005-2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 #include "sys/resource.h"
 #include "sys/time.h"
+#include "ctype.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
@@ -359,9 +360,86 @@ static char * _strftime_print_int(char * s, size_t * maxsize, int i)
 /* strptime */
 char * strptime(char const * buf, char const * format, struct tm * tm)
 {
-	/* FIXME implement */
-	errno = ENOSYS;
-	return NULL;
+	int e = errno;
+	char * p;
+	char const * q;
+
+	memset(tm, 0, sizeof(*tm));
+	for(p = (char *)buf, q = format; *p != '\0' && *q != '\0'; q++)
+	{
+		if(isspace(*q))
+		{
+			for(; isspace(*p); p++);
+			continue;
+		}
+		if(*q != '%')
+		{
+			if(*p != *q)
+				break;
+			p++;
+			continue;
+		}
+		switch(*(++q))
+		{
+			case 'd':
+				/* day of the month */
+				errno = 0;
+				tm->tm_mday = strtol(p, &p, 10);
+				if(errno != 0 || tm->tm_mday < 1
+						|| tm->tm_mday > 31)
+					return NULL;
+				break;
+			case 'H':
+				/* hour (24-hour clock) */
+				errno = 0;
+				tm->tm_hour = strtol(p, &p, 10);
+				if(errno != 0 || tm->tm_hour < 0
+						|| tm->tm_hour > 23)
+					return NULL;
+				break;
+			case 'M':
+				/* minute */
+				errno = 0;
+				tm->tm_min = strtol(p, &p, 10);
+				if(errno != 0 || tm->tm_min < 0
+						|| tm->tm_min > 60)
+					return NULL;
+				break;
+			case 'm':
+				/* month number */
+				errno = 0;
+				tm->tm_mon = strtol(p, &p, 10);
+				if(errno != 0 || tm->tm_mon < 1
+						|| tm->tm_mon > 12)
+					return NULL;
+				tm->tm_mon--;
+				break;
+			case 'S':
+				/* seconds */
+				errno = 0;
+				tm->tm_sec = strtol(p, &p, 10);
+				if(errno != 0 || tm->tm_sec < 0
+						|| tm->tm_sec > 61)
+					return NULL;
+				break;
+			case 'Y':
+				/* year, including the century */
+				errno = 0;
+				tm->tm_year = strtol(p, &p, 10);
+				if(errno != 0)
+					return NULL;
+				tm->tm_year -= 1970;
+				break;
+			default:
+				/* FIXME implement more */
+				errno = ENOSYS;
+				return NULL;
+		}
+	}
+	if(*q != '\0')
+		return NULL;
+	errno = e;
+	return p;
 }
 
 
