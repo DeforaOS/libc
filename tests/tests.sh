@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #$Id$
-#Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2012-2014 Pierre Pronchery <khorben@defora.org>
 #This file is part of DeforaOS System libc
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
@@ -114,10 +114,10 @@ _test "stdarg"
 _test "stdint"
 _test "stdio"
 _test "string"
+_test "time"
 _test "unistd"
 echo "Expected failures:" 1>&2
 _fail "dlfcn" "../src/libc.so"
-_fail "time"
 if [ -n "$FAILED" ]; then
 	echo "Failed tests:$FAILED" 1>&2
 	exit 2
