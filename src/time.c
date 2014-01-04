@@ -198,9 +198,28 @@ struct tm * localtime_r(time_t const * t, struct tm * ret)
 /* mktime */
 time_t mktime(struct tm * timep)
 {
-	/* FIXME implement */
-	errno = ENOSYS;
-	return -1;
+	time_t ret;
+	const time_t min = 60;
+	const time_t hour = min * 60;
+	const time_t day = hour * 24;
+	const time_t month28 = day * 28;
+	const time_t month30 = day * 30;
+	const time_t month31 = day * 31;
+	time_t month;
+	const time_t year = day * 365;
+
+	ret = timep->tm_sec;
+	/* FIXME not accurate */
+	ret += timep->tm_min * min;
+	ret += timep->tm_hour * hour;
+	ret += timep->tm_mday * day;
+	month = (timep->tm_mon == 1 || timep->tm_mon == 3 || timep->tm_mon == 5
+			|| timep->tm_mon == 7 || timep->tm_mon == 8
+			|| timep->tm_mon == 10 || timep->tm_mon == 12)
+		? month31 : ((timep->tm_mon != 2) ? month30 : month28);
+	ret += timep->tm_mon * month;
+	ret += (timep->tm_year - 70) * year;
+	return ret;
 }
 
 
