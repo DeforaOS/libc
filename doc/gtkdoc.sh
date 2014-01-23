@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2012-2014 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -26,8 +26,7 @@
 
 #variables
 PREFIX="/usr/local"
-. "../config.sh"
-MODULE="$PACKAGE"
+[ -f "../config.sh" ] && . "../config.sh"
 #executables
 DEBUG="_debug"
 GTKDOC_FIXXREF="gtkdoc-fixxref"
@@ -47,6 +46,14 @@ _debug()
 {
 	echo "$@" 1>&2
 	"$@"
+}
+
+
+#error
+_error()
+{
+	echo "gtkdoc.sh: $@" 1>&2
+	return 2
 }
 
 
@@ -89,6 +96,13 @@ if [ $# -eq 0 ]; then
 	_usage
 	exit $?
 fi
+
+#check the variables
+if [ -z "$PACKAGE" ]; then
+	_error "The PACKAGE variable needs to be set"
+	exit $?
+fi
+MODULE="$PACKAGE"
 
 [ -z "$DATADIR" ] && DATADIR="$PREFIX/share"
 instdir="$DATADIR/gtk-doc/html"
