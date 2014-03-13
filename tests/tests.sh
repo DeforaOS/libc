@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 #$Id$
 #Copyright (c) 2012-2014 Pierre Pronchery <khorben@defora.org>
 #This file is part of DeforaOS System libc
