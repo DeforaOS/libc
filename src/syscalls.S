@@ -74,11 +74,13 @@
 #  include "kernel/netbsd/arm/syscalls.S"
 # elif defined(__i386__)
 #  include "kernel/netbsd/i386/syscalls.S"
+# elif defined(__lm32__)
+#  include "kernel/netbsd/lm32/syscalls.S"
 # elif defined(__sparc64__)
 #  include "kernel/netbsd/sparc64/syscalls.S"
 # elif defined(__sparc__)
 #  include "kernel/netbsd/sparc/syscalls.S"
-# else /* !__amd64__ && !__arm__ && !__i386__ && !__sparc__ && !__sparc64__ */
+# else
 #  warning Unsupported NetBSD architecture
 #  define SYSCALL(name)
 # endif

@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -67,6 +67,8 @@
 #  include "kernel/netbsd/arm/start.S"
 # elif defined(__i386__)
 #  include "kernel/netbsd/i386/start.S"
+# elif defined(__lm32__)
+#  include "kernel/netbsd/lm32/start.S"
 # elif defined(__sparc64__)
 #  include "kernel/netbsd/sparc64/start.S"
 # elif defined(__sparc__)
