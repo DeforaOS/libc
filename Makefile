@@ -522,6 +522,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/socket/kernel/netbsd/sparc/project.conf \
 		$(PACKAGE)-$(VERSION)/tests/dlfcn.c \
+		$(PACKAGE)-$(VERSION)/tests/errno.c \
 		$(PACKAGE)-$(VERSION)/tests/fnmatch.c \
 		$(PACKAGE)-$(VERSION)/tests/includes.c \
 		$(PACKAGE)-$(VERSION)/tests/langinfo.c \

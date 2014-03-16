@@ -98,6 +98,7 @@ target="$1"
 $DATE > "$target"
 FAILED=
 echo "Performing tests:" 1>&2
+_test "errno"
 _test "fnmatch"
 _test "includes"
 _test "langinfo"
