@@ -834,8 +834,20 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 			return (errno == 0 && string != s) ? s - string : 0;
 		case '%':
 			return (*string == '%') ? 1 : 0;
+		case 'A':
+		case 'a':
+		case 'C':
+		case 'E':
+		case 'e':
+		case 'F':
+		case 'f':
+		case 'G':
+		case 'g':
+		case 'p':
+		case 'S':
 		case 's':
 		case '[':
+			/* FIXME implement */
 			errno = ENOSYS;
 			return 0;
 	}
