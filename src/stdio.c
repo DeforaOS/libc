@@ -796,6 +796,22 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 				break;
 			ret = s - string;
 			break;
+		case 'i':
+			d = va_arg(ap, int *);
+			errno = 0;
+			*d = strtol(string, &s, 0);
+			if(errno != 0 || string == s)
+				break;
+			ret = s - string;
+			break;
+		case 'o':
+			u = va_arg(ap, unsigned int *);
+			errno = 0;
+			*u = strtol(string, &s, 8);
+			if(errno != 0 || string == s)
+				break;
+			ret = s - string;
+			break;
 		case 'u':
 			u = va_arg(ap, unsigned int *);
 			errno = 0;
@@ -804,11 +820,20 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 				break;
 			ret = s - string;
 			break;
-		case 'l':
-		case 'o':
-		case 's':
 		case 'x':
+			u = va_arg(ap, unsigned int *);
+			errno = 0;
+			*u = strtol(string, &s, 16);
+			if(errno != 0 || string == s)
+				break;
+			ret = s - string;
+			break;
 		case '%':
+			if(*string == '%')
+				ret = 1;
+			break;
+		case 'l':
+		case 's':
 			errno = ENOSYS;
 			break;
 		default:
