@@ -36,12 +36,14 @@ static int _fopen(char const * progname, char const * mode, int expected)
 /* sscanf */
 static int _sscanf(char const * progname)
 {
-	char const * str = "abc   e 42def";
-	char const * format = "abc e %udef";
+	char const * str = "abc   e 42def3";
+	char const * format = "abc e %udef%c";
 	unsigned int u;
+	char c;
 
 	printf("%s: Testing sscanf()\n", progname);
-	if(sscanf(str, format, &u) != 1)
+	if(sscanf(str, format, &u, &c) != 2
+			|| u != 42 || c != '3')
 		return 1;
 	return 0;
 }
