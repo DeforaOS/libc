@@ -783,6 +783,11 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 
 	switch(format[0])
 	{
+		case 'c':
+			s = va_arg(ap, char *);
+			*s = *string;
+			ret = 1;
+			break;
 		case 'd':
 			d = va_arg(ap, int *);
 			errno = 0;
