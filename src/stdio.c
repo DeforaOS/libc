@@ -776,7 +776,6 @@ int sscanf(char const * string, char const * format, ...)
 
 static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 {
-	size_t ret = 0;
 	int * d;
 	unsigned int * u;
 	char * s;
@@ -786,61 +785,42 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 		case 'c':
 			s = va_arg(ap, char *);
 			*s = *string;
-			ret = 1;
-			break;
+			return 1;
 		case 'd':
 			d = va_arg(ap, int *);
 			errno = 0;
 			*d = strtol(string, &s, 10);
-			if(errno != 0 || string == s)
-				break;
-			ret = s - string;
-			break;
+			return (errno == 0 && string != s) ? s - string : 0;
 		case 'i':
 			d = va_arg(ap, int *);
 			errno = 0;
 			*d = strtol(string, &s, 0);
-			if(errno != 0 || string == s)
-				break;
-			ret = s - string;
-			break;
+			return (errno == 0 && string != s) ? s - string : 0;
 		case 'o':
 			u = va_arg(ap, unsigned int *);
 			errno = 0;
 			*u = strtol(string, &s, 8);
-			if(errno != 0 || string == s)
-				break;
-			ret = s - string;
-			break;
+			return (errno == 0 && string != s) ? s - string : 0;
 		case 'u':
 			u = va_arg(ap, unsigned int *);
 			errno = 0;
 			*u = strtoul(string, &s, 10);
-			if(errno != 0 || string == s)
-				break;
-			ret = s - string;
-			break;
+			return (errno == 0 && string != s) ? s - string : 0;
 		case 'x':
 			u = va_arg(ap, unsigned int *);
 			errno = 0;
 			*u = strtol(string, &s, 16);
-			if(errno != 0 || string == s)
-				break;
-			ret = s - string;
-			break;
+			return (errno == 0 && string != s) ? s - string : 0;
 		case '%':
-			if(*string == '%')
-				ret = 1;
-			break;
+			return (*string == '%') ? 1 : 0;
 		case 'l':
 		case 's':
 			errno = ENOSYS;
-			break;
+			return 0;
 		default:
 			errno = EINVAL;
-			break;
+			return 0;
 	}
-	return ret;
 }
 
 
