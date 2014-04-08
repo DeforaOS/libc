@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2012-2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,20 @@ static int _fopen(char const * progname, char const * mode, int expected)
 	printf("%s: Testing fopen() mode \"%s\": 0x%x (0x%x)\n", progname,
 			mode, m, expected);
 	return (m == expected) ? 0 : 1;
+}
+
+
+/* sscanf */
+static int _sscanf(char const * progname)
+{
+	char const * str = "abc   e 42def";
+	char const * format = "abc e %udef";
+	unsigned int u;
+
+	printf("%s: Testing sscanf()\n", progname);
+	if(sscanf(str, format, &u) != 1)
+		return 1;
+	return 0;
 }
 
 
@@ -75,6 +89,7 @@ int main(int argc, char * argv[])
 	ret += _fopen(argv[0], "wbx", O_WRONLY | O_TRUNC | O_CREAT | O_EXCL);
 	ret += _fopen(argv[0], "w+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
 	ret += _fopen(argv[0], "wb+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
+	ret += _sscanf(argv[0]);
 	ret += _tmpfile(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
