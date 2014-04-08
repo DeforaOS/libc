@@ -18,6 +18,7 @@
 #include "fcntl.h"
 #include "unistd.h"
 #include "stdarg.h"
+#include "stdint.h"
 #include "stdlib.h"
 #include "string.h"
 #include "ctype.h"
@@ -731,6 +732,8 @@ int sprintf(char * str, char const * format, ...)
 static size_t _sscanf_do(char const * string, char const * format, va_list ap);
 static size_t _sscanf_do_long(char const * string, char const * format,
 		va_list ap);
+static size_t _sscanf_do_max(char const * string, char const * format,
+		va_list ap);
 static size_t _sscanf_do_short(char const * string, char const * format,
 		va_list ap);
 
@@ -760,6 +763,8 @@ int sscanf(char const * string, char const * format, ...)
 				f++;
 				if(*f == 'h')
 					i = _sscanf_do_short(s, ++f, ap);
+				else if(*f == 'j')
+					i = _sscanf_do_max(s, ++f, ap);
 				else if(*f == 'l')
 					i = _sscanf_do_long(s, ++f, ap);
 				else
@@ -820,7 +825,7 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 		case 'x':
 			u = va_arg(ap, unsigned int *);
 			errno = 0;
-			*u = strtol(string, &s, 16);
+			*u = strtoul(string, &s, 16);
 			return (errno == 0 && string != s) ? s - string : 0;
 		case '%':
 			return (*string == '%') ? 1 : 0;
@@ -865,7 +870,46 @@ static size_t _sscanf_do_long(char const * string, char const * format,
 		case 'x':
 			u = va_arg(ap, unsigned long *);
 			errno = 0;
-			*u = strtol(string, &s, 16);
+			*u = strtoul(string, &s, 16);
+			return (errno == 0 && string != s) ? s - string : 0;
+	}
+	errno = EINVAL;
+	return 0;
+}
+
+static size_t _sscanf_do_max(char const * string, char const * format,
+		va_list ap)
+{
+	intmax_t * d;
+	uintmax_t * u;
+	char * s;
+
+	switch(format[0])
+	{
+		case 'd':
+			d = va_arg(ap, intmax_t *);
+			errno = 0;
+			*d = strtoll(string, &s, 10);
+			return (errno == 0 && string != s) ? s - string : 0;
+		case 'i':
+			d = va_arg(ap, intmax_t *);
+			errno = 0;
+			*d = strtoll(string, &s, 0);
+			return (errno == 0 && string != s) ? s - string : 0;
+		case 'o':
+			u = va_arg(ap, uintmax_t *);
+			errno = 0;
+			*u = strtoll(string, &s, 8);
+			return (errno == 0 && string != s) ? s - string : 0;
+		case 'u':
+			u = va_arg(ap, uintmax_t *);
+			errno = 0;
+			*u = strtoull(string, &s, 10);
+			return (errno == 0 && string != s) ? s - string : 0;
+		case 'x':
+			u = va_arg(ap, uintmax_t *);
+			errno = 0;
+			*u = strtoull(string, &s, 16);
 			return (errno == 0 && string != s) ? s - string : 0;
 	}
 	errno = EINVAL;
@@ -904,7 +948,7 @@ static size_t _sscanf_do_short(char const * string, char const * format,
 		case 'x':
 			u = va_arg(ap, unsigned short *);
 			errno = 0;
-			*u = strtol(string, &s, 16);
+			*u = strtoul(string, &s, 16);
 			return (errno == 0 && string != s) ? s - string : 0;
 	}
 	errno = EINVAL;
