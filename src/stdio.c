@@ -826,6 +826,7 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 			errno = 0;
 			*u = strtoul(string, &s, 10);
 			return (errno == 0 && string != s) ? s - string : 0;
+		case 'X':
 		case 'x':
 			u = va_arg(ap, unsigned int *);
 			errno = 0;
@@ -871,6 +872,7 @@ static size_t _sscanf_do_long(char const * string, char const * format,
 			errno = 0;
 			*u = strtoul(string, &s, 10);
 			return (errno == 0 && string != s) ? s - string : 0;
+		case 'X':
 		case 'x':
 			u = va_arg(ap, unsigned long *);
 			errno = 0;
@@ -910,6 +912,7 @@ static size_t _sscanf_do_max(char const * string, char const * format,
 			errno = 0;
 			*u = strtoull(string, &s, 10);
 			return (errno == 0 && string != s) ? s - string : 0;
+		case 'X':
 		case 'x':
 			u = va_arg(ap, uintmax_t *);
 			errno = 0;
@@ -949,6 +952,7 @@ static size_t _sscanf_do_short(char const * string, char const * format,
 			errno = 0;
 			*u = strtoul(string, &s, 10);
 			return (errno == 0 && string != s) ? s - string : 0;
+		case 'X':
 		case 'x':
 			u = va_arg(ap, unsigned short *);
 			errno = 0;
@@ -988,6 +992,7 @@ static size_t _sscanf_do_size(char const * string, char const * format,
 			errno = 0;
 			*u = strtoull(string, &s, 10);
 			return (errno == 0 && string != s) ? s - string : 0;
+		case 'X':
 		case 'x':
 			u = va_arg(ap, size_t *);
 			errno = 0;
