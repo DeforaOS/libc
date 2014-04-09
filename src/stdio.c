@@ -824,30 +824,25 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 			return 1;
 		case 'd':
 			d = va_arg(ap, int *);
-			errno = 0;
 			*d = strtol(string, &s, 10);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'i':
 			d = va_arg(ap, int *);
-			errno = 0;
 			*d = strtol(string, &s, 0);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'o':
 			u = va_arg(ap, unsigned int *);
-			errno = 0;
 			*u = strtol(string, &s, 8);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'u':
 			u = va_arg(ap, unsigned int *);
-			errno = 0;
 			*u = strtoul(string, &s, 10);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'X':
 		case 'x':
 			u = va_arg(ap, unsigned int *);
-			errno = 0;
 			*u = strtoul(string, &s, 16);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case '%':
 			return (*string == '%') ? 1 : 0;
 		case 'C':
@@ -910,30 +905,25 @@ static size_t _sscanf_do_long(char const * string, char const * format,
 				? *f : 0;
 		case 'd':
 			d = va_arg(ap, long *);
-			errno = 0;
 			*d = strtol(string, &s, 10);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'i':
 			d = va_arg(ap, long *);
-			errno = 0;
 			*d = strtol(string, &s, 0);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'o':
 			u = va_arg(ap, unsigned long *);
-			errno = 0;
 			*u = strtol(string, &s, 8);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'u':
 			u = va_arg(ap, unsigned long *);
-			errno = 0;
 			*u = strtoul(string, &s, 10);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'X':
 		case 'x':
 			u = va_arg(ap, unsigned long *);
-			errno = 0;
 			*u = strtoul(string, &s, 16);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'c':
 		case 's':
 		case '[':
@@ -956,30 +946,25 @@ static size_t _sscanf_do_max(char const * string, char const * format,
 	{
 		case 'd':
 			d = va_arg(ap, intmax_t *);
-			errno = 0;
 			*d = strtoll(string, &s, 10);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'i':
 			d = va_arg(ap, intmax_t *);
-			errno = 0;
 			*d = strtoll(string, &s, 0);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'o':
 			u = va_arg(ap, uintmax_t *);
-			errno = 0;
 			*u = strtoll(string, &s, 8);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'u':
 			u = va_arg(ap, uintmax_t *);
-			errno = 0;
 			*u = strtoull(string, &s, 10);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'X':
 		case 'x':
 			u = va_arg(ap, uintmax_t *);
-			errno = 0;
 			*u = strtoull(string, &s, 16);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 	}
 	errno = EINVAL;
 	return 0;
@@ -996,30 +981,25 @@ static size_t _sscanf_do_short(char const * string, char const * format,
 	{
 		case 'd':
 			d = va_arg(ap, short *);
-			errno = 0;
 			*d = strtol(string, &s, 10);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'i':
 			d = va_arg(ap, short *);
-			errno = 0;
 			*d = strtol(string, &s, 0);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'o':
 			u = va_arg(ap, unsigned short *);
-			errno = 0;
 			*u = strtol(string, &s, 8);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'u':
 			u = va_arg(ap, unsigned short *);
-			errno = 0;
 			*u = strtoul(string, &s, 10);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'X':
 		case 'x':
 			u = va_arg(ap, unsigned short *);
-			errno = 0;
 			*u = strtoul(string, &s, 16);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 	}
 	errno = EINVAL;
 	return 0;
@@ -1036,30 +1016,25 @@ static size_t _sscanf_do_size(char const * string, char const * format,
 	{
 		case 'd':
 			d = va_arg(ap, ssize_t *);
-			errno = 0;
 			*d = strtoll(string, &s, 10);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'i':
 			d = va_arg(ap, ssize_t *);
-			errno = 0;
 			*d = strtoll(string, &s, 0);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'o':
 			u = va_arg(ap, size_t *);
-			errno = 0;
 			*u = strtoll(string, &s, 8);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'u':
 			u = va_arg(ap, size_t *);
-			errno = 0;
 			*u = strtoull(string, &s, 10);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 		case 'X':
 		case 'x':
 			u = va_arg(ap, size_t *);
-			errno = 0;
 			*u = strtoull(string, &s, 16);
-			return (errno == 0 && string != s) ? s - string : 0;
+			return s - string;
 	}
 	errno = EINVAL;
 	return 0;
