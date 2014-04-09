@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -119,8 +119,7 @@ static int _atexit_do(AtexitFunction function, void (*callback)(void))
 /* atof */
 double atof(char const * str)
 {
-	/* FIXME implement */
-	return 0.0;
+	return strtod(str, NULL);
 }
 
 
