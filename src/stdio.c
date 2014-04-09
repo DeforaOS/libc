@@ -730,6 +730,8 @@ int sprintf(char * str, char const * format, ...)
 
 /* sscanf */
 static size_t _sscanf_do(char const * string, char const * format, va_list ap);
+static size_t _sscanf_do_char(char const * string, char const * format,
+		va_list ap);
 static size_t _sscanf_do_double(char const * string, char const * format,
 		va_list ap);
 static size_t _sscanf_do_long(char const * string, char const * format,
@@ -770,7 +772,12 @@ int sscanf(char const * string, char const * format, ...)
 				if(strtol(++f, &p, 10) != 0)
 					f = p;
 				if(*f == 'h')
-					i = _sscanf_do_short(s, ++f, ap);
+				{
+					if(*(++f) == 'h')
+						i = _sscanf_do_char(s, ++f, ap);
+					else
+						i = _sscanf_do_short(s, f, ap);
+				}
 				else if(*f == 'j')
 					i = _sscanf_do_max(s, ++f, ap);
 				else if(*f == 'L')
@@ -857,6 +864,41 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 			/* FIXME implement */
 			errno = ENOSYS;
 			return 0;
+	}
+	errno = EINVAL;
+	return 0;
+}
+
+static size_t _sscanf_do_char(char const * string, char const * format,
+		va_list ap)
+{
+	char * d;
+	unsigned char * u;
+	char * s;
+
+	switch(format[0])
+	{
+		case 'd':
+			d = va_arg(ap, char *);
+			*d = strtol(string, &s, 10);
+			return s - string;
+		case 'i':
+			d = va_arg(ap, char *);
+			*d = strtol(string, &s, 0);
+			return s - string;
+		case 'o':
+			u = va_arg(ap, unsigned char *);
+			*u = strtol(string, &s, 8);
+			return s - string;
+		case 'u':
+			u = va_arg(ap, unsigned char *);
+			*u = strtoul(string, &s, 10);
+			return s - string;
+		case 'X':
+		case 'x':
+			u = va_arg(ap, unsigned char *);
+			*u = strtoul(string, &s, 16);
+			return s - string;
 	}
 	errno = EINVAL;
 	return 0;
