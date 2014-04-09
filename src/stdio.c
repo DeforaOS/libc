@@ -890,6 +890,20 @@ static size_t _sscanf_do_long(char const * string, char const * format,
 			errno = 0;
 			*u = strtoul(string, &s, 16);
 			return (errno == 0 && string != s) ? s - string : 0;
+		case 'A':
+		case 'a':
+		case 'c':
+		case 'E':
+		case 'e':
+		case 'F':
+		case 'f':
+		case 'G':
+		case 'g':
+		case 's':
+		case '[':
+			/* FIXME implement */
+			errno = ENOSYS;
+			return 0;
 	}
 	errno = EINVAL;
 	return 0;
