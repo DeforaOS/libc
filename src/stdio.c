@@ -748,6 +748,7 @@ int sscanf(char const * string, char const * format, ...)
 	char const * f = format;
 	va_list ap;
 	size_t i;
+	char * p;
 
 	va_start(ap, format);
 	for(i = 0; *f != '\0' && *s != '\0'; f += i)
@@ -764,7 +765,10 @@ int sscanf(char const * string, char const * format, ...)
 				for(; isspace((unsigned int)*s); s++);
 				break;
 			case '%':
-				f++;
+				/* skip the optional maximum field width */
+				/* FIXME really implement */
+				if(strtol(++f, &p, 10) != 0)
+					f = p;
 				if(*f == 'h')
 					i = _sscanf_do_short(s, ++f, ap);
 				else if(*f == 'j')
