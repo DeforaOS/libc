@@ -645,7 +645,8 @@ double strtod(char const * str, char ** endptr)
 	unsigned long u;
 	char const * p;
 
-	*endptr = (char*)str; /* XXX only good for errors */
+	if(endptr != NULL)
+		*endptr = (char *)str;
 	if((res = sscanf(str, "%ld.%lu", &i, &u)) == 1)
 		ret = i;
 	else if(res == 2 && (p = index(str, '.')) != NULL)
@@ -671,7 +672,8 @@ float strtof(char const * str, char ** endptr)
 	unsigned long u;
 	char const * p;
 
-	*endptr = (char*)str; /* XXX only good for errors */
+	if(endptr != NULL)
+		*endptr = (char *)str;
 	if((res = sscanf(str, "%ld.%lu", &i, &u)) == 1)
 		ret = i;
 	else if(res == 2 && (p = index(str, '.')) != NULL)
@@ -731,7 +733,7 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 	if(*p == '\0')
 	{
 		if(endptr != NULL)
-			*endptr = (char*)p; /* XXX cast */
+			*endptr = (char *)p; /* XXX cast */
 		errno = ERANGE;
 		return 0;
 	}
@@ -758,7 +760,7 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 		/* FIXME add integer overflow detection code */
 	}
 	if(endptr != NULL)
-		*endptr = (char*)p; /* XXX cast */
+		*endptr = (char *)p; /* XXX cast */
 	return ret;
 }
 
@@ -781,6 +783,8 @@ static int _strtoull_base(char const ** p)
 /* strtold */
 long double strtold(char const * str, char ** endptr)
 {
+	if(endptr != NULL)
+		*endptr = (char *)str; /* XXX cast */
 	/* FIXME implement */
 	return 0.0;
 }
