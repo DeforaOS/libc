@@ -730,6 +730,8 @@ int sprintf(char * str, char const * format, ...)
 
 /* sscanf */
 static size_t _sscanf_do(char const * string, char const * format, va_list ap);
+static size_t _sscanf_do_double(char const * string, char const * format,
+		va_list ap);
 static size_t _sscanf_do_long(char const * string, char const * format,
 		va_list ap);
 static size_t _sscanf_do_max(char const * string, char const * format,
@@ -767,6 +769,8 @@ int sscanf(char const * string, char const * format, ...)
 					i = _sscanf_do_short(s, ++f, ap);
 				else if(*f == 'j')
 					i = _sscanf_do_max(s, ++f, ap);
+				else if(*f == 'L')
+					i = _sscanf_do_double(s, ++f, ap);
 				else if(*f == 'l')
 					i = _sscanf_do_long(s, ++f, ap);
 				else if(*f == 'z')
@@ -797,11 +801,23 @@ int sscanf(char const * string, char const * format, ...)
 static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 {
 	int * d;
+	float * f;
 	unsigned int * u;
 	char * s;
 
 	switch(format[0])
 	{
+		case 'A':
+		case 'a':
+		case 'E':
+		case 'e':
+		case 'F':
+		case 'f':
+		case 'G':
+		case 'g':
+			f = va_arg(ap, float *);
+			return ((*f = strtof(string, &s)) != 0 && string != s)
+				? *f : 0;
 		case 'c':
 			s = va_arg(ap, char *);
 			*s = *string;
@@ -834,15 +850,7 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 			return (errno == 0 && string != s) ? s - string : 0;
 		case '%':
 			return (*string == '%') ? 1 : 0;
-		case 'A':
-		case 'a':
 		case 'C':
-		case 'E':
-		case 'e':
-		case 'F':
-		case 'f':
-		case 'G':
-		case 'g':
 		case 'p':
 		case 'S':
 		case 's':
@@ -855,15 +863,51 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 	return 0;
 }
 
+static size_t _sscanf_do_double(char const * string, char const * format,
+		va_list ap)
+{
+	long double * f;
+	char * s;
+
+	switch(format[0])
+	{
+		case 'A':
+		case 'a':
+		case 'E':
+		case 'e':
+		case 'F':
+		case 'f':
+		case 'G':
+		case 'g':
+			f = va_arg(ap, long double *);
+			return ((*f = strtold(string, &s)) != 0 && string != s)
+				? *f : 0;
+	}
+	errno = EINVAL;
+	return 0;
+}
+
 static size_t _sscanf_do_long(char const * string, char const * format,
 		va_list ap)
 {
 	long * d;
+	double * f;
 	unsigned long * u;
 	char * s;
 
 	switch(format[0])
 	{
+		case 'A':
+		case 'a':
+		case 'E':
+		case 'e':
+		case 'F':
+		case 'f':
+		case 'G':
+		case 'g':
+			f = va_arg(ap, double *);
+			return ((*f = strtod(string, &s)) != 0 && string != s)
+				? *f : 0;
 		case 'd':
 			d = va_arg(ap, long *);
 			errno = 0;
@@ -890,15 +934,7 @@ static size_t _sscanf_do_long(char const * string, char const * format,
 			errno = 0;
 			*u = strtoul(string, &s, 16);
 			return (errno == 0 && string != s) ? s - string : 0;
-		case 'A':
-		case 'a':
 		case 'c':
-		case 'E':
-		case 'e':
-		case 'F':
-		case 'f':
-		case 'G':
-		case 'g':
 		case 's':
 		case '[':
 			/* FIXME implement */
