@@ -742,6 +742,7 @@ static size_t _sscanf_do_short(char const * string, char const * format,
 		va_list ap);
 static size_t _sscanf_do_size(char const * string, char const * format,
 		va_list ap);
+static size_t _sscanf_do_string(char const * string, va_list ap);
 
 int sscanf(char const * string, char const * format, ...)
 {
@@ -845,6 +846,8 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 			u = va_arg(ap, unsigned int *);
 			*u = strtol(string, &s, 8);
 			return s - string;
+		case 's':
+			return _sscanf_do_string(string, ap);
 		case 'u':
 			u = va_arg(ap, unsigned int *);
 			*u = strtoul(string, &s, 10);
@@ -859,7 +862,6 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 		case 'C':
 		case 'p':
 		case 'S':
-		case 's':
 		case '[':
 			/* FIXME implement */
 			errno = ENOSYS;
@@ -1084,6 +1086,16 @@ static size_t _sscanf_do_size(char const * string, char const * format,
 	}
 	errno = EINVAL;
 	return 0;
+}
+
+static size_t _sscanf_do_string(char const * string, va_list ap)
+{
+	char * s;
+
+	s = va_arg(ap, char *);
+	/* XXX may overflow */
+	strcpy(s, string);
+	return 1;
 }
 
 
