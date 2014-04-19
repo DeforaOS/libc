@@ -18,6 +18,7 @@
 #ifndef LIBSOCKET_NETDB_H
 # define LIBSOCKET_NETDB_H
 
+# include <inttypes.h>
 # include <netinet/in.h>
 
 
@@ -46,6 +47,27 @@ struct hostent
 	int h_addrtype;
 	int h_length;
 	char ** h_addr_list;
+};
+# endif
+
+# ifndef netent
+#  define netent netent
+struct netent
+{
+	char * n_name;
+	char ** n_aliases;
+	int n_addrtype;
+	uint32_t n_net;
+};
+# endif
+
+# ifndef protoent
+#  define protoent protoent
+struct protoent
+{
+	char * p_name;
+	char ** p_aliases;
+	int p_proto;
 };
 # endif
 
@@ -92,6 +114,8 @@ extern int h_errno;
 
 /* functions */
 void endhostent(void);
+void endnetent(void);
+void endprotoent(void);
 void endservent(void);
 void freeaddrinfo(struct addrinfo * ai);
 const char * gai_strerror(int ecode);
@@ -102,12 +126,20 @@ struct hostent * gethostbyname(const char * name);
 int getnameinfo(const struct sockaddr * sa, socklen_t salen, char * node,
 		socklen_t nodelen, char * service, socklen_t servicelen,
 		int flags);
+struct netent * getnetbyaddr(uint32_t net, int type);
+struct netent * getnetbyname(const char * name);
+struct netent * getnetent(void);
+struct protoent * getprotobyname(const char * name);
+struct protoent * getprotobynumber(int proto);
+struct protoent * getprotoent(void);
 struct servent * getservbyname(const char * name, const char * protocol);
 struct servent * getservbyport(int port, const char * protocol);
 struct servent * getservent(void);
 struct hostent * gethostent(void);
 char * hstrerror(int errnum);
 void sethostent(int stayopen);
+void setnetent(int stayopen);
+void setprotoent(int stayopen);
 void setservent(int stayopen);
 
 #endif /* !LIBSOCKET_NETDB_H */
