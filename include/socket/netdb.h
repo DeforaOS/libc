@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008-2013 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,6 +77,13 @@ struct servent
 # define EAI_SERVICE			8
 # define EAI_SOCKTYPE			9
 # define EAI_SYSTEM			10
+
+# define NI_NOFQDN			0x01
+# define NI_NUMERICHOST			0x02
+# define NI_NAMEREQD			0x04
+# define NI_NUMERICSERV			0x08
+# define NI_NUMERICSCOPE		0x10
+# define NI_DGRAM			0x20
 
 
 /* variables */
