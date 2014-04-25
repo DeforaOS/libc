@@ -311,8 +311,8 @@ int getloadavg(double loadavg[], int nelem)
 
 	if((fp = fopen("/proc/loadavg", "r")) == NULL)
 		return -1;
-	if(fscanf(fp, "%lf %lf %lf %d/%d %d", &lo[0], &lo[1], &lo[2], &i, &i,
-				&i) != 6)
+	if(fscanf(fp, "%f %f %f %d/%d %d", &lo[0], &lo[1], &lo[2], &i, &i, &i)
+			!= 6)
 	{
 		fclose(fp);
 		return -1;
