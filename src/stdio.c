@@ -830,6 +830,7 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 	float * f;
 	unsigned int * u;
 	char * s;
+	void ** v;
 
 	switch(format[0])
 	{
@@ -860,6 +861,10 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 			u = va_arg(ap, unsigned int *);
 			*u = strtol(string, &s, 8);
 			return s - string;
+		case 'p':
+			v = va_arg(ap, void **);
+			*v = (void *)strtol(string, &s, 16);
+			return s - string;
 		case 's':
 			return _sscanf_do_string(string, ap);
 		case 'u':
@@ -874,7 +879,6 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 		case '%':
 			return (*string == '%') ? 1 : 0;
 		case 'C':
-		case 'p':
 		case 'S':
 		case '[':
 			/* FIXME implement */
