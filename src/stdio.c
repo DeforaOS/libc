@@ -735,7 +735,8 @@ typedef struct _scan_args
 	int discard;
 	int width;
 } scan_args;
-static size_t _sscanf_do(char const * string, char const * format, va_list ap);
+static size_t _sscanf_do(scan_args * args, char const * string,
+		char const * format, va_list ap);
 static size_t _sscanf_do_char(char const * string, char const * format,
 		va_list ap);
 static size_t _sscanf_do_double(char const * string, char const * format,
@@ -748,7 +749,8 @@ static size_t _sscanf_do_short(char const * string, char const * format,
 		va_list ap);
 static size_t _sscanf_do_size(char const * string, char const * format,
 		va_list ap);
-static size_t _sscanf_do_string(char const * string, va_list ap);
+static size_t _sscanf_do_string(scan_args * args, char const * string,
+		va_list ap);
 
 int sscanf(char const * string, char const * format, ...)
 {
@@ -802,7 +804,7 @@ int sscanf(char const * string, char const * format, ...)
 				else if(*f == 'z')
 					i = _sscanf_do_size(s, ++f, ap);
 				else
-					i = _sscanf_do(s, f, ap);
+					i = _sscanf_do(&args, s, f, ap);
 				if(i == 0)
 					break;
 				s += i;
@@ -824,7 +826,8 @@ int sscanf(char const * string, char const * format, ...)
 	return args.ret;
 }
 
-static size_t _sscanf_do(char const * string, char const * format, va_list ap)
+static size_t _sscanf_do(scan_args * args, char const * string,
+		char const * format, va_list ap)
 {
 	int * d;
 	float * f;
@@ -866,7 +869,7 @@ static size_t _sscanf_do(char const * string, char const * format, va_list ap)
 			*v = (void *)strtol(string, &s, 16);
 			return s - string;
 		case 's':
-			return _sscanf_do_string(string, ap);
+			return _sscanf_do_string(args, string, ap);
 		case 'u':
 			u = va_arg(ap, unsigned int *);
 			*u = strtoul(string, &s, 10);
@@ -1106,13 +1109,18 @@ static size_t _sscanf_do_size(char const * string, char const * format,
 	return 0;
 }
 
-static size_t _sscanf_do_string(char const * string, va_list ap)
+static size_t _sscanf_do_string(scan_args * args, char const * string,
+		va_list ap)
 {
+	int i;
 	char * s;
 
 	s = va_arg(ap, char *);
-	/* XXX may overflow */
-	strcpy(s, string);
+	for(i = 0; (args->width <= 0 || i < args->width)
+			&& !isspace((unsigned int)string[i]); i++)
+		s[i] = string[i];
+	/* FIXME check for any off by one */
+	s[i] = '\0';
 	return 1;
 }
 
