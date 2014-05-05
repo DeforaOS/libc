@@ -737,6 +737,8 @@ typedef struct _scan_args
 } scan_args;
 static size_t _sscanf_do(scan_args * args, char const * string,
 		char const * format, va_list ap);
+static size_t _sscanf_do_bracket(scan_args * args, char const * format,
+		char const * string, va_list ap);
 static size_t _sscanf_do_char(char const * string, char const * format,
 		va_list ap);
 static size_t _sscanf_do_double(char const * string, char const * format,
@@ -879,17 +881,41 @@ static size_t _sscanf_do(scan_args * args, char const * string,
 			u = va_arg(ap, unsigned int *);
 			*u = strtoul(string, &s, 16);
 			return s - string;
+		case '[':
+			return _sscanf_do_bracket(args, format, string, ap);
 		case '%':
 			return (*string == '%') ? 1 : 0;
 		case 'C':
 		case 'S':
-		case '[':
 			/* FIXME implement */
 			errno = ENOSYS;
 			return 0;
 	}
 	errno = EINVAL;
 	return 0;
+}
+
+static size_t _sscanf_do_bracket(scan_args * args, char const * format,
+		char const * string, va_list ap)
+{
+	int ret = 1;
+	int i;
+	char * s;
+
+	if(format[ret] == '^')
+		/* FIXME really implement */
+		ret++;
+	if(format[ret] == ']')
+		ret++;
+	/* FIXME really implement */
+	for(; format[ret] != ']'; ret++);
+	s = va_arg(ap, char *);
+	for(i = 0; (args->width <= 0 || i < args->width) && string[i] != '\0';
+			i++)
+		s[i] = string[i];
+	/* FIXME check for any off by one */
+	s[i] = '\0';
+	return ret;
 }
 
 static size_t _sscanf_do_char(char const * string, char const * format,
@@ -1117,7 +1143,8 @@ static size_t _sscanf_do_string(scan_args * args, char const * string,
 
 	s = va_arg(ap, char *);
 	for(i = 0; (args->width <= 0 || i < args->width)
-			&& !isspace((unsigned int)string[i]); i++)
+			&& !isspace((unsigned int)string[i])
+			&& string[i] != '\0'; i++)
 		s[i] = string[i];
 	/* FIXME check for any off by one */
 	s[i] = '\0';
