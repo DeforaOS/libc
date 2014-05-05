@@ -729,6 +729,12 @@ int sprintf(char * str, char const * format, ...)
 
 
 /* sscanf */
+typedef struct _scan_args
+{
+	int ret;
+	int discard;
+	int width;
+} scan_args;
 static size_t _sscanf_do(char const * string, char const * format, va_list ap);
 static size_t _sscanf_do_char(char const * string, char const * format,
 		va_list ap);
@@ -746,13 +752,14 @@ static size_t _sscanf_do_string(char const * string, va_list ap);
 
 int sscanf(char const * string, char const * format, ...)
 {
-	int ret = 0;
+	scan_args args;
 	char const * s = string;
 	char const * f = format;
 	va_list ap;
 	size_t i;
 	char * p;
 
+	args.ret = 0;
 	va_start(ap, format);
 	for(i = 0; *f != '\0' && *s != '\0'; f += i)
 	{
@@ -768,9 +775,16 @@ int sscanf(char const * string, char const * format, ...)
 				for(; isspace((unsigned int)*s); s++);
 				break;
 			case '%':
-				/* skip the optional maximum field width */
-				/* FIXME really implement */
-				if(strtol(++f, &p, 10) != 0)
+				if((++f)[0] == '*')
+				{
+					/* FIXME really implement */
+					args.discard = 1;
+					f++;
+				}
+				else
+					args.discard = 0;
+				/* maximum field width */
+				if((args.width = strtol(f, &p, 10)) != 0)
 					f = p;
 				if(*f == 'h')
 				{
@@ -794,7 +808,7 @@ int sscanf(char const * string, char const * format, ...)
 				s += i;
 				/* FIXME hardcoded */
 				i = 1;
-				ret++;
+				args.ret++;
 				break;
 			default:
 				i = (*(s++) == f[0]) ? 1 : 0;
@@ -802,12 +816,12 @@ int sscanf(char const * string, char const * format, ...)
 		}
 		if(i == 0)
 		{
-			ret = -1;
+			args.ret = -1;
 			break;
 		}
 	}
 	va_end(ap);
-	return ret;
+	return args.ret;
 }
 
 static size_t _sscanf_do(char const * string, char const * format, va_list ap)
