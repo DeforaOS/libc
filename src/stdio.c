@@ -96,7 +96,9 @@ char * ctermid(char * buf)
 
 	if(buf == NULL)
 		buf = tty;
-	snprintf(buf, L_ctermid, "%s", devtty);
+	/* XXX may overflow */
+	if(snprintf(buf, L_ctermid, "%s", devtty) >= L_ctermid)
+		return NULL;
 	return buf;
 }
 
