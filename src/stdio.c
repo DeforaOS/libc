@@ -1498,7 +1498,7 @@ static int _format_o(print_args * args, unsigned long long * ptr)
 
 static int _format_s(print_args * args, char const * str)
 {
-	if(str == NULL) /* XXX be nice and don't crash */
+	if(str == NULL) /* XXX be nice and do not crash */
 		str = "(null)";
 	return _vfprintf_do(args, str, strlen(str));
 }
