@@ -40,11 +40,15 @@ static int _sscanf(char const * progname)
 	char const * format = "abc e %udef%c";
 	unsigned int u;
 	char c;
+	char buf[4];
 
 	printf("%s: Testing sscanf()\n", progname);
 	if(sscanf(str, format, &u, &c) != 2
 			|| u != 42 || c != '3')
 		return 1;
+	if(sscanf(str, "%3s", &buf) != 1
+			|| strncmp(str, buf, 3) != 0)
+		return 2;
 	return 0;
 }
 
