@@ -412,7 +412,7 @@ int mkstemp(char * template)
 {
 	if(mktemp(template) == NULL)
 		return -1;
-	return open(template, O_WRONLY | O_CREAT | O_EXCL, 0666);
+	return open(template, O_WRONLY | O_CREAT | O_EXCL, 0600);
 }
 
 
