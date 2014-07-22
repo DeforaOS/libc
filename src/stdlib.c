@@ -401,7 +401,7 @@ char * mktemp(char * template)
 	for(i = strlen(template); i-- > 0 && template[i] == 'X';)
 		template[i] = tab[rand() % sizeof(tab)];
 	if(lstat(template, &st) != 0)
-		return errno == ENOENT ? template : NULL;
+		return (errno == ENOENT) ? template : NULL;
 	errno = EEXIST;
 	return NULL;
 }
