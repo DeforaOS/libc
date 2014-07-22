@@ -35,6 +35,7 @@
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
 
+/* private */
 /* types */
 typedef struct _Alloc
 {
@@ -50,6 +51,11 @@ static Alloc _alloc = { 0, NULL, NULL };
 static unsigned int _seed = 1;
 
 
+/* prototypes */
+static void _mktemp_template(char * template);
+
+
+/* public */
 /* functions */
 /* abort */
 void abort(void)
@@ -393,13 +399,9 @@ void * malloc(size_t size)
 /* mktemp */
 char * mktemp(char * template)
 {
-	static char const tab[62] = "0123456789abcdefghijklmnopqrstuvwxyz"
-		"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	size_t i;
 	struct stat st;
 
-	for(i = strlen(template); i-- > 0 && template[i] == 'X';)
-		template[i] = tab[rand() % sizeof(tab)];
+	_mktemp_template(template);
 	if(lstat(template, &st) != 0)
 		return (errno == ENOENT) ? template : NULL;
 	errno = EEXIST;
@@ -410,8 +412,7 @@ char * mktemp(char * template)
 /* mkstemp */
 int mkstemp(char * template)
 {
-	if(mktemp(template) == NULL)
-		return -1;
+	_mktemp_template(template);
 	return open(template, O_WRONLY | O_CREAT | O_EXCL, 0600);
 }
 
@@ -868,4 +869,18 @@ int unsetenv(char const * name)
 		return -1;
 	}
 	return _setenv_do(name, NULL, 1);
+}
+
+
+/* private */
+/* functions */
+/* mktemp_template */
+static void _mktemp_template(char * template)
+{
+	static char const tab[62] = "0123456789abcdefghijklmnopqrstuvwxyz"
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	size_t i;
+
+	for(i = strlen(template); i > 0 && template[i - 1] == 'X'; i--)
+		template[i - 1] = tab[rand() % sizeof(tab)];
 }
