@@ -114,6 +114,7 @@ _test "start" argv1 argv2
 _test "stdarg"
 _test "stdint"
 _test "stdio"
+_test "stdlib"
 _test "string"
 _test "time"
 _test "unistd"

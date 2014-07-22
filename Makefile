@@ -538,6 +538,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/tests/stdarg.c \
 		$(PACKAGE)-$(VERSION)/tests/stdint.c \
 		$(PACKAGE)-$(VERSION)/tests/stdio.c \
+		$(PACKAGE)-$(VERSION)/tests/stdlib.c \
 		$(PACKAGE)-$(VERSION)/tests/string.c \
 		$(PACKAGE)-$(VERSION)/tests/time.c \
 		$(PACKAGE)-$(VERSION)/tests/unistd.c \
