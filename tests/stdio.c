@@ -66,6 +66,14 @@ static int _tmpfile(char const * progname)
 }
 
 
+/* tmpnam */
+static int _tmpnam(char const * progname, char * str)
+{
+	printf("%s: Testing tmpnam()\n", progname);
+	return (tmpnam(str) != NULL) ? 0 : 1;
+}
+
+
 /* main */
 int main(int argc, char * argv[])
 {
@@ -97,5 +105,6 @@ int main(int argc, char * argv[])
 	ret += _fopen(argv[0], "wb+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
 	ret += _sscanf(argv[0]);
 	ret += _tmpfile(argv[0]);
+	ret += _tmpnam(argv[0], NULL);
 	return (ret == 0) ? 0 : 2;
 }
