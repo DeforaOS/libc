@@ -22,11 +22,23 @@
 /* stdlib */
 /* private */
 /* prototypes */
+static int _error(char const * progname, char const * message, int ret);
+
 static int _mkstemp(char const * progname);
 static int _mktemp(char const * progname);
 
 
 /* functions */
+/* error */
+static int _error(char const * progname, char const * message, int ret)
+{
+	fputs(progname, stderr);
+	fputs(": ", stderr);
+	perror(message);
+	return ret;
+}
+
+
 /* mkstemp */
 static int _mkstemp(char const * progname)
 {
@@ -36,11 +48,11 @@ static int _mkstemp(char const * progname)
 
 	printf("%s: Testing mkstemp()\n", progname);
 	if((fd = mkstemp(buf)) < 0)
-		return 1;
+		return _error(progname, "mkstemp", 1);
 	if(unlink(buf) != 0)
-		ret = 1;
+		ret = _error(progname, "unlink", 1);
 	if(close(fd) != 0)
-		ret = 1;
+		ret = _error(progname, "close", 1);
 	return ret;
 }
 
@@ -51,7 +63,7 @@ static int _mktemp(char const * progname)
 	char buf[] = "/tmp/stdlib.XXXXXX";
 
 	printf("%s: Testing mktemp()\n", progname);
-	return (mktemp(buf) == buf) ? 0 : 1;
+	return (mktemp(buf) == buf) ? 0 : _error(progname, "mktemp", 1);
 }
 
 
