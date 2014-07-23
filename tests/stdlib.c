@@ -20,21 +20,49 @@
 
 
 /* stdlib */
+/* private */
+/* prototypes */
+static int _mkstemp(char const * progname);
+static int _mktemp(char const * progname);
+
+
+/* functions */
+/* mkstemp */
+static int _mkstemp(char const * progname)
+{
+	int ret = 0;
+	char buf[] = "/tmp/stdlib.XXXXXX";
+	int fd;
+
+	printf("%s: Testing mkstemp()\n", progname);
+	if((fd = mkstemp(buf)) < 0)
+		return 1;
+	if(unlink(buf) != 0)
+		ret = 1;
+	if(close(fd) != 0)
+		ret = 1;
+	return ret;
+}
+
+
 /* mktemp */
 static int _mktemp(char const * progname)
 {
 	char buf[] = "/tmp/stdlib.XXXXXX";
 
 	printf("%s: Testing mktemp()\n", progname);
-	return (mktemp(buf) == buf) ? 0 : 2;
+	return (mktemp(buf) == buf) ? 0 : 1;
 }
 
 
+/* public */
+/* functions */
 /* main */
 int main(int argc, char * argv[])
 {
 	int ret = 0;
 
+	ret += _mkstemp(argv[0]);
 	ret += _mktemp(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
