@@ -1173,6 +1173,19 @@ FILE * tmpfile(void)
 }
 
 
+/* tmpnam */
+char * tmpnam(char * str)
+{
+	char template[] = "/tmp/tmp.XXXXXX";
+
+	if(str == NULL)
+		return mktemp(template);
+	if(snprintf(str, L_tmpnam, "%s", str) >= L_tmpnam)
+		return NULL;
+	return mktemp(str);
+}
+
+
 /* ungetc */
 int ungetc(int c, FILE * file)
 {

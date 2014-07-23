@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2004-2013 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,8 +57,11 @@ typedef void * va_list;
 /* end-of-file return value */
 # define EOF (-1)
 
-/* Maximum size of character array to hold ctermid() output */
-# define L_ctermid	256
+/* maximum size of character array to hold ctermid() output */
+# define L_ctermid 256
+
+/* maximum size of character array to hold tmpnam() output */
+# define L_tmpnam 1024 /* XXX OS dependent */
 
 
 /* variables */
@@ -116,6 +119,7 @@ int snprintf(char * str, size_t size, char const * format, ...);
 int sprintf(char * str, char const * format, ...);
 int sscanf(char const * string, char const * format, ...);
 FILE * tmpfile(void);
+char * tmpnam(char * str);
 int ungetc(int c, FILE * file);
 int vfprintf(FILE * file, char const * format, va_list arg);
 int vfscanf(FILE * file, char const * format, va_list arg);
