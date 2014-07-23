@@ -26,6 +26,7 @@ static int _error(char const * progname, char const * message, int ret);
 
 static int _mkstemp(char const * progname);
 static int _mktemp(char const * progname);
+static int _strtod(char const * progname, char const * str, double expected);
 
 
 /* functions */
@@ -67,6 +68,18 @@ static int _mktemp(char const * progname)
 }
 
 
+/* strtod */
+static int _strtod(char const * progname, char const * str, double expected)
+{
+	double d;
+	char * p;
+
+	printf("%s: Testing strtod(\"%s\", %f)\n", progname, str, expected);
+	d = strtod(str, &p);
+	return (d == expected && *p == '\0') ? 0 : 1;
+}
+
+
 /* public */
 /* functions */
 /* main */
@@ -76,5 +89,6 @@ int main(int argc, char * argv[])
 
 	ret += _mkstemp(argv[0]);
 	ret += _mktemp(argv[0]);
+	ret += _strtod(argv[0], "0.0", 0.0);
 	return (ret == 0) ? 0 : 2;
 }
