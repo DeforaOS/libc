@@ -412,8 +412,17 @@ char * mktemp(char * template)
 /* mkstemp */
 int mkstemp(char * template)
 {
-	_mktemp_template(template);
-	return open(template, O_WRONLY | O_CREAT | O_EXCL, 0600);
+	size_t i;
+	int fd;
+	const int flags = O_WRONLY | O_CREAT | O_EXCL;
+
+	for(i = 0; i < 20; i++)
+	{
+		_mktemp_template(template);
+		if((fd = open(template, flags, 0600)) >= 0)
+			return fd;
+	}
+	return -1;
 }
 
 
