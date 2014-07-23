@@ -399,12 +399,20 @@ void * malloc(size_t size)
 /* mktemp */
 char * mktemp(char * template)
 {
+	size_t i;
 	struct stat st;
 
-	_mktemp_template(template);
-	if(lstat(template, &st) != 0)
-		return (errno == ENOENT) ? template : NULL;
-	errno = EEXIST;
+	for(i = 0; i < 20; i++)
+	{
+		_mktemp_template(template);
+		if(lstat(template, &st) != 0)
+		{
+			if(errno == ENOENT)
+				return template;
+		}
+		else
+			errno = EEXIST;
+	}
 	return NULL;
 }
 
