@@ -52,6 +52,13 @@ void endhostent(void)
 }
 
 
+/* endprotoent */
+void endprotoent(void)
+{
+	/* FIXME implement */
+}
+
+
 /* endservent */
 void endservent(void)
 {
@@ -275,6 +282,30 @@ int getnameinfo(const struct sockaddr * sa, socklen_t salen, char * node,
 }
 
 
+/* getprotobyname */
+struct protoent * getprotobyname(const char * name)
+{
+	/* FIXME implement */
+	return NULL;
+}
+
+
+/* getprotobynumber */
+struct protoent * getprotobynumber(int proto)
+{
+	/* FIXME implement */
+	return NULL;
+}
+
+
+/* getprotoent */
+struct protoent * getprotoent(void)
+{
+	/* FIXME implement */
+	return NULL;
+}
+
+
 /* getservent */
 static char * _getservent_name(char const ** s);
 
@@ -410,6 +441,13 @@ void sethostent(int stayopen)
 		endhostent();
 	else
 		rewind(_fp);
+}
+
+
+/* setprotoent */
+void setprotoent(int stayopen)
+{
+	/* FIXME implement */
 }
 
 
