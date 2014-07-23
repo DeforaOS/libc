@@ -1158,15 +1158,12 @@ static size_t _sscanf_do_string(scan_args * args, char const * string,
 FILE * tmpfile(void)
 {
 	char template[] = "/tmp/tmp.XXXXXX";
-	char * path;
 	int fd;
 	FILE * file;
 
-	if((path = mktemp(template)) == NULL)
+	if((fd = mkstemp(template)) < 0)
 		return NULL;
-	if((fd = open(path, O_WRONLY | O_CREAT | O_EXCL, 0666)) < 0)
-		return NULL;
-	if(unlink(path) != 0
+	if(unlink(template) != 0
 			|| (file = fdopen(fd, "w+")) == NULL)
 	{
 		close(fd);
