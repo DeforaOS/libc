@@ -30,6 +30,11 @@
 
 /* public */
 /* variables */
+int daylight = 0;
+long timezone = 0;
+
+char * tzname[2] = { "UTC", "UTC" };
+
 int getdate_err = 0;
 
 
@@ -478,5 +483,5 @@ time_t time(time_t * t)
 /* tzset */
 void tzset(void)
 {
-	/* FIXME implement */
+	/* FIXME implement, set daylight, timezone and tzname */
 }

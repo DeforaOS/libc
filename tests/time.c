@@ -105,6 +105,17 @@ static int _strptime(char const * progname)
 }
 
 
+/* tzset */
+static int _tzset(char const * progname)
+{
+	printf("%s: Testing tzset()\n", progname);
+	tzset();
+	printf("STD: %s, DST %s\n", tzname[0], tzname[1]);
+	printf("daylight: %d, timezone %ld\n", daylight, timezone);
+	return 0;
+}
+
+
 /* main */
 int main(int argc, char * argv[])
 {
@@ -114,5 +125,6 @@ int main(int argc, char * argv[])
 	res += _getdate(argv[0]);
 	res += _mktime(argv[0]);
 	res += _strptime(argv[0]);
+	res += _tzset(argv[0]);
 	return (res == 0) ? 0 : 2;
 }

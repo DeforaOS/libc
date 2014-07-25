@@ -62,6 +62,11 @@ struct itimespec
 
 
 /* variables */
+extern int daylight;
+extern long timezone;
+
+extern char * tzname[2];
+
 extern int getdate_err;
 
 
