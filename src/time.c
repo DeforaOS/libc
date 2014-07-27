@@ -243,6 +243,7 @@ int nanosleep(struct timespec * requested, struct timespec * remaining)
 static char * _strftime_print(char * s, size_t * maxsize, char const * str,
 		size_t size);
 static char * _strftime_print_int(char * s, size_t * maxsize, int i);
+static char * _strftime_print_int02(char * s, size_t * maxsize, int i);
 
 size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 {
@@ -286,7 +287,7 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 			case 'e':
 				break;
 			case 'H':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int02(q, &maxsize,
 						t->tm_hour);
 				break;
 			case 'I':
@@ -298,7 +299,8 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 						t->tm_yday);
 				break;
 			case 'M':
-				q = _strftime_print_int(q, &maxsize, t->tm_min);
+				q = _strftime_print_int02(q, &maxsize,
+						t->tm_min);
 				break;
 			case 'm':
 				q = _strftime_print_int(q, &maxsize, t->tm_mon);
@@ -312,7 +314,8 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 						4);
 				break;
 			case 'S':
-				q = _strftime_print_int(q, &maxsize, t->tm_sec);
+				q = _strftime_print_int02(q, &maxsize,
+						t->tm_sec);
 				break;
 			case 'T':
 			case 'X':
@@ -376,6 +379,16 @@ static char * _strftime_print_int(char * s, size_t * maxsize, int i)
 	int len;
 
 	if((len = snprintf(buf, sizeof(buf), "%d", i)) <= 0)
+		return s;
+	return _strftime_print(s, maxsize, buf, len);
+}
+
+static char * _strftime_print_int02(char * s, size_t * maxsize, int i)
+{
+	char buf[16];
+	int len;
+
+	if((len = snprintf(buf, sizeof(buf), "%02d", i)) <= 0)
 		return s;
 	return _strftime_print(s, maxsize, buf, len);
 }
