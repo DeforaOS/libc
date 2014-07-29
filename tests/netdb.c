@@ -25,6 +25,7 @@ static int _netdb(char const * progname);
 static int _gai_strerror(char const * progname, char const * message,
 		int value);
 static int _gethostent(void);
+static int _getprotoent(void);
 static int _getservbyname(char const * name, char const * protocol);
 static int _getservbyport(int port, char const * protocol);
 static int _getservent(void);
@@ -39,6 +40,8 @@ static int _netdb(char const * progname)
 
 	/* gethostent */
 	ret |= _gethostent();
+	/* getprotoent */
+	ret |= _getprotoent();
 	/* getservent */
 	ret |= _getservbyname("ssh", "tcp");
 	ret |= _getservbyport(22, "tcp");
@@ -83,6 +86,21 @@ static int _gethostent(void)
 		printf("%s\t%d %d\n", he->h_name, he->h_addrtype, he->h_length);
 	endhostent();
 	printf("%u hosts listed\n", i);
+	return 0;
+}
+
+
+/* getprotoent */
+static int _getprotoent(void)
+{
+	struct protoent * pe;
+	unsigned int i;
+
+	setprotoent(1);
+	for(i = 0; (pe = getprotoent()) != NULL; i++)
+		printf("%s\t%d\n", pe->p_name, pe->p_proto);
+	endprotoent();
+	printf("%u protocols listed\n", i);
 	return 0;
 }
 
