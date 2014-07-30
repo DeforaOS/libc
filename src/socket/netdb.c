@@ -520,12 +520,11 @@ void setprotoent(int stayopen)
 {
 	if(_protofp == NULL)
 	{
-		if(stayopen != 0 && (_protofp = fopen("/etc/protocols", "r"))
-				== NULL)
-			h_errno = NO_DATA;
-		return;
+		if(stayopen != 0)
+			/* we can ignore errors */
+			_protofp = fopen("/etc/protocols", "r");
 	}
-	if(stayopen == 0)
+	else if(stayopen == 0)
 		endprotoent();
 	else
 		rewind(_protofp);
@@ -537,12 +536,11 @@ void setservent(int stayopen)
 {
 	if(_servfp == NULL)
 	{
-		if(stayopen != 0 && (_servfp = fopen("/etc/services", "r"))
-				== NULL)
-			h_errno = NO_DATA;
-		return;
+		if(stayopen != 0)
+			/* we can ignore errors */
+			_servfp = fopen("/etc/services", "r");
 	}
-	if(stayopen == 0)
+	else if(stayopen == 0)
 		endservent();
 	else
 		rewind(_servfp);
