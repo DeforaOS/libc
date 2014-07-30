@@ -325,9 +325,13 @@ struct netent * getnetbyname(const char * name)
 
 
 /* getnetent */
+static char * _getnetent_name(char const ** s);
+static int _getnetent_net(uint32_t * net, char const ** s);
+
 struct netent * getnetent(void)
 {
 	static struct netent ne = { NULL, NULL, 0, 0 };
+	char const * s;
 
 	if(_netfp == NULL)
 		setnetent(1);
@@ -336,11 +340,77 @@ struct netent * getnetent(void)
 	for(;;)
 	{
 		_netent_free(&ne);
-		/* FIXME really implement */
-		return NULL;
+		if(fgets(_buf, sizeof(_buf), _netfp) == NULL)
+			break;
+		/* skip whitespaces */
+		for(s = _buf; isspace(*s); s++);
+		/* skip comments */
+		if(*s == '#' || *s == '\n')
+			continue;
+		/* read name */
+		if((ne.n_name = _getnetent_name(&s)) == NULL)
+			continue;
+		if(!isspace(*s))
+			continue;
+		/* skip whitespaces */
+		for(; isspace(*s); s++);
+		/* read network */
+		if(_getnetent_net(&ne.n_net, &s) != 0)
+			continue;
+		/* read optional aliases */
+		/* FIXME implement */
+		ne.n_addrtype = AF_INET;
+		return &ne;
 	}
 	endnetent();
 	return NULL;
+}
+
+static char * _getnetent_name(char const ** s)
+{
+	char * ret = NULL;
+	size_t len = 0;
+	char * p;
+
+	for(; isalnum((int)(unsigned char)**s) || **s == '-' || **s == '.';
+			(*s)++)
+	{
+		/* XXX only realloc() once */
+		if((p = realloc(ret, len + 2)) == NULL)
+		{
+			free(ret);
+			return NULL;
+		}
+		ret = p;
+		p[len++] = **s;
+	}
+	if(len == 0)
+		return NULL;
+	ret[len] = '\0';
+	return ret;
+}
+
+static int _getnetent_net(uint32_t * net, char const ** s)
+{
+	int ret = 0;
+	int e;
+	uint32_t u;
+	char * p;
+
+	if(!isdigit((int)(unsigned char)**s))
+		return -1;
+	e = errno;
+	errno = 0;
+	u = strtoul(*s, &p, 10);
+	if(errno == 0)
+	{
+		*net = u;
+		*s = p;
+	}
+	else
+		ret = -1;
+	errno = e;
+	return ret;
 }
 
 
