@@ -28,6 +28,7 @@
 /* private */
 /* variables */
 static FILE * _hostfp = NULL;
+static FILE * _netfp = NULL;
 static FILE * _protofp = NULL;
 static FILE * _servfp = NULL;
 static char _buf[512];
@@ -35,6 +36,7 @@ static char _buf[512];
 
 /* prototypes */
 static void _hostent_free(struct hostent * he);
+static void _netent_free(struct netent * ne);
 static void _protoent_free(struct protoent * pe);
 static void _servent_free(struct servent * se);
 
@@ -299,7 +301,12 @@ int getnameinfo(const struct sockaddr * sa, socklen_t salen, char * node,
 /* getnetbyaddr */
 struct netent * getnetbyaddr(uint32_t net, int type)
 {
-	/* FIXME implement */
+	struct netent * ne;
+
+	setnetent(1);
+	while((ne = getnetent()) != NULL)
+		if(ne->n_net == net && ne->n_addrtype == type)
+			return ne;
 	return NULL;
 }
 
@@ -307,7 +314,12 @@ struct netent * getnetbyaddr(uint32_t net, int type)
 /* getnetbyname */
 struct netent * getnetbyname(const char * name)
 {
-	/* FIXME implement */
+	struct netent * ne;
+
+	setnetent(1);
+	while((ne = getnetent()) != NULL)
+		if(strcmp(ne->n_name, name) == 0)
+			return ne;
 	return NULL;
 }
 
@@ -315,7 +327,19 @@ struct netent * getnetbyname(const char * name)
 /* getnetent */
 struct netent * getnetent(void)
 {
-	/* FIXME implement */
+	static struct netent ne = { NULL, NULL, 0, 0 };
+
+	if(_netfp == NULL)
+		setnetent(1);
+	if(_netfp == NULL)
+		return NULL;
+	for(;;)
+	{
+		_netent_free(&ne);
+		/* FIXME really implement */
+		return NULL;
+	}
+	endnetent();
 	return NULL;
 }
 
@@ -507,7 +531,14 @@ void sethostent(int stayopen)
 /* setnetent */
 void setnetent(int stayopen)
 {
-	/* FIXME implement */
+	if(stayopen == 0)
+		endnetent();
+	else if(_netfp != NULL)
+		/* FIXME handle errors */
+		rewind(_netfp);
+	else
+		/* we can ignore errors */
+		_netfp = fopen("/etc/networks", "r");
 }
 
 
@@ -554,6 +585,19 @@ static void _hostent_free(struct hostent * he)
 		free(*p);
 	free(he->h_addr_list);
 	memset(he, 0, sizeof(*he));
+}
+
+
+/* netent_free */
+static void _netent_free(struct netent * ne)
+{
+	char ** p;
+
+	free(ne->n_name);
+	for(p = ne->n_aliases; p != NULL && *p != NULL; p++)
+		free(*p);
+	free(ne->n_aliases);
+	memset(ne, 0, sizeof(*ne));
 }
 
 
