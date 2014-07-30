@@ -59,7 +59,9 @@ void endhostent(void)
 /* endnetent */
 void endnetent(void)
 {
-	/* FIXME implement */
+	if(_netfp != NULL)
+		fclose(_netfp);
+	_netfp = NULL;
 }
 
 
