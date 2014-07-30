@@ -443,9 +443,13 @@ struct protoent * getprotobynumber(int proto)
 
 
 /* getprotoent */
+static char * _getprotoent_name(char const ** s);
+static int _getprotoent_proto(int * proto, char const ** s);
+
 struct protoent * getprotoent(void)
 {
 	static struct protoent pe = { NULL, NULL, 0 };
+	char const * s;
 
 	if(_protofp == NULL)
 		setprotoent(1);
@@ -454,11 +458,76 @@ struct protoent * getprotoent(void)
 	for(;;)
 	{
 		_protoent_free(&pe);
-		/* FIXME really implement */
-		return NULL;
+		if(fgets(_buf, sizeof(_buf), _protofp) == NULL)
+			break;
+		/* skip whitespaces */
+		for(s = _buf; isspace(*s); s++);
+		/* skip comments */
+		if(*s == '#' || *s == '\n')
+			continue;
+		/* read name */
+		if((pe.p_name = _getprotoent_name(&s)) == NULL)
+			continue;
+		if(!isspace(*s))
+			continue;
+		/* skip whitespaces */
+		for(; isspace(*s); s++);
+		/* read protocol */
+		if(_getprotoent_proto(&pe.p_proto, &s) != 0)
+			continue;
+		/* read optional aliases */
+		/* FIXME implement */
+		return &pe;
 	}
 	endprotoent();
 	return NULL;
+}
+
+static char * _getprotoent_name(char const ** s)
+{
+	char * ret = NULL;
+	size_t len = 0;
+	char * p;
+
+	for(; isalnum((int)(unsigned char)**s) || **s == '-' || **s == '.';
+			(*s)++)
+	{
+		/* XXX only realloc() once */
+		if((p = realloc(ret, len + 2)) == NULL)
+		{
+			free(ret);
+			return NULL;
+		}
+		ret = p;
+		p[len++] = **s;
+	}
+	if(len == 0)
+		return NULL;
+	ret[len] = '\0';
+	return ret;
+}
+
+static int _getprotoent_proto(int * proto, char const ** s)
+{
+	int ret = 0;
+	int e;
+	int i;
+	char * p;
+
+	if(!isdigit((int)(unsigned char)**s))
+		return -1;
+	e = errno;
+	errno = 0;
+	i = strtol(*s, &p, 10);
+	if(errno == 0)
+	{
+		*proto = i;
+		*s = p;
+	}
+	else
+		ret = -1;
+	errno = e;
+	return ret;
 }
 
 
