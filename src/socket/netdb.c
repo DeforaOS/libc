@@ -28,12 +28,14 @@
 /* private */
 /* variables */
 static FILE * _hostfp = NULL;
+static FILE * _protofp = NULL;
 static FILE * _servfp = NULL;
 static char _buf[512];
 
 
 /* prototypes */
 static void _hostent_free(struct hostent * he);
+static void _protoent_free(struct protoent * pe);
 static void _servent_free(struct servent * se);
 
 
@@ -62,7 +64,9 @@ void endnetent(void)
 /* endprotoent */
 void endprotoent(void)
 {
-	/* FIXME implement */
+	if(_protofp != NULL)
+		fclose(_protofp);
+	_protofp = NULL;
 }
 
 
@@ -319,7 +323,12 @@ struct netent * getnetent(void)
 /* getprotobyname */
 struct protoent * getprotobyname(const char * name)
 {
-	/* FIXME implement */
+	struct protoent * pe;
+
+	setprotoent(1);
+	while((pe = getprotoent()) != NULL)
+		if(strcmp(pe->p_name, name) == 0)
+			return pe;
 	return NULL;
 }
 
@@ -327,7 +336,12 @@ struct protoent * getprotobyname(const char * name)
 /* getprotobynumber */
 struct protoent * getprotobynumber(int proto)
 {
-	/* FIXME implement */
+	struct protoent * pe;
+
+	setprotoent(1);
+	while((pe = getprotoent()) != NULL)
+		if(pe->p_proto == proto)
+			return pe;
 	return NULL;
 }
 
@@ -335,7 +349,19 @@ struct protoent * getprotobynumber(int proto)
 /* getprotoent */
 struct protoent * getprotoent(void)
 {
-	/* FIXME implement */
+	static struct protoent pe = { NULL, NULL, 0 };
+
+	if(_protofp == NULL)
+		setprotoent(1);
+	if(_protofp == NULL)
+		return NULL;
+	for(;;)
+	{
+		_protoent_free(&pe);
+		/* FIXME really implement */
+		return NULL;
+	}
+	endprotoent();
 	return NULL;
 }
 
@@ -492,7 +518,17 @@ void setnetent(int stayopen)
 /* setprotoent */
 void setprotoent(int stayopen)
 {
-	/* FIXME implement */
+	if(_protofp == NULL)
+	{
+		if(stayopen != 0 && (_protofp = fopen("/etc/protocols", "r"))
+				== NULL)
+			h_errno = NO_DATA;
+		return;
+	}
+	if(stayopen == 0)
+		endprotoent();
+	else
+		rewind(_protofp);
 }
 
 
@@ -528,6 +564,19 @@ static void _hostent_free(struct hostent * he)
 		free(*p);
 	free(he->h_addr_list);
 	memset(he, 0, sizeof(*he));
+}
+
+
+/* protoent_free */
+static void _protoent_free(struct protoent * pe)
+{
+	char ** p;
+
+	free(pe->p_name);
+	for(p = pe->p_aliases; p != NULL && *p != NULL; p++)
+		free(*p);
+	free(pe->p_aliases);
+	memset(pe, 0, sizeof(*pe));
 }
 
 
