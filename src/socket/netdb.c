@@ -521,8 +521,10 @@ void sethostent(int stayopen)
 	if(stayopen == 0)
 		endhostent();
 	else if(_hostfp != NULL)
-		/* FIXME handle errors */
-		rewind(_hostfp);
+	{
+		if(fseek(_hostfp, 0, SEEK_SET) != 0)
+			endhostent();
+	}
 	else if((_hostfp = fopen("/etc/hosts", "r")) == NULL)
 		h_errno = NO_DATA;
 }
@@ -534,8 +536,10 @@ void setnetent(int stayopen)
 	if(stayopen == 0)
 		endnetent();
 	else if(_netfp != NULL)
-		/* FIXME handle errors */
-		rewind(_netfp);
+	{
+		if(fseek(_netfp, 0, SEEK_SET) != 0)
+			endnetent();
+	}
 	else
 		/* we can ignore errors */
 		_netfp = fopen("/etc/networks", "r");
@@ -548,8 +552,10 @@ void setprotoent(int stayopen)
 	if(stayopen == 0)
 		endprotoent();
 	else if(_protofp != NULL)
-		/* FIXME handle errors */
-		rewind(_protofp);
+	{
+		if(fseek(_protofp, 0, SEEK_SET) != 0)
+			endprotoent();
+	}
 	else
 		/* we can ignore errors */
 		_protofp = fopen("/etc/protocols", "r");
@@ -562,8 +568,10 @@ void setservent(int stayopen)
 	if(stayopen == 0)
 		endservent();
 	else if(_servfp != NULL)
-		/* FIXME handle errors */
-		rewind(_servfp);
+	{
+		if(fseek(_servfp, 0, SEEK_SET) != 0)
+			endservent();
+	}
 	else
 		/* we can ignore errors */
 		_servfp = fopen("/etc/services", "r");
