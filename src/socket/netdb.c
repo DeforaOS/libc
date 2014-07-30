@@ -27,8 +27,8 @@
 
 /* private */
 /* variables */
-static FILE * _fp = NULL;
-static FILE * _fp2 = NULL;
+static FILE * _hostfp = NULL;
+static FILE * _servfp = NULL;
 static char _buf[512];
 
 
@@ -46,9 +46,9 @@ int h_errno = 0;
 /* endhostent */
 void endhostent(void)
 {
-	if(_fp != NULL)
-		fclose(_fp);
-	_fp = NULL;
+	if(_hostfp != NULL)
+		fclose(_hostfp);
+	_hostfp = NULL;
 }
 
 
@@ -69,9 +69,9 @@ void endprotoent(void)
 /* endservent */
 void endservent(void)
 {
-	if(_fp2 != NULL)
-		fclose(_fp2);
-	_fp2 = NULL;
+	if(_servfp != NULL)
+		fclose(_servfp);
+	_servfp = NULL;
 }
 
 
@@ -186,14 +186,14 @@ struct hostent * gethostent(void)
 	static struct hostent he = { NULL, NULL, 0, 0, NULL };
 	char const * s;
 
-	if(_fp == NULL)
+	if(_hostfp == NULL)
 		sethostent(1);
-	if(_fp == NULL)
+	if(_hostfp == NULL)
 		return NULL;
 	for(;;)
 	{
 		_hostent_free(&he);
-		if(fgets(_buf, sizeof(_buf), _fp) == NULL)
+		if(fgets(_buf, sizeof(_buf), _hostfp) == NULL)
 			break;
 		/* skip whitespaces */
 		for(s = _buf; isspace(*s); s++);
@@ -346,14 +346,14 @@ struct servent * getservent(void)
 	char const * s;
 	char * p;
 
-	if(_fp2 == NULL)
+	if(_servfp == NULL)
 		setservent(1);
-	if(_fp2 == NULL)
+	if(_servfp == NULL)
 		return NULL;
 	for(;;)
 	{
 		_servent_free(&se);
-		if(fgets(_buf, sizeof(_buf), _fp2) == NULL)
+		if(fgets(_buf, sizeof(_buf), _servfp) == NULL)
 			break;
 		/* skip whitespaces */
 		for(s = _buf; isspace(*s); s++);
@@ -462,16 +462,17 @@ char * hstrerror(int errnum)
 /* sethostent */
 void sethostent(int stayopen)
 {
-	if(_fp == NULL)
+	if(_hostfp == NULL)
 	{
-		if(stayopen != 0 && (_fp = fopen("/etc/hosts", "r")) == NULL)
+		if(stayopen != 0 && (_hostfp = fopen("/etc/hosts", "r"))
+				== NULL)
 			h_errno = NO_DATA;
 		return;
 	}
 	if(stayopen == 0)
 		endhostent();
 	else
-		rewind(_fp);
+		rewind(_hostfp);
 }
 
 
@@ -492,17 +493,17 @@ void setprotoent(int stayopen)
 /* setservent */
 void setservent(int stayopen)
 {
-	if(_fp2 == NULL)
+	if(_servfp == NULL)
 	{
-		if(stayopen != 0
-				&& (_fp2 = fopen("/etc/services", "r")) == NULL)
+		if(stayopen != 0 && (_servfp = fopen("/etc/services", "r"))
+				== NULL)
 			h_errno = NO_DATA;
 		return;
 	}
 	if(stayopen == 0)
 		endservent();
 	else
-		rewind(_fp2);
+		rewind(_servfp);
 }
 
 
