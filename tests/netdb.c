@@ -25,6 +25,7 @@ static int _netdb(char const * progname);
 static int _gai_strerror(char const * progname, char const * message,
 		int value);
 static int _gethostent(void);
+static int _getnetent(void);
 static int _getprotoent(void);
 static int _getservbyname(char const * name, char const * protocol);
 static int _getservbyport(int port, char const * protocol);
@@ -40,6 +41,8 @@ static int _netdb(char const * progname)
 
 	/* gethostent */
 	ret |= _gethostent();
+	/* getnetent */
+	ret |= _getnetent();
 	/* getprotoent */
 	ret |= _getprotoent();
 	/* getservent */
@@ -86,6 +89,21 @@ static int _gethostent(void)
 		printf("%s\t%d %d\n", he->h_name, he->h_addrtype, he->h_length);
 	endhostent();
 	printf("%u hosts listed\n", i);
+	return 0;
+}
+
+
+/* getnetent */
+static int _getnetent(void)
+{
+	struct netent * ne;
+	unsigned int i;
+
+	setnetent(1);
+	for(i = 0; (ne = getnetent()) != NULL; i++)
+		printf("%s\t%d %u\n", ne->n_name, ne->n_addrtype, ne->n_net);
+	endnetent();
+	printf("%u networks listed\n", i);
 	return 0;
 }
 
