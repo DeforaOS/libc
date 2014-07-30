@@ -494,17 +494,13 @@ char * hstrerror(int errnum)
 /* sethostent */
 void sethostent(int stayopen)
 {
-	if(_hostfp == NULL)
-	{
-		if(stayopen != 0 && (_hostfp = fopen("/etc/hosts", "r"))
-				== NULL)
-			h_errno = NO_DATA;
-		return;
-	}
 	if(stayopen == 0)
 		endhostent();
-	else
+	else if(_hostfp != NULL)
+		/* FIXME handle errors */
 		rewind(_hostfp);
+	else if((_hostfp = fopen("/etc/hosts", "r")) == NULL)
+		h_errno = NO_DATA;
 }
 
 
@@ -518,32 +514,28 @@ void setnetent(int stayopen)
 /* setprotoent */
 void setprotoent(int stayopen)
 {
-	if(_protofp == NULL)
-	{
-		if(stayopen != 0)
-			/* we can ignore errors */
-			_protofp = fopen("/etc/protocols", "r");
-	}
-	else if(stayopen == 0)
+	if(stayopen == 0)
 		endprotoent();
-	else
+	else if(_protofp != NULL)
+		/* FIXME handle errors */
 		rewind(_protofp);
+	else
+		/* we can ignore errors */
+		_protofp = fopen("/etc/protocols", "r");
 }
 
 
 /* setservent */
 void setservent(int stayopen)
 {
-	if(_servfp == NULL)
-	{
-		if(stayopen != 0)
-			/* we can ignore errors */
-			_servfp = fopen("/etc/services", "r");
-	}
-	else if(stayopen == 0)
+	if(stayopen == 0)
 		endservent();
-	else
+	else if(_servfp != NULL)
+		/* FIXME handle errors */
 		rewind(_servfp);
+	else
+		/* we can ignore errors */
+		_servfp = fopen("/etc/services", "r");
 }
 
 
