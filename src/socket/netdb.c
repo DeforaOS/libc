@@ -267,7 +267,10 @@ static char * _gethostent_host(char const ** s)
 	{
 		/* XXX only realloc() once */
 		if((p = realloc(ret, len + 2)) == NULL)
-			break;
+		{
+			free(ret);
+			return NULL;
+		}
 		ret = p;
 		p[len++] = **s;
 	}
@@ -391,7 +394,10 @@ static char * _getservent_name(char const ** s)
 	{
 		/* XXX only realloc() once */
 		if((p = realloc(ret, len + 2)) == NULL)
-			break;
+		{
+			free(ret);
+			return NULL;
+		}
 		ret = p;
 		p[len++] = **s;
 	}
