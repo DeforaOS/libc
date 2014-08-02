@@ -17,6 +17,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
 
@@ -82,6 +83,29 @@ static int _mktime(char const * progname)
 }
 
 
+/* strftime */
+static int _strftime(char const * progname, char const * format,
+		char const * expected)
+{
+	time_t t = 0;
+	struct tm tm;
+	char buf[128];
+
+	printf("%s: Testing strftime()\n", progname);
+	if(gmtime_r(&t, &tm) == NULL)
+	{
+		perror("gmtime");
+		return -1;
+	}
+	if(strftime(buf, sizeof(buf), format, &tm) == 0)
+	{
+		perror("strftime");
+		return -1;
+	}
+	return (strcmp(buf, expected) == 0) ? 0 : -1;
+}
+
+
 /* strptime */
 static int _strptime(char const * progname)
 {
@@ -124,6 +148,7 @@ int main(int argc, char * argv[])
 	res += _clock(argv[0]);
 	res += _getdate(argv[0]);
 	res += _mktime(argv[0]);
+	res += _strftime(argv[0], "%H:%M:%S", "00:00:00");
 	res += _strptime(argv[0]);
 	res += _tzset(argv[0]);
 	return (res == 0) ? 0 : 2;
