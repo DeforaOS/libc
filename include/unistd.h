@@ -74,6 +74,7 @@ unsigned int alarm(unsigned int seconds);
 int brk(void * addr);
 int chdir(char const * filename);
 int chown(char const * filename, uid_t owner, gid_t group);
+int chroot(char const * filename);
 int close(int fildes);
 int dup(int fildes);
 int dup2(int fildes1, int fildes2);

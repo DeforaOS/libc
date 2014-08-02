@@ -347,6 +347,9 @@ SYSCALL(chdir)
 #ifdef SYS_chown
 SYSCALL(chown)
 #endif
+#ifdef SYS_chroot
+SYSCALL(chroot)
+#endif
 #ifdef SYS_close
 SYSCALL(close)
 #endif

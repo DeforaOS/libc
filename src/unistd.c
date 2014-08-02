@@ -126,6 +126,17 @@ int chown(char const * filename, uid_t owner, gid_t group)
 #endif
 
 
+/* chroot */
+#ifndef SYS_chroot
+# warning Unsupported platform: chroot() is missing
+int chroot(char const * filename)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* close */
 #ifndef SYS_close
 # warning Unsupported platform: close() is missing
