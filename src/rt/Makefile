@@ -2,6 +2,8 @@ TARGETS	= librt.a librt.so.0.0 librt.so.0 librt.so
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
+AS	= $(CC)
+ASFLAGS	= -W -Wall -g -pedantic -ffreestanding -c
 CC	= cc
 CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/rt -DPIC
 CPPFLAGS=
@@ -18,9 +20,10 @@ INSTALL	= install
 
 all: $(TARGETS)
 
-librt_OBJS = sched.o
+librt_OBJS = sched.o syscalls.o
 librt_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 librt_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
+librt_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
 librt.a: $(librt_OBJS)
 	$(AR) -rc librt.a $(librt_OBJS)
@@ -33,6 +36,9 @@ librt.so.0.0 librt.so.0 librt.so: $(librt_OBJS)
 
 sched.o: sched.c syscalls.h
 	$(CC) $(librt_CFLAGS) -c sched.c
+
+syscalls.o: syscalls.S syscalls.h
+	$(AS) $(librt_ASFLAGS) -o syscalls.o syscalls.S
 
 clean:
 	$(RM) -- $(librt_OBJS)

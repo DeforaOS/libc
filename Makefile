@@ -476,6 +476,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/pthread/Makefile \
 		$(PACKAGE)-$(VERSION)/src/pthread/project.conf \
 		$(PACKAGE)-$(VERSION)/src/rt/sched.c \
+		$(PACKAGE)-$(VERSION)/src/rt/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/rt/Makefile \
 		$(PACKAGE)-$(VERSION)/src/rt/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/rt/project.conf \
