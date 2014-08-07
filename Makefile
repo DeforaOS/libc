@@ -477,6 +477,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/pthread/project.conf \
 		$(PACKAGE)-$(VERSION)/src/rt/sched.c \
 		$(PACKAGE)-$(VERSION)/src/rt/Makefile \
+		$(PACKAGE)-$(VERSION)/src/rt/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/rt/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/arpa/inet.c \
 		$(PACKAGE)-$(VERSION)/src/socket/netdb.c \

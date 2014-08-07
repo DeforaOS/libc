@@ -31,7 +31,7 @@ librt.so.0.0 librt.so.0 librt.so: $(librt_OBJS)
 	$(LN) -s -- librt.so.0.0 librt.so.0
 	$(LN) -s -- librt.so.0.0 librt.so
 
-sched.o: sched.c
+sched.o: sched.c syscalls.h
 	$(CC) $(librt_CFLAGS) -c sched.c
 
 clean:

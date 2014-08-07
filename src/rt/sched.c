@@ -15,6 +15,8 @@
 
 
 
+#include "unistd.h"
+#include "syscalls.h"
 #include "sched.h"
 #include "errno.h"
 
@@ -23,70 +25,91 @@
 /* sched_get_priority_max */
 int sched_get_priority_max(int policy)
 {
-	/* FIXME really implement */
+#ifdef _SC_SCHED_PRI_MAX
+	return sysconf(_SC_SCHED_PRI_MAX);
+#else
 	errno = ENOSYS;
 	return -1;
+#endif
 }
 
 
 /* sched_get_priority_min */
 int sched_get_priority_min(int policy)
 {
-	/* FIXME really implement */
+#ifdef _SC_SCHED_PRI_MIN
+	return sysconf(_SC_SCHED_PRI_MIN);
+#else
 	errno = ENOSYS;
 	return -1;
+#endif
 }
 
 
 /* sched_getparam */
+#ifndef SYS_sched_getparam
 int sched_getparam(pid_t pid, struct sched_param * param)
 {
-	/* FIXME really implement */
 	errno = ENOSYS;
 	return -1;
 }
+#endif
 
 
 /* sched_getscheduler */
+#ifndef SYS_sched_getscheduler
 int sched_getscheduler(pid_t pid)
 {
-	/* FIXME really implement */
 	errno = ENOSYS;
 	return -1;
 }
+#endif
 
 
 /* sched_rr_get_interval */
 int sched_rr_get_interval(pid_t pid, struct timespec * interval)
 {
-	/* FIXME really implement */
+#ifdef _SC_SCHED_RT_TS
+	long l;
+
+	if((l = sysconf(_SC_SCHED_RT_TS)) < 0)
+		return -1;
+	interval->tv_nsec = l * 1000;
+	interval->tv_sec = interval->tv_nsec / 1000000000;
+	interval->tv_nsec -= (interval->tv_sec * 1000000000);
+	return 0;
+#else
 	errno = ENOSYS;
 	return -1;
+#endif
 }
 
 
 /* sched_setparam */
+#ifndef SYS_sched_setparam
 int sched_setparam(pid_t pid, const struct sched_param * param)
 {
-	/* FIXME really implement */
 	errno = ENOSYS;
 	return -1;
 }
+#endif
 
 
 /* sched_setscheduler */
+#ifndef SYS_sched_setscheduler
 int sched_setscheduler(pid_t pid, int policy, const struct sched_param * param)
 {
-	/* FIXME really implement */
 	errno = ENOSYS;
 	return -1;
 }
+#endif
 
 
 /* sched_yield */
+#ifndef SYS_sched_yield
 int sched_yield(void)
 {
-	/* FIXME really implement */
 	errno = ENOSYS;
 	return -1;
 }
+#endif
