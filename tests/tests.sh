@@ -33,7 +33,7 @@ _fail()
 	"./$test" "$@") >> "$target" 2>&1
 	res=$?
 	if [ $res -ne 0 ]; then
-		echo " FAILED (error $res)" 1>&2
+		echo " FAIL (error $res)" 1>&2
 	else
 		echo " PASS" 1>&2
 	fi
@@ -52,7 +52,7 @@ _test()
 	"./$test" "$@") >> "$target" 2>&1
 	res=$?
 	if [ $res -ne 0 ]; then
-		echo " FAILED" 1>&2
+		echo " FAIL" 1>&2
 		FAILED="$FAILED $test(error $res)"
 		return 2
 	else
