@@ -21,8 +21,18 @@
 .text
 
 
+/* NetBSD */
+#if defined(__NetBSD__)
+# if defined(__amd64__)
+#  include "kernel/netbsd/amd64/syscalls.S"
+# else
+#  warning Unsupported NetBSD architecture
+# endif
+
 /* Unknown */
-#warning Unsupported platform
+#else
+# warning Unsupported platform
+#endif
 #ifndef SYSCALL
 # define SYSCALL(name)
 #endif

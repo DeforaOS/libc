@@ -15,17 +15,10 @@
 
 
 
-#ifndef LIBRT_SYSCALLS_H
-# define LIBRT_SYSCALLS_H
+#ifndef LIBRT_KERNEL_NETBSD_COMMON_H
+# define LIBRT_KERNEL_NETBSD_COMMON_H
 
-# if defined(__NetBSD__)
-#  if defined(__amd64__)
-#   include "kernel/netbsd/common.h"
-#  else
-#   warning Unsupported NetBSD architecture
-#  endif
-# else
-#  warning Unsupported platform
-#endif
 
-#endif /* !LIBRT_SYSCALLS_H */
+# define SYS_sched_yield	350
+
+#endif /* !LIBRT_KERNEL_NETBSD_COMMON_H */

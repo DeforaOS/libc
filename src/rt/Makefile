@@ -1,3 +1,4 @@
+SUBDIRS	= kernel/netbsd
 TARGETS	= librt.a librt.so.0.0 librt.so.0 librt.so
 PREFIX	= /usr/local
 DESTDIR	=
@@ -18,7 +19,10 @@ MKDIR	= mkdir -m 0755 -p
 INSTALL	= install
 
 
-all: $(TARGETS)
+all: subdirs $(TARGETS)
+
+subdirs:
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE)) || exit; done
 
 librt_OBJS = sched.o syscalls.o
 librt_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -41,12 +45,16 @@ syscalls.o: syscalls.S syscalls.h
 	$(AS) $(librt_ASFLAGS) -o syscalls.o syscalls.S
 
 clean:
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) clean) || exit; done
 	$(RM) -- $(librt_OBJS)
 
-distclean: clean
+distclean:
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) distclean) || exit; done
+	$(RM) -- $(librt_OBJS)
 	$(RM) -- $(TARGETS)
 
 install: $(TARGETS)
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(INSTALL) -m 0644 librt.a $(DESTDIR)$(LIBDIR)/librt.a
 	$(INSTALL) -m 0755 librt.so.0.0 $(DESTDIR)$(LIBDIR)/librt.so.0.0
@@ -54,9 +62,10 @@ install: $(TARGETS)
 	$(LN) -s -- librt.so.0.0 $(DESTDIR)$(LIBDIR)/librt.so
 
 uninstall:
+	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done
 	$(RM) -- $(DESTDIR)$(LIBDIR)/librt.a
 	$(RM) -- $(DESTDIR)$(LIBDIR)/librt.so.0.0
 	$(RM) -- $(DESTDIR)$(LIBDIR)/librt.so.0
 	$(RM) -- $(DESTDIR)$(LIBDIR)/librt.so
 
-.PHONY: all clean distclean install uninstall
+.PHONY: all subdirs clean distclean install uninstall

@@ -480,6 +480,12 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/rt/Makefile \
 		$(PACKAGE)-$(VERSION)/src/rt/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/rt/project.conf \
+		$(PACKAGE)-$(VERSION)/src/rt/kernel/netbsd/Makefile \
+		$(PACKAGE)-$(VERSION)/src/rt/kernel/netbsd/common.h \
+		$(PACKAGE)-$(VERSION)/src/rt/kernel/netbsd/project.conf \
+		$(PACKAGE)-$(VERSION)/src/rt/kernel/netbsd/amd64/Makefile \
+		$(PACKAGE)-$(VERSION)/src/rt/kernel/netbsd/amd64/syscalls.S \
+		$(PACKAGE)-$(VERSION)/src/rt/kernel/netbsd/amd64/project.conf \
 		$(PACKAGE)-$(VERSION)/src/socket/arpa/inet.c \
 		$(PACKAGE)-$(VERSION)/src/socket/netdb.c \
 		$(PACKAGE)-$(VERSION)/src/socket/sys/socket.c \

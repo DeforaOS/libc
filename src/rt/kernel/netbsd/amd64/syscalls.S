@@ -15,17 +15,25 @@
 
 
 
-#ifndef LIBRT_SYSCALLS_H
-# define LIBRT_SYSCALLS_H
-
-# if defined(__NetBSD__)
-#  if defined(__amd64__)
-#   include "kernel/netbsd/common.h"
-#  else
-#   warning Unsupported NetBSD architecture
-#  endif
-# else
-#  warning Unsupported platform
+_syscall:
+	syscall
+	jnc	.errnoret
+.errno:
+#ifdef PIC
+	mov	errno@GOTPCREL(%rip), %rcx
+	mov	%rax, (%rcx)
+#else
+	mov	%rax, errno
 #endif
+	mov	$-1, %rax
+.errnoret:
+	ret
 
-#endif /* !LIBRT_SYSCALLS_H */
+
+/* macros */
+#define SYSCALL(name) \
+.global name; \
+.type name,@function; \
+name:; \
+	mov	$SYS_ ## name, %rax; \
+	jmp	_syscall
