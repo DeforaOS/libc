@@ -18,20 +18,70 @@
 #ifndef SYSCALLS_H
 # define SYSCALLS_H
 
-# include "sys/syscall.h"
+/* FreeBSD */
+# if defined(__FreeBSD__)
+#  if defined(__amd64__) || defined(__i386__)
+#   include "sys/syscall.h"
+#  else
+#   warning Unsupported FreeBSD architecture
+#  endif
+
+/* Linux */
+# elif defined(__linux__)
+#  if defined(__amd64__) || defined(__arm__) || defined(__i386__)
+#   include "sys/syscall.h"
+#  else
+#   warning Unsupported Linux architecture
+#  endif
 
 /* MacOS X */
-# if defined(__APPLE__)
-#  include "kernel/darwin/common.h"
+# elif defined(__APPLE__)
+#  if defined(__amd64__)
+#   include "sys/syscall.h"
+#   include "kernel/darwin/common.h"
+#  else
+#   warning Unsupported Darwin architecture
+#  endif
+
 /* NetBSD */
 # elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/sysctl.h"
+#  if defined(__amd64__) || defined(__arm__) || defined(__i386__) \
+	|| defined(__sparc__)
+#   include "sys/syscall.h"
+#   include "kernel/netbsd/sys/sysctl.h"
+#  else
+#   warning Unsupported NetBSD architecture
+#  endif
+
+/* OpenBSD */
+# elif defined(__OpenBSD__)
+#  if defined(__arm__) || defined(__i386__)
+#   include "sys/syscall.h"
+#  else
+#   warning Unsupported OpenBSD architecture
+#  endif
+
 /* Solaris */
 # elif defined(__sun__)
-#  include "kernel/solaris/common.h"
+#  if defined(__sparc__)
+#   include "sys/syscall.h"
+#   include "kernel/solaris/common.h"
+#  else
+#   warning Unsupported Solaris architecture
+#  endif
+
 /* Whitix */
 # elif defined(__Whitix__)
-#  include "kernel/whitix/common.h"
-# endif
+#  if defined(__i386__)
+#   include "sys/syscall.h"
+#   include "kernel/whitix/common.h"
+#  else
+#   warning Unsupported Solaris architecture
+#  endif
+
+/* Unknown */
+#else
+# warning Unsupported platform
+#endif
 
 #endif /* !SYSCALLS_H */
