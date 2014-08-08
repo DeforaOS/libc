@@ -165,7 +165,7 @@ time_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 time: $(time_OBJS)
 	$(CC) -o time $(time_OBJS) $(time_LDFLAGS)
 
-tests.log: dlfcn errno fnmatch includes langinfo netdb ptrace pwd regex select setjmp signal socket start stdarg stdint stdio stdlib string time tests.sh unistd
+tests.log: dlfcn errno fnmatch includes langinfo netdb ptrace pwd regex rt select setjmp signal socket start stdarg stdint stdio stdlib string time tests.sh unistd
 	./tests.sh -P "$(PREFIX)" -- "tests.log"
 
 unistd_OBJS = unistd.o
