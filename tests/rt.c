@@ -24,6 +24,12 @@ static int _rt(char const * progname)
 {
 	int d;
 
+	printf("%s: Testing %s()\n", progname, "sched_get_priority_max");
+	d = sched_get_priority_max(0);
+	printf("%s: sched_get_priority_max() => %d\n", progname, d);
+	printf("%s: Testing %s()\n", progname, "sched_get_priority_min");
+	d = sched_get_priority_min(0);
+	printf("%s: sched_get_priority_min() => %d\n", progname, d);
 	printf("%s: Testing %s()\n", progname, "sched_yield");
 	d = sched_yield();
 	printf("%s: sched_yield() => %d\n", progname, d);
