@@ -1,4 +1,4 @@
-TARGETS	= dlfcn errno fnmatch includes langinfo netdb ptrace pwd regex select setjmp signal socket start stdarg stdint stdio stdlib string time tests.log unistd
+TARGETS	= dlfcn errno fnmatch includes langinfo netdb ptrace pwd regex rt select setjmp signal socket start stdarg stdint stdio stdlib string time tests.log unistd
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -80,6 +80,13 @@ regex_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
 regex: $(regex_OBJS)
 	$(CC) -o regex $(regex_OBJS) $(regex_LDFLAGS)
+
+rt_OBJS = rt.o
+rt_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
+rt_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) ../src/rt/librt.a
+
+rt: $(rt_OBJS)
+	$(CC) -o rt $(rt_OBJS) $(rt_LDFLAGS)
 
 select_OBJS = select.o
 select_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -195,6 +202,9 @@ pwd.o: pwd.c ../src/libc.a ../src/start.o
 regex.o: regex.c ../src/libc.a ../src/start.o
 	$(CC) $(regex_CFLAGS) -c regex.c
 
+rt.o: rt.c ../src/rt/librt.a ../src/libc.a ../src/start.o
+	$(CC) -isystem ../include/rt $(rt_CFLAGS) -c rt.c
+
 select.o: select.c ../src/libc.a ../src/start.o
 	$(CC) $(select_CFLAGS) -c select.c
 
@@ -232,7 +242,7 @@ unistd.o: unistd.c
 	$(CC) $(unistd_CFLAGS) -c unistd.c
 
 clean:
-	$(RM) -- $(dlfcn_OBJS) $(errno_OBJS) $(fnmatch_OBJS) $(includes_OBJS) $(langinfo_OBJS) $(netdb_OBJS) $(ptrace_OBJS) $(pwd_OBJS) $(regex_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdarg_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(stdlib_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS) $(unistd_OBJS)
+	$(RM) -- $(dlfcn_OBJS) $(errno_OBJS) $(fnmatch_OBJS) $(includes_OBJS) $(langinfo_OBJS) $(netdb_OBJS) $(ptrace_OBJS) $(pwd_OBJS) $(regex_OBJS) $(rt_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdarg_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(stdlib_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS) $(unistd_OBJS)
 
 distclean: clean
 	$(RM) -- $(TARGETS)

@@ -538,6 +538,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/tests/ptrace.c \
 		$(PACKAGE)-$(VERSION)/tests/pwd.c \
 		$(PACKAGE)-$(VERSION)/tests/regex.c \
+		$(PACKAGE)-$(VERSION)/tests/rt.c \
 		$(PACKAGE)-$(VERSION)/tests/select.c \
 		$(PACKAGE)-$(VERSION)/tests/setjmp.c \
 		$(PACKAGE)-$(VERSION)/tests/signal.c \
