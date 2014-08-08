@@ -19,6 +19,13 @@
 # define LIBRT_KERNEL_NETBSD_COMMON_H
 
 
+/* constants */
+/* sysconf */
+# define _SC_SCHED_RT_TS	2001
+# define _SC_SCHED_PRI_MIN	2002
+# define _SC_SCHED_PRI_MAX	2003
+
+/* syscalls */
 # define SYS_sched_yield	350
 
 #endif /* !LIBRT_KERNEL_NETBSD_COMMON_H */
