@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,24 @@
 # define LIBSOCKET_SYSCALLS_H
 
 # if defined(__FreeBSD__)
-#  include "kernel/freebsd/common.h"
+#  if defined(__amd64__) || defined(__i386__)
+#   include "kernel/freebsd/common.h"
+#  else
+#   warning Unsupported FreeBSD architecture
+#  endif
 # elif defined(__linux__)
-#  include "kernel/linux/common.h"
+#  if defined(__amd64__) || defined(__arm__) || defined(__i386__)
+#   include "kernel/linux/common.h"
+#  else
+#   warning Unsupported Linux architecture
+#  endif
 # elif defined(__NetBSD__)
-#  include "kernel/netbsd/common.h"
+#  if defined(__amd64__) || defined(__arm__) || defined(__i386__) \
+	|| defined(__sparc__)
+#   include "kernel/netbsd/common.h"
+#  else
+#   warning Unsupported NetBSD architecture
+#  endif
 # else
 #  warning Unsupported platform
 # endif
