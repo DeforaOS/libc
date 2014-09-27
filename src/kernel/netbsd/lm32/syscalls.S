@@ -15,5 +15,13 @@
 
 
 
-_syscall:
-	/* FIXME implement */
+/* macros */
+#define SYSCALL(name) \
+.global name; \
+.type name,@function; \
+name:; \
+	mv	r3, r4; \
+	mv	r2, r3; \
+	mv	r1, r2; \
+	ori	r1, r0, $SYS_ ## name; \
+	scall
