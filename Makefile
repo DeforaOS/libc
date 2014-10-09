@@ -1,5 +1,5 @@
 PACKAGE	= libc
-VERSION	= 0.0.8
+VERSION	= 0.1.0
 SUBDIRS	= doc include src tests tools
 RM	= rm -f
 LN	= ln -f
