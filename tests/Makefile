@@ -243,6 +243,7 @@ unistd.o: unistd.c
 
 clean:
 	$(RM) -- $(dlfcn_OBJS) $(errno_OBJS) $(fnmatch_OBJS) $(includes_OBJS) $(langinfo_OBJS) $(netdb_OBJS) $(ptrace_OBJS) $(pwd_OBJS) $(regex_OBJS) $(rt_OBJS) $(select_OBJS) $(setjmp_OBJS) $(signal_OBJS) $(socket_OBJS) $(start_OBJS) $(stdarg_OBJS) $(stdint_OBJS) $(stdio_OBJS) $(stdlib_OBJS) $(string_OBJS) $(time_OBJS) $(tests.log_OBJS) $(unistd_OBJS)
+	./tests.sh -c -P "$(PREFIX)" -- "tests.log"
 
 distclean: clean
 	$(RM) -- $(TARGETS)
