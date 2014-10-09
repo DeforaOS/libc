@@ -17,8 +17,8 @@ Some of the most immediate benefits include faster compilation times, while
 also reducing the storage footprint. It is also useful during the development of
 programs intended to be portable across Operating Systems.
 
-libc is part of the DeforaOS Project, and distributed under the terms of the
-GNU General Public License, version 3 (GPLv3).
+libc is part of the DeforaOS Project, and distributed under the terms of the BSD
+license.
 
 
 Compiling libc
