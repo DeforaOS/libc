@@ -28,6 +28,9 @@
 
 
 
+#include "kernel/linux/errno.h"
+
+
 _syscall:
 	mov	%rcx, %r10
 	syscall
@@ -69,7 +72,12 @@ name:; \
 _brk:
 	mov	$SYS_brk, %rax
 	syscall
-	jc	.errno
+	test	%rdi, %rax
+	je	_brk_return
+	mov	$ENOMEM, %rax
+	jmp	.errno
+_brk_return:
+	mov	$0, %rax
 	ret
 #undef SYS_brk
 
