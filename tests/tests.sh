@@ -24,6 +24,10 @@
 
 
 #variables
+SYSTEM="$(uname -s)"
+SOEXT="so"
+#XXX not tested
+[ "$SYSTEM" = "Darwin" ] && SOEXT="dylib"
 #executables
 DATE="date"
 
@@ -127,7 +131,7 @@ _test "string"
 _test "time"
 _test "unistd"
 echo "Expected failures:" 1>&2
-_fail "dlfcn" "../src/libc.so"
+_fail "dlfcn" "../src/libc.$SOEXT"
 _fail "stdlib"
 if [ -n "$FAILED" ]; then
 	echo "Failed tests:$FAILED" 1>&2
