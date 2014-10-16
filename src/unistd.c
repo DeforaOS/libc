@@ -108,9 +108,9 @@ int brk(void * addr)
 {
 	void * cur;
 
-	if((cur = sbrk(NULL)) == (void*)-1)
+	if((cur = sbrk(NULL)) == (void *)-1)
 		return -1;
-	return sbrk(addr - cur) != (void*)-1 ? 0 : -1;
+	return sbrk(addr - cur) != (void *)-1 ? 0 : -1;
 }
 #else /* !SYS_brk && !SYS_sbrk */
 # warning Unsupported platform: brk() is missing
@@ -778,6 +778,7 @@ int rmdir(char const * filename)
 extern void * _sbrk(intptr_t increment); /* XXX in-kernel prototype */
 # if defined(SYS_brk) /* SYS_sbrk && SYS_brk */
 extern int _brk(void * addr); /* XXX in-kernel prototype */
+
 void * sbrk(intptr_t increment) /* _brk is used to actually allocate memory */
 {
 	void * cur;
@@ -795,6 +796,7 @@ void * sbrk(intptr_t increment)
 #elif defined(SYS_brk) /* !SYS_sbrk && SYS_brk */
 extern int _brk(void * addr); /* XXX in-kernel prototype */
 extern void * end;
+
 void * sbrk(intptr_t increment)
 {
 	static void * cur = &end;
