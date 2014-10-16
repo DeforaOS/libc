@@ -30,6 +30,9 @@
 
 
 
+#include "kernel/linux/errno.h"
+
+
 _syscall:
 	push	%ebx
 	push	%esi
@@ -68,7 +71,20 @@ name:; \
 .type _brk,@function
 _brk:
 	mov	$SYS_brk, %eax
-	jmp	_syscall
+	push	%ebx
+	mov	0x8(%esp), %ebx
+	int	$0x80
+	cmp	0x8(%esp), %eax
+	je	_brk_return
+	pop	%ebx
+	mov	$ENOMEM, %eax
+	mov	%eax, errno
+	mov	$-1, %eax
+	ret
+	_brk_return:
+	pop	%ebx
+	mov	$0, %eax
+	ret
 #undef SYS_brk
 
 
