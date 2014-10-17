@@ -99,6 +99,7 @@ unsigned int alarm(unsigned int seconds)
 /* brk */
 #if defined(SYS_brk)
 extern int _brk(void * addr); /* XXX in-kernel prototype */
+
 int brk(void * addr)
 {
 	return _brk(addr) != -1 ? 0 : -1;
@@ -783,9 +784,9 @@ void * sbrk(intptr_t increment) /* _brk is used to actually allocate memory */
 {
 	void * cur;
 
-	if((cur = _sbrk(0)) == (void*)-1 || increment == 0)
+	if((cur = _sbrk(0)) == (void *)-1 || increment == 0)
 		return cur;
-	return _brk(cur + increment) != (void*)-1 ? cur : (void*)-1;
+	return _brk(cur + increment) != (void *)-1 ? cur : (void *)-1;
 }
 # else /* SYS_sbrk && !SYS_brk */
 void * sbrk(intptr_t increment)
@@ -805,7 +806,7 @@ void * sbrk(intptr_t increment)
 	if(increment == 0)
 		return cur;
 	if(_brk(cur + increment) == -1)
-		return (void*)-1;
+		return (void *)-1;
 	ptr = cur;
 	cur += increment;
 	return ptr;
@@ -815,7 +816,7 @@ void * sbrk(intptr_t increment)
 void * sbrk(intptr_t increment)
 {
 	errno = ENOSYS;
-	return (void*)-1;
+	return (void *)-1;
 }
 #endif
 
