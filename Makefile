@@ -557,6 +557,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/tools/tracer-analyze.c \
 		$(PACKAGE)-$(VERSION)/tools/tracer-syscalls.S \
 		$(PACKAGE)-$(VERSION)/tools/Makefile \
+		$(PACKAGE)-$(VERSION)/tools/deforaos-gcc.in \
+		$(PACKAGE)-$(VERSION)/tools/deforaos-gcc.specs.in \
+		$(PACKAGE)-$(VERSION)/tools/subst.sh \
 		$(PACKAGE)-$(VERSION)/tools/tracer-analyze.h \
 		$(PACKAGE)-$(VERSION)/tools/tracer-syscalls.h \
 		$(PACKAGE)-$(VERSION)/tools/project.conf \

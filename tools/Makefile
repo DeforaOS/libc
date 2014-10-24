@@ -1,4 +1,4 @@
-TARGETS	= tracer.so
+TARGETS	= deforaos-gcc deforaos-gcc.specs tracer.so
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
@@ -20,6 +20,12 @@ INSTALL	= install
 
 all: $(TARGETS)
 
+deforaos-gcc: deforaos-gcc.in subst.sh ../config.sh
+	./subst.sh -P "$(PREFIX)" -- "deforaos-gcc"
+
+deforaos-gcc.specs: deforaos-gcc.specs.in subst.sh ../config.sh
+	./subst.sh -P "$(PREFIX)" -- "deforaos-gcc.specs"
+
 tracer_OBJS = tracer-analyze.o tracer-syscalls.o
 tracer_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 tracer_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
@@ -35,13 +41,19 @@ tracer-syscalls.o: tracer-syscalls.S tracer-analyze.h
 	$(AS) $(tracer_ASFLAGS) -o tracer-syscalls.o tracer-syscalls.S
 
 clean:
-	$(RM) -- $(tracer_OBJS)
+	$(RM) -- $(deforaos-gcc_OBJS) $(deforaos-gcc.specs_OBJS) $(tracer_OBJS)
+	./subst.sh -c -P "$(PREFIX)" -- "deforaos-gcc"
+	./subst.sh -c -P "$(PREFIX)" -- "deforaos-gcc.specs"
 
 distclean: clean
 	$(RM) -- $(TARGETS)
 
 install: $(TARGETS)
+	./subst.sh -P "$(DESTDIR)$(PREFIX)/bin" -i -- "deforaos-gcc"
+	./subst.sh -P "$(DESTDIR)$(PREFIX)/lib/gcc" -i -- "deforaos-gcc.specs"
 
 uninstall:
+	./subst.sh -P "$(DESTDIR)$(PREFIX)/bin" -u -- "deforaos-gcc"
+	./subst.sh -P "$(DESTDIR)$(PREFIX)/lib/gcc" -u -- "deforaos-gcc.specs"
 
 .PHONY: all clean distclean install uninstall
