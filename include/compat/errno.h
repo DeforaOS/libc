@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -32,12 +32,12 @@
 # define LIBC_COMPAT_ERRNO_H
 
 
-# if defined(__FreeBSD__)
+# if defined(__APPLE__)
+#  include "kernel/darwin/errno.h"
+# elif defined(__FreeBSD__)
 #  include "kernel/freebsd/errno.h"
 # elif defined(__linux__)
 #  include "kernel/linux/errno.h"
-# elif defined(__APPLE__)
-#  include "kernel/darwin/errno.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/errno.h"
 # elif defined(__OpenBSD__)

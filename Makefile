@@ -117,6 +117,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/project.conf \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/Makefile \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/dirent.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/fcntl.h \
