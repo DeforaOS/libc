@@ -109,9 +109,9 @@ int brk(void * addr)
 {
 	void * cur;
 
-	if((cur = sbrk(NULL)) == (void *)-1)
+	if((cur = sbrk(0)) == (void *)-1)
 		return -1;
-	return sbrk(addr - cur) != (void *)-1 ? 0 : -1;
+	return (sbrk(addr - cur) != (void *)-1) ? 0 : -1;
 }
 #else /* !SYS_brk && !SYS_sbrk */
 # warning Unsupported platform: brk() is missing
