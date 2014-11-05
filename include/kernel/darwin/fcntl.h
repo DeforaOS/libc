@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2014 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,24 +28,20 @@
 
 
 
-#ifndef LIBC_COMPAT_FCNTL_H
-# define LIBC_COMPAT_FCNTL_H
+#ifndef LIBC_KERNEL_DARWIN_FCNTL_H
+# define LIBC_KERNEL_DARWIN_FCNTL_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/fcntl.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/fcntl.h"
-# elif defined(__linux__)
-#  include "kernel/linux/fcntl.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/fcntl.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/fcntl.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/fcntl.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef off_t
+#  define off_t off_t
+typedef long long off_t;
 # endif
 
-#endif /* !LIBC_COMPAT_FCNTL_H */
+
+/* constants */
+# define O_RDONLY	0
+# define O_WRONLY	1
+# define O_RDWR		2
+
+#endif /* !LIBC_KERNEL_DARWIN_FCNTL_H */

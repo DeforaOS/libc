@@ -33,6 +33,10 @@
 
 
 /* types */
+# ifndef off_t
+#  define off_t off_t
+typedef long long off_t;
+# endif
 # ifndef suseconds_t
 #  define suseconds_t suseconds_t
 typedef int suseconds_t;

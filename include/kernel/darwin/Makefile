@@ -24,11 +24,14 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/darwin
 	$(INSTALL) -m 0644 errno.h $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/errno.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/darwin
+	$(INSTALL) -m 0644 fcntl.h $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/fcntl.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/darwin
 	$(INSTALL) -m 0644 unistd.h $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/unistd.h
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/errno.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/fcntl.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/unistd.h
 
 .PHONY: all subdirs clean distclean install uninstall

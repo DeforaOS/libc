@@ -115,6 +115,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/dl/Makefile \
 		$(PACKAGE)-$(VERSION)/include/dl/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/errno.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/fcntl.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/project.conf \
