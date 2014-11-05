@@ -115,9 +115,11 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/dl/Makefile \
 		$(PACKAGE)-$(VERSION)/include/dl/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/errno.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/unistd.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/mman.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/Makefile \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/freebsd/dirent.h \

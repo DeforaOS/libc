@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -32,10 +32,12 @@
 # define LIBC_COMPAT_SYS_TYPES_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/types.h"
+# if defined(__APPLE__)
+#  include "kernel/darwin/sys/types.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/types.h"
+# elif defined(__linux__)
+#  include "kernel/linux/sys/types.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/types.h"
 # elif defined(__OpenBSD__)
