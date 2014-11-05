@@ -1,5 +1,6 @@
 SUBDIRS	= amd64 i386
-TARGETS	= libm.a libm.so.0.0 libm.so.0 libm.so
+TARGETS	= $(OBJDIR)libm.a $(OBJDIR)libm.so.0.0 libm.so.0 libm.so
+OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
@@ -24,25 +25,25 @@ all: subdirs $(TARGETS)
 subdirs:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE)) || exit; done
 
-libm_OBJS = arch.o math.o
+libm_OBJS = $(OBJDIR)arch.o $(OBJDIR)math.o
 libm_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 libm_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 libm_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
-libm.a: $(libm_OBJS)
-	$(AR) -rc libm.a $(libm_OBJS)
-	$(RANLIB) libm.a
+$(OBJDIR)libm.a: $(libm_OBJS)
+	$(AR) -rc $(OBJDIR)libm.a $(libm_OBJS)
+	$(RANLIB) $(OBJDIR)libm.a
 
-libm.so.0.0 libm.so.0 libm.so: $(libm_OBJS)
-	$(CCSHARED) -o libm.so.0.0 -Wl,-soname,libm.so.0 $(libm_OBJS) $(libm_LDFLAGS)
-	$(LN) -s -- libm.so.0.0 libm.so.0
-	$(LN) -s -- libm.so.0.0 libm.so
+$(OBJDIR)libm.so.0.0 libm.so.0 libm.so: $(libm_OBJS)
+	$(CCSHARED) -o $(OBJDIR)libm.so.0.0 -Wl,-soname,libm.so.0 $(libm_OBJS) $(libm_LDFLAGS)
+	$(LN) -s -- libm.so.0.0 $(OBJDIR)libm.so.0
+	$(LN) -s -- libm.so.0.0 $(OBJDIR)libm.so
 
-arch.o: arch.S amd64/math.S i386/math.S
-	$(AS) $(libm_ASFLAGS) -o arch.o arch.S
+$(OBJDIR)arch.o: arch.S amd64/math.S i386/math.S
+	$(AS) $(libm_ASFLAGS) -o $(OBJDIR)arch.o arch.S
 
-math.o: math.c ../../include/math/math.h
-	$(CC) $(libm_CFLAGS) -c math.c
+$(OBJDIR)math.o: math.c ../../include/math/math.h
+	$(CC) $(libm_CFLAGS) -o $(OBJDIR)math.o -c math.c
 
 clean:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) clean) || exit; done
@@ -56,8 +57,8 @@ distclean:
 install: $(TARGETS)
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 libm.a $(DESTDIR)$(LIBDIR)/libm.a
-	$(INSTALL) -m 0755 libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0.0
+	$(INSTALL) -m 0644 $(OBJDIR)libm.a $(DESTDIR)$(LIBDIR)/libm.a
+	$(INSTALL) -m 0755 $(OBJDIR)libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0.0
 	$(LN) -s -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so.0
 	$(LN) -s -- libm.so.0.0 $(DESTDIR)$(LIBDIR)/libm.so
 

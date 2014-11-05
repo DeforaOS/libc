@@ -1,5 +1,6 @@
 SUBDIRS	= kernel/netbsd
-TARGETS	= librt.a librt.so.0.0 librt.so.0 librt.so
+TARGETS	= $(OBJDIR)librt.a $(OBJDIR)librt.so.0.0 librt.so.0 librt.so
+OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
@@ -24,25 +25,25 @@ all: subdirs $(TARGETS)
 subdirs:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE)) || exit; done
 
-librt_OBJS = sched.o syscalls.o
+librt_OBJS = $(OBJDIR)sched.o $(OBJDIR)syscalls.o
 librt_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 librt_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 librt_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
-librt.a: $(librt_OBJS)
-	$(AR) -rc librt.a $(librt_OBJS)
-	$(RANLIB) librt.a
+$(OBJDIR)librt.a: $(librt_OBJS)
+	$(AR) -rc $(OBJDIR)librt.a $(librt_OBJS)
+	$(RANLIB) $(OBJDIR)librt.a
 
-librt.so.0.0 librt.so.0 librt.so: $(librt_OBJS)
-	$(CCSHARED) -o librt.so.0.0 -Wl,-soname,librt.so.0 $(librt_OBJS) $(librt_LDFLAGS)
-	$(LN) -s -- librt.so.0.0 librt.so.0
-	$(LN) -s -- librt.so.0.0 librt.so
+$(OBJDIR)librt.so.0.0 librt.so.0 librt.so: $(librt_OBJS)
+	$(CCSHARED) -o $(OBJDIR)librt.so.0.0 -Wl,-soname,librt.so.0 $(librt_OBJS) $(librt_LDFLAGS)
+	$(LN) -s -- librt.so.0.0 $(OBJDIR)librt.so.0
+	$(LN) -s -- librt.so.0.0 $(OBJDIR)librt.so
 
-sched.o: sched.c syscalls.h
-	$(CC) $(librt_CFLAGS) -c sched.c
+$(OBJDIR)sched.o: sched.c syscalls.h
+	$(CC) $(librt_CFLAGS) -o $(OBJDIR)sched.o -c sched.c
 
-syscalls.o: syscalls.S syscalls.h
-	$(AS) $(librt_ASFLAGS) -o syscalls.o syscalls.S
+$(OBJDIR)syscalls.o: syscalls.S syscalls.h
+	$(AS) $(librt_ASFLAGS) -o $(OBJDIR)syscalls.o syscalls.S
 
 clean:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) clean) || exit; done
@@ -56,8 +57,8 @@ distclean:
 install: $(TARGETS)
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 librt.a $(DESTDIR)$(LIBDIR)/librt.a
-	$(INSTALL) -m 0755 librt.so.0.0 $(DESTDIR)$(LIBDIR)/librt.so.0.0
+	$(INSTALL) -m 0644 $(OBJDIR)librt.a $(DESTDIR)$(LIBDIR)/librt.a
+	$(INSTALL) -m 0755 $(OBJDIR)librt.so.0.0 $(DESTDIR)$(LIBDIR)/librt.so.0.0
 	$(LN) -s -- librt.so.0.0 $(DESTDIR)$(LIBDIR)/librt.so.0
 	$(LN) -s -- librt.so.0.0 $(DESTDIR)$(LIBDIR)/librt.so
 

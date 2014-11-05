@@ -1,4 +1,5 @@
-TARGETS	= libdl.a libdl.so.0.0 libdl.so.0 libdl.so
+TARGETS	= $(OBJDIR)libdl.a $(OBJDIR)libdl.so.0.0 libdl.so.0 libdl.so
+OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
@@ -18,21 +19,21 @@ INSTALL	= install
 
 all: $(TARGETS)
 
-libdl_OBJS = dlfcn.o
+libdl_OBJS = $(OBJDIR)dlfcn.o
 libdl_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 libdl_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
-libdl.a: $(libdl_OBJS)
-	$(AR) -rc libdl.a $(libdl_OBJS)
-	$(RANLIB) libdl.a
+$(OBJDIR)libdl.a: $(libdl_OBJS)
+	$(AR) -rc $(OBJDIR)libdl.a $(libdl_OBJS)
+	$(RANLIB) $(OBJDIR)libdl.a
 
-libdl.so.0.0 libdl.so.0 libdl.so: $(libdl_OBJS)
-	$(CCSHARED) -o libdl.so.0.0 -Wl,-soname,libdl.so.0 $(libdl_OBJS) $(libdl_LDFLAGS)
-	$(LN) -s -- libdl.so.0.0 libdl.so.0
-	$(LN) -s -- libdl.so.0.0 libdl.so
+$(OBJDIR)libdl.so.0.0 libdl.so.0 libdl.so: $(libdl_OBJS)
+	$(CCSHARED) -o $(OBJDIR)libdl.so.0.0 -Wl,-soname,libdl.so.0 $(libdl_OBJS) $(libdl_LDFLAGS)
+	$(LN) -s -- libdl.so.0.0 $(OBJDIR)libdl.so.0
+	$(LN) -s -- libdl.so.0.0 $(OBJDIR)libdl.so
 
-dlfcn.o: dlfcn.c ../../include/dl/dlfcn.h ../../include/dl/elf.h
-	$(CC) $(libdl_CFLAGS) -c dlfcn.c
+$(OBJDIR)dlfcn.o: dlfcn.c ../../include/dl/dlfcn.h ../../include/dl/elf.h
+	$(CC) $(libdl_CFLAGS) -o $(OBJDIR)dlfcn.o -c dlfcn.c
 
 clean:
 	$(RM) -- $(libdl_OBJS)
@@ -42,8 +43,8 @@ distclean: clean
 
 install: $(TARGETS)
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 libdl.a $(DESTDIR)$(LIBDIR)/libdl.a
-	$(INSTALL) -m 0755 libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so.0.0
+	$(INSTALL) -m 0644 $(OBJDIR)libdl.a $(DESTDIR)$(LIBDIR)/libdl.a
+	$(INSTALL) -m 0755 $(OBJDIR)libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so.0.0
 	$(LN) -s -- libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so.0
 	$(LN) -s -- libdl.so.0.0 $(DESTDIR)$(LIBDIR)/libdl.so
 

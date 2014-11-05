@@ -1,4 +1,5 @@
-TARGETS	= deforaos-gcc deforaos-gcc.specs tracer.so
+TARGETS	= $(OBJDIR)deforaos-gcc $(OBJDIR)deforaos-gcc.specs $(OBJDIR)tracer.so
+OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
@@ -20,25 +21,25 @@ INSTALL	= install
 
 all: $(TARGETS)
 
-deforaos-gcc: deforaos-gcc.in subst.sh ../config.sh
-	./subst.sh -P "$(PREFIX)" -- "deforaos-gcc"
+$(OBJDIR)deforaos-gcc: deforaos-gcc.in subst.sh ../config.sh
+	./subst.sh -P "$(PREFIX)" -- "$(OBJDIR)deforaos-gcc"
 
-deforaos-gcc.specs: deforaos-gcc.specs.in subst.sh ../config.sh
-	./subst.sh -P "$(PREFIX)" -- "deforaos-gcc.specs"
+$(OBJDIR)deforaos-gcc.specs: deforaos-gcc.specs.in subst.sh ../config.sh
+	./subst.sh -P "$(PREFIX)" -- "$(OBJDIR)deforaos-gcc.specs"
 
-tracer_OBJS = tracer-analyze.o tracer-syscalls.o
+tracer_OBJS = $(OBJDIR)tracer-analyze.o $(OBJDIR)tracer-syscalls.o
 tracer_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 tracer_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 tracer_ASFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(ASFLAGS)
 
-tracer.so: $(tracer_OBJS)
-	$(CCSHARED) -o tracer.so $(tracer_OBJS) $(tracer_LDFLAGS)
+$(OBJDIR)tracer.so: $(tracer_OBJS)
+	$(CCSHARED) -o $(OBJDIR)tracer.so $(tracer_OBJS) $(tracer_LDFLAGS)
 
-tracer-analyze.o: tracer-analyze.c tracer-syscalls.h ../src/syscalls.h tracer-analyze.h
-	$(CC) $(tracer_CFLAGS) -c tracer-analyze.c
+$(OBJDIR)tracer-analyze.o: tracer-analyze.c tracer-syscalls.h ../src/syscalls.h tracer-analyze.h
+	$(CC) $(tracer_CFLAGS) -o $(OBJDIR)tracer-analyze.o -c tracer-analyze.c
 
-tracer-syscalls.o: tracer-syscalls.S tracer-analyze.h
-	$(AS) $(tracer_ASFLAGS) -o tracer-syscalls.o tracer-syscalls.S
+$(OBJDIR)tracer-syscalls.o: tracer-syscalls.S tracer-analyze.h
+	$(AS) $(tracer_ASFLAGS) -o $(OBJDIR)tracer-syscalls.o tracer-syscalls.S
 
 clean:
 	$(RM) -- $(deforaos-gcc_OBJS) $(deforaos-gcc.specs_OBJS) $(tracer_OBJS)
@@ -49,8 +50,8 @@ distclean: clean
 	$(RM) -- $(TARGETS)
 
 install: $(TARGETS)
-	./subst.sh -P "$(DESTDIR)$(PREFIX)/bin" -i -- "deforaos-gcc"
-	./subst.sh -P "$(DESTDIR)$(PREFIX)/lib/gcc" -i -- "deforaos-gcc.specs"
+	./subst.sh -P "$(DESTDIR)$(PREFIX)/bin" -i -- "$(OBJDIR)deforaos-gcc"
+	./subst.sh -P "$(DESTDIR)$(PREFIX)/lib/gcc" -i -- "$(OBJDIR)deforaos-gcc.specs"
 
 uninstall:
 	./subst.sh -P "$(DESTDIR)$(PREFIX)/bin" -u -- "deforaos-gcc"

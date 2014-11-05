@@ -3,7 +3,8 @@ VERSION	= 0.1.0
 SUBDIRS	= doc include src tests tools
 RM	= rm -f
 LN	= ln -f
-TAR	= tar -czvf
+TAR	= tar
+MKDIR	= mkdir -m 0755 -p
 
 
 all: subdirs
@@ -20,7 +21,7 @@ distclean:
 dist:
 	$(RM) -r -- $(PACKAGE)-$(VERSION)
 	$(LN) -s -- . $(PACKAGE)-$(VERSION)
-	@$(TAR) $(PACKAGE)-$(VERSION).tar.gz -- \
+	@$(TAR) -czvf $(PACKAGE)-$(VERSION).tar.gz -- \
 		$(PACKAGE)-$(VERSION)/doc/Makefile \
 		$(PACKAGE)-$(VERSION)/doc/gtkdoc.sh \
 		$(PACKAGE)-$(VERSION)/doc/project.conf \
@@ -576,10 +577,21 @@ dist:
 		$(PACKAGE)-$(VERSION)/project.conf
 	$(RM) -- $(PACKAGE)-$(VERSION)
 
+distcheck: dist
+	$(TAR) -xzvf $(PACKAGE)-$(VERSION).tar.gz
+	$(MKDIR) -- $(PACKAGE)-$(VERSION)/objdir
+	$(MKDIR) -- $(PACKAGE)-$(VERSION)/destdir
+	(cd "$(PACKAGE)-$(VERSION)" && $(MAKE) OBJDIR="$$PWD/objdir/")
+	(cd "$(PACKAGE)-$(VERSION)" && $(MAKE) OBJDIR="$$PWD/objdir/" DESTDIR="$$PWD/destdir" install)
+	(cd "$(PACKAGE)-$(VERSION)" && $(MAKE) OBJDIR="$$PWD/objdir/" DESTDIR="$$PWD/destdir" uninstall)
+	(cd "$(PACKAGE)-$(VERSION)" && $(MAKE) OBJDIR="$$PWD/objdir/" distclean)
+	(cd "$(PACKAGE)-$(VERSION)" && $(MAKE) dist)
+	$(RM) -r -- $(PACKAGE)-$(VERSION)
+
 install:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) install) || exit; done
 
 uninstall:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done
 
-.PHONY: all subdirs clean distclean dist install uninstall
+.PHONY: all subdirs clean distclean dist distcheck install uninstall

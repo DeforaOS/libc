@@ -1,4 +1,5 @@
 SUBDIRS	= net sys
+OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
 RM	= rm -f

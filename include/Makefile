@@ -1,4 +1,5 @@
 SUBDIRS	= compat dl kernel/darwin kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris math net pthread rt socket sys
+OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
 RM	= rm -f

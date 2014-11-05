@@ -40,6 +40,9 @@ SYSCONFDIR=
 [ -z "$INCLUDEDIR" ] && INCLUDEDIR="$PREFIX/include"
 if [ -z "$LDSO" ]; then
 	case "$(uname -s)" in
+		FreeBSD)
+			LDSO="/libexec/ld-elf.so.1"
+			;;
 		Linux)
 			LDSO="/lib/ld-linux-$(uname -p).so.2"
 			;;
@@ -147,15 +150,18 @@ while [ $# -gt 0 ]; do
 
 	#install
 	if [ "$install" -eq 1 ]; then
+		source="${target#$OBJDIR}"
 		$DEBUG $MKDIR -- "$PREFIX"			|| exit 2
 		mode="-m 0644"
-		[ -x "$target" ] && mode="-m 0755"
-		$DEBUG $INSTALL $mode "$target" "$PREFIX/$target" \
+		[ -x "${source}.in" ] && mode="-m 0755"
+		$DEBUG $INSTALL $mode "$target" "$PREFIX/$source" \
 								|| exit 2
 		continue
 	fi
 
 	#create
+	source="${target#$OBJDIR}"
+	source="${source}.in"
 	$DEBUG $SED -e "s,@PACKAGE@,$PACKAGE,g" \
 		-e "s,@VERSION@,$VERSION,g" \
 		-e "s,@PREFIX@,$PREFIX,g" \
@@ -168,11 +174,11 @@ while [ $# -gt 0 ]; do
 		-e "s,@MANDIR@,$MANDIR,g" \
 		-e "s,@SYSCONFDIR@,$SYSCONFDIR,g" \
 		-e "s,@PWD@,$PWD,g" \
-		-- "$target.in" > "$target"
+		-- "$source" > "$target"
 	if [ $? -ne 0 ]; then
 		$RM -- "$target" 2> "$DEVNULL"
 		exit 2
-	elif [ -x "$target.in" ]; then
+	elif [ -x "$source" ]; then
 		$DEBUG $CHMOD 0755 "$target"
 	fi
 done
