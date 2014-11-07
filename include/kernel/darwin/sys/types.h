@@ -33,6 +33,14 @@
 
 
 /* types */
+# ifndef clock_t
+#  define clock_t clock_t
+typedef unsigned long clock_t;
+# endif
+# ifndef clockid_t
+#  define clockid_t clockid_t
+typedef int clockid_t;
+# endif
 # ifndef off_t
 #  define off_t off_t
 typedef long long off_t;
