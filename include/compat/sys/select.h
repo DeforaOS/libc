@@ -32,10 +32,12 @@
 # define LIBC_COMPAT_SYS_SELECT_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/select.h"
+# if defined(__APPLE__)
+#  include "kernel/darwin/sys/select.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/select.h"
+# elif defined(__linux__)
+#  include "kernel/linux/sys/select.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/select.h"
 # elif defined(__OpenBSD__)

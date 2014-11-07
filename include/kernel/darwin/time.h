@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,22 @@
 
 
 
-#ifndef LIBC_COMPAT_STDIO_H
-# define LIBC_COMPAT_STDIO_H
+#ifndef LIBC_KERNEL_DARWIN_TIME_H
+# define LIBC_KERNEL_DARWIN_TIME_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/stdio.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/stdio.h"
-# elif defined(__linux__)
-#  include "kernel/linux/stdio.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/stdio.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/stdio.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/stdio.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/stdio.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef clock_t
+#  define clock_t clock_t
+typedef unsigned int clock_t;
+# endif
+# ifndef clockid_t
+#  define clockid_t clockid_t
+typedef int clockid_t;
+# endif
+# ifndef time_t
+#  define time_t time_t
+typedef long time_t;
 # endif
 
-#endif /* !LIBC_COMPAT_STDIO_H */
+#endif /* !LIBC_KERNEL_DARWIN_TIME_H */

@@ -32,10 +32,12 @@
 # define LIBC_COMPAT_TIME_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/time.h"
+# if defined(__APPLE__)
+#  include "kernel/darwin/time.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/time.h"
+# elif defined(__linux__)
+#  include "kernel/linux/time.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/time.h"
 # elif defined(__OpenBSD__)

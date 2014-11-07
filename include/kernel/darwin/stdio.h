@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,26 @@
 
 
 
-#ifndef LIBC_COMPAT_STDIO_H
-# define LIBC_COMPAT_STDIO_H
+#ifndef LIBC_KERNEL_DARWIN_STDIO_H
+# define LIBC_KERNEL_DARWIN_STDIO_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/stdio.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/stdio.h"
-# elif defined(__linux__)
-#  include "kernel/linux/stdio.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/stdio.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/stdio.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/stdio.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/stdio.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef off_t
+#  define off_t off_t
+typedef long long off_t;
 # endif
 
-#endif /* !LIBC_COMPAT_STDIO_H */
+
+/* constants */
+# ifndef SEEK_SET
+#  define SEEK_SET	0
+# endif
+# ifndef SEEK_CUR
+#  define SEEK_CUR	1
+# endif
+# ifndef SEEK_END
+#  define SEEK_END	2
+# endif
+
+#endif /* !LIBC_KERNEL_DARWIN_STDIO_H */

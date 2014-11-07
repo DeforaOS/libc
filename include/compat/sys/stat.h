@@ -32,10 +32,12 @@
 # define LIBC_COMPAT_SYS_STAT_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/stat.h"
+# if defined(__APPLE__)
+#  include "kernel/darwin/sys/stat.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/stat.h"
+# elif defined(__linux__)
+#  include "kernel/linux/sys/stat.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/stat.h"
 # elif defined(__OpenBSD__)
