@@ -176,7 +176,7 @@ int dup(int fildes)
 /* dup2 */
 #ifndef SYS_dup2
 # warning Unsupported platform: dup2() is missing
-int dup(int fildes1, int fildes2)
+int dup2(int fildes1, int fildes2)
 {
 	errno = ENOSYS;
 	return -1;
