@@ -151,8 +151,10 @@ while [ $# -gt 0 ]; do
 			;;
 		gtkdoc/sgml.stamp)
 			output="xml"
-			[ -n "$OBJDIR" ] && output="${OBJDIR}gtkdoc/xml"
-			$DEBUG $MKDIR -- "$output"		|| exit 2
+			if [ -n "$OBJDIR" ]; then
+				output="${OBJDIR}gtkdoc/xml"
+				$DEBUG $MKDIR -- "$output"	|| exit 2
+			fi
 			(cd "${OBJDIR}gtkdoc" &&
 				$DEBUG $GTKDOC_MKDB \
 					--module="$MODULE" \
@@ -162,8 +164,10 @@ while [ $# -gt 0 ]; do
 			;;
 		gtkdoc/tmpl.stamp)
 			output="tmpl"
-			[ -n "$OBJDIR" ] && output="${OBJDIR}gtkdoc/tmpl"
-			$DEBUG $MKDIR -- "$output"		|| exit 2
+			if [ -n "$OBJDIR" ]; then
+				output="${OBJDIR}gtkdoc/tmpl"
+				$DEBUG $MKDIR -- "$output"	|| exit 2
+			fi
 			(cd "${OBJDIR}gtkdoc" &&
 				$DEBUG $GTKDOC_MKTMPL \
 					--module="$MODULE" \
