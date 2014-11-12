@@ -26,7 +26,7 @@
 
 #variables
 PREFIX="/usr/local"
-[ -f "../config.sh" ] && . "../config.sh"
+PROGNAME="gtkdoc.sh"
 #executables
 DEBUG="_debug"
 GTKDOC_FIXXREF="gtkdoc-fixxref"
@@ -38,6 +38,8 @@ INSTALL="install -m 0644"
 MKDIR="mkdir -m 0755 -p"
 RM="rm -f"
 TOUCH="touch"
+
+[ -f "../config.sh" ] && . "../config.sh"
 
 
 #functions
@@ -52,7 +54,7 @@ _debug()
 #error
 _error()
 {
-	echo "gtkdoc.sh: $@" 1>&2
+	echo "$PROGNAME: $@" 1>&2
 	return 2
 }
 
@@ -60,7 +62,7 @@ _error()
 #usage
 _usage()
 {
-	echo "Usage: gtkdoc.sh [-c|-i|-u][-P prefix] target..." 1>&2
+	echo "Usage: $PROGNAME [-c|-i|-u][-P prefix] target..." 1>&2
 	return 1
 }
 
@@ -109,6 +111,8 @@ instdir="$DATADIR/gtk-doc/html"
 
 while [ $# -gt 0 ]; do
 	target="$1"
+	#XXX ignore OBJDIR
+	target="${target#$OBJDIR}"
 	shift
 
 	#clean

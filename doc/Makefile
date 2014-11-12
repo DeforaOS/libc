@@ -17,13 +17,13 @@ subdirs:
 $(OBJDIR)gtkdoc/libc.types:
 	./gtkdoc.sh -P "$(PREFIX)" -- "$(OBJDIR)gtkdoc/libc.types"
 
-$(OBJDIR)gtkdoc/tmpl.stamp: gtkdoc/libc.types
+$(OBJDIR)gtkdoc/tmpl.stamp: $(OBJDIR)gtkdoc/libc.types
 	./gtkdoc.sh -P "$(PREFIX)" -- "$(OBJDIR)gtkdoc/tmpl.stamp"
 
-$(OBJDIR)gtkdoc/sgml.stamp: gtkdoc/tmpl.stamp
+$(OBJDIR)gtkdoc/sgml.stamp: $(OBJDIR)gtkdoc/tmpl.stamp
 	./gtkdoc.sh -P "$(PREFIX)" -- "$(OBJDIR)gtkdoc/sgml.stamp"
 
-$(OBJDIR)gtkdoc/html.stamp: gtkdoc/libc-docs.xml gtkdoc/sgml.stamp gtkdoc/tmpl.stamp
+$(OBJDIR)gtkdoc/html.stamp: gtkdoc/libc-docs.xml $(OBJDIR)gtkdoc/sgml.stamp $(OBJDIR)gtkdoc/tmpl.stamp
 	./gtkdoc.sh -P "$(PREFIX)" -- "$(OBJDIR)gtkdoc/html.stamp"
 
 clean:
