@@ -71,9 +71,9 @@ struct flock
 # define F_WRLCK	3
 
 # define O_CREAT	0x0200
+# define O_TRUNC	0x0400
 # define O_EXCL		0x0800
 # define O_NOCTTY	0x8000
-# define O_TRUNC	0x0400
 
 # define O_NONBLOCK	0x00004
 # define O_APPEND	0x00008
