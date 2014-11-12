@@ -1,5 +1,5 @@
 SUBDIRS	= dl kernel/darwin kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris math pthread rt socket
-TARGETS	= $(OBJDIR)libc.a $(OBJDIR)libc.so.0.0 libc.so.0 libc.so $(OBJDIR)start.o
+TARGETS	= $(OBJDIR)libc.a $(OBJDIR)libc.so.0.0 $(OBJDIR)libc.so.0 $(OBJDIR)libc.so $(OBJDIR)start.o
 OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
@@ -37,7 +37,7 @@ $(OBJDIR)libc.a: $(libc_OBJS)
 	$(AR) -rc $(OBJDIR)libc.a $(libc_OBJS)
 	$(RANLIB) $(OBJDIR)libc.a
 
-$(OBJDIR)libc.so.0.0 libc.so.0 libc.so: $(libc_OBJS)
+$(OBJDIR)libc.so.0.0 $(OBJDIR)libc.so.0 $(OBJDIR)libc.so: $(libc_OBJS)
 	$(CCSHARED) -o $(OBJDIR)libc.so.0.0 -Wl,-soname,libc.so.0 $(libc_OBJS) $(libc_LDFLAGS)
 	$(LN) -s -- libc.so.0.0 $(OBJDIR)libc.so.0
 	$(LN) -s -- libc.so.0.0 $(OBJDIR)libc.so

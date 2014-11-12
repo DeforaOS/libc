@@ -1,5 +1,5 @@
 SUBDIRS	= kernel/netbsd
-TARGETS	= $(OBJDIR)librt.a $(OBJDIR)librt.so.0.0 librt.so.0 librt.so
+TARGETS	= $(OBJDIR)librt.a $(OBJDIR)librt.so.0.0 $(OBJDIR)librt.so.0 $(OBJDIR)librt.so
 OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
@@ -35,7 +35,7 @@ $(OBJDIR)librt.a: $(librt_OBJS)
 	$(AR) -rc $(OBJDIR)librt.a $(librt_OBJS)
 	$(RANLIB) $(OBJDIR)librt.a
 
-$(OBJDIR)librt.so.0.0 librt.so.0 librt.so: $(librt_OBJS)
+$(OBJDIR)librt.so.0.0 $(OBJDIR)librt.so.0 $(OBJDIR)librt.so: $(librt_OBJS)
 	$(CCSHARED) -o $(OBJDIR)librt.so.0.0 -Wl,-soname,librt.so.0 $(librt_OBJS) $(librt_LDFLAGS)
 	$(LN) -s -- librt.so.0.0 $(OBJDIR)librt.so.0
 	$(LN) -s -- librt.so.0.0 $(OBJDIR)librt.so

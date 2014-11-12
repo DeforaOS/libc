@@ -1,5 +1,5 @@
 SUBDIRS	= amd64 i386
-TARGETS	= $(OBJDIR)libm.a $(OBJDIR)libm.so.0.0 libm.so.0 libm.so
+TARGETS	= $(OBJDIR)libm.a $(OBJDIR)libm.so.0.0 $(OBJDIR)libm.so.0 $(OBJDIR)libm.so
 OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
@@ -35,7 +35,7 @@ $(OBJDIR)libm.a: $(libm_OBJS)
 	$(AR) -rc $(OBJDIR)libm.a $(libm_OBJS)
 	$(RANLIB) $(OBJDIR)libm.a
 
-$(OBJDIR)libm.so.0.0 libm.so.0 libm.so: $(libm_OBJS)
+$(OBJDIR)libm.so.0.0 $(OBJDIR)libm.so.0 $(OBJDIR)libm.so: $(libm_OBJS)
 	$(CCSHARED) -o $(OBJDIR)libm.so.0.0 -Wl,-soname,libm.so.0 $(libm_OBJS) $(libm_LDFLAGS)
 	$(LN) -s -- libm.so.0.0 $(OBJDIR)libm.so.0
 	$(LN) -s -- libm.so.0.0 $(OBJDIR)libm.so

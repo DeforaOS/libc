@@ -1,4 +1,4 @@
-TARGETS	= $(OBJDIR)libpthread.a $(OBJDIR)libpthread.so.0.0 libpthread.so.0 libpthread.so
+TARGETS	= $(OBJDIR)libpthread.a $(OBJDIR)libpthread.so.0.0 $(OBJDIR)libpthread.so.0 $(OBJDIR)libpthread.so
 OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
@@ -28,7 +28,7 @@ $(OBJDIR)libpthread.a: $(libpthread_OBJS)
 	$(AR) -rc $(OBJDIR)libpthread.a $(libpthread_OBJS)
 	$(RANLIB) $(OBJDIR)libpthread.a
 
-$(OBJDIR)libpthread.so.0.0 libpthread.so.0 libpthread.so: $(libpthread_OBJS)
+$(OBJDIR)libpthread.so.0.0 $(OBJDIR)libpthread.so.0 $(OBJDIR)libpthread.so: $(libpthread_OBJS)
 	$(CCSHARED) -o $(OBJDIR)libpthread.so.0.0 -Wl,-soname,libpthread.so.0 $(libpthread_OBJS) $(libpthread_LDFLAGS)
 	$(LN) -s -- libpthread.so.0.0 $(OBJDIR)libpthread.so.0
 	$(LN) -s -- libpthread.so.0.0 $(OBJDIR)libpthread.so

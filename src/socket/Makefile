@@ -1,5 +1,5 @@
 SUBDIRS	= kernel/freebsd kernel/linux kernel/netbsd
-TARGETS	= $(OBJDIR)libsocket.a $(OBJDIR)libsocket.so.0.0 libsocket.so.0 libsocket.so
+TARGETS	= $(OBJDIR)libsocket.a $(OBJDIR)libsocket.so.0.0 $(OBJDIR)libsocket.so.0 $(OBJDIR)libsocket.so
 OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
@@ -35,7 +35,7 @@ $(OBJDIR)libsocket.a: $(libsocket_OBJS)
 	$(AR) -rc $(OBJDIR)libsocket.a $(libsocket_OBJS)
 	$(RANLIB) $(OBJDIR)libsocket.a
 
-$(OBJDIR)libsocket.so.0.0 libsocket.so.0 libsocket.so: $(libsocket_OBJS)
+$(OBJDIR)libsocket.so.0.0 $(OBJDIR)libsocket.so.0 $(OBJDIR)libsocket.so: $(libsocket_OBJS)
 	$(CCSHARED) -o $(OBJDIR)libsocket.so.0.0 -Wl,-soname,libsocket.so.0 $(libsocket_OBJS) $(libsocket_LDFLAGS)
 	$(LN) -s -- libsocket.so.0.0 $(OBJDIR)libsocket.so.0
 	$(LN) -s -- libsocket.so.0.0 $(OBJDIR)libsocket.so

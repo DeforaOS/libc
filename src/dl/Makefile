@@ -1,4 +1,4 @@
-TARGETS	= $(OBJDIR)libdl.a $(OBJDIR)libdl.so.0.0 libdl.so.0 libdl.so
+TARGETS	= $(OBJDIR)libdl.a $(OBJDIR)libdl.so.0.0 $(OBJDIR)libdl.so.0 $(OBJDIR)libdl.so
 OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
@@ -27,7 +27,7 @@ $(OBJDIR)libdl.a: $(libdl_OBJS)
 	$(AR) -rc $(OBJDIR)libdl.a $(libdl_OBJS)
 	$(RANLIB) $(OBJDIR)libdl.a
 
-$(OBJDIR)libdl.so.0.0 libdl.so.0 libdl.so: $(libdl_OBJS)
+$(OBJDIR)libdl.so.0.0 $(OBJDIR)libdl.so.0 $(OBJDIR)libdl.so: $(libdl_OBJS)
 	$(CCSHARED) -o $(OBJDIR)libdl.so.0.0 -Wl,-soname,libdl.so.0 $(libdl_OBJS) $(libdl_LDFLAGS)
 	$(LN) -s -- libdl.so.0.0 $(OBJDIR)libdl.so.0
 	$(LN) -s -- libdl.so.0.0 $(OBJDIR)libdl.so
