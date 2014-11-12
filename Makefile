@@ -125,6 +125,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/mman.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/select.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/stat.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/times.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/types.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/sys/Makefile \

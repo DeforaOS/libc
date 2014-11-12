@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2014 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,32 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_TIME_H
-# define LIBC_COMPAT_SYS_TIME_H
+#ifndef LIBC_KERNEL_DARWIN_SYS_TIME_H
+# define LIBC_KERNEL_DARWIN_SYS_TIME_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/sys/time.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/time.h"
-# elif defined(__linux__)
-#  include "kernel/linux/sys/time.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/time.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/time.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/sys/time.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/sys/time.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef suseconds_t
+#  define suseconds_t suseconds_t
+typedef int suseconds_t;
+# endif
+# ifndef time_t
+#  define time_t time_t
+typedef long time_t;
+# endif
+# ifndef timeval
+#  define timeval timeval
+struct timeval
+{
+	time_t tv_sec;
+	suseconds_t tv_usec;
+};
 # endif
 
-#endif /* !LIBC_COMPAT_SYS_TIME_H */
+
+/* constants */
+# define ITIMER_REAL	0
+# define ITIMER_VIRTUAL	1
+# define ITIMER_PROF	2
+
+#endif /* !LIBC_KERNEL_DARWIN_SYS_TIME_H */
