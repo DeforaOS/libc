@@ -21,7 +21,7 @@ distclean:
 dist:
 	$(RM) -r -- $(PACKAGE)-$(VERSION)
 	$(LN) -s -- . $(PACKAGE)-$(VERSION)
-	@$(TAR) -czvf $(PACKAGE)-$(VERSION).tar.gz -- \
+	@$(TAR) -czvf $(OBJDIR)$(PACKAGE)-$(VERSION).tar.gz -- \
 		$(PACKAGE)-$(VERSION)/doc/Makefile \
 		$(PACKAGE)-$(VERSION)/doc/gtkdoc.sh \
 		$(PACKAGE)-$(VERSION)/doc/project.conf \
