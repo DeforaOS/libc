@@ -117,6 +117,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/dl/project.conf \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/errno.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/fcntl.h \
+		$(PACKAGE)-$(VERSION)/include/kernel/darwin/signal.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/stdio.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/time.h \
 		$(PACKAGE)-$(VERSION)/include/kernel/darwin/unistd.h \

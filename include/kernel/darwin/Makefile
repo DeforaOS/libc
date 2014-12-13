@@ -27,6 +27,8 @@ install:
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/darwin
 	$(INSTALL) -m 0644 fcntl.h $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/fcntl.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/darwin
+	$(INSTALL) -m 0644 signal.h $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/signal.h
+	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/darwin
 	$(INSTALL) -m 0644 stdio.h $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/stdio.h
 	$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/kernel/darwin
 	$(INSTALL) -m 0644 time.h $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/time.h
@@ -37,6 +39,7 @@ uninstall:
 	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE) uninstall) || exit; done
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/errno.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/fcntl.h
+	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/signal.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/stdio.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/time.h
 	$(RM) -- $(DESTDIR)$(INCLUDEDIR)/kernel/darwin/unistd.h

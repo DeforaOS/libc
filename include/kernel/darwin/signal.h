@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2014 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2014 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,24 +28,33 @@
 
 
 
-#ifndef LIBC_COMPAT_SIGNAL_H
-# define LIBC_COMPAT_SIGNAL_H
+#ifndef LIBC_KERNEL_DARWIN_SIGNAL_H
+# define LIBC_KERNEL_DARWIN_SIGNAL_H
+
+# include "../../sys/types.h"
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/signal.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/signal.h"
-# elif defined(__linux__)
-#  include "kernel/linux/signal.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/signal.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/signal.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/signal.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+# define SIGHUP		1
+# define SIGINT		2
+# define SIGQUIT	3
+# define SIGILL		4
+# define SIGTRAP	5
+# define SIGABRT	6
+# define SIGFPE		8
+# define SIGKILL	9
+# define SIGBUS		10
+# define SIGSEGV	11
+# define SIGPIPE	13
+# define SIGALRM	14
+# define SIGTERM	15
+# define SIGSTOP	17
+# define SIGTSTP	18
+# define SIGCONT	19
+# define SIGCHLD	20
+# define SIGWINCH	28
+# define SIGINFO	29
+# define SIGUSR1	30
+# define SIGUSR2	31
 
-#endif /* !LIBC_COMPAT_SIGNAL_H */
+#endif /* !LIBC_KERNEL_DARWIN_SIGNAL_H */
