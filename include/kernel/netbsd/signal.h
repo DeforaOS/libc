@@ -97,6 +97,8 @@ typedef struct _stack_t
 # define SIGTSTP	18
 # define SIGCONT	19
 # define SIGCHLD	20
+# define SIGWINCH	28
+# define SIGINFO	29
 # define SIGUSR1	30
 # define SIGUSR2	31
 
