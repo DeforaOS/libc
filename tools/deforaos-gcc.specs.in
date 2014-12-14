@@ -1,16 +1,15 @@
 %rename cpp_options old_cpp_options
+%rename cc1 old_cc1
+%rename link old_link
 
 *cpp_options:
--nostdinc -isystem @INCLUDEDIR@ -isystem include%s %(old_cpp_options)
+-nostdinc -isystem @INCLUDEDIR@%I %(old_cpp_options)
 
 *cc1:
-%(cc1_cpu) -nostdinc -isystem @INCLUDEDIR@ -isystem include%s
-
-*link_libgcc:
--L@LIBDIR@ -L .%s
+%(cc1_cpu) -nostdinc -isystem @INCLUDEDIR@%I %(old_cc1)
 
 *libgcc:
-libgcc.a%s %:if-exists(libgcc_eh.a%s)
+libgcc.a%s
 
 *startfile:
 @LIBDIR@/start.o
@@ -18,15 +17,8 @@ libgcc.a%s %:if-exists(libgcc_eh.a%s)
 *endfile:
 
 
+*lib:
+-lc
+
 *link:
--dynamic-linker @LDSO@ -nostdlib %{shared:-shared} %{static:-static} %{rdynamic:-export-dynamic}
-
-*esp_link:
-
-
-*esp_options:
-
-
-*esp_cpp_options:
-
-
+-nostdlib %(old_link)
