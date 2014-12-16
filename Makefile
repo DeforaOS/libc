@@ -1,6 +1,6 @@
 PACKAGE	= libc
 VERSION	= 0.1.0
-SUBDIRS	= doc include src tests tools
+SUBDIRS	= doc include src src/dl src/math src/pthread src/rt src/socket tests tools
 RM	= rm -f
 LN	= ln -f
 TAR	= tar
@@ -398,9 +398,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/Makefile \
 		$(PACKAGE)-$(VERSION)/src/syscalls.h \
 		$(PACKAGE)-$(VERSION)/src/project.conf \
-		$(PACKAGE)-$(VERSION)/src/dl/dlfcn.c \
-		$(PACKAGE)-$(VERSION)/src/dl/Makefile \
-		$(PACKAGE)-$(VERSION)/src/dl/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/darwin/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/darwin/common.h \
 		$(PACKAGE)-$(VERSION)/src/kernel/darwin/project.conf \
@@ -473,6 +470,9 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/start.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/solaris/sparc/project.conf \
+		$(PACKAGE)-$(VERSION)/src/dl/dlfcn.c \
+		$(PACKAGE)-$(VERSION)/src/dl/Makefile \
+		$(PACKAGE)-$(VERSION)/src/dl/project.conf \
 		$(PACKAGE)-$(VERSION)/src/math/arch.S \
 		$(PACKAGE)-$(VERSION)/src/math/math.c \
 		$(PACKAGE)-$(VERSION)/src/math/Makefile \

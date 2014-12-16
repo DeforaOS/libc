@@ -1,4 +1,4 @@
-SUBDIRS	= dl kernel/darwin kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris math pthread rt socket
+SUBDIRS	= kernel/darwin kernel/freebsd kernel/linux kernel/netbsd kernel/openbsd kernel/solaris
 TARGETS	= $(OBJDIR)libc.a $(OBJDIR)libc.so.0.0 $(OBJDIR)libc.so.0 $(OBJDIR)libc.so $(OBJDIR)start.o
 OBJDIR	=
 PREFIX	= /usr/local

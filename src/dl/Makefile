@@ -8,6 +8,7 @@ CPPFLAGSF= -nostdinc -isystem ../../include -isystem ../../include/dl -DPIC
 CPPFLAGS=
 CFLAGSF	= -W -fPIC
 CFLAGS	= -Wall -g -O2 -pedantic -ffreestanding
+LDFLAGSF= -nostdlib -lc -L..
 AR	= ar
 RANLIB	= ranlib
 CCSHARED= $(CC) -nostdlib -shared
