@@ -41,6 +41,7 @@
 # define SIGILL		4
 # define SIGTRAP	5
 # define SIGABRT	6
+# define SIGIOT		6
 # define SIGFPE		8
 # define SIGKILL	9
 # define SIGBUS		10
