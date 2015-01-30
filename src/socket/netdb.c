@@ -146,7 +146,7 @@ int getaddrinfo(char const * nodename, char const * servname,
 {
 	struct addrinfo h;
 
-	if(nodename == NULL || servname == NULL)
+	if(nodename == NULL && servname == NULL)
 		return EAI_NONAME;
 	if(hints == NULL)
 	{
