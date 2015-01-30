@@ -144,8 +144,16 @@ const char * gai_strerror(int ecode)
 int getaddrinfo(char const * nodename, char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res)
 {
+	struct addrinfo h;
+
 	if(nodename == NULL || servname == NULL)
 		return EAI_NONAME;
+	if(hints == NULL)
+	{
+		memset(&h, 0, sizeof(h));
+		h.ai_family = AF_UNSPEC;
+		hints = &h;
+	}
 	/* FIXME really implement */
 	errno = ENOSYS;
 	return EAI_SYSTEM;
