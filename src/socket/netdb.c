@@ -146,7 +146,7 @@ int getaddrinfo(char const * nodename, char const * servname,
 {
 	/* FIXME really implement */
 	errno = ENOSYS;
-	return -1;
+	return EAI_SYSTEM;
 }
 
 
