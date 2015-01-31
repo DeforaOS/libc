@@ -39,6 +39,13 @@
 
 
 /* private */
+/* constants */
+#define ETC_HOSTS	"/etc/hosts"
+#define ETC_NETWORKS	"/etc/networks"
+#define ETC_PROTOCOLS	"/etc/protocols"
+#define ETC_SERVICES	"/etc/services"
+
+
 /* variables */
 static FILE * _hostfp = NULL;
 static FILE * _netfp = NULL;
@@ -689,7 +696,7 @@ void sethostent(int stayopen)
 		if(fseek(_hostfp, 0, SEEK_SET) != 0)
 			endhostent();
 	}
-	else if((_hostfp = fopen("/etc/hosts", "r")) == NULL)
+	else if((_hostfp = fopen(ETC_HOSTS, "r")) == NULL)
 		h_errno = NO_DATA;
 }
 
@@ -706,7 +713,7 @@ void setnetent(int stayopen)
 	}
 	else
 		/* we can ignore errors */
-		_netfp = fopen("/etc/networks", "r");
+		_netfp = fopen(ETC_NETWORKS, "r");
 }
 
 
@@ -722,7 +729,7 @@ void setprotoent(int stayopen)
 	}
 	else
 		/* we can ignore errors */
-		_protofp = fopen("/etc/protocols", "r");
+		_protofp = fopen(ETC_PROTOCOLS, "r");
 }
 
 
@@ -738,7 +745,7 @@ void setservent(int stayopen)
 	}
 	else
 		/* we can ignore errors */
-		_servfp = fopen("/etc/services", "r");
+		_servfp = fopen(ETC_SERVICES, "r");
 }
 
 
