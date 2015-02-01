@@ -29,7 +29,9 @@
 
 
 #include <stdio.h>
+#include <string.h>
 #include <netdb.h>
+#include <arpa/inet.h>
 
 
 /* prototypes */
@@ -37,6 +39,7 @@ static int _netdb(char const * progname);
 
 static int _gai_strerror(char const * progname, char const * message,
 		int value);
+static int _getaddrinfo(char const * progname);
 static int _gethostent(void);
 static int _getnetent(void);
 static int _getprotoent(void);
@@ -78,7 +81,9 @@ static int _netdb(char const * progname)
 	ret |= _gai_strerror(progname, "EAI_SERVICE", EAI_SERVICE);
 	ret |= _gai_strerror(progname, "EAI_SOCKTYPE", EAI_SOCKTYPE);
 	ret |= _gai_strerror(progname, "EAI_SYSTEM", EAI_SYSTEM);
-	return 0;
+	/* getaddrinfo */
+	ret |= _getaddrinfo(progname);
+	return ret;
 }
 
 
@@ -88,6 +93,43 @@ static int _gai_strerror(char const * progname, char const * message,
 {
 	printf("%s: %s: %s\n", progname, message, gai_strerror(value));
 	return 0;
+}
+
+
+/* getaddrinfo */
+static int _getaddrinfo(char const * progname)
+{
+	int ret = 0;
+	struct addrinfo hints;
+	struct addrinfo * ai;
+	int res;
+	struct addrinfo * p;
+	struct sockaddr_in * sin;
+
+	/* FIXME also test without hints and without AI_PASSIVE set */
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_flags = AI_PASSIVE;
+	if((res = getaddrinfo("localhost", "http", &hints, &ai)) != 0)
+	{
+		printf("%s: %s: %s\n", progname, "getaddrinfo",
+				gai_strerror(res));
+		return 1;
+	}
+	for(p = ai; p != NULL; p = p->ai_next)
+		if(p->ai_family == AF_INET)
+		{
+			sin = (struct sockaddr_in *)p->ai_addr;
+			/* FIXME also verify the address */
+			if(sin->sin_port != 80)
+				ret = 1;
+			printf("%s: %s: %s:%u%s\n", progname, "localhost",
+					inet_ntoa(sin->sin_addr),
+					sin->sin_port,
+					(ret == 0) ? "" : " (WRONG)");
+		}
+	freeaddrinfo(ai);
+	return ret;
 }
 
 
