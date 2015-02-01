@@ -32,6 +32,7 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
+#include "strings.h"
 #include "ctype.h"
 #include "limits.h"
 #include "errno.h"
@@ -148,9 +149,29 @@ const char * gai_strerror(int ecode)
 
 
 /* getaddrinfo */
+static struct addrinfo * _getaddrinfo_alloc(int family, int socktype,
+		int protocol, socklen_t addrlen, struct sockaddr * addr,
+		struct addrinfo ** res);
+static int _getaddrinfo_hints(struct addrinfo const * hints);
+static int _getaddrinfo_nodename(char const * nodename,
+		struct addrinfo const * hints, struct addrinfo ** res);
+static int _getaddrinfo_nodename_default(struct addrinfo const * hints,
+		struct addrinfo ** res);
+static int _getaddrinfo_nodename_hosts(char const * nodename,
+		struct addrinfo const * hints, struct addrinfo ** res);
+static int _getaddrinfo_nodename_hosts_lookup(char const * nodename,
+		struct hostent * he);
+static int _getaddrinfo_servname(char const * servname,
+		struct addrinfo const * hints, struct addrinfo ** res);
+static int _getaddrinfo_servname_hosts(char const * servname,
+		struct addrinfo const * hints, struct addrinfo ** res);
+static int _getaddrinfo_servname_services_lookup(char const * servname,
+		struct addrinfo const * hints, struct servent * se);
+
 int getaddrinfo(char const * nodename, char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res)
 {
+	int ret;
 	struct addrinfo h;
 
 	if(nodename == NULL && servname == NULL)
@@ -161,9 +182,197 @@ int getaddrinfo(char const * nodename, char const * servname,
 		h.ai_family = AF_UNSPEC;
 		hints = &h;
 	}
-	/* FIXME really implement */
-	errno = ENOSYS;
-	return EAI_SYSTEM;
+	if((ret = _getaddrinfo_hints(hints)) != 0)
+		return ret;
+	*res = NULL;
+	if((ret = _getaddrinfo_nodename(nodename, hints, res)) != 0
+			|| (ret = _getaddrinfo_servname(servname, hints,
+					res)) != 0)
+		freeaddrinfo(*res);
+	return ret;
+}
+
+static struct addrinfo * _getaddrinfo_alloc(int family, int socktype,
+		int protocol, socklen_t addrlen, struct sockaddr * addr,
+		struct addrinfo ** res)
+{
+	struct addrinfo * ret;
+	struct addrinfo * p;
+
+	if((ret = malloc(sizeof(*ret) + addrlen)) == NULL)
+		return NULL;
+	memset(ret, 0, sizeof(*ret));
+	ret->ai_family = family;
+	ret->ai_socktype = socktype;
+	ret->ai_protocol = protocol;
+	ret->ai_addrlen = addrlen;
+	ret->ai_addr = (struct sockaddr *)(ret + 1);
+	memcpy(ret->ai_addr, addr, addrlen);
+	if(*res == NULL)
+		*res = ret;
+	else
+	{
+		for(p = *res; p->ai_next != NULL; p = p->ai_next);
+		p->ai_next = ret;
+	}
+	return ret;
+}
+
+static int _getaddrinfo_hints(struct addrinfo const * hints)
+{
+	switch(hints->ai_family)
+	{
+		case AF_INET:
+		case AF_UNSPEC:
+			break;
+		default:
+			/* unknown family */
+			return EAI_FAMILY;
+	}
+	switch(hints->ai_socktype)
+	{
+		case 0:
+		case SOCK_DGRAM:
+		case SOCK_RAW:
+		case SOCK_STREAM:
+			break;
+		default:
+			/* unknown socket type */
+			return EAI_SOCKTYPE;
+	}
+	return 0;
+}
+
+static int _getaddrinfo_nodename(char const * nodename,
+		struct addrinfo const * hints, struct addrinfo ** res)
+{
+	if(nodename == NULL)
+		return _getaddrinfo_nodename_default(hints, res);
+	/* FIXME implement more */
+	return _getaddrinfo_nodename_hosts(nodename, hints, res);
+}
+
+static int _getaddrinfo_nodename_default(struct addrinfo const * hints,
+		struct addrinfo ** res)
+{
+	int passive = (hints->ai_flags & AI_PASSIVE) ? 1 : 0;
+	struct sockaddr_in sin;
+
+	memset(&sin, 0, sizeof(sin));
+	sin.sin_addr.s_addr = passive ? INADDR_ANY : INADDR_LOOPBACK;
+	if(hints->ai_family == AF_UNSPEC || hints->ai_family == AF_INET)
+		if(_getaddrinfo_alloc(AF_INET, hints->ai_socktype,
+					hints->ai_protocol, sizeof(sin),
+					(struct sockaddr *)&sin, res) == NULL)
+			return EAI_SYSTEM;
+	return 0;
+}
+
+static int _getaddrinfo_nodename_hosts(char const * nodename,
+		struct addrinfo const * hints, struct addrinfo ** res)
+{
+	struct hostent * he;
+	char ** addr;
+	struct sockaddr_in sin;
+
+	/* XXX may have side-effects */
+	sethostent(1);
+	memset(&sin, 0, sizeof(sin));
+	while((he = gethostent()) != NULL)
+	{
+		if(_getaddrinfo_nodename_hosts_lookup(nodename, he) != 0)
+			continue;
+		if(hints->ai_family != AF_UNSPEC
+				&& hints->ai_family != he->h_addrtype)
+			continue;
+		for(addr = he->h_addr_list; *addr != NULL; addr++)
+			if(he->h_addrtype == AF_INET)
+			{
+				if(sizeof(sin.sin_addr.s_addr) != he->h_length)
+					return EAI_SYSTEM;
+				memcpy(&sin.sin_addr.s_addr, *addr,
+						sizeof(sin.sin_addr.s_addr));
+				if(_getaddrinfo_alloc(he->h_addrtype,
+							hints->ai_socktype,
+							hints->ai_protocol,
+							sizeof(sin),
+							(struct sockaddr *)&sin,
+							res) == NULL)
+					return EAI_SYSTEM;
+			}
+		return 0;
+	}
+	return EAI_NONAME;
+}
+
+static int _getaddrinfo_nodename_hosts_lookup(char const * nodename,
+		struct hostent * he)
+{
+	char ** alias;
+
+	if(strcasecmp(he->h_name, nodename) == 0)
+		return 0;
+	for(alias = he->h_aliases; *alias != NULL; alias++)
+		if(strcasecmp(*alias, nodename) == 0)
+			return 0;
+	return -1;
+}
+
+static int _getaddrinfo_servname(char const * servname,
+		struct addrinfo const * hints, struct addrinfo ** res)
+{
+	if(servname == NULL)
+		return 0;
+	return _getaddrinfo_servname_hosts(servname, hints, res);
+}
+
+static int _getaddrinfo_servname_hosts(char const * servname,
+		struct addrinfo const * hints, struct addrinfo ** res)
+{
+	struct servent * se;
+	struct sockaddr_in * sin;
+	struct addrinfo * ai;
+
+	/* XXX may have side-effects */
+	setservent(1);
+	while((se = getservent()) != NULL)
+	{
+		if(_getaddrinfo_servname_services_lookup(servname, hints, se)
+				!= 0)
+			continue;
+		for(ai = *res; ai != NULL; ai = ai->ai_next)
+			if(ai->ai_family == AF_INET)
+			{
+				sin = (struct sockaddr_in *)ai->ai_addr;
+				sin->sin_port = se->s_port;
+			}
+		return 0;
+	}
+	return EAI_NONAME;
+}
+
+static int _getaddrinfo_servname_services_lookup(char const * servname,
+		struct addrinfo const * hints, struct servent * se)
+{
+	char ** alias;
+	struct protoent * pe;
+
+	pe = getprotobyname(se->s_proto);
+	if(strcasecmp(se->s_name, servname) != 0)
+	{
+		if(se->s_aliases == NULL)
+			return -1;
+		for(alias = se->s_aliases; *alias != NULL; alias++)
+			if(strcasecmp(*alias, servname) == 0)
+				break;
+		if(*alias == NULL)
+			return -1;
+	}
+	if(hints->ai_protocol == 0)
+		return 0;
+	if((pe = getprotobyname(se->s_proto)) == NULL)
+		return -1;
+	return (pe->p_proto == hints->ai_protocol) ? 0 : -1;
 }
 
 

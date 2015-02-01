@@ -103,6 +103,8 @@ struct servent
 # define NO_RECOVERY			3
 # define TRY_AGAIN			4
 
+# define AI_PASSIVE			0x01
+
 # define EAI_AGAIN			1
 # define EAI_BADFLAGS			2
 # define EAI_FAIL			3
