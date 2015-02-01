@@ -477,13 +477,14 @@ struct hostent * gethostent(void)
 static char * _gethostent_addr(char const ** s)
 {
 	char * ret;
-	int i;
+	const size_t len = 4;
+	size_t i;
 	unsigned long u;
 	char * p = NULL;
 
-	if((ret = malloc(4 * sizeof(char))) == NULL)
+	if((ret = malloc(len * sizeof(*ret))) == NULL)
 		return NULL;
-	for(i = 0; i < 4; i++)
+	for(i = 0; i < len; i++)
 	{
 		if(**s == '\0' || **s < '0' || **s > '9')
 			break;
@@ -493,7 +494,7 @@ static char * _gethostent_addr(char const ** s)
 		if(errno == ERANGE || u > 255)
 			break;
 		ret[i] = u;
-		if(i == 3)
+		if(i == len - 1)
 			return ret;
 		if(*p != '.')
 			break;
