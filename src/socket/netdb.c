@@ -1006,6 +1006,7 @@ static void _protoent_free(struct protoent * pe)
 static void _servent_free(struct servent * se)
 {
 	free(se->s_name);
+	free(se->s_aliases);
 	free(se->s_proto);
 	memset(se, 0, sizeof(*se));
 }
