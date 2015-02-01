@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2015 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,38 +28,18 @@
 
 
 
-#ifndef LIBSOCKET_KERNEL_LINUX_NETINET_IN_H
-# define LIBSOCKET_KERNEL_LINUX_NETINET_IN_H
+#ifndef LIBSOCKET_NETINET6_IN6_H
+# define LIBSOCKET_NETINET6_IN6_H
+
+# include "compat/netinet6/in6.h"
 
 
-/* types */
-# ifndef in_addr_t
-#  define in_addr_t in_addr_t
-typedef uint32_t in_addr_t;
-# endif
+/* constants */
+# define IN6ADDR_ANY_INIT \
+	{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \
+	    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+# define IN6ADDR_LOOPBACK_INIT \
+	{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \
+	    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 }
 
-# ifndef in_port_t
-#  define in_port_t in_port_t
-typedef uint16_t in_port_t;
-#endif
-
-# ifndef in_addr
-#  define in_addr in_addr
-struct in_addr
-{
-	in_addr_t s_addr;
-};
-# endif
-
-# ifndef sockaddr_in
-#  define sockaddr_in sockaddr_in
-struct sockaddr_in
-{
-	sa_family_t sin_family;
-	in_port_t sin_port;
-	struct in_addr sin_addr;
-	char _padding[8];		/* FIXME not checked */
-};
-# endif
-
-#endif /* !LIBSOCKET_KERNEL_LINUX_NETINET_IN_H */
+#endif /* !LIBSOCKET_NETINET6_IN6_H */

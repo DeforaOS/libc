@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2011 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2015 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,38 +28,16 @@
 
 
 
-#ifndef LIBSOCKET_KERNEL_LINUX_NETINET_IN_H
-# define LIBSOCKET_KERNEL_LINUX_NETINET_IN_H
+#ifndef LIBSOCKET_COMPAT_NETINET6_IN6_H
+# define LIBSOCKET_COMPAT_NETINET6_IN6_H
 
 
-/* types */
-# ifndef in_addr_t
-#  define in_addr_t in_addr_t
-typedef uint32_t in_addr_t;
+# if defined(__linux__)
+#  include "kernel/linux/netinet6/in6.h"
+# elif defined(__NetBSD__)
+#  include "kernel/netbsd/netinet6/in6.h"
+# else
+#  warning Unsupported platform
 # endif
 
-# ifndef in_port_t
-#  define in_port_t in_port_t
-typedef uint16_t in_port_t;
-#endif
-
-# ifndef in_addr
-#  define in_addr in_addr
-struct in_addr
-{
-	in_addr_t s_addr;
-};
-# endif
-
-# ifndef sockaddr_in
-#  define sockaddr_in sockaddr_in
-struct sockaddr_in
-{
-	sa_family_t sin_family;
-	in_port_t sin_port;
-	struct in_addr sin_addr;
-	char _padding[8];		/* FIXME not checked */
-};
-# endif
-
-#endif /* !LIBSOCKET_KERNEL_LINUX_NETINET_IN_H */
+#endif /* !LIBSOCKET_COMPAT_NETINET6_IN6_H */

@@ -33,6 +33,7 @@
 
 # include <inttypes.h>
 # include <netinet/in.h>
+# include <netinet6/in6.h>
 
 
 /* types */

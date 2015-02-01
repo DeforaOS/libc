@@ -51,14 +51,6 @@ struct in_addr
 };
 # endif
 
-# ifndef in6_addr
-#  define in6_addr in6_addr
-struct in6_addr
-{
-	uint8_t s6_addr[16];
-};
-# endif
-
 # ifndef sockaddr_in
 #  define sockaddr_in sockaddr_in
 struct sockaddr_in

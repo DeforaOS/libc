@@ -1,4 +1,4 @@
-SUBDIRS	= netinet sys
+SUBDIRS	= netinet netinet6 sys
 
 
 all: subdirs
