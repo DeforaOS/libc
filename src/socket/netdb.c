@@ -266,7 +266,7 @@ static int _getaddrinfo_nodename_default(struct addrinfo const * hints,
 		if(_getaddrinfo_alloc(AF_INET, hints->ai_socktype,
 					hints->ai_protocol, sizeof(sin),
 					(struct sockaddr *)&sin, res) == NULL)
-			return EAI_SYSTEM;
+			return EAI_MEMORY;
 	return 0;
 }
 
@@ -300,7 +300,7 @@ static int _getaddrinfo_nodename_hosts(char const * nodename,
 							sizeof(sin),
 							(struct sockaddr *)&sin,
 							res) == NULL)
-					return EAI_SYSTEM;
+					return EAI_MEMORY;
 			}
 		return 0;
 	}
