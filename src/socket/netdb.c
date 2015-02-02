@@ -167,6 +167,8 @@ static int _getaddrinfo_servname_hosts(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_servname_services_lookup(char const * servname,
 		struct addrinfo const * hints, struct servent * se);
+static int _getaddrinfo_servname_numeric(char const * servname,
+		struct addrinfo const * hints, struct addrinfo ** res);
 
 int getaddrinfo(char const * nodename, char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res)
@@ -323,6 +325,8 @@ static int _getaddrinfo_servname(char const * servname,
 {
 	if(servname == NULL)
 		return 0;
+	if(hints->ai_flags & AI_NUMERICSERV)
+		return _getaddrinfo_servname_numeric(servname, hints, res);
 	return _getaddrinfo_servname_hosts(servname, hints, res);
 }
 
@@ -373,6 +377,37 @@ static int _getaddrinfo_servname_services_lookup(char const * servname,
 	if((pe = getprotobyname(se->s_proto)) == NULL)
 		return -1;
 	return (pe->p_proto == hints->ai_protocol) ? 0 : -1;
+}
+
+static int _getaddrinfo_servname_numeric(char const * servname,
+		struct addrinfo const * hints, struct addrinfo ** res)
+{
+	int ret = 0;
+	int e;
+	unsigned long u;
+	char * p;
+	struct addrinfo * ai;
+	struct sockaddr_in * sin;
+
+	if(!isdigit((int)(unsigned char const)*servname))
+		return -1;
+	e = errno;
+	errno = 0;
+	u = strtoul(servname, &p, 10);
+	/* XXX ports may have different constraints besides AF_INET */
+	if(errno == 0 && *p == '\0' && u <= 65535)
+	{
+		for(ai = *res; ai != NULL; ai = ai->ai_next)
+			if(ai->ai_family == AF_INET)
+			{
+				sin = (struct sockaddr_in *)ai->ai_addr;
+				sin->sin_port = u;
+			}
+	}
+	else
+		ret = -1;
+	errno = e;
+	return ret;
 }
 
 
