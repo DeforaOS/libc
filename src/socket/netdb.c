@@ -166,7 +166,7 @@ static int _getaddrinfo_servname(char const * servname,
 static int _getaddrinfo_servname_hosts(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_servname_numeric(char const * servname,
-		struct addrinfo const * hints, struct addrinfo ** res);
+		struct addrinfo ** res);
 static int _getaddrinfo_servname_services_lookup(char const * servname,
 		struct addrinfo const * hints, struct servent * se);
 
@@ -330,7 +330,7 @@ static int _getaddrinfo_servname(char const * servname,
 	if(hints->ai_flags & AI_NUMERICSERV
 			|| (ret = _getaddrinfo_servname_hosts(servname, hints,
 					res)) != 0)
-		if(_getaddrinfo_servname_numeric(servname, hints, res) == 0)
+		if(_getaddrinfo_servname_numeric(servname, res) == 0)
 			ret = 0;
 	return ret;
 }
@@ -361,7 +361,7 @@ static int _getaddrinfo_servname_hosts(char const * servname,
 }
 
 static int _getaddrinfo_servname_numeric(char const * servname,
-		struct addrinfo const * hints, struct addrinfo ** res)
+		struct addrinfo ** res)
 {
 	int ret = 0;
 	int e;
