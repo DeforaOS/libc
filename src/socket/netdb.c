@@ -165,10 +165,10 @@ static int _getaddrinfo_servname(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_servname_hosts(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
-static int _getaddrinfo_servname_services_lookup(char const * servname,
-		struct addrinfo const * hints, struct servent * se);
 static int _getaddrinfo_servname_numeric(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
+static int _getaddrinfo_servname_services_lookup(char const * servname,
+		struct addrinfo const * hints, struct servent * se);
 
 int getaddrinfo(char const * nodename, char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res)
@@ -360,30 +360,6 @@ static int _getaddrinfo_servname_hosts(char const * servname,
 	return EAI_NONAME;
 }
 
-static int _getaddrinfo_servname_services_lookup(char const * servname,
-		struct addrinfo const * hints, struct servent * se)
-{
-	char ** alias;
-	struct protoent * pe;
-
-	pe = getprotobyname(se->s_proto);
-	if(strcasecmp(se->s_name, servname) != 0)
-	{
-		if(se->s_aliases == NULL)
-			return -1;
-		for(alias = se->s_aliases; *alias != NULL; alias++)
-			if(strcasecmp(*alias, servname) == 0)
-				break;
-		if(*alias == NULL)
-			return -1;
-	}
-	if(hints->ai_protocol == 0)
-		return 0;
-	if((pe = getprotobyname(se->s_proto)) == NULL)
-		return -1;
-	return (pe->p_proto == hints->ai_protocol) ? 0 : -1;
-}
-
 static int _getaddrinfo_servname_numeric(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res)
 {
@@ -413,6 +389,30 @@ static int _getaddrinfo_servname_numeric(char const * servname,
 		ret = -1;
 	errno = e;
 	return ret;
+}
+
+static int _getaddrinfo_servname_services_lookup(char const * servname,
+		struct addrinfo const * hints, struct servent * se)
+{
+	char ** alias;
+	struct protoent * pe;
+
+	pe = getprotobyname(se->s_proto);
+	if(strcasecmp(se->s_name, servname) != 0)
+	{
+		if(se->s_aliases == NULL)
+			return -1;
+		for(alias = se->s_aliases; *alias != NULL; alias++)
+			if(strcasecmp(*alias, servname) == 0)
+				break;
+		if(*alias == NULL)
+			return -1;
+	}
+	if(hints->ai_protocol == 0)
+		return 0;
+	if((pe = getprotobyname(se->s_proto)) == NULL)
+		return -1;
+	return (pe->p_proto == hints->ai_protocol) ? 0 : -1;
 }
 
 
