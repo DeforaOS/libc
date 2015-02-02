@@ -513,29 +513,35 @@ static char * _gethostent_addr(char const ** s)
 {
 	char * ret;
 	const size_t len = 4;
+	int e;
 	size_t i;
 	unsigned long u;
 	char * p = NULL;
 
 	if((ret = malloc(len * sizeof(*ret))) == NULL)
 		return NULL;
+	e = errno;
+	errno = 0;
 	for(i = 0; i < len; i++)
 	{
 		if(**s == '\0' || **s < '0' || **s > '9')
 			break;
-		errno = 0;
 		u = strtoul(*s, &p, 10);
 		*s = p;
-		if(errno == ERANGE || u > 255)
+		if(errno != 0 || u > 255)
 			break;
 		ret[i] = u;
 		if(i == len - 1)
+		{
+			errno = e;
 			return ret;
+		}
 		if(*p != '.')
 			break;
 		(*s)++;
 	}
 	free(ret);
+	errno = e;
 	return NULL;
 }
 
