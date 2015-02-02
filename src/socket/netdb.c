@@ -323,11 +323,16 @@ static int _getaddrinfo_nodename_hosts_lookup(char const * nodename,
 static int _getaddrinfo_servname(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res)
 {
+	int ret = 0;
+
 	if(servname == NULL)
 		return 0;
-	if(hints->ai_flags & AI_NUMERICSERV)
-		return _getaddrinfo_servname_numeric(servname, hints, res);
-	return _getaddrinfo_servname_hosts(servname, hints, res);
+	if(hints->ai_flags & AI_NUMERICSERV
+			|| (ret = _getaddrinfo_servname_hosts(servname, hints,
+					res)) != 0)
+		if(_getaddrinfo_servname_numeric(servname, hints, res) == 0)
+			ret = 0;
+	return ret;
 }
 
 static int _getaddrinfo_servname_hosts(char const * servname,
