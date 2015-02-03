@@ -255,11 +255,12 @@ static int _getaddrinfo_nodename(char const * nodename,
 
 	if(nodename == NULL)
 		return _getaddrinfo_nodename_default(hints, res);
-	if(!(hints->ai_flags & AI_NUMERICHOST))
-		/* FIXME implement more */
-		ret = _getaddrinfo_nodename_hosts(nodename, hints, res);
-	if(ret != 0)
-		ret = _getaddrinfo_nodename_numeric(nodename, hints, res);
+	if(hints->ai_flags & AI_NUMERICHOST)
+		return _getaddrinfo_nodename_numeric(nodename, hints, res);
+	/* FIXME implement more */
+	ret = _getaddrinfo_nodename_hosts(nodename, hints, res);
+	if(ret != 0 && _getaddrinfo_nodename_numeric(nodename, hints, res) == 0)
+		ret = 0;
 	return ret;
 }
 
@@ -358,15 +359,15 @@ static int _getaddrinfo_nodename_numeric(char const * nodename,
 static int _getaddrinfo_servname(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res)
 {
-	int ret = 0;
+	int ret = -1;
 
 	if(servname == NULL)
 		return 0;
-	if(hints->ai_flags & AI_NUMERICSERV
-			|| (ret = _getaddrinfo_servname_hosts(servname, hints,
-					res)) != 0)
-		if(_getaddrinfo_servname_numeric(servname, res) == 0)
-			ret = 0;
+	if(hints->ai_flags & AI_NUMERICSERV)
+		return _getaddrinfo_servname_numeric(servname, res);
+	ret = _getaddrinfo_servname_hosts(servname, hints, res);
+	if(ret != 0 && _getaddrinfo_servname_numeric(servname, res) == 0)
+		ret = 0;
 	return ret;
 }
 
