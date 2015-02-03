@@ -36,6 +36,7 @@
 #include "ctype.h"
 #include "limits.h"
 #include "errno.h"
+#include "arpa/inet.h"
 #include "netdb.h"
 
 
@@ -161,6 +162,8 @@ static int _getaddrinfo_nodename_hosts(char const * nodename,
 		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_nodename_hosts_lookup(char const * nodename,
 		struct hostent * he);
+static int _getaddrinfo_nodename_numeric(char const * nodename,
+		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_servname(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_servname_hosts(char const * servname,
@@ -248,10 +251,17 @@ static int _getaddrinfo_hints(struct addrinfo const * hints)
 static int _getaddrinfo_nodename(char const * nodename,
 		struct addrinfo const * hints, struct addrinfo ** res)
 {
+	int ret;
+
 	if(nodename == NULL)
 		return _getaddrinfo_nodename_default(hints, res);
-	/* FIXME implement more */
-	return _getaddrinfo_nodename_hosts(nodename, hints, res);
+	if(hints->ai_flags & AI_NUMERICHOST
+			/* FIXME implement more */
+			|| (ret = _getaddrinfo_nodename_hosts(nodename, hints,
+					res)) != 0)
+		if(_getaddrinfo_nodename_numeric(nodename, hints, res) == 0)
+			ret = 0;
+	return ret;
 }
 
 static int _getaddrinfo_nodename_default(struct addrinfo const * hints,
@@ -318,6 +328,29 @@ static int _getaddrinfo_nodename_hosts_lookup(char const * nodename,
 		if(strcasecmp(*alias, nodename) == 0)
 			return 0;
 	return -1;
+}
+
+static int _getaddrinfo_nodename_numeric(char const * nodename,
+		struct addrinfo const * hints, struct addrinfo ** res)
+{
+	struct sockaddr_in sin;
+
+	switch(hints->ai_family)
+	{
+		case AF_INET:
+			memset(&sin, 0, sizeof(sin));
+			if(inet_aton(nodename, &sin.sin_addr) != 1)
+				break;
+			if(_getaddrinfo_alloc(AF_INET, hints->ai_socktype,
+						hints->ai_protocol, sizeof(sin),
+						(struct sockaddr *)&sin, res)
+					== NULL)
+				return EAI_MEMORY;
+			return 0;
+		default:
+			return EAI_FAMILY;
+	}
+	return EAI_FAIL;
 }
 
 static int _getaddrinfo_servname(char const * servname,
