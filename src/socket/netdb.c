@@ -324,9 +324,10 @@ static int _getaddrinfo_nodename_hosts_lookup(char const * nodename,
 
 	if(strcasecmp(he->h_name, nodename) == 0)
 		return 0;
-	for(alias = he->h_aliases; *alias != NULL; alias++)
-		if(strcasecmp(*alias, nodename) == 0)
-			return 0;
+	if(he->h_aliases != NULL)
+		for(alias = he->h_aliases; *alias != NULL; alias++)
+			if(strcasecmp(*alias, nodename) == 0)
+				return 0;
 	return -1;
 }
 
