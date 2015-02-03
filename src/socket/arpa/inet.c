@@ -63,33 +63,39 @@ uint16_t htons(uint16_t host16)
 /* inet_addr */
 in_addr_t inet_addr(const char *cp)
 {
-	in_addr_t ret = 0;
-	unsigned long byte;
-	char * p;
-	int i;
+	struct in_addr ia;
 
-	if(cp == NULL || cp[0] == '\0')
-		return -1;
-	for(i = 0; i < 4; i++)
-	{
-		byte = strtoul(cp, &p, 0);
-		if(*p != '.' && *p != '\0')
-			return -1;
-		if(byte > 0xff)
-			return -1;
-		ret = (ret << 8) | byte;
-		if(*p == '\0')
-			return ret;
-		cp = ++p;
-	}
-	return ret;
+	if(inet_aton(cp, &ia) != 1)
+		return INADDR_NONE;
+	return ia.s_addr;
 }
 
 
 /* inet_aton */
 int inet_aton(const char *cp, struct in_addr *addr)
 {
-	/* FIXME implement */
+	unsigned long byte;
+	char * p;
+	int i;
+
+	if(cp == NULL || cp[0] == '\0')
+		return 0;
+	addr->s_addr = 0;
+	for(i = 0; i < 4; i++)
+	{
+		byte = strtoul(cp, &p, 0);
+		if(*p != '.' && *p != '\0')
+			return 0;
+		if(byte > 0xff)
+			return 0;
+		addr->s_addr = (addr->s_addr << 8) | byte;
+		if(*p == '\0')
+		{
+			addr->s_addr = htonl(addr->s_addr);
+			return 1;
+		}
+		cp = ++p;
+	}
 	return 0;
 }
 

@@ -40,6 +40,7 @@
 # define INADDR_ANY		0x00000000
 # define INADDR_BROADCAST	0xffffffff
 # define INADDR_LOOPBACK	0x7f000001
+# define INADDR_NONE		0xffffffff
 
 # define IPPROTO_IP		0
 # define IPPROTO_ICMP		1
