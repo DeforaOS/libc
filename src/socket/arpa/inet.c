@@ -86,6 +86,14 @@ in_addr_t inet_addr(const char *cp)
 }
 
 
+/* inet_aton */
+int inet_aton(const char *cp, struct in_addr *addr)
+{
+	/* FIXME implement */
+	return 0;
+}
+
+
 /* inet_ntoa */
 char * inet_ntoa(struct in_addr in)
 {
