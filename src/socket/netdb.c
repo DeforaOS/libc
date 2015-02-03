@@ -251,16 +251,15 @@ static int _getaddrinfo_hints(struct addrinfo const * hints)
 static int _getaddrinfo_nodename(char const * nodename,
 		struct addrinfo const * hints, struct addrinfo ** res)
 {
-	int ret;
+	int ret = -1;
 
 	if(nodename == NULL)
 		return _getaddrinfo_nodename_default(hints, res);
-	if(hints->ai_flags & AI_NUMERICHOST
-			/* FIXME implement more */
-			|| (ret = _getaddrinfo_nodename_hosts(nodename, hints,
-					res)) != 0)
-		if(_getaddrinfo_nodename_numeric(nodename, hints, res) == 0)
-			ret = 0;
+	if(!(hints->ai_flags & AI_NUMERICHOST))
+		/* FIXME implement more */
+		ret = _getaddrinfo_nodename_hosts(nodename, hints, res);
+	if(ret != 0)
+		ret = _getaddrinfo_nodename_numeric(nodename, hints, res);
 	return ret;
 }
 
