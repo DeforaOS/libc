@@ -338,6 +338,8 @@ static int _getaddrinfo_nodename_numeric(char const * nodename,
 
 	switch(hints->ai_family)
 	{
+		case AF_UNSPEC:
+			/* fallback */
 		case AF_INET:
 			memset(&sin, 0, sizeof(sin));
 			if(inet_aton(nodename, &sin.sin_addr) != 1)
