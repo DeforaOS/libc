@@ -158,7 +158,7 @@ static int _getaddrinfo_nodename(char const * nodename,
 		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_nodename_default(struct addrinfo const * hints,
 		struct addrinfo ** res);
-static int _getaddrinfo_nodename_hosts(char const * nodename,
+static int _getaddrinfo_nodename_files(char const * nodename,
 		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_nodename_hosts_lookup(char const * nodename,
 		struct hostent * he);
@@ -166,7 +166,7 @@ static int _getaddrinfo_nodename_numeric(char const * nodename,
 		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_servname(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
-static int _getaddrinfo_servname_hosts(char const * servname,
+static int _getaddrinfo_servname_files(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_servname_numeric(char const * servname,
 		struct addrinfo ** res);
@@ -258,7 +258,7 @@ static int _getaddrinfo_nodename(char const * nodename,
 	if(hints->ai_flags & AI_NUMERICHOST)
 		return _getaddrinfo_nodename_numeric(nodename, hints, res);
 	/* FIXME implement more */
-	ret = _getaddrinfo_nodename_hosts(nodename, hints, res);
+	ret = _getaddrinfo_nodename_files(nodename, hints, res);
 	if(ret != 0 && _getaddrinfo_nodename_numeric(nodename, hints, res) == 0)
 		ret = 0;
 	return ret;
@@ -280,7 +280,7 @@ static int _getaddrinfo_nodename_default(struct addrinfo const * hints,
 	return 0;
 }
 
-static int _getaddrinfo_nodename_hosts(char const * nodename,
+static int _getaddrinfo_nodename_files(char const * nodename,
 		struct addrinfo const * hints, struct addrinfo ** res)
 {
 	struct hostent * he;
@@ -365,13 +365,13 @@ static int _getaddrinfo_servname(char const * servname,
 		return 0;
 	if(hints->ai_flags & AI_NUMERICSERV)
 		return _getaddrinfo_servname_numeric(servname, res);
-	ret = _getaddrinfo_servname_hosts(servname, hints, res);
+	ret = _getaddrinfo_servname_files(servname, hints, res);
 	if(ret != 0 && _getaddrinfo_servname_numeric(servname, res) == 0)
 		ret = 0;
 	return ret;
 }
 
-static int _getaddrinfo_servname_hosts(char const * servname,
+static int _getaddrinfo_servname_files(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res)
 {
 	struct servent * se;
