@@ -1,5 +1,5 @@
 PACKAGE	= libc
-VERSION	= 0.1.0
+VERSION	= 0.1.1
 SUBDIRS	= doc include src src/dl src/math src/pthread src/rt src/socket tests tools
 RM	= rm -f
 LN	= ln -f
