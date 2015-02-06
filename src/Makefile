@@ -26,7 +26,11 @@ INSTALL	= install
 all: subdirs $(TARGETS)
 
 subdirs:
-	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE)) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && \
+		if [ -n "$(OBJDIR)" ]; then \
+		([ -d "$(OBJDIR)$$i" ] || $(MKDIR) -- "$(OBJDIR)$$i") && \
+		$(MAKE) OBJDIR="$(OBJDIR)$$i/"; \
+		else $(MAKE); fi) || exit; done
 
 libc_OBJS = $(OBJDIR)ctype.o $(OBJDIR)dirent.o $(OBJDIR)errno.o $(OBJDIR)fcntl.o $(OBJDIR)float.o $(OBJDIR)fnmatch.o $(OBJDIR)grp.o $(OBJDIR)iconv.o $(OBJDIR)langinfo.o $(OBJDIR)libgen.o $(OBJDIR)locale.o $(OBJDIR)net/if.o $(OBJDIR)poll.o $(OBJDIR)pwd.o $(OBJDIR)regex.o $(OBJDIR)search.o $(OBJDIR)setjmp.o $(OBJDIR)signal.o $(OBJDIR)stdlib.o $(OBJDIR)stdio.o $(OBJDIR)string.o $(OBJDIR)strings.o $(OBJDIR)stropts.o $(OBJDIR)sys/ipc.o $(OBJDIR)sys/mman.o $(OBJDIR)sys/mount.o $(OBJDIR)sys/ptrace.o $(OBJDIR)sys/reboot.o $(OBJDIR)sys/resource.o $(OBJDIR)sys/select.o $(OBJDIR)sys/shm.o $(OBJDIR)sys/stat.o $(OBJDIR)sys/statvfs.o $(OBJDIR)sys/time.o $(OBJDIR)sys/times.o $(OBJDIR)sys/utsname.o $(OBJDIR)sys/wait.o $(OBJDIR)syscalls.o $(OBJDIR)syslog.o $(OBJDIR)termios.o $(OBJDIR)time.o $(OBJDIR)ucontext.o $(OBJDIR)unistd.o $(OBJDIR)utime.o $(OBJDIR)utmpx.o $(OBJDIR)wchar.o
 libc_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -79,6 +83,7 @@ $(OBJDIR)locale.o: locale.c
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)locale.o -c locale.c
 
 $(OBJDIR)net/if.o: net/if.c
+	@[ -d "$(OBJDIR)net" ] || $(MKDIR) -- "$(OBJDIR)net"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)net/if.o -c net/if.c
 
 $(OBJDIR)poll.o: poll.c
@@ -115,45 +120,59 @@ $(OBJDIR)stropts.o: stropts.c
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)stropts.o -c stropts.c
 
 $(OBJDIR)sys/ipc.o: sys/ipc.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/ipc.o -c sys/ipc.c
 
 $(OBJDIR)sys/mman.o: sys/mman.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/mman.o -c sys/mman.c
 
 $(OBJDIR)sys/mount.o: sys/mount.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/mount.o -c sys/mount.c
 
 $(OBJDIR)sys/ptrace.o: sys/ptrace.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/ptrace.o -c sys/ptrace.c
 
 $(OBJDIR)sys/reboot.o: sys/reboot.c
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/reboot.o -c sys/reboot.c
 
 $(OBJDIR)sys/resource.o: sys/resource.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/resource.o -c sys/resource.c
 
 $(OBJDIR)sys/select.o: sys/select.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/select.o -c sys/select.c
 
 $(OBJDIR)sys/shm.o: sys/shm.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/shm.o -c sys/shm.c
 
 $(OBJDIR)sys/stat.o: sys/stat.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/stat.o -c sys/stat.c
 
 $(OBJDIR)sys/statvfs.o: sys/statvfs.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/statvfs.o -c sys/statvfs.c
 
 $(OBJDIR)sys/time.o: sys/time.c
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/time.o -c sys/time.c
 
 $(OBJDIR)sys/times.o: sys/times.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/times.o -c sys/times.c
 
 $(OBJDIR)sys/utsname.o: sys/utsname.c
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/utsname.o -c sys/utsname.c
 
 $(OBJDIR)sys/wait.o: sys/wait.c syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/wait.o -c sys/wait.c
 
 $(OBJDIR)syscalls.o: syscalls.S kernel/darwin/amd64/syscalls.S kernel/freebsd/amd64/syscalls.S kernel/freebsd/i386/syscalls.S kernel/linux/amd64/syscalls.S kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/netbsd/common.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S kernel/netbsd/sparc64/syscalls.S kernel/openbsd/arm/syscalls.S kernel/openbsd/i386/syscalls.S

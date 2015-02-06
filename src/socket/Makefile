@@ -24,7 +24,11 @@ INSTALL	= install
 all: subdirs $(TARGETS)
 
 subdirs:
-	@for i in $(SUBDIRS); do (cd "$$i" && $(MAKE)) || exit; done
+	@for i in $(SUBDIRS); do (cd "$$i" && \
+		if [ -n "$(OBJDIR)" ]; then \
+		([ -d "$(OBJDIR)$$i" ] || $(MKDIR) -- "$(OBJDIR)$$i") && \
+		$(MAKE) OBJDIR="$(OBJDIR)$$i/"; \
+		else $(MAKE); fi) || exit; done
 
 libsocket_OBJS = $(OBJDIR)arpa/inet.o $(OBJDIR)netdb.o $(OBJDIR)sys/socket.o $(OBJDIR)syscalls.o
 libsocket_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
@@ -41,12 +45,14 @@ $(OBJDIR)libsocket.so.0.0 $(OBJDIR)libsocket.so.0 $(OBJDIR)libsocket.so: $(libso
 	$(LN) -s -- libsocket.so.0.0 $(OBJDIR)libsocket.so
 
 $(OBJDIR)arpa/inet.o: arpa/inet.c
+	@[ -d "$(OBJDIR)arpa" ] || $(MKDIR) -- "$(OBJDIR)arpa"
 	$(CC) $(libsocket_CFLAGS) -o $(OBJDIR)arpa/inet.o -c arpa/inet.c
 
 $(OBJDIR)netdb.o: netdb.c
 	$(CC) $(libsocket_CFLAGS) -o $(OBJDIR)netdb.o -c netdb.c
 
 $(OBJDIR)sys/socket.o: sys/socket.c kernel/linux/common.h kernel/netbsd/common.h syscalls.h
+	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libsocket_CFLAGS) -o $(OBJDIR)sys/socket.o -c sys/socket.c
 
 $(OBJDIR)syscalls.o: syscalls.S kernel/freebsd/common.h kernel/freebsd/amd64/syscalls.S kernel/freebsd/i386/syscalls.S kernel/linux/common.h kernel/linux/amd64/syscalls.S kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/arm/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/common.h kernel/netbsd/sparc/syscalls.S
