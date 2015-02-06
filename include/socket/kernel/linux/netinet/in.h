@@ -62,4 +62,12 @@ struct sockaddr_in
 };
 # endif
 
+# ifndef in6_addr
+#  define in6_addr in6_addr
+struct in6_addr
+{
+	uint8_t s6_addr[16];
+};
+# endif
+
 #endif /* !LIBSOCKET_KERNEL_LINUX_NETINET_IN_H */

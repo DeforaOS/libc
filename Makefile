@@ -289,9 +289,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/tcp.h \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet/project.conf \
-		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet6/in6.h \
-		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet6/Makefile \
-		$(PACKAGE)-$(VERSION)/include/socket/compat/netinet6/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/socket.h \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/un.h \
 		$(PACKAGE)-$(VERSION)/include/socket/compat/sys/Makefile \
@@ -311,9 +308,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/tcp.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet/project.conf \
-		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet6/in6.h \
-		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet6/Makefile \
-		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/netinet6/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/socket.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/un.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/linux/sys/Makefile \
@@ -324,9 +318,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/tcp.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet/project.conf \
-		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet6/in6.h \
-		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet6/Makefile \
-		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/netinet6/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/socket.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/un.h \
 		$(PACKAGE)-$(VERSION)/include/socket/kernel/netbsd/sys/Makefile \
@@ -335,9 +326,6 @@ dist:
 		$(PACKAGE)-$(VERSION)/include/socket/netinet/tcp.h \
 		$(PACKAGE)-$(VERSION)/include/socket/netinet/Makefile \
 		$(PACKAGE)-$(VERSION)/include/socket/netinet/project.conf \
-		$(PACKAGE)-$(VERSION)/include/socket/netinet6/in6.h \
-		$(PACKAGE)-$(VERSION)/include/socket/netinet6/Makefile \
-		$(PACKAGE)-$(VERSION)/include/socket/netinet6/project.conf \
 		$(PACKAGE)-$(VERSION)/include/socket/sys/socket.h \
 		$(PACKAGE)-$(VERSION)/include/socket/sys/un.h \
 		$(PACKAGE)-$(VERSION)/include/socket/sys/Makefile \

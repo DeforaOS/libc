@@ -63,4 +63,30 @@ struct sockaddr_in
 };
 # endif
 
+# ifndef in6_addr
+#  define in6_addr in6_addr
+struct in6_addr
+{
+	uint8_t s6_addr[16];
+};
+# endif
+
+# ifndef in6_port_t
+#  define in6_port_t in6_port_t
+typedef uint16_t in6_port_t;
+#endif
+
+# ifndef sockaddr_in6
+#  define sockaddr_in6 sockaddr_in6
+struct sockaddr_in6
+{
+	unsigned char sin6_len;
+	sa_family_t sin6_family;
+	in6_port_t sin6_port;
+	unsigned int sin6_flowinfo;
+	struct in6_addr sin6_addr;
+	unsigned int sin6_scope_id;
+};
+# endif
+
 #endif /* !LIBSOCKET_KERNEL_NETBSD_NETINET_IN_H */

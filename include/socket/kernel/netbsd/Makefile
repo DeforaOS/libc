@@ -1,4 +1,4 @@
-SUBDIRS	= netinet netinet6 sys
+SUBDIRS	= netinet sys
 MKDIR	= mkdir -m 0755 -p
 
 
