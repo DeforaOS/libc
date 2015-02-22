@@ -18,7 +18,7 @@ libgcc.a%s
 
 
 *lib:
--lc
+%{!nostdlib:-lc}
 
 *link:
 -nostdlib %(old_link)
