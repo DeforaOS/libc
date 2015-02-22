@@ -90,7 +90,7 @@ int mkdir(char const * name, mode_t mode)
 
 /* mkfifo */
 #if !defined(SYS_mkfifo)
-# if defined(SYS_mknod)
+# if defined(SYS_mknod) && defined(S_IFIFO)
 int mkfifo(char const * path, mode_t mode)
 {
 	return mknod(path, mode | S_IFIFO, 0);
