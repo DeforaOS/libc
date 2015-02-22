@@ -51,6 +51,7 @@ typedef signed int pid_t;
 
 /* functions */
 int creat(const char * filename, mode_t mode);
+int faccessat(int fd, char const * path, int mode, int flags);
 int fcntl(int fd, int cmd, ...);
 int flock(int fd, int operation);
 int open(char const * filename, int flags, ...);

@@ -52,6 +52,17 @@ int creat(const char * filename, mode_t mode)
 #endif
 
 
+/* faccessat */
+#ifndef SYS_faccessat
+# warning Unsupported platform: faccessat() is missing
+int faccessat(int fd, char const * path, int mode, int flags)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* fcntl */
 #ifndef SYS_fcntl
 # warning Unsupported platform: fcntl() is missing

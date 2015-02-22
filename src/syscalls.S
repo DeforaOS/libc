@@ -135,6 +135,9 @@ SYSCALL(getdirentries)
 #ifdef SYS_creat
 SYSCALL(creat)
 #endif
+#ifdef SYS_faccessat
+SYSCALL(faccessat)
+#endif
 #ifdef SYS_fcntl
 SYSCALL(fcntl)
 #endif
