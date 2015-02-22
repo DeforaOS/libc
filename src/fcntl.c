@@ -83,3 +83,14 @@ int open(char const * filename, int flags, ...)
 	return -1;
 }
 #endif
+
+
+/* openat */
+#ifndef SYS_openat
+# warning Unsupported platform: openat() is missing
+int openat(int fd, char const * filename, int flags, ...)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif

@@ -144,6 +144,9 @@ SYSCALL(flock)
 #ifdef SYS_open
 SYSCALL(open)
 #endif
+#ifdef SYS_openat
+SYSCALL(openat)
+#endif
 
 /* poll.h */
 #ifdef SYS_poll
