@@ -993,6 +993,17 @@ int symlink(char const * from, char const * to)
 #endif
 
 
+/* symlinkat */
+#ifndef SYS_symlinkat
+# warning Unsupported platform: symlinkat() is missing
+int symlinkat(char const * from, int fd, char const * to)
+{
+	errno = -ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* sync */
 #ifndef SYS_sync
 # warning Unsupported platform: sync() is missing

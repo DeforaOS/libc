@@ -137,6 +137,7 @@ pid_t setsid(void);
 int setuid(uid_t uid);
 unsigned int sleep(unsigned int seconds);
 int symlink(char const * from, char const * to);
+int symlinkat(char const * from, int fd, char const * to);
 void sync(void);
 long sysconf(int name);
 int truncate(char const * filename, off_t offset);

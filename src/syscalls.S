@@ -471,6 +471,9 @@ SYSCALL(setuid)
 #ifdef SYS_symlink
 SYSCALL(symlink)
 #endif
+#ifdef SYS_symlinkat
+SYSCALL(symlinkat)
+#endif
 #ifdef SYS_sync
 SYSCALL(sync)
 #endif
