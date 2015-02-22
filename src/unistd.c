@@ -763,6 +763,17 @@ ssize_t readlink(char const * filename, char * buf, size_t bufsiz)
 #endif
 
 
+/* readlinkat */
+#ifndef SYS_readlinkat
+# warning Unsupported platform: readlinkat() is missing
+ssize_t readlinkat(int fd, char const * filename, char * buf, size_t bufsiz)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* rmdir */
 #ifndef SYS_rmdir
 # warning Unsupported platform: rmdir() is missing

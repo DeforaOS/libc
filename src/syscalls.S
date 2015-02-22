@@ -438,6 +438,9 @@ SYSCALL(read)
 #ifdef SYS_readlink
 SYSCALL(readlink)
 #endif
+#ifdef SYS_readlinkat
+SYSCALL(readlinkat)
+#endif
 #ifdef SYS_rmdir
 SYSCALL(rmdir)
 #endif

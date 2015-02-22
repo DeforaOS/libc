@@ -131,5 +131,6 @@
 # define SYS_getrusage		445
 # define SYS_wait4		449
 # define SYS_mknod		450
+# define SYS_readlinkat		469
 
 #endif /* !KERNEL_NETBSD_SYS_SYSCALL_H */

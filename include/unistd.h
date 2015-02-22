@@ -124,6 +124,7 @@ int nice(int inc);
 int pipe(int fildes[2]);
 ssize_t read(int fildes, void * buf, size_t count);
 ssize_t readlink(char const * filename, char * buf, size_t bufsiz);
+ssize_t readlinkat(int fd, char const * filename, char * buf, size_t bufsiz);
 int rmdir(char const * filename);
 void * sbrk(intptr_t increment);
 int setgid(gid_t gid);
