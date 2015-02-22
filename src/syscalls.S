@@ -282,6 +282,9 @@ SYSCALL(mkfifoat)
 #ifdef SYS_mknod
 SYSCALL(mknod)
 #endif
+#ifdef SYS_mknodat
+SYSCALL(mknodat)
+#endif
 #ifdef SYS_stat
 SYSCALL(stat)
 #endif

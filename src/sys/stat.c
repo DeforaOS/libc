@@ -135,6 +135,17 @@ int mknod(char const * name, mode_t mode, dev_t dev)
 #endif
 
 
+/* mknodat */
+#ifndef SYS_mknodat
+# warning Unsupported platform: mknodat() is missing
+int mknodat(int fd, char const * name, mode_t mode, dev_t dev)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* stat */
 #ifndef SYS_stat
 # warning Unsupported platform: stat() is missing

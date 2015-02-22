@@ -79,6 +79,7 @@ int mkdir(char const * name, mode_t mode);
 int mkfifo(char const * name, mode_t mode);
 int mkfifoat(int fd, char const * name, mode_t mode);
 int mknod(char const * name, mode_t mode, dev_t dev);
+int mknodat(int fd, char const * name, mode_t mode, dev_t dev);
 int stat(char const * name, struct stat * st);
 mode_t umask(mode_t mask);
 
