@@ -143,6 +143,7 @@ long sysconf(int name);
 int truncate(char const * filename, off_t offset);
 char * ttyname(int fildes);
 int unlink(char const * filename);
+int unlinkat(int fd, char const * filename, int flags);
 int usleep(useconds_t useconds);
 pid_t vfork(void);
 ssize_t write(int fildes, const void * buf, size_t count);

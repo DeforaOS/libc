@@ -1110,6 +1110,17 @@ int unlink(char const * filename)
 #endif
 
 
+/* unlinkat */
+#ifndef SYS_unlinkat
+# warning Unsupported platform: unlinkat() is missing
+int unlinkat(int fd, char const * filename, int flags)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* usleep */
 int usleep(useconds_t useconds)
 {

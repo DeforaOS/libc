@@ -483,6 +483,9 @@ SYSCALL(truncate)
 #ifdef SYS_unlink
 SYSCALL(unlink)
 #endif
+#ifdef SYS_unlinkat
+SYSCALL(unlinkat)
+#endif
 #ifdef SYS_vfork
 SYSCALL(vfork)
 #endif
