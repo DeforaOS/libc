@@ -267,6 +267,9 @@ SYSCALL(chmod)
 #ifdef SYS_fchmod
 SYSCALL(fchmod)
 #endif
+#ifdef SYS_fchmodat
+SYSCALL(fchmodat)
+#endif
 #ifdef SYS_fstat
 SYSCALL(fstat)
 #endif
