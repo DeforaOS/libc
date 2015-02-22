@@ -124,6 +124,7 @@ int putchar_unlocked(int c);
 int puts(char const * string);
 int remove(char const * path);
 int rename(char const * from, char const * to);
+int renameat(int fromfd, char const * from, int tofd, char const * to);
 void rewind(FILE * file);
 int scanf(char const * format, ...);
 void setbuf(FILE * file, char * buf);

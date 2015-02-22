@@ -674,6 +674,17 @@ int rename(char const * from, char const * to)
 #endif
 
 
+/* renameat */
+#ifndef SYS_renameat
+# warning Unsupported platform: renameat() is missing
+int renameat(int fromfd, char const * from, int tofd, char const * to)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* rewind */
 void rewind(FILE * file)
 {

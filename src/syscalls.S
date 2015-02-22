@@ -171,6 +171,9 @@ SYSCALL(sigprocmask)
 #ifdef SYS_rename
 SYSCALL(rename)
 #endif
+#ifdef SYS_renameat
+SYSCALL(renameat)
+#endif
 
 /* stropts.h */
 #ifdef SYS_ioctl

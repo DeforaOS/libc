@@ -132,6 +132,7 @@
 # define SYS_wait4		449
 # define SYS_mknod		450
 # define SYS_linkat		457
+# define SYS_renameat		458
 # define SYS_openat		468
 # define SYS_readlinkat		469
 # define SYS_symlinkat		470
