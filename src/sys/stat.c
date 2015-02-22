@@ -47,7 +47,7 @@ int chmod(char const * name, mode_t mode)
 /* fchmod */
 #ifndef SYS_fchmod
 # warning Unsupported platform: fchmod() is missing
-int fchmod(int fildes, mode_t mode)
+int fchmod(int fd, mode_t mode)
 {
 	errno = ENOSYS;
 	return -1;
@@ -58,7 +58,18 @@ int fchmod(int fildes, mode_t mode)
 /* fstat */
 #ifndef SYS_fstat
 # warning Unsupported platform: fstat() is missing
-int fstat(int fildes, struct stat * st)
+int fstat(int fd, struct stat * st)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
+/* fstatat */
+#ifndef SYS_fstatat
+# warning Unsupported platform: fstatat() is missing
+int fstatat(int fd, char const * name, struct stat * st, int flags)
 {
 	errno = ENOSYS;
 	return -1;

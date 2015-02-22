@@ -276,6 +276,9 @@ SYSCALL(fchmodat)
 #ifdef SYS_fstat
 SYSCALL(fstat)
 #endif
+#ifdef SYS_fstatat
+SYSCALL(fstatat)
+#endif
 #ifdef SYS_lstat
 SYSCALL(lstat)
 #endif
