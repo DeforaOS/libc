@@ -106,6 +106,24 @@ int mkfifo(char const * path, mode_t mode)
 #endif /* !SYS_mkfifo */
 
 
+/* mkfifoat */
+#if !defined(SYS_mkfifoat)
+# if defined(SYS_mknodat) && defined(S_IFIFO)
+int mkfifoat(int fd, char const * path, mode_t mode)
+{
+	return mknodat(fd, path, mode | S_IFIFO, 0);
+}
+# else /* !SYS_mkfifoat && !SYS_mknodat */
+#  warning Unsupported platform: mkfifoat() is missing
+int mkfifoat(int fd, char const * path, mode_t mode)
+{
+	errno = ENOSYS;
+	return -1;
+}
+# endif
+#endif /* !SYS_mkfifoat */
+
+
 /* mknod */
 #ifndef SYS_mknod
 # warning Unsupported platform: mknod() is missing

@@ -276,6 +276,9 @@ SYSCALL(mkdir)
 #ifdef SYS_mkfifo
 SYSCALL(mkfifo)
 #endif
+#ifdef SYS_mkfifoat
+SYSCALL(mkfifoat)
+#endif
 #ifdef SYS_mknod
 SYSCALL(mknod)
 #endif
