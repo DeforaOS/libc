@@ -88,6 +88,17 @@ int mkdir(char const * name, mode_t mode)
 #endif
 
 
+/* mkdirat */
+#ifndef SYS_mkdirat
+# warning Unsupported platform: mkdirat() is missing
+int mkdirat(int fd, char const * name, mode_t mode)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* mkfifo */
 #if !defined(SYS_mkfifo)
 # if defined(SYS_mknod) && defined(S_IFIFO)

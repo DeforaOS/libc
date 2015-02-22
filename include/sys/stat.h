@@ -76,6 +76,7 @@ int fchmod(int fildes, mode_t mode);
 int fstat(int fildes, struct stat * st);
 int lstat(char const * name, struct stat * st);
 int mkdir(char const * name, mode_t mode);
+int mkdirat(int fd, char const * name, mode_t mode);
 int mkfifo(char const * name, mode_t mode);
 int mkfifoat(int fd, char const * name, mode_t mode);
 int mknod(char const * name, mode_t mode, dev_t dev);

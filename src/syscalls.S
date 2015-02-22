@@ -273,6 +273,9 @@ SYSCALL(lstat)
 #ifdef SYS_mkdir
 SYSCALL(mkdir)
 #endif
+#ifdef SYS_mkdirat
+SYSCALL(mkdirat)
+#endif
 #ifdef SYS_mkfifo
 SYSCALL(mkfifo)
 #endif

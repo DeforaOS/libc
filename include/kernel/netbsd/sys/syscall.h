@@ -135,6 +135,7 @@
 # define SYS_renameat		458
 # define SYS_mkfifoat		459
 # define SYS_mknodat		460
+# define SYS_mkdirat		461
 # define SYS_openat		468
 # define SYS_readlinkat		469
 # define SYS_symlinkat		470
