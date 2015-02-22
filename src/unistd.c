@@ -700,6 +700,17 @@ int link(char const * from, char const * to)
 #endif
 
 
+/* linkat */
+#ifndef SYS_linkat
+# warning Unsupported platform: linkat() is missing
+int linkat(int fromfd, char const * from, int tofd, char const * to)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* lseek */
 #ifndef SYS_lseek
 # warning Unsupported platform: lseek() is missing

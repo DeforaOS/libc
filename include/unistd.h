@@ -119,6 +119,7 @@ char * getwd(char * buf);
 int isatty(int fildes);
 int lchown(char const * filename, uid_t owner, gid_t group);
 int link(char const * from, char const * to);
+int linkat(int fromfd, char const * from, int tofd, char const * to);
 off_t lseek(int fildes, off_t offset, int whence);
 int nice(int inc);
 int pipe(int fildes[2]);

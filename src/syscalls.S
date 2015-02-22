@@ -426,6 +426,9 @@ SYSCALL(lchown)
 #ifdef SYS_link
 SYSCALL(link)
 #endif
+#ifdef SYS_linkat
+SYSCALL(linkat)
+#endif
 #ifdef SYS_lseek
 SYSCALL(lseek)
 #endif
