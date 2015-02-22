@@ -138,6 +138,7 @@
 # define SYS_mkdirat		461
 # define SYS_faccessat		462
 # define SYS_fchmodat		463
+# define SYS_fchownat		464
 # define SYS_openat		468
 # define SYS_readlinkat		469
 # define SYS_symlinkat		470

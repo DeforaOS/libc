@@ -138,6 +138,9 @@ SYSCALL(creat)
 #ifdef SYS_faccessat
 SYSCALL(faccessat)
 #endif
+#ifdef SYS_fchownat
+SYSCALL(fchownat)
+#endif
 #ifdef SYS_fcntl
 SYSCALL(fcntl)
 #endif

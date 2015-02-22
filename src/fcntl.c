@@ -63,6 +63,17 @@ int faccessat(int fd, char const * path, int mode, int flags)
 #endif
 
 
+/* fchownat */
+#ifndef SYS_fchownat
+# warning Unsupported platform: fchownat() is missing
+int fchownat(int fd, char const * path, uid_t uid, gid_t gid, int flags);
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* fcntl */
 #ifndef SYS_fcntl
 # warning Unsupported platform: fcntl() is missing

@@ -39,6 +39,14 @@
 #  define id_t id_t
 typedef unsigned int id_t;
 # endif
+# ifndef gid_t
+#  define gid_t gid_t
+typedef id_t gid_t;
+# endif
+# ifndef uid_t
+#  define uid_t uid_t
+typedef id_t uid_t;
+# endif
 # ifndef mode_t
 #  define mode_t mode_t
 typedef int mode_t;
@@ -52,6 +60,7 @@ typedef signed int pid_t;
 /* functions */
 int creat(const char * filename, mode_t mode);
 int faccessat(int fd, char const * path, int mode, int flags);
+int fchownat(int fd, char const * path, uid_t uid, gid_t gid, int flags);
 int fcntl(int fd, int cmd, ...);
 int flock(int fd, int operation);
 int open(char const * filename, int flags, ...);
