@@ -31,8 +31,12 @@
 _syscall:
 	mov	%rcx, %r10
 	syscall
-	jnc	.errnoret
+	cmp	$0, %rax
+	jge	_syscall_return
+	cmp	$-4096, %rax
+	jle	_syscall_return
 .errno:
+	neg	%rax
 #ifdef PIC
 	mov	errno@GOTPCREL(%rip), %rcx
 	mov	%rax, (%rcx)
