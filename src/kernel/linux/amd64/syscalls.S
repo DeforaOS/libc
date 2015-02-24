@@ -78,7 +78,6 @@ _brk:
 	syscall
 	cmp	%rdi, %rax
 	jle	_brk_return
-	mov	$-ENOMEM, %rax
 	jmp	.errno
 _brk_return:
 	mov	$0, %rax
