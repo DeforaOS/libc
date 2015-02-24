@@ -102,7 +102,7 @@ extern int _brk(void * addr); /* XXX in-kernel prototype */
 
 int brk(void * addr)
 {
-	return _brk(addr) != -1 ? 0 : -1;
+	return (_brk(addr) != -1) ? 0 : -1;
 }
 #elif defined(SYS_sbrk) /* !SYS_brk && SYS_sbrk */
 int brk(void * addr)
