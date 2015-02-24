@@ -85,7 +85,6 @@ _brk:
 	pop	%ebx
 	mov	$0, %eax
 	ret
-#undef SYS_brk
 
 
 /* _exit */
@@ -192,6 +191,25 @@ mmap:
 	jl	.errnoret
 	jmp	.errno
 #undef SYS_mmap
+
+
+/* _sbrk */
+.global _sbrk
+.type _sbrk,@function
+_sbrk:
+	cmpl	$0, 0x4(%esp)
+	je	_sbrk_return
+	mov	$-1, %eax
+	ret
+_sbrk_return:
+	mov	$SYS_brk, %eax
+	push	%ebx
+	mov	$0, %ebx
+	int	$0x80
+	pop	%ebx
+	ret
+#undef SYS_brk
+#undef SYS_sbrk
 
 
 /* _setjmp */
