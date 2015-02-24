@@ -808,7 +808,7 @@ void * sbrk(intptr_t increment) /* _brk is used to actually allocate memory */
 
 	if((cur = _sbrk(0)) == (void *)-1 || increment == 0)
 		return cur;
-	return _brk(cur + increment) != (void *)-1 ? cur : (void *)-1;
+	return (_brk(cur + increment) != (void *)-1) ? cur : (void *)-1;
 }
 # else /* SYS_sbrk && !SYS_brk */
 void * sbrk(intptr_t increment)
