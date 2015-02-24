@@ -44,7 +44,7 @@ _syscall:
 	mov	%rax, errno
 #endif
 	mov	$-1, %rax
-.errnoret:
+_syscall_return:
 	ret
 
 
