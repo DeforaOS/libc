@@ -104,15 +104,7 @@ _exit:
 execve:
 	mov	$SYS_execve, %rax
 	syscall
-	neg	%rax
-#ifdef PIC
-	mov	errno@GOTPCREL(%rip), %rcx
-	mov	%rax, (%rcx)
-#else
-	mov	%rax, errno
-#endif
-	mov	$-1, %rax
-	ret
+	jmp	.errno
 #undef SYS_execve
 
 
