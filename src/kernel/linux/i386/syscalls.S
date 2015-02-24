@@ -198,6 +198,8 @@ mmap:
 _sbrk:
 	cmpl	$0, 0x4(%esp)
 	je	_sbrk_return
+	mov	$EOPNOTSUPP, %eax
+	mov	%eax, errno
 	mov	$-1, %eax
 	ret
 _sbrk_return:
