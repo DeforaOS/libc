@@ -78,7 +78,7 @@ _brk:
 	syscall
 	test	%rdi, %rax
 	je	_brk_return
-	mov	$ENOMEM, %rax
+	mov	$-ENOMEM, %rax
 	jmp	.errno
 _brk_return:
 	mov	$0, %rax
