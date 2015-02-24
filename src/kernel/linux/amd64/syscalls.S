@@ -82,7 +82,6 @@ _brk:
 _brk_return:
 	mov	$0, %rax
 	ret
-#undef SYS_brk
 
 
 /* _exit */
@@ -210,6 +209,22 @@ pipe:
 	mov	$0, %rax
 	ret
 #undef SYS_pipe
+
+
+/* _sbrk */
+.global _sbrk
+.type _sbrk,@function
+_sbrk:
+	test	$0, %rdi
+	je	_sbrk_return
+	mov	$-1, %rax
+	ret
+_sbrk_return:
+	mov	$SYS_brk, %rax
+	syscall
+	ret
+#undef SYS_brk
+#undef SYS_sbrk
 
 
 /* _setjmp */

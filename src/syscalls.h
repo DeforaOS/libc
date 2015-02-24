@@ -43,6 +43,7 @@
 # elif defined(__linux__)
 #  if defined(__amd64__) || defined(__arm__) || defined(__i386__)
 #   include "sys/syscall.h"
+#   define SYS_sbrk
 #  else
 #   warning Unsupported Linux architecture
 #  endif
