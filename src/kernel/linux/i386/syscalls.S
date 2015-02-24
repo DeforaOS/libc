@@ -74,15 +74,14 @@ _brk:
 	push	%ebx
 	mov	0x8(%esp), %ebx
 	int	$0x80
-	cmp	0x8(%esp), %eax
-	je	_brk_return
 	pop	%ebx
+	cmp	0x4(%esp), %eax
+	jle	_brk_return
 	mov	$ENOMEM, %eax
 	mov	%eax, errno
 	mov	$-1, %eax
 	ret
 _brk_return:
-	pop	%ebx
 	mov	$0, %eax
 	ret
 
