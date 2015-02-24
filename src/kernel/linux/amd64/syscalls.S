@@ -104,6 +104,7 @@ _exit:
 execve:
 	mov	$SYS_execve, %rax
 	syscall
+	neg	%rax
 #ifdef PIC
 	mov	errno@GOTPCREL(%rip), %rcx
 	mov	%rax, (%rcx)
