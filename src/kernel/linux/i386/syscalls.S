@@ -81,7 +81,7 @@ _brk:
 	mov	%eax, errno
 	mov	$-1, %eax
 	ret
-	_brk_return:
+_brk_return:
 	pop	%ebx
 	mov	$0, %eax
 	ret
