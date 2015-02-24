@@ -59,6 +59,7 @@ _syscall5:
 
 _syscall6:
 	/* FIXME how to get the last arg? */
+	/* fallback */
 
 .trap:
 	mov	%i0, %g1	/* syscall number */
