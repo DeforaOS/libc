@@ -34,6 +34,7 @@
 
 
 /* stdarg */
+static int _stdarg_error(char const * progname, char const * type);
 static int _stdarg_int(char const * progname, ...);
 static char const * _stdarg_str(char const * progname, ...);
 
@@ -45,10 +46,16 @@ static int _stdarg(char const * progname)
 
 	printf("%s: Testing va_arg()\n", progname);
 	if(_stdarg_int(progname, i) != i)
-		ret += 1;
+		ret += _stdarg_error(progname, "int");
 	if(strcmp(_stdarg_str(progname, str), str) != 0)
-		ret += 1;
+		ret += _stdarg_error(progname, "char const *");
 	return ret;
+}
+
+static int _stdarg_error(char const * progname, char const * type)
+{
+	fprintf(stderr, "%s: %s: %s\n", progname, type, "Did not match");
+	return 1;
 }
 
 static int _stdarg_int(char const * progname, ...)
