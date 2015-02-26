@@ -30,7 +30,9 @@
 
 #include <sys/types.h>
 #include <sys/ptrace.h>
+#include <sys/wait.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -44,15 +46,55 @@ static int _error(char const * progname, char const * message, int ret);
 
 /* functions */
 /* ptrace */
+static int _ptrace_child(char const * progname);
+
 static int _ptrace(char const * progname)
 {
+	int ret = 0;
+	pid_t pid;
+	pid_t p;
+	int status;
+
+	if((pid = fork()) < 0)
+		return -_error(progname, "fork", 1);
+	if(pid == 0)
+		return _ptrace_child(progname);
+	for(;;)
+		if((p = waitpid(pid, &status, 0)) == pid)
+		{
+			if(WIFEXITED(status))
+			{
+				ret = WEXITSTATUS(status);
+				break;
+			}
+			else if(WIFSIGNALED(status))
+			{
+				ret = 1;
+				break;
+			}
+			else if(WIFSTOPPED(status)
+					&& ptrace(PT_CONTINUE, pid, (void *)1,
+						0) == 0)
+				break;
+		}
+		else if(p == -1)
+		{
+			ret = -_error(progname, "waitpid", 1);
+			if(errno == ECHILD)
+				break;
+		}
+	return ret;
+}
+
+static int _ptrace_child(char const * progname)
+{
+	int ret = 0;
+
 	errno = 0;
 	if(ptrace(PT_TRACE_ME, 0, NULL, 0) != 0 && errno != 0)
-		return -_error(progname, "PT_TRACE_ME", 1);
-	if(ptrace(PT_ATTACH, getpid(), NULL, 0) != 0 && errno != 0
-			&& errno != EBUSY && errno != EINVAL)
-		return -_error(progname, "PT_ATTACH", 1);
-	return 0;
+		ret = _error(progname, "PT_TRACE_ME", 1) + 1;
+	_exit(ret);
+	return -_error(progname, "exit", 1);
 }
 
 
