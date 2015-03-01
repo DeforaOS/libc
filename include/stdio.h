@@ -42,11 +42,7 @@ typedef struct _FILE FILE;
 # endif
 
 # ifndef va_list
-#  if defined(__amd64__) \
-	|| defined(__arm__) \
-	|| defined(__mips__) \
-	|| defined(__sparc__) \
-	|| defined(__sparc64__)	/* XXX compiler dependent */
+#  if defined(__GNUC__) && __GNUC__ >= 3
 #   define va_list __builtin_va_list
 #  else
 #   warning Unsupported architecture: va_list is not supported

@@ -34,11 +34,7 @@
 
 /* types */
 # ifndef va_list
-#  if defined(__amd64__) \
-	|| defined(__arm__) \
-	|| defined(__mips__) \
-	|| defined(__sparc__) \
-	|| defined(__sparc64__)	/* XXX compiler dependent */
+#  if defined(__GNUC__) && __GNUC__ >= 3
 #   define va_list __builtin_va_list
 #  else
 #   warning Unsupported architecture: va_list is not supported
@@ -49,17 +45,13 @@ typedef char * va_list;
 
 
 /* macros */
-# if defined(__amd64__) \
-	|| defined(__arm__) \
-	|| defined(__mips__) \
-	|| defined(__sparc__) \
-	|| defined(__sparc64__)	/* XXX compiler dependent */
+# if defined(__GNUC__) && __GNUC__ >= 3
 #  define va_start(ap, arg)	__builtin_va_start((ap), (arg))
 #  define va_arg		__builtin_va_arg
 #  define va_copy		__builtin_va_copy
 #  define va_end(ap)		__builtin_va_end((ap))
 # else
-/* FIXME works only in particular cases */
+/* XXX works only in particular cases */
 #  define va_start(ap, arg)	((ap) = ((va_list)&(arg)) \
 		+ ((sizeof(long) > sizeof(arg)) ? sizeof(long) : sizeof(arg)))
 #  define va_arg(ap, type)	*(type *)(ap), \
