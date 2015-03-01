@@ -34,6 +34,7 @@
 
 /* constants */
 # define PT_TRACE_ME		0
+# define PT_CONTINUE		7
 # define PT_ATTACH		10
 # define PT_DETACH		11
 # define PT_SYSCALL		22
