@@ -86,6 +86,9 @@ static void _strerror(char const * progname)
 		ENOTSUP,
 		ENOTTY,
 		ENXIO,
+#ifdef EOPNOTSUPP
+		EOPNOTSUPP,
+#endif
 		EPERM,
 		EPIPE,
 		ERANGE,
