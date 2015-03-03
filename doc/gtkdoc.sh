@@ -141,7 +141,16 @@ while [ $# -gt 0 ]; do
 			$DEBUG $MKDIR -- "$output"		|| exit 2
 			(cd "$output" &&
 				$DEBUG $GTKDOC_MKHTML "$MODULE" \
-					"${OBJDIR}$driver")	|| exit 2
+					"${OBJDIR}$driver")
+			#detect when gtk-doc is not available
+			res=$?
+			if [ $res -eq 127 ]; then
+				_error "$GTKDOC_MKHTML: Not available" \
+					"(not generating documentation)"
+				continue
+			elif [ $res -ne 0 ]; then
+				exit 2
+			fi
 			output="${OBJDIR}gtkdoc"
 			(cd "$output" &&
 				$DEBUG $GTKDOC_FIXXREF \
