@@ -175,7 +175,7 @@ $(OBJDIR)sys/wait.o: sys/wait.c syscalls.h
 	@[ -d "$(OBJDIR)sys" ] || $(MKDIR) -- "$(OBJDIR)sys"
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)sys/wait.o -c sys/wait.c
 
-$(OBJDIR)syscalls.o: syscalls.S kernel/darwin/amd64/syscalls.S kernel/freebsd/amd64/syscalls.S kernel/freebsd/i386/syscalls.S kernel/linux/amd64/syscalls.S kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/netbsd/common.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S kernel/netbsd/sparc64/syscalls.S kernel/openbsd/arm/syscalls.S kernel/openbsd/i386/syscalls.S
+$(OBJDIR)syscalls.o: syscalls.S kernel/darwin/amd64/syscalls.S kernel/freebsd/amd64/syscalls.S kernel/freebsd/i386/syscalls.S kernel/linux/common.S kernel/linux/amd64/syscalls.S kernel/linux/arm/syscalls.S kernel/linux/i386/syscalls.S kernel/linux/sparc/syscalls.S kernel/netbsd/common.S kernel/netbsd/amd64/syscalls.S kernel/netbsd/i386/syscalls.S kernel/netbsd/sparc/syscalls.S kernel/netbsd/sparc64/syscalls.S kernel/openbsd/arm/syscalls.S kernel/openbsd/i386/syscalls.S
 	$(AS) $(libc_ASFLAGS) -o $(OBJDIR)syscalls.o syscalls.S
 
 $(OBJDIR)syslog.o: syslog.c
