@@ -29,6 +29,7 @@
 
 
 _start:
+	xor	%rbp, %rbp	/* stack	*/
 	pop	%rdi		/* argc		*/
 	mov	%rsp, %rsi	/* argv		*/
 	push	%rdi
@@ -39,13 +40,9 @@ _start:
 #ifdef PIC
 	mov	environ@GOTPCREL(%rip), %rcx
 	mov	%rdx, (%rcx)
-#else
-	mov	%rdx, environ
-#endif
-	xor	%rbp, %rbp	/* stack	*/
-#ifdef PIC
 	call	main@PLT
 #else
+	mov	%rdx, environ
 	call	main
 #endif
 	mov	%rax, %rdi	/* exit		*/
