@@ -28,8 +28,18 @@
 
 
 
+#define ARCH_SET_FS 0x1002
+
+
 _start:
 	xor	%rbp, %rbp	/* stack	*/
+	mov	$ARCH_SET_FS, %rdi
+	mov	_tls_area, %rsi
+#ifdef PIC
+	call	arch_prctl@PLT
+#else
+	call	arch_prctl
+#endif
 	pop	%rdi		/* argc		*/
 	mov	%rsp, %rsi	/* argv		*/
 	push	%rdi
@@ -52,3 +62,7 @@ _start:
 	call	exit
 #endif
 	hlt
+
+.bss
+_tls_area:
+.space 4096
