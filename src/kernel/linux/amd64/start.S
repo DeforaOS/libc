@@ -34,10 +34,11 @@
 _start:
 	xor	%rbp, %rbp	/* stack	*/
 	mov	$ARCH_SET_FS, %rdi
-	mov	_tls_area, %rsi
 #ifdef PIC
+	mov	_tls_area@GOTPCREL(%rip), %rsi
 	call	arch_prctl@PLT
 #else
+	mov	_tls_area, %rsi
 	call	arch_prctl
 #endif
 	pop	%rdi		/* argc		*/
