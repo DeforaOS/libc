@@ -419,6 +419,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/syscalls.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/freebsd/i386/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/Makefile \
+		$(PACKAGE)-$(VERSION)/src/kernel/linux/common.S \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/project.conf \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/amd64/Makefile \
 		$(PACKAGE)-$(VERSION)/src/kernel/linux/amd64/start.S \

@@ -55,6 +55,7 @@
 # else /* !__amd64__ && !__arm__ && !__i386__ */
 #  warning Unsupported Linux architecture
 # endif
+# include "kernel/linux/common.S"
 
 /* MacOS X */
 #elif defined(__APPLE__)
