@@ -9,7 +9,7 @@ CPPFLAGSF= -nostdinc -isystem ../include -isystem ../include/pthread -isystem ..
 CPPFLAGS=
 CFLAGSF	= -W
 CFLAGS	= -Wall -g -O2 -ffreestanding
-LDFLAGSF= -nostdlib -L../src -Wl,-rpath,$(PWD)/../src -lc ../src/start.o
+LDFLAGSF= -nostdlib -L$(OBJDIR)../src -Wl,-rpath,$(OBJDIR)../src -lc $(OBJDIR)../src/start.o
 LDFLAGS	= `$(CC) -print-libgcc-file-name`
 RM	= rm -f
 LN	= ln -f
@@ -56,7 +56,7 @@ $(OBJDIR)langinfo: $(langinfo_OBJS)
 
 netdb_OBJS = $(OBJDIR)netdb.o
 netdb_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) -isystem ../include/socket $(CFLAGSF) $(CFLAGS)
-netdb_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) ../src/socket/libsocket.a
+netdb_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) $(OBJDIR)../src/socket/libsocket.a
 
 $(OBJDIR)netdb: $(netdb_OBJS)
 	$(CC) -o $(OBJDIR)netdb $(netdb_OBJS) $(netdb_LDFLAGS)
@@ -84,7 +84,7 @@ $(OBJDIR)regex: $(regex_OBJS)
 
 rt_OBJS = $(OBJDIR)rt.o
 rt_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
-rt_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) ../src/rt/librt.a
+rt_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) $(OBJDIR)../src/rt/librt.a
 
 $(OBJDIR)rt: $(rt_OBJS)
 	$(CC) -o $(OBJDIR)rt $(rt_OBJS) $(rt_LDFLAGS)
@@ -112,7 +112,7 @@ $(OBJDIR)signal: $(signal_OBJS)
 
 socket_OBJS = $(OBJDIR)socket.o
 socket_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
-socket_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) ../src/socket/libsocket.a
+socket_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) $(OBJDIR)../src/socket/libsocket.a
 
 $(OBJDIR)socket: $(socket_OBJS)
 	$(CC) -o $(OBJDIR)socket $(socket_OBJS) $(socket_LDFLAGS)
@@ -176,67 +176,67 @@ unistd_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 $(OBJDIR)unistd: $(unistd_OBJS)
 	$(CC) -o $(OBJDIR)unistd $(unistd_OBJS) $(unistd_LDFLAGS)
 
-$(OBJDIR)dlfcn.o: dlfcn.c ../src/dl/libdl.a ../src/libc.a ../src/start.o
+$(OBJDIR)dlfcn.o: dlfcn.c $(OBJDIR)../src/dl/libdl.a $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(dlfcn_CFLAGS) -o $(OBJDIR)dlfcn.o -c dlfcn.c
 
-$(OBJDIR)errno.o: errno.c ../src/libc.a ../src/start.o
+$(OBJDIR)errno.o: errno.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(errno_CFLAGS) -o $(OBJDIR)errno.o -c errno.c
 
-$(OBJDIR)fnmatch.o: fnmatch.c ../src/libc.a ../src/start.o
+$(OBJDIR)fnmatch.o: fnmatch.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(fnmatch_CFLAGS) -o $(OBJDIR)fnmatch.o -c fnmatch.c
 
-$(OBJDIR)includes.o: includes.c ../src/libc.a ../src/start.o
+$(OBJDIR)includes.o: includes.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(includes_CFLAGS) -o $(OBJDIR)includes.o -c includes.c
 
-$(OBJDIR)langinfo.o: langinfo.c ../src/libc.a ../src/start.o
+$(OBJDIR)langinfo.o: langinfo.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(langinfo_CFLAGS) -o $(OBJDIR)langinfo.o -c langinfo.c
 
-$(OBJDIR)netdb.o: netdb.c ../src/libc.a ../src/socket/libsocket.a ../src/start.o
+$(OBJDIR)netdb.o: netdb.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/socket/libsocket.a $(OBJDIR)../src/start.o
 	$(CC) $(netdb_CFLAGS) -o $(OBJDIR)netdb.o -c netdb.c
 
-$(OBJDIR)ptrace.o: ptrace.c ../src/libc.a ../src/start.o
+$(OBJDIR)ptrace.o: ptrace.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(ptrace_CFLAGS) -o $(OBJDIR)ptrace.o -c ptrace.c
 
-$(OBJDIR)pwd.o: pwd.c ../src/libc.a ../src/start.o
+$(OBJDIR)pwd.o: pwd.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(pwd_CFLAGS) -o $(OBJDIR)pwd.o -c pwd.c
 
-$(OBJDIR)regex.o: regex.c ../src/libc.a ../src/start.o
+$(OBJDIR)regex.o: regex.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(regex_CFLAGS) -o $(OBJDIR)regex.o -c regex.c
 
-$(OBJDIR)rt.o: rt.c ../src/rt/librt.a ../src/libc.a ../src/start.o
+$(OBJDIR)rt.o: rt.c $(OBJDIR)../src/rt/librt.a $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) -isystem ../include/rt $(rt_CFLAGS) -o $(OBJDIR)rt.o -c rt.c
 
-$(OBJDIR)select.o: select.c ../src/libc.a ../src/start.o
+$(OBJDIR)select.o: select.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(select_CFLAGS) -o $(OBJDIR)select.o -c select.c
 
-$(OBJDIR)setjmp.o: setjmp.c ../src/libc.a ../src/start.o
+$(OBJDIR)setjmp.o: setjmp.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(setjmp_CFLAGS) -o $(OBJDIR)setjmp.o -c setjmp.c
 
-$(OBJDIR)signal.o: signal.c ../src/libc.a ../src/start.o
+$(OBJDIR)signal.o: signal.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(signal_CFLAGS) -o $(OBJDIR)signal.o -c signal.c
 
-$(OBJDIR)socket.o: socket.c ../src/socket/libsocket.a ../src/libc.a ../src/start.o
+$(OBJDIR)socket.o: socket.c $(OBJDIR)../src/socket/libsocket.a $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) -isystem ../include/socket $(socket_CFLAGS) -o $(OBJDIR)socket.o -c socket.c
 
-$(OBJDIR)start.o: start.c ../src/libc.a ../src/start.o
+$(OBJDIR)start.o: start.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(start_CFLAGS) -o $(OBJDIR)start.o -c start.c
 
-$(OBJDIR)stdarg.o: stdarg.c ../src/libc.a ../src/start.o
+$(OBJDIR)stdarg.o: stdarg.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(stdarg_CFLAGS) -o $(OBJDIR)stdarg.o -c stdarg.c
 
-$(OBJDIR)stdint.o: stdint.c ../src/libc.a ../src/start.o
+$(OBJDIR)stdint.o: stdint.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(stdint_CFLAGS) -o $(OBJDIR)stdint.o -c stdint.c
 
-$(OBJDIR)stdio.o: stdio.c ../src/libc.a ../src/start.o
+$(OBJDIR)stdio.o: stdio.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(stdio_CFLAGS) -o $(OBJDIR)stdio.o -c stdio.c
 
-$(OBJDIR)stdlib.o: stdlib.c ../src/libc.a ../src/start.o
+$(OBJDIR)stdlib.o: stdlib.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(stdlib_CFLAGS) -o $(OBJDIR)stdlib.o -c stdlib.c
 
-$(OBJDIR)string.o: string.c ../src/libc.a ../src/start.o
+$(OBJDIR)string.o: string.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(string_CFLAGS) -o $(OBJDIR)string.o -c string.c
 
-$(OBJDIR)time.o: time.c ../src/libc.a ../src/start.o
+$(OBJDIR)time.o: time.c $(OBJDIR)../src/libc.a $(OBJDIR)../src/start.o
 	$(CC) $(time_CFLAGS) -o $(OBJDIR)time.o -c time.c
 
 $(OBJDIR)unistd.o: unistd.c

@@ -24,6 +24,7 @@
 
 
 #variables
+[ -n "$OBJDIR" ] || OBJDIR="./"
 SYSTEM="$(uname -s)"
 SOEXT="so"
 #XXX not tested
@@ -41,8 +42,8 @@ _fail()
 	shift
 	echo -n "$test:" 1>&2
 	(echo
-	echo "Testing: ./$test" "$@"
-	"./$test" "$@") >> "$target" 2>&1
+	echo "Testing: $OBJDIR$test" "$@"
+	"$OBJDIR$test" "$@") >> "$target" 2>&1
 	res=$?
 	if [ $res -ne 0 ]; then
 		echo " FAIL (error $res)" 1>&2
@@ -60,8 +61,8 @@ _test()
 	shift
 	echo -n "$test:" 1>&2
 	(echo
-	echo "Testing: ./$test" "$@"
-	"./$test" "$@") >> "$target" 2>&1
+	echo "Testing: $OBJDIR$test" "$@"
+	"$OBJDIR$test" "$@") >> "$target" 2>&1
 	res=$?
 	if [ $res -ne 0 ]; then
 		echo " FAIL" 1>&2
