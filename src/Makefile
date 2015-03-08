@@ -202,7 +202,7 @@ $(OBJDIR)utmpx.o: utmpx.c
 $(OBJDIR)wchar.o: wchar.c
 	$(CC) $(libc_CFLAGS) -o $(OBJDIR)wchar.o -c wchar.c
 
-$(OBJDIR)start.o: start.S kernel/freebsd/amd64/start.S kernel/freebsd/i386/start.S kernel/linux/arm/start.S kernel/linux/i386/start.S kernel/linux/sparc/start.S kernel/netbsd/amd64/start.S kernel/netbsd/i386/start.S kernel/netbsd/sparc64/start.S kernel/netbsd/sparc/start.S kernel/openbsd/arm/start.S kernel/openbsd/i386/start.S
+$(OBJDIR)start.o: start.S kernel/freebsd/amd64/start.S kernel/freebsd/i386/start.S kernel/linux/amd64/start.S kernel/linux/arm/start.S kernel/linux/i386/start.S kernel/linux/sparc/start.S kernel/netbsd/start.S kernel/netbsd/amd64/start.S kernel/netbsd/i386/start.S kernel/netbsd/sparc64/start.S kernel/netbsd/sparc/start.S kernel/openbsd/arm/start.S kernel/openbsd/i386/start.S kernel/solaris/sparc/start.S kernel/whitix/i386/start.S
 	$(AS) $(start.o_ASFLAGS) -o $(OBJDIR)start.o start.S
 
 clean:
