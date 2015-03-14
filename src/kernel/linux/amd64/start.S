@@ -32,7 +32,10 @@
 
 
 _start:
-	xor	%rbp, %rbp	/* stack	*/
+	/* reset the stack */
+	xor	%rbp, %rbp
+
+	/* set the thread-local storage area */
 	mov	$ARCH_SET_FS, %rdi
 #ifdef PIC
 	mov	_tls_area@GOTPCREL(%rip), %rsi
@@ -41,6 +44,8 @@ _start:
 	mov	_tls_area, %rsi
 	call	arch_prctl
 #endif
+
+	/* run the main program */
 	pop	%rdi		/* argc		*/
 	mov	%rsp, %rsi	/* argv		*/
 	push	%rdi
@@ -56,14 +61,18 @@ _start:
 	mov	%rdx, environ
 	call	main
 #endif
-	mov	%rax, %rdi	/* exit		*/
+
+	/* exit the main program */
+	mov	%rax, %rdi
 #ifdef PIC
 	call	exit@PLT
 #else
 	call	exit
 #endif
+
 	hlt
 
 .bss
+.align 8
 _tls_area:
-.space 4096
+	.space	4096

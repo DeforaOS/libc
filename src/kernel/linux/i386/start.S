@@ -29,24 +29,30 @@
 
 
 _start:
+	/* reset the stack */
+	xor	%ebp, %ebp
+
+	/* run the main program */
 	pop	%eax		/* argc */
 	mov	%esp, %ebx	/* argv */
 	push	%eax
 	mov	%ebx, %ecx	/* envp */
-	add	$4, %ecx
+	add	$0x4, %ecx
 	add	%eax, %ecx
 	add	%eax, %ecx
 	add	%eax, %ecx
 	add	%eax, %ecx
 	mov	%ecx, environ	/* environ */
-	xor	%ebp, %ebp	/* stack */
 	push	%ebp
 	push	%esp
 	mov	%esp, %ebp
-	push	%ecx		/* main */
+	push	%ecx
 	push	%ebx
 	push	%eax
 	call	main
+
+	/* exit the main program */
 	push	%eax
 	call	exit
+
 	hlt
