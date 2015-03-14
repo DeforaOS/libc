@@ -200,6 +200,8 @@
 #  define SYS_unmount		166
 #  define SYS_reboot		169
 #  define SYS_sethostname	170
+#  define SYS_set_thread_area	205
+#  define SYS_get_thread_area	211
 #  define SYS_utimes		235
 # elif defined(__arm__)
 #  define SYS_lchown		16
@@ -241,6 +243,8 @@
 #  define SYS_setuid		213
 #  define SYS_setgid		214
 #  define SYS_getdents		220
+#  define SYS_set_thread_area	243
+#  define SYS_get_thread_area	244
 #  define SYS_pselect		270
 
 /* for <sys/shm.h> */

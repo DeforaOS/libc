@@ -32,7 +32,15 @@
 #ifdef SYS_arch_prctl
 SYSCALL(arch_prctl)
 #endif
+/* get_thread_area */
+#ifdef SYS_get_thread_area
+SYSCALL(get_thread_area)
+#endif
 /* prctl */
 #ifdef SYS_prctl
 SYSCALL(prctl)
+#endif
+/* set_thread_area */
+#ifdef SYS_set_thread_area
+SYSCALL(set_thread_area)
 #endif
