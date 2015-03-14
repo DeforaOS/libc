@@ -37,7 +37,7 @@
 
 /* variables */
 static const int _test = 0x1234;
-static const char * _ptest = (char*)&_test;
+static const char * _ptest = (char *)&_test;
 
 
 /* functions */
