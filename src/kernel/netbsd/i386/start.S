@@ -29,9 +29,13 @@
 
 
 _start:
-	pop	%eax		/* argc */
+	/* reset the stack */
+	xor	%ebp, %ebp	/* stack */
+
+	/* run the main program */
+	mov	(%esp), %eax	/* argc */
 	mov	%esp, %ebx	/* argv */
-	push	%eax
+	add	$4, %ebx
 	mov	%ebx, %ecx	/* envp */
 	add	$4, %ecx
 	add	%eax, %ecx
@@ -39,14 +43,15 @@ _start:
 	add	%eax, %ecx
 	add	%eax, %ecx
 	mov	%ecx, environ	/* environ */
-	xor	%ebp, %ebp	/* stack */
 	push	%ebp
 	push	%esp
 	mov	%esp, %ebp
-	push	%ecx		/* main */
+	push	%ecx
 	push	%ebx
 	push	%eax
 	call	main
-	push	%eax		/* exit */
+
+	/* exit the main program */
+	push	%eax
 	call	exit
 	hlt
