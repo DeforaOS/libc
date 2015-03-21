@@ -46,13 +46,11 @@ _start:
 #endif
 
 	/* run the main program */
-	pop	%rdi		/* argc		*/
-	mov	%rsp, %rsi	/* argv		*/
-	push	%rdi
-	mov	%rdi, %rdx	/* envp		*/
-	shl	$3, %rdx
+	mov	(%rsp), %rdi	/* argc */
+	mov	%rsp, %rsi	/* argv */
+	add	$8, %rsi
+	mov	%rsi, %rdx	/* envp */
 	add	$8, %rdx
-	add	%rsi, %rdx
 #ifdef PIC
 	mov	environ@GOTPCREL(%rip), %rcx
 	mov	%rdx, (%rcx)
