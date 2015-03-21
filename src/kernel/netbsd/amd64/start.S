@@ -29,26 +29,29 @@
 
 
 _start:
-	pop	%rdi		/* argc		*/
-	mov	%rsp, %rsi	/* argv		*/
-	push	%rdi
-	mov	%rdi, %rdx	/* envp		*/
-	shl	$3, %rdx
+	/* reset the stack */
+	xor	%rbp, %rbp	/* stack */
+
+	/* run the main program */
+	mov	(%rsp), %rdi	/* argc */
+	mov	%rsp, %rsi	/* argv */
+	add	$8, %rsi
+	mov	%rsi, %rdx	/* envp */
 	add	$8, %rdx
-	add	%rsi, %rdx
 #ifdef PIC
 	mov	environ@GOTPCREL(%rip), %rcx
 	mov	%rdx, (%rcx)
 #else
 	mov	%rdx, environ
 #endif
-	xor	%rbp, %rbp	/* stack	*/
 #ifdef PIC
 	call	main@PLT
 #else
 	call	main
 #endif
-	mov	%rax, %rdi	/* exit		*/
+
+	/* exit the main program */
+	mov	%rax, %rdi
 #ifdef PIC
 	call	exit@PLT
 #else
