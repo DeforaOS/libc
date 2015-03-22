@@ -1084,8 +1084,9 @@ static void _hostent_free(struct hostent * he)
 	char ** p;
 
 	free(he->h_name);
-	for(p = he->h_aliases; p != NULL && *p != NULL; p++)
-		free(*p);
+	if(he->h_aliases != NULL)
+		for(p = he->h_aliases; *p != NULL; p++)
+			free(*p);
 	free(he->h_aliases);
 	for(p = he->h_addr_list; p != NULL && *p != NULL; p++)
 		free(*p);
@@ -1100,8 +1101,9 @@ static void _netent_free(struct netent * ne)
 	char ** p;
 
 	free(ne->n_name);
-	for(p = ne->n_aliases; p != NULL && *p != NULL; p++)
-		free(*p);
+	if(ne->n_aliases != NULL)
+		for(p = ne->n_aliases; *p != NULL; p++)
+			free(*p);
 	free(ne->n_aliases);
 	memset(ne, 0, sizeof(*ne));
 }
@@ -1113,8 +1115,9 @@ static void _protoent_free(struct protoent * pe)
 	char ** p;
 
 	free(pe->p_name);
-	for(p = pe->p_aliases; p != NULL && *p != NULL; p++)
-		free(*p);
+	if(pe->p_aliases != NULL)
+		for(p = pe->p_aliases; *p != NULL; p++)
+			free(*p);
 	free(pe->p_aliases);
 	memset(pe, 0, sizeof(*pe));
 }
