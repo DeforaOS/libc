@@ -674,6 +674,7 @@ struct netent * getnetbyname(const char * name)
 
 
 /* getnetent */
+static int _getnetent_alias(struct netent * ne, char * alias);
 static char * _getnetent_name(char const ** s);
 static int _getnetent_net(uint32_t * net, char const ** s);
 
@@ -681,6 +682,7 @@ struct netent * getnetent(void)
 {
 	static struct netent ne = { NULL, NULL, 0, 0 };
 	char const * s;
+	char * p;
 
 	if(_netfp == NULL)
 		setnetent(1);
@@ -706,13 +708,37 @@ struct netent * getnetent(void)
 		/* read network */
 		if(_getnetent_net(&ne.n_net, &s) != 0)
 			continue;
+		/* skip whitespaces */
+		for(; isspace(*s); s++);
 		/* read optional aliases */
-		/* FIXME implement */
+		while((p = _getnetent_name(&s)) != NULL)
+		{
+			_getnetent_alias(&ne, p);
+			for(; isspace(*s); s++);
+		}
 		ne.n_addrtype = AF_INET;
 		return &ne;
 	}
 	endnetent();
 	return NULL;
+}
+
+static int _getnetent_alias(struct netent * ne, char * alias)
+{
+	char ** p;
+	size_t cnt = 0;
+
+	if(ne->n_aliases != NULL)
+		for(; ne->n_aliases[cnt] != NULL; cnt++);
+	if((p = realloc(ne->n_aliases, sizeof(*p) * (cnt + 2))) == NULL)
+	{
+		free(alias);
+		return -1;
+	}
+	ne->n_aliases = p;
+	ne->n_aliases[cnt++] = alias;
+	ne->n_aliases[cnt] = NULL;
+	return 0;
 }
 
 static char * _getnetent_name(char const ** s)
