@@ -816,6 +816,7 @@ struct protoent * getprotobynumber(int proto)
 
 
 /* getprotoent */
+static int _getprotoent_alias(struct protoent * pe, char * alias);
 static char * _getprotoent_name(char const ** s);
 static int _getprotoent_proto(int * proto, char const ** s);
 
@@ -823,6 +824,7 @@ struct protoent * getprotoent(void)
 {
 	static struct protoent pe = { NULL, NULL, 0 };
 	char const * s;
+	char * p;
 
 	if(_protofp == NULL)
 		setprotoent(1);
@@ -848,12 +850,36 @@ struct protoent * getprotoent(void)
 		/* read protocol */
 		if(_getprotoent_proto(&pe.p_proto, &s) != 0)
 			continue;
+		/* skip whitespaces */
+		for(; isspace(*s); s++);
 		/* read optional aliases */
-		/* FIXME implement */
+		while((p = _getprotoent_name(&s)) != NULL)
+		{
+			_getprotoent_alias(&pe, p);
+			for(; isspace(*s); s++);
+		}
 		return &pe;
 	}
 	endprotoent();
 	return NULL;
+}
+
+static int _getprotoent_alias(struct protoent * pe, char * alias)
+{
+	char ** p;
+	size_t cnt = 0;
+
+	if(pe->p_aliases != NULL)
+		for(; pe->p_aliases[cnt] != NULL; cnt++);
+	if((p = realloc(pe->p_aliases, sizeof(*p) * (cnt + 2))) == NULL)
+	{
+		free(alias);
+		return -1;
+	}
+	pe->p_aliases = p;
+	pe->p_aliases[cnt++] = alias;
+	pe->p_aliases[cnt] = NULL;
+	return 0;
 }
 
 static char * _getprotoent_name(char const ** s)
