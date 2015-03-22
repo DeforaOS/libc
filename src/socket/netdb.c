@@ -955,8 +955,9 @@ struct servent * getservbyname(const char * name, const char * protocol)
 
 	setservent(1);
 	while((se = getservent()) != NULL)
-		if(strcmp(se->s_name, name) == 0
-				&& strcmp(se->s_proto, protocol) == 0)
+		if(protocol != NULL && strcmp(se->s_proto, protocol) != 0)
+			continue;
+		else if(strcmp(se->s_name, name) == 0)
 			return se;
 	return NULL;
 }
@@ -969,7 +970,9 @@ struct servent * getservbyport(int port, const char * protocol)
 
 	setservent(1);
 	while((se = getservent()) != NULL)
-		if(se->s_port == port && strcmp(se->s_proto, protocol) == 0)
+		if(protocol != NULL && strcmp(se->s_proto, protocol) != 0)
+			continue;
+		else if(se->s_port == port)
 			return se;
 	return NULL;
 }
