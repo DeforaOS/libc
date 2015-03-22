@@ -182,10 +182,24 @@ static int _getprotoent(void)
 {
 	struct protoent * pe;
 	unsigned int i;
+	char * const * p;
+	char const * sep;
 
 	setprotoent(1);
 	for(i = 0; (pe = getprotoent()) != NULL; i++)
-		printf("%s\t%d\n", pe->p_name, pe->p_proto);
+	{
+		printf("%s\t%d", pe->p_name, pe->p_proto);
+		if(pe->p_aliases != NULL)
+		{
+			sep = "\t";
+			for(p = pe->p_aliases; *p != NULL; p++)
+			{
+				printf("%s%s", sep, *p);
+				sep = ", ";
+			}
+		}
+		putchar('\n');
+	}
 	endprotoent();
 	printf("%u protocols listed\n", i);
 	return 0;
