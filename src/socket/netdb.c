@@ -969,7 +969,7 @@ struct servent * getservent(void)
 			continue;
 		/* skip whitespaces */
 		for(; isspace(*s); s++);
-		/* read aliases */
+		/* read optional aliases */
 		while((p = _getservent_name(&s)) != NULL)
 		{
 			_getservent_alias(&se, p);
