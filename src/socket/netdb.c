@@ -502,12 +502,14 @@ struct hostent * gethostbyname(const char * name)
 
 /* gethostent */
 static char * _gethostent_addr(char const ** s);
+static int _gethostent_alias(struct hostent * he, char * alias);
 static char * _gethostent_host(char const ** s);
 
 struct hostent * gethostent(void)
 {
 	static struct hostent he = { NULL, NULL, 0, 0, NULL };
 	char const * s;
+	char * p;
 
 	if(_hostfp == NULL)
 		sethostent(1);
@@ -537,10 +539,15 @@ struct hostent * gethostent(void)
 		/* read hostname */
 		if((he.h_name = _gethostent_host(&s)) == NULL)
 			continue;
+		/* skip whitespaces */
+		for(; isspace(*s); s++);
 		/* read optional aliases */
-		/* FIXME implement */
+		while((p = _gethostent_host(&s)) != NULL)
+		{
+			_gethostent_alias(&he, p);
+			for(; isspace(*s); s++);
+		}
 		/* return entry */
-		he.h_aliases = NULL;
 		he.h_addrtype = AF_INET;
 		he.h_length = 4;
 		return &he;
@@ -584,6 +591,24 @@ static char * _gethostent_addr(char const ** s)
 	free(ret);
 	errno = e;
 	return NULL;
+}
+
+static int _gethostent_alias(struct hostent * he, char * alias)
+{
+	char ** p;
+	size_t cnt = 0;
+
+	if(he->h_aliases != NULL)
+		for(; he->h_aliases[cnt] != NULL; cnt++);
+	if((p = realloc(he->h_aliases, sizeof(*p) * (cnt + 2))) == NULL)
+	{
+		free(alias);
+		return -1;
+	}
+	he->h_aliases = p;
+	he->h_aliases[cnt++] = alias;
+	he->h_aliases[cnt] = NULL;
+	return 0;
 }
 
 static char * _gethostent_host(char const ** s)
