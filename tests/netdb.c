@@ -138,10 +138,24 @@ static int _gethostent(void)
 {
 	struct hostent * he;
 	unsigned int i;
+	char * const * p;
+	char const * sep;
 
 	sethostent(1);
 	for(i = 0; (he = gethostent()) != NULL; i++)
-		printf("%s\t%d %d\n", he->h_name, he->h_addrtype, he->h_length);
+	{
+		printf("%s\t%d %d", he->h_name, he->h_addrtype, he->h_length);
+		if(he->h_aliases != NULL)
+		{
+			sep = "\t";
+			for(p = he->h_aliases; *p != NULL; p++)
+			{
+				printf("%s%s", sep, *p);
+				sep = ", ";
+			}
+		}
+		putchar('\n');
+	}
 	endhostent();
 	printf("%u hosts listed\n", i);
 	return 0;
