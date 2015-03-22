@@ -854,6 +854,7 @@ static int _getprotoent_proto(int * proto, char const ** s)
 
 
 /* getservent */
+static int _getservent_alias(struct servent * se, char * alias);
 static char * _getservent_name(char const ** s);
 
 struct servent * getservent(void)
@@ -889,11 +890,37 @@ struct servent * getservent(void)
 		s = p + 1;
 		if((se.s_proto = _getservent_name(&s)) == NULL)
 			continue;
+		/* skip whitespaces */
+		for(; isspace(*s); s++);
+		/* read aliases */
+		while((p = _getservent_name(&s)) != NULL)
+		{
+			_getservent_alias(&se, p);
+			for(; isspace(*s); s++);
+		}
 		return &se;
 	}
 	/* nothing found */
 	endservent();
 	return NULL;
+}
+
+static int _getservent_alias(struct servent * se, char * alias)
+{
+	char ** p;
+	size_t cnt = 0;
+
+	if(se->s_aliases != NULL)
+		for(; se->s_aliases[cnt] != NULL; cnt++);
+	if((p = realloc(se->s_aliases, sizeof(*p) * (cnt + 2))) == NULL)
+	{
+		free(alias);
+		return -1;
+	}
+	se->s_aliases = p;
+	se->s_aliases[cnt++] = alias;
+	se->s_aliases[cnt] = NULL;
+	return 0;
 }
 
 static char * _getservent_name(char const ** s)
@@ -1088,7 +1115,12 @@ static void _protoent_free(struct protoent * pe)
 /* servent_free */
 static void _servent_free(struct servent * se)
 {
+	char ** p;
+
 	free(se->s_name);
+	if(se->s_aliases != NULL)
+		for(p = se->s_aliases; *p != NULL; p++)
+			free(*p);
 	free(se->s_aliases);
 	free(se->s_proto);
 	memset(se, 0, sizeof(*se));
