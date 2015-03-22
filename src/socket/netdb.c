@@ -952,6 +952,7 @@ static char * _getservent_name(char const ** s)
 struct servent * getservbyname(const char * name, const char * protocol)
 {
 	struct servent * se;
+	char * const * p;
 
 	setservent(1);
 	while((se = getservent()) != NULL)
@@ -959,6 +960,10 @@ struct servent * getservbyname(const char * name, const char * protocol)
 			continue;
 		else if(strcmp(se->s_name, name) == 0)
 			return se;
+		else if(se->s_aliases != NULL)
+			for(p = se->s_aliases; *p != NULL; p++)
+				if(strcmp(*p, name) == 0)
+					return se;
 	return NULL;
 }
 
