@@ -209,11 +209,18 @@ static int _getservent(void)
 {
 	struct servent * se;
 	unsigned int i;
+	char * const * p;
 
 	printf("%s:\n", "getservent");
 	setservent(1);
 	for(i = 0; (se = getservent()) != NULL; i++)
-		printf("%s\t%d/%s\n", se->s_name, se->s_port, se->s_proto);
+	{
+		printf("%s\t%d/%s", se->s_name, se->s_port, se->s_proto);
+		if(se->s_aliases != NULL)
+			for(p = se->s_aliases; *p != NULL; p++)
+				printf(" %s", *p);
+		putchar('\n');
+	}
 	endservent();
 	printf("%u services listed\n", i);
 	return 0;
