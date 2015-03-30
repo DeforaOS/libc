@@ -167,10 +167,24 @@ static int _getnetent(void)
 {
 	struct netent * ne;
 	unsigned int i;
+	char * const * p;
+	char const * sep;
 
 	setnetent(1);
 	for(i = 0; (ne = getnetent()) != NULL; i++)
-		printf("%s\t%d %u\n", ne->n_name, ne->n_addrtype, ne->n_net);
+	{
+		printf("%s\t%d %u", ne->n_name, ne->n_addrtype, ne->n_net);
+		if(ne->n_aliases != NULL)
+		{
+			sep = "\t";
+			for(p = ne->n_aliases; *p != NULL; p++)
+			{
+				printf("%s%s", sep, *p);
+				sep = ", ";
+			}
+		}
+		putchar('\n');
+	}
 	endnetent();
 	printf("%u networks listed\n", i);
 	return 0;
