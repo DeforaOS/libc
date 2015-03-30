@@ -25,6 +25,7 @@
 
 #variables
 [ -n "$OBJDIR" ] || OBJDIR="./"
+PROGNAME="tests.sh"
 SYSTEM="$(uname -s)"
 SOEXT="so"
 #XXX not tested
@@ -77,7 +78,7 @@ _test()
 #usage
 _usage()
 {
-	echo "Usage: tests.sh [-c][-P prefix]" 1>&2
+	echo "Usage: $PROGNAME [-c][-P prefix]" 1>&2
 	return 1
 }
 
