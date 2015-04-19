@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2012-2014 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2012-2015 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -25,6 +25,7 @@
 
 
 #variables
+CONFIGSH="${0%/subst.sh}/../config.sh"
 PREFIX="/usr/local"
 BINDIR=
 DATADIR=
@@ -34,7 +35,7 @@ LIBDIR=
 LIBEXECDIR=
 MANDIR=
 SYSCONFDIR=
-[ -f "../config.sh" ] && . "../config.sh"
+[ -f "$CONFIGSH" ] && . "$CONFIGSH"
 [ -z "$BINDIR" ] && BINDIR="$PREFIX/bin"
 [ -z "$DATADIR" ] && DATADIR="$PREFIX/share"
 [ -z "$INCLUDEDIR" ] && INCLUDEDIR="$PREFIX/include"
@@ -179,6 +180,6 @@ while [ $# -gt 0 ]; do
 		$RM -- "$target" 2> "$DEVNULL"
 		exit 2
 	elif [ -x "$source" ]; then
-		$DEBUG $CHMOD 0755 "$target"
+		$DEBUG $CHMOD -- 0755 "$target"
 	fi
 done
