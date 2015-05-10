@@ -1,3 +1,4 @@
+/config.sh
 Makefile
 *.a
 *.dylib
