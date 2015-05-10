@@ -45,6 +45,7 @@ static int _usage(void)
 int main(int argc, char * argv[], char * envp[])
 {
 	int ret = 0;
+	size_t len;
 	int i;
 	char const * sep;
 
@@ -53,7 +54,8 @@ int main(int argc, char * argv[], char * envp[])
 	printf("%s: %s\n", argv[0], "Testing arguments:");
 	if(argv == NULL)
 		ret |= 1;
-	else if(strcmp(argv[0], "./start") != 0)
+	else if((len = strlen(argv[0])) < 6
+			|| strcmp(&argv[0][len - 6], "/start") != 0)
 		ret |= 2;
 	else if(strcmp(argv[1], "argv1") != 0)
 		ret |= 4;
