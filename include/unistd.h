@@ -76,6 +76,11 @@ typedef id_t uid_t;
 # endif
 
 
+/* constants */
+# define _POSIX_VERSION		200112L
+# define _POSIX2_VERSION	200112L
+
+
 /* variables */
 extern char * optarg;
 extern int optind, opterr, optopt;
