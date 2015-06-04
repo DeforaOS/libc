@@ -69,6 +69,9 @@ typedef char * va_list;
 /* maximum size of character array to hold tmpnam() output */
 # define L_tmpnam 1024 /* XXX OS dependent */
 
+/* default directory prefix for tempnam() */
+# define P_tmpdir "/tmp"
+
 
 /* variables */
 /* standard input, output, and error streams */
