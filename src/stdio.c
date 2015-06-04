@@ -1181,7 +1181,7 @@ static size_t _sscanf_do_string(scan_args * args, char const * string,
 /* tmpfile */
 FILE * tmpfile(void)
 {
-	char template[] = "/tmp/tmp.XXXXXX";
+	char template[] = P_tmpdir "/tmp.XXXXXX";
 	int fd;
 	FILE * file;
 
@@ -1200,7 +1200,7 @@ FILE * tmpfile(void)
 /* tmpnam */
 char * tmpnam(char * str)
 {
-	char template[] = "/tmp/tmp.XXXXXX";
+	char template[] = P_tmpdir "/tmp.XXXXXX";
 
 	if(str == NULL)
 		return mktemp(template);
