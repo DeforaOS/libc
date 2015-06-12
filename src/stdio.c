@@ -1178,6 +1178,30 @@ static size_t _sscanf_do_string(scan_args * args, char const * string,
 }
 
 
+/* tempnam */
+char * tempnam(char const * dir, char const * prefix)
+{
+	char const * p;
+	char * template;
+
+	if((p = getenv("TMPDIR")) != NULL)
+		dir = p;
+	else if(dir == NULL)
+		dir = P_tmpdir;
+	if(dir == NULL)
+		dir = "/tmp";
+	if(prefix == NULL)
+		prefix = "tmp.XXXXXX";
+	if((template = malloc(strlen(dir) + strlen(prefix) + 2)) == NULL)
+		return NULL;
+	snprintf(template, "%s/%s", dir, prefix);
+	if(mktemp(template) != NULL)
+		return template;
+	free(template);
+	return NULL;
+}
+
+
 /* tmpfile */
 FILE * tmpfile(void)
 {

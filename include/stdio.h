@@ -128,6 +128,7 @@ int setvbuf(FILE * file, char * buf, int type, size_t size);
 int snprintf(char * str, size_t size, char const * format, ...);
 int sprintf(char * str, char const * format, ...);
 int sscanf(char const * string, char const * format, ...);
+char * tempnam(char const * dir, char const * prefix);
 FILE * tmpfile(void);
 char * tmpnam(char * str);
 int ungetc(int c, FILE * file);
