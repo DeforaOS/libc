@@ -1200,7 +1200,7 @@ FILE * tmpfile(void)
 /* tmpnam */
 char * tmpnam(char * str)
 {
-	char template[] = P_tmpdir "/tmp.XXXXXX";
+	static char template[] = P_tmpdir "/tmp.XXXXXX";
 
 	if(str == NULL)
 		return mktemp(template);
