@@ -88,11 +88,11 @@ int main(int argc, char * argv[])
 	if(signal(SIGTERM, SIG_IGN) == SIG_ERR)
 		_error(argv[0], "signal", 2);
 	printf("%s: %s", argv[0], "Testing kill()\n");
-	if(kill(getpid(), SIGUSR2) != 0)
+	if(raise(SIGUSR2) != 0)
 		_error(argv[0], "kill", 2);
-	if(kill(getpid(), SIGUSR1) != 0)
+	if(raise(SIGUSR1) != 0)
 		_error(argv[0], "kill", 2);
-	if(kill(getpid(), SIGTERM) != 0)
+	if(raise(SIGTERM) != 0)
 		_error(argv[0], "kill", 2);
 	return _ret;
 }
