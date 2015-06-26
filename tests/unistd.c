@@ -32,7 +32,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
-#include "../src/unistd.c"
 
 
 /* fork */
