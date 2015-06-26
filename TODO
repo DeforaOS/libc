@@ -1,3 +1,6 @@
+- stdlib.c:
+  * implement arc4random()
+  * use it to initialize SSP on remaining platforms
 - string.c:
   * refactor code? (strchr/strrchr/memchr)
 
