@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2015 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,7 +28,14 @@
 
 
 
-/* sysctl */
-#ifdef SYS_sysctl
-SYSCALL(sysctl)
-#endif
+#ifndef LIBC_COMPAT_SYS_SYSCTL_H
+# define LIBC_COMPAT_SYS_SYSCTL_H
+
+
+# if defined(__NetBSD__)
+#  include "kernel/netbsd/sys/sysctl.h"
+# else
+#  warning Unsupported platform
+# endif
+
+#endif /* !LIBC_COMPAT_SYS_SYSCTL_H */

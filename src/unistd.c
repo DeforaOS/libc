@@ -29,6 +29,7 @@
 
 
 #include "sys/stat.h"
+#include "sys/sysctl.h"
 #include "sys/types.h"
 #include "sys/utsname.h"
 #include "inttypes.h"
@@ -1033,7 +1034,6 @@ long sysconf(int name)
 			return 4096;
 	}
 #elif defined(__NetBSD__)
-# include "kernel/netbsd/sys/sysctl.h"
 	int mib[2];
 	size_t len;
 	struct clockinfo ci;

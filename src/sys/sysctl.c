@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2015 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,50 +28,17 @@
 
 
 
-#ifndef KERNEL_NETBSD_SYS_SYSCTL_H
-# define KERNEL_NETBSD_SYS_SYSCTL_H
-
-
-/* types */
-# ifndef size_t
-#  define size_t size_t
-typedef unsigned long size_t;
-# endif
-
-struct clockinfo
-{
-	int hz;
-	int tick;
-	int tickadj;
-	int stathz;
-	int profhz;
-};
-
-
-/* constants */
-# ifndef NULL
-#  define NULL ((void*)0)
-# endif
-
-/* sysctl name */
-# define CTL_KERN	1
-# define CTL_VM		2
-# define CTL_HW		6
-
-# define KERN_OSTYPE	1
-# define KERN_OSRELEASE	2
-# define KERN_VERSION	4
-# define KERN_HOSTNAME	10
-# define KERN_CLOCKRATE	12
-
-# define VM_LOADAVG	2
-
-# define HW_MACHINE	1
-# define HW_PAGESIZE	7
+#include "sys/sysctl.h"
+#include "errno.h"
+#include "../syscalls.h"
 
 
 /* functions */
+#ifndef SYS_sysctl
 int sysctl(int * name, unsigned int namecnt, void * from, size_t * fromsize,
-		void const * to, size_t tosize);
-
-#endif /* !KERNEL_NETBSD_SYS_SYSCTL_H */
+		void const * to, size_t tosize)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif

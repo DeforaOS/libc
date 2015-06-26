@@ -82,7 +82,6 @@
 #  warning Unsupported NetBSD architecture
 #  define SYSCALL(name)
 # endif
-# include "kernel/netbsd/common.S"
 
 /* OpenBSD */
 #elif defined(__OpenBSD__)
@@ -314,6 +313,11 @@ SYSCALL(_statfs)
 #endif
 #ifdef SYS_statvfs
 SYSCALL(statvfs)
+#endif
+
+/* sys/sysctl.h */
+#ifdef SYS_sysctl
+SYSCALL(sysctl)
 #endif
 
 /* sys/time.h */
