@@ -131,6 +131,7 @@ _test "stdio"
 _test "string"
 _test "time"
 _test "unistd"
+_test "utsname"
 echo "Expected failures:" 1>&2
 _fail "dlfcn" "../src/libc.$SOEXT"
 _fail "stdlib"
