@@ -1,5 +1,5 @@
 - string.c:
-  * factorize code? (strchr/strrchr/memchr)
+  * refactor code? (strchr/strrchr/memchr)
 
 Platform specific:
 - Linux:
