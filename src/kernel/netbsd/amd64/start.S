@@ -32,6 +32,11 @@ _start:
 	/* reset the stack */
 	xor	%rbp, %rbp	/* stack */
 
+#if defined(__SSP__)
+	/* initialize SSP */
+	call	__stack_chk_setup
+#endif
+
 	/* run the main program */
 	mov	(%rsp), %rdi	/* argc */
 	mov	%rsp, %rsi	/* argv */
