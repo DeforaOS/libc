@@ -35,6 +35,11 @@ _start:
 	/* reset the stack */
 	xor	%rbp, %rbp
 
+#if defined(__SSP__)
+	/* initialize SSP */
+	call	__stack_chk_setup
+#endif
+
 	/* set the thread-local storage area */
 	mov	$ARCH_SET_FS, %rdi
 #ifdef PIC
