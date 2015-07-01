@@ -29,6 +29,7 @@
 
 
 #include "sys/sysctl.h"
+#include "unistd.h"
 #include "stdlib.h"
 #include "syscalls.h"
 #include "ssp.h"
