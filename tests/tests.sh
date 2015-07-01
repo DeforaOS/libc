@@ -124,6 +124,7 @@ _test "select"
 _test "setjmp"
 _test "signal"
 _test "socket"
+_test "ssp"
 _test "start" argv1 argv2
 _test "stdarg"
 _test "stdint"
