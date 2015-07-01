@@ -369,9 +369,9 @@ static int _file_relocations(DL * dl)
 static void _file_relocations_arch(DL * dl, Elf_Rela * rela, char * strtab,
 		size_t strtab_cnt, Elf_Sym * sym)
 {
+#if defined(__amd64__)
 	Elf_Addr * addr;
 
-#if defined(__amd64__)
 	switch(ELF_R_TYPE(rela->r_info))
 	{
 		case R_X86_64_RELATIVE:
