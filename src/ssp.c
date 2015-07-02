@@ -52,6 +52,14 @@ void __stack_chk_fail(void)
 }
 
 
+#ifdef __i386__
+void __stack_chk_fail_local(void)
+{
+	__stack_chk_fail();
+}
+#endif
+
+
 /* stack_chk_setup */
 void __stack_chk_setup(void)
 {
