@@ -90,7 +90,7 @@ void _ssp_child_sub(char const * progname, unsigned int pattern)
 	char buf[32];
 
 	printf("%s: Testing SSP (%#08x)\n", progname, pattern);
-	memset(buf, pattern, sizeof(buf) * 8);
+	memset(buf, pattern, sizeof(buf) + sizeof(void *) * 2);
 }
 
 
