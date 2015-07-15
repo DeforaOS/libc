@@ -28,6 +28,7 @@
 
 
 
+#include "errno.h"
 #include "../syscalls.h"
 #include "sys/resource.h"
 
@@ -36,28 +37,53 @@
 /* getpriority */
 #ifndef SYS_getpriority
 # warning Unsupported platform: getpriority() is missing
+int getpriority(int which, id_t who)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* getrlimit */
 #ifndef SYS_getrlimit
 # warning Unsupported platform: getrlimit() is missing
+int getrlimit(int resource, struct rlimit * rlp)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* getrusage */
 #ifndef SYS_getrusage
 # warning Unsupported platform: getrusage() is missing
+int getrusage(int who, struct rusage * rup)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* setpriority */
 #ifndef SYS_setpriority
 # warning Unsupported platform: setpriority() is missing
+int setpriority(int which, id_t who, int value)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 
 /* setrlimit */
 #ifndef SYS_setrlimit
 # warning Unsupported platform: setrlimit() is missing
+int setrlimit(int resource, const struct rlimit * rlp)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
