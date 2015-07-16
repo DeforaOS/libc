@@ -1,4 +1,3 @@
-/config.sh
 Makefile
 *.a
 *.dylib
@@ -6,3 +5,4 @@ Makefile
 *.o
 *.so
 *.so.*
+/config.sh
