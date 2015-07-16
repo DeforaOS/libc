@@ -40,7 +40,7 @@ int main(void)
 
 	if(getrlimit(RLIMIT_CORE, &rl) != 0)
 		return 2;
-	printf("%u (%u)\n", rl.rlim_cur, rl.rlim_max);
+	printf("%lld (%lld)\n", rl.rlim_cur, rl.rlim_max);
 	if(setrlimit(RLIMIT_CORE, &rl) != 0)
 		return 3;
 	return 0;
