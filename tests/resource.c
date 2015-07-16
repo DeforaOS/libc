@@ -33,15 +33,70 @@
 
 
 /* resource */
+/* error */
+static int _error(char const * message, int ret)
+{
+	fputs("resource: ", stderr);
+	perror(message);
+	return ret;
+}
+
+
 /* main */
 int main(void)
 {
+	int ret = 0;
+	int limits[] =
+	{
+#ifdef RLIMIT_CPU
+		RLIMIT_CPU,
+#endif
+#ifdef RLIMIT_FSIZE
+		RLIMIT_FSIZE,
+#endif
+#ifdef RLIMIT_DATA
+		RLIMIT_DATA,
+#endif
+#ifdef RLIMIT_STACK
+		RLIMIT_STACK,
+#endif
+#ifdef RLIMIT_CORE
+		RLIMIT_CORE,
+#endif
+#ifdef RLIMIT_RSS
+		RLIMIT_RSS,
+#endif
+#ifdef RLIMIT_MEMLOCK
+		RLIMIT_MEMLOCK,
+#endif
+#ifdef RLIMIT_NPROC
+		RLIMIT_NPROC,
+#endif
+#ifdef RLIMIT_NOFILE
+		RLIMIT_NOFILE,
+#endif
+#ifdef RLIMIT_AS
+		RLIMIT_AS,
+#endif
+		-1
+	};
+	size_t i;
 	struct rlimit rl;
 
-	if(getrlimit(RLIMIT_CORE, &rl) != 0)
-		return 2;
-	printf("%lld (%lld)\n", rl.rlim_cur, rl.rlim_max);
-	if(setrlimit(RLIMIT_CORE, &rl) != 0)
-		return 3;
-	return 0;
+	for(i = 0; limits[i] != -1; i++)
+	{
+		if(getrlimit(limits[i], &rl) != 0)
+		{
+			ret |= _error("getrlimit", 2);
+			continue;
+		}
+		printf("%d: %lld (%lld)\n", limits[i], rl.rlim_cur,
+				rl.rlim_max);
+		if(setrlimit(limits[i], &rl) != 0)
+			ret |= _error("setrlimit", 3);
+	}
+	if(i == 0)
+		/* at least one value should be supported */
+		ret = 4;
+	return ret;
 }
