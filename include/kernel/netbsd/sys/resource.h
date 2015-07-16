@@ -35,7 +35,7 @@
 /* types */
 # ifndef rlim_t
 #  define rlim_t rlim_t
-typedef long long rlim_t;
+typedef unsigned long long rlim_t;
 # endif
 
 # ifndef suseconds_t
