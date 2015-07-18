@@ -123,21 +123,21 @@ _test "resource"
 _test "rt"
 _test "select"
 _test "setjmp"
-_test "signal"
+[ "$SYSTEM" != "Linux" ] && _test "signal"
 _test "socket"
 _test "ssp"
 _test "start" argv1 argv2
 _test "stdarg"
 _test "stdint"
-[ "$SYSTEM" != "Linux" ] && _test "stdio"
+_test "stdio"
 _test "string"
 _test "time"
 _test "unistd"
 _test "utsname"
 echo "Expected failures:" 1>&2
 _fail "dlfcn" "../src/libc.$SOEXT"
+[ "$SYSTEM" = "Linux" ] && _fail "signal"
 _fail "stdlib"
-[ "$SYSTEM" = "Linux" ] || _fail "stdio"
 if [ -n "$FAILED" ]; then
 	echo "Failed tests:$FAILED" 1>&2
 	exit 2
