@@ -33,7 +33,7 @@ _syscall:
 	syscall
 	jnc	_syscall_return
 .errno:
-#ifdef PIC
+#ifdef __PIC__
 	mov	errno@GOTPCREL(%rip), %rcx
 	mov	%rax, (%rcx)
 #else

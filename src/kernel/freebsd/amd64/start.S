@@ -36,19 +36,19 @@ _start:
 	mov	%rdi, %rdx	/* envp = (argc << 3) + argv */
 	shl	$3, %rdx
 	add	%rsi, %rdx
-#ifdef PIC			/* environ	*/
+#ifdef __PIC__			/* environ	*/
 	mov	%rdx, environ@GOTPCREL(%rip)
 #else
 	mov	%rdx, environ
 #endif
 	xor	%rbp, %rbp	/* stack	*/
-#ifdef PIC
+#ifdef __PIC__
 	call	main@PLT
 #else
 	call	main
 #endif
 	mov	%rax, %rdi	/* exit		*/
-#ifdef PIC
+#ifdef __PIC__
 	call	exit@PLT
 #else
 	call	exit

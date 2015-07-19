@@ -33,7 +33,7 @@ _syscall:
 	syscall
 	jnc	_syscall_return
 .errno:
-#ifdef PIC
+#ifdef __PIC__
 	mov	errno@GOTPCREL(%rip), %rcx
 	mov	%rax, (%rcx)
 #else
@@ -46,7 +46,7 @@ _syscall_return:
 
 /* macros */
 #ifndef SYSCALL
-# ifdef PIC
+# ifdef __PIC__
 #  define SYSCALL(name) \
 .global name; \
 .type name,@function; \
@@ -81,7 +81,7 @@ _brk:
 .type _exit,@function
 _exit:
 	mov	$SYS_exit, %rax
-#ifdef PIC
+#ifdef __PIC__
 	jmp	_syscall@PLT
 #else
 	jmp	_syscall
@@ -94,7 +94,7 @@ _exit:
 execve:
 	mov	$SYS_execve, %rax
 	syscall
-#ifdef PIC
+#ifdef __PIC__
 	mov	errno@GOTPCREL(%rip), %rcx
 	mov	%rax, (%rcx)
 #else
@@ -151,7 +151,7 @@ siglongjmp:
 	lea	80(%rdi), %rdx
 	mov	$0x0, %rsi
 	mov	$0x3, %rdi
-#ifdef PIC
+#ifdef __PIC__
 	call	sigprocmask@PLT
 #else
 	call	sigprocmask
@@ -275,7 +275,7 @@ setjmp:
 	mov	$0x0, %rdi
 	mov	$0x0, %rsi
 	lea	80(%rax), %rdx
-#ifdef PIC
+#ifdef __PIC__
 	call	sigprocmask@PLT
 #else
 	call	sigprocmask
@@ -310,14 +310,14 @@ __sigaction_sigtramp:
 .type sigaction,@function
 sigaction:
 	mov	$SYS_sigaction, %rax
-#ifdef PIC
+#ifdef __PIC__
 	lea	__sigaction_sigtramp@GOTPCREL(%rip), %rcx
 	mov	(%rcx), %rcx
 #else
 	lea	__sigaction_sigtramp, %rcx
 #endif
 	mov	$0x2, %r8
-#ifdef PIC
+#ifdef __PIC__
 	jmp	_syscall@PLT
 #else
 	jmp	_syscall
@@ -332,14 +332,14 @@ sigsetjmp:
 	/* if(savemask == 0) return _setjmp() */
 	test	%esi, %esi
 	jnz	_sigsetjmp_save
-#ifdef PIC
+#ifdef __PIC__
 	jmp	_setjmp@PLT
 #else
 	jmp	_setjmp
 #endif
 _sigsetjmp_save:
 	/* else return setjmp() */
-#ifdef PIC
+#ifdef __PIC__
 	jmp	setjmp@PLT
 #else
 	jmp	setjmp

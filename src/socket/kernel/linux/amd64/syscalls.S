@@ -37,7 +37,7 @@ _syscall:
 	jle	_syscall_return
 .errno:
 	neg	%rax
-#ifdef PIC
+#ifdef __PIC__
 	mov	errno@GOTPCREL(%rip), %rcx
 	mov	%rax, (%rcx)
 #else
@@ -49,7 +49,7 @@ _syscall_return:
 
 
 /* macros */
-#ifdef PIC
+#ifdef __PIC__
 # define SYSCALL(name) \
 .global name; \
 .type name,@function; \

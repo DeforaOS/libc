@@ -43,13 +43,13 @@ _start:
 	add	$8, %rsi
 	mov	%rsi, %rdx	/* envp */
 	add	$8, %rdx
-#ifdef PIC
+#ifdef __PIC__
 	mov	environ@GOTPCREL(%rip), %rcx
 	mov	%rdx, (%rcx)
 #else
 	mov	%rdx, environ
 #endif
-#ifdef PIC
+#ifdef __PIC__
 	call	main@PLT
 #else
 	call	main
@@ -57,7 +57,7 @@ _start:
 
 	/* exit the main program */
 	mov	%rax, %rdi
-#ifdef PIC
+#ifdef __PIC__
 	call	exit@PLT
 #else
 	call	exit

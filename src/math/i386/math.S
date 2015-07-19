@@ -224,7 +224,7 @@ pow:
 1:	ret
 .Lfinpow:
 	fyl2x
-#ifdef PIC
+#ifdef __PIC__
 	jmp __finexp@PLT
 #else
 	jmp __finexp

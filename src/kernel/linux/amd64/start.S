@@ -42,7 +42,7 @@ _start:
 
 	/* set the thread-local storage area */
 	mov	$ARCH_SET_FS, %rdi
-#ifdef PIC
+#ifdef __PIC__
 	mov	_tls_area@GOTPCREL(%rip), %rsi
 	call	arch_prctl@PLT
 #else
@@ -56,7 +56,7 @@ _start:
 	add	$8, %rsi
 	mov	%rsi, %rdx	/* envp */
 	add	$8, %rdx
-#ifdef PIC
+#ifdef __PIC__
 	mov	environ@GOTPCREL(%rip), %rcx
 	mov	%rdx, (%rcx)
 	call	main@PLT
@@ -67,7 +67,7 @@ _start:
 
 	/* exit the main program */
 	mov	%rax, %rdi
-#ifdef PIC
+#ifdef __PIC__
 	call	exit@PLT
 #else
 	call	exit
