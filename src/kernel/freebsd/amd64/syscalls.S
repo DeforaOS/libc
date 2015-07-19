@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2009-2015 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
