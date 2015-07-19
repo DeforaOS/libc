@@ -29,6 +29,7 @@
 
 
 _syscall:
+	mov	%rcx, %r10
 	syscall
 	jnc	.errnoret
 .errno:
