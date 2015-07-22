@@ -81,7 +81,7 @@ execve:
 	mov	$SYS_execve, %rax
 	syscall
 #ifdef __PIC__
-	mov	%rax, errno@GOT(%rip)
+	mov	%rax, errno@GOTPCREL(%rip)
 #else
 	mov	%rax, errno
 #endif
