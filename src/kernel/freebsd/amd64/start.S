@@ -29,6 +29,9 @@
 
 
 _start:
+	/* reset the stack */
+	xor	%rbp, %rbp	/* stack */
+
 	/* rdi is &argc, argv is (&argc + 8) */
 	mov	%rdi, %rsi	/* argv = &argc + 1 */
 	mov	(%rdi), %rdi	/* argc */
@@ -47,7 +50,9 @@ _start:
 #else
 	call	main
 #endif
-	mov	%rax, %rdi	/* exit		*/
+
+	/* exit the main program */
+	mov	%rax, %rdi
 #ifdef __PIC__
 	call	exit@PLT
 #else
