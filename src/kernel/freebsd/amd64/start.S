@@ -32,6 +32,11 @@ _start:
 	/* reset the stack */
 	xor	%rbp, %rbp	/* stack */
 
+#if defined(__SSP__)
+	/* initialize SSP */
+	call	__stack_chk_setup
+#endif
+
 	/* rdi is &argc, argv is (&argc + 8) */
 	mov	%rdi, %rsi	/* argv = &argc + 1 */
 	mov	(%rdi), %rdi	/* argc */
