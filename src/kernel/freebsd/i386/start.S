@@ -31,6 +31,10 @@
 
 
 _start:
+	/* reset the stack */
+	xor	%ebp, %ebp	/* stack */
+
+	/* run the main program */
 	pop	%eax		/* argc */
 	mov	%esp, %ebx	/* argv */
 	push	%eax
@@ -41,7 +45,6 @@ _start:
 	add	%eax, %ecx
 	add	%eax, %ecx
 	mov	%ecx, environ	/* environ */
-	xor	%ebp, %ebp	/* stack */
 	push	%ebp
 	push	%esp
 	mov	%esp, %ebp
@@ -49,6 +52,8 @@ _start:
 	push	%ebx
 	push	%eax
 	call	main
+
+	/* exit the main program */
 	push	%eax		/* exit */
 	call	exit
 	hlt
