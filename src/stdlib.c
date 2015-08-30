@@ -30,6 +30,7 @@
 
 #include "sys/mman.h"
 #include "sys/stat.h"
+#include "sys/sysctl.h"
 #include "sys/wait.h"
 #include "assert.h"
 #include "fcntl.h"
@@ -83,6 +84,31 @@ int abs(int x)
 {
 	return (x >= 0) ? x : -x;
 }
+
+
+/* arc4random */
+#if defined(__NetBSD__)
+uint32_t arc4random(void)
+{
+# include "kernel/netbsd/sys/sysctl.h"
+	char buf[] = "arc4random() failed: terminated\n";
+	int mib[2] = { CTL_KERN, KERN_ARND };
+	uint32_t ret;
+	size_t len = sizeof(ret);
+
+	if(sysctl(mib, sizeof(mib) / sizeof(*mib), &ret, &len, NULL, 0) == -1
+			|| len != sizeof(ret))
+	{
+		write(2, buf, sizeof(buf) - 1);
+		abort();
+		return -1;
+	}
+	return ret;
+}
+#else
+/* FIXME implement a generic arc4random() function */
+# warning Unsupported platform: arc4random() is missing
+#endif
 
 
 /* atexit */

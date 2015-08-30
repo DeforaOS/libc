@@ -34,6 +34,13 @@
 # include "stddef.h"
 
 
+/* types */
+#ifndef uint32_t
+# define uint32_t uint32_t
+typedef unsigned int uint32_t;
+#endif
+
+
 /* constants */
 # define EXIT_FAILURE	1
 # define EXIT_SUCCESS	0
@@ -46,6 +53,7 @@
 /* functions */
 void abort(void);
 int abs(int x);
+uint32_t arc4random(void);
 int atexit(void (*function)(void));
 double atof(char const * str);
 int atoi(char const * str);
