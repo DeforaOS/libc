@@ -318,7 +318,7 @@ int getloadavg(double loadavg[], int nelem)
 	size_t len = sizeof(lo);
 	int i;
 
-	if(sysctl(mib, 2, &lo, &len, NULL, 0) != 0)
+	if(sysctl(mib, sizeof(mib) / sizeof(*mib), &lo, &len, NULL, 0) != 0)
 		return -1;
 	for(i = 0; i < nelem && i < 3; i++)
 		loadavg[i] = lo.lo_avg[i];
