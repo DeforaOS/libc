@@ -123,7 +123,7 @@ _test "resource"
 _test "rt"
 _test "select"
 _test "setjmp"
-[ "$SYSTEM" != "Linux" ] && _test "signal"
+[ "$SYSTEM" != "FreeBSD" -a "$SYSTEM" != "Linux" ] && _test "signal"
 _test "socket"
 _test "ssp"
 _test "start" argv1 argv2
@@ -136,7 +136,7 @@ _test "unistd"
 _test "utsname"
 echo "Expected failures:" 1>&2
 _fail "dlfcn" "../src/libc.$SOEXT"
-[ "$SYSTEM" = "Linux" ] && _fail "signal"
+[ "$SYSTEM" = "FreeBSD" -o "$SYSTEM" = "Linux" ] && _fail "signal"
 _fail "stdlib"
 if [ -n "$FAILED" ]; then
 	echo "Failed tests:$FAILED" 1>&2
