@@ -38,12 +38,31 @@
 /* prototypes */
 static int _error(char const * progname, char const * message, int ret);
 
+static int _arc4random(char const * progname);
 static int _mkstemp(char const * progname);
 static int _mktemp(char const * progname);
 static int _strtod(char const * progname, char const * str, double expected);
 
 
 /* functions */
+static int _arc4random(char const * progname)
+{
+	uint32_t res[4];
+	size_t i;
+
+	printf("%s: Testing arc4random()\n", progname);
+	for(i = 0; i < sizeof(res) / sizeof(*res); i++)
+		res[i] = arc4random();
+	for(i = 0; i < sizeof(res) / sizeof(*res); i++)
+		printf("%u. 0x%08x\n", i + 1, res[i]);
+	/* XXX false negatives are unlikely but possible */
+	for(i = 1; i < sizeof(res) / sizeof(*res); i++)
+		if(res[i] == res[0])
+			return -1;
+	return 0;
+}
+
+
 /* error */
 static int _error(char const * progname, char const * message, int ret)
 {
@@ -101,6 +120,7 @@ int main(int argc, char * argv[])
 {
 	int ret = 0;
 
+	ret += _arc4random(argv[0]);
 	ret += _mkstemp(argv[0]);
 	ret += _mktemp(argv[0]);
 	ret += _strtod(argv[0], "0.0", 0.0);
