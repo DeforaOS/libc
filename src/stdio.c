@@ -1182,6 +1182,7 @@ static size_t _sscanf_do_string(scan_args * args, char const * string,
 char * tempnam(char const * dir, char const * prefix)
 {
 	char const * p;
+	size_t len;
 	char * template;
 
 	if((p = getenv("TMPDIR")) != NULL)
@@ -1192,9 +1193,10 @@ char * tempnam(char const * dir, char const * prefix)
 		dir = "/tmp";
 	if(prefix == NULL)
 		prefix = "tmp.XXXXXX";
-	if((template = malloc(strlen(dir) + strlen(prefix) + 2)) == NULL)
+	len = strlen(dir) + strlen(prefix) + 2;
+	if((template = malloc(len)) == NULL)
 		return NULL;
-	snprintf(template, "%s/%s", dir, prefix);
+	snprintf(template, len, "%s/%s", dir, prefix);
 	if(mktemp(template) != NULL)
 		return template;
 	free(template);
