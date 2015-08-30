@@ -44,7 +44,7 @@ long __stack_chk_guard[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 /* stack_chk_fail */
 void __stack_chk_fail(void)
 {
-	char buf[] = "stack overflow detected: terminated\n";
+	const char buf[] = "stack overflow detected: terminated\n";
 
 	write(2, buf, sizeof(buf) - 1);
 	abort();

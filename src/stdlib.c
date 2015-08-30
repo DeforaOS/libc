@@ -91,7 +91,7 @@ int abs(int x)
 uint32_t arc4random(void)
 {
 # include "kernel/netbsd/sys/sysctl.h"
-	char buf[] = "arc4random() failed: terminated\n";
+	const char buf[] = "arc4random() failed: terminated\n";
 	int mib[2] = { CTL_KERN, KERN_ARND };
 	uint32_t ret;
 	size_t len = sizeof(ret);
@@ -287,7 +287,7 @@ void exit(int status)
 /* free */
 void free(void * ptr)
 {
-	char buf[] = "invalid free detected: terminated\n";
+	const char buf[] = "invalid free detected: terminated\n";
 	Alloc * a = (Alloc*)((char*)ptr - sizeof(*a));
 	Alloc * b;
 
