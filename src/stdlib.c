@@ -261,6 +261,7 @@ void exit(int status)
 /* free */
 void free(void * ptr)
 {
+	char buf[] = "invalid free detected: terminated\n";
 	Alloc * a = (Alloc*)((char*)ptr - sizeof(*a));
 	Alloc * b;
 
@@ -269,8 +270,8 @@ void free(void * ptr)
 	b = a->prev;
 	if(b->next != a)
 	{
-		fprintf(stderr, "%s: %p: %s\n", "*** libc", ptr,
-				"Invalid free");
+		write(2, buf, sizeof(buf) - 1);
+		abort();
 		return;
 	}
 	b->next = a->next;
