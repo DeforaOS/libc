@@ -35,13 +35,13 @@
 /* types */
 # if defined(__amd64__)
 typedef long jmp_buf[9 + 1 + 4];
-typedef jmp_buf sigjmp_buf;
 # elif defined(__i386__)
 typedef long jmp_buf[6 + 1 + 4];
-typedef jmp_buf sigjmp_buf;
 # else
 #  warning Unsupported platform: jmp_buf and sigjmp_buf are not defined
+typedef long jmp_buf[16];
 # endif
+typedef jmp_buf sigjmp_buf;
 
 
 /* functions */
