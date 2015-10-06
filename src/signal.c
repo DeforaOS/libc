@@ -76,10 +76,12 @@ int sigemptyset(sigset_t * set)
 
 
 /* sigismember */
-int sigismember(sigset_t * set, int sig)
+int sigismember(const sigset_t * set, int sig)
 {
 	/* FIXME untested */
-	return set->bits[sig / 4] & (sig % 32);
+	if(sig < 0 || (size_t)sig > (sizeof(set->bits) / sizeof(*set->bits)))
+		return 0;
+	return (set->bits[(sig - 1) >> 5] & (sig % 32));
 }
 
 
