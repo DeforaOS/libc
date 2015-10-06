@@ -245,6 +245,7 @@ static int _file_read_ehdr(int fd, Elf_Ehdr * ehdr)
 static int _file_mmap(DL * dl, Elf_Phdr * phdr)
 {
 	int prot;
+	int flags;
 	char ** base;
 	size_t * size;
 	char ** addr;
@@ -252,6 +253,7 @@ static int _file_mmap(DL * dl, Elf_Phdr * phdr)
 	off_t offset;
 
 	prot = _file_prot(phdr->p_flags);
+	flags = (prot & PROT_WRITE) ? MAP_PRIVATE : 0;
 	/* FIXME assuming the order here */
 	if(dl->text_addr == NULL)
 	{
@@ -271,10 +273,9 @@ static int _file_mmap(DL * dl, Elf_Phdr * phdr)
 	offset = phdr->p_offset;
 #ifdef DEBUG
 	fprintf(stderr, "DEBUG: mmap(%p, 0x%lx, %d, %d, %d, 0x%lx)\n", NULL,
-			len, prot, MAP_PRIVATE, dl->fd, offset);
+			len, prot, flags, dl->fd, offset);
 #endif
-	if((*base = mmap(NULL, len, prot, MAP_PRIVATE, dl->fd, offset))
-			== MAP_FAILED)
+	if((*base = mmap(NULL, len, prot, flags, dl->fd, offset)) == MAP_FAILED)
 		return _dl_error_set_errno(-1);
 	*size = len;
 	*addr = *base - phdr->p_vaddr;
