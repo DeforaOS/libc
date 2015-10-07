@@ -1,5 +1,6 @@
 Makefile
 *.a
+*.bak
 *.dylib
 *.la
 *.o
