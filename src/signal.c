@@ -65,12 +65,46 @@ int sigaction(int sig, const struct sigaction * act, struct sigaction * oact)
 #endif
 
 
+/* sigaddset */
+int sigaddset(sigset_t * set, int sig)
+{
+	if(sig < 0 || (size_t)sig > (sizeof(set->bits) / sizeof(*set->bits)))
+	{
+		errno = EINVAL;
+		return -1;
+	}
+	set->bits[(sig - 1) >> 5] |= (sig % 32);
+	return 0;
+}
+
+
+/* sigdelset */
+int sigdelset(sigset_t * set, int sig)
+{
+	if(sig < 0 || (size_t)sig > (sizeof(set->bits) / sizeof(*set->bits)))
+	{
+		errno = EINVAL;
+		return -1;
+	}
+	set->bits[(sig - 1) >> 5] &= ~(sig % 32);
+	return 0;
+}
+
+
 /* sigemptyset */
 #undef sigemptyset
 int sigemptyset(sigset_t * set)
 {
-	/* XXX untested */
 	memset(set, 0, sizeof(*set));
+	return 0;
+}
+
+
+/* sigfillset */
+#undef sigfillset
+int sigfillset(sigset_t * set)
+{
+	memset(set, ~0, sizeof(*set));
 	return 0;
 }
 
@@ -78,7 +112,6 @@ int sigemptyset(sigset_t * set)
 /* sigismember */
 int sigismember(const sigset_t * set, int sig)
 {
-	/* FIXME untested */
 	if(sig < 0 || (size_t)sig > (sizeof(set->bits) / sizeof(*set->bits)))
 		return 0;
 	return (set->bits[(sig - 1) >> 5] & (sig % 32));

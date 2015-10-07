@@ -40,6 +40,8 @@ static int _ret;
 
 
 /* prototypes */
+static int _sigismember(char const * progname, int signal);
+
 static void _on_sigusr1(int signal);
 static void _on_sigusr2(int signal);
 
@@ -47,6 +49,24 @@ static int _error(char const * progname, char const * message, int ret);
 
 
 /* functions */
+/* sigismember */
+static int _sigismember(char const * progname, int signal)
+{
+	sigset_t set;
+
+	printf("%s: Testing sigismember(%d)\n", progname, signal);
+	if(sigemptyset(&set) != 0 || sigismember(&set, signal))
+		return 1;
+	if(sigaddset(&set, signal) != 0 || sigismember(&set, signal) == 0)
+		return 2;
+	if(sigdelset(&set, signal) != 0 || sigismember(&set, signal))
+		return 4;
+	if(sigfillset(&set) != 0 || sigismember(&set, signal) == 0)
+		return 8;
+	return 0;
+}
+
+
 /* on_sigusr1 */
 static void _on_sigusr1(int signal)
 {
@@ -76,6 +96,9 @@ static int _error(char const * progname, char const * message, int ret)
 /* functions */
 int main(int argc, char * argv[])
 {
+	int ret = 0;
+
+	ret = (_sigismember(argv[0], SIGHUP) << 2);
 	_ret = 2;
 	printf("%s: %s", argv[0], "Testing signal()\n");
 	if(signal(SIGUSR1, _on_sigusr1) == SIG_ERR)
@@ -94,5 +117,5 @@ int main(int argc, char * argv[])
 		_error(argv[0], "kill", 2);
 	if(raise(SIGTERM) != 0)
 		_error(argv[0], "kill", 2);
-	return _ret;
+	return (ret | _ret);
 }
