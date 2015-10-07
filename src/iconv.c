@@ -55,9 +55,7 @@ iconv_t iconv_open(const char * tocode, const char * fromcode)
 	cd->fromcode = strdup(fromcode);
 	if(cd->tocode == NULL || cd->fromcode == NULL)
 	{
-		free(cd->fromcode);
-		free(cd->tocode);
-		free(cd);
+		iconv_close(cd);
 		return NULL;
 	}
 	return cd;
