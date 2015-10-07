@@ -68,12 +68,21 @@ int sigaction(int sig, const struct sigaction * act, struct sigaction * oact)
 /* sigaddset */
 int sigaddset(sigset_t * set, int sig)
 {
+#ifdef __OpenBSD__
+	if(sig < 0 || sig >= sizeof(*set) << 3)
+	{
+		errno = EINVAL;
+		return -1;
+	}
+	*set |= (1 << sig);
+#else
 	if(sig < 0 || (size_t)sig > (sizeof(set->bits) / sizeof(*set->bits)))
 	{
 		errno = EINVAL;
 		return -1;
 	}
 	set->bits[(sig - 1) >> 5] |= (sig % 32);
+#endif
 	return 0;
 }
 
@@ -81,12 +90,21 @@ int sigaddset(sigset_t * set, int sig)
 /* sigdelset */
 int sigdelset(sigset_t * set, int sig)
 {
+#ifdef __OpenBSD__
+	if(sig < 0 || sig >= sizeof(*set) << 3)
+	{
+		errno = EINVAL;
+		return -1;
+	}
+	*set &= ~(1 << sig);
+#else
 	if(sig < 0 || (size_t)sig > (sizeof(set->bits) / sizeof(*set->bits)))
 	{
 		errno = EINVAL;
 		return -1;
 	}
 	set->bits[(sig - 1) >> 5] &= ~(sig % 32);
+#endif
 	return 0;
 }
 
@@ -112,9 +130,13 @@ int sigfillset(sigset_t * set)
 /* sigismember */
 int sigismember(const sigset_t * set, int sig)
 {
+#ifdef __OpenBSD__
+	return (*set & (1 << sig));
+#else
 	if(sig < 0 || (size_t)sig > (sizeof(set->bits) / sizeof(*set->bits)))
 		return 0;
 	return (set->bits[(sig - 1) >> 5] & (sig % 32));
+#endif
 }
 
 
