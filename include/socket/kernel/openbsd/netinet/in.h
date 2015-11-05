@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2015 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,20 +28,27 @@
 
 
 
-#ifndef LIBSOCKET_COMPAT_NETINET_IN_H
-# define LIBSOCKET_COMPAT_NETINET_IN_H
+#ifndef LIBSOCKET_KERNEL_OPENBSD_NETINET_IN_H
+# define LIBSOCKET_KERNEL_OPENBSD_NETINET_IN_H
 
 
-# if defined(__FreeBSD__)
-#  include "kernel/freebsd/netinet/in.h"
-# elif defined(__linux__)
-#  include "kernel/linux/netinet/in.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/netinet/in.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/netinet/in.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef in_addr_t
+#  define in_addr_t in_addr_t
+typedef uint32_t in_addr_t;
 # endif
 
-#endif /* !LIBSOCKET_COMPAT_NETINET_IN_H */
+# ifndef in_port_t
+#  define in_port_t in_port_t
+typedef uint16_t in_port_t;
+#endif
+
+# ifndef in_addr
+#  define in_addr in_addr
+struct in_addr
+{
+	in_addr_t s_addr;
+};
+# endif
+
+#endif /* !LIBSOCKET_KERNEL_OPENBSD_NETINET_IN_H */
