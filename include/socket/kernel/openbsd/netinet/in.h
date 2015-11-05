@@ -51,4 +51,16 @@ struct in_addr
 };
 # endif
 
+# ifndef sockaddr_in
+#  define sockaddr_in sockaddr_in
+struct sockaddr_in
+{
+	unsigned char sin_len;
+	sa_family_t sin_family;
+	in_port_t sin_port;
+	struct in_addr sin_addr;
+	char _padding[8];
+};
+# endif
+
 #endif /* !LIBSOCKET_KERNEL_OPENBSD_NETINET_IN_H */
