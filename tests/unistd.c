@@ -30,8 +30,38 @@
 
 #include <sys/wait.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
+#include <libgen.h>
 #include <unistd.h>
+#include <errno.h>
+
+
+/* chroot */
+static int _chroot(char const * progname)
+{
+	char * p;
+	char * dir;
+	int res;
+
+	printf("%s: Testing chroot()\n", progname);
+	if((p = strdup(progname)) == NULL)
+		return -1;
+	dir = dirname(p);
+	res = chroot(dir);
+	free(p);
+	if(res != 0)
+		switch(errno)
+		{
+			case ENOSYS:
+			case EPERM:
+				/* we can ignore these errors */
+				break;
+			default:
+				return -1;
+		}
+	return 0;
+}
 
 
 /* fork */
@@ -85,6 +115,7 @@ int main(int argc, char * argv[])
 {
 	int ret = 0;
 
+	ret += _chroot(argv[0]);
 	ret += _fork(argv[0]);
 	ret += _sleep(argv[0], 0);
 	ret += _sleep(argv[0], 1);
