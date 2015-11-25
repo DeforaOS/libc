@@ -122,7 +122,8 @@ int fclose(FILE * file)
 	int ret;
 	
 	ret = fflush(file);
-	close(file->fd);
+	if(close(file->fd) != 0)
+		ret = -1;
 	free(file);
 	return ret;
 }
