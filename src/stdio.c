@@ -1818,7 +1818,7 @@ static FILE * _fopen_new(int fd, int flags, int fbuf)
 	file->pos = 0;
 	file->eof = 0;
 	file->error = 0;
-	file->dir = file->flags & O_WRONLY ? FD_WRITE : FD_READ;
+	file->dir = (file->flags & O_WRONLY) ? FD_WRITE : FD_READ;
 	file->fbuf = fbuf;
 	return file;
 }
