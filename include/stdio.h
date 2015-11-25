@@ -92,6 +92,7 @@ int fgetc(FILE * file);
 char * fgets(char * str, int size, FILE * file);
 int fileno(FILE * file);
 void flockfile(FILE * file);
+FILE * fmemopen(void * buffer, size_t size, char const * mode);
 FILE * fopen(char const * path, char const * mode);
 int fprintf(FILE * file, char const * format, ...);
 int fputc(int c, FILE * file);

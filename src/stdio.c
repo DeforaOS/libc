@@ -122,8 +122,10 @@ int fclose(FILE * file)
 	int ret;
 	
 	ret = fflush(file);
-	if(close(file->fd) != 0)
-		ret = -1;
+	if(file->fd >= 0)
+		if(close(file->fd) != 0)
+			ret = -1;
+	/* FIXME free file->buf if dynamically allocated */
 	free(file);
 	return ret;
 }
@@ -242,6 +244,35 @@ void flockfile(FILE * file)
 	fl.l_type = F_RDLCK | F_WRLCK;
 	fl.l_whence = SEEK_SET;
 	fcntl(file->fd, F_SETLKW, &fl);
+}
+
+
+/* fmemopen */
+FILE * fmemopen(void * buffer, size_t size, char const * mode)
+{
+	FILE * file;
+	int flags;
+
+	/* FIXME subsequent file operations untested */
+	if((flags = _fopen_mode(mode)) == -1)
+		return NULL;
+	if((file = _fopen_new(-1, flags, _IONBF)) == NULL)
+		return NULL;
+	if(buffer != NULL)
+		file->buf = buffer;
+	else
+	{
+		if(size == 0)
+			file->buf = NULL;
+		else if((file->buf = calloc(1, size)) == NULL)
+		{
+			fclose(file);
+			return NULL;
+		}
+	}
+	file->bufsiz = size;
+	file->len = size;
+	return file;
 }
 
 

@@ -35,6 +35,36 @@
 
 
 /* stdio */
+/* fmemopen */
+static int _fmemopen(char const * progname, void * buffer, size_t size)
+{
+	int ret = 1;
+	FILE * file;
+	char * buf;
+	size_t s;
+
+	printf("%s: Testing fmemopen()\n", progname);
+	if((file = fmemopen(buffer, size, "r")) == NULL)
+		return 2;
+	if((buf = malloc(size)) == NULL)
+	{
+		fclose(file);
+		return 3;
+	}
+	if((s = fread(buf, sizeof(*buf), size, file)) != size)
+		printf("%s: Obtained %lu (expected: %lu)\n", progname, s, size);
+	else if(memcmp(buf, buffer, size) != 0)
+		printf("%s: Obtained \"%s\" (expected: \"%s\")\n", progname,
+				buf, buffer);
+	else
+		ret = 0;
+	free(buf);
+	if(fclose(file) != 0 && ret == 0)
+		ret = 4;
+	return ret;
+}
+
+
 /* fopen */
 static int _fopen(char const * progname, char const * mode, int expected)
 {
@@ -92,6 +122,7 @@ int main(int argc, char * argv[])
 {
 	int ret = 0;
 
+	ret += _fmemopen(argv[0], "test", 5);
 	ret += _fopen(argv[0], "a", O_WRONLY | O_APPEND | O_CREAT);
 	ret += _fopen(argv[0], "ab", O_WRONLY | O_APPEND | O_CREAT);
 	ret += _fopen(argv[0], "a+", O_RDWR | O_APPEND | O_CREAT);
