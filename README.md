@@ -76,6 +76,13 @@ With GCC:
       LDFLAGS="-nostdlib -L/path/to/libc/src -Wl,-rpath,/path/to/libc/src -lc /path/to/libc/src/start.o" \
       target
 
+A specs file for GCC is also provided by DeforaOS libc, in
+`tools/deforaos-gcc.specs`. It is installed in the `$PREFIX/lib/gcc` directory
+by default. A shell wrapper for GCC using this specs file, `deforaos-gcc`, is
+also provided and installed by default.
+
+This specs file is still experimental, and known to fail in some situations.
+
 
 Cross-compiling with DeforaOS libc
 ----------------------------------
