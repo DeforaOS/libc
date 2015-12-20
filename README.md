@@ -39,6 +39,17 @@ _Warning_: unless you know what you are doing, do not install libc in a
 	   libraries, like `/usr` or even the default `/usr/local`.
 
 
+Generating Makefiles
+--------------------
+
+Official releases of DeforaOS libc ship with Makefiles, fitting most platforms.
+They are generated with the `configure` tool from the DeforaOS Project, found
+at <http://www.defora.org/os/project/16/configure>.
+
+This tool is therefore necessary to generate Makefiles for development versions
+of the library.
+
+
 Compiling programs against libc
 -------------------------------
 
