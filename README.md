@@ -24,7 +24,9 @@ libc is part of the DeforaOS Project, and distributed under the terms of the BSD
 Compiling libc
 --------------
 
-With GCC, this should be enough:
+libc is developed with GCC as the main compiler.
+
+Simply running `make` with no argument should be enough regardless:
 
     $ make
 
@@ -33,8 +35,8 @@ To install libc in a dedicated directory, like `/path/to/libc`:
     $ make PREFIX="/path/to/libc" install
 
 _Warning_: unless you know what you are doing, do not install libc in a
-           directory where it might conflict with your system's default headers
-           and libraries, like `/usr` or even the default `/usr/local`.
+           directory where it might conflict with the system headers and
+	   libraries, like `/usr` or even the default `/usr/local`.
 
 
 Compiling programs against libc
