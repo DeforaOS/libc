@@ -59,8 +59,8 @@ The following instructions assume that libc is installed in the
 With GCC:
 
     $ make CPPFLAGS="-nostdinc -isystem /path/to/libc/include" \
-        LDFLAGS="-nostdlib -L/path/to/libc/src -Wl,-rpath,/path/to/libc/src -lc /path/to/libc/src/start.o" \
-        target
+      LDFLAGS="-nostdlib -L/path/to/libc/src -Wl,-rpath,/path/to/libc/src -lc /path/to/libc/src/start.o" \
+      target
 
 
 Cross-compiling with libc
