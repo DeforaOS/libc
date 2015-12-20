@@ -73,13 +73,13 @@ Linux i386 binary on NetBSD amd64, with GCC:
 Build DeforaOS libc as follows:
 
     $ make CC="gcc -m32 -Wl,--dynamic-linker,/lib/ld-linux.so.2" \
-	CPPFLAGS="-U __NetBSD__ -D __linux__"
+      CPPFLAGS="-U __NetBSD__ -D __linux__"
 
 Build the target binary as follows:
 
     $ make CC="gcc -m32 -Wl,--dynamic-linker,/lib/ld-linux.so.2" \
-	CPPFLAGS="-U __NetBSD__ -D __linux__ -nostdinc -isystem /path/to/libc/include" \
-        LDFLAGS="-nostdlib -L/path/to/libc/src -Wl,-rpath,/path/to/libc/src -lc /path/to/libc/src/start.o" \
-        target
+      CPPFLAGS="-U __NetBSD__ -D __linux__ -nostdinc -isystem /path/to/libc/include" \
+      LDFLAGS="-nostdlib -L/path/to/libc/src -Wl,-rpath,/path/to/libc/src -lc /path/to/libc/src/start.o" \
+      target
 
 This should provide a functional Linux/i386 binary.
