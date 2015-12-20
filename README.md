@@ -18,7 +18,7 @@ also reducing the storage footprint. It is also useful during the development of
 programs intended to be portable across Operating Systems.
 
 libc is part of the DeforaOS Project, and distributed under the terms of the BSD
-license.
+2-clause license.
 
 
 Compiling libc
