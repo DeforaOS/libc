@@ -81,7 +81,7 @@ A specs file for GCC is also provided by DeforaOS libc, in
 by default. A shell wrapper for GCC using this specs file, `deforaos-gcc`, is
 also provided and installed by default.
 
-This specs file is still experimental, and known to fail in some situations.
+This specs file is experimental, with some known issues remaining.
 
 
 Cross-compiling with DeforaOS libc
@@ -95,9 +95,9 @@ Simply refer to the right compiler while building, as follows:
 Compatibility with GCC's command-line syntax is assumed by default (for both
 building and linking).
 
-It is sometimes possible to build cross-OS binaries thanks to DeforaOS libc,
-without requiring a cross-compiler in the first place. For instance, to build a
-Linux i386 binary on NetBSD amd64, with GCC:
+In some cases, it is possible to build binaries cross-OS without requiring a
+cross-compiler in the first place. For instance, to build a Linux i386 binary
+on NetBSD amd64, with GCC:
 
 Build DeforaOS libc as follows:
 
