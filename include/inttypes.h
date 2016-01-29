@@ -49,6 +49,31 @@ typedef char wchar_t;
 # endif
 
 
+/* constants */
+#ifdef __INTPTR_FMTd__
+# define PRId8		__INT8_FMTd__
+# define PRId16		__INT16_FMTd__
+# define PRId32		__INT32_FMTd__
+# define PRId64		__INT64_FMTd__
+# define PRIdMAX	__INTMAX_FMTd__
+# define PRIdPTR	__INTPTR_FMTd__
+#elif _LP64
+# define PRId8		"d"
+# define PRId16		"d"
+# define PRId32		"d"
+# define PRId64		"ld"
+# define PRIdMAX	"ld"
+# define PRIdPTR	"ld"
+#else
+# define PRId8		"d"
+# define PRId16		"d"
+# define PRId32		"d"
+# define PRId64		"lld"
+# define PRIdMAX	"lld"
+# define PRIdPTR	"d"
+#endif
+
+
 /* functions */
 intmax_t imaxabs(intmax_t);
 imaxdiv_t imaxdiv(intmax_t, intmax_t);
