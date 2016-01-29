@@ -114,6 +114,7 @@ echo "Performing tests:" 1>&2
 _test "errno"
 _test "fnmatch"
 _test "includes"
+_test "inttypes"
 _test "langinfo"
 _test "netdb"
 _test "ptrace"
