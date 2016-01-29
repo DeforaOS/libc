@@ -31,6 +31,9 @@
 #ifndef LIBC_KERNEL_NETBSD_SYS_SELECT_H
 # define LIBC_KERNEL_NETBSD_SYS_SELECT_H
 
+/* XXX for memset() */
+# include <string.h>
+
 
 /* types */
 # ifndef fd_set
