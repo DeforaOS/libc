@@ -76,6 +76,29 @@ static int _fopen(char const * progname, char const * mode, int expected)
 }
 
 
+/* printf */
+static int _printf(char const * progname, char const * format, int64_t i,
+		char const * expected)
+{
+	int ret;
+	char * buf;
+	int len;
+
+	printf("%s: Testing printf()\n", progname);
+	if((len = snprintf(NULL, 0, format, i)) <= 0)
+		return -1;
+	if((buf = malloc(len + 2)) == NULL)
+		return -1;
+	snprintf(buf, len + 2, format, i);
+	buf[len + 1] = '\0';
+	if((ret = strcmp(buf, expected)) != 0)
+		printf("%s: Obtained \"%s\" (expected: \"%s\")\n", progname,
+				buf, expected);
+	free(buf);
+	return ret;
+}
+
+
 /* sscanf */
 static int _sscanf(char const * progname)
 {
@@ -147,6 +170,12 @@ int main(int argc, char * argv[])
 	ret += _fopen(argv[0], "wbx", O_WRONLY | O_TRUNC | O_CREAT | O_EXCL);
 	ret += _fopen(argv[0], "w+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
 	ret += _fopen(argv[0], "wb+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
+	ret += _printf(argv[0], "%d", 42, "42");
+	ret += _printf(argv[0], "%d", -42, "-42");
+	ret += _printf(argv[0], "%o", 42, "52");
+	ret += _printf(argv[0], "%u", 42, "42");
+	ret += _printf(argv[0], "%x", 42, "2a");
+	ret += _printf(argv[0], "%X", 42, "2A");
 	ret += _sscanf(argv[0]);
 	ret += _tmpfile(argv[0]);
 	ret += _tmpnam(argv[0], NULL);
