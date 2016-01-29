@@ -1737,12 +1737,12 @@ static int _sprint(void * dest, size_t size, char const buf[])
 int vsprintf(char * str, char const * format, va_list arg)
 {
 	int ret;
-	char * p = str;
-	size_t size = -1;
+	size_t size = (str != NULL) ? -1 : 0;
 
-	if((ret = _vprintf(_sprint, &p, size, format, arg)) < 0)
+	if((ret = _vprintf(_sprint, &str, size, format, arg)) < 0)
 		return ret;
-	str[ret] = '\0';
+	if(str != NULL)
+		str[ret] = '\0';
 	return ret;
 }
 
