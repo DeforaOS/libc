@@ -140,6 +140,36 @@ typedef char wchar_t;
 # define PRIXFAST64	__UINTFAST64_FMTX__
 # define PRIXMAX	__UINTMAX_FMTX__
 # define PRIXPTR	__UINTPTR_FMTX__
+
+# define SCNd8		__INT8_FMTd__
+# define SCNd16		__INT16_FMTd__
+# define SCNd32		__INT32_FMTd__
+# define SCNd64		__INT64_FMTd__
+# define SCNdLEAST8	__INT_LEAST8_FMTd__
+# define SCNdLEAST16	__INT_LEAST16_FMTd__
+# define SCNdLEAST32	__INT_LEAST32_FMTd__
+# define SCNdLEAST64	__INT_LEAST64_FMTd__
+# define SCNdFAST8	__INT_FAST8_FMTd__
+# define SCNdFAST16	__INT_FAST16_FMTd__
+# define SCNdFAST32	__INT_FAST32_FMTd__
+# define SCNdFAST64	__INT_FAST64_FMTd__
+# define SCNdMAX	__INTMAX_FMTd__
+# define SCNdPTR	__INTPTR_FMTd__
+
+# define SCNi8		__INT8_FMTi__
+# define SCNi16		__INT16_FMTi__
+# define SCNi32		__INT32_FMTi__
+# define SCNi64		__INT64_FMTi__
+# define SCNiLEAST8	__INT_LEAST8_FMTi__
+# define SCNiLEAST16	__INT_LEAST16_FMTi__
+# define SCNiLEAST32	__INT_LEAST32_FMTi__
+# define SCNiLEAST64	__INT_LEAST64_FMTi__
+# define SCNiFAST8	__INT_FAST8_FMTi__
+# define SCNiFAST16	__INT_FAST16_FMTi__
+# define SCNiFAST32	__INT_FAST32_FMTi__
+# define SCNiFAST64	__INT_FAST64_FMTi__
+# define SCNiMAX	__INTMAX_FMTi__
+# define SCNiPTR	__INTPTR_FMTi__
 #elif _LP64
 # define PRId8		"d"
 # define PRId16		"d"
@@ -230,7 +260,37 @@ typedef char wchar_t;
 # define PRIXFAST64	"lX"
 # define PRIXMAX	"lX"
 # define PRIXPTR	"lX"
-#else
+
+# define SCNd8		"hhd"
+# define SCNd16		"hd"
+# define SCNd32		"d"
+# define SCNd64		"ld"
+# define SCNdLEAST8	"hhd"
+# define SCNdLEAST16	"hd"
+# define SCNdLEAST32	"d"
+# define SCNdLEAST64	"ld"
+# define SCNdFAST8	"d"
+# define SCNdFAST16	"d"
+# define SCNdFAST32	"d"
+# define SCNdFAST64	"ld"
+# define SCNdMAX	"ld"
+# define SCNdPTR	"ld"
+
+# define SCNi8		"hhi"
+# define SCNi16		"hi"
+# define SCNi32		"i"
+# define SCNi64		"li"
+# define SCNiLEAST8	"hhi"
+# define SCNiLEAST16	"hi"
+# define SCNiLEAST32	"i"
+# define SCNiLEAST64	"li"
+# define SCNiFAST8	"i"
+# define SCNiFAST16	"i"
+# define SCNiFAST32	"i"
+# define SCNiFAST64	"li"
+# define SCNiMAX	"li"
+# define SCNiPTR	"li"
+#else /* !_LP64 */
 # define PRId8		"d"
 # define PRId16		"d"
 # define PRId32		"d"
@@ -320,6 +380,36 @@ typedef char wchar_t;
 # define PRIXFAST64	"llX"
 # define PRIXMAX	"llX"
 # define PRIXPTR	"X"
+
+# define SCNd8		"hhd"
+# define SCNd16		"hd"
+# define SCNd32		"d"
+# define SCNd64		"lld"
+# define SCNdLEAST8	"hhd"
+# define SCNdLEAST16	"hd"
+# define SCNdLEAST32	"d"
+# define SCNdLEAST64	"lld"
+# define SCNdFAST8	"d"
+# define SCNdFAST16	"d"
+# define SCNdFAST32	"d"
+# define SCNdFAST64	"lld"
+# define SCNdMAX	"lld"
+# define SCNdPTR	"ld"
+
+# define SCNi8		"hhi"
+# define SCNi16		"hi"
+# define SCNi32		"i"
+# define SCNi64		"lli"
+# define SCNiLEAST8	"hhi"
+# define SCNiLEAST16	"hi"
+# define SCNiLEAST32	"i"
+# define SCNiLEAST64	"lli"
+# define SCNiFAST8	"i"
+# define SCNiFAST16	"i"
+# define SCNiFAST32	"i"
+# define SCNiFAST64	"lli"
+# define SCNiMAX	"lli"
+# define SCNiPTR	"li"
 #endif
 
 
