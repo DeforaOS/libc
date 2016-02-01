@@ -49,8 +49,8 @@ Generating Makefiles
 --------------------
 
 Official releases of DeforaOS libc ship with Makefiles fitting BSD- and
-Linux-based platforms by default. The Makefiles are generated with the
-`configure` tool from the DeforaOS configure project, found at
+Linux-based platforms by default. The Makefiles are generated with
+`configure(1)` from the DeforaOS configure project, found at
 <http://www.defora.org/os/project/16/configure>.
 
 This tool is necessary to generate Makefiles for other platforms (including
