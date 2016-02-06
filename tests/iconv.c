@@ -65,9 +65,14 @@ static int _iconv(char const * progname, char const * tocode,
 		free(outbuf);
 		return _iconv_error(NULL, 2);
 	}
-	if((ret = iconv(cd, &buf, &inbytesleft, &p, &outbytesleft)) == 0
-			&& strcmp(outbuf, expected) != 0)
+	if((ret = iconv(cd, &buf, &inbytesleft, &p, &outbytesleft)) != 0)
 		ret = _iconv_error(NULL, 3);
+	else if(strcmp(outbuf, expected) != 0)
+	{
+		printf("Obtained: \"%s\"\nExpected: \"%s\"\n",
+				outbuf, expected);
+		ret = _iconv_error(NULL, 4);
+	}
 	iconv_close(cd);
 	free(outbuf);
 	return ret;
