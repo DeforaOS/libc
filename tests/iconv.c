@@ -34,12 +34,14 @@
 #include <iconv.h>
 
 
+/* private */
 /* prototypes */
 static int _iconv(char const * progname, char const * tocode,
 		char const * fromcode, char const * buf, char const * expected);
 static int _iconv_error(char const * message, int ret);
 
 
+/* functions */
 /* iconv */
 static int _iconv(char const * progname, char const * tocode,
 		char const * fromcode, char const * buf, char const * expected)
@@ -72,6 +74,7 @@ static int _iconv(char const * progname, char const * tocode,
 }
 
 
+/* iconv_error */
 static int _iconv_error(char const * message, int ret)
 {
 	fputs("iconv: ", stderr);
@@ -80,6 +83,8 @@ static int _iconv_error(char const * message, int ret)
 }
 
 
+/* public */
+/* functions */
 /* main */
 int main(int argc, char * argv[])
 {
