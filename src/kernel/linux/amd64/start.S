@@ -37,7 +37,11 @@ _start:
 
 #if defined(__SSP__)
 	/* initialize SSP */
+# ifdef __PIC__
+	call	__stack_chk_setup@PLT
+# else
 	call	__stack_chk_setup
+# endif
 #endif
 
 	/* set the thread-local storage area */
