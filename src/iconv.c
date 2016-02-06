@@ -29,36 +29,68 @@
 
 
 #include "sys/types.h"
-#include "stdlib.h"
 #include "string.h"
+#include "strings.h"
 #include "errno.h"
 #include "iconv.h"
 
 
 /* types */
-struct _iconv_t
+typedef enum _iconv_code
 {
-	char * tocode;
-	char * fromcode;
+	IC_UNKNOWN = -1,
+	IC_ISO_8859_1,
+	IC_ISO_8859_15,
+	IC_UTF_8
+} iconv_code;
+
+
+/* constants */
+static struct
+{
+	iconv_code code;
+	char const * name;
+} _iconv_names[] =
+{
+	{ IC_ISO_8859_1, "iso-8859-1" },
+	{ IC_ISO_8859_15, "iso-8859-15" },
+	{ IC_UTF_8, "UTF-8" },
+	{ IC_UTF_8, "UTF8" }
 };
 
 
 /* functions */
 /* iconv_open */
+static iconv_code _open_code(char const * code);
+
 iconv_t iconv_open(const char * tocode, const char * fromcode)
 {
 	iconv_t cd;
+	iconv_code code;
 
-	if((cd = malloc(sizeof(*cd))) == NULL)
-		return NULL;
-	cd->tocode = strdup(tocode);
-	cd->fromcode = strdup(fromcode);
-	if(cd->tocode == NULL || cd->fromcode == NULL)
+	if((code = _open_code(tocode)) == IC_UNKNOWN)
 	{
-		iconv_close(cd);
-		return NULL;
+		errno = EINVAL;
+		return (iconv_t)-1;
 	}
+	cd = code;
+	if((code = _open_code(fromcode)) == IC_UNKNOWN)
+	{
+		errno = EINVAL;
+		return (iconv_t)-1;
+	}
+	cd |= code << 16;
 	return cd;
+}
+
+static iconv_code _open_code(char const * code)
+{
+	size_t i;
+
+	for(i = 0; i < sizeof(_iconv_names) / sizeof(*_iconv_names); i++)
+		if(strcasecmp(_iconv_names[i].name, code) == 0)
+			return _iconv_names[i].code;
+	return IC_UNKNOWN;
 }
 
 
@@ -66,6 +98,22 @@ iconv_t iconv_open(const char * tocode, const char * fromcode)
 size_t iconv(iconv_t cd, char ** inbuf, size_t * inbytesleft, 
 		char ** outbuf, size_t * outbytesleft)
 {
+	if((cd & 0xffff) == ((cd >> 16) & 0xffff))
+	{
+		/* no conversion is required */
+		if(*inbytesleft > *outbytesleft)
+		{
+			/* the conversion will not fit */
+			errno = E2BIG;
+			return (size_t)-1;
+		}
+		memcpy(*outbuf, *inbuf, *inbytesleft);
+		(*inbuf) += *inbytesleft;
+		(*outbuf) += *inbytesleft;
+		(*outbytesleft) -= *inbytesleft;
+		*inbytesleft = 0;
+		return 0;
+	}
 	errno = ENOSYS;
 	return (size_t)-1;
 }
@@ -74,8 +122,7 @@ size_t iconv(iconv_t cd, char ** inbuf, size_t * inbytesleft,
 /* iconv_close */
 int iconv_close(iconv_t cd)
 {
-	free(cd->tocode);
-	free(cd->fromcode);
-	free(cd);
+	(void) cd;
+
 	return 0;
 }

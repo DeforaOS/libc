@@ -33,7 +33,7 @@
 
 
 /* types */
-typedef struct _iconv_t * iconv_t;
+typedef unsigned int iconv_t;
 
 
 /* functions */
