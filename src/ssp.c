@@ -52,19 +52,19 @@ void __stack_chk_fail(void)
 }
 
 
-#ifdef __i386__
+# ifdef __i386__
 /* stack_chk_fail_local */
 void __stack_chk_fail_local(void)
 {
 	__stack_chk_fail();
 }
-#endif
+# endif
 
 
 /* stack_chk_setup */
 void __stack_chk_setup(void)
 {
-#if defined(SYS_sysctl) && defined(CTL_KERN) && defined(KERN_ARND)
+# if defined(SYS_sysctl) && defined(CTL_KERN) && defined(KERN_ARND)
 	const int mib[2] = { CTL_KERN, KERN_ARND };
 	size_t len = sizeof(__stack_chk_guard);
 
@@ -73,9 +73,9 @@ void __stack_chk_setup(void)
 	if(sysctl(mib, sizeof(mib) / sizeof(*mib), __stack_chk_guard, &len,
 				NULL, 0) == -1
 			|| len != sizeof(__stack_chk_guard))
-#else
+# else
 	if(__stack_chk_guard[0] == 0)
-#endif
+# endif
 	{
 		/* use the "terminator canary" */
 		__stack_chk_guard[0] = 0;
