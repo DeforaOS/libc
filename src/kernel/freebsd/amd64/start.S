@@ -34,7 +34,11 @@ _start:
 
 #if defined(__SSP__)
 	/* initialize SSP */
+# ifdef __PIC__
+	call	__stack_chk_setup@PLT
+# else
 	call	__stack_chk_setup
+# endif
 #endif
 
 	/* rdi is &argc, argv is (&argc + 8) */
