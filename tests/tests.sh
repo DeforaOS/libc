@@ -114,6 +114,7 @@ FAILED=
 echo "Performing tests:" 1>&2
 _test "errno"
 _test "fnmatch"
+_test "iconv"
 _test "includes"
 _test "inttypes"
 _test "langinfo"
