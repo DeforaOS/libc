@@ -1,7 +1,9 @@
 /dlfcn
 /errno
 /fnmatch
+/iconv
 /includes
+/inttypes
 /langinfo
 /netdb
 /ptrace
