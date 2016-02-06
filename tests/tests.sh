@@ -24,6 +24,7 @@
 
 
 #variables
+ARCH="$(uname -m)"
 [ -n "$OBJDIR" ] || OBJDIR="./"
 PROGNAME="tests.sh"
 SYSTEM="$(uname -s)"
@@ -126,6 +127,7 @@ _test "select"
 _test "setjmp"
 [ "$SYSTEM" != "FreeBSD" -a "$SYSTEM" != "Linux" ] && _test "signal"
 _test "socket"
+[ "$SYSTEM" = "NetBSD" -a "$ARCH" = "amd64" ] && _test "ssp"
 _test "start" argv1 argv2
 _test "stdarg"
 _test "stdint"
@@ -137,7 +139,7 @@ _test "utsname"
 echo "Expected failures:" 1>&2
 _fail "dlfcn" "../src/libc.$SOEXT"
 [ "$SYSTEM" = "FreeBSD" -o "$SYSTEM" = "Linux" ] && _fail "signal"
-_fail "ssp"
+[ "$SYSTEM" = "NetBSD" -a "$ARCH" = "amd64" ] || _fail "ssp"
 _fail "stdlib"
 if [ -n "$FAILED" ]; then
 	echo "Failed tests:$FAILED" 1>&2
