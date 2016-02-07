@@ -56,10 +56,11 @@ static int _iconv(char const * progname, char const * tocode,
 	printf("%s: Testing %s: \"%s\" to \"%s\"\n", progname, "iconv()",
 			fromcode, tocode);
 	inbytesleft = strlen(buf);
-	if((outbuf = malloc(inbytesleft + 1)) == NULL)
+	outbytesleft = inbytesleft;
+	if((outbuf = malloc(outbytesleft + 1)) == NULL)
 		return _iconv_error(NULL, 1);
 	p = outbuf;
-	outbuf[inbytesleft] = '\0';
+	outbuf[outbytesleft] = '\0';
 	if((cd = iconv_open(tocode, fromcode)) == (iconv_t)-1)
 	{
 		free(outbuf);
