@@ -3,10 +3,10 @@
 %rename link old_link
 
 *cpp_options:
--nostdinc -isystem @INCLUDEDIR@%I %(old_cpp_options)
+-nostdinc -isystem @INCLUDEDIR@ %(old_cpp_options)
 
 *cc1:
-%(cc1_cpu) -nostdinc -isystem @INCLUDEDIR@%I %(old_cc1)
+%(cc1_cpu) -nostdinc -isystem @INCLUDEDIR@ %(old_cc1)
 
 *libgcc:
 libgcc.a%s
