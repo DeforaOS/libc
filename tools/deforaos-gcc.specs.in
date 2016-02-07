@@ -1,9 +1,5 @@
-%rename cpp_options old_cpp_options
 %rename cc1 old_cc1
 %rename link old_link
-
-*cpp_options:
--nostdinc -isystem @INCLUDEDIR@ %(old_cpp_options)
 
 *cc1:
 %(cc1_cpu) -D__DeforaOS__=1 -nostdinc -isystem @INCLUDEDIR@ %(old_cc1)
