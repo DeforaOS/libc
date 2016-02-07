@@ -2,7 +2,7 @@
 %rename link old_link
 
 *cc1:
-%(cc1_cpu) -D__DeforaOS__=1 -nostdinc -isystem @INCLUDEDIR@ %(old_cc1)
+%(cc1_cpu) -D__DeforaOS__=1 -nostdinc -isystem =@INCLUDEDIR@ %(old_cc1)
 
 *libgcc:
 libgcc.a%s
