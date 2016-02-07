@@ -6,13 +6,13 @@
 -nostdinc -isystem @INCLUDEDIR@ %(old_cpp_options)
 
 *cc1:
-%(cc1_cpu) -nostdinc -isystem @INCLUDEDIR@ %(old_cc1)
+%(cc1_cpu) -D__DeforaOS__=1 -nostdinc -isystem @INCLUDEDIR@ %(old_cc1)
 
 *libgcc:
 libgcc.a%s
 
 *startfile:
-@LIBDIR@/start.o
+start.o%s
 
 *endfile:
 
