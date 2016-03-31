@@ -116,6 +116,25 @@ char * inet_ntoa(struct in_addr in)
 }
 
 
+/* inet_ntop */
+char const * inet_ntop(int family, const void * src, char * dst, socklen_t size)
+{
+	struct in_addr * in;
+	char const * p;
+
+	switch(family)
+	{
+		case AF_INET:
+			in = (struct in_addr *)src;
+			p = inet_ntoa(*in);
+			snprintf(dst, size, "%s", p);
+			return dst;
+		default:
+			return NULL;
+	}
+}
+
+
 /* ntohl */
 uint32_t ntohl(uint32_t net32)
 {
