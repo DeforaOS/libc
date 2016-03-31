@@ -55,8 +55,8 @@ typedef unsigned int uint32_t;
 /* functions */
 uint32_t htonl(uint32_t host32);
 uint16_t htons(uint16_t host16);
-in_addr_t inet_addr(const char *cp);
-int inet_aton(const char *cp, struct in_addr *addr);
+in_addr_t inet_addr(const char * cp);
+int inet_aton(const char * cp, struct in_addr *addr);
 char * inet_ntoa(struct in_addr in);
 uint32_t ntohl(uint32_t net32);
 uint16_t ntohs(uint16_t net16);
