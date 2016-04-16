@@ -115,15 +115,20 @@ char * inet_ntoa(struct in_addr in)
 /* inet_ntop */
 static char const * _ntop_inet(const struct in_addr * in, char * dst,
 		socklen_t size);
+static char const * _ntop_inet6(const struct in6_addr * in6, char * dst,
+		socklen_t size);
 
 char const * inet_ntop(int family, const void * src, char * dst, socklen_t size)
 {
 	const struct in_addr * in = src;
+	const struct in6_addr * in6 = src;
 
 	switch(family)
 	{
 		case AF_INET:
 			return _ntop_inet(in, dst, size);
+		case AF_INET6:
+			return _ntop_inet6(in6, dst, size);
 		default:
 #ifdef EAFNOSUPPORT
 			errno = EAFNOSUPPORT;
@@ -152,6 +157,26 @@ static char const * _ntop_inet(const struct in_addr * in, char * dst,
 			errno = ENOSPC;
 			return NULL;
 		}
+		else
+			pos += p;
+	return dst;
+}
+
+static char const * _ntop_inet6(const struct in6_addr * in6, char * dst,
+		socklen_t size)
+{
+	uint16_t * b = (uint16_t *)&in6->s6_addr;
+	unsigned int i;
+	unsigned int pos;
+	unsigned int p;
+
+	for(i = 0, pos = 0;; i++)
+		if(i == sizeof(in6->s6_addr))
+			break;
+		else if((p = snprintf(&dst[pos], size - pos, "%s%x",
+						(i > 0) ? ":" : "", b[i]))
+				>= size - pos)
+			return NULL;
 		else
 			pos += p;
 	return dst;
