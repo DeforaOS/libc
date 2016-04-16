@@ -105,6 +105,8 @@ static int _getaddrinfo(char const * progname)
 	int res;
 	struct addrinfo * p;
 	struct sockaddr_in * sin;
+	struct sockaddr_in6 * sin6;
+	char buf[32];
 
 	/* FIXME also test without hints and without AI_PASSIVE set */
 	memset(&hints, 0, sizeof(hints));
@@ -126,6 +128,19 @@ static int _getaddrinfo(char const * progname)
 			printf("%s: %s: %s:%u%s\n", progname, "localhost",
 					inet_ntoa(sin->sin_addr),
 					sin->sin_port,
+					(ret == 0) ? "" : " (WRONG)");
+		}
+		else if(p->ai_family == AF_INET6)
+		{
+			sin6 = (struct sockaddr_in6 *)p->ai_addr;
+			/* FIXME also verify the address */
+			if(sin6->sin6_port != 80)
+				ret = 1;
+			printf("%s: %s: %s:%u%s\n", progname, "localhost",
+					inet_ntop(p->ai_family,
+						&sin6->sin6_addr, buf,
+						sizeof(buf)),
+					sin6->sin6_port,
 					(ret == 0) ? "" : " (WRONG)");
 		}
 	freeaddrinfo(ai);
