@@ -104,34 +104,50 @@ int inet_aton(const char *cp, struct in_addr *addr)
 char * inet_ntoa(struct in_addr in)
 {
 	static char ret[16];
-	unsigned char * b = (unsigned char*)&in.s_addr;
-	unsigned int i;
-	unsigned int pos = 0;
 
-	ret[0] = '\0';
-	for(i = 0; pos <= sizeof(ret) && i < sizeof(in.s_addr); i++)
-		pos += snprintf(&ret[pos], sizeof(ret) - pos, "%s%u",
-				i ? "." : "", b[i]);
+	if(inet_ntop(AF_INET, &in, ret, sizeof(ret)) == NULL)
+		return NULL;
 	return ret;
 }
 
 
 /* inet_ntop */
+static char const * _ntop_inet(const struct in_addr * in, char * dst,
+		socklen_t size);
+
 char const * inet_ntop(int family, const void * src, char * dst, socklen_t size)
 {
-	struct in_addr * in;
-	char const * p;
+	const struct in_addr * in = src;
 
 	switch(family)
 	{
 		case AF_INET:
-			in = (struct in_addr *)src;
-			p = inet_ntoa(*in);
-			snprintf(dst, size, "%s", p);
-			return dst;
+			return _ntop_inet(in, dst, size);
 		default:
 			return NULL;
 	}
+}
+
+static char const * _ntop_inet(const struct in_addr * in, char * dst,
+		socklen_t size)
+{
+	unsigned char const * b = (unsigned char const *)&in->s_addr;
+	unsigned int i;
+	unsigned int pos;
+	unsigned int p;
+
+	for(i = 0, pos = 0;; i++)
+		if(i == sizeof(in->s_addr))
+			break;
+		else if(i > sizeof(in->s_addr))
+			return NULL;
+		else if((p = snprintf(&dst[pos], size - pos, "%s%u",
+						(i > 0) ? "." : "", b[i]))
+				>= size - pos)
+			return NULL;
+		else
+			pos += p;
+	return dst;
 }
 
 
