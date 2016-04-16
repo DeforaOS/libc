@@ -29,9 +29,10 @@
 
 
 
+#include "sys/types.h"
 #include "stdlib.h"
 #include "stdio.h"
-#include "sys/types.h"
+#include "errno.h"
 #include "arpa/inet.h"
 
 
@@ -124,6 +125,11 @@ char const * inet_ntop(int family, const void * src, char * dst, socklen_t size)
 		case AF_INET:
 			return _ntop_inet(in, dst, size);
 		default:
+#ifdef EAFNOSUPPORT
+			errno = EAFNOSUPPORT;
+#else
+			errno = EINVAL;
+#endif
 			return NULL;
 	}
 }
@@ -144,7 +150,10 @@ static char const * _ntop_inet(const struct in_addr * in, char * dst,
 		else if((p = snprintf(&dst[pos], size - pos, "%s%u",
 						(i > 0) ? "." : "", b[i]))
 				>= size - pos)
+		{
+			errno = ENOSPC;
 			return NULL;
+		}
 		else
 			pos += p;
 	return dst;
