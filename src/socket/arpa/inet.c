@@ -145,8 +145,6 @@ static char const * _ntop_inet(const struct in_addr * in, char * dst,
 	for(i = 0, pos = 0;; i++)
 		if(i == sizeof(in->s_addr))
 			break;
-		else if(i > sizeof(in->s_addr))
-			return NULL;
 		else if((p = snprintf(&dst[pos], size - pos, "%s%u",
 						(i > 0) ? "." : "", b[i]))
 				>= size - pos)
