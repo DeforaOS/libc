@@ -57,7 +57,7 @@ mmap:
 	mov	0, %o5
 	stx	%i5, [%sp + 0x8af]
 	mov	SYS_mmap, %g1
-	ta 0
+	ta	0
 	bcc	.merrnoret
 	nop
 	set	errno, %g1
