@@ -63,6 +63,7 @@
 # define EAGAIN		35
 # define EINPROGRESS	36
 # define EOPNOTSUPP	45
+# define EAFNOSUPPORT	47
 # define EADDRINUSE	48
 # define EADDRNOTAVAIL	49
 # define ENOBUFS	55
