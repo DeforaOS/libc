@@ -230,7 +230,7 @@ typedef char wchar_t;
 # define SCNXFAST64	__UINT_FAST64_FMTX__
 # define SCNXMAX	__UINTMAX_FMTX__
 # define SCNXPTR	__UINTPTR_FMTX__
-#elif _LP64
+#elif defined(_LP64) && _LP64
 # define PRId8		"d"
 # define PRId16		"d"
 # define PRId32		"d"
