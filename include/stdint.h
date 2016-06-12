@@ -34,19 +34,43 @@
 
 /* types */
 typedef char int8_t;
+# ifdef __INT16_TYPE__
+typedef __INT16_TYPE__ int16_t;
+# else
 typedef short int int16_t;
+# endif
+# ifdef __INT32_TYPE__
+typedef __INT32_TYPE__ int32_t;
+# else
 typedef int int32_t;
+# endif
+# ifdef __INT64_TYPE__
+typedef __INT64_TYPE__ int64_t;
+# else
 typedef long long int64_t;
+# endif
 typedef unsigned char uint8_t;
 # ifndef uint16_t
 #  define uint16_t uint16_t
+#  ifdef __UINT16_TYPE__
+typedef __UINT16_TYPE__ uint16_t;
+#  else
 typedef unsigned short uint16_t;
+#  endif
 # endif
 # ifndef uint32_t
 #  define uint32_t uint32_t
+#  ifdef __UINT32_TYPE__
+typedef __UINT32_TYPE__ uint32_t;
+#  else
 typedef unsigned int uint32_t;
+#  endif
 # endif
+# ifdef __UINT64_TYPE__
+typedef __UINT64_TYPE__ uint64_t;
+# else
 typedef unsigned long long uint64_t;
+# endif
 
 # ifndef intmax_t
 #  define intmax_t intmax_t
