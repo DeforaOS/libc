@@ -31,6 +31,8 @@
 #ifndef LIBC_STDINT_H
 # define LIBC_STDINT_H
 
+# include "compat.h"
+
 
 /* types */
 typedef char int8_t;
@@ -77,16 +79,14 @@ typedef unsigned long long uint64_t;
 typedef long intmax_t;
 # endif
 # ifndef intptr_t
-#  define intptr_t intptr_t
-typedef signed long intptr_t;
+#  define intptr_t __intptr_t
 # endif
 # ifndef uintmax_t
 #  define uintmax_t uintmax_t
 typedef unsigned long uintmax_t;
 # endif
 # ifndef uintptr_t
-#  define uintptr_t uintptr_t
-typedef unsigned long uintptr_t;
+#  define uintptr_t __uintptr_t
 # endif
 
 #endif /* !LIBC_STDINT_H */

@@ -47,8 +47,7 @@ enum { F_OK, R_OK, W_OK, X_OK };
 
 /* types */
 # ifndef intptr_t
-#  define intptr_t intptr_t
-typedef signed long intptr_t;
+#  define intptr_t __intptr_t
 # endif
 # ifndef pid_t
 #  define pid_t pid_t
