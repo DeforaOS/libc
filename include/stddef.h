@@ -36,8 +36,7 @@
 
 /* types */
 # ifndef ptrdiff_t
-#  define ptrdiff_t ptrdiff_t
-typedef long ptrdiff_t;
+#  define ptrdiff_t __ptrdiff_t
 # endif
 # ifndef size_t
 #  define size_t __size_t

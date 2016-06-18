@@ -57,6 +57,14 @@ typedef unsigned long __size_t;
 typedef long __ssize_t;
 #  endif
 # endif
+# ifndef __ptrdiff_t
+#  ifdef __PTRDIFF_TYPE__
+#   define __ptrdiff_t __PTRDIFF_TYPE__
+#  else
+#   define __ptrdiff_t __ptrdiff_t
+typedef long __ptrdiff_t;
+#  endif
+# endif
 # ifndef __uintptr_t
 #  ifdef __UINTPTR_TYPE__
 #   define __uintptr_t __UINTPTR_TYPE__
