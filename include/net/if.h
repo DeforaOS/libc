@@ -31,7 +31,7 @@
 #ifndef LIBC_NET_IF_H
 # define LIBC_NET_IF_H
 
-# include "compat/net/if.h"
+# include "../compat/net/if.h"
 
 
 /* types */

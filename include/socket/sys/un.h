@@ -31,6 +31,6 @@
 #ifndef LIBSOCKET_SYS_UN_H
 # define LIBSOCKET_SYS_UN_H
 
-# include "compat/sys/un.h"
+# include "../compat/sys/un.h"
 
 #endif /* !LIBSOCKET_SYS_UN_H */

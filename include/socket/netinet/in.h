@@ -33,7 +33,7 @@
 
 # include <sys/socket.h>
 # include <inttypes.h>
-# include "compat/netinet/in.h"
+# include "../compat/netinet/in.h"
 
 
 /* constants */

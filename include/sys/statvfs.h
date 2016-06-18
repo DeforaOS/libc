@@ -31,7 +31,7 @@
 #ifndef LIBC_SYS_STATVFS_H
 # define LIBC_SYS_STATVFS_H
 
-# include "compat/sys/types.h"
+# include "../compat/sys/types.h"
 
 
 /* types */

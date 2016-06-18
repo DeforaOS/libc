@@ -31,7 +31,7 @@
 #ifndef LIBC_SYS_IOCTL_H
 # define LIBC_SYS_IOCTL_H
 
-# include "compat/sys/ioctl.h"
+# include "../compat/sys/ioctl.h"
 
 
 /* functions */

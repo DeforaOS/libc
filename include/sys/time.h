@@ -32,7 +32,7 @@
 # define LIBC_SYS_TIME_H
 
 # include <sys/select.h>
-# include "compat/sys/time.h"
+# include "../compat/sys/time.h"
 
 
 /* types */

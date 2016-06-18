@@ -31,7 +31,7 @@
 #ifndef LIBC_SYS_STAT_H
 # define LIBC_SYS_STAT_H
 
-# include "compat/sys/stat.h"
+# include "../compat/sys/stat.h"
 
 
 /* constants */

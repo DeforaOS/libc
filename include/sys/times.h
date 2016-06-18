@@ -31,7 +31,7 @@
 #ifndef LIBC_SYS_TIMES_H
 # define LIBC_SYS_TIMES_H
 
-# include "compat/sys/times.h"
+# include "../compat/sys/times.h"
 
 
 /* types */

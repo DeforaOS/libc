@@ -32,6 +32,6 @@
 # define LIBC_SYS_SYSCALL_H
 
 
-# include "compat/sys/syscall.h"
+# include "../compat/sys/syscall.h"
 
 #endif /* !LIBC_SYS_SYSCALL_H */

@@ -31,6 +31,6 @@
 #ifndef LIBC_SYS_VT_H
 # define LIBC_SYS_VT_H
 
-# include "compat/sys/vt.h"
+# include "../compat/sys/vt.h"
 
 #endif /* !LIBC_SYS_VT_H */

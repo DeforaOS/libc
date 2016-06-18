@@ -31,8 +31,8 @@
 #ifndef LIBC_SYS_SELECT_H
 # define LIBC_SYS_SELECT_H
 
-# include "compat/sys/select.h"
-# include "compat/signal.h" /* XXX should not have to be included */
+# include "../compat/sys/select.h"
+# include "../compat/signal.h" /* XXX should not have to be included */
 
 
 /* types */

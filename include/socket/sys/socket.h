@@ -32,7 +32,7 @@
 # define LIBSOCKET_SYS_SOCKET_H
 
 # include <sys/uio.h>
-# include "compat/sys/socket.h"
+# include "../compat/sys/socket.h"
 
 
 /* types */

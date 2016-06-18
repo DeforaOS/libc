@@ -31,7 +31,7 @@
 #ifndef LIBC_SYS_RESOURCE_H
 # define LIBC_SYS_RESOURCE_H
 
-# include "compat/sys/resource.h"
+# include "../compat/sys/resource.h"
 
 
 /* types */

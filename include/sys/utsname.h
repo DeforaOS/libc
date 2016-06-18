@@ -31,7 +31,7 @@
 #ifndef LIBC_SYS_UTSNAME_H
 # define LIBC_SYS_UTSNAME_H
 
-# include "compat/sys/utsname.h"
+# include "../compat/sys/utsname.h"
 
 
 /* types */

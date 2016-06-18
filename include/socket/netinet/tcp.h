@@ -31,6 +31,6 @@
 #ifndef LIBSOCKET_NETINET_TCP_H
 # define LIBSOCKET_NETINET_TCP_H
 
-# include "compat/netinet/tcp.h"
+# include "../compat/netinet/tcp.h"
 
 #endif /* !LIBSOCKET_NETINET_TCP_H */
