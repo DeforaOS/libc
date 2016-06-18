@@ -31,15 +31,15 @@
 #ifndef LIBC_SYS_UIO_H
 # define LIBC_SYS_UIO_H
 
+# include "../compat.h"
+
 
 /* types */
 # ifndef size_t
-#  define size_t size_t
-typedef unsigned long size_t;
+#  define size_t __size_t
 # endif
 # ifndef ssize_t
-#  define ssize_t ssize_t
-typedef signed long ssize_t;
+#  define ssize_t __ssize_t
 # endif
 
 struct iovec

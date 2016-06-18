@@ -31,12 +31,13 @@
 #ifndef LIBC_REGEX_H
 # define LIBC_REGEX_H
 
+# include "compat.h"
+
 
 /* types */
 typedef long regoff_t;
 # ifndef size_t
-#  define size_t size_t
-typedef unsigned long size_t;
+#  define size_t __size_t
 # endif
 
 typedef struct

@@ -31,7 +31,8 @@
 #ifndef LIBC_SYS_SHM_H
 # define LIBC_SYS_SHM_H
 
-# include "compat/sys/shm.h"
+# include "../compat.h"
+# include "../compat/sys/shm.h"
 # include "ipc.h"
 
 
@@ -41,8 +42,7 @@
 typedef signed int pid_t;
 # endif
 # ifndef size_t
-#  define size_t size_t
-typedef unsigned long size_t;
+#  define size_t __size_t
 # endif
 # ifndef smhid_ds
 #  define shmid_ds shmid_ds

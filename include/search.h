@@ -31,6 +31,8 @@
 #ifndef LIBC_SEARCH_H
 # define LIBC_SEARCH_H
 
+# include "compat.h"
+
 
 /* types */
 typedef enum { FIND, ENTER } ACTION;
@@ -43,8 +45,7 @@ typedef struct _ENTRY
 } ENTRY;
 
 # ifndef size_t
-#  define size_t size_t
-typedef unsigned long size_t;
+#  define size_t __size_t
 # endif
 
 

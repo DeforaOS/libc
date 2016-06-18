@@ -31,13 +31,13 @@
 #ifndef LIBC_TIME_H
 # define LIBC_TIME_H
 
+# include "compat.h"
 # include "compat/time.h"
 
 
 /* types */
 # ifndef size_t
-#  define size_t size_t
-typedef unsigned long size_t;
+#  define size_t __size_t
 # endif
 /* FIXME also define clockid_t timer_t */
 

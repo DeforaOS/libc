@@ -31,6 +31,7 @@
 #ifndef LIBC_UNISTD_H
 # define LIBC_UNISTD_H
 
+# include "compat.h"
 # include "compat/unistd.h"
 
 
@@ -54,12 +55,10 @@ typedef signed long intptr_t;
 typedef signed int pid_t;
 # endif
 # ifndef size_t
-#  define size_t size_t
-typedef unsigned long size_t;
+#  define size_t __size_t
 # endif
 # ifndef ssize_t
-#  define ssize_t ssize_t
-typedef signed int ssize_t;
+#  define ssize_t __ssize_t
 # endif
 
 # ifndef id_t

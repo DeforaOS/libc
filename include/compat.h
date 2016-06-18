@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2016 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,35 +28,18 @@
 
 
 
-#ifndef LIBC_STDDEF_H
-# define LIBC_STDDEF_H
-
-# include "compat.h"
+#ifndef LIBC_COMPAT_H
+# define LIBC_COMPAT_H
 
 
 /* types */
-# ifndef ptrdiff_t
-#  define ptrdiff_t ptrdiff_t
-typedef long ptrdiff_t;
+# ifndef __size_t
+#  define __size_t __size_t
+typedef unsigned long __size_t;
 # endif
-# ifndef size_t
-#  define size_t __size_t
-# endif
-# ifndef wchar_t
-#  define wchar_t wchar_t
-typedef char wchar_t;
+# ifndef __ssize_t
+#  define __ssize_t __ssize_t
+typedef long __ssize_t;
 # endif
 
-
-/* constants */
-# ifndef NULL
-#  define NULL ((void*)0)
-# endif
-
-
-/* macros */
-# ifndef offsetof
-#  define offsetof(type, member) ((size_t)&((type*)0)->member)
-# endif
-
-#endif /* !LIBC_STDDEF_H */
+#endif /* !LIBC_COMPAT_H */

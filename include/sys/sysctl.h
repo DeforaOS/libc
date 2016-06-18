@@ -31,13 +31,13 @@
 #ifndef LIBC_SYS_SYSCTL_H
 # define LIBC_SYS_SYSCTL_H
 
-# include "compat/sys/sysctl.h"
+# include "../compat.h"
+# include "../compat/sys/sysctl.h"
 
 
 /* types */
 # ifndef size_t
-#  define size_t size_t
-typedef unsigned long size_t;
+#  define size_t __size_t
 # endif
 
 

@@ -31,6 +31,8 @@
 #ifndef LIBC_WCHAR_H
 # define LIBC_WCHAR_H
 
+# include "compat.h"
+
 
 /* types */
 /* FIXME check if wchar_t is correct */
@@ -46,8 +48,7 @@ typedef struct _mbstate_t
 } mbstate_t;
 # endif
 # ifndef size_t
-#  define size_t size_t
-typedef unsigned long size_t;
+#  define size_t __size_t
 # endif
 # ifndef wchar_t
 #  define wchar_t wchar_t
