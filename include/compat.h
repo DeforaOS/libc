@@ -34,12 +34,20 @@
 
 /* types */
 # ifndef __size_t
-#  define __size_t __size_t
+#  ifdef __SIZE_TYPE__
+#   define __size_t __SIZE_TYPE__
+#  else
+#   define __size_t __size_t
 typedef unsigned long __size_t;
+#  endif
 # endif
 # ifndef __ssize_t
-#  define __ssize_t __ssize_t
+#  ifdef __SSIZE_TYPE__
+#   define __ssize_t __SSIZE_TYPE__
+#  else
+#   define __ssize_t __ssize_t
 typedef long __ssize_t;
+#  endif
 # endif
 
 #endif /* !LIBC_COMPAT_H */
