@@ -51,20 +51,10 @@ typedef struct _mbstate_t
 #  define size_t __size_t
 # endif
 # ifndef wchar_t
-#  define wchar_t wchar_t
-#  ifdef __WCHAR_TYPE__
-typedef __WCHAR_TYPE__ wchar_t;
-#  else
-typedef char wchar_t;
-#  endif
+#  define wchar_t __wchar_t
 # endif
 # ifndef wint_t
-#  define wint_t wint_t
-#  ifdef __WINT_TYPE__
-typedef __WINT_TYPE__ wint_t;
-#  else
-typedef int wint_t;
-#  endif
+#  define wint_t __wint_t
 # endif
 
 

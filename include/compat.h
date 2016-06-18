@@ -65,5 +65,21 @@ typedef long __ssize_t;
 typedef unsigned long __uintptr_t;
 #  endif
 # endif
+# ifndef __wchar_t
+#  ifdef __WCHAR_TYPE__
+#   define __wchar_t __WCHAR_TYPE__
+#  else
+#   define __wchar_t __wchar_t
+typedef char __wchar_t;
+#  endif
+# endif
+# ifndef __wint_t
+#  ifdef __WINT_TYPE__
+#   define __wint_t __WINT_TYPE__
+#  else
+#   define __wint_t __wint_t
+typedef int __wint_t;
+#  endif
+# endif
 
 #endif /* !LIBC_COMPAT_H */

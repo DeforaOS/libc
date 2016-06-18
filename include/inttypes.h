@@ -32,6 +32,7 @@
 # define LIBC_INTTYPES_H
 
 # include <stdint.h>
+# include "compat.h"
 
 
 /* types */
@@ -44,8 +45,7 @@ typedef struct _imaxdiv_t
 } imaxdiv_t;
 # endif
 # ifndef wchar_t
-#  define wchar_t wchar_t
-typedef char wchar_t;
+#  define wchar_t __wchar_t
 # endif
 
 
