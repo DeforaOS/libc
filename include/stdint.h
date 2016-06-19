@@ -35,7 +35,11 @@
 
 
 /* types */
-typedef char int8_t;
+# ifdef __INT8_TYPE__
+typedef __INT8_TYPE__ int8_t;
+# else
+typedef signed char int8_t;
+# endif
 # ifdef __INT16_TYPE__
 typedef __INT16_TYPE__ int16_t;
 # else
@@ -51,7 +55,11 @@ typedef __INT64_TYPE__ int64_t;
 # else
 typedef long long int64_t;
 # endif
+# ifdef __UINT8_TYPE__
+typedef __UINT8_TYPE__ uint8_t;
+# else
 typedef unsigned char uint8_t;
+# endif
 # ifndef uint16_t
 #  define uint16_t uint16_t
 #  ifdef __UINT16_TYPE__
