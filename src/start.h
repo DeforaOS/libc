@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2006-2015 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2016 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,38 +28,12 @@
 
 
 
-_start:
-	/* reset the stack */
-	xor	%ebp, %ebp	/* stack */
+#ifndef LIBC_MISC_START_H
+# define LIBC_MISC_START_H
 
-	/* setup the environment */
-	mov	(%esp), %eax	/* argc */
-	mov	%esp, %ebx	/* argv */
-	add	$4, %ebx
-	mov	%eax, %ecx	/* envp */
-	shl	$2, %ecx
-	add	%ebx, %ecx
-	mov	%ecx, environ	/* environ */
-	push	%ebp
-	push	%esp
-	mov	%esp, %ebp
-	push	%ecx
-	push	%ebx
-	push	%eax
 
-#if defined(__SSP__)
-	/* initialize SSP */
-	call	__stack_chk_setup
+/* functions */
+/* protected */
+void __start_stdio(void);
+
 #endif
-
-	/* initialize stdio */
-	call	__start_stdio
-
-	/* run the main program */
-	call	main
-
-	/* exit the main program */
-	mov	%ebp, %esp
-	push	%eax
-	call	exit
-	hlt

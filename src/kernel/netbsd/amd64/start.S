@@ -32,16 +32,7 @@ _start:
 	/* reset the stack */
 	xor	%rbp, %rbp	/* stack */
 
-#if defined(__SSP__)
-	/* initialize SSP */
-# ifdef __PIC__
-	call	__stack_chk_setup@PLT
-# else
-	call	__stack_chk_setup
-# endif
-#endif
-
-	/* run the main program */
+	/* setup the environment */
 	mov	(%rsp), %rdi	/* argc */
 	mov	%rsp, %rsi	/* argv */
 	add	$8, %rsi
@@ -53,13 +44,37 @@ _start:
 #else
 	mov	%rdx, environ
 #endif
+	push	%rdi
+	push	%rsi
+	push	%rdx
+
+#if defined(__SSP__)
+	/* initialize SSP */
+# ifdef __PIC__
+	call	__stack_chk_setup@PLT
+# else
+	call	__stack_chk_setup
+# endif
+#endif
+
+	/* initialize stdio */
+# ifdef __PIC__
+	call	__start_stdio@PLT
+# else
+	call	__start_stdio
+# endif
+
+	/* run the program */
+	pop	%rdx
+	pop	%rsi
+	pop	%rdi
 #ifdef __PIC__
 	call	main@PLT
 #else
 	call	main
 #endif
 
-	/* exit the main program */
+	/* exit the program */
 	mov	%rax, %rdi
 #ifdef __PIC__
 	call	exit@PLT

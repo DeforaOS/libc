@@ -39,6 +39,7 @@
 #include "syscalls.h"
 #include "errno.h"
 #include "stdio.h"
+#include "start.h"
 
 #define min(a, b) ((a) > (b) ? (b) : (a))
 
@@ -1744,6 +1745,15 @@ int vsprintf(char * str, char const * format, va_list arg)
 	if(str != NULL)
 		str[ret] = '\0';
 	return ret;
+}
+
+
+/* protected */
+/* start_stdio */
+void __start_stdio(void)
+{
+	if(getenv("PS1") == NULL)
+		_stdout.flags = _IONBF;
 }
 
 
