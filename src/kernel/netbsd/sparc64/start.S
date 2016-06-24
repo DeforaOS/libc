@@ -41,6 +41,10 @@ _start:
 	set	environ, %o3		/* %o3 = &environ */
 	stx	%o2, [%o3]		/* *environ = %o2 */
 
+	/* initialize stdio */
+	call	__start_stdio
+	nop
+
 	/* main */
 	call	main
 	nop
