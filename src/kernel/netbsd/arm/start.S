@@ -47,6 +47,9 @@ _start:
 	ldr	%r3, =environ
 	str	%r2, [%r3]
 
+	/* initialize stdio */
+	bl	__start_stdio
+
 	/* main */
 	bl	main
 
