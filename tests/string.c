@@ -54,7 +54,7 @@ static int _memchr(char const * progname)
 
 
 /* strerror */
-static void _strerror(char const * progname)
+static int _strerror(char const * progname)
 {
 	int errors[] =
 	{
@@ -107,6 +107,7 @@ static void _strerror(char const * progname)
 	for(i = 0; i < sizeof(errors) / sizeof(*errors); i++)
 		printf("%s: Testing %s: \"%s\" (%u)\n", progname,
 				"strerror()", strerror(errors[i]), errors[i]);
+	return 0;
 }
 
 
@@ -115,7 +116,7 @@ int main(int argc, char * argv[])
 {
 	int ret = 0;
 
-	ret += _memchr(argv[0]);
-	_strerror(argv[0]);
+	ret |= _memchr(argv[0]);
+	ret |= _strerror(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
