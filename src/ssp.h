@@ -32,8 +32,9 @@
 # define LIBC_MISC_SSP_H
 
 
-# ifdef __SSP__
+/* functions */
 /* protected */
+# ifdef __SSP__
 void __stack_chk_fail(void);
 void __stack_chk_setup(void);
 # endif
