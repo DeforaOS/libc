@@ -70,4 +70,16 @@ struct in6_addr
 };
 # endif
 
+# ifndef sockaddr_in6
+#  define sockaddr_in6 sockaddr_in6
+struct sockaddr_in6
+{
+       sa_family_t sin6_family;
+       in_port_t sin6_port;
+       uint32_t _padding0;
+       struct in6_addr sin6_addr;
+       uint32_t _padding1;
+};
+# endif
+
 #endif /* !LIBSOCKET_KERNEL_LINUX_NETINET_IN_H */
