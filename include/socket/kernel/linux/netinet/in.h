@@ -74,11 +74,11 @@ struct in6_addr
 #  define sockaddr_in6 sockaddr_in6
 struct sockaddr_in6
 {
-       sa_family_t sin6_family;
-       in_port_t sin6_port;
-       uint32_t _padding0;
-       struct in6_addr sin6_addr;
-       uint32_t _padding1;
+	sa_family_t sin6_family;
+	in_port_t sin6_port;
+	uint32_t _padding0;
+	struct in6_addr sin6_addr;
+	uint32_t _padding1;
 };
 # endif
 
