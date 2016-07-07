@@ -395,15 +395,15 @@ char * strrchr(char const * s, int c)
 /* strstr */
 char * strstr(char const * s1, char const * s2)
 {
-	unsigned int len1 = strlen(s1);
-	unsigned int len2 = strlen(s2);
-	unsigned int i;
+	size_t len1 = strlen(s1);
+	size_t len2 = strlen(s2);
+	size_t i;
 
 	if(len2 == 0)
 		return (char *)s1; /* XXX */
 	if(len1 < len2)
 		return NULL;
-	for(i = 0; i < len1 - len2; i++)
+	for(i = 0; i <= len1 - len2; i++)
 		if(strncmp(&s1[i], s2, len2) == 0)
 			return (char *)s1 + i; /* XXX */
 	return NULL;
