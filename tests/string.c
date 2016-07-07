@@ -111,6 +111,24 @@ static int _strerror(char const * progname)
 }
 
 
+/* strstr */
+static int _strstr(char const * progname)
+{
+	printf("%s: Testing %s\n", progname, "strstr()");
+	if(strstr("haystack", "needle") != NULL)
+		return -1;
+	if(strstr("needle", "needle") == NULL)
+		return -1;
+	if(strstr("haystack with a needle", "needle") == NULL)
+		return -1;
+	if(strstr("haystack with a needle\n", "needle") == NULL)
+		return -1;
+	if(strstr("haystack with a needle again", "needle") == NULL)
+		return -1;
+	return 0;
+}
+
+
 /* main */
 int main(int argc, char * argv[])
 {
@@ -118,5 +136,6 @@ int main(int argc, char * argv[])
 
 	ret |= _memchr(argv[0]);
 	ret |= _strerror(argv[0]);
+	ret |= _strstr(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
