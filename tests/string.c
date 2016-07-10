@@ -120,6 +120,9 @@ static int _strstr(char const * progname)
 	printf("%s: Testing %s\n", progname, "strstr()");
 	if(_strstr_test("haystack", "needle", NULL) != 0
 			|| _strstr_test("needle", "needle", "needle") != 0
+			|| _strstr_test("needle ", "needle", "needle ") != 0
+			|| _strstr_test("needle again", "needle",
+				"needle again") != 0
 			|| _strstr_test("haystack with a needle", "needle",
 				"needle") != 0
 			|| _strstr_test("haystack with a needle ", "needle",
