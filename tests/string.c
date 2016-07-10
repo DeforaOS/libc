@@ -112,20 +112,46 @@ static int _strerror(char const * progname)
 
 
 /* strstr */
+static int _strstr_test(char const * str1, char const * str2,
+		char const * expected);
+
 static int _strstr(char const * progname)
 {
 	printf("%s: Testing %s\n", progname, "strstr()");
-	if(strstr("haystack", "needle") != NULL)
-		return -1;
-	if(strstr("needle", "needle") == NULL)
-		return -1;
-	if(strstr("haystack with a needle", "needle") == NULL)
-		return -1;
-	if(strstr("haystack with a needle\n", "needle") == NULL)
-		return -1;
-	if(strstr("haystack with a needle again", "needle") == NULL)
+	if(_strstr_test("haystack", "needle", NULL) != 0
+			|| _strstr_test("needle", "needle", "needle") != 0
+			|| _strstr_test("haystack with a needle", "needle",
+				"needle") != 0
+			|| _strstr_test("haystack with a needle ", "needle",
+				"needle ") != 0
+			|| _strstr_test("haystack with a needle again",
+				"needle", "needle again") != 0)
 		return -1;
 	return 0;
+}
+
+static int _strstr_test(char const * str1, char const * str2,
+		char const * expected)
+{
+	int ret;
+	char const * res;
+
+	res = strstr(str1, str2);
+	if(expected == NULL || res == NULL)
+		ret = (res == expected) ? 0 : -1;
+	else
+		ret = (strcmp(res, expected) == 0) ? 0 : -1;
+	printf("\"%s\", \"%s\" => %s%s%s", str1, str2,
+			(res != NULL) ? "\"" : "",
+			(res != NULL) ? res : "NULL",
+			(res != NULL) ? "\"" : "");
+	if(ret != 0)
+		printf(" (expected: %s%s%s)",
+				(expected != NULL) ? "\"" : "",
+				(expected != NULL) ? expected : "NULL",
+				(expected != NULL) ? "\"" : "");
+	putc('\n', stdout);
+	return ret;
 }
 
 
