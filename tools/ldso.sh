@@ -108,13 +108,12 @@ fi
 	NetBSD)
 		LDSO="/libexec/ld.elf_so"
 		;;
-	*)
-		#unknown system
-		LDSO="/nonexistent"
-		;;
 esac
-if [ ! -x "$LDSO" ]; then
-	#XXX ignore errors
+#XXX ignore errors
+if [ -z "$LDSO" ]; then
+	_error "$SYSTEM: No known dynamic linker for this platform"
+	exit 0
+elif [ -o ! -f "$LDSO" ]; then
 	_error "$LDSO: Dynamic linker not found"
 	exit 0
 fi
