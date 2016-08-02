@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008-2014 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2016 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,45 +28,22 @@
 
 
 
-#ifndef LIBSOCKET_SYSCALLS_H
-# define LIBSOCKET_SYSCALLS_H
+#ifndef LIBSOCKET_KERNEL_OPENBSD_COMMON_H
+# define LIBSOCKET_KERNEL_OPENBSD_COMMON_H
 
-/* FreeBSD */
-# if defined(__FreeBSD__)
-#  if defined(__amd64__) || defined(__i386__)
-#   include "kernel/freebsd/common.h"
-#  else
-#   warning Unsupported FreeBSD architecture
-#  endif
 
-/* Linux */
-# elif defined(__linux__)
-#  if defined(__amd64__) || defined(__arm__) || defined(__i386__)
-#   include "kernel/linux/common.h"
-#  else
-#   warning Unsupported Linux architecture
-#  endif
+# define SYS_recvfrom		29
+# define SYS_accept		30
+# define SYS_getpeername	31
+# define SYS_getsockname	32
+# define SYS_socket		97
+# define SYS_connect		98
+# define SYS_bind		104
+# define SYS_setsockopt		105
+# define SYS_listen		106
+# define SYS_getsockopt		118
+# define SYS_sendto		133
+# define SYS_shutdown		134
+# define SYS_socketpair		135
 
-/* NetBSD */
-# elif defined(__NetBSD__)
-#  if defined(__amd64__) || defined(__arm__) || defined(__i386__) \
-	|| defined(__sparc__)
-#   include "kernel/netbsd/common.h"
-#  else
-#   warning Unsupported NetBSD architecture
-#  endif
-
-/* OpenBSD */
-# elif defined(__OpenBSD__)
-#  if defined(__arm__) || defined(__i386__)
-#   include "kernel/openbsd/common.h"
-#  else
-#   warning Unsupported OpenBSD architecture
-#  endif
-
-/* Unknown */
-# else
-#  warning Unsupported platform
-# endif
-
-#endif /* !LIBSOCKET_SYSCALLS_H */
+#endif /* !LIBSOCKET_KERNEL_OPENBSD_COMMON_H */

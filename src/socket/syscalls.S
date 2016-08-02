@@ -70,6 +70,16 @@
 #  warning Unsupported NetBSD architecture
 # endif
 
+/* OpenBSD */
+#elif defined(__OpenBSD__)
+# if defined(__arm__)
+#  include "kernel/openbsd/arm/syscalls.S"
+# elif defined(__i386__)
+#  include "kernel/openbsd/i386/syscalls.S"
+# else /* !__arm__ && !__i386__ */
+#  warning Unsupported OpenBSD architecture
+# endif
+
 /* Unknown */
 #else
 # warning Unsupported platform

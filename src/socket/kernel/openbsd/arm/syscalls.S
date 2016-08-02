@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008-2014 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2016 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,45 +28,20 @@
 
 
 
-#ifndef LIBSOCKET_SYSCALLS_H
-# define LIBSOCKET_SYSCALLS_H
+_syscall:
+	swi
+	/* FIXME implement
+	bcc	.errnoret
+	set	errno, %g1
+	st	%o0, [%g1]
+	set	-1, %o0
+.errnoret: */
+	mov	%pc, %lr
 
-/* FreeBSD */
-# if defined(__FreeBSD__)
-#  if defined(__amd64__) || defined(__i386__)
-#   include "kernel/freebsd/common.h"
-#  else
-#   warning Unsupported FreeBSD architecture
-#  endif
 
-/* Linux */
-# elif defined(__linux__)
-#  if defined(__amd64__) || defined(__arm__) || defined(__i386__)
-#   include "kernel/linux/common.h"
-#  else
-#   warning Unsupported Linux architecture
-#  endif
-
-/* NetBSD */
-# elif defined(__NetBSD__)
-#  if defined(__amd64__) || defined(__arm__) || defined(__i386__) \
-	|| defined(__sparc__)
-#   include "kernel/netbsd/common.h"
-#  else
-#   warning Unsupported NetBSD architecture
-#  endif
-
-/* OpenBSD */
-# elif defined(__OpenBSD__)
-#  if defined(__arm__) || defined(__i386__)
-#   include "kernel/openbsd/common.h"
-#  else
-#   warning Unsupported OpenBSD architecture
-#  endif
-
-/* Unknown */
-# else
-#  warning Unsupported platform
-# endif
-
-#endif /* !LIBSOCKET_SYSCALLS_H */
+/* macros */
+#define SYSCALL(name) \
+.global name; \
+name:; \
+	ldr	%ip, =SYS_ ## name; \
+	b	_syscall;
