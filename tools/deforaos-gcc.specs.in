@@ -18,4 +18,4 @@ start.o%s
 %{!nostdlib:-lc} %(old_lib)
 
 *link:
--nostdlib -L =@LIBDIR@ %(old_link)
+-nostdlib -dynamic-linker @LIBDIR@/ld.so -L =@LIBDIR@ %(old_link)
