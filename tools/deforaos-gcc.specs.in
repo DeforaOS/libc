@@ -6,7 +6,7 @@
 %(cc1_cpu) -D__DeforaOS__=1 -nostdinc -isystem =@INCLUDEDIR@ %(old_cc1)
 
 *libgcc:
-libgcc.a%s
+@LIBDIR@/libgcc.a
 
 *startfile:
 start.o%s
