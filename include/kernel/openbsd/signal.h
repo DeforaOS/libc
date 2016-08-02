@@ -78,7 +78,9 @@ struct sigaction
 # define SIGUSR1	30
 # define SIGUSR2	31
 
+# define SIG_DFL	((void (*)(int)) 0)
 # define SIG_ERR	((void (*)(int)) -1)
+# define SIG_IGN	((void (*)(int)) 1)
 
 # define SA_RESTART	0x2
 
