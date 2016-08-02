@@ -113,7 +113,7 @@ esac
 if [ -z "$LDSO" ]; then
 	_error "$SYSTEM: No known dynamic linker for this platform"
 	exit 0
-elif [ -o ! -f "$LDSO" ]; then
+elif [ ! -f "$LDSO" ]; then
 	_error "$LDSO: Dynamic linker not found"
 	exit 0
 fi
