@@ -58,7 +58,7 @@ _error()
 #usage
 _usage()
 {
-	echo "Usage: $PROGNAME [-c|-i|-u][-P prefix] target..." 1>&2
+	echo "Usage: $PROGNAME [-c|-i|-u][-P prefix] target" 1>&2
 	return 1
 }
 
@@ -90,37 +90,30 @@ while getopts "ciuP:" name; do
 	esac
 done
 shift $(($OPTIND - 1))
-if [ $# -eq 0 ]; then
+if [ $# -ne 1 ]; then
 	_usage
 	exit $?
 fi
 
-while [ $# -gt 0 ]; do
-	target="$1"
-	shift
+#clean
+[ "$clean" -ne 0 ] && exit 0
 
-	#clean
-	[ "$clean" -ne 0 ] && continue
+#do not tamper with the underlying system
+[ -z "$DESTDIR" ] && exit 0
 
-	#do not tamper with the underlying system
-	[ -z "$DESTDIR" ] && continue
+#check for GCC
+target=$($CC -print-libgcc-file-name)
+[ $? -ne 0 -o -z "$target" ] && exit 0
 
-	#check for GCC
-	target=$($CC -print-libgcc-file-name)
-	if [ $? -ne 0 -o -z "$target" ]; then
-		continue
-	fi
+#uninstall
+if [ "$uninstall" -eq 1 ]; then
+	$DEBUG $RM -- "$PREFIX/${target##*/}"			|| exit 2
+	exit 0
+fi
 
-	#uninstall
-	if [ "$uninstall" -eq 1 ]; then
-		$DEBUG $RM -- "$PREFIX/${target##*/}"		|| exit 2
-		continue
-	fi
-
-	#install
-	if [ "$install" -eq 1 ]; then
-		$DEBUG $MKDIR -- "$PREFIX"			|| exit 2
-		$DEBUG $INSTALL -m 0644 "$target" "$PREFIX/${target##*/}" \
+#install
+if [ "$install" -eq 1 ]; then
+	$DEBUG $MKDIR -- "$PREFIX"				|| exit 2
+	$DEBUG $INSTALL -m 0644 "$target" "$PREFIX/${target##*/}" \
 								|| exit 2
-	fi
-done
+fi
