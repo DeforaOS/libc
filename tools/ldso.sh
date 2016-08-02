@@ -103,7 +103,7 @@ fi
 		LDSO="/libexec/ld-elf.so.1"
 		;;
 	Linux)
-		LDSO="/lib/ld-linux-$(uname -m).so.2"
+		LDSO="/lib/ld-linux-$(uname -m | tr _ -).so.2"
 		;;
 	NetBSD)
 		LDSO="/libexec/ld.elf_so"
