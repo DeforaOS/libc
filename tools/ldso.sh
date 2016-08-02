@@ -135,7 +135,7 @@ fi
 if [ "$install" -eq 1 ]; then
 	($DEBUG $MKDIR -- "$PREFIX" &&
 	$DEBUG $INSTALL -m 0755 "$LDSO" "$PREFIX/${LDSO##*/}")	|| exit 2
-	if [ $ret -eq 0 -a "${LDSO##*/}" != "ld.so" ]; then
+	if [ "${LDSO##*/}" != "ld.so" ]; then
 		$DEBUG $LN -s "${LDSO##*/}" "$PREFIX/ld.so"	|| exit 2
 	fi
 fi
