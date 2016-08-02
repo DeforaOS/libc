@@ -148,7 +148,8 @@ static int _atexit_do(AtexitFunction function, void (*callback)(void))
 		case AF_REGISTER:
 			if(cb_pos == cb_size)
 			{
-				if((p = realloc(cb, (cb_size+4) * sizeof(*cb)))
+				if((p = realloc(cb, (cb_size + 4)
+								* sizeof(*cb)))
 						== NULL)
 					return -1;
 				cb = p;
