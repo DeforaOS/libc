@@ -80,6 +80,17 @@ int getpeername(int fd, struct sockaddr * addr, socklen_t * len)
 #endif
 
 
+/* getsockname */
+#ifndef SYS_getsockname
+# warning Unsupported platform: getsockname() is missing
+int getsockname(int fd, struct sockaddr * addr, socklen_t * len)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* listen */
 #ifndef SYS_listen
 # warning Unsupported platform: listen() is missing
