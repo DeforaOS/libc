@@ -102,6 +102,9 @@ while [ $# -gt 0 ]; do
 	#clean
 	[ "$clean" -ne 0 ] && continue
 
+	#do not tamper with the underlying system
+	[ -z "$DESTDIR" ] && continue
+
 	#check for GCC
 	target=$($CC -print-libgcc-file-name)
 	if [ $? -ne 0 -o -z "$target" ]; then
