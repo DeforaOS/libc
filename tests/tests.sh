@@ -23,6 +23,7 @@
 #OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+
 #variables
 ARCH="$(uname -m)"
 [ -n "$OBJDIR" ] || OBJDIR="./"
@@ -36,6 +37,17 @@ DATE="date"
 
 
 #functions
+#date
+_date()
+{
+	if [ -n "$SOURCE_EPOCH" ]; then
+		$DATE -d "@$SOURCE_EPOCH" '+%a %b %d %T %Z %Y'
+	else
+		$DATE
+	fi
+}
+
+
 #fail
 _fail()
 {
@@ -107,9 +119,9 @@ if [ $# -ne 1 ]; then
 fi
 target="$1"
 
-[ "$clean" -ne 0 ]			&& exit 0
+[ "$clean" -ne 0 ]						&& exit 0
 
-$DATE > "$target"
+_date > "$target"
 FAILED=
 echo "Performing tests:" 1>&2
 _test "errno"
