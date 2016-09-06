@@ -39,6 +39,30 @@ RM="rm -f"
 
 
 #functions
+_libgcc()
+{
+	[ $# -eq 1 ]						|| return 1
+	target="$1"
+	mode="0644"
+	[ "${target%.so}" = "$target" ] || mode="0755"
+
+	#uninstall
+	if [ "$uninstall" -eq 1 ]; then
+		$DEBUG $RM -- "$PREFIX/${target##*/}"		|| return 2
+		return 0
+	fi
+
+	#install
+	if [ "$install" -eq 1 ]; then
+		$DEBUG $MKDIR -- "$PREFIX"			|| return 2
+		$DEBUG $INSTALL -m "$mode" "$target" "$PREFIX/${target##*/}" \
+								|| return 2
+	fi
+
+	return 0
+}
+
+
 #debug
 _debug()
 {
@@ -101,19 +125,15 @@ fi
 #do not tamper with the underlying system
 [ -z "$DESTDIR" ] && exit 0
 
-#check for GCC
+#check for libgcc.a
 target=$($CC -print-libgcc-file-name)
 [ $? -ne 0 -o -z "$target" ] && exit 0
 
-#uninstall
-if [ "$uninstall" -eq 1 ]; then
-	$DEBUG $RM -- "$PREFIX/${target##*/}"			|| exit 2
-	exit 0
-fi
+_libgcc "$target"						|| exit $?
 
-#install
-if [ "$install" -eq 1 ]; then
-	$DEBUG $MKDIR -- "$PREFIX"				|| exit 2
-	$DEBUG $INSTALL -m 0644 "$target" "$PREFIX/${target##*/}" \
-								|| exit 2
+#check for libgcc_s.so
+target=$($CC -print-file-name=libgcc_s.so)
+if [ $? -eq 0 -a -n "$target" ]; then
+	_libgcc "$target"					|| exit $?
 fi
+exit 0
