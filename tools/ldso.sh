@@ -30,7 +30,7 @@ LDSO=
 PREFIX="/usr/local"
 [ -f "$CONFIGSH" ] && . "$CONFIGSH"
 PROGNAME="ldso.sh"
-SYSTEM=$(uname -s)
+SYSTEM="$(uname -s)-$(uname -m)"
 #executables
 DEBUG="_debug"
 DEVNULL="/dev/null"
@@ -99,13 +99,16 @@ fi
 
 #detect ld.so
 [ -n "$LDSO" ] || case "$SYSTEM" in
-	FreeBSD)
+	FreeBSD-*)
 		LDSO="/libexec/ld-elf.so.1"
 		;;
-	Linux)
+	Linux-armv7l)
+		LDSO="/lib/ld-linux-armhf.so.3"
+		;;
+	Linux-*)
 		LDSO="/lib/ld-linux-$(uname -m | tr _ -).so.2"
 		;;
-	NetBSD)
+	NetBSD-*)
 		LDSO="/libexec/ld.elf_so"
 		;;
 esac
