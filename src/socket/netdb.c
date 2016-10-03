@@ -158,8 +158,16 @@ static int _getaddrinfo_nodename(char const * nodename,
 		struct addrinfo const * hints, struct addrinfo ** res);
 static int _getaddrinfo_nodename_default(struct addrinfo const * hints,
 		struct addrinfo ** res);
+static int _getaddrinfo_nodename_default_inet(struct addrinfo const * hints,
+		struct addrinfo ** res);
+static int _getaddrinfo_nodename_default_inet6(struct addrinfo const * hints,
+		struct addrinfo ** res);
 static int _getaddrinfo_nodename_files(char const * nodename,
 		struct addrinfo const * hints, struct addrinfo ** res);
+static int _getaddrinfo_nodename_files_inet(struct addrinfo const * hints,
+		struct hostent * he, char ** addr, struct addrinfo ** res);
+static int _getaddrinfo_nodename_files_inet6(struct addrinfo const * hints,
+		struct hostent * he, char ** addr, struct addrinfo ** res);
 static int _getaddrinfo_nodename_hosts_lookup(char const * nodename,
 		struct hostent * he);
 static int _getaddrinfo_nodename_numeric(char const * nodename,
@@ -267,16 +275,50 @@ static int _getaddrinfo_nodename(char const * nodename,
 static int _getaddrinfo_nodename_default(struct addrinfo const * hints,
 		struct addrinfo ** res)
 {
+	switch(hints->ai_family)
+	{
+		case AF_UNSPEC:
+			/* fallback */
+		case AF_INET:
+			return _getaddrinfo_nodename_default_inet(hints, res);
+		case AF_INET6:
+			return _getaddrinfo_nodename_default_inet6(hints, res);
+		default:
+			return EAI_FAMILY;
+	}
+}
+
+static int _getaddrinfo_nodename_default_inet(struct addrinfo const * hints,
+		struct addrinfo ** res)
+{
 	int passive = (hints->ai_flags & AI_PASSIVE) ? 1 : 0;
 	struct sockaddr_in sin;
 
 	memset(&sin, 0, sizeof(sin));
 	sin.sin_addr.s_addr = passive ? INADDR_ANY : INADDR_LOOPBACK;
-	if(hints->ai_family == AF_UNSPEC || hints->ai_family == AF_INET)
-		if(_getaddrinfo_alloc(AF_INET, hints->ai_socktype,
-					hints->ai_protocol, sizeof(sin),
-					(struct sockaddr *)&sin, res) == NULL)
-			return EAI_MEMORY;
+	if(_getaddrinfo_alloc(AF_INET, hints->ai_socktype, hints->ai_protocol,
+				sizeof(sin), (struct sockaddr *)&sin, res)
+			== NULL)
+		return EAI_MEMORY;
+	return 0;
+}
+
+static int _getaddrinfo_nodename_default_inet6(struct addrinfo const * hints,
+		struct addrinfo ** res)
+{
+	int passive = (hints->ai_flags & AI_PASSIVE) ? 1 : 0;
+	struct sockaddr_in6 sin6;
+	const char sin6_addr_any[] = IN6ADDR_ANY_INIT;
+	const char sin6_addr_loopback[] = IN6ADDR_LOOPBACK_INIT;
+
+	memset(&sin6, 0, sizeof(sin6));
+	memcpy(sin6.sin6_addr.s6_addr,
+			passive ? sin6_addr_any : sin6_addr_loopback,
+			sizeof(sin6.sin6_addr.s6_addr));
+	if(_getaddrinfo_alloc(AF_INET6, hints->ai_socktype, hints->ai_protocol,
+				sizeof(sin6), (struct sockaddr *)&sin6, res)
+			== NULL)
+		return EAI_MEMORY;
 	return 0;
 }
 
@@ -285,11 +327,10 @@ static int _getaddrinfo_nodename_files(char const * nodename,
 {
 	struct hostent * he;
 	char ** addr;
-	struct sockaddr_in sin;
+	int ret;
 
 	/* XXX may have side-effects */
 	sethostent(1);
-	memset(&sin, 0, sizeof(sin));
 	while((he = gethostent()) != NULL)
 	{
 		if(_getaddrinfo_nodename_hosts_lookup(nodename, he) != 0)
@@ -298,23 +339,56 @@ static int _getaddrinfo_nodename_files(char const * nodename,
 				&& hints->ai_family != he->h_addrtype)
 			continue;
 		for(addr = he->h_addr_list; *addr != NULL; addr++)
-			if(he->h_addrtype == AF_INET)
+			switch(he->h_addrtype)
 			{
-				if(sizeof(sin.sin_addr.s_addr) != he->h_length)
-					return EAI_SYSTEM;
-				memcpy(&sin.sin_addr.s_addr, *addr,
-						sizeof(sin.sin_addr.s_addr));
-				if(_getaddrinfo_alloc(he->h_addrtype,
-							hints->ai_socktype,
-							hints->ai_protocol,
-							sizeof(sin),
-							(struct sockaddr *)&sin,
-							res) == NULL)
-					return EAI_MEMORY;
+				case AF_INET6:
+					ret = _getaddrinfo_nodename_files_inet6(
+							hints, he, addr, res);
+					if(ret != 0)
+						return ret;
+					break;
+				case AF_INET:
+					ret = _getaddrinfo_nodename_files_inet(
+							hints, he, addr, res);
+					if(ret != 0)
+						return ret;
+					break;
 			}
 		return 0;
 	}
 	return EAI_NONAME;
+}
+
+static int _getaddrinfo_nodename_files_inet(struct addrinfo const * hints,
+		struct hostent * he, char ** addr, struct addrinfo ** res)
+{
+	struct sockaddr_in sin;
+
+	if(sizeof(sin.sin_addr.s_addr) != he->h_length)
+		return EAI_SYSTEM;
+	memset(&sin, 0, sizeof(sin));
+	memcpy(&sin.sin_addr.s_addr, *addr, sizeof(sin.sin_addr.s_addr));
+	if(_getaddrinfo_alloc(he->h_addrtype, hints->ai_socktype,
+				hints->ai_protocol, sizeof(sin),
+				(struct sockaddr *)&sin, res) == NULL)
+		return EAI_MEMORY;
+	return 0;
+}
+
+static int _getaddrinfo_nodename_files_inet6(struct addrinfo const * hints,
+		struct hostent * he, char ** addr, struct addrinfo ** res)
+{
+	struct sockaddr_in6 sin6;
+
+	if(sizeof(sin6.sin6_addr.s6_addr) != he->h_length)
+		return EAI_SYSTEM;
+	memset(&sin6, 0, sizeof(sin6));
+	memcpy(&sin6.sin6_addr.s6_addr, *addr, sizeof(sin6.sin6_addr.s6_addr));
+	if(_getaddrinfo_alloc(he->h_addrtype, hints->ai_socktype,
+				hints->ai_protocol, sizeof(sin6),
+				(struct sockaddr *)&sin6, res) == NULL)
+		return EAI_MEMORY;
+	return 0;
 }
 
 static int _getaddrinfo_nodename_hosts_lookup(char const * nodename,
@@ -350,6 +424,8 @@ static int _getaddrinfo_nodename_numeric(char const * nodename,
 					== NULL)
 				return EAI_MEMORY;
 			return 0;
+		case AF_INET6:
+			/* FIXME implement */
 		default:
 			return EAI_FAMILY;
 	}
@@ -375,8 +451,9 @@ static int _getaddrinfo_servname_files(char const * servname,
 		struct addrinfo const * hints, struct addrinfo ** res)
 {
 	struct servent * se;
-	struct sockaddr_in * sin;
 	struct addrinfo * ai;
+	struct sockaddr_in * sin;
+	struct sockaddr_in6 * sin6;
 
 	/* XXX may have side-effects */
 	setservent(1);
@@ -386,7 +463,12 @@ static int _getaddrinfo_servname_files(char const * servname,
 				!= 0)
 			continue;
 		for(ai = *res; ai != NULL; ai = ai->ai_next)
-			if(ai->ai_family == AF_INET)
+			if(ai->ai_family == AF_INET6)
+			{
+				sin6 = (struct sockaddr_in6 *)ai->ai_addr;
+				sin6->sin6_port = se->s_port;
+			}
+			else if(ai->ai_family == AF_INET)
 			{
 				sin = (struct sockaddr_in *)ai->ai_addr;
 				sin->sin_port = se->s_port;
@@ -405,6 +487,7 @@ static int _getaddrinfo_servname_numeric(char const * servname,
 	char * p;
 	struct addrinfo * ai;
 	struct sockaddr_in * sin;
+	struct sockaddr_in6 * sin6;
 
 	if(!isdigit((int)(unsigned char const)*servname))
 		return -1;
@@ -415,7 +498,12 @@ static int _getaddrinfo_servname_numeric(char const * servname,
 	if(errno == 0 && *p == '\0' && u <= 65535)
 	{
 		for(ai = *res; ai != NULL; ai = ai->ai_next)
-			if(ai->ai_family == AF_INET)
+			if(ai->ai_family == AF_INET6)
+			{
+				sin6 = (struct sockaddr_in6 *)ai->ai_addr;
+				sin6->sin6_port = u;
+			}
+			else if(ai->ai_family == AF_INET)
 			{
 				sin = (struct sockaddr_in *)ai->ai_addr;
 				sin->sin_port = u;
