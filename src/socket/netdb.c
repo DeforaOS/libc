@@ -493,7 +493,7 @@ struct hostent * gethostbyname(const char * name)
 	{
 		if((ret.h_addr_list[0] = malloc(ai->ai_addrlen)) != NULL)
 			memcpy(ret.h_addr_list[0], ai->ai_addr, ai->ai_addrlen);
-		ret.h_addr_list[1] = 0;
+		ret.h_addr_list[1] = NULL;
 	}
 	freeaddrinfo(ai);
 	/* check for errors */
