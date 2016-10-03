@@ -455,8 +455,15 @@ static int _getaddrinfo_servname_services_lookup(char const * servname,
 /* gethostbyaddr */
 struct hostent * gethostbyaddr(const void * addr, socklen_t len, int type)
 {
-	/* FIXME implement */
-	errno = ENOSYS;
+	struct hostent * he;
+	char ** p;
+
+	sethostent(1);
+	while((he = gethostent()) != NULL)
+		if(he->h_addrtype == type && he->h_length == len)
+			for(p = &he->h_addr_list[0]; *p != NULL; p++)
+				if(memcmp(*p, addr, len) == 0)
+					return he;
 	return NULL;
 }
 
