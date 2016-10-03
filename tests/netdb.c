@@ -40,6 +40,7 @@ static int _netdb(char const * progname);
 static int _gai_strerror(char const * progname, char const * message,
 		int value);
 static int _getaddrinfo(char const * progname);
+static int _gethostbyaddr(char const * addr, size_t length, int type);
 static int _gethostent(void);
 static int _getnetent(void);
 static int _getprotoent(void);
@@ -55,6 +56,8 @@ static int _netdb(char const * progname)
 {
 	int ret = 0;
 
+	/* gethostbyaddr */
+	ret |= _gethostbyaddr("\x7f\x00\x00\x01", 4, AF_INET);
 	/* gethostent */
 	ret |= _gethostent();
 	/* getnetent */
@@ -145,6 +148,13 @@ static int _getaddrinfo(char const * progname)
 		}
 	freeaddrinfo(ai);
 	return ret;
+}
+
+
+/* gethostbyaddr */
+static int _gethostbyaddr(char const * addr, size_t length, int type)
+{
+	return (gethostbyaddr(addr, length, type) != NULL) ? 0 : -1;
 }
 
 
