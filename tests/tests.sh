@@ -26,6 +26,7 @@
 
 #variables
 ARCH="$(uname -m)"
+DEVNULL="/dev/null"
 [ -n "$OBJDIR" ] || OBJDIR="./"
 PROGNAME="tests.sh"
 SYSTEM="$(uname -s)"
@@ -121,6 +122,10 @@ target="$1"
 
 [ "$clean" -ne 0 ]						&& exit 0
 
+if ! _run "start" argv1 argv2 > "$DEVNULL" 2>&1; then
+	echo "Not performing tests (not functional)"
+	exit 0
+fi
 _date > "$target"
 FAILED=
 echo "Performing tests:" 1>&2
