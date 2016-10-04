@@ -1033,7 +1033,8 @@ long sysconf(int name)
 		case _SC_PAGESIZE:
 			return 4096;
 	}
-#elif defined(__NetBSD__)
+#elif defined(CTL_KERN) && defined(KERN_CLOCKRATE) && \
+	defined(CTL_HW) && defined(HW_PAGESIZE)
 	int mib[2];
 	size_t len;
 	struct clockinfo ci;
