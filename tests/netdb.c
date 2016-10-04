@@ -37,8 +37,7 @@
 /* prototypes */
 static int _netdb(char const * progname);
 
-static int _gai_strerror(char const * progname, char const * message,
-		int value);
+static int _gai_strerror(char const * message, int value);
 static int _getaddrinfo(char const * progname);
 static int _gethostbyaddr(char const * addr, size_t length, int type);
 static int _gethostent(void);
@@ -48,7 +47,7 @@ static int _getprotoent(void);
 static int _getservbyname(char const * name, char const * protocol);
 static int _getservbyport(int port, char const * protocol);
 static int _getservent(void);
-static int _hstrerror(char const * progname, char const * message, int value);
+static int _hstrerror(char const * message, int value);
 
 
 /* functions */
@@ -72,21 +71,21 @@ static int _netdb(char const * progname)
 	ret |= _getservbyport(22, "tcp");
 	ret |= _getservent();
 	/* hstrerror */
-	ret |= _hstrerror(progname, "HOST_NOT_FOUND", HOST_NOT_FOUND);
-	ret |= _hstrerror(progname, "TRY_AGAIN", TRY_AGAIN);
-	ret |= _hstrerror(progname, "NO_RECOVERY", NO_RECOVERY);
-	ret |= _hstrerror(progname, "NO_DATA", NO_DATA);
+	ret |= _hstrerror("HOST_NOT_FOUND", HOST_NOT_FOUND);
+	ret |= _hstrerror("TRY_AGAIN", TRY_AGAIN);
+	ret |= _hstrerror("NO_RECOVERY", NO_RECOVERY);
+	ret |= _hstrerror("NO_DATA", NO_DATA);
 	/* gai_strerror */
-	ret |= _gai_strerror(progname, "EAI_AGAIN", EAI_AGAIN);
-	ret |= _gai_strerror(progname, "EAI_BADFLAGS", EAI_BADFLAGS);
-	ret |= _gai_strerror(progname, "EAI_FAIL", EAI_FAIL);
-	ret |= _gai_strerror(progname, "EAI_FAMILY", EAI_FAMILY);
-	ret |= _gai_strerror(progname, "EAI_MEMORY", EAI_MEMORY);
-	ret |= _gai_strerror(progname, "EAI_NONAME", EAI_NONAME);
-	ret |= _gai_strerror(progname, "EAI_OVERFLOW", EAI_OVERFLOW);
-	ret |= _gai_strerror(progname, "EAI_SERVICE", EAI_SERVICE);
-	ret |= _gai_strerror(progname, "EAI_SOCKTYPE", EAI_SOCKTYPE);
-	ret |= _gai_strerror(progname, "EAI_SYSTEM", EAI_SYSTEM);
+	ret |= _gai_strerror("EAI_AGAIN", EAI_AGAIN);
+	ret |= _gai_strerror("EAI_BADFLAGS", EAI_BADFLAGS);
+	ret |= _gai_strerror("EAI_FAIL", EAI_FAIL);
+	ret |= _gai_strerror("EAI_FAMILY", EAI_FAMILY);
+	ret |= _gai_strerror("EAI_MEMORY", EAI_MEMORY);
+	ret |= _gai_strerror("EAI_NONAME", EAI_NONAME);
+	ret |= _gai_strerror("EAI_OVERFLOW", EAI_OVERFLOW);
+	ret |= _gai_strerror("EAI_SERVICE", EAI_SERVICE);
+	ret |= _gai_strerror("EAI_SOCKTYPE", EAI_SOCKTYPE);
+	ret |= _gai_strerror("EAI_SYSTEM", EAI_SYSTEM);
 	/* getaddrinfo */
 	ret |= _getaddrinfo(progname);
 	return ret;
@@ -94,10 +93,9 @@ static int _netdb(char const * progname)
 
 
 /* gai_strerror */
-static int _gai_strerror(char const * progname, char const * message,
-		int value)
+static int _gai_strerror(char const * message, int value)
 {
-	printf("%s: %s: %s\n", progname, message, gai_strerror(value));
+	printf("%s: %s\n", message, gai_strerror(value));
 	return 0;
 }
 
@@ -131,8 +129,8 @@ static int _getaddrinfo(char const * progname)
 			/* FIXME also verify the address */
 			if(sin->sin_port != 80)
 				ret = 1;
-			printf("%s: %s: %s:%u%s\n", progname, "localhost",
-					inet_ntoa(sin->sin_addr),
+			printf("%s: %s:%u%s\n", "localhost", inet_ntoa(
+						sin->sin_addr),
 					sin->sin_port,
 					(ret == 0) ? "" : " (WRONG)");
 		}
@@ -142,10 +140,9 @@ static int _getaddrinfo(char const * progname)
 			/* FIXME also verify the address */
 			if(sin6->sin6_port != 80)
 				ret = 1;
-			printf("%s: %s: %s:%u%s\n", progname, "localhost",
-					inet_ntop(p->ai_family,
-						&sin6->sin6_addr, buf,
-						sizeof(buf)),
+			printf("%s: %s:%u%s\n", "localhost", inet_ntop(
+						p->ai_family, &sin6->sin6_addr,
+						buf, sizeof(buf)),
 					sin6->sin6_port,
 					(ret == 0) ? "" : " (WRONG)");
 		}
@@ -329,9 +326,9 @@ static int _getservent(void)
 
 
 /* hstrerror */
-static int _hstrerror(char const * progname, char const * message, int value)
+static int _hstrerror(char const * message, int value)
 {
-	printf("%s: %s: %s\n", progname, message, hstrerror(value));
+	printf("%s: %s\n", message, hstrerror(value));
 	return 0;
 }
 
