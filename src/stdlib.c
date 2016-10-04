@@ -334,8 +334,7 @@ char * getenv(char const * name)
 /* getloadavg */
 int getloadavg(double loadavg[], int nelem)
 {
-#if defined(__NetBSD__)
-# include "kernel/netbsd/sys/sysctl.h"
+#if defined(CTL_VM) && defined(VM_LOADAVG)
 	int mib[2] = { CTL_VM, VM_LOADAVG };
 	struct loadavg
 	{
