@@ -87,10 +87,9 @@ int abs(int x)
 
 
 /* arc4random */
-#if defined(__NetBSD__)
+#if defined(CTL_KERN) && defined(KERN_ARND)
 uint32_t arc4random(void)
 {
-# include "kernel/netbsd/sys/sysctl.h"
 	const char buf[] = "arc4random() failed: terminated\n";
 	int mib[2] = { CTL_KERN, KERN_ARND };
 	uint32_t ret;
