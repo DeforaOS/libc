@@ -732,13 +732,139 @@ static char * _gethostent_host(char const ** s)
 
 
 /* getnameinfo */
+static int _getnameinfo_inet(const struct sockaddr_in * sa, socklen_t salen,
+		char * node, socklen_t nodelen,
+		char * service, socklen_t servicelen, int flags);
+static int _getnameinfo_inet6(const struct sockaddr_in6 * sa, socklen_t salen,
+		char * node, socklen_t nodelen,
+		char * service, socklen_t servicelen, int flags);
+static int _getnameinfo_node(const void * addr, socklen_t len, int type,
+		char * node, socklen_t nodelen);
+static int _getnameinfo_service(int port, char * service, socklen_t servicelen,
+		int flags);
+
 int getnameinfo(const struct sockaddr * sa, socklen_t salen, char * node,
 		socklen_t nodelen, char * service, socklen_t servicelen,
 		int flags)
 {
-	/* FIXME implement */
-	errno = ENOSYS;
-	return EAI_SYSTEM;
+	if(sa == NULL)
+	{
+		errno = EINVAL;
+		return EAI_SYSTEM;
+	}
+	switch(sa->sa_family)
+	{
+		case AF_INET:
+			return _getnameinfo_inet((struct sockaddr_in *)sa,
+					salen, node, nodelen,
+					service, servicelen, flags);
+		case AF_INET6:
+			return _getnameinfo_inet6((struct sockaddr_in6 *)sa,
+					salen, node, nodelen,
+					service, servicelen, flags);
+		default:
+			return EAI_FAMILY;
+	}
+}
+
+static int _getnameinfo_inet(const struct sockaddr_in * sa, socklen_t salen,
+		char * node, socklen_t nodelen,
+		char * service, socklen_t servicelen, int flags)
+{
+	int ret = 0;
+
+	if(salen < (socklen_t)sizeof(*sa))
+	{
+		errno = EINVAL;
+		return EAI_SYSTEM;
+	}
+	if(nodelen > 0)
+	{
+		if((flags & NI_NUMERICHOST) == 0)
+			ret = _getnameinfo_node( &sa->sin_addr.s_addr,
+					sizeof(sa->sin_addr.s_addr),
+					sa->sin_family, node, nodelen);
+		else
+			ret = EAI_NONAME;
+		if(ret == EAI_NONAME && (flags & NI_NAMEREQD) == 0
+				&& inet_ntop(sa->sin_family, &sa->sin_addr,
+					node, nodelen) != NULL)
+			ret = 0;
+	}
+	if(ret == 0 && servicelen > 0)
+		ret = _getnameinfo_service(sa->sin_port, service, servicelen,
+				flags);
+	return ret;
+}
+
+static int _getnameinfo_inet6(const struct sockaddr_in6 * sa, socklen_t salen,
+		char * node, socklen_t nodelen,
+		char * service, socklen_t servicelen, int flags)
+{
+	int ret = 0;
+
+	if(salen < (socklen_t)sizeof(*sa))
+	{
+		errno = EINVAL;
+		return EAI_SYSTEM;
+	}
+	if(nodelen > 0)
+	{
+		if((flags & NI_NUMERICHOST) == 0)
+			ret = _getnameinfo_node( &sa->sin6_addr.s6_addr,
+					sizeof(sa->sin6_addr.s6_addr),
+					sa->sin6_family, node, nodelen);
+		else
+			ret = EAI_NONAME;
+		if(ret == EAI_NONAME && (flags & NI_NAMEREQD) == 0
+				&& inet_ntop(sa->sin6_family, &sa->sin6_addr,
+					node, nodelen) != NULL)
+			ret = 0;
+	}
+	if(ret == 0 && servicelen > 0)
+		ret = _getnameinfo_service(sa->sin6_port, service, servicelen,
+				flags);
+	return ret;
+}
+
+static int _getnameinfo_node(const void * addr, socklen_t len, int type,
+		char * node, socklen_t nodelen)
+{
+	struct hostent * he = NULL;
+
+	if((he = gethostbyaddr(addr, len, type)) == NULL)
+		switch(h_errno)
+		{
+			case TRY_AGAIN:
+				return EAI_AGAIN;
+			case NO_RECOVERY:
+				return EAI_FAIL;
+			case HOST_NOT_FOUND:
+			case NO_DATA:
+				/* fallback */
+			default:
+				return EAI_NONAME;
+		}
+	if(snprintf(NULL, 0, "%s", he->h_name) >= nodelen)
+		return EAI_SYSTEM;
+	snprintf(node, nodelen, "%s", he->h_name);
+	return 0;
+}
+
+static int _getnameinfo_service(int port, char * service, socklen_t servicelen,
+		int flags)
+{
+	char const * proto = (flags & NI_DGRAM) ? "udp" : "tcp";
+	struct servent * se;
+
+	if((se = getservbyport(port, proto)) == NULL)
+		return EAI_NONAME;
+	/* FIXME check that it fits */
+	if(flags & NI_NUMERICSERV)
+		snprintf(service, servicelen, "%d", se->s_port);
+	else
+		snprintf(service, servicelen, "%s", se->s_name);
+	return 0;
 }
 
 
