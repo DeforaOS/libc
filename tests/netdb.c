@@ -157,7 +157,7 @@ static int _getaddrinfo(char const * progname)
 /* gethostbyaddr */
 static int _gethostbyaddr(char const * addr, size_t length, int type)
 {
-	return (gethostbyaddr(addr, length, type) != NULL) ? 0 : -1;
+	return (gethostbyaddr(addr, length, type) != NULL) ? 0 : 1;
 }
 
 
