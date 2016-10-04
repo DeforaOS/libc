@@ -46,8 +46,12 @@ _cross()
 	objdir=$($MKTEMP -d)
 	[ $? -eq 0 ]						|| return 2
 
-	(cd .. && sh -c "$make OBJDIR='$objdir/' $TARGETS")
-	ret=$?
+	#XXX avoid running the tests
+	for dir in ../src ../src/dl ../src/math ../src/pthread ../src/rt ../src/socket; do
+		(cd "$dir" && sh -c "$make OBJDIR='$objdir/' $TARGETS")
+		ret=$?
+		[ $ret -eq 0 ] || break
+	done
 	[ $ret -eq 0 ] || echo "$PROGNAME: $1: Could not cross-build" 1>&2
 	$RM -r -- "$objdir"
 	return $ret
