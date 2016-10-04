@@ -120,7 +120,7 @@ static int _getaddrinfo(char const * progname)
 	hints.ai_flags = AI_PASSIVE;
 	if((res = getaddrinfo("localhost", "http", &hints, &ai)) != 0)
 	{
-		printf("%s: %s: %s\n", progname, "getaddrinfo",
+		fprintf(stderr, "%s: %s: %s\n", progname, "getaddrinfo",
 				gai_strerror(res));
 		return 1;
 	}
