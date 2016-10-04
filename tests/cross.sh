@@ -26,11 +26,13 @@
 
 #variables
 PROGNAME="cross.sh"
-TARGETS="clean all"
+TARGETS="all"
 UNAME=$(uname -s)
 #executables
 GCC="gcc"
 MAKE="make"
+MKTEMP="mktemp"
+RM="rm -f"
 
 
 #functions
@@ -41,10 +43,13 @@ _cross()
 	cppflags="-U__${UNAME}__ -D__${1}__"
 	make="$MAKE CPPFLAGS=\"$cppflags\""
 	[ $# -eq 2 ] && make="$make CC=\"$2\""
+	objdir=$($MKTEMP -d)
+	[ $? -eq 0 ]						|| return 2
 
-	(cd .. && sh -c "$make $TARGETS")
+	(cd .. && sh -c "$make OBJDIR='$objdir/' $TARGETS")
 	ret=$?
 	[ $ret -eq 0 ] || echo "$PROGNAME: $1: Could not cross-build" 1>&2
+	$RM -r -- "$objdir"
 	return $ret
 }
 
