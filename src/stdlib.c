@@ -105,8 +105,13 @@ uint32_t arc4random(void)
 	return ret;
 }
 #else
-/* FIXME implement a generic arc4random() function */
 # warning Unsupported platform: arc4random() is missing
+uint32_t arc4random(void)
+{
+	/* FIXME implement a generic arc4random() function */
+	abort();
+	return -1;
+}
 #endif
 
 
