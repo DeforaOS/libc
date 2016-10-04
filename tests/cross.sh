@@ -67,6 +67,6 @@ _cross_all()
 _cross_all							|| return 2
 case $(uname -m) in
 	amd64|sparc64|x86_64)
-		_cross_all "gcc -m32"
+		_cross_all "$GCC -m32"
 		;;
 esac
