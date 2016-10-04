@@ -53,6 +53,7 @@ _cross()
 	return $ret
 }
 
+
 #cross_all
 _cross_all()
 {
