@@ -32,7 +32,9 @@
 # define LIBC_COMPAT_UTMPX_H
 
 
-# if defined(__linux__)
+# if defined(__APPLE__)
+#  include "kernel/darwin/utmpx.h"
+# elif defined(__linux__)
 #  include "kernel/linux/utmpx.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/utmpx.h"
