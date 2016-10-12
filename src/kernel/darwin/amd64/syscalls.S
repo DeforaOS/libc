@@ -47,7 +47,9 @@ _syscall_return:
 /* macros */
 #ifndef SYSCALL
 # define SYSCALL(name) \
-name:; \
+.global _ ## name; \
+.type _ ## name,@function; \
+_ ## name:; \
 	mov	$SYS_ ## name, %rax; \
 	add	$0x2000000, %rax; \
 	jmp	_syscall
@@ -56,6 +58,6 @@ name:; \
 
 /* functions */
 /* _exit */
-_exit:
+__exit:
 	mov	$SYS_exit, %rax
 	jmp	_syscall
