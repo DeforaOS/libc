@@ -35,9 +35,9 @@ _start:
 	/* setup the environment */
 	mov	(%rsp), %rdi	/* argc */
 	mov	%rsp, %rsi	/* argv */
-	add	$8, %rsi
+	add	$0x8, %rsi
 	mov	%rsi, %rdx	/* envp */
-	add	$8, %rdx
+	add	$0x8, %rdx
 #ifdef __PIC__
 	mov	environ@GOTPCREL(%rip), %rcx
 	mov	%rdx, (%rcx)
