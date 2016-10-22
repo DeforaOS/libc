@@ -57,7 +57,7 @@ _cross()
 #cross_all
 _cross_all()
 {
-	for system in FreeBSD linux NetBSD OpenBSD; do
+	for system in APPLE FreeBSD linux NetBSD OpenBSD; do
 		_cross "$system" "$@"				|| return 2
 	done
 }
