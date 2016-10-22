@@ -37,6 +37,10 @@
 #  define off_t off_t
 typedef long long off_t;
 # endif
+# ifndef pid_t
+#  define pid_t pid_t
+typedef signed int pid_t;
+# endif
 
 struct flock
 {
