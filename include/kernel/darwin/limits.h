@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2016 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,24 +28,13 @@
 
 
 
-#ifndef LIBC_COMPAT_LIMITS_H
-# define LIBC_COMPAT_LIMITS_H
+#ifndef LIBC_KERNEL_DARWIN_LIMITS_H
+# define LIBC_KERNEL_DARWIN_LIMITS_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/limits.h"
-# elif defined(__linux__)
-#  include "kernel/linux/limits.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/limits.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/limits.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/limits.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/limits.h"
-# else
-#  warning Unsupported platform
+/* constants */
+# ifndef LOGIN_NAME_MAX
+#  define LOGIN_NAME_MAX 73
 # endif
 
-#endif /* !LIBC_COMPAT_LIMITS_H */
+#endif /* !LIBC_KERNEL_DARWIN_LIMITS_H */
