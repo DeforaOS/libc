@@ -54,6 +54,7 @@ struct _FILE
 	int flags;
 	unsigned char _buf[BUFSIZ];
 	unsigned char * buf;
+	unsigned char * mbuf;
 	size_t bufsiz;
 	size_t len;
 	size_t pos;
@@ -73,22 +74,22 @@ static FILE * _fopen_new(int fd, int flags, int fbuf);
 /* variables */
 static FILE _stdin =
 {
-	STDIN_FILENO, O_RDONLY, { 0 }, _stdin._buf, sizeof(_stdin._buf), 0, 0,
-	0, 0, _IOFBF, FD_READ
+	STDIN_FILENO, O_RDONLY, { 0 }, _stdin._buf, NULL, sizeof(_stdin._buf),
+	0, 0, 0, 0, _IOFBF, FD_READ
 };
 FILE * stdin = &_stdin;
 
 static FILE _stdout =
 {
-	STDOUT_FILENO, O_WRONLY, { 0 }, _stdout._buf, sizeof(_stdout._buf), 0,
-	0, 0, 0, _IOLBF, FD_WRITE
+	STDOUT_FILENO, O_WRONLY, { 0 }, _stdout._buf, NULL,
+	sizeof(_stdout._buf), 0, 0, 0, 0, _IOLBF, FD_WRITE
 };
 FILE * stdout = &_stdout;
 
 static FILE _stderr =
 {
-	STDERR_FILENO, O_WRONLY, { 0 }, _stderr._buf, sizeof(_stderr._buf), 0,
-	0, 0, 0, _IONBF, FD_WRITE
+	STDERR_FILENO, O_WRONLY, { 0 }, _stderr._buf, NULL,
+	sizeof(_stderr._buf), 0, 0, 0, 0, _IONBF, FD_WRITE
 };
 FILE * stderr = &_stderr;
 
@@ -126,7 +127,7 @@ int fclose(FILE * file)
 	if(file->fd >= 0)
 		if(close(file->fd) != 0)
 			ret = -1;
-	/* FIXME free file->buf if dynamically allocated */
+	free(file->mbuf);
 	free(file);
 	return ret;
 }
@@ -265,11 +266,13 @@ FILE * fmemopen(void * buffer, size_t size, char const * mode)
 	{
 		if(size == 0)
 			file->buf = NULL;
-		else if((file->buf = calloc(1, size)) == NULL)
+		else if((file->mbuf = calloc(1, size)) == NULL)
 		{
 			fclose(file);
 			return NULL;
 		}
+		else
+			file->buf = file->mbuf;
 	}
 	file->bufsiz = size;
 	file->len = size;
@@ -1822,6 +1825,7 @@ static FILE * _fopen_new(int fd, int flags, int fbuf)
 		return NULL;
 	file->flags = flags;
 	file->buf = file->_buf;
+	file->mbuf = NULL;
 	file->bufsiz = sizeof(file->_buf);
 	file->fd = fd;
 	file->len = 0;
