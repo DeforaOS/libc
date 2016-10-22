@@ -38,6 +38,15 @@
 typedef long long off_t;
 # endif
 
+struct flock
+{
+	off_t l_start;
+	off_t l_len;
+	pid_t l_pid;
+	short l_type;
+	short l_whence;
+};
+
 
 /* constants */
 # define F_DUPFD	0
