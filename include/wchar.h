@@ -35,7 +35,6 @@
 
 
 /* types */
-/* FIXME check if wchar_t is correct */
 # ifndef FILE
 #  define FILE FILE
 typedef struct _FILE FILE;
