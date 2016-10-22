@@ -41,6 +41,14 @@ typedef unsigned long clock_t;
 #  define clockid_t clockid_t
 typedef int clockid_t;
 # endif
+# ifndef fsblkcnt_t
+#  define fsblkcnt_t fsblkcnt_t
+typedef unsigned int fsblkcnt_t;
+# endif
+# ifndef fsfilcnt_t
+#  define fsfilcnt_t fsfilcnt_t
+typedef unsigned int fsfilcnt_t;
+# endif
 # ifndef off_t
 #  define off_t off_t
 typedef long long off_t;
