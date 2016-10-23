@@ -95,7 +95,7 @@ static iconv_code _open_code(char const * code)
 
 
 /* iconv */
-size_t iconv(iconv_t cd, char ** inbuf, size_t * inbytesleft, 
+size_t iconv(iconv_t cd, const char ** inbuf, size_t * inbytesleft,
 		char ** outbuf, size_t * outbytesleft)
 {
 	if((cd & 0xffff) == ((cd >> 16) & 0xffff))
