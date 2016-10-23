@@ -47,6 +47,21 @@ int daylight = 0;
 long timezone = 0;
 
 char * tzname[2] = { "UTC", "UTC" };
+char * _mon[] =
+{
+	"Jan",
+	"Feb",
+	"Mar",
+	"Apr",
+	"May",
+	"Jun",
+	"Jul",
+	"Aug",
+	"Sep",
+	"Oct",
+	"Nov",
+	"Dec"
+};
 
 int getdate_err = 0;
 
@@ -278,6 +293,7 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				break;
 			/* FIXME implement correctly */
 			case 'b':
+				q = _strftime_print(q, &maxsize, _mon[t->tm_mon], 1);
 				break;
 			case 'C':
 				q = _strftime_print_int(q, &maxsize,
