@@ -47,7 +47,7 @@ int daylight = 0;
 long timezone = 0;
 
 char * tzname[2] = { "UTC", "UTC" };
-char * _mon[] =
+static char * _mon[] =
 {
 	"Jan",
 	"Feb",
