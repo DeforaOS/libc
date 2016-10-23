@@ -950,10 +950,9 @@ static size_t _sscanf_do(scan_args * args, char const * string,
 		case '%':
 			return (*string == '%') ? 1 : 0;
 		case 'C':
+			return _sscanf_do_long(string, "c", ap);
 		case 'S':
-			/* FIXME implement */
-			errno = ENOSYS;
-			return 0;
+			return _sscanf_do_long(string, "S", ap);
 	}
 	errno = EINVAL;
 	return 0;
