@@ -291,9 +291,10 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				q = _strftime_print(q, &maxsize, &format[pos],
 						1);
 				break;
-			/* FIXME implement correctly */
 			case 'b':
-				q = _strftime_print(q, &maxsize, _mon[t->tm_mon], 1);
+				if(t->tm_mon < (int)(sizeof(_mon) / sizeof(*_mon)))
+					q = _strftime_print(q, &maxsize,
+							_mon[t->tm_mon], 1);
 				break;
 			case 'C':
 				q = _strftime_print_int(q, &maxsize,
