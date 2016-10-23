@@ -47,6 +47,21 @@ int daylight = 0;
 long timezone = 0;
 
 char * tzname[2] = { "UTC", "UTC" };
+char * _mon[] =
+{
+	"Jan",
+	"Feb",
+	"Mar",
+	"Apr",
+	"May",
+	"Jun",
+	"Jul",
+	"Aug",
+	"Sep",
+	"Oct",
+	"Nov",
+	"Dec"
+};
 
 int getdate_err = 0;
 
@@ -261,7 +276,6 @@ static char * _strftime_print_int02(char * s, size_t * maxsize, int i);
 size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 {
 	char * q = s;
-	char mon_str[4];
 	size_t pos;
 
 	for(pos = 0; format[pos] != '\0'; pos++)
@@ -279,34 +293,7 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				break;
 			/* FIXME implement correctly */
 			case 'b':
-				switch(t->tm_mon)
-				{
-					case '0':
-						strcpy(mon_str, "Jan");
-					case '1':
-						strcpy(mon_str, "Feb");
-					case '2':
-						strcpy(mon_str, "Mar");
-					case '3':
-						strcpy(mon_str, "Apr");
-					case '4':
-						strcpy(mon_str, "May");
-					case '5':
-						strcpy(mon_str, "Jun");
-					case '6':
-						strcpy(mon_str, "Jul");
-					case '7':
-						strcpy(mon_str, "Aug");
-					case '8':
-						strcpy(mon_str, "Sep");
-					case '9':
-						strcpy(mon_str, "Oct");
-					case '10':
-						strcpy(mon_str, "Nov");
-					case '11':
-						strcpy(mon_str, "Dec");
-				}
-				q = _strtftime_print(q, &maxsize, mon_str, 1);
+				q = _strftime_print(q, &maxsize, _mon[t->tm_mon], 1);
 				break;
 			case 'C':
 				q = _strftime_print_int(q, &maxsize,
