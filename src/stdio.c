@@ -162,7 +162,7 @@ int fflush(FILE * file)
 	if(file == NULL)
 	{
 		errno = ENOSYS; /* FIXME implement */
-		return -1;
+		return EOF;
 	}
 	if(file->dir == FD_WRITE)
 	{
