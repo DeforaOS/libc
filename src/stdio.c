@@ -799,8 +799,8 @@ typedef struct _scan_args
 } scan_args;
 static size_t _sscanf_do(scan_args * args, char const * string,
 		char const * format, va_list ap);
-static size_t _sscanf_do_bracket(scan_args * args, char const * format,
-		char const * string, va_list ap);
+static size_t _sscanf_do_bracket(scan_args * args, char const * string,
+		char const * format, va_list ap);
 static size_t _sscanf_do_char(char const * string, char const * format,
 		va_list ap);
 static size_t _sscanf_do_double(char const * string, char const * format,
@@ -944,7 +944,7 @@ static size_t _sscanf_do(scan_args * args, char const * string,
 			*u = strtoul(string, &s, 16);
 			return s - string;
 		case '[':
-			return _sscanf_do_bracket(args, format, string, ap);
+			return _sscanf_do_bracket(args, string, format, ap);
 		case '%':
 			return (*string == '%') ? 1 : 0;
 		case 'C':
@@ -957,8 +957,8 @@ static size_t _sscanf_do(scan_args * args, char const * string,
 	return 0;
 }
 
-static size_t _sscanf_do_bracket(scan_args * args, char const * format,
-		char const * string, va_list ap)
+static size_t _sscanf_do_bracket(scan_args * args, char const * string,
+		char const * format, va_list ap)
 {
 	int ret = 1;
 	int i;
