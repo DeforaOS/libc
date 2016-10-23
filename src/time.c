@@ -41,13 +41,9 @@
 #define min(a, b) ((a) < (b) ? (a) : (b))
 
 
-/* public */
+/* private */
 /* variables */
-int daylight = 0;
-long timezone = 0;
-
-char * tzname[2] = { "UTC", "UTC" };
-static char * _mon[] =
+static char * _months[] =
 {
 	"Jan",
 	"Feb",
@@ -63,6 +59,13 @@ static char * _mon[] =
 	"Dec"
 };
 
+
+/* public */
+/* variables */
+int daylight = 0;
+long timezone = 0;
+
+char * tzname[2] = { "UTC", "UTC" };
 int getdate_err = 0;
 
 
@@ -277,6 +280,7 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 {
 	char * q = s;
 	size_t pos;
+	char const * p;
 
 	for(pos = 0; format[pos] != '\0'; pos++)
 	{
@@ -292,10 +296,11 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 						1);
 				break;
 			case 'b':
-				if(t->tm_mon < (int)(sizeof(_mon) / sizeof(*_mon)))
-					q = _strftime_print(q, &maxsize,
-							_mon[t->tm_mon],
-							strlen(_mon[t->tm_mon]));
+				if(t->tm_mon >= (int)(sizeof(_months)
+							/ sizeof(*_months)))
+					break;
+				p = _months[t->tm_mon];
+				q = _strftime_print(q, &maxsize, p, strlen(p));
 				break;
 			case 'C':
 				q = _strftime_print_int(q, &maxsize,
