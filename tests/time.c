@@ -115,7 +115,11 @@ static int _strftime(char const * progname, char const * format,
 		perror("strftime");
 		return -1;
 	}
-	return (strcmp(buf, expected) == 0) ? 0 : -1;
+	if(strcmp(buf, expected) == 0)
+		return 0;
+	printf("%s: Obtained \"%s\" (expected: \"%s\")\n", progname, buf,
+			expected);
+	return -1;
 }
 
 
