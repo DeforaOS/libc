@@ -112,9 +112,12 @@ static int _sscanf(char const * progname)
 	if(sscanf(str, format, &u, &c) != 2
 			|| u != 42 || c != '3')
 		return 1;
-	if(sscanf(str, "%3s", &buf) != 1
-			|| strncmp(str, buf, 3) != 0)
+	if(sscanf(str, "a%3s", &buf) != 1
+			|| strncmp(&str[1], buf, 2) != 0)
 		return 2;
+	if(sscanf(str, "a%3c", &buf) != 1
+			|| strncmp(&str[1], buf, 3) != 0)
+		return 3;
 	return 0;
 }
 
