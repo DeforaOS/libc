@@ -294,7 +294,8 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 			case 'b':
 				if(t->tm_mon < (int)(sizeof(_mon) / sizeof(*_mon)))
 					q = _strftime_print(q, &maxsize,
-							_mon[t->tm_mon], 1);
+							_mon[t->tm_mon],
+							strlen(_mon[t->tm_mon]));
 				break;
 			case 'C':
 				q = _strftime_print_int(q, &maxsize,
