@@ -31,7 +31,7 @@
 #ifndef LIBC_LANGINFO_H
 # define LIBC_LANGINFO_H
 
-# include <nl_types.h>
+# include "nl_types.h"
 
 
 /* types */

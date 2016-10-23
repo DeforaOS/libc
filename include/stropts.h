@@ -31,7 +31,7 @@
 #ifndef LIBC_STROPTS_H
 # define LIBC_STROPTS_H
 
-# include <compat/stropts.h>
+# include "compat/stropts.h"
 
 
 /* functions */

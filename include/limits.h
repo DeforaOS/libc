@@ -31,7 +31,7 @@
 #ifndef LIBC_LIMITS_H
 # define LIBC_LIMITS_H
 
-# include <compat/limits.h>
+# include "compat/limits.h"
 
 
 /* constants */

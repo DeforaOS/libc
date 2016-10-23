@@ -31,7 +31,7 @@
 #ifndef LIBC_STRINGS_H
 # define LIBC_STRINGS_H
 
-# include <stddef.h>
+# include "stddef.h"
 
 
 /* macros */
