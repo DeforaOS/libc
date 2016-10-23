@@ -166,6 +166,7 @@ int main(int argc, char * argv[])
 	res += _getdate(argv[0]);
 	res += _mktime(argv[0]);
 	res += _strftime(argv[0], "%H:%M:%S", "00:00:00");
+	res += _strftime(argv[0], "%b", "Jan");
 	res += _strptime(argv[0]);
 	res += _tzset(argv[0]);
 	return (res == 0) ? 0 : 2;
