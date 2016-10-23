@@ -35,8 +35,8 @@
 
 /* functions */
 #ifndef SYS_sysctl
-int sysctl(int * name, unsigned int namecnt, void * from, size_t * fromsize,
-		void const * to, size_t tosize)
+int sysctl(int const * name, unsigned int namecnt, void * from,
+		size_t * fromsize, void const * to, size_t tosize)
 {
 	errno = ENOSYS;
 	return -1;

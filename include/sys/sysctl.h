@@ -42,7 +42,7 @@
 
 
 /* functions */
-int sysctl(int * name, unsigned int namecnt, void * from, size_t * fromsize,
-		void const * to, size_t tosize);
+int sysctl(int const * name, unsigned int namecnt, void * from,
+		size_t * fromsize, void const * to, size_t tosize);
 
 #endif /* LIBC_SYS_SYSCTL_H */
