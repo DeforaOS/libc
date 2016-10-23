@@ -803,6 +803,8 @@ static size_t _sscanf_do_bracket(scan_args * args, char const * string,
 		char const * format, va_list ap);
 static size_t _sscanf_do_char(char const * string, char const * format,
 		va_list ap);
+static size_t _sscanf_do_chars(scan_args * args, char const * string,
+		va_list ap);
 static size_t _sscanf_do_double(char const * string, char const * format,
 		va_list ap);
 static size_t _sscanf_do_long(char const * string, char const * format,
@@ -850,7 +852,9 @@ int sscanf(char const * string, char const * format, ...)
 				else
 					args.discard = 0;
 				/* maximum field width */
-				if((args.width = strtol(f, &p, 10)) != 0)
+				if((args.width = strtol(f, &p, 10)) == 0)
+					args.width = -1;
+				else
 					f = p;
 				if(*f == 'h')
 				{
@@ -913,9 +917,7 @@ static size_t _sscanf_do(scan_args * args, char const * string,
 			return ((*f = strtof(string, &s)) != 0 && string != s)
 				? *f : 0;
 		case 'c':
-			s = va_arg(ap, char *);
-			*s = *string;
-			return 1;
+			return _sscanf_do_chars(args, string, ap);
 		case 'd':
 			d = va_arg(ap, int *);
 			*d = strtol(string, &s, 10);
@@ -1013,6 +1015,19 @@ static size_t _sscanf_do_char(char const * string, char const * format,
 	}
 	errno = EINVAL;
 	return 0;
+}
+
+static size_t _sscanf_do_chars(scan_args * args, char const * string,
+		va_list ap)
+{
+	size_t ret;
+	char * s;
+	size_t width = (args->width > 0) ? args->width : 1;
+
+	s = va_arg(ap, char *);
+	for(ret = 0; ret < width && *string != '\0'; ret++)
+		*s++ = *string++;
+	return ret;
 }
 
 static size_t _sscanf_do_double(char const * string, char const * format,
