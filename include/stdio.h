@@ -136,6 +136,7 @@ int ungetc(int c, FILE * file);
 int vfprintf(FILE * file, char const * format, va_list arg);
 int vfscanf(FILE * file, char const * format, va_list arg);
 int vprintf(char const * format, va_list arg);
+int vscanf(char const * format, va_list arg);
 int vsnprintf(char * str, size_t size, char const * format, va_list arg);
 int vsprintf(char * str, char const * format, va_list arg);
 

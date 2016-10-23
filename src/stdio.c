@@ -1720,6 +1720,13 @@ int vprintf(char const * format, va_list arg)
 }
 
 
+/* vscanf */
+int vscanf(char const * format, va_list arg)
+{
+	return vfscanf(stdin, format, arg);
+}
+
+
 /* vsnprintf */
 static int _sprint(void * dest, size_t size, const char * buf);
 
