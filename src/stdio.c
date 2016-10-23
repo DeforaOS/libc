@@ -1096,6 +1096,12 @@ static size_t _sscanf_do_long(char const * string, char const * format,
 			u = va_arg(ap, unsigned long *);
 			*u = strtoul(string, &s, 16);
 			return s - string;
+		case 'c':
+		case 's':
+		case '[':
+			/* FIXME implement */
+			errno = ENOSYS;
+			return 0;
 	}
 	errno = EINVAL;
 	return 0;
