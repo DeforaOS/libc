@@ -311,8 +311,8 @@ int nanosleep(struct timespec * requested, struct timespec * remaining)
 /* strftime */
 static char * _strftime_print(char * s, size_t * maxsize, char const * str,
 		size_t size);
-static char * _strftime_print_int(char * s, size_t * maxsize, int i);
-static char * _strftime_print_int02(char * s, size_t * maxsize, int i);
+static char * _strftime_print_int(char * s, size_t * maxsize,
+		char const * format, int i);
 
 size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 {
@@ -363,137 +363,149 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				q = _strftime_print(q, &maxsize, p, strlen(p));
 				break;
 			case 'C':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_year / 100);
 				break;
 			case 'D':
 			case 'x':
-				q = _strftime_print_int(q, &maxsize, t->tm_mon);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_mon);
 				q = _strftime_print(q, &maxsize, "/", 1);
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_mday);
 				q = _strftime_print(q, &maxsize, "/", 1);
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_year);
 				break;
 			case 'd':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_mday);
 				break;
-			case 'e': /* TODO: Test */
-				q = _strftime_print_int(q, &maxsize, t->tm_mday);
-				if(q[0] == '0')
-					q[0] = ' ';
+			case 'e':
+				q = _strftime_print_int(q, &maxsize, "% 2d",
+						t->tm_mday);
 				break;
 			case 'F':
-				q = _strftime_print_int(q, &maxsize, t->tm_year);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_year);
 				q = _strftime_print(q, &maxsize, "-", 1);
-				q = _strftime_print_int(q, &maxsize, t->tm_mon);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_mon);
 				q = _strftime_print(q, &maxsize, "-", 1);
-				q = _strftime_print_int(q, &maxsize, t->tm_mday);
+				q = _strftime_print_int(q, &maxsize, NULL, t->tm_mday);
 				break;
 			case 'H':
-				q = _strftime_print_int02(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, "%02d",
 						t->tm_hour);
 				break;
 			case 'I':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_hour % 12);
 				break;
 			case 'j':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_yday);
 				break;
 			case 'k':
-				q = _strftime_print_int(q, &maxsize, t->tm_hour);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_hour);
 				if(q[0] == '0')
 					q[0] = ' ';
 				break;
 			case 'l':
-				q = _strftime_print_int(q, &maxsize, t->tm_hour % 12);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_hour % 12);
 				if(q[0] == '0')
 					q[0] = ' ';
 				break;
 			case 'M':
-				q = _strftime_print_int02(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, "%02d",
 						t->tm_min);
 				break;
 			case 'm':
-				q = _strftime_print_int(q, &maxsize, t->tm_mon);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_mon);
 				break;
 			case 'n':
 				q = _strftime_print(q, &maxsize, "\n", 1);
 				break;
 			case 'P':
 				q = _strftime_print(q, &maxsize, (t->tm_hour
-							< 12) ? "am" : "pm", 4);
+							< 12) ? "am" : "pm", 2);
 				break;
 			case 'p':
 				q = _strftime_print(q, &maxsize, (t->tm_hour
-							< 12) ? "AM" : "PM",
-						4);
+							< 12) ? "AM" : "PM", 2);
 				break;
 			case 'R':
-				q = _strftime_print_int(q, &maxsize, t->tm_hour);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_hour);
 				q = _strftime_print(q, &maxsize, ":", 1);
-				q = _strftime_print_int(q, &maxsize, t->tm_min);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_min);
 				break;
 			case 'r':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_hour % 12);
 				q = _strftime_print(q, &maxsize, ":", 1);
-				q = _strftime_print_int(q, &maxsize, t->tm_min);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_min);
 				q = _strftime_print(q, &maxsize, ":", 1);
-				q = _strftime_print_int(q, &maxsize, t->tm_sec);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_sec);
 				q = _strftime_print(q, &maxsize, " ", 1);
 				q = _strftime_print(q, &maxsize, (t->tm_hour < 12)
-						? "AM" : "PM", 4);
+						? "AM" : "PM", 2);
 				break;
 			case 'S':
-				q = _strftime_print_int02(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, "%02d",
 						t->tm_sec);
 				break;
 			case 's':
-				q = _strftime_print_int(q, &maxsize, time(NULL));
+				q = _strftime_print_int(q, &maxsize, NULL,
+						time(NULL));
 				break;
 			case 'T':
-				q = _strftime_print_int(q, &maxsize, t->tm_hour);
+				q = _strftime_print_int(q, &maxsize, NULL, t->tm_hour);
 				q = _strftime_print(q, &maxsize, ":", 1);
-				q = _strftime_print_int(q, &maxsize, t->tm_min);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_min);
 				q = _strftime_print(q, &maxsize, ":", 1);
-				q = _strftime_print_int(q, &maxsize, t->tm_sec);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_sec);
 				break;
 			case 't':
 				q = _strftime_print(q, &maxsize, "\t", 1);
 				break;
 			case 'X':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_hour);
 				q = _strftime_print(q, &maxsize, ":", 1);
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_min);
 				q = _strftime_print(q, &maxsize, ":", 1);
-				q = _strftime_print_int(q, &maxsize, t->tm_sec);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_sec);
 				break;
 			case 'u':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_wday);
 				break;
 			case 'w':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_wday);
 				break;
 			case 'Y':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_year + 1900);
 				break;
 			case 'y':
-				q = _strftime_print_int(q, &maxsize,
+				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_year);
 				break;
 			case 'Z':
 				break;
-			/* FIXME implement the rest */
+				/* FIXME implement the rest */
 			default:
 				errno = EINVAL;
 				return 0;
@@ -518,22 +530,14 @@ static char * _strftime_print(char * s, size_t * maxsize, char const * str,
 	return s + size;
 }
 
-static char * _strftime_print_int(char * s, size_t * maxsize, int i)
+static char * _strftime_print_int(char * s, size_t * maxsize,
+		char const * format, int i)
 {
 	char buf[16];
 	int len;
 
-	if((len = snprintf(buf, sizeof(buf), "%d", i)) <= 0)
-		return s;
-	return _strftime_print(s, maxsize, buf, len);
-}
-
-static char * _strftime_print_int02(char * s, size_t * maxsize, int i)
-{
-	char buf[16];
-	int len;
-
-	if((len = snprintf(buf, sizeof(buf), "%02d", i)) <= 0)
+	format = (format != NULL) ? format : "%d";
+	if((len = snprintf(buf, sizeof(buf), format, i)) <= 0)
 		return s;
 	return _strftime_print(s, maxsize, buf, len);
 }
