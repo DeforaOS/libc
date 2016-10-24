@@ -43,7 +43,7 @@
 
 /* private */
 /* variables */
-char * _months[] =
+static char * _months[] =
 {
 	"Jan",
 	"Feb",
@@ -59,7 +59,7 @@ char * _months[] =
 	"Dec"
 };
 
-char * _days[] =
+static char * _days[] =
 {
 	"Sun",
 	"Mon",
@@ -306,9 +306,10 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				q = _strftime_print(q, &maxsize, &format[pos],
 						1);
 				break;
-			case 'a': /* TODO: Test it */
+			case 'a':
 				if(t->tm_wday >= (int)(sizeof(_days)
 							/ sizeof(*_days)))
+					break;
 				p = _days[t->tm_wday];
 				q = _strftime_print(q, &maxsize, p, strlen(p));
 				break;
