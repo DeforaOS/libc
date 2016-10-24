@@ -43,7 +43,7 @@
 
 /* private */
 /* variables */
-static char * _months[] =
+static char const * _months[] =
 {
 	"Jan",
 	"Feb",
@@ -59,7 +59,7 @@ static char * _months[] =
 	"Dec"
 };
 
-static char * _months_long[] =
+static char const * _months_long[] =
 {
 	"January",
 	"February",
@@ -75,7 +75,7 @@ static char * _months_long[] =
 	"December",
 };
 
-static char * _days[] =
+static char const * _days[] =
 {
 	"Sun",
 	"Mon",
@@ -86,7 +86,7 @@ static char * _days[] =
 	"Sat"
 };
 
-static char * _days_long[] =
+static char const * _days_long[] =
 {
 	"Sunday",
 	"Monday",
