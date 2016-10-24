@@ -336,7 +336,7 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 			case 'A':
 				if(t->tm_wday >= (int)(sizeof(_days_long)
 							/ sizeof(*_days_long)))
-				break;
+					break;
 				p = _days_long[t->tm_wday];
 				q = _strftime_print(q, &maxsize, p, strlen(p));
 				break;
@@ -350,7 +350,7 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 			case 'B':
 				if(t->tm_mon >= (int)(sizeof(_months_long)
 							/ sizeof(*_months_long)))
-				break;
+					break;
 				p = _months_long[t->tm_mon];
 				q = _strftime_print(q, &maxsize, p, strlen(p));
 				break;
@@ -440,14 +440,14 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				break;
 			case 'r':
 				q = _strftime_print_int(q, &maxsize,
-							t->tm_hour % 12);
+						t->tm_hour % 12);
 				q = _strftime_print(q, &maxsize, ":", 1);
 				q = _strftime_print_int(q, &maxsize, t->tm_min);
 				q = _strftime_print(q, &maxsize, ":", 1);
 				q = _strftime_print_int(q, &maxsize, t->tm_sec);
 				q = _strftime_print(q, &maxsize, " ", 1);
 				q = _strftime_print(q, &maxsize, (t->tm_hour < 12)
-								? "AM" : "PM", 4);
+						? "AM" : "PM", 4);
 				break;
 			case 'S':
 				q = _strftime_print_int02(q, &maxsize,
