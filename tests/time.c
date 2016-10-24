@@ -170,6 +170,9 @@ int main(int argc, char * argv[])
 	res += _strftime(argv[0], "%b", "Jan");
 	res += _strftime(argv[0], "%A", "Thursday");
 	res += _strftime(argv[0], "%a", "Thu");
+#if 0 /* FIXME not implemented in gmtime() */
+	res += _strftime(argv[0], "%e", " 1");
+#endif
 	res += _strptime(argv[0]);
 	res += _tzset(argv[0]);
 	return (res == 0) ? 0 : 2;
