@@ -355,7 +355,7 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				q = _strftime_print(q, &maxsize, p, strlen(p));
 				break;
 			case 'b':
-				b: /* case 'h' */
+			case 'h':
 				if(t->tm_mon >= (int)(sizeof(_months)
 							/ sizeof(*_months)))
 					break;
@@ -396,8 +396,6 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				q = _strftime_print_int02(q, &maxsize,
 						t->tm_hour);
 				break;
-			case 'h':
-				goto b;
 			case 'I':
 				q = _strftime_print_int(q, &maxsize,
 						t->tm_hour % 12);
