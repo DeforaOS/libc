@@ -429,10 +429,6 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 			case 'n':
 				q = _strftime_print(q, &maxsize, "\n", 1);
 				break;
-			case 'P':
-				q = _strftime_print(q, &maxsize, (t->tm_hour
-							< 12) ? "am" : "pm", 2);
-				break;
 			case 'p':
 				q = _strftime_print(q, &maxsize, (t->tm_hour
 							< 12) ? "AM" : "PM", 2);
