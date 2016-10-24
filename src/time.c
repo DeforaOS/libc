@@ -392,7 +392,8 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_mon);
 				q = _strftime_print(q, &maxsize, "-", 1);
-				q = _strftime_print_int(q, &maxsize, NULL, t->tm_mday);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_mday);
 				break;
 			case 'H':
 				q = _strftime_print_int(q, &maxsize, "%02d",
@@ -450,8 +451,9 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_sec);
 				q = _strftime_print(q, &maxsize, " ", 1);
-				q = _strftime_print(q, &maxsize, (t->tm_hour < 12)
-						? "AM" : "PM", 2);
+				q = _strftime_print(q, &maxsize,
+						(t->tm_hour < 12) ? "AM" : "PM",
+						2);
 				break;
 			case 'S':
 				q = _strftime_print_int(q, &maxsize, "%02d",
@@ -462,7 +464,8 @@ size_t strftime(char * s, size_t maxsize, char const * format, struct tm * t)
 						time(NULL));
 				break;
 			case 'T':
-				q = _strftime_print_int(q, &maxsize, NULL, t->tm_hour);
+				q = _strftime_print_int(q, &maxsize, NULL,
+						t->tm_hour);
 				q = _strftime_print(q, &maxsize, ":", 1);
 				q = _strftime_print_int(q, &maxsize, NULL,
 						t->tm_min);
