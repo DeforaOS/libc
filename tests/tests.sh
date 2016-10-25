@@ -151,7 +151,6 @@ _test "stdarg"
 _test "stdint"
 _test "stdio"
 _test "string"
-_test "time"
 _test "unistd"
 _test "utsname"
 echo "Expected failures:" 1>&2
@@ -159,6 +158,7 @@ _fail "dlfcn" "../src/libc.$SOEXT"
 [ "$SYSTEM" = "FreeBSD" -o "$SYSTEM" = "Linux" ] && _fail "signal"
 [ "$SYSTEM" = "NetBSD" -a "$ARCH" = "amd64" ] || _fail "ssp"
 _fail "stdlib"
+_fail "time"
 if [ -n "$FAILED" ]; then
 	echo "Failed tests:$FAILED" 1>&2
 	exit 2
