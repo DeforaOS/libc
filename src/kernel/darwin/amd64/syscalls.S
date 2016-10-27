@@ -48,7 +48,6 @@ _syscall_return:
 #ifndef SYSCALL
 # define SYSCALL(name) \
 .global _ ## name; \
-.type _ ## name,@function; \
 _ ## name:; \
 	mov	$SYS_ ## name, %rax; \
 	add	$0x2000000, %rax; \
