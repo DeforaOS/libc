@@ -32,7 +32,9 @@
 # define LIBC_COMPAT_SYS_SYSCALL_H
 
 
-# if defined(__FreeBSD__)
+# if defined(__APPLE__)
+#  include "kernel/darwin/sys/syscall.h"
+# elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/syscall.h"
 # elif defined(__linux__)
 #  include "kernel/linux/sys/syscall.h"
