@@ -93,6 +93,9 @@
 # ifndef SCHAR_MIN
 #  define SCHAR_MIN -0x7f
 # endif
+# ifndef SIZE_MAX
+#  define SIZE_MAX ULONG_MAX
+# endif
 # ifndef SSIZE_MAX
 #  define SSIZE_MAX LONG_MAX
 # endif
