@@ -437,7 +437,10 @@ char * strtok(char * s1, char const * s2)
 /* strxfrm */
 size_t strxfrm(char * s1, char const * s2, size_t n)
 {
-	/* FIXME implement */
-	errno = ENOSYS;
-	return 0;
+	int res;
+
+	/* XXX return a copy of the original string */
+	if((res = snprintf(s1, n, "%s", s2)) < 0)
+		return n;
+	return res;
 }
