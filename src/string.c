@@ -361,6 +361,20 @@ char * strpbrk(char const * s1, char const * s2)
 }
 
 
+/* strrchr */
+char * strrchr(char const * s, int c)
+{
+	unsigned char const * ret = NULL;
+	unsigned char const * ls;
+	unsigned char lc = c;
+
+	for(ls = (unsigned char const *)s; *ls != '\0'; ls++)
+		if(*ls == lc)
+			ret = ls;
+	return (char *)((lc == '\0') ? ls : ret);
+}
+
+
 /* strspn */
 size_t strspn(char const * s1, char const * s2)
 	/* FIXME not tested */
@@ -375,20 +389,6 @@ size_t strspn(char const * s1, char const * s2)
 			break;
 	}
 	return i;
-}
-
-
-/* strrchr */
-char * strrchr(char const * s, int c)
-{
-	unsigned char const * ret = NULL;
-	unsigned char const * ls;
-	unsigned char lc = c;
-
-	for(ls = (unsigned char const *)s; *ls != '\0'; ls++)
-		if(*ls == lc)
-			ret = ls;
-	return (char *)((lc == '\0') ? ls : ret);
 }
 
 
