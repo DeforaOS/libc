@@ -44,7 +44,7 @@ void * memchr(void const * s, int c, size_t n)
 
 	for(ls = s; n--; ls++)
 		if(*ls == lc)
-			return (void*)ls;
+			return (void *)ls;
 	return NULL;
 }
 
