@@ -214,6 +214,20 @@ SYSCALL(mount)
 SYSCALL(unmount)
 #endif
 
+/* sys/msg.h */
+#ifdef SYS_msgctl
+SYSCALL(msgctl)
+#endif
+#ifdef SYS_msgget
+SYSCALL(msgget)
+#endif
+#ifdef SYS_msgrcv
+SYSCALL(msgrcv)
+#endif
+#ifdef SYS_msgsnd
+SYSCALL(msgsnd)
+#endif
+
 /* sys/ptrace.h */
 #ifdef SYS_ptrace
 SYSCALL(ptrace)
