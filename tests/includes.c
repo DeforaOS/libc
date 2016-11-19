@@ -68,6 +68,7 @@
 #include <sys/ipc.h>
 #include <sys/mman.h>
 #include <sys/mount.h>
+#include <sys/msg.h>
 #include <sys/param.h>
 #include <sys/ptrace.h>
 #include <sys/reboot.h>
