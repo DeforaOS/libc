@@ -38,4 +38,8 @@
 typedef long long time_t;
 # endif
 
+
+/* constants */
+# define MSG_NOERROR	010000
+
 #endif /* !LIBC_KERNEL_NETBSD_SYS_MSG_H */

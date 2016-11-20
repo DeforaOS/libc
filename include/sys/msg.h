@@ -53,9 +53,6 @@ struct msqid_ds
 };
 
 
-/* constants */
-
-
 /* functions */
 int msgctl(int msqid, int cmd, struct msqid_ds * buf);
 int msgget(key_t key, int msgflg);
