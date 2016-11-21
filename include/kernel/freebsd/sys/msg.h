@@ -38,4 +38,8 @@
 typedef int time_t;
 # endif
 
+
+/* constants */
+# define MSG_NOERROR	010000
+
 #endif /* !LIBC_KERNEL_FREEBSD_SYS_MSG_H */
