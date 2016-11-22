@@ -41,7 +41,8 @@ static int _gai_strerror(char const * message, int value);
 static int _getaddrinfo(char const * progname);
 static int _gethostbyaddr(char const * addr, size_t length, int type);
 static int _gethostent(void);
-static int _getnameinfo(char const * progname);
+static int _getnameinfo(char const * progname, in_port_t port,
+		char const * expected);
 static int _getnetent(void);
 static int _getprotoent(void);
 static int _getservbyname(char const * name, char const * protocol);
@@ -61,7 +62,7 @@ static int _netdb(char const * progname)
 	/* gethostent */
 	ret |= _gethostent();
 	/* getnameinfo */
-	ret |= _getnameinfo(progname);
+	ret |= _getnameinfo(progname, 80, "http");
 	/* getnetent */
 	ret |= _getnetent();
 	/* getprotoent */
@@ -188,7 +189,8 @@ static int _gethostent(void)
 
 
 /* getnameinfo */
-static int _getnameinfo(char const * progname)
+static int _getnameinfo(char const * progname, in_port_t port,
+		char const * expected)
 {
 	struct sockaddr_in sa;
 	char node[16];
@@ -199,7 +201,7 @@ static int _getnameinfo(char const * progname)
 	memset(&sa, 0, sizeof(sa));
 	sa.sin_family = AF_INET;
 	sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-	sa.sin_port = 80;
+	sa.sin_port = port;
 	if((res = getnameinfo((struct sockaddr *)&sa, sizeof(sa),
 					node, sizeof(node),
 					service, sizeof(service), flags)) != 0)
@@ -208,10 +210,10 @@ static int _getnameinfo(char const * progname)
 				gai_strerror(res));
 		return 1;
 	}
-	if(strcmp(service, "http") != 0)
+	if(strcmp(service, expected) != 0)
 	{
 		fprintf(stderr, "%s: %s: Wrong service (expected: %s)\n",
-				progname, "getnameinfo", "http");
+				progname, service, expected);
 		return 1;
 	}
 	return 0;
