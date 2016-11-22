@@ -150,6 +150,7 @@ _test "start" argv1 argv2
 _test "stdarg"
 _test "stdint"
 _test "stdio"
+[ "$SYSTEM" = "Linux" ] && _test "stdlib"
 _test "string"
 _test "unistd"
 _test "utsname"
@@ -158,7 +159,7 @@ _fail "dlfcn" "../src/libc.$SOEXT"
 [ "$SYSTEM" = "FreeBSD" ] && _fail "setjmp"
 [ "$SYSTEM" = "FreeBSD" -o "$SYSTEM" = "Linux" ] && _fail "signal"
 [ "$SYSTEM" = "NetBSD" -a "$ARCH" = "amd64" ] || _fail "ssp"
-_fail "stdlib"
+[ "$SYSTEM" = "Linux" ] || _fail "stdlib"
 _fail "time"
 if [ -n "$FAILED" ]; then
 	echo "Failed tests:$FAILED" 1>&2
