@@ -111,6 +111,9 @@ fi
 	NetBSD-*)
 		LDSO="/libexec/ld.elf_so"
 		;;
+	OpenBSD-*)
+		LDSO="/usr/libexec/ld.so"
+		;;
 esac
 #XXX ignore errors
 if [ -z "$LDSO" ]; then
