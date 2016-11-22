@@ -700,26 +700,40 @@ void srand(unsigned int seed)
 /* strtod */
 double strtod(char const * str, char ** endptr)
 {
-	/* FIXME really implement */
+	/* FIXME support additional notations */
 	double ret;
-	int res;
-	long i;
-	unsigned long u;
-	char const * p;
+	char * e = str;
+	int neg = (*e == '-') ? 1 : 0;
+	unsigned long u = 0;
+	unsigned long cnt;
+	double f;
 
-	if(endptr != NULL)
-		*endptr = (char *)str;
-	if((res = sscanf(str, "%ld.%lu", &i, &u)) == 1)
-		ret = i;
-	else if(res == 2 && (p = index(str, '.')) != NULL)
+	if(neg)
+		e++;
+	for(cnt = 0; isdigit((unsigned char)e[cnt]); cnt++)
+		u = u * 10 + (e[cnt] - '0');
+	if(cnt == 0)
+		return 0.0 / 0.0;
+	e += cnt;
+	ret = u;
+	if(*e == '.')
 	{
-		if(i >= 0)
-			ret = i + u / (10.0 * strlen(++p));
-		else
-			ret = i - u / (10.0 * strlen(++p));
+		e++;
+		u = 0;
+		for(cnt = 0; isdigit((unsigned char)e[cnt]); cnt++)
+			u = u * 10 + (e[cnt] - '0');
+		if(cnt == 0)
+			return 0.0 / 0.0;
+		e += cnt;
+		f = u;
+		for(; cnt > 0; cnt--)
+			f = f / 10;
+		ret += f;
 	}
-	else
-		ret = 0.0 / 0.0;
+	if(neg)
+		ret = -ret;
+	if(endptr != NULL)
+		*endptr = e;
 	return ret;
 }
 
