@@ -109,7 +109,11 @@ static int _strtod(char const * progname, char const * str, double expected)
 
 	printf("%s: Testing strtod(\"%s\", %f)\n", progname, str, expected);
 	d = strtod(str, &p);
-	return (d == expected && *p == '\0') ? 0 : 1;
+	if(d == expected && *p == '\0')
+		return 0;
+	fprintf(stderr, "%s: %s: Obtained %f (expected: %f)\n", progname,
+			"strtod", d, expected);
+	return 1;
 }
 
 
