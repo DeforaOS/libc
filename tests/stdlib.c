@@ -58,7 +58,7 @@ static int _arc4random(char const * progname)
 	/* XXX false negatives are unlikely but possible */
 	for(i = 1; i < sizeof(res) / sizeof(*res); i++)
 		if(res[i] == res[0])
-			return -1;
+			return 1;
 	return 0;
 }
 
