@@ -62,7 +62,8 @@ static int _netdb(char const * progname)
 	/* gethostent */
 	ret |= _gethostent();
 	/* getnameinfo */
-	ret |= _getnameinfo(progname, 80, "http");
+	ret |= _getnameinfo(progname, 22, "ssh");
+	ret |= _getnameinfo(progname, 23, "telnet");
 	/* getnetent */
 	ret |= _getnetent();
 	/* getprotoent */
