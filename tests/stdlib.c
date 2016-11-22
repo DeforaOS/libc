@@ -128,5 +128,11 @@ int main(int argc, char * argv[])
 	ret += _mkstemp(argv[0]);
 	ret += _mktemp(argv[0]);
 	ret += _strtod(argv[0], "0.0", 0.0);
+	ret += _strtod(argv[0], "0.1", 0.1);
+	ret += _strtod(argv[0], "1.0", 1.0);
+	ret += _strtod(argv[0], "1.1", 1.1);
+	ret += _strtod(argv[0], "1.01", 1.01);
+	ret += _strtod(argv[0], "-1.1", -1.1);
+	ret += _strtod(argv[0], "-1.01", -1.01);
 	return (ret == 0) ? 0 : 2;
 }
