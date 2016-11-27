@@ -32,6 +32,7 @@
 # define LIBC_SYS_MSG_H
 
 # include "../compat.h"
+# include "../compat/sys/msg.h"
 # include "ipc.h"
 
 
