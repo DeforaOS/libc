@@ -46,7 +46,6 @@ typedef signed int pid_t;
 # ifndef ssize_t
 #  define ssize_t __ssize_t
 # endif
-/* FIXME also define time_t */
 struct msqid_ds
 {
 	/* FIXME implement */
