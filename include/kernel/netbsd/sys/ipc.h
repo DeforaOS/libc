@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2016 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,10 +28,8 @@
 
 
 
-#ifndef LIBC_SYS_IPC_H
-# define LIBC_SYS_IPC_H
-
-# include "../compat/sys/ipc.h"
+#ifndef LIBC_KERNEL_NETBSD_SYS_IPC_H
+# define LIBC_KERNEL_NETBSD_SYS_IPC_H
 
 
 /* types */
@@ -59,23 +57,16 @@ typedef id_t uid_t;
 
 # ifndef ipc_perm
 #  define ipc_perm ipc_perm
-#  warning Unsupported platform: struct ipc_perm is missing
-struct ipc_perm;
+struct ipc_perm
+{
+	uid_t uid;
+	gid_t gid;
+	uid_t cuid;
+	gid_t cgid;
+	mode_t mode;
+	unsigned short __padding1;
+	key_t __padding2;
+};
 # endif
 
-
-/* constants */
-# define IPC_PRIVATE	((key_t)0)
-# define IPC_CREAT	01000
-# define IPC_EXCL	02000
-# define IPC_NOWAIT	04000
-
-# define IPC_RMID	0
-# define IPC_SET	1
-# define IPC_STAT	2
-
-
-/* functions */
-key_t ftok(const char *, int);
-
-#endif /* !LIBC_SYS_IPC_H */
+#endif /* !LIBC_KERNEL_NETBSD_SYS_IPC_H */
