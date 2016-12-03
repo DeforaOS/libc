@@ -31,9 +31,9 @@
 #ifndef LIBC_SYS_MSG_H
 # define LIBC_SYS_MSG_H
 
+# include "ipc.h"
 # include "../compat.h"
 # include "../compat/sys/msg.h"
-# include "ipc.h"
 
 
 /* types */
