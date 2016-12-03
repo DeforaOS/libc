@@ -117,6 +117,7 @@
 # define SYS_setcontext		422
 # define SYS_truncate		479
 # define SYS_ftruncate		480
+# define SYS_msgctl		511
 # define SYS_shmctl		512
 
 #endif /* !KERNEL_FREEBSD_SYS_SYSCALL_H */
