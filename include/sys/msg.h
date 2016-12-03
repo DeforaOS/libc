@@ -47,10 +47,11 @@ typedef signed int pid_t;
 # ifndef ssize_t
 #  define ssize_t __ssize_t
 # endif
-struct msqid_ds
-{
-	/* FIXME implement */
-};
+# ifndef msqid_ds
+#  define msqid_ds msqid_ds
+#  warning Unsupported platform: struct msqid_ds is missing
+struct msqid_ds;
+# endif
 
 
 /* functions */
