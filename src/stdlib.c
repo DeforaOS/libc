@@ -45,9 +45,7 @@
 #include "stdint.h"
 #include "stdlib.h"
 
-#if !defined(CTL_KERN) || !defined(KERN_ARND)
-# include "chacha/ecrypt-sync.h"
-#endif
+#include "chacha/ecrypt-sync.h"
 
 #define min(a, b) (((a) > (b)) ? (b) : (a))
 #define max(a, b) (((a) > (b)) ? (a) : (b))
@@ -91,24 +89,6 @@ int abs(int x)
 
 
 /* arc4random */
-#if defined(CTL_KERN) && defined(KERN_ARND)
-uint32_t arc4random(void)
-{
-	const char buf[] = "arc4random() failed: terminated\n";
-	int mib[2] = { CTL_KERN, KERN_ARND };
-	uint32_t ret;
-	size_t len = sizeof(ret);
-
-	if(sysctl(mib, sizeof(mib) / sizeof(*mib), &ret, &len, NULL, 0) == -1
-			|| len != sizeof(ret))
-	{
-		write(2, buf, sizeof(buf) - 1);
-		abort();
-		return -1;
-	}
-	return ret;
-}
-#else
 uint32_t arc4random(void)
 {
 	static int initialized = 0;
@@ -137,7 +117,6 @@ uint32_t arc4random(void)
 	ECRYPT_encrypt_bytes(&ctx, &input, ret.u8, sizeof(input));
 	return ret.u32;
 }
-#endif
 
 
 /* atexit */
