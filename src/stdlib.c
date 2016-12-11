@@ -45,6 +45,10 @@
 #include "stdint.h"
 #include "stdlib.h"
 
+#if !defined(CTL_KERN) || !defined(KERN_ARND)
+# include "chacha/ecrypt-sync.h"
+#endif
+
 #define min(a, b) (((a) > (b)) ? (b) : (a))
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
@@ -105,12 +109,33 @@ uint32_t arc4random(void)
 	return ret;
 }
 #else
-# warning Unsupported platform: arc4random() is missing
 uint32_t arc4random(void)
 {
-	/* FIXME implement a generic arc4random() function */
-	abort();
-	return -1;
+	static int initialized = 0;
+	int fd;
+	static ECRYPT_ctx ctx;
+	unsigned char key[64] = { 0 };
+	unsigned char iv[8] = { 0 };
+	const unsigned char input[4] = { 0 };
+	union
+	{
+		uint8_t u8[4];
+		uint32_t u32;
+	} ret;
+
+	if(!initialized)
+	{
+		if((fd = open("/dev/urandom", O_RDONLY)) < 0
+				|| read(fd, &key, sizeof(key)) != sizeof(key)
+				|| read(fd, &iv, sizeof(iv)) != sizeof(iv))
+			abort();
+		close(fd);
+		ECRYPT_init(&ctx, &key, sizeof(key) * 8, sizeof(iv) * 8);
+		ECRYPT_ivsetup(&ctx, &iv);
+		initialized = 1;
+	}
+	ECRYPT_encrypt_bytes(&ctx, &input, ret.u8, sizeof(input));
+	return ret.u32;
 }
 #endif
 
