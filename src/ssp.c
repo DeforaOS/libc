@@ -47,7 +47,9 @@ void __stack_chk_fail(void)
 {
 	const char buf[] = "stack overflow detected: terminated\n";
 
+	/* output on the standard error stream */
 	write(2, buf, sizeof(buf) - 1);
+	/* trigger a crash */
 	abort();
 	_exit(127);
 }
