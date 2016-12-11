@@ -702,7 +702,7 @@ double strtod(char const * str, char ** endptr)
 {
 	/* FIXME support additional notations */
 	double ret;
-	char * e = str;
+	char const * e = str;
 	int neg = (*e == '-') ? 1 : 0;
 	unsigned long u = 0;
 	unsigned long cnt;
@@ -733,7 +733,7 @@ double strtod(char const * str, char ** endptr)
 	if(neg)
 		ret = -ret;
 	if(endptr != NULL)
-		*endptr = e;
+		*endptr = (char *)e;
 	return ret;
 }
 
