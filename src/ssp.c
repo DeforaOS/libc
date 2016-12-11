@@ -73,9 +73,6 @@ void __stack_chk_setup(void)
 	if(sysctl(mib, sizeof(mib) / sizeof(*mib), __stack_chk_guard, &len,
 				NULL, 0) == -1
 			|| len != sizeof(__stack_chk_guard))
-# else
-	if(__stack_chk_guard[0] == 0)
-# endif
 	{
 		/* use the "terminator canary" */
 		__stack_chk_guard[0] = 0;
@@ -83,5 +80,13 @@ void __stack_chk_setup(void)
 		__stack_chk_guard[2] = '\n';
 		__stack_chk_guard[3] = 255;
 	}
+# else
+	size_t i;
+
+	if(__stack_chk_guard[0] == 0)
+		for(i = 0; i < sizeof(__stack_chk_guard)
+				/ sizeof(*__stack_chk_guard); i++)
+			__stack_chk_guard[i] = arc4random();
+# endif
 }
 #endif
