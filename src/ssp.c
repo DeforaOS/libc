@@ -37,7 +37,8 @@
 
 #if defined(__SSP__)
 /* variables */
-long __stack_chk_guard[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+/* default to the "terminator canary" */
+long __stack_chk_guard[8] = { 0, 0, '\n', 255, 0, 0, 0, 0 };
 
 
 /* functions */
@@ -64,29 +65,11 @@ void __stack_chk_fail_local(void)
 /* stack_chk_setup */
 void __stack_chk_setup(void)
 {
-# if defined(SYS_sysctl) && defined(CTL_KERN) && defined(KERN_ARND)
-	const int mib[2] = { CTL_KERN, KERN_ARND };
-	size_t len = sizeof(__stack_chk_guard);
-
-	if(__stack_chk_guard[0] != 0)
-		return;
-	if(sysctl(mib, sizeof(mib) / sizeof(*mib), __stack_chk_guard, &len,
-				NULL, 0) == -1
-			|| len != sizeof(__stack_chk_guard))
-	{
-		/* use the "terminator canary" */
-		__stack_chk_guard[0] = 0;
-		__stack_chk_guard[1] = 0;
-		__stack_chk_guard[2] = '\n';
-		__stack_chk_guard[3] = 255;
-	}
-# else
 	size_t i;
 
 	if(__stack_chk_guard[0] == 0)
 		for(i = 0; i < sizeof(__stack_chk_guard)
 				/ sizeof(*__stack_chk_guard); i++)
 			__stack_chk_guard[i] = arc4random();
-# endif
 }
 #endif
