@@ -1,3 +1,10 @@
 Platform specific:
+- FreeBSD:
+  * fix build (conflict with /usr/local/include)
+  * complete signal() on amd64
 - Linux:
   * fork() and pause() may have to be inline (asm/unistd.h)
+- NetBSD:
+  * fix random crashes for the "stdlib" test
+- OpenBSD:
+  * complete support for SSP
