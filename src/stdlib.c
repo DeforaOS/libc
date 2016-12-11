@@ -95,8 +95,11 @@ uint32_t arc4random(void)
 	static int initialized = 0;
 	int fd;
 	static ECRYPT_ctx ctx;
-	unsigned char key[64] = { 0 };
-	unsigned char iv[8] = { 0 };
+	struct
+	{
+		unsigned char key[64];
+		unsigned char iv[8];
+	} ki;
 	const unsigned char input[4] = { 0 };
 	union
 	{
@@ -107,13 +110,13 @@ uint32_t arc4random(void)
 	if(!initialized)
 	{
 		if((fd = open("/dev/urandom", O_RDONLY)) < 0
-				|| read(fd, &key, sizeof(key)) != sizeof(key)
-				|| read(fd, &iv, sizeof(iv)) != sizeof(iv))
+				|| read(fd, &ki, sizeof(ki)) != sizeof(ki))
 			abort();
 		close(fd);
 		ECRYPT_init();
-		ECRYPT_keysetup(&ctx, &key, sizeof(key) * 8, sizeof(iv) * 8);
-		ECRYPT_ivsetup(&ctx, &iv);
+		ECRYPT_keysetup(&ctx, &ki.key, sizeof(ki.key) * 8,
+				sizeof(ki.iv) * 8);
+		ECRYPT_ivsetup(&ctx, &ki.iv);
 		initialized = 1;
 	}
 	ECRYPT_encrypt_bytes(&ctx, &input, ret.u8, sizeof(input));
