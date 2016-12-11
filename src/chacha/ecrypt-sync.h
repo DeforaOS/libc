@@ -156,7 +156,6 @@ static void ECRYPT_decrypt_bytes(
  * reset the ECRYPT_GENERATES_KEYSTREAM flag.
  */
 
-#define ECRYPT_GENERATES_KEYSTREAM
 #ifdef ECRYPT_GENERATES_KEYSTREAM
 
 static void ECRYPT_keystream_bytes(
