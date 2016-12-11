@@ -30,6 +30,8 @@
 
 #include <fcntl.h>
 #include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #include "../src/stdio.c"
 
