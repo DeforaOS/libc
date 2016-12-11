@@ -1,6 +1,3 @@
-- stdlib.c:
-  * use it to initialize SSP on remaining platforms
-
 Platform specific:
 - Linux:
   * fork() and pause() may have to be inline (asm/unistd.h)
