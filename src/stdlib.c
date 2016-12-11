@@ -45,7 +45,7 @@
 #include "stdint.h"
 #include "stdlib.h"
 
-#include "chacha/ecrypt-sync.h"
+#include "chacha/chacha.c"
 
 #define min(a, b) (((a) > (b)) ? (b) : (a))
 #define max(a, b) (((a) > (b)) ? (a) : (b))
