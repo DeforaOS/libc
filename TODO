@@ -1,3 +1,5 @@
+- pass the "time" test
+
 Platform specific:
 - FreeBSD:
   * fix build (conflict with /usr/local/include)
