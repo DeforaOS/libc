@@ -1,5 +1,4 @@
 - stdlib.c:
-  * implement arc4random()
   * use it to initialize SSP on remaining platforms
 
 Platform specific:
