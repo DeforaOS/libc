@@ -110,7 +110,8 @@ uint32_t arc4random(void)
 				|| read(fd, &iv, sizeof(iv)) != sizeof(iv))
 			abort();
 		close(fd);
-		ECRYPT_init(&ctx, &key, sizeof(key) * 8, sizeof(iv) * 8);
+		ECRYPT_init();
+		ECRYPT_keysetup(&ctx, &key, sizeof(key) * 8, sizeof(iv) * 8);
 		ECRYPT_ivsetup(&ctx, &iv);
 		initialized = 1;
 	}
