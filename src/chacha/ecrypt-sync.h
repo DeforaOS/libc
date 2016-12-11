@@ -132,17 +132,21 @@ static void ECRYPT_ivsetup(
  * ECRYPT_encrypt_blocks();
  */
 
+#ifdef ECRYPT_ENCRYPTS_BYTES
 static void ECRYPT_encrypt_bytes(
   ECRYPT_ctx* ctx, 
   const u8* plaintext, 
   u8* ciphertext, 
   u32 msglen);                /* Message length in bytes. */ 
+#endif
 
+#ifdef ECRYPT_DECRYPTS_BYTES
 static void ECRYPT_decrypt_bytes(
   ECRYPT_ctx* ctx, 
   const u8* ciphertext, 
   u8* plaintext, 
   u32 msglen);                /* Message length in bytes. */ 
+#endif
 
 /* ------------------------------------------------------------------------- */
 
@@ -184,19 +188,23 @@ static void ECRYPT_keystream_bytes(
  */
 #define ECRYPT_USES_DEFAULT_ALL_IN_ONE        /* [edit] */
 
+#ifdef ECRYPT_ENCRYPTS_PACKETS
 static void ECRYPT_encrypt_packet(
   ECRYPT_ctx* ctx, 
   const u8* iv,
   const u8* plaintext, 
   u8* ciphertext, 
   u32 msglen);
+#endif
 
+#ifdef ECRYPT_DECRYPTS_PACKETS
 static void ECRYPT_decrypt_packet(
   ECRYPT_ctx* ctx, 
   const u8* iv,
   const u8* ciphertext, 
   u8* plaintext, 
   u32 msglen);
+#endif
 
 /*
  * Encryption/decryption of blocks.

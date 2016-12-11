@@ -45,6 +45,7 @@
 #include "stdint.h"
 #include "stdlib.h"
 
+#define ECRYPT_ENCRYPTS_BYTES
 #include "chacha/chacha.c"
 
 #define min(a, b) (((a) > (b)) ? (b) : (a))
