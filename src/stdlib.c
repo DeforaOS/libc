@@ -70,6 +70,8 @@ static unsigned int _seed = 1;
 
 /* prototypes */
 static void _mktemp_template(char * template);
+static unsigned long long _strtoull(char const * str, char ** endptr, int base,
+		int * neg);
 
 
 /* public */
@@ -775,10 +777,6 @@ float strtof(char const * str, char ** endptr)
 
 
 /* strtol */
-static unsigned long long _strtoull(char const * str, char ** endptr, int base,
-		int * neg);
-static int _strtoull_base(char const ** p);
-
 long strtol(char const * str, char ** endptr, int base)
 {
 	unsigned long ret;
@@ -787,7 +785,7 @@ long strtol(char const * str, char ** endptr, int base)
 	ret = _strtoull(str, endptr, base, &neg);
 	if(neg != 0)
 	{
-		if(ret > (unsigned)LONG_MAX+1)
+		if(ret > (unsigned)LONG_MAX + 1)
 		{
 			errno = ERANGE;
 			return LONG_MIN;
@@ -800,68 +798,6 @@ long strtol(char const * str, char ** endptr, int base)
 		return LONG_MAX;
 	}
 	return ret;
-}
-
-static unsigned long long _strtoull(char const * str, char ** endptr, int base,
-		int * neg)
-{
-	unsigned long long ret = 0;
-	char const * p;
-	int r;
-
-	if(base > 36 || base < 0 || base == 1)
-	{
-		errno = EINVAL;
-		return 0;
-	}
-	for(p = str; isspace((int)(unsigned char)*p); p++);
-	if(*p == '\0')
-	{
-		if(endptr != NULL)
-			*endptr = (char *)str; /* XXX cast */
-		errno = ERANGE;
-		return 0;
-	}
-	if((*p == '+' || *p == '-') && *(p++) == '-' && neg != NULL)
-		*neg = 1;
-	if(base == 0)
-		base = _strtoull_base(&p);
-	if(base == 16 && *p == '0')
-	{
-		p++;
-		if(*p == 'x' || *p == 'X')
-			p++;
-	}
-	for(; *p != '\0'; p++)
-	{
-		if(*p >= '0' && *p - '0' < min(10, base))
-			ret = (ret * base) + *p - '0';
-		else if(base > 10 && (((r = (*p) - 'a') >= 0 && r < 26)
-				|| ((r = (*p) - 'A') >= 0 && r < 26))
-				&& r < base - 10)
-			ret = (ret * base) + r + 10;
-		else
-			break;
-		/* FIXME add integer overflow detection code */
-	}
-	if(endptr != NULL)
-		*endptr = (char *)p; /* XXX cast */
-	return ret;
-}
-
-static int _strtoull_base(char const ** p)
-{
-	if(**p == '0')
-	{
-		(*p)++;
-		if(**p == 'x' || **p == 'X')
-		{
-			(*p)++;
-			return 16;
-		}
-		return 8;
-	}
-	return 10;
 }
 
 
@@ -967,4 +903,70 @@ static void _mktemp_template(char * template)
 
 	for(i = strlen(template); i > 0 && template[i - 1] == 'X'; i--)
 		template[i - 1] = tab[rand() % sizeof(tab)];
+}
+
+
+/* strtoull */
+static int _strtoull_base(char const ** p);
+
+static unsigned long long _strtoull(char const * str, char ** endptr, int base,
+		int * neg)
+{
+	unsigned long long ret = 0;
+	char const * p;
+	int r;
+
+	if(base > 36 || base < 0 || base == 1)
+	{
+		errno = EINVAL;
+		return 0;
+	}
+	for(p = str; isspace((int)(unsigned char)*p); p++);
+	if(*p == '\0')
+	{
+		if(endptr != NULL)
+			*endptr = (char *)str; /* XXX cast */
+		errno = ERANGE;
+		return 0;
+	}
+	if((*p == '+' || *p == '-') && *(p++) == '-' && neg != NULL)
+		*neg = 1;
+	if(base == 0)
+		base = _strtoull_base(&p);
+	if(base == 16 && *p == '0')
+	{
+		p++;
+		if(*p == 'x' || *p == 'X')
+			p++;
+	}
+	for(; *p != '\0'; p++)
+	{
+		if(*p >= '0' && *p - '0' < min(10, base))
+			ret = (ret * base) + *p - '0';
+		else if(base > 10 && (((r = (*p) - 'a') >= 0 && r < 26)
+				|| ((r = (*p) - 'A') >= 0 && r < 26))
+				&& r < base - 10)
+			ret = (ret * base) + r + 10;
+		else
+			break;
+		/* FIXME add integer overflow detection code */
+	}
+	if(endptr != NULL)
+		*endptr = (char *)p; /* XXX cast */
+	return ret;
+}
+
+static int _strtoull_base(char const ** p)
+{
+	if(**p == '0')
+	{
+		(*p)++;
+		if(**p == 'x' || **p == 'X')
+		{
+			(*p)++;
+			return 16;
+		}
+		return 8;
+	}
+	return 10;
 }
