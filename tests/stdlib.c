@@ -30,6 +30,7 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <limits.h>
 #include <errno.h>
 #include <stdlib.h>
 
@@ -148,13 +149,27 @@ static int _strtol(char const * progname)
 {
 	char * p;
 	char const spaces[] = "      ";
+	unsigned long lu;
+	char buf[32];
 
+	/* spaces */
 	errno = 0;
 	strtol(spaces, &p, 0);
 	if(p != spaces || errno != ERANGE)
 	{
-		fprintf(stderr, "%s: %s: Conversion error\n", progname,
+		fprintf(stderr, "%s: %s: Conversion error (spaces)\n", progname,
 				"strtol");
+		return 1;
+	}
+	/* -(LONG_MAX + 1) */
+	lu = LONG_MAX + 1;
+	snprintf(buf, sizeof(buf), "-%lu", lu);
+	errno = 0;
+	strtol(buf, &p, 10);
+	if(errno != ERANGE)
+	{
+		fprintf(stderr, "%s: %s: Conversion error (-(LONG_MAX + 1))\n",
+				progname, "strtol");
 		return 1;
 	}
 	return 0;
@@ -166,13 +181,25 @@ static int _strtoul(char const * progname)
 {
 	char * p;
 	char const spaces[] = "      ";
+	char buf[32];
 
+	/* spaces */
 	errno = 0;
 	strtoul(spaces, &p, 0);
 	if(p != spaces || errno != ERANGE)
 	{
-		fprintf(stderr, "%s: %s: Conversion error\n", progname,
+		fprintf(stderr, "%s: %s: Conversion error (spaces)\n", progname,
 				"strtoul");
+		return 1;
+	}
+	/* ULONG_MAX */
+	snprintf(buf, sizeof(buf), "%lu", ULONG_MAX);
+	errno = 0;
+	strtoul(buf, &p, 10);
+	if(errno != 0 || *p != '\0')
+	{
+		fprintf(stderr, "%s: %s: Conversion error (ULONG_MAX)\n",
+				progname, "strtoul");
 		return 1;
 	}
 	return 0;
