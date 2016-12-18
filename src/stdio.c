@@ -1169,16 +1169,14 @@ static int _format_c(print_args * args, char const * chrp)
 static int _format_d(print_args * args, long long * ptr)
 {
 	unsigned long long uval;
+	char tmp[20] = "-";
 
 	if(*ptr >= 0)
-	{
-		uval = *ptr;
-		return _format_u(args, &uval);
-	}
-	uval = -(*ptr);
-	if(_vfprintf_do(args, "-", 1) != 0 || _format_u(args, &uval) != 0)
-		return -1;
-	return 0;
+		return _format_u(args, (unsigned long long *)ptr);
+	uval = llabs(*ptr);
+	/* XXX assumes tmp is large enough */
+	_format_lutoa(&tmp[1], uval, 10, 0);
+	return _vfprintf_do(args, tmp, strlen(tmp));
 }
 
 static int _format_f(print_args * args, double * ptr)
