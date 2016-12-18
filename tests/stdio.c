@@ -176,6 +176,7 @@ int main(int argc, char * argv[])
 	ret += _fopen(argv[0], "w+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
 	ret += _fopen(argv[0], "wb+x", O_RDWR | O_TRUNC | O_CREAT | O_EXCL);
 	ret += _printf(argv[0], "%d", 42, "42");
+	ret += _printf(argv[0], "%3d", 42, " 42");
 	ret += _printf(argv[0], "%d", -42, "-42");
 	ret += _printf(argv[0], "%o", 42, "52");
 	ret += _printf(argv[0], "%u", 42, "42");
