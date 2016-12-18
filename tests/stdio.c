@@ -180,6 +180,7 @@ int main(int argc, char * argv[])
 	ret += _printf(argv[0], "%o", 42, "52");
 	ret += _printf(argv[0], "%u", 42, "42");
 	ret += _printf(argv[0], "%x", 42, "2a");
+	ret += _printf(argv[0], "%#x", 42, "0x2a");
 	ret += _printf(argv[0], "%X", 42, "2A");
 	ret += _sscanf(argv[0]);
 	ret += _tmpfile(argv[0]);
