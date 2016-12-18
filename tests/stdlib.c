@@ -42,7 +42,8 @@ static int _error(char const * progname, char const * message, int ret);
 static int _arc4random(char const * progname);
 static int _mkstemp(char const * progname);
 static int _mktemp(char const * progname);
-static int _strtod(char const * progname, char const * str, double expected);
+static int _strtold(char const * progname, char const * str,
+		long double expected);
 static int _strtoul(char const * progname);
 
 
@@ -103,18 +104,19 @@ static int _mktemp(char const * progname)
 }
 
 
-/* strtod */
-static int _strtod(char const * progname, char const * str, double expected)
+/* strtold */
+static int _strtold(char const * progname, char const * str,
+		long double expected)
 {
-	double d;
+	long double d;
 	char * p;
 
-	printf("%s: Testing strtod(\"%s\", %f)\n", progname, str, expected);
-	d = strtod(str, &p);
+	printf("%s: Testing strtold(\"%s\", %f)\n", progname, str, expected);
+	d = strtold(str, &p);
 	if(d == expected && *p == '\0')
 		return 0;
 	fprintf(stderr, "%s: %s: Obtained %f (expected: %f)\n", progname,
-			"strtod", d, expected);
+			"strtold", d, expected);
 	return 1;
 }
 
@@ -147,13 +149,13 @@ int main(int argc, char * argv[])
 	ret += _arc4random(argv[0]);
 	ret += _mkstemp(argv[0]);
 	ret += _mktemp(argv[0]);
-	ret += _strtod(argv[0], "0.0", 0.0);
-	ret += _strtod(argv[0], "0.1", 0.1);
-	ret += _strtod(argv[0], "1.0", 1.0);
-	ret += _strtod(argv[0], "1.1", 1.1);
-	ret += _strtod(argv[0], "1.01", 1.01);
-	ret += _strtod(argv[0], "-1.1", -1.1);
-	ret += _strtod(argv[0], "-1.01", -1.01);
+	ret += _strtold(argv[0], "0.0", 0.0);
+	ret += _strtold(argv[0], "0.1", 0.1);
+	ret += _strtold(argv[0], "1.0", 1.0);
+	ret += _strtold(argv[0], "1.1", 1.1);
+	ret += _strtold(argv[0], "1.01", 1.01);
+	ret += _strtold(argv[0], "-1.1", -1.1);
+	ret += _strtold(argv[0], "-1.01", -1.01);
 	ret += _strtoul(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
