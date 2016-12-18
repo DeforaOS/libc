@@ -818,7 +818,7 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 	if(*p == '\0')
 	{
 		if(endptr != NULL)
-			*endptr = (char *)p; /* XXX cast */
+			*endptr = (char *)str; /* XXX cast */
 		errno = ERANGE;
 		return 0;
 	}
