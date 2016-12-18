@@ -30,6 +30,7 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
 #include <stdlib.h>
 
 
@@ -42,6 +43,7 @@ static int _arc4random(char const * progname);
 static int _mkstemp(char const * progname);
 static int _mktemp(char const * progname);
 static int _strtod(char const * progname, char const * str, double expected);
+static int _strtoul(char const * progname);
 
 
 /* functions */
@@ -117,6 +119,24 @@ static int _strtod(char const * progname, char const * str, double expected)
 }
 
 
+/* strtoul */
+static int _strtoul(char const * progname)
+{
+	char * p;
+	char const spaces[] = "      ";
+
+	errno = 0;
+	strtoul(spaces, &p, 0);
+	if(p != spaces || errno != ERANGE)
+	{
+		fprintf(stderr, "%s: %s: Conversion error\n", progname,
+				"strtoul");
+		return 1;
+	}
+	return 0;
+}
+
+
 /* public */
 /* functions */
 /* main */
@@ -134,5 +154,6 @@ int main(int argc, char * argv[])
 	ret += _strtod(argv[0], "1.01", 1.01);
 	ret += _strtod(argv[0], "-1.1", -1.1);
 	ret += _strtod(argv[0], "-1.01", -1.01);
+	ret += _strtoul(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
