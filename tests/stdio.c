@@ -178,6 +178,9 @@ int main(int argc, char * argv[])
 	ret += _printf(argv[0], "%d", 42, "42");
 	ret += _printf(argv[0], "%3d", 42, " 42");
 	ret += _printf(argv[0], "%d", -42, "-42");
+#if 0 /* XXX make it work eventually */
+	ret += _printf(argv[0], "%4d", -42, " -42");
+#endif
 	ret += _printf(argv[0], "%o", 42, "52");
 	ret += _printf(argv[0], "%u", 42, "42");
 	ret += _printf(argv[0], "%x", 42, "2a");
