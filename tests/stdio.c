@@ -86,7 +86,7 @@ static int _printf(char const * progname, char const * format, int64_t i,
 	char * buf;
 	int len;
 
-	printf("%s: Testing printf()\n", progname);
+	printf("%s: Testing printf(\"%s\")\n", progname, format);
 	if((len = snprintf(NULL, 0, format, i)) <= 0)
 		return -1;
 	if((buf = malloc(len + 2)) == NULL)
