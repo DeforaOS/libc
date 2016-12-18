@@ -108,16 +108,37 @@ static int _mktemp(char const * progname)
 static int _strtold(char const * progname, char const * str,
 		long double expected)
 {
-	long double d;
+	int ret = 0;
+	long double ld;
+	double d;
+	float f;
 	char * p;
 
 	printf("%s: Testing strtold(\"%s\", %f)\n", progname, str, expected);
-	d = strtold(str, &p);
-	if(d == expected && *p == '\0')
-		return 0;
-	fprintf(stderr, "%s: %s: Obtained %f (expected: %f)\n", progname,
-			"strtold", d, expected);
-	return 1;
+	ld = strtold(str, &p);
+	if(ld != expected || *p != '\0')
+	{
+		fprintf(stderr, "%s: %s: Obtained %f (expected: %f)\n",
+				progname, "strtold", ld, expected);
+		ret = 1;
+	}
+	printf("%s: Testing strtod(\"%s\", %f)\n", progname, str, expected);
+	d = strtod(str, &p);
+	if(d != (double)expected || *p != '\0')
+	{
+		fprintf(stderr, "%s: %s: Obtained %f (expected: %f)\n",
+				progname, "strtod", d, expected);
+		ret = 1;
+	}
+	printf("%s: Testing strtof(\"%s\", %f)\n", progname, str, expected);
+	f = strtof(str, &p);
+	if(f != (float)expected || *p != '\0')
+	{
+		fprintf(stderr, "%s: %s: Obtained %f (expected: %f)\n",
+				progname, "strtof", f, expected);
+		ret = 1;
+	}
+	return ret;
 }
 
 
