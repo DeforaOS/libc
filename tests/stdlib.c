@@ -44,6 +44,7 @@ static int _mkstemp(char const * progname);
 static int _mktemp(char const * progname);
 static int _strtold(char const * progname, char const * str,
 		long double expected);
+static int _strtol(char const * progname);
 static int _strtoul(char const * progname);
 
 
@@ -142,6 +143,24 @@ static int _strtold(char const * progname, char const * str,
 }
 
 
+/* strtol */
+static int _strtol(char const * progname)
+{
+	char * p;
+	char const spaces[] = "      ";
+
+	errno = 0;
+	strtol(spaces, &p, 0);
+	if(p != spaces || errno != ERANGE)
+	{
+		fprintf(stderr, "%s: %s: Conversion error\n", progname,
+				"strtol");
+		return 1;
+	}
+	return 0;
+}
+
+
 /* strtoul */
 static int _strtoul(char const * progname)
 {
@@ -177,6 +196,7 @@ int main(int argc, char * argv[])
 	ret += _strtold(argv[0], "1.01", 1.01);
 	ret += _strtold(argv[0], "-1.1", -1.1);
 	ret += _strtold(argv[0], "-1.01", -1.01);
+	ret += _strtol(argv[0]);
 	ret += _strtoul(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
