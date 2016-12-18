@@ -83,6 +83,7 @@
 # define SYS_setreuid		126
 # define SYS_setregid		127
 # define SYS_rename		128
+# define SYS_flock		131
 # define SYS_mkfifo		132
 # define SYS_mkdir		136
 # define SYS_rmdir		137
