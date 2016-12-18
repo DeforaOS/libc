@@ -70,6 +70,7 @@ static unsigned int _seed = 1;
 
 /* prototypes */
 static void _mktemp_template(char * template);
+static long double _strtold(char const * str, char ** endptr);
 static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 		int * neg);
 
@@ -711,68 +712,14 @@ void srand(unsigned int seed)
 /* strtod */
 double strtod(char const * str, char ** endptr)
 {
-	/* FIXME support additional notations */
-	double ret;
-	char const * e = str;
-	int neg = (*e == '-') ? 1 : 0;
-	unsigned long u = 0;
-	unsigned long cnt;
-	double f;
-
-	if(neg)
-		e++;
-	for(cnt = 0; isdigit((unsigned char)e[cnt]); cnt++)
-		u = u * 10 + (e[cnt] - '0');
-	if(cnt == 0)
-		return 0.0 / 0.0;
-	e += cnt;
-	ret = u;
-	if(*e == '.')
-	{
-		e++;
-		u = 0;
-		for(cnt = 0; isdigit((unsigned char)e[cnt]); cnt++)
-			u = u * 10 + (e[cnt] - '0');
-		if(cnt == 0)
-			return 0.0 / 0.0;
-		e += cnt;
-		f = u;
-		for(; cnt > 0; cnt--)
-			f = f / 10;
-		ret += f;
-	}
-	if(neg)
-		ret = -ret;
-	if(endptr != NULL)
-		*endptr = (char *)e;
-	return ret;
+	return _strtold(str, endptr);
 }
 
 
 /* strtof */
 float strtof(char const * str, char ** endptr)
 {
-	/* FIXME really implement */
-	float ret;
-	int res;
-	long i;
-	unsigned long u;
-	char const * p;
-
-	if(endptr != NULL)
-		*endptr = (char *)str;
-	if((res = sscanf(str, "%ld.%lu", &i, &u)) == 1)
-		ret = i;
-	else if(res == 2 && (p = index(str, '.')) != NULL)
-	{
-		if(i >= 0)
-			ret = i + u / (10.0 * strlen(++p));
-		else
-			ret = i - u / (10.0 * strlen(++p));
-	}
-	else
-		ret = 0.0 / 0.0;
-	return ret;
+	return _strtold(str, endptr);
 }
 
 
@@ -804,10 +751,7 @@ long strtol(char const * str, char ** endptr, int base)
 /* strtold */
 long double strtold(char const * str, char ** endptr)
 {
-	if(endptr != NULL)
-		*endptr = (char *)str; /* XXX cast */
-	/* FIXME implement */
-	return 0.0;
+	return _strtold(str, endptr);
 }
 
 
@@ -903,6 +847,47 @@ static void _mktemp_template(char * template)
 
 	for(i = strlen(template); i > 0 && template[i - 1] == 'X'; i--)
 		template[i - 1] = tab[rand() % sizeof(tab)];
+}
+
+
+/* strtold */
+static long double _strtold(char const * str, char ** endptr)
+{
+	/* FIXME support additional notations */
+	long double ret;
+	char const * e = str;
+	int neg = (*e == '-') ? 1 : 0;
+	unsigned long u = 0;
+	unsigned long cnt;
+	long double f;
+
+	if(neg)
+		e++;
+	for(cnt = 0; isdigit((unsigned char)e[cnt]); cnt++)
+		u = u * 10 + (e[cnt] - '0');
+	if(cnt == 0)
+		return 0.0 / 0.0;
+	e += cnt;
+	ret = u;
+	if(*e == '.')
+	{
+		e++;
+		u = 0;
+		for(cnt = 0; isdigit((unsigned char)e[cnt]); cnt++)
+			u = u * 10 + (e[cnt] - '0');
+		if(cnt == 0)
+			return 0.0 / 0.0;
+		e += cnt;
+		f = u;
+		for(; cnt > 0; cnt--)
+			f = f / 10;
+		ret += f;
+	}
+	if(neg)
+		ret = -ret;
+	if(endptr != NULL)
+		*endptr = (char *)e;
+	return ret;
 }
 
 
