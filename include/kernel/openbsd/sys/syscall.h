@@ -47,6 +47,7 @@
 # define SYS_chmod		15
 # define SYS_chown		16
 # define SYS_getpid		20
+# define SYS_unmount		22
 # define SYS_setuid		23
 # define SYS_getuid		24
 # define SYS_geteuid		25
