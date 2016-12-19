@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2016 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,18 +28,14 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_REBOOT_H
-# define LIBC_COMPAT_SYS_REBOOT_H
+#ifndef LIBC_KERNEL_OPENBSD_SYS_REBOOT_H
+# define LIBC_KERNEL_OPENBSD_SYS_REBOOT_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/reboot.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/reboot.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/reboot.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+/* reboot flag */
+# define RF_HALT	0x00000008
+# define RF_POWEROFF	0x00001000
+# define RF_REBOOT	0x00000000
 
-#endif /* !LIBC_COMPAT_SYS_REBOOT_H */
+#endif /* !LIBC_KERNEL_OPENBSD_SYS_REBOOT_H */
