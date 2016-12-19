@@ -63,6 +63,7 @@
 # define SYS_getlogin		49
 # define SYS_setlogin		50
 # define SYS_ioctl		54
+# define SYS_reboot		55
 # define SYS_symlink		57
 # define SYS_readlink		58
 # define SYS_execve		59
