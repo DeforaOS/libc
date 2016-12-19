@@ -103,6 +103,7 @@
 # define SYS_munlock		204
 # define SYS_getpgid		207
 # define SYS_nanosleep		240
+# define SYS_poll		252
 # define SYS_lchown		254
 # define SYS__statfs		261
 # define SYS_pipe		263
