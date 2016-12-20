@@ -41,7 +41,7 @@ _start:
 # endif
 #endif
 
-	/* run the main program */
+	/* run the program */
 	mov	(%rsp), %rdi	/* argc */
 	mov	%rsp, %rsi	/* argv */
 	add	$8, %rsi
@@ -65,7 +65,7 @@ _start:
 	call	main
 #endif
 
-	/* exit the main program */
+	/* exit the program */
 	mov	%rax, %rdi
 #ifdef __PIC__
 	call	exit@PLT
