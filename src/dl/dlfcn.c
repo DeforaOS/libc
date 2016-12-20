@@ -253,7 +253,7 @@ static int _file_mmap(DL * dl, Elf_Phdr * phdr)
 	off_t offset;
 
 	prot = _file_prot(phdr->p_flags);
-	flags = (prot & PROT_WRITE) ? MAP_PRIVATE : 0;
+	flags = (prot & PROT_WRITE) ? MAP_PRIVATE : MAP_SHARED;
 	/* FIXME assuming the order here */
 	if(dl->text_addr == NULL)
 	{
