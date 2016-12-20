@@ -63,7 +63,7 @@ typedef unsigned int nlink_t;
 # endif
 # ifndef off_t
 #  define off_t off_t
-typedef long long off_t;
+typedef long off_t;
 # endif
 # ifndef time_t
 #  define time_t time_t

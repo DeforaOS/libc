@@ -39,7 +39,7 @@ typedef unsigned long long ino_t;
 # endif
 # ifndef off_t
 #  define off_t off_t
-typedef long long off_t;
+typedef long off_t;
 # endif
 
 # pragma pack(1)

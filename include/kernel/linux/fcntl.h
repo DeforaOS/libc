@@ -35,7 +35,7 @@
 /* types */
 # ifndef off_t
 #  define off_t off_t
-typedef long long off_t;
+typedef long off_t;
 # endif
 # ifndef pid_t
 #  define pid_t pid_t

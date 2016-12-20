@@ -59,7 +59,7 @@ typedef unsigned int fsfilcnt_t;
 # endif
 # ifndef off_t
 #  define off_t off_t
-typedef long long off_t;
+typedef long off_t;
 # endif
 # ifndef suseconds_t
 #  define suseconds_t suseconds_t
