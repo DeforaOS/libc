@@ -41,19 +41,18 @@ _start:
 # endif
 #endif
 
-	/* rdi is &argc, argv is (&argc + 8) */
-	mov	%rdi, %rsi	/* argv = &argc + 1 */
-	mov	(%rdi), %rdi	/* argc */
-	add	$0x08, %rsi
-	mov	%rdi, %rdx	/* envp = (argc << 3) + argv */
-	shl	$3, %rdx
-	add	%rsi, %rdx
+	/* run the main program */
+	mov	(%rsp), %rdi	/* argc */
+	mov	%rsp, %rsi	/* argv */
+	add	$8, %rsi
+	mov	%rsi, %rdx	/* envp */
+	add	$8, %rdx
 #ifdef __PIC__			/* environ	*/
-	mov	%rdx, environ@GOTPCREL(%rip)
+	mov	environ@GOTPCREL(%rip), %rcx
+	mov	%rdx, (%rcx)
 #else
 	mov	%rdx, environ
 #endif
-	xor	%rbp, %rbp	/* stack	*/
 #ifdef __PIC__
 	call	main@PLT
 #else
