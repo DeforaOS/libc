@@ -50,8 +50,8 @@ static int _mman(char const * progname)
 	char * addr;
 	size_t i;
 
-	if((addr = mmap(NULL, PAGE_SIZE, PROT_READ, MAP_ANONYMOUS, -1, 0))
-			== MAP_FAILED)
+	if((addr = mmap(NULL, PAGE_SIZE, PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE,
+					-1, 0)) == MAP_FAILED)
 		return _error(progname, "mmap", 1);
 	for(i = 0; i < PAGE_SIZE; i++)
 		if(addr[i] != '\0')
