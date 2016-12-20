@@ -35,7 +35,7 @@
 /* regex */
 static void _regex(char const * progname)
 {
-	int errors[] =
+	const int errors[] =
 	{
 		REG_NOMATCH, REG_BADPAT, REG_ECOLLATE, REG_ECTYPE, REG_EESCAPE,
 		REG_ESUBREG, REG_EBRACK, REG_EPAREN, REG_EBRACE, REG_BADBR,
