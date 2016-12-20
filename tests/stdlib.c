@@ -50,6 +50,7 @@ static int _strtoul(char const * progname);
 
 
 /* functions */
+/* arc4random */
 static int _arc4random(char const * progname)
 {
 	uint32_t res[4];
