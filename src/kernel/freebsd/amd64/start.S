@@ -53,6 +53,12 @@ _start:
 #else
 	mov	%rdx, environ
 #endif
+	/* initialize stdio */
+# ifdef __PIC__
+	call	__start_stdio@PLT
+# else
+	call	__start_stdio
+# endif
 #ifdef __PIC__
 	call	main@PLT
 #else
