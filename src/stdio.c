@@ -926,6 +926,7 @@ static void _format_lutoa(char * dest, unsigned long n, size_t base, int upper);
 static int _format_c(print_args * args, char const * chrp);
 static int _format_d(print_args * args, long long * ptr);
 static int _format_f(print_args * args, double * ptr);
+static int _format_lf(print_args * args, long double * ptr);
 static int _format_o(print_args * args, unsigned long long * ptr);
 static int _format_s(print_args * args, char const * str);
 static int _format_p(print_args * args, void * ptr);
@@ -943,6 +944,7 @@ static int _vprintf(print_func func, void * dest, size_t size,
 	char c;
 	char const * str;
 	double e;
+	long double le;
 	long long int d;
 	unsigned long long int u;
 	void * ptr;
@@ -973,9 +975,18 @@ static int _vprintf(print_func func, void * dest, size_t size,
 		args.precision = _vprintf_precision(p, &i);
 		for(lng = 0; p[i] != '\0'; i++)
 		{
-			if(p[i] == 'l')
+			if(p[i] == 'L')
 			{
-				if(++lng > 2)
+				if(lng > 0)
+				{
+					errno = EINVAL;
+					return -1;
+				}
+				lng = -1;
+			}
+			else if(p[i] == 'l')
+			{
+				if(lng < 0 || ++lng > 2)
 				{
 					errno = EINVAL;
 					return -1;
@@ -1000,8 +1011,16 @@ static int _vprintf(print_func func, void * dest, size_t size,
 			}
 			else if(p[i] == 'f')
 			{
-				e = va_arg(arg, double);
-				f = _format_f(&args, &e);
+				if(lng < 0)
+				{
+					le = va_arg(arg, long double);
+					f = _format_lf(&args, &le);
+				}
+				else
+				{
+					e = va_arg(arg, double);
+					f = _format_f(&args, &e);
+				}
 				break;
 			}
 			else if(p[i] == 'h')
@@ -1180,6 +1199,22 @@ static int _format_d(print_args * args, long long * ptr)
 }
 
 static int _format_f(print_args * args, double * ptr)
+{
+	/* FIXME really implement */
+	unsigned long long uval;
+
+	if(*ptr >= 0.0)
+	{
+		uval = *ptr;
+		return _format_u(args, &uval);
+	}
+	uval = -(*ptr);
+	if(_vfprintf_do(args, "-", 1) != 0 || _format_u(args, &uval) != 0)
+		return -1;
+	return 0;
+}
+
+static int _format_lf(print_args * args, long double * ptr)
 {
 	/* FIXME really implement */
 	unsigned long long uval;

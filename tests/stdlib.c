@@ -117,15 +117,15 @@ static int _strtold(char const * progname, char const * str,
 	float f;
 	char * p;
 
-	printf("%s: Testing strtold(\"%s\", %f)\n", progname, str, expected);
+	printf("%s: Testing strtold(\"%s\", %Lf)\n", progname, str, expected);
 	ld = strtold(str, &p);
 	if(ld != expected || *p != '\0')
 	{
-		fprintf(stderr, "%s: %s: Obtained %f (expected: %f)\n",
+		fprintf(stderr, "%s: %s: Obtained %Lf (expected: %Lf)\n",
 				progname, "strtold", ld, expected);
 		ret = 1;
 	}
-	printf("%s: Testing strtod(\"%s\", %f)\n", progname, str, expected);
+	printf("%s: Testing strtod(\"%s\", %Lf)\n", progname, str, expected);
 	d = strtod(str, &p);
 	if(d != (double)expected || *p != '\0')
 	{
@@ -133,7 +133,7 @@ static int _strtold(char const * progname, char const * str,
 				progname, "strtod", d, expected);
 		ret = 1;
 	}
-	printf("%s: Testing strtof(\"%s\", %f)\n", progname, str, expected);
+	printf("%s: Testing strtof(\"%s\", %Lf)\n", progname, str, expected);
 	f = strtof(str, &p);
 	if(f != (float)expected || *p != '\0')
 	{
