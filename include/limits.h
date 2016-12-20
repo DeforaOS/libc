@@ -40,7 +40,7 @@
 #  define PAGESIZE 4096 /* XXX OS and architecture dependent */
 # endif
 # ifndef PAGE_SIZE
-#  define PAGE_SIZE PAGE_SIZE
+#  define PAGE_SIZE PAGESIZE
 # endif
 
 /* pathname variable values */
