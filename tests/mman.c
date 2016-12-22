@@ -60,6 +60,8 @@ static int _mman(char const * progname)
 			ret = 1;
 			break;
 		}
+	if(mprotect(addr, PAGE_SIZE, PROT_READ | PROT_WRITE) != 0)
+		ret = _error(progname, "mprotect", 1);
 	if(munmap(addr, PAGE_SIZE) != 0)
 		return _error(progname, "munmap", 1);
 	return ret;
