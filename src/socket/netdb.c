@@ -781,7 +781,7 @@ static int _getnameinfo_inet(const struct sockaddr_in * sa, socklen_t salen,
 	if(nodelen > 0)
 	{
 		if((flags & NI_NUMERICHOST) == 0)
-			ret = _getnameinfo_node( &sa->sin_addr.s_addr,
+			ret = _getnameinfo_node(&sa->sin_addr.s_addr,
 					sizeof(sa->sin_addr.s_addr),
 					sa->sin_family, node, nodelen);
 		else
@@ -811,7 +811,7 @@ static int _getnameinfo_inet6(const struct sockaddr_in6 * sa, socklen_t salen,
 	if(nodelen > 0)
 	{
 		if((flags & NI_NUMERICHOST) == 0)
-			ret = _getnameinfo_node( &sa->sin6_addr.s6_addr,
+			ret = _getnameinfo_node(&sa->sin6_addr.s6_addr,
 					sizeof(sa->sin6_addr.s6_addr),
 					sa->sin6_family, node, nodelen);
 		else
