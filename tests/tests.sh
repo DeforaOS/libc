@@ -26,6 +26,11 @@
 
 #variables
 ARCH="$(uname -m)"
+case "$ARCH" in
+	x86_64)
+		ARCH="amd64"
+		;;
+esac
 DEVNULL="/dev/null"
 [ -n "$OBJDIR" ] || OBJDIR="./"
 PROGNAME="tests.sh"
