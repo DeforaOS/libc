@@ -146,7 +146,7 @@ _test "select"
 [ "$SYSTEM" != "FreeBSD" -a "$ARCH" != "i386" ] && _test "setjmp"
 [ "$SYSTEM" != "FreeBSD" -a "$SYSTEM" != "Linux" ] && _test "signal"
 _test "socket"
-[ "$SYSTEM" = "NetBSD" -a "$ARCH" = "amd64" ] && _test "ssp"
+[ "$SYSTEM" != "Linux" -o "$ARCH" != "amd64" ] && _test "ssp"
 _test "start" argv1 argv2
 _test "stdarg"
 _test "stdint"
@@ -159,7 +159,7 @@ echo "Expected failures:" 1>&2
 _fail "dlfcn" "../src/libc.$SOEXT"
 [ "$SYSTEM" = "FreeBSD" -a "$ARCH" != "i386" ] && _fail "setjmp"
 [ "$SYSTEM" = "FreeBSD" -o "$SYSTEM" = "Linux" ] && _fail "signal"
-[ "$SYSTEM" = "NetBSD" -a "$ARCH" = "amd64" ] || _fail "ssp"
+[ "$SYSTEM" != "Linux" -o "$ARCH" != "amd64" ] || _fail "ssp"
 [ "$SYSTEM" = "NetBSD" ] || _fail "stdlib"
 _fail "time"
 if [ -n "$FAILED" ]; then
