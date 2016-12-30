@@ -53,7 +53,6 @@ static FILE * _hostfp = NULL;
 static FILE * _netfp = NULL;
 static FILE * _protofp = NULL;
 static FILE * _servfp = NULL;
-static char _buf[512];
 
 
 /* prototypes */
@@ -603,6 +602,7 @@ static char * _gethostent_host(char const ** s);
 struct hostent * gethostent(void)
 {
 	static struct hostent he = { NULL, NULL, 0, 0, NULL };
+	char buf[512];
 	char const * s;
 	char * p;
 
@@ -613,12 +613,12 @@ struct hostent * gethostent(void)
 	for(;;)
 	{
 		_hostent_free(&he);
-		if(fgets(_buf, sizeof(_buf), _hostfp) == NULL)
+		if(fgets(buf, sizeof(buf), _hostfp) == NULL)
 			break;
 		/* skip whitespaces */
-		for(s = _buf; isspace(*s); s++);
+		for(s = buf; isspace(*s); s++);
 		/* skip comments */
-		if(*s == '#' || *s == '\n')
+		if(*s == '#' || *s == '\0')
 			continue;
 		/* read address */
 		if((he.h_addr_list = malloc(2 * sizeof(*he.h_addr_list)))
@@ -902,6 +902,7 @@ static int _getnetent_net(uint32_t * net, char const ** s);
 struct netent * getnetent(void)
 {
 	static struct netent ne = { NULL, NULL, 0, 0 };
+	char buf[512];
 	char const * s;
 	char * p;
 
@@ -912,12 +913,12 @@ struct netent * getnetent(void)
 	for(;;)
 	{
 		_netent_free(&ne);
-		if(fgets(_buf, sizeof(_buf), _netfp) == NULL)
+		if(fgets(buf, sizeof(buf), _netfp) == NULL)
 			break;
 		/* skip whitespaces */
-		for(s = _buf; isspace(*s); s++);
+		for(s = buf; isspace(*s); s++);
 		/* skip comments */
-		if(*s == '#' || *s == '\n')
+		if(*s == '#' || *s == '\0')
 			continue;
 		/* read name */
 		if((ne.n_name = _getnetent_name(&s)) == NULL)
@@ -1044,6 +1045,7 @@ static int _getprotoent_proto(int * proto, char const ** s);
 struct protoent * getprotoent(void)
 {
 	static struct protoent pe = { NULL, NULL, 0 };
+	char buf[512];
 	char const * s;
 	char * p;
 
@@ -1054,12 +1056,12 @@ struct protoent * getprotoent(void)
 	for(;;)
 	{
 		_protoent_free(&pe);
-		if(fgets(_buf, sizeof(_buf), _protofp) == NULL)
+		if(fgets(buf, sizeof(buf), _protofp) == NULL)
 			break;
 		/* skip whitespaces */
-		for(s = _buf; isspace(*s); s++);
+		for(s = buf; isspace(*s); s++);
 		/* skip comments */
-		if(*s == '#' || *s == '\n')
+		if(*s == '#' || *s == '\0')
 			continue;
 		/* read name */
 		if((pe.p_name = _getprotoent_name(&s)) == NULL)
@@ -1158,6 +1160,7 @@ static char * _getservent_name(char const ** s);
 struct servent * getservent(void)
 {
 	static struct servent se = { NULL, NULL, 0, NULL };
+	char buf[512];
 	char const * s;
 	char * p;
 
@@ -1168,12 +1171,12 @@ struct servent * getservent(void)
 	for(;;)
 	{
 		_servent_free(&se);
-		if(fgets(_buf, sizeof(_buf), _servfp) == NULL)
+		if(fgets(buf, sizeof(buf), _servfp) == NULL)
 			break;
 		/* skip whitespaces */
-		for(s = _buf; isspace(*s); s++);
+		for(s = buf; isspace(*s); s++);
 		/* skip comments */
-		if(*s == '#' || *s == '\n')
+		if(*s == '#' || *s == '\0')
 			continue;
 		/* read service */
 		if((se.s_name = _getservent_name(&s)) == NULL)
