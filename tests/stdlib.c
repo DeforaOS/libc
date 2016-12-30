@@ -163,7 +163,7 @@ static int _strtol(char const * progname)
 		return 1;
 	}
 	/* -(LONG_MAX + 1) */
-	lu = LONG_MAX + 1;
+	lu = (unsigned long)LONG_MAX + 1;
 	snprintf(buf, sizeof(buf), "-%lu", lu);
 	errno = 0;
 	strtol(buf, &p, 10);
