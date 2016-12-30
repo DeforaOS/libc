@@ -60,12 +60,26 @@ __syscall:
 	pop	%rdi
 	jmp	_syscall@PLT
 
-#define SYSCALL(name) \
+#  define SYSCALL(name) \
 .global name; \
 .type name,@function; \
 name:; \
 	mov	$SYS_ ## name, %rax; \
 	jmp	__syscall@PLT
+# elif defined(__i386__)
+__syscall:
+	push	%eax
+	/* FIXME also implement further parameters */
+	call	analyze
+	pop	%eax
+	jmp	_syscall
+
+#  define SYSCALL(name) \
+.global name; \
+.type name,@function; \
+name:; \
+	mov	$SYS_ ## name, %eax; \
+	jmp	__syscall
 # else
 #  warning Unsupported FreeBSD architecture
 # endif
