@@ -52,20 +52,22 @@ _syscall_return:
 
 
 /* macros */
-#ifdef __PIC__
-# define SYSCALL(name) \
+#ifndef SYSCALL
+# ifdef __PIC__
+#  define SYSCALL(name) \
 .global name; \
 .type name,@function; \
 name:; \
 	mov	$SYS_ ## name, %rax; \
 	jmp	_syscall@PLT
-#else
-# define SYSCALL(name) \
+# else
+#  define SYSCALL(name) \
 .global name; \
 .type name,@function; \
 name:; \
 	mov	$SYS_ ## name, %rax; \
 	jmp	_syscall
+# endif
 #endif
 
 
