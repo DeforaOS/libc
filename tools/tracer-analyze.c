@@ -316,6 +316,11 @@ void analyze(int number, long arg1, long arg2, long arg3)
 			_analyze_print_mask(_flags_open, arg2);
 			snprintf(buf, sizeof(buf), ")\n");
 			break;
+		case SYS_read:
+		case SYS_write:
+			p = (void *)arg2;
+			snprintf(buf, sizeof(buf), "(%d, %p, %lu)\n", arg1, arg2);
+			break;
 #ifdef SYS_sysctl
 		case SYS_sysctl:
 			/* FIXME analyze the name */
