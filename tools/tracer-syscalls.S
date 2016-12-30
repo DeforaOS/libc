@@ -98,12 +98,26 @@ __syscall:
 	pop	%rdi
 	jmp	_syscall@PLT
 
-#define SYSCALL(name) \
+#  define SYSCALL(name) \
 .global name; \
 .type name,@function; \
 name:; \
 	mov	$SYS_ ## name, %rax; \
 	jmp	__syscall@PLT
+# elif defined(__i386__)
+__syscall:
+	push	%eax
+	/* FIXME also implement further parameters */
+	call	analyze
+	pop	%eax
+	jmp	_syscall
+
+#  define SYSCALL(name) \
+.global name; \
+.type name,@function; \
+name:; \
+	mov	$SYS_ ## name, %eax; \
+	jmp	__syscall
 # else
 #  warning Unsupported NetBSD architecture
 # endif
@@ -138,5 +152,26 @@ __lstat50:
 __stat50:
 	mov	$SYS_stat, %rax
 	jmp	__syscall@PLT
+# elif defined(__i386__)
+/* fstat */
+.global __fstat50
+.type __fstat50,@function
+__fstat50:
+	mov	$SYS_fstat, %eax
+	jmp	__syscall
+
+/* lstat */
+.global __lstat50
+.type __lstat50,@function
+__lstat50:
+	mov	$SYS_lstat, %eax
+	jmp	__syscall
+
+/* stat */
+.global __stat50
+.type __stat50,@function
+__stat50:
+	mov	$SYS_stat, %eax
+	jmp	__syscall
 # endif
 #endif
