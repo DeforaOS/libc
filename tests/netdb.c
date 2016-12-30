@@ -39,15 +39,18 @@ static int _netdb(char const * progname);
 
 static int _gai_strerror(char const * message, int value);
 static int _getaddrinfo(char const * progname);
-static int _gethostbyaddr(char const * addr, size_t length, int type);
-static int _gethostent(void);
+static int _gethostbyaddr(char const * progname, char const * addr,
+		size_t length, int type);
+static int _gethostent(char const * progname);
 static int _getnameinfo(char const * progname, in_port_t port,
 		char const * expected);
-static int _getnetent(void);
-static int _getprotoent(void);
-static int _getservbyname(char const * name, char const * protocol);
-static int _getservbyport(int port, char const * protocol);
-static int _getservent(void);
+static int _getnetent(char const * progname);
+static int _getprotoent(char const * progname);
+static int _getservbyname(char const * progname, char const * name,
+		char const * protocol);
+static int _getservbyport(char const * progname, int port,
+		char const * protocol);
+static int _getservent(char const * progname);
 static int _hstrerror(char const * message, int value);
 
 
@@ -58,20 +61,20 @@ static int _netdb(char const * progname)
 	int ret = 0;
 
 	/* gethostbyaddr */
-	ret |= _gethostbyaddr("\x7f\x00\x00\x01", 4, AF_INET);
+	ret |= _gethostbyaddr(progname, "\x7f\x00\x00\x01", 4, AF_INET);
 	/* gethostent */
-	ret |= _gethostent();
+	ret |= _gethostent(progname);
 	/* getnameinfo */
 	ret |= _getnameinfo(progname, 22, "ssh");
 	ret |= _getnameinfo(progname, 23, "telnet");
 	/* getnetent */
-	ret |= _getnetent();
+	ret |= _getnetent(progname);
 	/* getprotoent */
-	ret |= _getprotoent();
+	ret |= _getprotoent(progname);
 	/* getservent */
-	ret |= _getservbyname("ssh", "tcp");
-	ret |= _getservbyport(22, "tcp");
-	ret |= _getservent();
+	ret |= _getservbyname(progname, "ssh", "tcp");
+	ret |= _getservbyport(progname, 22, "tcp");
+	ret |= _getservent(progname);
 	/* hstrerror */
 	ret |= _hstrerror("HOST_NOT_FOUND", HOST_NOT_FOUND);
 	ret |= _hstrerror("TRY_AGAIN", TRY_AGAIN);
@@ -154,20 +157,23 @@ static int _getaddrinfo(char const * progname)
 
 
 /* gethostbyaddr */
-static int _gethostbyaddr(char const * addr, size_t length, int type)
+static int _gethostbyaddr(char const * progname, char const * addr,
+		size_t length, int type)
 {
+	printf("%s: Testing gethostbyaddr()\n", progname);
 	return (gethostbyaddr(addr, length, type) != NULL) ? 0 : 1;
 }
 
 
 /* gethostent */
-static int _gethostent(void)
+static int _gethostent(char const * progname)
 {
 	struct hostent * he;
 	unsigned int i;
 	char * const * p;
 	char const * sep;
 
+	printf("%s: Testing gethostent()\n", progname);
 	sethostent(1);
 	for(i = 0; (he = gethostent()) != NULL; i++)
 	{
@@ -199,6 +205,8 @@ static int _getnameinfo(char const * progname, in_port_t port,
 	const int flags = 0;
 	int res;
 
+	printf("%s: Testing getnameinfo(%u, \"%s\")\n", progname, port,
+			expected);
 	memset(&sa, 0, sizeof(sa));
 	sa.sin_family = AF_INET;
 	sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
@@ -222,13 +230,14 @@ static int _getnameinfo(char const * progname, in_port_t port,
 
 
 /* getnetent */
-static int _getnetent(void)
+static int _getnetent(char const * progname)
 {
 	struct netent * ne;
 	unsigned int i;
 	char * const * p;
 	char const * sep;
 
+	printf("%s: Testing getnetent()\n", progname);
 	setnetent(1);
 	for(i = 0; (ne = getnetent()) != NULL; i++)
 	{
@@ -251,13 +260,14 @@ static int _getnetent(void)
 
 
 /* getprotoent */
-static int _getprotoent(void)
+static int _getprotoent(char const * progname)
 {
 	struct protoent * pe;
 	unsigned int i;
 	char * const * p;
 	char const * sep;
 
+	printf("%s: Testing getprotoent()\n", progname);
 	setprotoent(1);
 	for(i = 0; (pe = getprotoent()) != NULL; i++)
 	{
@@ -280,11 +290,13 @@ static int _getprotoent(void)
 
 
 /* getservbyname */
-static int _getservbyname(char const * name, char const * protocol)
+static int _getservbyname(char const * progname, char const * name,
+		char const * protocol)
 {
 	struct servent * se;
 
-	printf("%s: %s/%s\n", "getservbyname", name, protocol);
+	printf("%s: Testing getservbyname(): %s/%s\n", progname, name,
+			protocol);
 	if((se = getservbyname(name, protocol)) == NULL)
 		return 0;
 	printf("%s\t%d/%s\n", se->s_name, se->s_port, se->s_proto);
@@ -293,11 +305,13 @@ static int _getservbyname(char const * name, char const * protocol)
 
 
 /* getservbyport */
-static int _getservbyport(int port, char const * protocol)
+static int _getservbyport(char const * progname, int port,
+		char const * protocol)
 {
 	struct servent * se;
 
-	printf("%s: %d/%s\n", "getservbyport", port, protocol);
+	printf("%s: Testing getservbyport(): %d/%s\n", progname, port,
+			protocol);
 	if((se = getservbyport(port, protocol)) == NULL)
 		return 0;
 	printf("%s\t%d/%s\n", se->s_name, se->s_port, se->s_proto);
@@ -306,13 +320,13 @@ static int _getservbyport(int port, char const * protocol)
 
 
 /* getservent */
-static int _getservent(void)
+static int _getservent(char const * progname)
 {
 	struct servent * se;
 	unsigned int i;
 	char * const * p;
 
-	printf("%s:\n", "getservent");
+	printf("%s: Testing getservent()\n", progname);
 	setservent(1);
 	for(i = 0; (se = getservent()) != NULL; i++)
 	{
