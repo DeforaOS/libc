@@ -41,11 +41,13 @@ _syscall:
 
 
 /* macros */
-#define SYSCALL(name) \
+#ifndef SYSCALL
+# define SYSCALL(name) \
 .global name; \
 name:; \
 	mov	$SYS_ ## name, %eax; \
 	jmp	_syscall
+#endif
 
 
 /* functions */
