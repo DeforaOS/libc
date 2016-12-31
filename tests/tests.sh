@@ -127,6 +127,7 @@ target="$1"
 
 [ "$clean" -ne 0 ]						&& exit 0
 
+#main
 if ! _run "start" argv1 argv2 > "$DEVNULL" 2>&1; then
 	echo "Not performing tests (not functional)"
 	exit 0
