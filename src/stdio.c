@@ -729,8 +729,7 @@ int renameat(int fromfd, char const * from, int tofd, char const * to)
 /* rewind */
 void rewind(FILE * file)
 {
-	if(fseek(file, 0, SEEK_SET) == 0)
-		clearerr(file);
+	fseeko(file, 0, SEEK_SET);
 }
 
 
