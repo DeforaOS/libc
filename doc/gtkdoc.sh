@@ -47,7 +47,7 @@ TOUCH="touch"
 #debug
 _debug()
 {
-	echo "$@" 1>&2
+	echo "$@" 1>&3
 	"$@"
 }
 
@@ -110,6 +110,7 @@ MODULE="$PACKAGE"
 [ -z "$DATADIR" ] && DATADIR="$PREFIX/share"
 instdir="$DATADIR/gtk-doc/html"
 
+exec 3>&1
 while [ $# -gt 0 ]; do
 	target="$1"
 	target="${target#$OBJDIR}"
