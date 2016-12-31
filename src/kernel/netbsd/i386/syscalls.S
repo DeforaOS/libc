@@ -182,16 +182,15 @@ pipe:
 .global _setjmp
 .type _setjmp,@function
 _setjmp:
-	push	%ebp
-	mov	%esp, %ebp
+	/* eax = env */
+	mov	4(%esp), %eax
 
 	/* save registers */
-	mov	8(%ebp), %eax			/* eax = env */
-	mov	4(%ebp), %edx			/* env[0] = return address */
+	mov	0(%esp), %edx			/* env[0] = return address */
 	mov	%edx, 0(%eax)
 	mov	%ebx, 4(%eax)			/* env[1] = ebx */
-	mov	%ebp, 8(%eax)			/* env[2] = stack pointer */
-	mov	0(%esp), %edx			/* env[3] = base pointer */
+	mov	%esp, 8(%eax)			/* env[2] = stack pointer */
+	mov	%ebp, %edx			/* env[3] = base pointer */
 	mov	%edx, 12(%eax)
 	mov	%esi, 16(%eax)			/* env[4] = esi */
 	mov	%edi, 20(%eax)			/* env[5] = edi */
@@ -201,7 +200,6 @@ _setjmp:
 
 	/* return 0 */
 	mov	$0x0, %eax
-	pop	%ebp
 	ret
 
 
@@ -209,18 +207,15 @@ _setjmp:
 .global setjmp
 .type setjmp,@function
 setjmp:
-	push	%ebp
-	mov	%esp, %ebp
-
 	/* eax = env */
-	mov	8(%ebp), %eax
+	mov	4(%esp), %eax
 
 	/* save registers */
-	mov	4(%ebp), %edx			/* return address */
+	mov	0(%esp), %edx			/* return address */
 	mov	%edx, 0(%eax)
 	mov	%ebx, 4(%eax)
-	mov	%ebp, 8(%eax)			/* stack pointer */
-	mov	0(%ebp), %edx			/* base pointer */
+	mov	%esp, 8(%eax)			/* stack pointer */
+	mov	%ebp, %edx			/* base pointer */
 	mov	%edx, 12(%eax)
 	mov	%esi, 16(%eax)
 	mov	%edi, 20(%eax)
@@ -240,13 +235,12 @@ setjmp:
 	/* if(res == 0) env[6] = 1 */
 	test	%eax, %eax
 	jnz	_setjmp_return
-	mov	8(%ebp), %eax
+	mov	4(%esp), %eax
 	movl	$0x1, 24(%eax)
 
 	/* return 0 */
 _setjmp_return:
 	mov	$0x0, %eax
-	pop	%ebp
 	ret
 
 
