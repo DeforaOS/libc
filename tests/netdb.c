@@ -191,7 +191,7 @@ static int _gethostent(char const * progname)
 	}
 	endhostent();
 	printf("%u hosts listed\n", i);
-	return 0;
+	return (i > 0) ? 0 : 1;
 }
 
 
