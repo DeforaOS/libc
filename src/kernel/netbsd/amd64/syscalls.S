@@ -329,18 +329,15 @@ sigaction:
 .global sigsetjmp
 .type sigsetjmp,@function
 sigsetjmp:
-	/* if(savemask == 0) return _setjmp() */
+	/* if(savemask != 0) return setjmp(); else return _setjmp(); */
 	test	%esi, %esi
-	jnz	_sigsetjmp_save
+#ifdef __PIC__
+	jnz	setjmp@PLT
+#else
+	jnz	setjmp
+#endif
 #ifdef __PIC__
 	jmp	_setjmp@PLT
 #else
 	jmp	_setjmp
-#endif
-_sigsetjmp_save:
-	/* else return setjmp() */
-#ifdef __PIC__
-	jmp	setjmp@PLT
-#else
-	jmp	setjmp
 #endif

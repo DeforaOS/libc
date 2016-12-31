@@ -277,7 +277,7 @@ sigaction:
 .global sigsetjmp
 .type sigsetjmp,@function
 sigsetjmp:
-	/* if(savemask != 0) return setjmp(); else return _setjmp() */
+	/* if(savemask != 0) return setjmp(); else return _setjmp(); */
 	mov	8(%esp), %eax
 	test	%eax, %eax
 	jnz	setjmp
