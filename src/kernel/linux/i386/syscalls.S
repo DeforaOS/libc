@@ -189,7 +189,7 @@ mmap:
 	int	$0x80
 	pop	%ebx
 	cmp	$-255, %eax
-	jl	.errnoret
+	jl	_syscall_return
 	jmp	.errno
 #undef SYS_mmap
 
