@@ -133,9 +133,9 @@ siglongjmp:
 	/* sigprocmask(SIG_SETMASK, &env[10], NULL) */
 	push	%rdi
 	push	%rsi
-	lea	80(%rdi), %rdx
 	mov	$0x3, %rdi
-	mov	$0x0, %rsi
+	lea	80(%rdi), %rsi
+	mov	$0x0, %rdx
 #ifdef __PIC__
 	call	sigprocmask@PLT
 #else
