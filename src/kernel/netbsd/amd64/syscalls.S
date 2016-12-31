@@ -230,8 +230,8 @@ pipe:
 .type _setjmp,@function
 _setjmp:
 	/* save registers */
-	mov	0(%rsp), %rsi			/* return address */
-	mov	%rsi, 0(%rdi)
+	mov	0(%rsp), %rax			/* return address */
+	mov	%rax, 0(%rdi)
 	mov	%rbx, 8(%rdi)			/* %rbx */
 	mov	%rsp, 16(%rdi)			/* stack pointer */
 	mov	%rbp, 24(%rdi)			/* base pointer */
@@ -255,8 +255,8 @@ _setjmp:
 .type setjmp,@function
 setjmp:
 	/* save registers */
-	mov	0(%rsp), %rsi			/* return address */
-	mov	%rsi, 0(%rdi)
+	mov	0(%rsp), %rax			/* return address */
+	mov	%rax, 0(%rdi)
 	mov	%rbx, 8(%rdi)			/* %rbx */
 	mov	%rsp, 16(%rdi)			/* stack pointer */
 	mov	%rbp, 24(%rdi)			/* base pointer */
