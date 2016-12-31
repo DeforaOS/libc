@@ -270,7 +270,7 @@ setjmp:
 	/* env[9] = 0 */
 	movq	$0x0, 72(%rdi)
 
-	/* res = sigprocmask(0, NULL, &env[9]) */
+	/* res = sigprocmask(0, NULL, &env[10]) */
 	push	%rdi
 	mov	$0x0, %rdi
 	mov	$0x0, %rsi
