@@ -48,11 +48,11 @@ _syscall:
 	pop	%ebx
 .errno:
 	cmp	$0, %eax
-	jge	.errnoret
+	jge	_syscall_return
 	neg	%eax
 	mov	%eax, errno
 	mov	$-1, %eax
-.errnoret:
+_syscall_return:
 	ret
 
 
@@ -285,7 +285,7 @@ _setjmp_return:
 .global sigsetjmp
 .type sigsetjmp,@function
 sigsetjmp:
-	/* if(savemask != 0) return setjmp(); else return _setjmp() */
+	/* if(savemask != 0) return setjmp(); else return _setjmp(); */
 	mov	8(%esp), %eax
 	test	%eax, %eax
 	jnz	setjmp
