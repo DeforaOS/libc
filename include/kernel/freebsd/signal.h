@@ -76,6 +76,8 @@ struct sigaction
 # define SIG_IGN	((void (*)(int)) 1)
 
 # define SIG_BLOCK	1
+# define SIG_UNBLOCK	2
+# define SIG_SETMASK	3
 
 # define SA_RESTART	0x2
 
