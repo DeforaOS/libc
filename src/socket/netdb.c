@@ -1181,6 +1181,8 @@ struct servent * getservent(void)
 		/* read service */
 		if((se.s_name = _getservent_name(&s)) == NULL)
 			continue;
+		if(!isspace(*s))
+			continue;
 		/* skip whitespaces */
 		for(; isspace(*s); s++);
 		/* read port */
