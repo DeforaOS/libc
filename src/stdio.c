@@ -437,7 +437,12 @@ int fseeko(FILE * file, off_t offset, int whence)
 	}
 	if(fflush(file) != 0)
 		return -1;
-	return (lseek(file->fd, offset, whence) != -1) ? 0 : -1;
+	if(lseek(file->fd, offset, whence) == -1)
+		return -1;
+	/* reset the status */
+	file->eof = (whence == SEEK_END && offset == 0) ? 1 : 0;
+	file->error = 0;
+	return 0;
 }
 
 
