@@ -193,7 +193,7 @@ int main(int argc, char * argv[])
 	{
 		printf("%s: %s", argv[0], "Testing setjmp()\n");
 		_ret = 2;
-		memset(_jb, 0, sizeof(jmp_buf));
+		memset(&_jb, 0, sizeof(_jb));
 		if((res = setjmp(_jb)) == 0)
 		{
 #ifdef DEBUG
@@ -229,7 +229,7 @@ int main(int argc, char * argv[])
 	{
 		printf("%s: %s", argv[0], "Testing sigsetjmp(2/2)\n");
 		_ret = 2;
-		memset(_sjb, 0, sizeof(sigjmp_buf));
+		memset(&_sjb, 0, sizeof(_sjb));
 		if((res = sigsetjmp(_sjb, (5 << 2))) == 0)
 		{
 #ifdef DEBUG
