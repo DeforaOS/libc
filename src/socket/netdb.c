@@ -630,7 +630,7 @@ struct hostent * gethostent(void)
 		if(!isspace(*s))
 			continue;
 		/* skip whitespaces */
-		for(; isspace(*s); s++);
+		for(s++; isspace(*s); s++);
 		/* read hostname */
 		if((he.h_name = _gethostent_host(&s)) == NULL)
 			continue;
@@ -926,7 +926,7 @@ struct netent * getnetent(void)
 		if(!isspace(*s))
 			continue;
 		/* skip whitespaces */
-		for(; isspace(*s); s++);
+		for(s++; isspace(*s); s++);
 		/* read network */
 		if(_getnetent_net(&ne.n_net, &s) != 0)
 			continue;
@@ -1069,7 +1069,7 @@ struct protoent * getprotoent(void)
 		if(!isspace(*s))
 			continue;
 		/* skip whitespaces */
-		for(; isspace(*s); s++);
+		for(s++; isspace(*s); s++);
 		/* read protocol */
 		if(_getprotoent_proto(&pe.p_proto, &s) != 0)
 			continue;
@@ -1184,7 +1184,7 @@ struct servent * getservent(void)
 		if(!isspace(*s))
 			continue;
 		/* skip whitespaces */
-		for(; isspace(*s); s++);
+		for(s++; isspace(*s); s++);
 		/* read port */
 		se.s_port = strtol(s, &p, 10);
 		if(*s == '\0' || *p != '/')
