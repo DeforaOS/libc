@@ -33,6 +33,6 @@
 
 
 /* constants */
-# define __NetBSD_Version__	300000000
+# define __NetBSD_Version__	600000000
 
 #endif /* !LIBC_KERNEL_NETBSD_SYS_PARAM_H */
