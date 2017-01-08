@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2010 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,9 +28,12 @@
 
 
 
-#ifndef LIBC_SYS_PARAM_H
-# define LIBC_SYS_PARAM_H
+#ifndef LIBC_COMPAT_SYS_PARAM_H
+# define LIBC_COMPAT_SYS_PARAM_H
 
-# include "compat/sys/param.h"
 
-#endif /* !LIBC_SYS_PARAM_H */
+# if defined(__NetBSD__)
+#  include "kernel/netbsd/sys/param.h"
+# endif
+
+#endif /* !LIBC_COMPAT_SYS_PARAM_H */

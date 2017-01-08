@@ -28,6 +28,9 @@
 
 
 
+#include "sys/param.h"
+
+
 /* NetBSD emulation */
 .section ".note.netbsd.ident", "a"
 	.p2align 2
@@ -36,6 +39,6 @@
 	.long	4
 	.long	1
 	.ascii	"NetBSD\0\0"
-	.long	300000000	/* requires NetBSD 3.0 */
+	.long	__NetBSD_Version__
 	.previous
 	.p2align 2
