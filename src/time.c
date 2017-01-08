@@ -604,7 +604,7 @@ char * strptime(char const * buf, char const * format, struct tm * tm)
 				errno = 0;
 				tm->tm_sec = strtol(p, &p, 10);
 				if(errno != 0 || tm->tm_sec < 0
-						|| tm->tm_sec > 61)
+						|| tm->tm_sec > 60)
 					return NULL;
 				break;
 			case 'Y':
