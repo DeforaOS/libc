@@ -92,27 +92,29 @@ typedef enum _DLError
 
 
 /* constants */
-/* XXX probably belongs somewhere else (some header file) */
-#ifndef _BYTE_ORDER
+#ifndef __BYTE_ORDER__
 # if defined(__amd64__)
-#  define _BYTE_ORDER	_LITTLE_ENDIAN
+#  define __BYTE_ORDER__	__ORDER_LITTLE_ENDIAN__
 # elif defined(__arm__)
 #  warning Assuming ARM is little-endian
-#  define _BYTE_ORDER	_LITTLE_ENDIAN
+#  define __BYTE_ORDER__	__ORDER_LITTLE_ENDIAN__
 # elif defined(__i386__)
-#  define _BYTE_ORDER	_LITTLE_ENDIAN
+#  define __BYTE_ORDER__	__ORDER_LITTLE_ENDIAN__
 # elif defined(__sparc__)
-#  define _BYTE_ORDER	_BIG_ENDIAN
+#  define __BYTE_ORDER__	__ORDER_BIG_ENDIAN__
 # endif
 #endif
 
-#ifndef _BYTE_ORDER
+#ifndef __BYTE_ORDER__
 # warning Assuming little-endian
 # define ELFDATA	ELFDATA2LSB
-#elif _BYTE_ORDER == _LITTLE_ENDIAN
+#elif __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 # define ELFDATA	ELFDATA2LSB
-#elif _BYTE_ORDER == _BIG_ENDIAN
+#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 # define ELFDATA	ELFDATA2MSB
+#else
+# warning Assuming little-endian
+# define ELFDATA	ELFDATA2LSB
 #endif
 
 
