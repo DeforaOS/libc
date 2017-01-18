@@ -55,6 +55,7 @@ name:; \
 /* functions */
 /* _brk */
 .global _brk
+.type _brk,%function; \
 _brk:
 	mov	%ip, %r7
 	ldr	%r7, =SYS_brk
@@ -64,6 +65,7 @@ _brk:
 
 /* _exit */
 .global _exit
+.type _exit,%function; \
 _exit:
 	mov	%ip, %r7
 	ldr	%r7, =SYS_exit
