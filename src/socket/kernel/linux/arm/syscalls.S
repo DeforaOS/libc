@@ -25,7 +25,6 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-/* FIXME not tested */
 
 
 
@@ -48,5 +47,6 @@ _syscall:
 .global name; \
 .type name,%function; \
 name:; \
-	ldr	%r0, =SYS_ ## name; \
+	mov	%ip, %r7; \
+	ldr	%r7, =SYS_ ## name; \
 	b	_syscall;
