@@ -108,6 +108,18 @@
 #  define SYS_vfork		190
 #  define SYS_getrlimit		191
 #  define SYS_utimes		271
+#  define SYS_openat		295
+#  define SYS_mkdirat		296
+#  define SYS_mknodat		297
+#  define SYS_fchownat		298
+#  define SYS_futimesat		299
+#  define SYS_unlinkat		301
+#  define SYS_renameat		302
+#  define SYS_linkat		303
+#  define SYS_symlinkat		304
+#  define SYS_readlinkat	305
+#  define SYS_fchmodat		306
+#  define SYS_faccessat		307
 #  define SYS_pselect		308
 # endif
  
