@@ -28,6 +28,9 @@
 
 
 
+#include "kernel/linux/errno.h"
+
+
 _syscall:
 	svc	0x00000000
 	mov	%r7, %ip
@@ -70,3 +73,16 @@ _exit:
 	mov	%ip, %r7
 	ldr	%r7, =SYS_exit
 	b	_syscall
+
+
+/* _sbrk */
+.global _sbrk
+.type _sbrk,%function
+_sbrk:
+	/* FIXME really implement */
+	mov	%r0, #ENOSYS
+	ldr	%r1, =errno
+	str	%r0, [%r1]
+	mov	%r0, #-1
+	mov	%pc, %lr
+#undef SYS_sbrk
