@@ -30,20 +30,23 @@
 
 
 _syscall:
-	swi
-	/* FIXME implement
-	bcc	.errnoret
-	set	errno, %g1
-	st	%o0, [%g1]
-	set	-1, %o0
-.errnoret: */
+	svc	0x00000000
+	mov	%r7, %ip
+	cmp	%r0, #0
+	bge	.errnoret
+	mov	%r1, #0
+	sub	%r0, %r1, %r0
+	ldr	%r1, =errno
+	str	%r0, [%r1]
+	mov	%r0, #-1
+.errnoret:
 	mov	%pc, %lr
 
 
 /* macros */
 #define SYSCALL(name) \
 .global name; \
+.type name,%function; \
 name:; \
-	ldr	%r0, =SYS_socketcall; \
-	ldr	%r1, =SYS_ ## name; \
+	ldr	%r0, =SYS_ ## name; \
 	b	_syscall;
