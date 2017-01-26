@@ -45,12 +45,21 @@ _syscall_return:
 
 /* macros */
 #ifndef SYSCALL
-# define SYSCALL(name) \
+# ifdef __PIC__
+#  define SYSCALL(name) \
+.global name; \
+.type name,@function; \
+name:; \
+	mov	$SYS_ ## name, %rax; \
+	jmp	_syscall@PLT
+# else
+#  define SYSCALL(name) \
 .global name; \
 .type name,@function; \
 name:; \
 	mov	$SYS_ ## name, %rax; \
 	jmp	_syscall
+# endif
 #endif
 
 
@@ -71,7 +80,11 @@ _brk:
 .type _exit,@function
 _exit:
 	mov	$SYS_exit, %rax
+#ifdef __PIC__
+	jmp	_syscall@PLT
+#else
 	jmp	_syscall
+#endif
 
 
 /* execve */
@@ -243,10 +256,11 @@ _setjmp_return:
 sigsetjmp:
 	/* if(savemask == 0) return _setjmp() */
 	test	%esi, %esi
-	jnz	_sigsetjmp_save
 #ifdef __PIC__
+	jnz	_sigsetjmp_save@PLT
 	jmp	_setjmp@PLT
 #else
+	jnz	_sigsetjmp_save
 	jmp	_setjmp
 #endif
 _sigsetjmp_save:
