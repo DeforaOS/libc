@@ -319,7 +319,8 @@ void analyze(int number, long arg1, long arg2, long arg3)
 		case SYS_read:
 		case SYS_write:
 			p = (void *)arg2;
-			snprintf(buf, sizeof(buf), "(%d, %p, %lu)\n", arg1, arg2);
+			snprintf(buf, sizeof(buf), "(%d, %p, %lu)\n", arg1, p,
+					arg3);
 			break;
 #ifdef SYS_sysctl
 		case SYS_sysctl:
