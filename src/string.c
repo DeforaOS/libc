@@ -200,7 +200,10 @@ char * strdup(char const * s)
 	char * str;
 
 	if((len = strlen(s) + 1) == 0)
+	{
+		errno = ENOMEM;
 		return NULL;
+	}
 	if((str = malloc(sizeof(char) * len)) == NULL)
 		return NULL;
 	strcpy(str, s);
