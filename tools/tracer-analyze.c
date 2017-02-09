@@ -113,7 +113,9 @@ static const struct
 }
 _syscalls[] =
 {
+#ifdef SYS_access
 	{ SYS_access,		"access"	},
+#endif
 #ifdef SYS_brk
 	{ SYS_brk,		"brk"		},
 #endif
@@ -253,6 +255,7 @@ void analyze(int number, long arg1, long arg2, long arg3)
 	_analyze_print(buf);
 	switch(number)
 	{
+#ifdef SYS_access
 		case SYS_access:
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\", ", s);
@@ -260,6 +263,7 @@ void analyze(int number, long arg1, long arg2, long arg3)
 			_analyze_print_mask(_flags_access, arg2);
 			snprintf(buf, sizeof(buf), ")\n");
 			break;
+#endif
 		case SYS_close:
 		case SYS_exit:
 #ifdef SYS_fchdir
