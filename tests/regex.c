@@ -33,7 +33,21 @@
 
 
 /* regex */
-static void _regex(char const * progname)
+static void _regex_regerror(char const * progname);
+static int _regex_regexec(char const * progname, char const * pattern,
+		char const * string, int flags);
+
+static int _regex(char const * progname)
+{
+	int ret;
+
+	ret = _regex_regexec(progname, "^test$", "test", 0);
+	ret |= _regex_regexec(progname, "^test$", "TEST", REG_ICASE);
+	_regex_regerror(progname);
+	return ret;
+}
+
+static void _regex_regerror(char const * progname)
 {
 	const int errors[] =
 	{
@@ -53,10 +67,37 @@ static void _regex(char const * progname)
 	}
 }
 
+static int _regex_regexec(char const * progname, char const * pattern,
+		char const * string, int flags)
+{
+	int ret;
+	regex_t reg;
+	char buf[80];
+	int r;
+	regmatch_t match[1];
+
+	printf("%s: Testing regexec(): \"%s\" \"%s\" (%d)\n", progname,
+			pattern, string, flags);
+	if((r = regcomp(&reg, pattern, flags)) != 0)
+	{
+		regerror(r, &reg, buf, sizeof(buf));
+		fprintf(stderr, "%s: %s: %s\n", progname, pattern, buf);
+		return 1;
+	}
+	if((ret = regexec(&reg, string, sizeof(match) / sizeof(*match), match,
+					0)) != 0)
+	{
+		regerror(r, &reg, buf, sizeof(buf));
+		fprintf(stderr, "%s: %s: %s\n", progname, pattern, buf);
+		ret = 1;
+	}
+	regfree(&reg);
+	return ret;
+}
+
 
 /* main */
 int main(int argc, char * argv[])
 {
-	_regex(argv[0]);
-	return 0;
+	return (_regex(argv[0]) == 0) ? 0 : 2;
 }
