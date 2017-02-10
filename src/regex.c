@@ -62,6 +62,7 @@ static struct
 int regcomp(regex_t * regex, const char * pattern, int flags)
 {
 	/* FIXME really implement */
+	regex->re_flags = flags;
 	return REG_ENOSYS;
 }
 
