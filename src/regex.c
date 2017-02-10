@@ -33,9 +33,6 @@
 #include "string.h"
 #include "regex.h"
 #include "dlfcn.h"
-#ifdef HAVE_CONFIG_H
-# include "regex/pcre/config.h"
-#endif
 #include "regex/pcre/pcre.h"
 /* XXX */
 #undef PACKAGE
