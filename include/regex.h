@@ -42,8 +42,8 @@ typedef long regoff_t;
 
 typedef struct
 {
-	int re_flags;
 	size_t re_nsub;
+	void * re_pcre;
 } regex_t;
 
 typedef struct
