@@ -28,8 +28,8 @@
 
 
 
-#ifndef LIBC_MISC_SSP_H
-# define LIBC_MISC_SSP_H
+#ifndef LIBC_SRC_SSP_H
+# define LIBC_SRC_SSP_H
 
 
 /* functions */
@@ -39,4 +39,4 @@ void __stack_chk_fail(void);
 void __stack_chk_setup(void);
 # endif
 
-#endif
+#endif /* !LIBC_SRC_SSP_H */

@@ -28,12 +28,12 @@
 
 
 
-#ifndef LIBC_MISC_START_H
-# define LIBC_MISC_START_H
+#ifndef LIBC_SRC_START_H
+# define LIBC_SRC_START_H
 
 
 /* functions */
 /* protected */
 void __start_stdio(void);
 
-#endif
+#endif /* !LIBC_SRC_START_H */

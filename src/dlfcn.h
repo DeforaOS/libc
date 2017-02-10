@@ -40,4 +40,4 @@ char * __dlerror(void);
 void * __dlopen(char const * pathname, int mode);
 void * __dlsym(void * handle, char const * name);
 
-#endif /* !LIBDL_DLFCN_H */
+#endif /* !LIBDL_SRC_DLFCN_H */

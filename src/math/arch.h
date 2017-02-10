@@ -28,8 +28,8 @@
 
 
 
-#ifndef MATH_ARCH_H
-# define MATH_ARCH_H
+#ifndef LIBM_ARCH_H
+# define LIBM_ARCH_H
 
 
 #if defined(__amd64__)
@@ -40,4 +40,4 @@
 # warning "Unsupported platform"
 #endif
 
-#endif /* !MATH_ARCH_H */
+#endif /* !LIBM_ARCH_H */
