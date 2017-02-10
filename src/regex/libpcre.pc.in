@@ -3,7 +3,7 @@
 prefix=@PREFIX@
 exec_prefix=@BINDIR@
 libdir=@LIBDIR@
-includedir=@INCLUDEDIR@
+includedir=@INCLUDEDIR@/pcre
 
 Name: libpcre
 Description: PCRE - Perl compatible regular expressions C library with 8 bit character support
