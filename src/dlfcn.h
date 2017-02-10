@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2016-2017 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,12 +28,16 @@
 
 
 
-#ifndef LIBC_SRC_START_H
-# define LIBC_SRC_START_H
+#ifndef LIBC_SRC_DLFCN_H
+# define LIBC_SRC_DLFCN_H
+
+# include "../include/dl/dlfcn.h"
 
 
 /* functions */
-/* protected */
-void __start_stdio(void);
+int __dlclose(void * handle);
+char * __dlerror(void);
+void * __dlopen(char const * pathname, int mode);
+void * __dlsym(void * handle, char const * name);
 
-#endif /* !LIBC_SRC_START_H */
+#endif /* !LIBDL_SRC_DLFCN_H */

@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2004-2015 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,8 +28,8 @@
 
 
 
-#ifndef SYSCALLS_H
-# define SYSCALLS_H
+#ifndef LIBC_SRC_SYSCALLS_H
+# define LIBC_SRC_SYSCALLS_H
 
 /* FreeBSD */
 # if defined(__FreeBSD__)
@@ -98,4 +98,4 @@
 # warning Unsupported platform
 #endif
 
-#endif /* !SYSCALLS_H */
+#endif /* !LIBC_SRC_SYSCALLS_H */
