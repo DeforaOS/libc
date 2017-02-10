@@ -62,7 +62,7 @@ static void _regex_regerror(char const * progname)
 	for(i = 0; i < sizeof(errors) / sizeof(*errors); i++)
 	{
 		size = regerror(errors[i], NULL, buf, sizeof(buf));
-		printf("%s: Testing %s: % 2u \"%s\" (%lu)\n", progname,
+		printf("%s: Testing %s: % 2u \"%s\" (%zu)\n", progname,
 				"regerror()", errors[i], buf, size);
 	}
 }
