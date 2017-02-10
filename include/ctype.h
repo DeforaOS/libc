@@ -37,6 +37,7 @@
 # define isalpha(c) (islower(c) || isupper(c))
 int isascii(int c);
 int isblank(int c);
+int iscntrl(int c);
 int isdigit(int c);
 int isgraph(int c);
 int islower(int c);
