@@ -37,6 +37,9 @@
 # include "regex/pcre/config.h"
 #endif
 #include "regex/pcre/pcre.h"
+/* XXX */
+#undef PACKAGE
+#undef VERSION
 #include "../config.h"
 
 #ifndef PREFIX
