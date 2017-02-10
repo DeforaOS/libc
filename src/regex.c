@@ -33,9 +33,9 @@
 #include "string.h"
 #include "regex.h"
 #ifdef HAVE_CONFIG_H
-# include "regex/config.h"
+# include "regex/pcre/config.h"
 #endif
-#include "regex/pcre.h"
+#include "regex/pcre/pcre.h"
 
 
 /* private */

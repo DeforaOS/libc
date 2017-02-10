@@ -29,9 +29,9 @@
 
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+# include "pcre/config.h"
 #endif
-#include "pcre.h"
+#include "pcre/pcre.h"
 
 
 /* pcre */
