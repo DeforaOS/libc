@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2017 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,34 +28,16 @@
 
 
 
-#include "../dlfcn.h"
+#ifndef LIBC_SRC_DLFCN_H
+# define LIBC_SRC_DLFCN_H
+
+# include "../include/dl/dlfcn.h"
 
 
-/* public */
 /* functions */
-/* dlclose */
-int dlclose(void * handle)
-{
-	return __dlclose(handle);
-}
+int __dlclose(void * handle);
+char * __dlerror(void);
+void * __dlopen(char const * pathname, int mode);
+void * __dlsym(void * handle, char const * name);
 
-
-/* dlerror */
-char * dlerror(void)
-{
-	return __dlerror();
-}
-
-
-/* dlopen */
-void * dlopen(char const * pathname, int mode)
-{
-	return __dlopen(pathname, mode);
-}
-
-
-/* dlsym */
-void * dlsym(void * handle, char const * name)
-{
-	return __dlsym(handle, name);
-}
+#endif /* !LIBDL_DLFCN_H */

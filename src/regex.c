@@ -32,14 +32,25 @@
 #include "stdio.h"
 #include "string.h"
 #include "regex.h"
+#include "dlfcn.h"
 #ifdef HAVE_CONFIG_H
 # include "regex/pcre/config.h"
 #endif
 #include "regex/pcre/pcre.h"
+#include "../config.h"
+
+#ifndef PREFIX
+# define PREFIX		"/usr/local"
+#endif
+#ifndef LIBDIR
+# define LIBDIR		PREFIX "/lib"
+#endif
 
 
 /* private */
 /* prototypes */
+static int _pcre_init(void);
+
 static int _regerror_pcre(int error);
 
 
@@ -67,6 +78,15 @@ static struct
 	{ REG_ENOSYS,	"Not implemented"				}
 };
 
+static void * _pcre_handle = NULL;
+
+static void * (*_pcre_compile2)(const char *, int, int *, const char **,
+                  int *, const unsigned char *);
+static int (*_pcre_exec)(const void *, const void *, const char *,
+                   int, int, int, int *, int);
+static int (*_pcre_fullinfo)(const void *, const void *, int,
+                  void *);
+
 
 /* public */
 /* functions */
@@ -77,15 +97,17 @@ int regcomp(regex_t * regex, const char * pattern, int flags)
 	int perror = 0;
 	int nsub;
 
+	if(_pcre_init() != 0)
+		return REG_ENOSYS;
 	/* XXX implement more flags */
 	if(flags & REG_ICASE)
 		pflags |= PCRE_CASELESS;
 	if(flags & REG_NEWLINE)
 		pflags |= PCRE_MULTILINE;
-	if((regex->re_pcre = pcre_compile2(pattern, pflags, &perror, NULL, NULL,
-					NULL)) == NULL)
+	if((regex->re_pcre = _pcre_compile2(pattern, pflags, &perror, NULL,
+					NULL, NULL)) == NULL)
 		return _regerror_pcre(perror);
-	pcre_fullinfo(regex->re_pcre, NULL, PCRE_INFO_CAPTURECOUNT, &nsub);
+	_pcre_fullinfo(regex->re_pcre, NULL, PCRE_INFO_CAPTURECOUNT, &nsub);
 	regex->re_nsub = nsub;
 	return 0;
 }
@@ -119,6 +141,8 @@ int regexec(const regex_t * regex, const char * string, size_t match_cnt,
 	int res;
 	size_t i;
 
+	if(_pcre_init() != 0)
+		return REG_ENOSYS;
 	if(flags & REG_NOTBOL)
 		pflags |= PCRE_NOTBOL;
 	if(flags & REG_NOTEOL)
@@ -130,7 +154,7 @@ int regexec(const regex_t * regex, const char * string, size_t match_cnt,
 	}
 	else
 		pmatch = NULL;
-	if((res = pcre_exec(regex->re_pcre, NULL, string, strlen(string), 0,
+	if((res = _pcre_exec(regex->re_pcre, NULL, string, strlen(string), 0,
 					pflags, pmatch, match_cnt * 3)) == 0)
 	{
 		for(i = 0; i < match_cnt; i++)
@@ -154,6 +178,27 @@ void regfree(regex_t * regex)
 
 
 /* private */
+/* pcre_init */
+static int _pcre_init(void)
+{
+	if(_pcre_handle != NULL)
+		return 0;
+	if((_pcre_handle = __dlopen(LIBDIR "/libpcre.so", RTLD_NOW)) == NULL)
+		return -1;
+	if((_pcre_compile2 = __dlsym(_pcre_handle, "pcre_compile2")) == NULL
+			|| (_pcre_exec = __dlsym(_pcre_handle, "pcre_exec"))
+			== NULL
+			|| (_pcre_fullinfo = __dlsym(_pcre_handle,
+					"pcre_fullinfo")) == NULL)
+	{
+		__dlclose(_pcre_handle);
+		_pcre_handle = NULL;
+		return -1;
+	}
+	return 0;
+}
+
+
 /* regerror_pcre */
 static int _regerror_pcre(int error)
 {
