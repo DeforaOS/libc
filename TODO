@@ -1,7 +1,6 @@
 - pass the "time" test
 - check and fix compilation warnings
 - pass the "regex" test
-- use dlopen("libpcre.so") for regex.h
 
 Platform specific:
 - FreeBSD:
