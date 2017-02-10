@@ -28,8 +28,19 @@
 
 
 
+#include "stdlib.h"
 #include "stdio.h"
+#include "string.h"
 #include "regex.h"
+#ifdef HAVE_CONFIG_H
+# include "regex/pcre/config.h"
+#endif
+#include "regex/pcre/pcre.h"
+
+
+/* private */
+/* prototypes */
+static int _regerror_pcre(int error);
 
 
 /* variables */
@@ -57,13 +68,26 @@ static struct
 };
 
 
+/* public */
 /* functions */
 /* regcomp */
 int regcomp(regex_t * regex, const char * pattern, int flags)
 {
-	/* FIXME really implement */
-	regex->re_flags = flags;
-	return REG_ENOSYS;
+	int pflags = 0;
+	int perror = 0;
+	int nsub;
+
+	/* XXX implement more flags */
+	if(flags & REG_ICASE)
+		pflags |= PCRE_CASELESS;
+	if(flags & REG_NEWLINE)
+		pflags |= PCRE_MULTILINE;
+	if((regex->re_pcre = pcre_compile2(pattern, pflags, &perror, NULL, NULL,
+					NULL)) == NULL)
+		return _regerror_pcre(perror);
+	pcre_fullinfo(regex->re_pcre, NULL, PCRE_INFO_CAPTURECOUNT, &nsub);
+	regex->re_nsub = nsub;
+	return 0;
 }
 
 
@@ -90,12 +114,57 @@ size_t regerror(int error, const regex_t * regex, char * buf, size_t buf_cnt)
 int regexec(const regex_t * regex, const char * string, size_t match_cnt,
 		regmatch_t match[], int flags)
 {
-	/* FIXME really implement */
-	return REG_ENOSYS;
+	int pflags = 0;
+	int * pmatch;
+	int res;
+	size_t i;
+
+	if(flags & REG_NOTBOL)
+		pflags |= PCRE_NOTBOL;
+	if(flags & REG_NOTEOL)
+		pflags |= PCRE_NOTEOL;
+	if(match_cnt > 0)
+	{
+		if((pmatch = malloc(sizeof(*pmatch) * match_cnt * 3)) == NULL)
+			return REG_ESPACE;
+	}
+	else
+		pmatch = NULL;
+	if((res = pcre_exec(regex->re_pcre, NULL, string, strlen(string), 0,
+					pflags, pmatch, match_cnt * 3)) == 0)
+	{
+		for(i = 0; i < match_cnt; i++)
+		{
+			match[i].rm_so = pmatch[i * 2];
+			match[i].rm_eo = pmatch[i * 2 + 1];
+		}
+		free(pmatch);
+		return 0;
+	}
+	free(pmatch);
+	return _regerror_pcre(res);
 }
 
 
 /* regfree */
 void regfree(regex_t * regex)
 {
+	free(regex->re_pcre);
+}
+
+
+/* private */
+/* regerror_pcre */
+static int _regerror_pcre(int error)
+{
+	switch(error)
+	{
+		case PCRE_ERROR_NOMATCH:
+			return REG_NOMATCH;
+		case PCRE_ERROR_MATCHLIMIT:
+		case PCRE_ERROR_NOMEMORY:
+			return REG_ESPACE;
+		default:
+			return REG_ENOSYS;
+	}
 }
