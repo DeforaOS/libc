@@ -28,6 +28,7 @@
 
 
 
+#include "../src/regex/pcre/pcre.h"
 #include <regex.h>
 #include <stdio.h>
 
@@ -93,6 +94,15 @@ static int _regex_regexec(char const * progname, char const * pattern,
 	}
 	regfree(&reg);
 	return ret;
+}
+
+
+/* XXX stub */
+void stub(void)
+{
+	pcre_compile2(NULL, 0, NULL, NULL, NULL, NULL);
+	pcre_exec(NULL, NULL, NULL, 0, 0, 0, NULL, 0);
+	pcre_fullinfo(NULL, NULL, 0, NULL);
 }
 
 
