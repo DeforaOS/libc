@@ -183,7 +183,8 @@ static int _pcre_init(void)
 {
 	if(_pcre_handle != NULL)
 		return 0;
-	if((_pcre_handle = __dlopen(LIBDIR "/libpcre.so", RTLD_NOW)) == NULL)
+	if((_pcre_handle = __dlopen(LIBDIR "/libpcre.so", RTLD_NOW)) == NULL
+			&& (_pcre_handle = __dlopen(NULL, RTLD_NOW)) == NULL)
 		return -1;
 	if((_pcre_compile2 = __dlsym(_pcre_handle, "pcre_compile2")) == NULL
 			|| (_pcre_exec = __dlsym(_pcre_handle, "pcre_exec"))
