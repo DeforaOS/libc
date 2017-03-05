@@ -87,7 +87,7 @@ static int _regex_regexec(char const * progname, char const * pattern,
 	if((ret = regexec(&reg, string, sizeof(match) / sizeof(*match), match,
 					0)) != 0)
 	{
-		regerror(r, &reg, buf, sizeof(buf));
+		regerror(ret, &reg, buf, sizeof(buf));
 		fprintf(stderr, "%s: %s: %s\n", progname, pattern, buf);
 		ret = 1;
 	}
