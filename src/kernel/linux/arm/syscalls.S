@@ -75,6 +75,24 @@ _exit:
 	b	_syscall
 
 
+/* _setjmp */
+.global _setjmp
+.type _setjmp,%function
+_setjmp:
+	/* FIXME really implement */
+	mov	%r0, #0
+	mov	%pc, %lr
+
+
+/* setjmp */
+.global setjmp
+.type setjmp,%function
+setjmp:
+	/* FIXME really implement */
+	mov	%r0, #0
+	mov	%pc, %lr
+
+
 /* _sbrk */
 .global _sbrk
 .type _sbrk,%function
