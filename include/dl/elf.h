@@ -274,17 +274,19 @@ typedef struct _Elf64_Phdr
 # define R_386_RELATIVE		8
 # define R_386_GOTOFF		9
 # define R_386_GOTPC		10
+
 typedef struct _Elf32_Rel
 {
 	Elf32_Addr r_offset;
 	Elf32_Word r_info;
 } Elf32_Rel;
 
-# define ELF64_R_SYM(info) ((info) >> 32)
-# define ELF64_R_TYPE(info) ((info) & 0xffffffff)
+# define ELF64_R_SYM(info)	((info) >> 32)
+# define ELF64_R_TYPE(info)	((info) & 0xffffffff)
 # define R_X86_64_GLOB_DAT	6
 # define R_X86_64_JUMP_SLOT	7
 # define R_X86_64_RELATIVE	8
+
 typedef struct _Elf64_Rel
 {
 	Elf64_Addr r_offset;
@@ -323,6 +325,7 @@ typedef struct _Elf64_Rela
 # define STT_HIPROC	15
 /* index */
 # define STN_UNDEF	0
+
 typedef struct _Elf32_Sym
 {
 	Elf32_Word st_name;
@@ -375,6 +378,7 @@ typedef struct _Elf64_Sym
 # define DT_FINI_ARRAYSZ	27
 # define DT_INIT_ARRAYSZ	28
 # define DT_NUM			29
+
 typedef struct _Elf32_Dyn
 {
 	Elf32_Word d_tag;
