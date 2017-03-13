@@ -135,6 +135,7 @@ fi
 _date > "$target"
 FAILED=
 echo "Performing tests:" 1>&2
+_test "dlfcn" "../src/libc.$SOEXT"
 _test "errno"
 _test "fnmatch"
 _test "iconv"
@@ -162,7 +163,6 @@ _test "string"
 _test "unistd"
 _test "utsname"
 echo "Expected failures:" 1>&2
-_fail "dlfcn" "../src/libc.$SOEXT"
 [ "$SYSTEM" = "FreeBSD" -o "$SYSTEM" = "Linux" ] && _fail "signal"
 [ "$SYSTEM" != "Linux" -o "$ARCH" != "amd64" ] || _fail "ssp"
 [ "$SYSTEM" = "NetBSD" ] || _fail "stdlib"
