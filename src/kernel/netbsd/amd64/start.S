@@ -46,9 +46,18 @@ _start:
 #else
 	mov	%rdx, environ
 #endif
+	mov	%rdx, %rcx	/* auxv */
+auxv:
+	cmpq	$0x0, (%rcx)
+	jz	auxv_done
+	add	$0x8, %rcx
+	jmp	auxv
+auxv_done:
+	add	$0x8, %rcx
 	push	%rdi
 	push	%rsi
 	push	%rdx
+	push	%rcx
 
 #if defined(__SSP__)
 	/* initialize SSP */
@@ -57,6 +66,14 @@ _start:
 # else
 	call	__stack_chk_setup
 # endif
+#endif
+
+	/* initialize dlfcn */
+	pop	%rdi
+#ifdef __PIC__
+	call	__start_dlfcn@PLT
+#else
+	call	__start_dlfcn
 #endif
 
 	/* initialize stdio */

@@ -123,6 +123,10 @@ static DLError _dl_errno = DE_E_NO_ERROR;
 
 static long int _dl_page_size = -1;
 
+static Elf_Phdr * _dl_phdr = NULL;
+static uint16_t _dl_phentsize = 0;
+static uint16_t _dl_phnum = 0;
+
 
 /* prototypes */
 static void * _dl_new(char const * pathname);
@@ -551,6 +555,30 @@ static int _dl_symtab(DL * dl, Elf_Word index, Elf_Word type, Elf_Sym ** symtab,
 		return -1;
 	*symtab_cnt = shdr->sh_size / shdr->sh_entsize;
 	return 0;
+}
+
+
+/* protected */
+/* start_dlfcn */
+void __start_dlfcn(AuxInfo * auxv)
+{
+	for(; auxv->a_type != AT_NULL; auxv++)
+		switch(auxv->a_type)
+		{
+			case AT_PHDR:
+				_dl_phdr = (Elf_Phdr *)auxv->a_v;
+				break;
+			case AT_PHENT:
+				_dl_phentsize = auxv->a_v;
+				break;
+			case AT_PHNUM:
+				_dl_phnum = auxv->a_v;
+				break;
+			case AT_NULL:
+			case AT_IGNORE:
+			default:
+				break;
+		}
 }
 
 

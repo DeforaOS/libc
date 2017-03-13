@@ -35,22 +35,35 @@ _start:
 	/* setup the environment */
 	mov	(%esp), %eax	/* argc */
 	mov	%esp, %ebx	/* argv */
-	add	$4, %ebx
+	add	$0x4, %ebx
 	mov	%eax, %ecx	/* envp */
 	shl	$2, %ecx
 	add	%ebx, %ecx
 	mov	%ecx, environ	/* environ */
+	mov	%ecx, %edx	/* auxv */
+auxv:
+	cmpl	$0x0, (%edx)
+	jz	auxv_done
+	add	$0x4, %edx
+	jmp	auxv
+auxv_done:
+	add	$0x4, %edx
 	push	%ebp
 	push	%esp
 	mov	%esp, %ebp
 	push	%ecx
 	push	%ebx
 	push	%eax
+	push	%edx
 
 #if defined(__SSP__)
 	/* initialize SSP */
 	call	__stack_chk_setup
 #endif
+
+	/* initialize dlfcn */
+	call	__start_dlfcn
+	pop	%eax
 
 	/* initialize stdio */
 	call	__start_stdio
