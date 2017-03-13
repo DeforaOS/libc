@@ -45,8 +45,10 @@ _start:
 	mov	(%rsp), %rdi	/* argc */
 	mov	%rsp, %rsi	/* argv */
 	add	$8, %rsi
-	mov	%rsi, %rdx	/* envp */
-	add	$8, %rdx
+	mov	%rdi, %rdx	/* envp */
+	shl	$3, %rdx
+	add	%rsi, %rdx
+	add	$0x8, %rdx
 #ifdef __PIC__			/* environ	*/
 	mov	environ@GOTPCREL(%rip), %rcx
 	mov	%rdx, (%rcx)
