@@ -34,6 +34,8 @@
 #include <errno.h>
 #include <stdlib.h>
 
+extern char ** environ;
+
 
 /* stdlib */
 /* private */
@@ -41,6 +43,7 @@
 static int _error(char const * progname, char const * message, int ret);
 
 static int _arc4random(char const * progname);
+static int _environ(char const * program);
 static int _mkstemp(char const * progname);
 static int _mktemp(char const * progname);
 static int _strtold(char const * progname, char const * str,
@@ -65,6 +68,18 @@ static int _arc4random(char const * progname)
 	for(i = 1; i < sizeof(res) / sizeof(*res); i++)
 		if(res[i] == res[0])
 			return 1;
+	return 0;
+}
+
+
+/* environ */
+static int _environ(char const * progname)
+{
+	char ** e;
+
+	printf("%s: Testing environ\n", progname);
+	for(e = environ; *e != NULL; e++)
+		printf("%s: %s\n", progname, *e);
 	return 0;
 }
 
@@ -215,6 +230,7 @@ int main(int argc, char * argv[])
 	int ret = 0;
 
 	ret += _arc4random(argv[0]);
+	ret += _environ(argv[0]);
 	ret += _mkstemp(argv[0]);
 	ret += _mktemp(argv[0]);
 	ret += _strtold(argv[0], "0.0", 0.0);
