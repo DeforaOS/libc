@@ -52,6 +52,7 @@
 #   define Elf_Rela Elf32_Rela
 #   define Elf_Sym  Elf32_Sym
 #   define Elf_Word Elf32_Word
+#   define AuxInfo  Aux32Info
 #  elif ELFSIZE == 64
 #   define ELFCLASS ELFCLASS64
 #   define ELF_R_SYM(info) ELF64_R_SYM(info)
@@ -67,6 +68,7 @@
 #   define Elf_Rela Elf64_Rela
 #   define Elf_Sym  Elf64_Sym
 #   define Elf_Word Elf64_Word
+#   define AuxInfo  Aux64Info
 #  endif /* ELFSIZE == 64 */
 # endif /* ELFSIZE */
 
@@ -391,5 +393,32 @@ typedef struct _Elf64_Dyn {
 		Elf64_Xword d_val;
 	} d_un;
 } Elf64_Dyn;
+
+
+/* AuxInfo */
+/* type */
+# define AT_NULL	0
+# define AT_IGNORE	1
+# define AT_EXECFD	2
+# define AT_PHDR	3
+# define AT_PHENT	4
+# define AT_PHNUM	5
+# define AT_PAGESZ	6
+# define AT_BASE	7
+# define AT_FLAGS	8
+# define AT_ENTRY	9
+# define AT_STACKBASE	13
+
+typedef struct _Aux32Info
+{
+	Elf32_Word a_type;
+	Elf32_Word a_v;
+} Aux32Info;
+
+typedef struct _Aux64Info
+{
+	Elf64_Word a_type;
+	Elf64_Xword a_v;
+} Aux64Info;
 
 #endif /* !LIBC_ELF_H */
