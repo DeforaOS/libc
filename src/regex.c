@@ -119,6 +119,7 @@ size_t regerror(int error, const regex_t * regex, char * buf, size_t buf_cnt)
 	size_t i;
 	char const * message = "Unknown error";
 	int res;
+	(void) regex;
 
 	for(i = 0; i < sizeof(_messages) / sizeof(*_messages); i++)
 		if(_messages[i].error == error)
