@@ -598,16 +598,14 @@ char * __dlerror(void)
 /* dlopen */
 void * __dlopen(char const * pathname, int mode)
 {
-	DL * dl;
+	(void) mode;
 
 	if(_dl_page_size < 0 && (_dl_page_size = sysconf(_SC_PAGESIZE)) < 0)
 	{
 		_dl_error_set_errno(0);
 		return NULL;
 	}
-	if((dl = _dl_new(pathname)) == NULL)
-		return NULL;
-	return dl;
+	return _dl_new(pathname);
 }
 
 
