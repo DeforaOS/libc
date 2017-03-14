@@ -40,7 +40,7 @@ _start:
 	shl	$3, %rdx
 	add	%rsi, %rdx
 	add	$0x8, %rdx
-#ifdef __PIC__
+#ifdef __PIC__			/* environ	*/
 	mov	environ@GOTPCREL(%rip), %rcx
 	mov	%rdx, (%rcx)
 #else
