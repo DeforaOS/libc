@@ -34,7 +34,7 @@ _start:
 	/* reset the stack */
 	xor	%ebp, %ebp	/* stack */
 
-	/* run the main program */
+	/* setup the environment */
 	pop	%eax		/* argc */
 	mov	%esp, %ebx	/* argv */
 	push	%eax
