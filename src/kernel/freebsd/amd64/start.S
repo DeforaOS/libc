@@ -31,6 +31,7 @@
 _start:
 	/* reset the stack */
 	xor	%rbp, %rbp	/* stack */
+	mov	%rdi, %rsp
 
 	/* setup the environment */
 	mov	(%rsp), %rdi	/* argc */
