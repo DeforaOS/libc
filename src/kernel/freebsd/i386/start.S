@@ -34,11 +34,6 @@ _start:
 	/* reset the stack */
 	xor	%ebp, %ebp	/* stack */
 
-#if defined(__SSP__)
-	/* initialize SSP */
-	call	__stack_chk_setup
-#endif
-
 	/* run the main program */
 	pop	%eax		/* argc */
 	mov	%esp, %ebx	/* argv */
@@ -53,9 +48,19 @@ _start:
 	push	%ebp
 	push	%esp
 	mov	%esp, %ebp
-	push	%ecx		/* main */
+	push	%ecx
 	push	%ebx
 	push	%eax
+
+#if defined(__SSP__)
+	/* initialize SSP */
+	call	__stack_chk_setup
+#endif
+
+	/* initialize stdio */
+	call	__start_stdio
+
+	/* run the main program */
 	call	main
 
 	/* exit the main program */
