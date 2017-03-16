@@ -31,6 +31,7 @@
 #include <dlfcn.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
 #include "../src/dl/dlfcn.c"
 
 
@@ -58,9 +59,10 @@ static int _dlfcn(char const * progname, char const * title,
 		printf("%s: %s\n", progname, dlerror());
 		ret++;
 	}
-	else if(*p != 0)
+	else if((soname != NULL && *p != 0)
+			|| (soname == NULL && p != &errno))
 	{
-		printf("%s: errno: Wrong value (%d)\n", progname, *p);
+		printf("%s: errno: Wrong value\n", progname);
 		ret++;
 	}
 	/* calling a simple syscall */
@@ -70,7 +72,8 @@ static int _dlfcn(char const * progname, char const * title,
 		printf("%s: %s\n", progname, dlerror());
 		ret++;
 	}
-	else if(getpid() != g())
+	else if((soname != NULL && getpid() != g())
+				|| (soname == NULL && getpid != (void *)p))
 	{
 		printf("%s: getpid(): Wrong value\n", progname);
 		ret++;
