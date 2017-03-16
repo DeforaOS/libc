@@ -95,6 +95,8 @@ int regcomp(regex_t * regex, const char * pattern, int flags)
 {
 	int pflags = 0;
 	int perror = 0;
+	const char * p;
+	int poffset;
 	int nsub;
 
 	if(_pcre_init() != 0)
@@ -104,8 +106,8 @@ int regcomp(regex_t * regex, const char * pattern, int flags)
 		pflags |= PCRE_CASELESS;
 	if(flags & REG_NEWLINE)
 		pflags |= PCRE_MULTILINE;
-	if((regex->re_pcre = _pcre_compile2(pattern, pflags, &perror, NULL,
-					NULL, NULL)) == NULL)
+	if((regex->re_pcre = _pcre_compile2(pattern, pflags, &perror, &p,
+					&poffset, NULL)) == NULL)
 		return _regerror_pcre(perror);
 	_pcre_fullinfo(regex->re_pcre, NULL, PCRE_INFO_CAPTURECOUNT, &nsub);
 	regex->re_nsub = nsub;
@@ -206,11 +208,8 @@ static int _regerror_pcre(int error)
 {
 	switch(error)
 	{
-		case PCRE_ERROR_NOMATCH:
-			return REG_NOMATCH;
-		case PCRE_ERROR_MATCHLIMIT:
-		case PCRE_ERROR_NOMEMORY:
-			return REG_ESPACE;
+		case 1:
+			return REG_BADPAT;
 		default:
 			return REG_ENOSYS;
 	}
