@@ -452,6 +452,12 @@ static int _file_relocations(DL * dl)
 static void _file_relocations_arch(DL * dl, Elf_Rela * rela, char * strtab,
 		size_t strtab_cnt, Elf_Sym * sym)
 {
+#ifndef DEBUG
+	(void) strtab;
+	(void) strtab_cnt;
+	(void) sym;
+
+#endif
 #if defined(__amd64__)
 	Elf_Addr * addr;
 
@@ -462,7 +468,7 @@ static void _file_relocations_arch(DL * dl, Elf_Rela * rela, char * strtab,
 			/* FIXME implement */
 			break;
 		case R_X86_64_JUMP_SLOT:
-#ifdef DEBUG
+# ifdef DEBUG
 			fprintf(stderr, "DEBUG: %s() Relocating \"%s\""
 					" (0x%lx 0x%lx 0x%lx)\n",
 					__func__, _dl_strtab_string(strtab,
@@ -475,12 +481,12 @@ static void _file_relocations_arch(DL * dl, Elf_Rela * rela, char * strtab,
 					", offset=0x%lx\n", __func__,
 					dl->data_base, dl->data_addr,
 					rela->r_offset);
-#endif
+# endif
 			addr = dl->data_addr + rela->r_offset;
-#ifdef DEBUG
+# ifdef DEBUG
 			fprintf(stderr, "*0x%lx = 0x%lx + 0x%lx\n", addr,
 					dl->data_base, rela->r_addend);
-#endif
+# endif
 			*addr = dl->text_base + rela->r_addend;
 			break;
 	}
