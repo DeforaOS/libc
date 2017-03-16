@@ -50,6 +50,17 @@ _start:
 	push	%rdi
 	push	%rsi
 	push	%rdx
+#ifdef __ELF__
+	mov	%rdx, %rcx	/* auxv */
+auxv:
+	cmpq	$0x0, (%rcx)
+	jz	auxv_done
+	add	$0x8, %rcx
+	jmp	auxv
+auxv_done:
+	add	$0x8, %rcx
+	push	%rcx
+#endif
 
 #if defined(__SSP__)
 	/* initialize SSP */
@@ -57,6 +68,16 @@ _start:
 	call	__stack_chk_setup@PLT
 # else
 	call	__stack_chk_setup
+# endif
+#endif
+
+#ifdef __ELF__
+	/* initialize dlfcn */
+	pop	%rdi
+# ifdef __PIC__
+	call	__start_dlfcn@PLT
+# else
+	call	__start_dlfcn
 # endif
 #endif
 
