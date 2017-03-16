@@ -126,6 +126,7 @@ static long int _dl_page_size = -1;
 static Elf_Phdr * _dl_phdr = NULL;
 static uint16_t _dl_phentsize = 0;
 static uint16_t _dl_phnum = 0;
+static void * _dl_str = NULL;
 
 
 /* prototypes */
@@ -149,6 +150,8 @@ static int _dl_symtab(DL * dl, Elf_Word index, Elf_Word type, Elf_Sym ** symtab,
 /* functions */
 /* dl_new */
 static int _new_file(DL * dl, char const * pathname);
+static int _new_self(DL * dl);
+static int _new_self_dynamic(DL * dl, Elf_Phdr * phdr);
 static int _file_read_ehdr(int fd, Elf_Ehdr * ehdr);
 static int _file_mmap(DL * dl, Elf_Phdr * phdr);
 static int _file_prot(unsigned int flags);
@@ -177,9 +180,8 @@ static void * _dl_new(char const * pathname)
 	dl->shdr = NULL;
 	dl->symtab = NULL;
 	dl->symtab_cnt = 0;
-	if(pathname == NULL)
-		return dl;
-	if(_new_file(dl, pathname) != 0)
+	if((pathname == NULL && _new_self(dl) != 0)
+			|| (pathname != NULL && _new_file(dl, pathname) != 0))
 	{
 		_dl_delete(dl);
 		return NULL;
@@ -226,6 +228,80 @@ static int _new_file(DL * dl, char const * pathname)
 		return -1;
 	if(_file_symbols(dl) != 0 || _file_relocations(dl) != 0)
 		return -1;
+	return 0;
+}
+
+static int _new_self(DL * dl)
+{
+	size_t i;
+
+	if(_dl_phdr == NULL)
+		return _dl_error_set(DE_UNKNOWN_ERROR, -1);
+	if(_dl_phentsize != sizeof(Elf_Phdr))
+		return _dl_error_set(DE_INVALID_FORMAT, -1);
+	/* obtain the base address */
+	for(i = 0; i < _dl_phnum; i++)
+	{
+		if(_dl_phdr[i].p_filesz > _dl_phdr[i].p_memsz)
+			return _dl_error_set(DE_INVALID_FORMAT, -1);
+		if(_dl_phdr[i].p_type != PT_PHDR)
+			continue;
+		dl->data_addr = (char *)_dl_phdr - _dl_phdr[i].p_vaddr;
+		dl->text_addr = (char *)_dl_phdr - _dl_phdr[i].p_vaddr;
+#ifdef DEBUG
+		fprintf(stderr, "DEBUG: addr=%p\n", dl->data_addr);
+#endif
+		break;
+	}
+	for(i = 0; i < _dl_phnum; i++)
+	{
+		switch(_dl_phdr[i].p_type)
+		{
+			case PT_DYNAMIC:
+				if(_new_self_dynamic(dl, &_dl_phdr[i]) != 0)
+					return -1;
+				return 0;
+		}
+	}
+	return _dl_error_set(DE_INVALID_FORMAT, -1);
+}
+
+static int _new_self_dynamic(DL * dl, Elf_Phdr * phdr)
+{
+	Elf_Dyn * dyn;
+
+	/* FIXME also check for the size */
+	for(dyn = (char *)dl->data_addr + phdr->p_vaddr;
+			dyn->d_tag != DT_NULL; dyn++)
+		switch(dyn->d_tag)
+		{
+			case DT_STRTAB:
+				_dl_str = dl->data_addr + dyn->d_un.d_ptr;
+				break;
+			case DT_STRSZ:
+				dl->symtab_cnt = dyn->d_un.d_val;
+				break;
+			case DT_SYMENT:
+				if(dyn->d_un.d_val != sizeof(Elf_Sym))
+					return _dl_error_set(DE_INVALID_FORMAT,
+							-1);
+				break;
+			case DT_SYMTAB:
+				dl->symtab = dl->data_addr + dyn->d_un.d_ptr;
+				break;
+#ifdef DEBUG
+			default:
+				fprintf(stderr, "DEBUG: %d (0x%x)\n",
+						dyn->d_tag, dyn->d_un.d_val);
+				break;
+#endif
+		}
+	/* sanity checks */
+	if(dl->symtab_cnt != 0 && _dl_str == NULL)
+	{
+		dl->symtab_cnt = 0;
+		return _dl_error_set(DE_INVALID_FORMAT, -1);
+	}
 	return 0;
 }
 
@@ -425,7 +501,8 @@ static void _dl_delete(DL * dl)
 {
 	free(dl->path);
 	free(dl->shdr);
-	free(dl->symtab);
+	if(dl->fd >= 0)
+		free(dl->symtab);
 	if(dl->text_base != NULL)
 		munmap(dl->text_base, dl->text_size);
 	if(dl->data_base != NULL)
@@ -562,9 +639,14 @@ static int _dl_symtab(DL * dl, Elf_Word index, Elf_Word type, Elf_Sym ** symtab,
 /* start_dlfcn */
 void __start_dlfcn(AuxInfo * auxv)
 {
-	for(; auxv->a_type != AT_NULL; auxv++)
+	for(;; auxv++)
 		switch(auxv->a_type)
 		{
+			case AT_NULL:
+				return;
+			case AT_PAGESZ:
+				_dl_page_size = auxv->a_v;
+				break;
 			case AT_PHDR:
 				_dl_phdr = (Elf_Phdr *)auxv->a_v;
 				break;
@@ -574,7 +656,6 @@ void __start_dlfcn(AuxInfo * auxv)
 			case AT_PHNUM:
 				_dl_phnum = auxv->a_v;
 				break;
-			case AT_NULL:
 			case AT_IGNORE:
 			default:
 				break;
@@ -647,19 +728,15 @@ void * __dlsym(void * handle, char const * name)
 	void * ret;
 	size_t i;
 	size_t len;
-	Elf_Shdr * shdr = dl->shdr;
+	Elf_Shdr * shdr;
 	char * strings = NULL;
 
 #ifdef DEBUG
 	fprintf(stderr, "DEBUG: dlsym(%p, \"%s\")\n", handle, name);
 #endif
 	if(dl->fd == -1)
-	{
-		/* FIXME implement dlopen(NULL) */
-		errno = ENOSYS;
-		_dl_error_set_errno(0);
-		return NULL;
-	}
+		return _sym_lookup(dl, name, _dl_str, dl->symtab_cnt);
+	shdr = dl->shdr;
 	for(i = 0; i < dl->ehdr.e_shnum; i++)
 	{
 		if(shdr[i].sh_type != SHT_SYMTAB)
@@ -694,10 +771,14 @@ static void * _sym_lookup(DL * dl, char const * name, char const * strtab,
 		if((p = _dl_strtab_string(strtab, strtab_cnt, sym->st_name))
 				== NULL)
 			return NULL;
+#ifdef DEBUG
+		if(dl->fd == -1)
+			fprintf(stderr, "DEBUG: symbol \"%s\"\n", p);
+#endif
 		if(strcmp(p, name) != 0)
 			continue;
 		/* found the symbol */
-		if(sym->st_shndx >= dl->ehdr.e_shnum)
+		if(dl->fd != -1 && sym->st_shndx >= dl->ehdr.e_shnum)
 		{
 			_dl_error_set(DE_INVALID_FORMAT, 0);
 			return NULL;
