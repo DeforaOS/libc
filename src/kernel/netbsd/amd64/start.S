@@ -46,6 +46,10 @@ _start:
 #else
 	mov	%rdx, environ
 #endif
+	push	%rdi
+	push	%rsi
+	push	%rdx
+#ifdef __ELF__
 	mov	%rdx, %rcx	/* auxv */
 auxv:
 	cmpq	$0x0, (%rcx)
@@ -54,10 +58,8 @@ auxv:
 	jmp	auxv
 auxv_done:
 	add	$0x8, %rcx
-	push	%rdi
-	push	%rsi
-	push	%rdx
 	push	%rcx
+#endif
 
 #if defined(__SSP__)
 	/* initialize SSP */
@@ -68,12 +70,14 @@ auxv_done:
 # endif
 #endif
 
+#ifdef __ELF__
 	/* initialize dlfcn */
 	pop	%rdi
-#ifdef __PIC__
+# ifdef __PIC__
 	call	__start_dlfcn@PLT
-#else
+# else
 	call	__start_dlfcn
+# endif
 #endif
 
 	/* initialize stdio */
