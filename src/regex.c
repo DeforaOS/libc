@@ -51,8 +51,6 @@
 /* prototypes */
 static int _pcre_init(void);
 
-static int _regerror_pcre(int error);
-
 
 /* variables */
 static struct
@@ -91,6 +89,8 @@ static int (*_pcre_fullinfo)(const void *, const void *, int,
 /* public */
 /* functions */
 /* regcomp */
+static int _regcomp_error(int error);
+
 int regcomp(regex_t * regex, const char * pattern, int flags)
 {
 	int pflags = 0;
@@ -108,10 +108,28 @@ int regcomp(regex_t * regex, const char * pattern, int flags)
 		pflags |= PCRE_MULTILINE;
 	if((regex->re_pcre = _pcre_compile2(pattern, pflags, &perror, &p,
 					&poffset, NULL)) == NULL)
-		return _regerror_pcre(perror);
+		return _regcomp_error(perror);
 	_pcre_fullinfo(regex->re_pcre, NULL, PCRE_INFO_CAPTURECOUNT, &nsub);
 	regex->re_nsub = nsub;
 	return 0;
+}
+
+static int _regcomp_error(int error)
+{
+	switch(error)
+	{
+		case 1:
+		case 2:
+		case 3:
+			return REG_EESCAPE;
+		case 4:
+		case 5:
+			return REG_BADBR;
+		case 8:
+			return REG_ERANGE;
+		default:
+			return REG_ENOSYS;
+	}
 }
 
 
@@ -136,6 +154,8 @@ size_t regerror(int error, const regex_t * regex, char * buf, size_t buf_cnt)
 
 
 /* regexec */
+static int _regexec_error(int error);
+
 int regexec(const regex_t * regex, const char * string, size_t match_cnt,
 		regmatch_t match[], int flags)
 {
@@ -158,7 +178,7 @@ int regexec(const regex_t * regex, const char * string, size_t match_cnt,
 	else
 		pmatch = NULL;
 	if((res = _pcre_exec(regex->re_pcre, NULL, string, strlen(string), 0,
-					pflags, pmatch, match_cnt * 3)) == 0)
+					pflags, pmatch, match_cnt * 3)) >= 0)
 	{
 		for(i = 0; i < match_cnt; i++)
 		{
@@ -169,7 +189,21 @@ int regexec(const regex_t * regex, const char * string, size_t match_cnt,
 		return 0;
 	}
 	free(pmatch);
-	return _regerror_pcre(res);
+	return _regexec_error(res);
+}
+
+static int _regexec_error(int error)
+{
+	switch(error)
+	{
+		case PCRE_ERROR_NOMATCH:
+			return REG_NOMATCH;
+		case PCRE_ERROR_MATCHLIMIT:
+		case PCRE_ERROR_NOMEMORY:
+			return REG_ESPACE;
+		default:
+			return REG_ENOSYS;
+	}
 }
 
 
@@ -200,17 +234,4 @@ static int _pcre_init(void)
 		return -1;
 	}
 	return 0;
-}
-
-
-/* regerror_pcre */
-static int _regerror_pcre(int error)
-{
-	switch(error)
-	{
-		case 1:
-			return REG_BADPAT;
-		default:
-			return REG_ENOSYS;
-	}
 }
