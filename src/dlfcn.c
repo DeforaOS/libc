@@ -610,8 +610,8 @@ void * __dlopen(char const * pathname, int mode)
 
 
 /* dlsym */
-static void * _sym_lookup(DL * dl, Elf_Shdr * shdr, char const * name,
-		char const * strings, size_t strings_cnt);
+static void * _sym_lookup(DL * dl, char const * name, char const * strings,
+		size_t strings_cnt);
 
 void * __dlsym(void * handle, char const * name)
 {
@@ -645,7 +645,7 @@ void * __dlsym(void * handle, char const * name)
 		/* read the complete string section */
 		if(_dl_strtab(dl, shdr[i].sh_link, &strings, &len) != 0)
 			break;
-		ret = _sym_lookup(dl, &shdr[i], name, strings, len);
+		ret = _sym_lookup(dl, name, strings, len);
 		free(strings);
 		if(ret != NULL)
 			return ret;
@@ -653,8 +653,8 @@ void * __dlsym(void * handle, char const * name)
 	return NULL;
 }
 
-static void * _sym_lookup(DL * dl, Elf_Shdr * shdr, char const * name,
-		char const * strtab, size_t strtab_cnt)
+static void * _sym_lookup(DL * dl, char const * name, char const * strtab,
+		size_t strtab_cnt)
 {
 	size_t i;
 	Elf_Sym * sym;
