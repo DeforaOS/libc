@@ -1,6 +1,4 @@
 - pass the "time" test
-- check and fix compilation warnings
-- pass the "regex" test
 
 Platform specific:
 - FreeBSD:
