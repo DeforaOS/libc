@@ -741,7 +741,15 @@ void * __dlsym(void * handle, char const * name)
 	fprintf(stderr, "DEBUG: dlsym(%p, \"%s\")\n", handle, name);
 #endif
 	if(dl->fd == -1)
+	{
+		if(dl->symtab_cnt == NULL)
+		{
+			errno = ENOSYS;
+			_dl_error_set_errno(0);
+			return NULL;
+		}
 		return _sym_lookup(dl, name, _dl_str, dl->symtab_cnt);
+	}
 	shdr = dl->shdr;
 	for(i = 0; i < dl->ehdr.e_shnum; i++)
 	{
