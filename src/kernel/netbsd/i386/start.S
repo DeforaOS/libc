@@ -40,6 +40,7 @@ _start:
 	shl	$2, %ecx
 	add	%ebx, %ecx
 	mov	%ecx, environ	/* environ */
+#if defined(__ELF__)
 	mov	%ecx, %edx	/* auxv */
 auxv:
 	cmpl	$0x0, (%edx)
@@ -48,22 +49,27 @@ auxv:
 	jmp	auxv
 auxv_done:
 	add	$0x4, %edx
+#endif
 	push	%ebp
 	push	%esp
 	mov	%esp, %ebp
 	push	%ecx
 	push	%ebx
 	push	%eax
+#if defined(__ELF__)
 	push	%edx
+#endif
 
 #if defined(__SSP__)
 	/* initialize SSP */
 	call	__stack_chk_setup
 #endif
 
+#if defined(__ELF__)
 	/* initialize dlfcn */
 	call	__start_dlfcn
 	pop	%eax
+#endif
 
 	/* initialize stdio */
 	call	__start_stdio
