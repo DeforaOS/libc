@@ -742,7 +742,7 @@ void * __dlsym(void * handle, char const * name)
 #endif
 	if(dl->fd == -1)
 	{
-		if(dl->symtab_cnt == NULL)
+		if(dl->symtab_cnt == 0)
 		{
 			errno = ENOSYS;
 			_dl_error_set_errno(0);
