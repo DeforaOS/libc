@@ -178,6 +178,8 @@ typedef struct _Elf64_Ehdr
 } Elf64_Ehdr;
 
 /* Elf_Shdr */
+/* name */
+# define SHN_UNDEF	0
 /* type */
 # define SHT_NULL	0
 # define SHT_PROGBIGS	1
@@ -310,6 +312,8 @@ typedef struct _Elf64_Rela
 } Elf64_Rela;
 
 /* Elf_Sym */
+/* name */
+# define STN_UNDEF	0
 /* info */
 # define ELF_ST_BIND(info) (info >> 4)
 # define ELF_ST_TYPE(info) (info & 0xf)
@@ -336,8 +340,6 @@ typedef struct _Elf64_Rela
 # define STT_HIOS	12
 # define STT_LOPROC	13
 # define STT_HIPROC	15
-/* index */
-# define STN_UNDEF	0
 
 typedef struct _Elf32_Sym
 {

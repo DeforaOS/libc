@@ -387,7 +387,7 @@ static int _file_symbols(DL * dl)
 #ifdef DEBUG
 	fprintf(stderr, "DEBUG: %s()\n", __func__);
 #endif
-	for(i = 0; i < dl->ehdr.e_shnum; i++)
+	for(i = SHN_UNDEF + 1; i < dl->ehdr.e_shnum; i++)
 		if(dl->shdr[i].sh_type == SHT_SYMTAB)
 			break;
 	if(i == dl->ehdr.e_shnum)
@@ -412,7 +412,7 @@ static int _file_relocations(DL * dl)
 #ifdef DEBUG
 	fprintf(stderr, "DEBUG: %s()\n", __func__);
 #endif
-	for(i = 0; i < dl->ehdr.e_shnum; i++)
+	for(i = SHN_UNDEF + 1; i < dl->ehdr.e_shnum; i++)
 	{
 		shdr = &dl->shdr[i];
 		if((shdr->sh_type != SHT_REL
@@ -748,10 +748,18 @@ void * __dlsym(void * handle, char const * name)
 			_dl_error_set_errno(0);
 			return NULL;
 		}
+#ifdef DEBUG
+		fprintf(stderr, "DEBUG: %p %p\n", dl->text_addr, dl->data_addr);
+		ret = _sym_lookup(dl, name, _dl_str, dl->symtab_cnt);
+		fprintf(stderr, "DEBUG: %s(\"%s\") => %p\n", __func__, name,
+				ret);
+		return ret;
+#else
 		return _sym_lookup(dl, name, _dl_str, dl->symtab_cnt);
+#endif
 	}
 	shdr = dl->shdr;
-	for(i = 0; i < dl->ehdr.e_shnum; i++)
+	for(i = SHN_UNDEF + 1; i < dl->ehdr.e_shnum; i++)
 	{
 		if(shdr[i].sh_type != SHT_SYMTAB)
 			continue;
@@ -780,7 +788,7 @@ static void * _sym_lookup(DL * dl, char const * name, char const * strtab,
 	Elf_Sym * sym;
 	char const * p;
 
-	for(i = 0; i < dl->symtab_cnt; i++)
+	for(i = STN_UNDEF + 1; i < dl->symtab_cnt; i++)
 	{
 		sym = &dl->symtab[i];
 		if((p = _dl_strtab_string(strtab, strtab_cnt, sym->st_name))
