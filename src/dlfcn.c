@@ -276,7 +276,11 @@ static int _new_self_dynamic(DL * dl, Elf_Phdr * phdr)
 		switch(dyn->d_tag)
 		{
 			case DT_STRTAB:
+#ifdef __linux__
+				_dl_str = dyn->d_un.d_ptr;
+#else
 				_dl_str = dl->data_addr + dyn->d_un.d_ptr;
+#endif
 				break;
 			case DT_STRSZ:
 				dl->symtab_cnt = dyn->d_un.d_val;
@@ -287,7 +291,11 @@ static int _new_self_dynamic(DL * dl, Elf_Phdr * phdr)
 							-1);
 				break;
 			case DT_SYMTAB:
+#ifdef __linux__
+				dl->symtab = dyn->d_un.d_ptr;
+#else
 				dl->symtab = dl->data_addr + dyn->d_un.d_ptr;
+#endif
 				break;
 #ifdef DEBUG
 			default:
