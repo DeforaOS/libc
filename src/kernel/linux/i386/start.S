@@ -41,12 +41,9 @@ _start:
 	pop	%eax		/* argc */
 	mov	%esp, %ebx	/* argv */
 	push	%eax
-	mov	%ebx, %ecx	/* envp */
-	add	$0x4, %ecx
-	add	%eax, %ecx
-	add	%eax, %ecx
-	add	%eax, %ecx
-	add	%eax, %ecx
+	mov	%eax, %ecx	/* envp */
+	shl	$2, %ecx
+	add	%ebx, %ecx
 	mov	%ecx, environ	/* environ */
 	push	%ebp
 	push	%esp
