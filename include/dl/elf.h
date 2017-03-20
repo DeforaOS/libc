@@ -311,7 +311,20 @@ typedef struct _Elf64_Rela
 
 /* Elf_Sym */
 /* info */
-# define ELF32_ST_TYPE(info) (info & 0xf)
+# define ELF_ST_BIND(info) (info >> 4)
+# define ELF_ST_TYPE(info) (info & 0xf)
+# define ELF32_ST_BIND(info) ELF_ST_BIND(info)
+# define ELF32_ST_TYPE(info) ELF_ST_TYPE(info)
+# define ELF64_ST_BIND(info) ELF_ST_BIND(info)
+# define ELF64_ST_TYPE(info) ELF_ST_TYPE(info)
+/* bind */
+# define STB_LOCAL	0
+# define STB_GLOBAL	1
+# define STB_WEAK	2
+# define STB_LOOS	10
+# define STB_HIOS	12
+# define STB_LOPROC	13
+# define STB_HIPROC	15
 /* type */
 # define STT_NOTYPE	0
 # define STT_OBJECT	1
