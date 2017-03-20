@@ -775,6 +775,7 @@ void * __dlsym(void * handle, char const * name)
 static void * _sym_lookup(DL * dl, char const * name, char const * strtab,
 		size_t strtab_cnt)
 {
+	void * ret = NULL;
 	size_t i;
 	Elf_Sym * sym;
 	char const * p;
@@ -806,9 +807,12 @@ static void * _sym_lookup(DL * dl, char const * name, char const * strtab,
 #endif
 		/* FIXME handle only known types */
 		if(ELF_ST_TYPE(sym->st_info) == STT_FUNC)
-			return (void*)(sym->st_value + dl->text_addr);
-		return (void*)(sym->st_value + dl->data_addr);
+			ret = (void *)(sym->st_value + dl->text_addr);
+		ret = (void *)(sym->st_value + dl->data_addr);
+		if(ELF_ST_BIND(sym->st_info) != STB_WEAK)
+			return ret;
 	}
-	_dl_error_set(DE_SYMBOL_NOT_FOUND, 0);
-	return NULL;
+	if(ret == NULL)
+		_dl_error_set(DE_SYMBOL_NOT_FOUND, 0);
+	return ret;
 }
