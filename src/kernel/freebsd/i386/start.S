@@ -32,7 +32,7 @@
 
 _start:
 	/* reset the stack */
-	xor	%ebp, %ebp	/* stack */
+	xor	%ebp, %ebp
 
 	/* setup the environment */
 	pop	%eax		/* argc */
@@ -86,4 +86,5 @@ auxv_done:
 	mov	%ebp, %esp
 	push	%eax
 	call	exit
+
 	hlt
