@@ -32,12 +32,7 @@ _start:
 	/* reset the stack */
 	xor	%ebp, %ebp
 
-#if defined(__SSP__)
-	/* initialize SSP */
-	call	__stack_chk_setup
-#endif
-
-	/* run the main program */
+	/* setup the environment */
 	pop	%eax		/* argc */
 	mov	%esp, %ebx	/* argv */
 	push	%eax
@@ -45,15 +40,45 @@ _start:
 	shl	$2, %ecx
 	add	%ebx, %ecx
 	mov	%ecx, environ	/* environ */
+#if defined(__ELF__)
+	mov	%ecx, %edx	/* auxv */
+auxv:
+	cmpl	$0x0, (%edx)
+	jz	auxv_done
+	add	$0x4, %edx
+	jmp	auxv
+auxv_done:
+	add	$0x4, %edx
+#endif
 	push	%ebp
 	push	%esp
 	mov	%esp, %ebp
 	push	%ecx
 	push	%ebx
 	push	%eax
+#if defined(__ELF__)
+	push	%edx
+#endif
+
+#if defined(__SSP__)
+	/* initialize SSP */
+	call	__stack_chk_setup
+#endif
+
+#if defined(__ELF__)
+	/* initialize dlfcn */
+	call	__start_dlfcn
+	pop	%eax
+#endif
+
+	/* initialize stdio */
+	call	__start_stdio
+
+	/* run the main program */
 	call	main
 
 	/* exit the main program */
+	mov	%ebp, %esp
 	push	%eax
 	call	exit
 
