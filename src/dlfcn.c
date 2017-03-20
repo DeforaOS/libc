@@ -799,10 +799,11 @@ static void * _sym_lookup(DL * dl, char const * name, char const * strtab,
 			return NULL;
 		}
 #ifdef DEBUG
-		fprintf(stderr, "DEBUG: %s() symbol: %s, section: %u, type=%x"
-				", value: 0x%x, size: 0x%x\n", __func__,
-				&strtab[sym->st_name],
-				sym->st_shndx, ELF_ST_TYPE(sym->st_info),
+		fprintf(stderr, "DEBUG: %s() symbol: %s, section: %u, type=%x,"
+				" bind=%d, value: 0x%x, size: 0x%x\n",
+				__func__, &strtab[sym->st_name], sym->st_shndx,
+				ELF_ST_TYPE(sym->st_info),
+				ELF_ST_BIND(sym->st_info),
 				sym->st_value, sym->st_size);
 #endif
 		/* FIXME handle only known types */
