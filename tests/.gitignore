@@ -5,6 +5,8 @@
 /includes
 /inttypes
 /langinfo
+/mman
+/msg
 /netdb
 /ptrace
 /pwd
