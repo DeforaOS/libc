@@ -37,10 +37,10 @@ _start:
 	/* terminate stack */
 	mov	%fp, $0
 
-	/* argc, argv, arge */
+	/* argc, argv, envp */
 	ldr	%r0, [%sp]		/* argc */
 	add	%r1, %sp, $4		/* argv */
-	add	%r2, %r0, $1		/* arge */
+	add	%r2, %r0, $1		/* envp */
 	add	%r2, %r2, %r2
 	add	%r2, %r2, %r2
 	add	%r2, %r1, %r2
