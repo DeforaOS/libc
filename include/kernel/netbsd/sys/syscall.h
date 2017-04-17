@@ -131,6 +131,7 @@
 # define SYS_fstat		440
 # define SYS_lstat		441
 # define SYS_shmctl		443
+# define SYS_msgctl		444
 # define SYS_getrusage		445
 # define SYS_wait4		449
 # define SYS_mknod		450
