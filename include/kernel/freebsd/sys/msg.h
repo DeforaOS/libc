@@ -33,9 +33,31 @@
 
 
 /* types */
+# ifndef pid_t
+#  define pid_t pid_t
+typedef signed int pid_t;
+# endif
 # ifndef time_t
 #  define time_t time_t
 typedef int time_t;
+# endif
+
+# ifndef msqid_ds
+#  define msqid_ds msqid_ds
+struct msqid_ds
+{
+	struct ipc_perm msg_perm;
+	void * __padding0;
+	void * __padding1;
+	unsigned long msg_cbytes;
+	unsigned long __padding2;
+	unsigned long __padding3;
+	pid_t msg_lspid;
+	pid_t msg_lrpid;
+	time_t msg_stime;
+	time_t msg_rtime;
+	time_t msg_ctime;
+};
 # endif
 
 

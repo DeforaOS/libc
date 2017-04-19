@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2016-2017 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,18 +28,23 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_IPC_H
-# define LIBC_COMPAT_SYS_IPC_H
+#ifndef LIBC_KERNEL_FREEBSD_SYS_IPC_H
+# define LIBC_KERNEL_FREEBSD_SYS_IPC_H
 
 
-# if defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/ipc.h"
-# elif defined(__linux__)
-#  include "kernel/linux/sys/ipc.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/ipc.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef ipc_perm
+#  define ipc_perm ipc_perm
+struct ipc_perm
+{
+	unsigned short cuid;
+	unsigned short cgid;
+	unsigned short uid;
+	unsigned short gid;
+	unsigned short mode;
+	unsigned short __padding0;
+	long __padding1;
+};
 # endif
 
-#endif /* !LIBC_COMPAT_SYS_IPC_H */
+#endif /* !LIBC_KERNEL_FREEBSD_SYS_IPC_H */
