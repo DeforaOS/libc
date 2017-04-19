@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2016 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,16 +28,44 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_IPC_H
-# define LIBC_COMPAT_SYS_IPC_H
+#ifndef LIBC_KERNEL_LINUX_SYS_IPC_H
+# define LIBC_KERNEL_LINUX_SYS_IPC_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/ipc.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/ipc.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef id_t
+#  define id_t id_t
+typedef unsigned int id_t;
+# endif
+# ifndef key_t
+#  define key_t key_t
+typedef int key_t;
 # endif
 
-#endif /* !LIBC_COMPAT_SYS_IPC_H */
+# ifndef gid_t
+#  define gid_t gid_t
+typedef id_t gid_t;
+# endif
+# ifndef uid_t
+#  define uid_t uid_t
+typedef id_t uid_t;
+# endif
+
+# ifndef ipc_perm
+#  define ipc_perm ipc_perm
+struct ipc_perm
+{
+	key_t __padding0;
+	uid_t uid;
+	gid_t gid;
+	uid_t cuid;
+	gid_t cgid;
+	unsigned short mode;
+	unsigned short __padding1;
+	unsigned int __padding2;
+	unsigned long __padding3;
+	unsigned long __padding4;
+};
+# endif
+
+#endif /* !LIBC_KERNEL_LINUX_SYS_IPC_H */
