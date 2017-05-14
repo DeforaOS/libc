@@ -33,8 +33,9 @@
 
 
 /* mount */
-#if !defined(SYS_mount) && defined(SYS__mount) /* for Linux */
-# include "stddef.h"
+#if !defined(SYS_mount)
+# if defined(SYS__mount) /* for Linux */
+#  include "stddef.h"
 int _mount(char const * node, char const * dir, char const * type, int flags,
 		char const * data);
 
@@ -44,20 +45,21 @@ int mount(char const * type, char const * dir, int flags, const void * data,
 	/* FIXME really implement */
 	return _mount(NULL, dir, type, flags, NULL);
 }
-#elif !defined(SYS_mount)
-# warning Unsupported platform: mount() is missing
-# include "errno.h"
+# else
+#  warning Unsupported platform: mount() is missing
+#  include "errno.h"
 int mount(char const * type, char const * dir, int flags, const void * data,
 		size_t data_len)
 {
 	errno = ENOSYS;
 	return -1;
 }
+# endif
 #endif
 
 
 /* umount */
-#ifndef SYS_unmount
+#if !defined(SYS_unmount)
 # warning Unsupported platform: unmount() is missing
 # include "errno.h"
 int unmount(char const * dir, int flags)
