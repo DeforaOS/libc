@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,18 +28,19 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_MOUNT_H
-# define LIBC_COMPAT_SYS_MOUNT_H
+#ifndef LIBC_KERNEL_OPENBSD_SYS_MOUNT_H
+# define LIBC_KERNEL_OPENBSD_SYS_MOUNT_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/mount.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/mount.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/mount.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+/* mount flags */
+# define MF_RDONLY	0x00000001
+# define MF_SYNC	0x00000002
+# define MF_NOEXEC	0x00000004
+# define MF_NOSUID	0x00000008
+# define MF_NODEV	0x00000010
+# define MF_ASYNC	0x00000040
+# define MF_REMOUNT	0x00010000
+# define MF_FORCE	0x00080000
 
-#endif /* !LIBC_COMPAT_SYS_MOUNT_H */
+#endif /* !LIBC_KERNEL_OPENBSD_SYS_MOUNT_H */
