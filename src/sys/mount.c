@@ -51,6 +51,12 @@ int mount(char const * type, char const * dir, int flags, const void * data,
 int mount(char const * type, char const * dir, int flags, const void * data,
 		size_t data_len)
 {
+	(void) type;
+	(void) dir;
+	(void) flags;
+	(void) data;
+	(void) data_len;
+
 	errno = ENOSYS;
 	return -1;
 }
@@ -64,6 +70,9 @@ int mount(char const * type, char const * dir, int flags, const void * data,
 # include "errno.h"
 int unmount(char const * dir, int flags)
 {
+	(void) dir;
+	(void) flags;
+
 	errno = ENOSYS;
 	return -1;
 }
