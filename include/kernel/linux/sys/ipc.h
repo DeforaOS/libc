@@ -33,22 +33,9 @@
 
 
 /* types */
-# ifndef id_t
-#  define id_t id_t
-typedef unsigned int id_t;
-# endif
 # ifndef key_t
 #  define key_t key_t
 typedef int key_t;
-# endif
-
-# ifndef gid_t
-#  define gid_t gid_t
-typedef id_t gid_t;
-# endif
-# ifndef uid_t
-#  define uid_t uid_t
-typedef id_t uid_t;
 # endif
 
 # ifndef ipc_perm

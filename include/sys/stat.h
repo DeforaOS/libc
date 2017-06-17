@@ -31,6 +31,23 @@
 #ifndef LIBC_SYS_STAT_H
 # define LIBC_SYS_STAT_H
 
+# include "../compat.h"
+
+
+/* types */
+# ifndef gid_t
+#  define gid_t gid_t
+typedef __gid_t gid_t;
+# endif
+# ifndef id_t
+#  define id_t id_t
+typedef __id_t id_t;
+# endif
+# ifndef uid_t
+#  define uid_t uid_t
+typedef __uid_t uid_t;
+# endif
+
 # include "../compat/sys/stat.h"
 
 

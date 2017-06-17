@@ -42,6 +42,10 @@
 
 
 /* types */
+# ifndef __id_t
+#  define __id_t __id_t
+typedef unsigned int __id_t;
+# endif
 # ifndef __intptr_t
 #  define __intptr_t __intptr_t
 typedef signed long __intptr_t;
@@ -81,6 +85,15 @@ typedef char __wchar_t;
 # ifndef __wint_t
 #  define __wint_t __wint_t
 typedef int __wint_t;
+# endif
+
+# ifndef __gid_t
+#  define __gid_t __gid_t
+typedef __id_t __gid_t;
+# endif
+# ifndef __uid_t
+#  define __uid_t __uid_t
+typedef __id_t __uid_t;
 # endif
 
 #endif /* !LIBC_COMPAT_H */

@@ -46,10 +46,6 @@ typedef unsigned long blksize_t;
 #  define dev_t dev_t
 typedef unsigned short int dev_t;
 #endif
-# ifndef id_t
-#  define id_t id_t
-typedef unsigned int id_t;
-# endif
 # ifndef ino_t
 #  define ino_t ino_t
 typedef unsigned long long ino_t;
@@ -69,15 +65,6 @@ typedef unsigned int off_t;
 # ifndef time_t
 #  define time_t time_t
 typedef int time_t;
-# endif
-
-# ifndef gid_t
-#  define gid_t gid_t
-typedef id_t gid_t;
-# endif
-# ifndef uid_t
-#  define uid_t uid_t
-typedef id_t uid_t;
 # endif
 
 struct stat

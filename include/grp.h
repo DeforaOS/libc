@@ -31,15 +31,17 @@
 #ifndef LIBC_GRP_H
 # define LIBC_GRP_H
 
+# include "compat.h"
+
 
 /* types */
 # ifndef id_t
 #  define id_t id_t
-typedef unsigned int id_t;
+typedef __id_t id_t;
 # endif
 # ifndef gid_t
 #  define gid_t gid_t
-typedef id_t gid_t;
+typedef __gid_t gid_t;
 # endif
 struct group
 {

@@ -35,17 +35,13 @@
 
 
 /* types */
-# ifndef id_t
-#  define id_t id_t
-typedef unsigned int id_t;
-# endif
 # ifndef gid_t
 #  define gid_t gid_t
-typedef id_t gid_t;
+typedef __gid_t gid_t;
 # endif
-# ifndef uid_t
-#  define uid_t uid_t
-typedef id_t uid_t;
+# ifndef id_t
+#  define id_t id_t
+typedef __id_t id_t;
 # endif
 # ifndef mode_t
 #  define mode_t mode_t
@@ -58,6 +54,10 @@ typedef __off_t off_t;
 # ifndef pid_t
 #  define pid_t pid_t
 typedef __pid_t pid_t;
+# endif
+# ifndef uid_t
+#  define uid_t uid_t
+typedef __uid_t uid_t;
 # endif
 
 # include "compat/fcntl.h"

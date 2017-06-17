@@ -32,6 +32,38 @@
 # define LIBC_UNISTD_H
 
 # include "compat.h"
+
+
+/* types */
+# ifndef gid_t
+#  define gid_t gid_t
+typedef __gid_t gid_t;
+# endif
+# ifndef id_t
+#  define id_t id_t
+typedef __id_t id_t;
+# endif
+# ifndef intptr_t
+#  define intptr_t intptr_t
+typedef __intptr_t intptr_t;
+# endif
+# ifndef pid_t
+#  define pid_t pid_t
+typedef __pid_t pid_t;
+# endif
+# ifndef size_t
+#  define size_t size_t
+typedef __size_t size_t;
+# endif
+# ifndef ssize_t
+#  define ssize_t ssize_t
+typedef __ssize_t ssize_t;
+# endif
+# ifndef uid_t
+#  define uid_t uid_t
+typedef __uid_t uid_t;
+# endif
+
 # include "compat/unistd.h"
 
 
@@ -44,37 +76,6 @@ enum { F_OK, R_OK, W_OK, X_OK };
 # define STDOUT_FILENO	1
 # define STDERR_FILENO	2
 
-
-/* types */
-# ifndef intptr_t
-#  define intptr_t __intptr_t
-# endif
-# ifndef pid_t
-#  define pid_t pid_t
-typedef signed int pid_t;
-# endif
-# ifndef size_t
-#  define size_t __size_t
-# endif
-# ifndef ssize_t
-#  define ssize_t __ssize_t
-# endif
-
-# ifndef id_t
-#  define id_t id_t
-typedef unsigned int id_t;
-# endif
-# ifndef gid_t
-#  define gid_t gid_t
-typedef id_t gid_t;
-# endif
-# ifndef uid_t
-#  define uid_t uid_t
-typedef id_t uid_t;
-# endif
-
-
-/* constants */
 # define _POSIX_VERSION		200112L
 # define _POSIX2_VERSION	200112L
 

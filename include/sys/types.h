@@ -32,7 +32,6 @@
 # define LIBC_SYS_TYPES_H
 
 # include "../compat.h"
-# include "../compat/sys/types.h"
 
 
 /* types */
@@ -40,9 +39,13 @@
 #  define blksize_t blksize_t
 typedef unsigned int blksize_t;
 # endif
+# ifndef gid_t
+#  define gid_t gid_t
+typedef __gid_t gid_t;
+# endif
 # ifndef id_t
 #  define id_t id_t
-typedef unsigned int id_t;
+typedef __id_t id_t;
 # endif
 # ifndef key_t
 #  define key_t key_t
@@ -66,14 +69,9 @@ typedef signed int pid_t;
 # ifndef ssize_t
 #  define ssize_t __ssize_t
 # endif
-
-# ifndef gid_t
-#  define gid_t gid_t
-typedef id_t gid_t;
-# endif
 # ifndef uid_t
 #  define uid_t uid_t
-typedef id_t uid_t;
+typedef __uid_t uid_t;
 # endif
 
 /* pthread */
@@ -156,5 +154,7 @@ typedef volatile int pthread_spinlock_t;
 #  define pthread_t pthread_t
 typedef unsigned long pthread_t;
 # endif
+
+# include "../compat/sys/types.h"
 
 #endif /* !LIBC_SYS_TYPES_H */

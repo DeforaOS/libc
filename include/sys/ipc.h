@@ -31,13 +31,17 @@
 #ifndef LIBC_SYS_IPC_H
 # define LIBC_SYS_IPC_H
 
-# include "../compat/sys/ipc.h"
+# include "../compat.h"
 
 
 /* types */
+# ifndef gid_t
+#  define gid_t gid_t
+typedef __gid_t gid_t;
+# endif
 # ifndef id_t
 #  define id_t id_t
-typedef unsigned int id_t;
+typedef __id_t id_t;
 # endif
 # ifndef key_t
 #  define key_t key_t
@@ -47,15 +51,12 @@ typedef long key_t;
 #  define mode_t mode_t
 typedef unsigned int mode_t;
 # endif
-
-# ifndef gid_t
-#  define gid_t gid_t
-typedef id_t gid_t;
-# endif
 # ifndef uid_t
 #  define uid_t uid_t
-typedef id_t uid_t;
+typedef __uid_t uid_t;
 # endif
+
+# include "../compat/sys/ipc.h"
 
 # ifndef ipc_perm
 #  define ipc_perm ipc_perm
