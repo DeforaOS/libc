@@ -33,15 +33,6 @@
 
 
 /* types */
-# ifndef pid_t
-#  define pid_t pid_t
-typedef signed int pid_t;
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef int time_t;
-# endif
-
 # ifndef msqid_ds
 #  define msqid_ds msqid_ds
 struct msqid_ds

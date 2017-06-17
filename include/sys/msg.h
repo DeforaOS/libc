@@ -33,20 +33,28 @@
 
 # include "ipc.h"
 # include "../compat.h"
-# include "../compat/sys/msg.h"
 
 
 /* types */
 # ifndef pid_t
 #  define pid_t pid_t
-typedef signed int pid_t;
+typedef __pid_t pid_t;
 # endif
 # ifndef size_t
-#  define size_t __size_t
+#  define size_t size_t
+typedef __size_t size_t;
 # endif
 # ifndef ssize_t
-#  define ssize_t __ssize_t
+#  define ssize_t ssize_t
+typedef __ssize_t ssize_t;
 # endif
+# ifndef time_t
+#  define time_t time_t
+typedef __time_t time_t;
+# endif
+
+# include "../compat/sys/msg.h"
+
 # ifndef msqid_ds
 #  define msqid_ds msqid_ds
 #  warning Unsupported platform: struct msqid_ds is missing

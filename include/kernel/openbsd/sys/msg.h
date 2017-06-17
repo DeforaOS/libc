@@ -32,13 +32,6 @@
 # define LIBC_KERNEL_OPENBSD_SYS_MSG_H
 
 
-/* types */
-# ifndef time_t
-#  define time_t time_t
-typedef int time_t;
-# endif
-
-
 /* constants */
 # define MSG_NOERROR	010000
 

@@ -32,62 +32,47 @@
 # define LIBC_COMPAT_H
 
 
+# if defined(__OpenBSD__)
+#  include "kernel/openbsd/compat.h"
+# endif
+
+
 /* types */
 # ifndef __intptr_t
-#  ifdef __INTPTR_TYPE__
-#   define __intptr_t __INTPTR_TYPE__
-#  else
-#   define __intptr_t __intptr_t
+#  define __intptr_t __intptr_t
 typedef signed long __intptr_t;
-#  endif
 # endif
-# ifndef __size_t
-#  ifdef __SIZE_TYPE__
-#   define __size_t __SIZE_TYPE__
-#  else
-#   define __size_t __size_t
-typedef unsigned long __size_t;
-#  endif
-# endif
-# ifndef __ssize_t
-#  ifdef __SSIZE_TYPE__
-#   define __ssize_t __SSIZE_TYPE__
-#  else
-#   define __ssize_t __ssize_t
-typedef long __ssize_t;
-#  endif
+# ifndef __pid_t
+#  define __pid_t __pid_t
+typedef signed int __pid_t;
 # endif
 # ifndef __ptrdiff_t
-#  ifdef __PTRDIFF_TYPE__
-#   define __ptrdiff_t __PTRDIFF_TYPE__
-#  else
-#   define __ptrdiff_t __ptrdiff_t
+#  define __ptrdiff_t __ptrdiff_t
 typedef long __ptrdiff_t;
-#  endif
+# endif
+# ifndef __size_t
+#  define __size_t __size_t
+typedef unsigned long __size_t;
+# endif
+# ifndef __ssize_t
+#  define __ssize_t __ssize_t
+typedef long __ssize_t;
+# endif
+# ifndef __time_t
+#  define __time_t __time_t
+typedef long long __time_t;
 # endif
 # ifndef __uintptr_t
-#  ifdef __UINTPTR_TYPE__
-#   define __uintptr_t __UINTPTR_TYPE__
-#  else
-#   define __uintptr_t __uintptr_t
+#  define __uintptr_t __uintptr_t
 typedef unsigned long __uintptr_t;
-#  endif
 # endif
 # ifndef __wchar_t
-#  ifdef __WCHAR_TYPE__
-#   define __wchar_t __WCHAR_TYPE__
-#  else
-#   define __wchar_t __wchar_t
+#  define __wchar_t __wchar_t
 typedef char __wchar_t;
-#  endif
 # endif
 # ifndef __wint_t
-#  ifdef __WINT_TYPE__
-#   define __wint_t __WINT_TYPE__
-#  else
-#   define __wint_t __wint_t
+#  define __wint_t __wint_t
 typedef int __wint_t;
-#  endif
 # endif
 
 #endif /* !LIBC_COMPAT_H */

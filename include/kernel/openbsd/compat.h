@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2016 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,14 +28,11 @@
 
 
 
-#ifndef LIBC_KERNEL_SOLARIS_SYS_MSG_H
-# define LIBC_KERNEL_SOLARIS_SYS_MSG_H
+#ifndef LIBC_KERNEL_OPENBSD_COMPAT_H
+# define LIBC_KERNEL_OPENBSD_COMPAT_H
 
 
 /* types */
-# ifndef time_t
-#  define time_t time_t
-typedef int time_t;
-# endif
+# define __time_t int
 
-#endif /* !LIBC_KERNEL_SOLARIS_SYS_MSG_H */
+#endif /* !LIBC_KERNEL_OPENBSD_COMPAT_H */

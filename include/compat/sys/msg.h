@@ -40,8 +40,6 @@
 #  include "kernel/netbsd/sys/msg.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/sys/msg.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/sys/msg.h"
 # else
 #  warning Unsupported platform
 # endif
