@@ -39,14 +39,6 @@
 
 
 /* types */
-# ifndef id_t
-#  define id_t id_t
-typedef unsigned int id_t;
-# endif
-# ifndef pid_t
-#  define pid_t pid_t
-typedef signed int pid_t;
-# endif
 # ifndef suseconds_t
 #  define suseconds_t suseconds_t
 typedef long suseconds_t;

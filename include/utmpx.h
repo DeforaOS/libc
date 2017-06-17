@@ -31,7 +31,19 @@
 #ifndef LIBC_UTMPX_H
 # define LIBC_UTMPX_H
 
-# include "compat/sys/time.h"
+# include "compat.h"
+
+
+/* types */
+# ifndef id_t
+#  define id_t id_t
+typedef __id_t id_t;
+# endif
+# ifndef pid_t
+#  define pid_t pid_t
+typedef __pid_t pid_t;
+# endif
+
 # include "compat/utmpx.h"
 
 
