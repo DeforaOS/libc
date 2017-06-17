@@ -32,8 +32,12 @@
 # define LIBC_COMPAT_H
 
 
-# if defined(__OpenBSD__)
+# if defined(__linux__)
+#  include "kernel/linux/compat.h"
+# elif defined(__OpenBSD__)
 #  include "kernel/openbsd/compat.h"
+# elif defined(__Whitix__)
+#  include "kernel/whitix/compat.h"
 # endif
 
 
@@ -41,6 +45,10 @@
 # ifndef __intptr_t
 #  define __intptr_t __intptr_t
 typedef signed long __intptr_t;
+# endif
+# ifndef __off_t
+#  define __off_t __off_t
+typedef long long __off_t;
 # endif
 # ifndef __pid_t
 #  define __pid_t __pid_t

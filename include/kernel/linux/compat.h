@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,14 +28,11 @@
 
 
 
-#ifndef LIBC_KERNEL_WHITIX_STDIO_H
-# define LIBC_KERNEL_WHITIX_STDIO_H
+#ifndef LIBC_KERNEL_LINUX_COMPAT_H
+# define LIBC_KERNEL_LINUX_COMPAT_H
 
 
 /* types */
-# ifndef off_t
-#  define off_t off_t
-typedef unsigned int off_t;
-# endif
+# define __off_t long
 
-#endif /* !LIBC_KERNEL_WHITIX_STDIO_H */
+#endif /* !LIBC_KERNEL_LINUX_COMPAT_H */

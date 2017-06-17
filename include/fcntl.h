@@ -31,7 +31,7 @@
 #ifndef LIBC_FCNTL_H
 # define LIBC_FCNTL_H
 
-# include "compat/fcntl.h"
+# include "compat.h"
 
 
 /* types */
@@ -51,10 +51,16 @@ typedef id_t uid_t;
 #  define mode_t mode_t
 typedef int mode_t;
 # endif
+# ifndef off_t
+#  define off_t off_t
+typedef __off_t off_t;
+# endif
 # ifndef pid_t
 #  define pid_t pid_t
-typedef signed int pid_t;
+typedef __pid_t pid_t;
 # endif
+
+# include "compat/fcntl.h"
 
 
 /* functions */

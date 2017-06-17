@@ -31,7 +31,6 @@
 #ifndef LIBC_STDIO_H
 # define LIBC_STDIO_H
 
-# include "compat/stdio.h"
 # include "stddef.h"
 
 
@@ -39,6 +38,11 @@
 # ifndef FILE
 #  define FILE FILE
 typedef struct _FILE FILE;
+# endif
+
+# ifndef off_t
+#  define off_t off_t
+typedef __off_t off_t;
 # endif
 
 # ifndef va_list
@@ -50,6 +54,8 @@ typedef struct _FILE FILE;
 typedef char * va_list;
 #  endif
 # endif
+
+# include "compat/stdio.h"
 
 
 /* constants */

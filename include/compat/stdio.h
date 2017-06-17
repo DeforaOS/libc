@@ -42,8 +42,6 @@
 #  include "kernel/netbsd/stdio.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/stdio.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/stdio.h"
 # elif defined(__Whitix__)
 #  include "kernel/whitix/stdio.h"
 # else
