@@ -31,6 +31,8 @@
 #ifndef LIBC_PWD_H
 # define LIBC_PWD_H
 
+# include "compat.h"
+
 
 /* types */
 # ifndef gid_t
