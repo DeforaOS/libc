@@ -29,9 +29,26 @@
 
 
 #include "ctype.h"
+#undef isalnum
+#undef isalpha
+#undef ispunct
 
 
 /* functions */
+/* isalnum */
+int isalnum(int c)
+{
+	return isalpha(c) || isdigit(c);
+}
+
+
+/* isalpha */
+int isalpha(int c)
+{
+	return islower(c) || isupper(c);
+}
+
+
 /* isascii */
 int isascii(int c)
 {
@@ -79,6 +96,13 @@ int islower(int c)
 int isprint(int c)
 {
 	return c >= ' ' && c <= '~';
+}
+
+
+/* ispunct */
+int ispunct(int c)
+{
+	return isprint(c) && (!(isspace(c) || isalnum(c)));
 }
 
 
