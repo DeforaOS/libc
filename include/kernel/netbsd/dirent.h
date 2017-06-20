@@ -33,11 +33,6 @@
 
 
 /* types */
-# ifndef ino_t
-#  define ino_t ino_t
-typedef unsigned long long ino_t;
-# endif
-
 struct dirent
 {
 	ino_t d_ino;

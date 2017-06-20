@@ -31,10 +31,17 @@
 #ifndef LIBC_DIRENT_H
 # define LIBC_DIRENT_H
 
-# include "compat/dirent.h"
+# include "compat.h"
 
 
 /* types */
+# ifndef ino_t
+#  define ino_t ino_t
+typedef __ino_t ino_t;
+# endif
+
+# include "compat/dirent.h"
+
 typedef struct _DIR DIR;
 
 

@@ -32,7 +32,9 @@
 # define LIBC_COMPAT_H
 
 
-# if defined(__linux__)
+# if defined(__FreeBSD__)
+#  include "kernel/freebsd/compat.h"
+# elif defined(__linux__)
 #  include "kernel/linux/compat.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/compat.h"
@@ -45,6 +47,10 @@
 # ifndef __id_t
 #  define __id_t __id_t
 typedef unsigned int __id_t;
+# endif
+# ifndef __ino_t
+#  define __ino_t __ino_t
+typedef unsigned long long __ino_t;
 # endif
 # ifndef __intptr_t
 #  define __intptr_t __intptr_t

@@ -33,6 +33,7 @@
 
 
 /* types */
+# define __ino_t unsigned long long
 # define __off_t unsigned int
 
 #endif /* !LIBC_KERNEL_WHITIX_COMPAT_H */
