@@ -31,9 +31,18 @@
 #ifndef LIBC_ICONV_H
 # define LIBC_ICONV_H
 
+# include "compat.h"
+
 
 /* types */
-typedef unsigned int iconv_t;
+# ifndef iconv_t
+#  define iconv_t iconv_t
+typedef __iconv_t iconv_t;
+# endif
+# ifndef size_t
+#  define size_t size_t
+typedef __size_t size_t;
+# endif
 
 
 /* functions */

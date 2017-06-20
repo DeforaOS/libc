@@ -44,6 +44,10 @@
 
 
 /* types */
+# ifndef __iconv_t
+#  define __iconv_t __iconv_t
+typedef unsigned int __iconv_t;
+# endif
 # ifndef __id_t
 #  define __id_t __id_t
 typedef unsigned int __id_t;
