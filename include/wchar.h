@@ -47,13 +47,16 @@ typedef struct _mbstate_t
 } mbstate_t;
 # endif
 # ifndef size_t
-#  define size_t __size_t
+#  define size_t size_t
+typedef __size_t size_t;
 # endif
 # ifndef wchar_t
-#  define wchar_t __wchar_t
+#  define wchar_t wchar_t
+typedef __wchar_t wchar_t;
 # endif
 # ifndef wint_t
-#  define wint_t __wint_t
+#  define wint_t wint_t
+typedef __wint_t wint_t;
 # endif
 
 
