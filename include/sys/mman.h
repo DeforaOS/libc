@@ -52,7 +52,7 @@ typedef __size_t size_t;
 
 
 /* constants */
-# define MAP_FAILED	((void*)-1)
+# define MAP_FAILED	((void *)-1)
 
 
 /* functions */
