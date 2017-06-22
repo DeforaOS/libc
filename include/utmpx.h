@@ -52,14 +52,14 @@ typedef __time_t time_t;
 
 
 /* constants */
-#define EMPTY		0
-#define BOOT_TIME	2
-#define OLD_TIME	3
-#define NEW_TIME	4
-#define INIT_PROCESS	5
-#define LOGIN_PROCESS	6
-#define USER_PROCESS	7
-#define DEAD_PROCESS	8
+# define EMPTY		0
+# define BOOT_TIME	2
+# define OLD_TIME	3
+# define NEW_TIME	4
+# define INIT_PROCESS	5
+# define LOGIN_PROCESS	6
+# define USER_PROCESS	7
+# define DEAD_PROCESS	8
 
 
 /* functions */
