@@ -31,17 +31,17 @@
 #ifndef LIBC_SIGNAL_H
 # define LIBC_SIGNAL_H
 
-# include "compat/signal.h"
+# include "compat.h"
 
 
 /* types */
 # ifndef id_t
 #  define id_t id_t
-typedef unsigned int id_t;
+typedef __id_t id_t;
 # endif
 # ifndef pid_t
 #  define pid_t pid_t
-typedef signed int pid_t;
+typedef __pid_t pid_t;
 # endif
 # ifndef sig_atomic_t
 #  define sig_atomic_t sig_atomic_t
@@ -49,8 +49,10 @@ typedef int sig_atomic_t;
 # endif
 # ifndef uid_t
 #  define uid_t uid_t
-typedef id_t uid_t;
+typedef __uid_t uid_t;
 # endif
+
+# include "compat/signal.h"
 
 
 /* functions */
