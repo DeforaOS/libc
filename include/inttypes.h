@@ -32,7 +32,6 @@
 # define LIBC_INTTYPES_H
 
 # include "stdint.h"
-# include "compat.h"
 
 
 /* types */
