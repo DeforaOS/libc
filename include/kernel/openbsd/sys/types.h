@@ -37,10 +37,6 @@
 #  define blkcnt_t blkcnt_t
 typedef unsigned long long blkcnt_t;
 # endif
-# ifndef clock_t
-#  define clock_t clock_t
-typedef unsigned int clock_t;
-# endif
 # ifndef dev_t
 #  define dev_t dev_t
 typedef unsigned int dev_t;
@@ -53,17 +49,9 @@ typedef unsigned int fsblkcnt_t;
 #  define fsfilcnt_t fsfilcnt_t
 typedef unsigned int fsfilcnt_t;
 # endif
-# ifndef off_t
-#  define off_t off_t
-typedef long long off_t;
-# endif
 # ifndef suseconds_t
 #  define suseconds_t suseconds_t
 typedef int suseconds_t;
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef int time_t;
 # endif
 # ifndef useconds_t
 #  define useconds_t useconds_t

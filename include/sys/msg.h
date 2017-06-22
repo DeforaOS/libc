@@ -32,7 +32,6 @@
 # define LIBC_SYS_MSG_H
 
 # include "ipc.h"
-# include "../compat.h"
 
 
 /* types */

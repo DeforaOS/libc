@@ -33,11 +33,6 @@
 
 
 /* types */
-# ifndef key_t
-#  define key_t key_t
-typedef int key_t;
-# endif
-
 # ifndef ipc_perm
 #  define ipc_perm ipc_perm
 struct ipc_perm

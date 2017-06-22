@@ -45,11 +45,11 @@ typedef __id_t id_t;
 # endif
 # ifndef key_t
 #  define key_t key_t
-typedef long key_t;
+typedef __key_t key_t;
 # endif
 # ifndef mode_t
 #  define mode_t mode_t
-typedef unsigned int mode_t;
+typedef __mode_t mode_t;
 # endif
 # ifndef uid_t
 #  define uid_t uid_t

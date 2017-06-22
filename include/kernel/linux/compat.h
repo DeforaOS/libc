@@ -33,6 +33,8 @@
 
 
 /* types */
+# define __key_t int
 # define __off_t long
+# define __time_t long
 
 #endif /* !LIBC_KERNEL_LINUX_COMPAT_H */

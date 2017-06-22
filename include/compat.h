@@ -62,6 +62,12 @@
 # ifndef __intptr_t
 #  define __intptr_t signed long
 # endif
+# ifndef __key_t
+#  define __key_t long
+# endif
+# ifndef __mode_t
+#  define __mode_t unsigned int
+# endif
 # ifndef __off_t
 #  define __off_t long long
 # endif

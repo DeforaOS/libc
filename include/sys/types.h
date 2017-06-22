@@ -39,6 +39,14 @@
 #  define blksize_t blksize_t
 typedef unsigned int blksize_t;
 # endif
+# ifndef clock_t
+#  define clock_t clock_t
+typedef __clock_t clock_t;
+# endif
+# ifndef clockid_t
+#  define clockid_t clockid_t
+typedef __clockid_t clockid_t;
+# endif
 # ifndef gid_t
 #  define gid_t gid_t
 typedef __gid_t gid_t;
@@ -49,25 +57,31 @@ typedef __id_t id_t;
 # endif
 # ifndef key_t
 #  define key_t key_t
-typedef long key_t;
+typedef __key_t key_t;
 # endif
 # ifndef mode_t
 #  define mode_t mode_t
-typedef unsigned int mode_t;
+typedef __mode_t mode_t;
 # endif
 # ifndef nlink_t
 #  define nlink_t nlink_t
 typedef unsigned int nlink_t;
 # endif
+# ifndef off_t
+#  define off_t off_t
+typedef __off_t off_t;
+# endif
 # ifndef pid_t
 #  define pid_t pid_t
-typedef signed int pid_t;
+typedef __pid_t pid_t;
 # endif
 # ifndef size_t
-#  define size_t __size_t
+#  define size_t size_t
+typedef __size_t size_t;
 # endif
 # ifndef ssize_t
-#  define ssize_t __ssize_t
+#  define ssize_t ssize_t
+typedef __ssize_t ssize_t;
 # endif
 # ifndef uid_t
 #  define uid_t uid_t
