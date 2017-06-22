@@ -77,6 +77,14 @@
 # ifndef __uintptr_t
 #  define __uintptr_t unsigned long
 # endif
+# ifndef __va_list
+#  if defined(__GNUC__) && __GNUC__ >= 3
+#   define __va_list __builtin_va_list
+#  else
+#   warning Unsupported architecture: va_list is not supported
+#   define __va_list char *
+#  endif
+# endif
 # ifndef __wchar_t
 #  define __wchar_t char
 # endif

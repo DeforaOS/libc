@@ -46,13 +46,8 @@ typedef __off_t off_t;
 # endif
 
 # ifndef va_list
-#  if defined(__GNUC__) && __GNUC__ >= 3
-#   define va_list __builtin_va_list
-#  else
-#   warning Unsupported architecture: va_list is not supported
 #   define va_list va_list
-typedef char * va_list;
-#  endif
+typedef __va_list va_list;
 # endif
 
 # include "compat/stdio.h"

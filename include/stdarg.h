@@ -31,16 +31,13 @@
 #ifndef LIBC_STDARG_H
 # define LIBC_STDARG_H
 
+# include "compat.h"
+
 
 /* types */
 # ifndef va_list
-#  if defined(__GNUC__) && __GNUC__ >= 3
-#   define va_list __builtin_va_list
-#  else
-#   warning Unsupported architecture: va_list is not supported
 #   define va_list va_list
-typedef char * va_list;
-#  endif
+typedef __va_list va_list;
 # endif
 
 
