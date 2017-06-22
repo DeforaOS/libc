@@ -31,11 +31,17 @@
 #ifndef LIBC_SYS_SELECT_H
 # define LIBC_SYS_SELECT_H
 
-# include "../compat/sys/select.h"
-# include "../compat/signal.h" /* XXX should not have to be included */
+# include "compat.h"
 
 
 /* types */
+# ifndef time_t
+#  define time_t time_t
+typedef __time_t time_t;
+# endif
+
+# include "../compat/sys/select.h"
+
 # ifndef fd_set
 #  define fd_set fd_set
 typedef struct _fd_set fd_set;
@@ -56,6 +62,8 @@ struct timespec
 	long tv_nsec;
 };
 # endif
+
+# include "../compat/signal.h" /* XXX should not have to be included */
 
 
 /* functions */

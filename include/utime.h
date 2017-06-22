@@ -31,15 +31,22 @@
 #ifndef LIBC_UTIME_H
 # define LIBC_UTIME_H
 
-# include "compat/sys/time.h"
+# include "compat.h"
 
 
 /* types */
+# ifndef time_t
+#  define time_t time_t
+typedef __time_t time_t;
+# endif
+
 struct utimbuf
 {
 	time_t actime;
 	time_t modtime;
 };
+
+# include "compat/sys/time.h"
 
 
 /* functions */
