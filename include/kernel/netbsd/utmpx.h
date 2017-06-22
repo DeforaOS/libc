@@ -41,7 +41,7 @@ typedef int suseconds_t;
 # define timeval timeval
 struct timeval
 {
-	__time_t tv_sec;
+	time_t tv_sec;
 	suseconds_t tv_usec;
 };
 #endif

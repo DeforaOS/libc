@@ -43,6 +43,10 @@ typedef __id_t id_t;
 #  define pid_t pid_t
 typedef __pid_t pid_t;
 # endif
+# ifndef time_t
+#  define time_t time_t
+typedef __time_t time_t;
+# endif
 
 # include "compat/utmpx.h"
 
