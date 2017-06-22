@@ -45,65 +45,50 @@
 
 /* types */
 # ifndef __iconv_t
-#  define __iconv_t __iconv_t
-typedef unsigned int __iconv_t;
+#  define __iconv_t unsigned int
 # endif
 # ifndef __id_t
-#  define __id_t __id_t
-typedef unsigned int __id_t;
+#  define __id_t unsigned int
 # endif
 # ifndef __ino_t
-#  define __ino_t __ino_t
-typedef unsigned long long __ino_t;
+#  define __ino_t unsigned long long
 # endif
 # ifndef __intptr_t
-#  define __intptr_t __intptr_t
-typedef signed long __intptr_t;
+#  define __intptr_t signed long
 # endif
 # ifndef __off_t
-#  define __off_t __off_t
-typedef long long __off_t;
+#  define __off_t long long
 # endif
 # ifndef __pid_t
-#  define __pid_t __pid_t
-typedef signed int __pid_t;
+#  define __pid_t signed int
 # endif
 # ifndef __ptrdiff_t
-#  define __ptrdiff_t __ptrdiff_t
-typedef long __ptrdiff_t;
+#  define __ptrdiff_t long
 # endif
 # ifndef __size_t
-#  define __size_t __size_t
-typedef unsigned long __size_t;
+#  define __size_t unsigned long
 # endif
 # ifndef __ssize_t
-#  define __ssize_t __ssize_t
-typedef long __ssize_t;
+#  define __ssize_t long
 # endif
 # ifndef __time_t
-#  define __time_t __time_t
-typedef long long __time_t;
+#  define __time_t long long
 # endif
 # ifndef __uintptr_t
-#  define __uintptr_t __uintptr_t
-typedef unsigned long __uintptr_t;
+#  define __uintptr_t unsigned long
 # endif
 # ifndef __wchar_t
-#  define __wchar_t __wchar_t
-typedef char __wchar_t;
+#  define __wchar_t char
 # endif
 # ifndef __wint_t
-#  define __wint_t __wint_t
-typedef int __wint_t;
+#  define __wint_t int
 # endif
 
 # ifndef __gid_t
-#  define __gid_t __gid_t
-typedef __id_t __gid_t;
+#  define __gid_t __id_t
 # endif
 # ifndef __uid_t
-#  define __uid_t __uid_t
-typedef __id_t __uid_t;
+#  define __uid_t __id_t
 # endif
 
 #endif /* !LIBC_COMPAT_H */
