@@ -51,13 +51,13 @@ typedef __wchar_t wchar_t;
 
 /* constants */
 # ifndef NULL
-#  define NULL ((void*)0)
+#  define NULL ((void *)0)
 # endif
 
 
 /* macros */
 # ifndef offsetof
-#  define offsetof(type, member) ((size_t)&((type*)0)->member)
+#  define offsetof(type, member) ((size_t)&((type *)0)->member)
 # endif
 
 #endif /* !LIBC_STDDEF_H */
