@@ -32,21 +32,6 @@
 # define LIBC_KERNEL_NETBSD_TIME_H
 
 
-/* types */
-# ifndef clock_t
-#  define clock_t clock_t
-typedef unsigned int clock_t;
-# endif
-# ifndef clockid_t
-#  define clockid_t clockid_t
-typedef int clockid_t;
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef long long time_t;
-# endif
-
-
 /* constants */
 #define CLOCK_REALTIME	0
 #define CLOCK_MONOTONIC	3

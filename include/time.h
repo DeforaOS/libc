@@ -32,14 +32,26 @@
 # define LIBC_TIME_H
 
 # include "compat.h"
-# include "compat/time.h"
 
 
 /* types */
-# ifndef size_t
-#  define size_t __size_t
+# ifndef clock_t
+#  define clock_t clock_t
+typedef __clock_t clock_t;
 # endif
-/* FIXME also define clockid_t timer_t */
+# ifndef clockid_t
+#  define clockid_t clockid_t
+typedef __clockid_t clockid_t;
+# endif
+# ifndef size_t
+#  define size_t size_t
+typedef __size_t size_t;
+# endif
+# ifndef time_t
+#  define time_t time_t
+typedef __time_t time_t;
+# endif
+/* FIXME also define timer_t */
 
 struct tm
 {
@@ -68,6 +80,8 @@ struct itimespec
 	struct timespec it_interval;
 	struct timespec it_value;
 };
+
+# include "compat/time.h"
 
 
 /* constants */

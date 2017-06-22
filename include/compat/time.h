@@ -32,20 +32,8 @@
 # define LIBC_COMPAT_TIME_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/time.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/time.h"
-# elif defined(__linux__)
-#  include "kernel/linux/time.h"
-# elif defined(__NetBSD__)
+# if defined(__NetBSD__)
 #  include "kernel/netbsd/time.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/time.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/time.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/time.h"
 # else
 #  warning Unsupported platform
 # endif

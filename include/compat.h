@@ -44,6 +44,12 @@
 
 
 /* types */
+# ifndef __clock_t
+#  define __clock_t unsigned int
+# endif
+# ifndef __clockid_t
+#  define __clockid_t int
+# endif
 # ifndef __iconv_t
 #  define __iconv_t unsigned int
 # endif
