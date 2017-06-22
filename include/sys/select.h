@@ -31,10 +31,14 @@
 #ifndef LIBC_SYS_SELECT_H
 # define LIBC_SYS_SELECT_H
 
-# include "compat.h"
+# include "../compat.h"
 
 
 /* types */
+# ifndef suseconds_t
+#  define suseconds_t suseconds_t
+typedef __suseconds_t suseconds_t;
+# endif
 # ifndef time_t
 #  define time_t time_t
 typedef __time_t time_t;

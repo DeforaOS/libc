@@ -32,18 +32,6 @@
 # define LIBC_KERNEL_WHITIX_UNISTD_H
 
 
-/* types */
-# ifndef off_t
-#  define off_t off_t
-typedef unsigned int off_t;
-# endif
-/* FIXME not checked */
-# ifndef useconds_t
-#  define useconds_t useconds_t
-typedef unsigned int useconds_t;
-# endif
-
-
 /* constants */
 /* FIXME not checked */
 # ifndef SEEK_SET

@@ -39,10 +39,6 @@
 
 
 /* types */
-# ifndef suseconds_t
-#  define suseconds_t suseconds_t
-typedef long suseconds_t;
-# endif
 #ifndef timeval
 # define timeval timeval
 struct timeval

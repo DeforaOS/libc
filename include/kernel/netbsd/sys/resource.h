@@ -38,14 +38,6 @@
 typedef unsigned long long rlim_t;
 # endif
 
-# ifndef suseconds_t
-#  define suseconds_t suseconds_t
-typedef int suseconds_t;
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef long long time_t;
-# endif
 # ifndef timeval
 #  define timeval timeval
 struct timeval

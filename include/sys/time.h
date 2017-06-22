@@ -31,7 +31,7 @@
 #ifndef LIBC_SYS_TIME_H
 # define LIBC_SYS_TIME_H
 
-# include <sys/select.h>
+# include "select.h"
 
 
 /* types */
@@ -42,10 +42,6 @@ struct itimerval
 	struct timeval it_interval;
 	struct timeval it_value;
 };
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef __time_t time_t;
 # endif
 
 # include "../compat/sys/time.h"

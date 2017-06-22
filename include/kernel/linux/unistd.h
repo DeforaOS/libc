@@ -32,17 +32,6 @@
 # define LIBC_KERNEL_LINUX_UNISTD_H
 
 
-/* types */
-# ifndef off_t
-#  define off_t off_t
-typedef long off_t;
-# endif
-# ifndef useconds_t
-#  define useconds_t useconds_t
-typedef unsigned int useconds_t;
-# endif
-
-
 /* constants */
 # ifndef SEEK_SET
 #  define SEEK_SET	0

@@ -42,8 +42,6 @@
 #  include "kernel/netbsd/unistd.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/unistd.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/unistd.h"
 # elif defined(__Whitix__)
 #  include "kernel/whitix/unistd.h"
 # else

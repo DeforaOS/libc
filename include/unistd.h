@@ -47,6 +47,10 @@ typedef __id_t id_t;
 #  define intptr_t intptr_t
 typedef __intptr_t intptr_t;
 # endif
+# ifndef off_t
+#  define off_t off_t
+typedef __off_t off_t;
+# endif
 # ifndef pid_t
 #  define pid_t pid_t
 typedef __pid_t pid_t;
@@ -62,6 +66,10 @@ typedef __ssize_t ssize_t;
 # ifndef uid_t
 #  define uid_t uid_t
 typedef __uid_t uid_t;
+# endif
+# ifndef useconds_t
+#  define useconds_t useconds_t
+typedef __useconds_t useconds_t;
 # endif
 
 # include "compat/unistd.h"

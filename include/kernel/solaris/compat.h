@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,14 +28,11 @@
 
 
 
-#ifndef LIBC_KERNEL_SOLARIS_UNISTD_H
-# define LIBC_KERNEL_SOLARIS_UNISTD_H
+#ifndef LIBC_KERNEL_SOLARIS_COMPAT_H
+# define LIBC_KERNEL_SOLARIS_COMPAT_H
 
 
 /* types */
-# ifndef useconds_t
-#  define useconds_t useconds_t
-typedef unsigned int useconds_t;
-# endif
+# define __ino_t unsigned long
 
-#endif /* !LIBC_KERNEL_SOLARIS_UNISTD_H */
+#endif /* !LIBC_KERNEL_SOLARIS_COMPAT_H */

@@ -49,13 +49,5 @@ typedef unsigned long fsblkcnt_t;
 #  define fsfilcnt_t fsfilcnt_t
 typedef unsigned long fsfilcnt_t;
 # endif
-# ifndef suseconds_t
-#  define suseconds_t suseconds_t
-typedef long suseconds_t;
-# endif
-# ifndef useconds_t
-#  define useconds_t useconds_t
-typedef unsigned int useconds_t;
-# endif
 
 #endif /* !LIBC_KERNEL_LINUX_SYS_TYPES_H */

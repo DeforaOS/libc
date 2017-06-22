@@ -34,5 +34,7 @@
 
 /* types */
 # define __ino_t unsigned int
+# define __suseconds_t long
+# define __useconds_t unsigned long
 
 #endif /* !LIBC_KERNEL_FREEBSD_COMPAT_H */

@@ -83,9 +83,17 @@ typedef __size_t size_t;
 #  define ssize_t ssize_t
 typedef __ssize_t ssize_t;
 # endif
+# ifndef suseconds_t
+#  define suseconds_t suseconds_t
+typedef __suseconds_t suseconds_t;
+# endif
 # ifndef uid_t
 #  define uid_t uid_t
 typedef __uid_t uid_t;
+# endif
+# ifndef useconds_t
+#  define useconds_t useconds_t
+typedef __useconds_t useconds_t;
 # endif
 
 /* pthread */

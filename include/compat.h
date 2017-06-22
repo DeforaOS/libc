@@ -38,6 +38,8 @@
 #  include "kernel/linux/compat.h"
 # elif defined(__OpenBSD__)
 #  include "kernel/openbsd/compat.h"
+# elif defined(__sun__)
+#  include "kernel/solaris/compat.h"
 # elif defined(__Whitix__)
 #  include "kernel/whitix/compat.h"
 # endif
@@ -83,11 +85,17 @@
 # ifndef __ssize_t
 #  define __ssize_t long
 # endif
+# ifndef __suseconds_t
+#  define __suseconds_t int
+# endif
 # ifndef __time_t
 #  define __time_t long long
 # endif
 # ifndef __uintptr_t
 #  define __uintptr_t unsigned long
+# endif
+# ifndef __useconds_t
+#  define __useconds_t unsigned int
 # endif
 # ifndef __va_list
 #  if defined(__GNUC__) && __GNUC__ >= 3

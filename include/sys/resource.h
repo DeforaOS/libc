@@ -31,14 +31,24 @@
 #ifndef LIBC_SYS_RESOURCE_H
 # define LIBC_SYS_RESOURCE_H
 
-# include "../compat/sys/resource.h"
+# include "../compat.h"
 
 
 /* types */
 # ifndef id_t
 #  define id_t id_t
-typedef unsigned int id_t;
+typedef __id_t id_t;
 # endif
+# ifndef time_t
+#  define time_t time_t
+typedef __time_t time_t;
+# endif
+# ifndef suseconds_t
+#  define suseconds_t suseconds_t
+typedef __suseconds_t suseconds_t;
+# endif
+
+# include "../compat/sys/resource.h"
 
 
 /* constants */
