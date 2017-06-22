@@ -44,7 +44,8 @@ typedef struct _imaxdiv_t
 } imaxdiv_t;
 # endif
 # ifndef wchar_t
-#  define wchar_t __wchar_t
+#  define wchar_t wchar_t
+typedef __wchar_t wchar_t;
 # endif
 
 

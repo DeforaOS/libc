@@ -87,14 +87,16 @@ typedef unsigned long long uint64_t;
 typedef signed long intmax_t;
 # endif
 # ifndef intptr_t
-#  define intptr_t __intptr_t
+#  define intptr_t intptr_t
+typedef __intptr_t intptr_t;
 # endif
 # ifndef uintmax_t
 #  define uintmax_t uintmax_t
 typedef unsigned long uintmax_t;
 # endif
 # ifndef uintptr_t
-#  define uintptr_t __uintptr_t
+#  define uintptr_t uintptr_t
+typedef __uintptr_t uintptr_t;
 # endif
 
 
