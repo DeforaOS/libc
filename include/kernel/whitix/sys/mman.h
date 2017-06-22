@@ -32,13 +32,6 @@
 # define LIBC_KERNEL_WHITIX_SYS_MMAN_H
 
 
-/* types */
-# ifndef off_t
-#  define off_t off_t
-typedef unsigned int off_t;
-# endif
-
-
 /* constants */
 /* FIXME not checked */
 # define PROT_NONE	0x0

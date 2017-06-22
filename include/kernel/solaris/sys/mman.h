@@ -32,13 +32,6 @@
 # define LIBC_KERNEL_SOLARIS_SYS_MMAN_H
 
 
-/* types */
-# ifndef off_t
-#  define off_t off_t
-typedef long off_t;
-# endif
-
-
 /* constants */
 # define PROT_READ	0x1
 # define PROT_WRITE	0x2

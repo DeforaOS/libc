@@ -32,17 +32,23 @@
 # define LIBC_SYS_MMAN_H
 
 # include "../compat.h"
-# include "../compat/sys/mman.h"
 
 
 /* types */
 # ifndef mode_t
 #  define mode_t mode_t
-typedef int mode_t;
+typedef __mode_t mode_t;
+# endif
+# ifndef off_t
+#  define off_t off_t
+typedef __off_t off_t;
 # endif
 # ifndef size_t
-#  define size_t __size_t
+#  define size_t size_t
+typedef __size_t size_t;
 # endif
+
+# include "../compat/sys/mman.h"
 
 
 /* constants */

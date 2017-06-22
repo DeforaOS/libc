@@ -32,13 +32,6 @@
 # define LIBC_KERNEL_DARWIN_SYS_MMAN_H
 
 
-/* types */
-# ifndef off_t
-#  define off_t off_t
-typedef long long off_t;
-# endif
-
-
 /* constants */
 # define PROT_NONE	0x0
 # define PROT_READ	0x1
