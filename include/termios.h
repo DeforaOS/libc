@@ -44,6 +44,6 @@
 
 /* functions */
 int tcgetattr(int fildes, struct termios * tp);
-int tcsetattr(int, int, const struct termios * tp);
+int tcsetattr(int fildes, int action, const struct termios * tp);
 
 #endif /* !LIBC_TERMIOS_H */
