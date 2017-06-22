@@ -70,13 +70,19 @@ typedef char * va_list;
 # define EOF (-1)
 
 /* maximum size of character array to hold ctermid() output */
-# define L_ctermid 256
+# ifndef L_ctermid
+#  define L_ctermid 256
+# endif
 
 /* maximum size of character array to hold tmpnam() output */
-# define L_tmpnam 1024 /* XXX OS dependent */
+# ifndef L_tmpnam
+#  define L_tmpnam 1024
+# endif
 
 /* default directory prefix for tempnam() */
-# define P_tmpdir "/tmp"
+# ifndef P_tmpdir
+#  define P_tmpdir "/tmp"
+# endif
 
 
 /* variables */
