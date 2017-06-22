@@ -36,14 +36,16 @@
 
 /* types */
 # ifndef ptrdiff_t
-#  define ptrdiff_t __ptrdiff_t
+#  define ptrdiff_t ptrdiff_t
+typedef __ptrdiff_t ptrdiff_t;
 # endif
 # ifndef size_t
-#  define size_t __size_t
+#  define size_t size_t
+typedef __size_t size_t;
 # endif
 # ifndef wchar_t
 #  define wchar_t wchar_t
-typedef char wchar_t;
+typedef __wchar_t wchar_t;
 # endif
 
 
