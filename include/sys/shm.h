@@ -32,7 +32,6 @@
 # define LIBC_SYS_SHM_H
 
 # include "../compat.h"
-# include "../compat/sys/shm.h"
 # include "ipc.h"
 
 
@@ -45,12 +44,16 @@ typedef __pid_t pid_t;
 #  define size_t size_t
 typedef __size_t size_t;
 # endif
+
+# if 0
+/* FIXME re-implement */
+#  include "../compat/sys/shm.h"
+# endif
+
 # ifndef smhid_ds
 #  define shmid_ds shmid_ds
-struct shmid_ds
-{
-	/* FIXME implement */
-};
+#  warning Unsupported platform: struct shmid_ds is missing
+struct shmid_ds;
 # endif
 
 
