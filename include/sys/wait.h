@@ -31,16 +31,18 @@
 #ifndef LIBC_SYS_WAIT_H
 # define LIBC_SYS_WAIT_H
 
+# include "../compat.h"
+
 
 /* types */
 # ifndef id_t
 #  define id_t id_t
-typedef unsigned int id_t;
+typedef __id_t id_t;
 # endif
 typedef enum { P_ALL, P_PID, P_PGID } idtype_t;
 # ifndef pid_t
 #  define pid_t pid_t
-typedef signed int pid_t;
+typedef __pid_t pid_t;
 # endif
 /* FIXME rusage */
 

@@ -45,7 +45,7 @@ typedef __id_t id_t;
 # endif
 # ifndef mode_t
 #  define mode_t mode_t
-typedef int mode_t;
+typedef __mode_t mode_t;
 # endif
 # ifndef off_t
 #  define off_t off_t

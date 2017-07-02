@@ -33,31 +33,6 @@
 
 
 /* types */
-# ifndef blkcnt_t
-#  define blkcnt_t blkcnt_t
-typedef unsigned long long blkcnt_t;
-# endif
-# ifndef dev_t
-#  define dev_t dev_t
-typedef unsigned int dev_t;
-# endif
-# ifndef ino_t
-#  define ino_t ino_t
-typedef unsigned int ino_t;
-# endif
-# ifndef mode_t
-#  define mode_t mode_t
-typedef int mode_t;
-# endif
-# ifndef off_t
-#  define off_t off_t
-typedef long long off_t;
-# endif
-# ifndef time_t
-#  define time_t time_t
-typedef int time_t;
-# endif
-
 struct stat
 {
 	dev_t st_dev;

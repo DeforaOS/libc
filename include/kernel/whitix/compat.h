@@ -33,8 +33,11 @@
 
 
 /* types */
+# define __blkcnt_t unsigned long
 # define __blksize_t unsigned long
+# define __dev_t unsigned short int
 # define __ino_t unsigned long long
 # define __off_t unsigned int
+# define __time_t int
 
 #endif /* !LIBC_KERNEL_WHITIX_COMPAT_H */

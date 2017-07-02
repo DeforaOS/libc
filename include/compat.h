@@ -46,6 +46,9 @@
 
 
 /* types */
+# ifndef __blkcnt_t
+#  define __blkcnt_t unsigned long long
+# endif
 # ifndef __blksize_t
 #  define __blksize_t unsigned int
 # endif
@@ -54,6 +57,9 @@
 # endif
 # ifndef __clockid_t
 #  define __clockid_t int
+# endif
+# ifndef __dev_t
+#  define __dev_t unsigned long long
 # endif
 # ifndef __iconv_t
 #  define __iconv_t unsigned int

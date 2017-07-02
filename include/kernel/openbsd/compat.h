@@ -33,6 +33,7 @@
 
 
 /* types */
+# define __dev_t unsigned int
 # define __ino_t unsigned int
 # define __nlink_t int
 # define __time_t int

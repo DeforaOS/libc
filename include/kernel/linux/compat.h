@@ -33,7 +33,9 @@
 
 
 /* types */
+# define __blkcnt_t unsigned long
 # define __blksize_t unsigned long
+# define __dev_t unsigned short int
 # define __key_t int
 # define __off_t long
 # define __suseconds_t long

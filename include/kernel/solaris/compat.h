@@ -33,7 +33,11 @@
 
 
 /* types */
+# define __blkcnt_t unsigned long
 # define __blksize_t unsigned long
+# define __dev_t unsigned long
 # define __ino_t unsigned long
+# define __off_t long
+# define __time_t long
 
 #endif /* !LIBC_KERNEL_SOLARIS_COMPAT_H */
