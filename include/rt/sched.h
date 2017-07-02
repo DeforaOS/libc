@@ -37,7 +37,7 @@
 /* types */
 # ifndef pid_t
 #  define pid_t pid_t
-typedef signed int pid_t;
+typedef __pid_t pid_t;
 # endif
 
 struct sched_param
