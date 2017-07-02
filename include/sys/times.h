@@ -31,10 +31,15 @@
 #ifndef LIBC_SYS_TIMES_H
 # define LIBC_SYS_TIMES_H
 
-# include "../compat/sys/times.h"
+# include "../compat.h"
 
 
 /* types */
+# ifndef clock_t
+#  define clock_t clock_t
+typedef __clock_t clock_t;
+# endif
+
 struct tms
 {
 	clock_t tms_utime;
