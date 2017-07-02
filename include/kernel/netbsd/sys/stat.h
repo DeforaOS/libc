@@ -37,10 +37,6 @@
 #  define blkcnt_t blkcnt_t
 typedef unsigned long long blkcnt_t;
 # endif
-# ifndef blksize_t
-#  define blksize_t blksize_t
-typedef unsigned int blksize_t;
-# endif
 # ifndef dev_t
 #  define dev_t dev_t
 typedef unsigned long long dev_t;

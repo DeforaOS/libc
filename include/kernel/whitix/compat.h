@@ -33,6 +33,7 @@
 
 
 /* types */
+# define __blksize_t unsigned long
 # define __ino_t unsigned long long
 # define __off_t unsigned int
 

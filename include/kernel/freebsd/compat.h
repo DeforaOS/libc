@@ -33,6 +33,7 @@
 
 
 /* types */
+# define __blksize_t int
 # define __ino_t unsigned int
 # define __nlink_t short int
 # define __suseconds_t long

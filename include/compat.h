@@ -46,6 +46,9 @@
 
 
 /* types */
+# ifndef __blksize_t
+#  define __blksize_t unsigned int
+# endif
 # ifndef __clock_t
 #  define __clock_t unsigned int
 # endif

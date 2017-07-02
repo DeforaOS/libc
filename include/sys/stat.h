@@ -35,6 +35,10 @@
 
 
 /* types */
+# ifndef blksize_t
+#  define blksize_t blksize_t
+typedef __blksize_t blksize_t;
+# endif
 # ifndef gid_t
 #  define gid_t gid_t
 typedef __gid_t gid_t;

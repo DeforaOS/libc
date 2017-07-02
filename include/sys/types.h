@@ -37,7 +37,7 @@
 /* types */
 # ifndef blksize_t
 #  define blksize_t blksize_t
-typedef unsigned int blksize_t;
+typedef __blksize_t blksize_t;
 # endif
 # ifndef clock_t
 #  define clock_t clock_t
