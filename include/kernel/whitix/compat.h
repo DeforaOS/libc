@@ -36,6 +36,8 @@
 # define __blkcnt_t unsigned long
 # define __blksize_t unsigned long
 # define __dev_t unsigned short int
+# define __fsblkcnt_t unsigned int
+# define __fsfilcnt_t unsigned int
 # define __ino_t unsigned long long
 # define __off_t unsigned int
 # define __time_t int

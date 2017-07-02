@@ -177,6 +177,4 @@ typedef volatile int pthread_spinlock_t;
 typedef unsigned long pthread_t;
 # endif
 
-# include "../compat/sys/types.h"
-
 #endif /* !LIBC_SYS_TYPES_H */

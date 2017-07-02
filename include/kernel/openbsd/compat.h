@@ -34,6 +34,8 @@
 
 /* types */
 # define __dev_t unsigned int
+# define __fsblkcnt_t unsigned int
+# define __fsfilcnt_t unsigned int
 # define __ino_t unsigned int
 # define __nlink_t int
 # define __rlim_t long long

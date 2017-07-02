@@ -61,6 +61,12 @@
 # ifndef __dev_t
 #  define __dev_t unsigned long long
 # endif
+# ifndef __fsblkcnt_t
+#  define __fsblkcnt_t unsigned long long
+# endif
+# ifndef __fsfilcnt_t
+#  define __fsfilcnt_t unsigned long long
+# endif
 # ifndef __iconv_t
 #  define __iconv_t unsigned int
 # endif

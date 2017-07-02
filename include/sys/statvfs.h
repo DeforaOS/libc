@@ -31,10 +31,19 @@
 #ifndef LIBC_SYS_STATVFS_H
 # define LIBC_SYS_STATVFS_H
 
-# include "../compat/sys/types.h"
+# include "../compat.h"
 
 
 /* types */
+# ifndef fsblkcnt_t
+#  define fsblkcnt_t fsblkcnt_t
+typedef __fsblkcnt_t fsblkcnt_t;
+# endif
+# ifndef fsfilcnt_t
+#  define fsblkcnt_t fsfilcnt_t
+typedef __fsfilcnt_t fsfilcnt_t;
+# endif
+
 struct statvfs
 {
 	unsigned long f_bsize;
