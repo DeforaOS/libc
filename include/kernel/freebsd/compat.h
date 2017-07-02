@@ -36,6 +36,7 @@
 # define __blksize_t int
 # define __ino_t unsigned int
 # define __nlink_t short int
+# define __rlim_t long long
 # define __suseconds_t long
 # define __useconds_t unsigned long
 

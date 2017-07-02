@@ -33,11 +33,6 @@
 
 
 /* types */
-# ifndef rlim_t
-#  define rlim_t rlim_t
-typedef unsigned long long rlim_t;
-# endif
-
 # ifndef timeval
 #  define timeval timeval
 struct timeval

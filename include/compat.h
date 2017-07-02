@@ -91,6 +91,9 @@
 # ifndef __ptrdiff_t
 #  define __ptrdiff_t long
 # endif
+# ifndef __rlim_t
+#  define __rlim_t unsigned long long
+# endif
 # ifndef __size_t
 #  define __size_t unsigned long
 # endif

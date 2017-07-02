@@ -38,6 +38,7 @@
 # define __dev_t unsigned short int
 # define __key_t int
 # define __off_t long
+# define __rlim_t long long
 # define __suseconds_t long
 # define __time_t long
 

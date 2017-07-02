@@ -39,6 +39,10 @@
 #  define id_t id_t
 typedef __id_t id_t;
 # endif
+# ifndef rlim_t
+#  define rlim_t rlim_t
+typedef __rlim_t rlim_t;
+# endif
 # ifndef time_t
 #  define time_t time_t
 typedef __time_t time_t;
