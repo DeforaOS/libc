@@ -36,10 +36,12 @@
 
 /* types */
 # ifndef size_t
-#  define size_t __size_t
+#  define size_t size_t
+typedef __size_t size_t;
 # endif
 # ifndef ssize_t
 #  define ssize_t __ssize_t
+typedef __ssize_t ssize_t;
 # endif
 
 struct iovec
