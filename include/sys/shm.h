@@ -39,10 +39,11 @@
 /* types */
 # ifndef pid_t
 #  define pid_t pid_t
-typedef signed int pid_t;
+typedef __pid_t pid_t;
 # endif
 # ifndef size_t
-#  define size_t __size_t
+#  define size_t size_t
+typedef __size_t size_t;
 # endif
 # ifndef smhid_ds
 #  define shmid_ds shmid_ds
