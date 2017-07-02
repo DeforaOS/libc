@@ -70,6 +70,9 @@
 # ifndef __mode_t
 #  define __mode_t unsigned int
 # endif
+# ifndef __nlink_t
+#  define __nlink_t unsigned int
+# endif
 # ifndef __off_t
 #  define __off_t long long
 # endif

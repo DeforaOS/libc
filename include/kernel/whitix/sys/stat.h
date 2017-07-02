@@ -54,10 +54,6 @@ typedef unsigned long long ino_t;
 #  define mode_t mode_t
 typedef unsigned int mode_t;
 # endif
-# ifndef nlink_t
-#  define nlink_t nlink_t
-typedef unsigned int nlink_t;
-# endif
 # ifndef off_t
 #  define off_t off_t
 typedef unsigned int off_t;

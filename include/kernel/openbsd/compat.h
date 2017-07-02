@@ -34,6 +34,7 @@
 
 /* types */
 # define __ino_t unsigned int
+# define __nlink_t int
 # define __time_t int
 
 #endif /* !LIBC_KERNEL_OPENBSD_COMPAT_H */

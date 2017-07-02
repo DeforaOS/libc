@@ -65,7 +65,7 @@ typedef __mode_t mode_t;
 # endif
 # ifndef nlink_t
 #  define nlink_t nlink_t
-typedef unsigned int nlink_t;
+typedef __nlink_t nlink_t;
 # endif
 # ifndef off_t
 #  define off_t off_t
