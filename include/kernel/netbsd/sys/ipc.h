@@ -33,15 +33,6 @@
 
 
 /* types */
-# ifndef key_t
-#  define key_t key_t
-typedef long key_t;
-# endif
-# ifndef mode_t
-#  define mode_t mode_t
-typedef unsigned int mode_t;
-# endif
-
 # ifndef ipc_perm
 #  define ipc_perm ipc_perm
 struct ipc_perm
