@@ -117,12 +117,13 @@ uint32_t arc4random(void)
 			abort();
 		close(fd);
 		ECRYPT_init();
-		ECRYPT_keysetup(&ctx, &ki.key, sizeof(ki.key) * 8,
-				sizeof(ki.iv) * 8);
-		ECRYPT_ivsetup(&ctx, &ki.iv);
+		ECRYPT_keysetup(&ctx, (unsigned char *)&ki.key,
+				sizeof(ki.key) * 8, sizeof(ki.iv) * 8);
+		ECRYPT_ivsetup(&ctx, (unsigned char *)&ki.iv);
 		initialized = 1;
 	}
-	ECRYPT_encrypt_bytes(&ctx, &input, ret.u8, sizeof(input));
+	ECRYPT_encrypt_bytes(&ctx, (unsigned char *)&input, ret.u8,
+			sizeof(input));
 	return ret.u32;
 }
 
