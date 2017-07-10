@@ -165,6 +165,7 @@ static int _strtol(char const * progname)
 {
 	char * p;
 	char const spaces[] = "      ";
+	long l;
 	unsigned long lu;
 	char buf[32];
 
@@ -185,6 +186,14 @@ static int _strtol(char const * progname)
 	if(errno != ERANGE)
 	{
 		fprintf(stderr, "%s: %s: Conversion error (-(LONG_MAX + 1))\n",
+				progname, "strtol");
+		return 1;
+	}
+	/* invalid input */
+	l = strtol("invalid", &p, 10);
+	if(l != 0 || errno != EINVAL)
+	{
+		fprintf(stderr, "%s: %s: Conversion error (invalid input)\n",
 				progname, "strtol");
 		return 1;
 	}
