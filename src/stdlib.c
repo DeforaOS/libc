@@ -900,6 +900,7 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 	unsigned long long ret = 0;
 	char const * p;
 	int r;
+	size_t i;
 
 	if(base > 36 || base < 0 || base == 1)
 	{
@@ -927,12 +928,12 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 		if(*p == 'x' || *p == 'X')
 			p++;
 	}
-	for(; *p != '\0'; p++)
+	for(i = 0; p[i] != '\0'; i++)
 	{
-		if(*p >= '0' && *p - '0' < min(10, base))
-			r = *p - '0';
-		else if(base > 10 && (((r = (*p) - 'a') >= 0 && r < 26)
-				|| ((r = (*p) - 'A') >= 0 && r < 26))
+		if(p[i] >= '0' && p[i] - '0' < min(10, base))
+			r = p[i] - '0';
+		else if(base > 10 && (((r = p[i] - 'a') >= 0 && r < 26)
+				|| ((r = p[i] - 'A') >= 0 && r < 26))
 				&& r < base - 10)
 			r += 10;
 		else
@@ -940,8 +941,13 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 		/* FIXME add integer overflow detection code */
 		ret = (ret * base) + r;
 	}
+	if(i == 0)
+	{
+		errno = EINVAL;
+		return 0;
+	}
 	if(endptr != NULL)
-		*endptr = (char *)p; /* XXX cast */
+		*endptr = (char *)&p[i]; /* XXX cast */
 	return ret;
 }
 
