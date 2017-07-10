@@ -930,14 +930,15 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 	for(; *p != '\0'; p++)
 	{
 		if(*p >= '0' && *p - '0' < min(10, base))
-			ret = (ret * base) + *p - '0';
+			r = *p - '0';
 		else if(base > 10 && (((r = (*p) - 'a') >= 0 && r < 26)
 				|| ((r = (*p) - 'A') >= 0 && r < 26))
 				&& r < base - 10)
-			ret = (ret * base) + r + 10;
+			r += 10;
 		else
 			break;
 		/* FIXME add integer overflow detection code */
+		ret = (ret * base) + r;
 	}
 	if(endptr != NULL)
 		*endptr = (char *)p; /* XXX cast */
