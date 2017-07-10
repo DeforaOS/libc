@@ -190,7 +190,7 @@ static int _strtol(char const * progname)
 		return 1;
 	}
 	/* invalid input */
-	l = strtol("invalid", &p, 10);
+	l = strtol("invalid", &p, 0);
 	if(l != 0 || errno != EINVAL)
 	{
 		fprintf(stderr, "%s: %s: Conversion error (invalid input)\n",
