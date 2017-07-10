@@ -917,11 +917,8 @@ static unsigned long long _strtoull(char const * str, char ** endptr, int base,
 	}
 	if((*p == '+' || *p == '-') && *(p++) == '-' && neg != NULL)
 		*neg = 1;
-	if(base == 0 && (base = _strtoull_base(&p)) < 0)
-	{
-		errno = EINVAL;
-		return 0;
-	}
+	if(base == 0)
+		base = _strtoull_base(&p);
 	if(base == 16 && *p == '0')
 	{
 		p++;
@@ -963,7 +960,5 @@ static int _strtoull_base(char const ** p)
 		}
 		return 8;
 	}
-	else if(**p > '0' && **p <= '9')
-		return 10;
-	return -1;
+	return 10;
 }
