@@ -50,8 +50,6 @@
 #  define SYS_getpid		20
 #  define SYS__mount		21
 #  define SYS_ptrace		26
-#  define SYS_alarm		27
-#  define SYS_utime		30
 #  define SYS_access		33
 #  define SYS_nice		34
 #  define SYS_sync		36
@@ -253,6 +251,8 @@
 #  define SYS_mmap		192
 # elif defined(__i386__)
 #  define SYS_waitpid	  	7
+#  define SYS_alarm		27
+#  define SYS_utime		30
 #  define SYS_setrlimit		75
 #  define SYS_getrusage		77
 #  define SYS_mmap		90
