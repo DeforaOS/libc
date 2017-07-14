@@ -44,8 +44,18 @@ _start:
 	add	%r2, %r1, %r2
 	ldr	%r3, =environ
 	str	%r2, [%r3]
+	push	{r0-r2}
+
+#if defined(__SSP__)
+	/* initialize SSP */
+	bl	__stack_chk_setup
+#endif
+
+	/* initialize stdio */
+	bl	__start_stdio
 
 	/* main */
+	pop	{r0-r2}
 	bl	main
 
 	/* exit */
