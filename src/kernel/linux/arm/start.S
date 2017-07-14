@@ -28,12 +28,10 @@
 
 
 
-.weak exit				/* apparently necessary */
 .extern environ
 
 
 _start:
-.type _start,#function
 	/* terminate stack */
 	mov	%fp, $0
 
@@ -53,6 +51,5 @@ _start:
 	/* exit */
 	bl	exit
 
-exit:
 	/* crash */
 	mov	%pc, %lr
