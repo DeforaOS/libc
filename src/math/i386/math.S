@@ -105,6 +105,15 @@ fabs:
 	ret
 
 
+/* fabsf */
+.global fabsf
+.type fabsf,@function
+fabsf:
+	fldl	0x04(%esp)
+	fabs
+	ret
+
+
 /* floor */
 .global floor
 .type floor,@function

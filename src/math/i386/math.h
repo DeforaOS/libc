@@ -36,6 +36,7 @@
 #define ARCH_cos
 #define ARCH_exp
 #define ARCH_fabs
+#define ARCH_fabsf
 #define ARCH_floor
 #define ARCH_fmod
 #define ARCH_frexp
