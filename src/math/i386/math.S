@@ -289,3 +289,12 @@ sqrt:
 	fldl	0x04(%esp)
 	fsqrt
 	ret
+
+
+/* sqrtf */
+.global sqrtf
+.type sqrtf,@function
+sqrtf:
+	fldl	0x04(%esp)
+	fsqrt
+	ret

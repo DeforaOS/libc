@@ -649,8 +649,18 @@ double sqrt(double x)
 #endif
 
 
+/* sqrtf */
+#ifndef ARCH_sqrtf
+# warning Unsupported platform: sqrtf() is not implemented
+float sqrtf(float x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
 #if 0
-float sqrtf(float);
 long double sqrtl(long double);
 double tan(double);
 float tanf(float);
