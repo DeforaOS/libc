@@ -295,9 +295,6 @@ long double expl(long double);
 double expm1(double);
 float expm1f(float);
 long double expm1l(long double);
-double fabs(double);
-float fabsf(float);
-long double fabsl(long double);
 double fdim(double, double);
 float fdimf(float, float);
 long double fdiml(long double, long double);
@@ -687,10 +684,27 @@ double exp(double x)
 
 /* fabs */
 #ifndef ARCH_fabs
-# warning Unsupported platform: fabs() is not implemented
 double fabs(double x)
 {
-	return 0.0;
+	return (x >= 0.0) ? x : -x;
+}
+#endif
+
+
+/* fabsf */
+#ifndef ARCH_fabsf
+float fabsf(float x)
+{
+	return (x >= 0.0) ? x : -x;
+}
+#endif
+
+
+/* fabsl */
+#ifndef ARCH_fabsfl
+long double fabsl(long double x)
+{
+	return (x >= 0.0) ? x : -x;
 }
 #endif
 
