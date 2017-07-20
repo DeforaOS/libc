@@ -261,6 +261,27 @@ sin:
 3:	ret
 
 
+/* sinf */
+.global sinf
+.type sinf,@function
+sinf:
+	fldl	0x04(%esp)
+1:	fsin
+	fnstsw	%ax
+	test	$0x04, %ah
+	je	3f
+	fldpi
+	fadd	%st
+	fxch	%st(1)
+2:	fprem1
+	fnstsw	%ax
+	test	$0x04, %ah
+	jne	2b
+	fstp	%st(1)
+	fsin
+3:	ret
+
+
 /* sqrt */
 .global sqrt
 .type sqrt,@function

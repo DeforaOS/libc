@@ -613,12 +613,28 @@ double sin(double x)
 #endif
 
 
+#ifndef ARCH_sinf
+# warning Unsupported platform: sinf() is not implemented
+float sinf(float x)
+{
+	return 0.0;
+}
+#endif
+
+
 #if 0
-float sinf(float);
 double sinh(double);
 float sinhf(float);
 long double sinhl(long double);
-long double sinl(long double);
+#endif
+
+
+#ifndef ARCH_sinl
+# warning Unsupported platform: sinl() is not implemented
+long double sinl(long double x)
+{
+	return 0.0;
+}
 #endif
 
 

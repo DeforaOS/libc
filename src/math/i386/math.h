@@ -45,6 +45,7 @@
 #define ARCH_log
 #define ARCH_pow
 #define ARCH_sin
+#define ARCH_sinf
 #define ARCH_sqrt
 
 #endif /* !MATH_I386_H */
