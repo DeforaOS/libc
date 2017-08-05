@@ -37,10 +37,10 @@
 	push	%eax
 	fstcw	(%esp)
 	mov	(%esp), %ax
-	and	$0x03, %ah
+	and	$0x3, %ah
 	or	%ecx, %eax
-	mov	%ax, 0x02(%esp)
-	fldcw	0x02(%esp)
+	mov	%ax, 0x2(%esp)
+	fldcw	0x2(%esp)
 	frndint
 	fldcw	(%esp)
 	pop	%eax
@@ -51,8 +51,8 @@
 .global ceil
 .type ceil,@function
 ceil:
-	fldl	0x04(%esp)
-	mov	$0x08, %ah
+	fldl	0x4(%esp)
+	mov	$0x8, %ah
 	jmp	.Lflcetr
 
 
@@ -60,18 +60,18 @@ ceil:
 .global cos
 .type cos,@function
 cos:
-	fldl	0x04(%esp)
+	fldl	0x4(%esp)
 /* FIXME check there are no conflicts between labels 1, 2 and 3 and sin() */
 1:	fcos
 	fnstsw	%ax
-	test	$0x04, %ah
+	test	$0x4, %ah
 	je	3f
 	fldpi
 	fadd	%st
 	fxch	%st(1)
 2:	fprem1
 	fnstsw	%ax
-	test	$0x04, %ah
+	test	$0x4, %ah
 	jne	2b
 	fstp	%st(1)
 	fcos
@@ -83,7 +83,7 @@ cos:
 .type exp,@function
 exp:
 	fldl2e
-	fmull	0x04(%esp)
+	fmull	0x4(%esp)
 __finexp:
 	fst	%st(1)
 	frndint
@@ -100,7 +100,7 @@ __finexp:
 .global fabs
 .type fabs,@function
 fabs:
-	fldl	0x04(%esp)
+	fldl	0x4(%esp)
 	fabs
 	ret
 
@@ -109,7 +109,7 @@ fabs:
 .global fabsf
 .type fabsf,@function
 fabsf:
-	fldl	0x04(%esp)
+	fldl	0x4(%esp)
 	fabs
 	ret
 
@@ -118,8 +118,8 @@ fabsf:
 .global floor
 .type floor,@function
 floor:
-	fldl	0x04(%esp)
-	mov	$0x04, %ah
+	fldl	0x4(%esp)
+	mov	$0x4, %ah
 	jmp	.Lflcetr
 
 
@@ -127,8 +127,8 @@ floor:
 .global fmod
 .type fmod,@function
 fmod:
-	fldl	0x0c(%esp)
-	fldl	0x04(%esp)
+	fldl	0xc(%esp)
+	fldl	0x4(%esp)
 .Lfmod:
 	fprem
 	fstsw	%ax
@@ -142,8 +142,8 @@ fmod:
 .global frexp
 .type frexp,@function
 frexp:
-	fldl	0x04(%esp)
-	mov	0x0c(%esp), %eax
+	fldl	0x4(%esp)
+	mov	0xc(%esp), %eax
 	fxtract
 	fxch
 	fistpl	(%eax)
@@ -158,8 +158,8 @@ frexp:
 .global hypot
 .type hypot,@function
 hypot:
-	fldl	0x0c(%esp)
-	fldl	0x04(%esp)
+	fldl	0xc(%esp)
+	fldl	0x4(%esp)
 	fmul	%st(0), %st(0)
 	fxch
 	fmul	%st(0), %st(0)
@@ -172,8 +172,8 @@ hypot:
 .global ldexp
 .type ldexp,@function
 ldexp:
-	fildl	0x0c(%esp)
-	fldl	0x04(%esp)
+	fildl	0xc(%esp)
+	fldl	0x4(%esp)
 	fscale
 	ret
 
@@ -183,7 +183,7 @@ ldexp:
 .type log,@function
 log:
 	fldln2
-	fldl	0x04(%esp)
+	fldl	0x4(%esp)
 	fyl2x
 	ret
 
@@ -192,8 +192,8 @@ log:
 .global pow
 .type pow,@function
 pow:
-	fldl	0x04(%esp)
-	fldl	0x0c(%esp)
+	fldl	0x4(%esp)
+	fldl	0xc(%esp)
 	ftst			/* y = 0 ? */
 	fstsw	%ax
 	fld1			/* st(0)=1, st(1)=y, st(2)=x */
@@ -244,17 +244,17 @@ pow:
 .global sin
 .type sin,@function
 sin:
-	fldl	0x04(%esp)
+	fldl	0x4(%esp)
 1:	fsin
 	fnstsw	%ax
-	test	$0x04, %ah
+	test	$0x4, %ah
 	je	3f
 	fldpi
 	fadd	%st
 	fxch	%st(1)
 2:	fprem1
 	fnstsw	%ax
-	test	$0x04, %ah
+	test	$0x4, %ah
 	jne	2b
 	fstp	%st(1)
 	fsin
@@ -265,17 +265,17 @@ sin:
 .global sinf
 .type sinf,@function
 sinf:
-	fldl	0x04(%esp)
+	fldl	0x4(%esp)
 1:	fsin
 	fnstsw	%ax
-	test	$0x04, %ah
+	test	$0x4, %ah
 	je	3f
 	fldpi
 	fadd	%st
 	fxch	%st(1)
 2:	fprem1
 	fnstsw	%ax
-	test	$0x04, %ah
+	test	$0x4, %ah
 	jne	2b
 	fstp	%st(1)
 	fsin
@@ -286,7 +286,7 @@ sinf:
 .global sqrt
 .type sqrt,@function
 sqrt:
-	fldl	0x04(%esp)
+	fldl	0x4(%esp)
 	fsqrt
 	ret
 
@@ -295,6 +295,6 @@ sqrt:
 .global sqrtf
 .type sqrtf,@function
 sqrtf:
-	fldl	0x04(%esp)
+	fldl	0x4(%esp)
 	fsqrt
 	ret
