@@ -93,3 +93,27 @@ MCALL1(sqrt, fsqrt)
 
 /* sqrtl */
 MCALL1L(sqrtl, fsqrt)
+
+
+/* tan */
+.global tan
+.type tan,@function
+tan:
+	movq	%xmm0, -0x8(%rsp)
+	fldl	-0x8(%rsp)
+	fsincos
+	fdivp	%st(0), %st(1)
+	fstpl	-0x8(%rsp)
+	movq	-0x8(%rsp), %xmm0
+	emms
+	ret
+
+
+/* tanl */
+.global tanl
+.type tanl,@function
+tanl:
+	fldt	0x8(%rsp)
+	fsincos
+	fdivp	%st(0), %st(1)
+	ret

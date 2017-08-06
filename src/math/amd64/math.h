@@ -42,5 +42,7 @@
 #define ARCH_sinl
 #define ARCH_sqrt
 #define ARCH_sqrtl
+#define ARCH_tan
+#define ARCH_tanl
 
 #endif /* !MATH_AMD64_H */
