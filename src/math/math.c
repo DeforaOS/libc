@@ -350,10 +350,9 @@ long double copysignl(long double, long double);
 
 /* cos */
 #ifndef ARCH_cos
-# warning Unsupported platform: cos() is not implemented
 double cos(double x)
 {
-	return 0.0;
+	return cosl(x);
 }
 #endif
 
@@ -369,7 +368,21 @@ float cosf(float x)
 double cosh(double);
 float coshf(float);
 long double coshl(long double);
-long double cosl(long double);
+#endif
+
+
+/* cosl */
+#ifndef ARCH_cosl
+# warning Unsupported platform: cosl() is not implemented
+long double cosl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+#if 0
 double erf(double);
 double erfc(double);
 float erfcf(float);
