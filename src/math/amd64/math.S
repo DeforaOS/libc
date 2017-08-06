@@ -28,54 +28,34 @@
 
 
 
+/* macros */
+#ifndef MCALL1
+# define MCALL1(name, ins) \
+.global name; \
+.type name,@function; \
+name:; \
+	movq	%xmm0, -0x8(%rsp); \
+	fldl	-0x8(%rsp); \
+	ins; \
+	fstl	-0x8(%rsp); \
+	movq	-0x8(%rsp), %xmm0; \
+	emms; \
+	ret
+#endif
+
+
 /* functions */
 /* cos */
-.global cos
-.type cos,@function
-cos:
-	movq	%xmm0, -0x8(%rsp)
-	fldl	-0x8(%rsp)
-	fcos
-	fstl	-0x8(%rsp)
-	movq	-0x8(%rsp), %xmm0
-	emms
-	ret
+MCALL1(cos, fcos)
 
 
 /* round */
-.global round
-.type round,@function
-round:
-	movq	%xmm0, -0x8(%rsp)
-	fldl	-0x8(%rsp)
-	frndint
-	fstl	-0x8(%rsp)
-	movq	-0x8(%rsp), %xmm0
-	emms
-	ret
+MCALL1(round, frndint)
 
 
 /* sin */
-.global sin
-.type sin,@function
-sin:
-	movq	%xmm0, -0x8(%rsp)
-	fldl	-0x8(%rsp)
-	fsin
-	fstl	-0x8(%rsp)
-	movq	-0x8(%rsp), %xmm0
-	emms
-	ret
+MCALL1(sin, fsin)
 
 
 /* sqrt */
-.global sqrt
-.type sqrt,@function
-sqrt:
-	movq	%xmm0, -0x8(%rsp)
-	fldl	-0x8(%rsp)
-	fsqrt
-	fstl	-0x8(%rsp)
-	movq	-0x8(%rsp), %xmm0
-	emms
-	ret
+MCALL1(sqrt, fsqrt)
