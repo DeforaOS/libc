@@ -42,6 +42,19 @@ cos:
 	ret
 
 
+/* round */
+.global round
+.type round,@function
+round:
+	movq	%xmm0, -0x8(%rsp)
+	fldl	-0x8(%rsp)
+	frndint
+	fstl	-0x8(%rsp)
+	movq	-0x8(%rsp), %xmm0
+	emms
+	ret
+
+
 /* sin */
 .global sin
 .type sin,@function

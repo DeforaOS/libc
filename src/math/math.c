@@ -743,8 +743,30 @@ double rint(double x)
 #if 0
 float rintf(float);
 long double rintl(long double);
-double round(double);
-float roundf(float);
+#endif
+
+
+/* round */
+#ifndef ARCH_round
+# warning Unsupported platform: round() is not implemented
+double round(double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+/* roundf */
+#ifndef ARCH_roundf
+float roundf(float x)
+{
+	return round(x);
+}
+#endif
+
+
+#if 0
 long double roundl(long double);
 double scalb(double, double);
 double scalbln(double, long);
