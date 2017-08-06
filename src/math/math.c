@@ -826,10 +826,12 @@ double tan(double x)
 
 
 /* tanf */
+#ifndef ARCH_tanf
 float tanf(float x)
 {
-	return sinf(x) / cosf(x);
+	return tan(x);
 }
+#endif
 
 
 #if 0
