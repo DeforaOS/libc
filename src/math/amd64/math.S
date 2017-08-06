@@ -43,13 +43,12 @@ name:; \
 	ret
 #endif
 
-/* FIXME does not work */
 #ifndef MCALL1L
 # define MCALL1L(name, ins) \
 .global name; \
 .type name,@function; \
 name:; \
-	fldt	0x16(%rsp); \
+	fldt	0x8(%rsp); \
 	ins; \
 	ret
 #endif
