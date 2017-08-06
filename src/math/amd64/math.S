@@ -33,7 +33,12 @@
 .global cos
 .type cos,@function
 cos:
+	movq	%xmm0, -0x8(%rsp)
+	fldl	-0x8(%rsp)
 	fcos
+	fstl	-0x8(%rsp)
+	movq	-0x8(%rsp), %xmm0
+	emms
 	ret
 
 
@@ -41,5 +46,10 @@ cos:
 .global sin
 .type sin,@function
 sin:
+	movq	%xmm0, -0x8(%rsp)
+	fldl	-0x8(%rsp)
 	fsin
+	fstl	-0x8(%rsp)
+	movq	-0x8(%rsp), %xmm0
+	emms
 	ret
