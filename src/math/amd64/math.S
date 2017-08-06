@@ -37,7 +37,7 @@ name:; \
 	movq	%xmm0, -0x8(%rsp); \
 	fldl	-0x8(%rsp); \
 	ins; \
-	fstl	-0x8(%rsp); \
+	fstpl	-0x8(%rsp); \
 	movq	-0x8(%rsp), %xmm0; \
 	emms; \
 	ret
