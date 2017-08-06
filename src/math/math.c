@@ -884,7 +884,19 @@ float tanf(float x)
 double tanh(double);
 float tanhf(float);
 long double tanhl(long double);
-long double tanl(long double);
+#endif
+
+
+/* tanl */
+#ifndef ARCH_tanl
+long double tanl(long double x)
+{
+	return sinl(x) / cosl(x);
+}
+#endif
+
+
+#if 0
 double tgamma(double);
 float tgammaf(float);
 long double tgammal(long double);
