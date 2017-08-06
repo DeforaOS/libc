@@ -46,8 +46,10 @@ static int _math(char const * progname)
 			|| fabsf(-3.0) != 3.0
 			|| fabsl(-3.0) != 3.0)
 		ret |= 4;
-	if(sqrt(4.0) != 2.0)
+	if(round(1.5) != 2.0)
 		ret |= 8;
+	if(sqrt(4.0) != 2.0)
+		ret |= 16;
 	return ret;
 }
 
