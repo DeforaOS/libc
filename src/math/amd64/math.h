@@ -35,9 +35,12 @@
 #define ARCH_cos
 #define ARCH_cosl
 #define ARCH_fabs
+#define ARCH_fabsl
 #define ARCH_round
+#define ARCH_roundl
 #define ARCH_sin
 #define ARCH_sinl
 #define ARCH_sqrt
+#define ARCH_sqrtl
 
 #endif /* !MATH_AMD64_H */

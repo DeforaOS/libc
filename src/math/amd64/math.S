@@ -67,8 +67,16 @@ MCALL1L(cosl, fcos)
 MCALL1(fabs, fabs)
 
 
+/* fabsl */
+MCALL1L(fabsl, fabs)
+
+
 /* round */
 MCALL1(round, frndint)
+
+
+/* roundl */
+MCALL1L(roundl, frndint)
 
 
 /* sin */
@@ -81,3 +89,7 @@ MCALL1L(sinl, fsin)
 
 /* sqrt */
 MCALL1(sqrt, fsqrt)
+
+
+/* sqrtl */
+MCALL1L(sqrtl, fsqrt)

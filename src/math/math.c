@@ -433,7 +433,7 @@ float fabsf(float x)
 
 
 /* fabsl */
-#ifndef ARCH_fabsfl
+#ifndef ARCH_fabsl
 long double fabsl(long double x)
 {
 	return (x >= 0.0) ? x : -x;
@@ -761,11 +761,9 @@ long double rintl(long double);
 
 /* round */
 #ifndef ARCH_round
-# warning Unsupported platform: round() is not implemented
 double round(double x)
 {
-	/* FIXME implement */
-	return 0.0;
+	return roundl(x);
 }
 #endif
 
@@ -779,8 +777,18 @@ float roundf(float x)
 #endif
 
 
+/* roundl */
+#ifndef ARCH_roundl
+# warning Unsupported platform: roundl() is not implemented
+long double roundl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
 #if 0
-long double roundl(long double);
 double scalb(double, double);
 double scalbln(double, long);
 float scalblnf(float, long);
@@ -827,11 +835,9 @@ long double sinl(long double x)
 
 /* sqrt */
 #ifndef ARCH_sqrt
-# warning Unsupported platform: sqrt() is not implemented
 double sqrt(double x)
 {
-	/* FIXME implement */
-	return 0.0;
+	return sqrtl(x);
 }
 #endif
 
@@ -845,8 +851,14 @@ float sqrtf(float x)
 #endif
 
 
-#if 0
-long double sqrtl(long double);
+/* sqrtl */
+#ifndef ARCH_sqrtl
+# warning Unsupported platform: sqrtl() is not implemented
+long double sqrtl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
