@@ -29,4 +29,17 @@
 
 
 /* functions */
-/* FIXME implement */
+/* cos */
+.global cos
+.type cos,@function
+cos:
+	fcos
+	ret
+
+
+/* sin */
+.global sin
+.type sin,@function
+sin:
+	fsin
+	ret

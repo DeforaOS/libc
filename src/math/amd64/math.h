@@ -32,6 +32,7 @@
 # define MATH_AMD64_H
 
 
-/* FIXME implement */
+#define ARCH_cos
+#define ARCH_sin
 
 #endif /* !MATH_AMD64_H */
