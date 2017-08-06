@@ -752,11 +752,9 @@ double sqrt(double x)
 
 /* sqrtf */
 #ifndef ARCH_sqrtf
-# warning Unsupported platform: sqrtf() is not implemented
 float sqrtf(float x)
 {
-	/* FIXME implement */
-	return 0.0;
+	return sqrt(x);
 }
 #endif
 
