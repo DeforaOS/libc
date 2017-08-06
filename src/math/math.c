@@ -246,23 +246,75 @@ double asinh(double);
 float asinhf(float);
 long double asinhl(long double);
 long double asinl(long double);
-double atan(double);
 #endif
 
 
+/* atan */
+#ifndef ARCH_atan
+# warning Unsupported platform: atan() is not implemented
+double atan(double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+/* atan2 */
+#ifndef ARCH_atan2
+# warning Unsupported platform: atan2() is not implemented
 double atan2(double x, double y)
 {
 	/* FIXME implement */
 	return 0.0;
 }
+#endif
+
+
+/* atan2f */
+#ifndef ARCH_atan2f
+float atan2f(float x, float y)
+{
+	return atan2(x, y);
+}
+#endif
 
 
 #if 0
-float atan2f(float, float);
 long double atan2l(long double, long double);
-float atanf(float);
-double atanh(double);
-float atanhf(float);
+#endif
+
+
+/* atanf */
+#ifndef ARCH_atanf
+float atanf(float x)
+{
+	return atan(x);
+}
+#endif
+
+
+/* atanh */
+#ifndef ARCH_atanh
+# warning Unsupported platform: atanh() is not implemented
+double atanh(double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+/* atanhf */
+#ifndef ARCH_atanhf
+float atanhf(float x)
+{
+	return atanh(x);
+}
+#endif
+
+
+#if 0
 long double atanhl(long double);
 long double atanl(long double);
 double cbrt(double);
