@@ -34,5 +34,6 @@
 
 #define ARCH_cos
 #define ARCH_sin
+#define ARCH_sqrt
 
 #endif /* !MATH_AMD64_H */

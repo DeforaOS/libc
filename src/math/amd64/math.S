@@ -53,3 +53,16 @@ sin:
 	movq	-0x8(%rsp), %xmm0
 	emms
 	ret
+
+
+/* sqrt */
+.global sqrt
+.type sqrt,@function
+sqrt:
+	movq	%xmm0, -0x8(%rsp)
+	fldl	-0x8(%rsp)
+	fsqrt
+	fstl	-0x8(%rsp)
+	movq	-0x8(%rsp), %xmm0
+	emms
+	ret
