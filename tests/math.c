@@ -40,7 +40,9 @@ static int _math(char const * progname)
 	int ret = 0;
 
 	if(cos(0.0) != 1.0
-			|| sin(0.0) != 0.0)
+			|| sin(0.0) != 0.0
+			|| cosl(0.0) != 1.0
+			|| sinl(0.0) != 0.0)
 		ret |= 2;
 	if(fabs(-3.0) != 3.0
 			|| fabsf(-3.0) != 3.0
