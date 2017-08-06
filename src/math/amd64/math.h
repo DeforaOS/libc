@@ -33,6 +33,7 @@
 
 
 #define ARCH_cos
+#define ARCH_fabs
 #define ARCH_round
 #define ARCH_sin
 #define ARCH_sqrt

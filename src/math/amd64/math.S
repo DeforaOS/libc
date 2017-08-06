@@ -49,6 +49,10 @@ name:; \
 MCALL1(cos, fcos)
 
 
+/* fabs */
+MCALL1(fabs, fabs)
+
+
 /* round */
 MCALL1(round, frndint)
 
