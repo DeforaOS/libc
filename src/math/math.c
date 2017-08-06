@@ -268,14 +268,52 @@ long double atanl(long double);
 double cbrt(double);
 float cbrtf(float);
 long double cbrtl(long double);
-double ceil(double);
-float ceilf(float);
+#endif
+
+
+/* ceil */
+#ifndef ARCH_ceil
+# warning Unsupported platform: ceil() is not implemented
+double ceil(double x)
+{
+	return 0.0;
+}
+#endif
+
+
+/* ceilf */
+float ceilf(float x)
+{
+	return ceil(x);
+}
+
+
+#if 0
 long double ceill(long double);
 double copysign(double, double);
 float copysignf(float, float);
 long double copysignl(long double, long double);
-double cos(double);
-float cosf(float);
+#endif
+
+
+/* cos */
+#ifndef ARCH_cos
+# warning Unsupported platform: cos() is not implemented
+double cos(double x)
+{
+	return 0.0;
+}
+#endif
+
+
+/* cosf */
+float cosf(float x)
+{
+	return cos(x);
+}
+
+
+#if 0
 double cosh(double);
 float coshf(float);
 long double coshl(long double);
@@ -286,7 +324,20 @@ float erfcf(float);
 long double erfcl(long double);
 float erff(float);
 long double erfl(long double);
-double exp(double);
+#endif
+
+
+/* exp */
+#ifndef ARCH_exp
+# warning Unsupported platform: exp() is not implemented
+double exp(double x)
+{
+	return 0.0;
+}
+#endif
+
+
+#if 0
 double exp2(double);
 float exp2f(float);
 long double exp2l(long double);
@@ -295,11 +346,61 @@ long double expl(long double);
 double expm1(double);
 float expm1f(float);
 long double expm1l(long double);
+#endif
+
+
+/* fabs */
+#ifndef ARCH_fabs
+double fabs(double x)
+{
+	return (x >= 0.0) ? x : -x;
+}
+#endif
+
+
+/* fabsf */
+#ifndef ARCH_fabsf
+float fabsf(float x)
+{
+	return (x >= 0.0) ? x : -x;
+}
+#endif
+
+
+/* fabsl */
+#ifndef ARCH_fabsfl
+long double fabsl(long double x)
+{
+	return (x >= 0.0) ? x : -x;
+}
+#endif
+
+
+#if 0
 double fdim(double, double);
 float fdimf(float, float);
 long double fdiml(long double, long double);
-double floor(double);
-float floorf(float);
+#endif
+
+
+/* floor */
+#ifndef ARCH_floor
+# warning Unsupported platform: floor() is not implemented
+double floor(double x)
+{
+	return 0.0;
+}
+#endif
+
+
+/* floorf */
+float floorf(float x)
+{
+	return floor(x);
+}
+
+
+#if 0
 long double floorl(long double);
 double fma(double, double, double);
 float fmaf(float, float, float);
@@ -662,8 +763,26 @@ float sqrtf(float x)
 
 #if 0
 long double sqrtl(long double);
-double tan(double);
-float tanf(float);
+#endif
+
+
+/* tan */
+#ifndef ARCH_tan
+double tan(double x)
+{
+	return sin(x) / cos(x);
+}
+#endif
+
+
+/* tanf */
+float tanf(float x)
+{
+	return sinf(x) / cosf(x);
+}
+
+
+#if 0
 double tanh(double);
 float tanhf(float);
 long double tanhl(long double);
@@ -674,74 +793,6 @@ long double tgammal(long double);
 double trunc(double);
 float truncf(float);
 long double truncl(long double);
-#endif
-
-
-/* FIXME place accordingly and compile conditionally */
-/* ceil */
-#ifndef ARCH_ceil
-# warning Unsupported platform: ceil() is not implemented
-double ceil(double x)
-{
-	return 0.0;
-}
-#endif
-
-
-/* cos */
-#ifndef ARCH_cos
-# warning Unsupported platform: cos() is not implemented
-double cos(double x)
-{
-	return 0.0;
-}
-#endif
-
-
-/* exp */
-#ifndef ARCH_exp
-# warning Unsupported platform: exp() is not implemented
-double exp(double x)
-{
-	return 0.0;
-}
-#endif
-
-
-/* fabs */
-#ifndef ARCH_fabs
-double fabs(double x)
-{
-	return (x >= 0.0) ? x : -x;
-}
-#endif
-
-
-/* fabsf */
-#ifndef ARCH_fabsf
-float fabsf(float x)
-{
-	return (x >= 0.0) ? x : -x;
-}
-#endif
-
-
-/* fabsl */
-#ifndef ARCH_fabsfl
-long double fabsl(long double x)
-{
-	return (x >= 0.0) ? x : -x;
-}
-#endif
-
-
-/* floor */
-#ifndef ARCH_floor
-# warning Unsupported platform: floor() is not implemented
-double floor(double x)
-{
-	return 0.0;
-}
 #endif
 
 
