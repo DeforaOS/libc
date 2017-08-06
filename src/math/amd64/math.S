@@ -43,10 +43,25 @@ name:; \
 	ret
 #endif
 
+/* FIXME does not work */
+#ifndef MCALL1L
+# define MCALL1L(name, ins) \
+.global name; \
+.type name,@function; \
+name:; \
+	fldt	0x16(%rsp); \
+	ins; \
+	ret
+#endif
+
 
 /* functions */
 /* cos */
 MCALL1(cos, fcos)
+
+
+/* cosl */
+MCALL1L(cosl, fcos)
 
 
 /* fabs */
@@ -59,6 +74,10 @@ MCALL1(round, frndint)
 
 /* sin */
 MCALL1(sin, fsin)
+
+
+/* sinl */
+MCALL1L(sinl, fsin)
 
 
 /* sqrt */
