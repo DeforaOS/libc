@@ -793,19 +793,17 @@ long double scalbnl(long double, int);
 
 /* sin */
 #ifndef ARCH_sin
-# warning Unsupported platform: sin() is not implemented
 double sin(double x)
 {
-	return 0.0;
+	return sinl(x);
 }
 #endif
 
 
 #ifndef ARCH_sinf
-# warning Unsupported platform: sinf() is not implemented
 float sinf(float x)
 {
-	return 0.0;
+	return sin(x);
 }
 #endif
 
@@ -821,6 +819,7 @@ long double sinhl(long double);
 # warning Unsupported platform: sinl() is not implemented
 long double sinl(long double x)
 {
+	/* FIXME implement */
 	return 0.0;
 }
 #endif
