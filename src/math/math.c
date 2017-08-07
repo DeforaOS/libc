@@ -629,28 +629,29 @@ double jn(int n, double x)
 
 /* ldexp */
 #ifndef ARCH_ldexp
-# warning Unsupported platform: ldexp() is not implemented
 double ldexp(double x, int y)
 {
-	/* FIXME implement */
-	return 0.0;
+	return ldexpl(x, y);
 }
 #endif
 
 
 /* ldexpf */
 #ifndef ARCH_ldexpf
-# warning Unsupported platform: ldexpf() is not implemented
 float ldexpf(float x, int y)
 {
-	/* FIXME implement */
-	return 0.0;
+	return ldexp(x, y);
 }
 #endif
 
 
-#if 0
-long double ldexpl(long double, int);
+#ifndef ARCH_ldexpl
+# warning Unsupported platform: ldexpl() is not implemented
+long double ldexpl(long double x, int y)
+{
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
