@@ -109,7 +109,7 @@ fabs:
 .global fabsf
 .type fabsf,@function
 fabsf:
-	fldl	0x4(%esp)
+	flds	0x4(%esp)
 	fabs
 	ret
 
@@ -265,7 +265,7 @@ sin:
 .global sinf
 .type sinf,@function
 sinf:
-	fldl	0x4(%esp)
+	flds	0x4(%esp)
 1:	fsin
 	fnstsw	%ax
 	test	$0x4, %ah
@@ -295,6 +295,6 @@ sqrt:
 .global sqrtf
 .type sqrtf,@function
 sqrtf:
-	fldl	0x4(%esp)
+	flds	0x4(%esp)
 	fsqrt
 	ret
