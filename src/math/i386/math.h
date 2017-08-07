@@ -44,6 +44,8 @@
 #define ARCH_ldexp
 #define ARCH_log
 #define ARCH_pow
+#define ARCH_round
+#define ARCH_roundf
 #define ARCH_sin
 #define ARCH_sinf
 #define ARCH_sqrt

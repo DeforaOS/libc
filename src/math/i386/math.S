@@ -240,6 +240,24 @@ pow:
 #endif
 
 
+/* round */
+.global round
+.type round,@function
+round:
+	fldl	0x4(%esp)
+	frndint
+	ret
+
+
+/* roundf */
+.global roundf
+.type roundf,@function
+roundf:
+	flds	0x4(%esp)
+	frndint
+	ret
+
+
 /* sin */
 .global sin
 .type sin,@function
