@@ -703,11 +703,9 @@ long long llroundl(long double);
 
 /* log */
 #ifndef ARCH_log
-# warning Unsupported platform: log() is not implemented
 double log(double x)
 {
-	/* FIXME implement */
-	return 0.0;
+	return logl(x);
 }
 #endif
 
@@ -725,8 +723,30 @@ long double log2l(long double);
 double logb(double);
 float logbf(float);
 long double logbl(long double);
-float logf(float);
-long double logl(long double);
+#endif
+
+
+/* logf */
+#ifndef ARCH_logf
+float logf(float x)
+{
+	return log(x);
+}
+#endif
+
+
+/* logl */
+#ifndef ARCH_logl
+# warning Unsupported platform: logl() is not implemented
+long double logl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+#if 0
 long lrint(double);
 long lrintf(float);
 long lrintl(long double);
