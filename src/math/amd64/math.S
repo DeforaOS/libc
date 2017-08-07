@@ -83,7 +83,18 @@ fmod:
 	fprem
 	fstpl	-0x8(%rsp)
 	movq	-0x8(%rsp), %xmm0
-	femms
+	emms
+	ret
+
+
+/* fmodl */
+/* FIXME this is only the partial remainder */
+.global fmodl
+.type fmodl,@function
+fmodl:
+	fldt	0x18(%rsp)
+	fldt	0x8(%rsp)
+	fprem
 	ret
 
 

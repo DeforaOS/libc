@@ -37,6 +37,7 @@
 #define ARCH_fabs
 #define ARCH_fabsl
 #define ARCH_fmod
+#define ARCH_fmodl
 #define ARCH_round
 #define ARCH_roundl
 #define ARCH_sin
