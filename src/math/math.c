@@ -525,28 +525,30 @@ long double fminl(long double, long double);
 
 /* fmod */
 #ifndef ARCH_fmod
-# warning Unsupported platform: fmod() is not implemented
 double fmod(double x, double y)
 {
-	/* FIXME implement */
-	return 0.0;
+	return fmodl(x, y);
 }
 #endif
 
 
 /* fmod */
 #ifndef ARCH_fmodf
-# warning Unsupported platform: fmodf() is not implemented
 float fmodf(float x, float y)
 {
-	/* FIXME implement */
-	return 0.0;
+	return fmod(x, y);
 }
 #endif
 
 
-#if 0
-long double fmodl(long double, long double);
+#ifndef ARCH_fmodl
+long double fmodl(long double x, long double y)
+{
+	long double z;
+
+	z = floor(x / y);
+	return x - (y * z);
+}
 #endif
 
 
