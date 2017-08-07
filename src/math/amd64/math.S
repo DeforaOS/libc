@@ -39,7 +39,7 @@ name:; \
 	ins; \
 	fstpl	-0x8(%rsp); \
 	movq	-0x8(%rsp), %xmm0; \
-	emms; \
+	femms; \
 	ret
 #endif
 
@@ -105,7 +105,7 @@ tan:
 	fdivp	%st(0), %st(1)
 	fstpl	-0x8(%rsp)
 	movq	-0x8(%rsp), %xmm0
-	emms
+	femms
 	ret
 
 
