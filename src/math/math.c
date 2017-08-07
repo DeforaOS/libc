@@ -325,23 +325,35 @@ long double cbrtl(long double);
 
 /* ceil */
 #ifndef ARCH_ceil
-# warning Unsupported platform: ceil() is not implemented
 double ceil(double x)
 {
-	return 0.0;
+	return ceill(x);
 }
 #endif
 
 
 /* ceilf */
+#ifndef ARCH_ceilf
 float ceilf(float x)
 {
 	return ceil(x);
 }
+#endif
+
+
+/* ceill */
+#ifndef ARCH_ceill
+long double ceill(long double x)
+{
+	long double y;
+
+	y = round(x);
+	return (y >= x) ? y : y + 1.0;
+}
+#endif
 
 
 #if 0
-long double ceill(long double);
 double copysign(double, double);
 float copysignf(float, float);
 long double copysignl(long double, long double);
@@ -450,23 +462,34 @@ long double fdiml(long double, long double);
 
 /* floor */
 #ifndef ARCH_floor
-# warning Unsupported platform: floor() is not implemented
 double floor(double x)
 {
-	return 0.0;
+	return floorl(x);
 }
 #endif
 
 
 /* floorf */
+#ifndef ARCH_floorf
 float floorf(float x)
 {
 	return floor(x);
 }
+#endif
+
+
+#ifndef ARCH_floorl
+long double floorl(long double x)
+{
+	long double y;
+
+	y = round(x);
+	return (y <= x) ? y : y - 1.0;
+}
+#endif
 
 
 #if 0
-long double floorl(long double);
 double fma(double, double, double);
 float fmaf(float, float, float);
 long double fmal(long double, long double, long double);
