@@ -742,8 +742,24 @@ long double nexttowardl(long double, long double);
 
 /* pow */
 #ifndef ARCH_pow
-# warning Unsupported platform: pow() is not implemented
 double pow(double x, double y)
+{
+	return powl(x, y);
+}
+#endif
+
+
+#ifndef ARCH_powf
+float powf(float x, float y)
+{
+	return pow(x, y);
+}
+#endif
+
+
+#ifndef ARCH_powl
+# warning Unsupported platform: powl() is not implemented
+long double powl(long double x, long double y)
 {
 	/* FIXME implement */
 	return 0.0;
@@ -751,15 +767,7 @@ double pow(double x, double y)
 #endif
 
 
-float powf(float x, float y)
-{
-	/* FIXME implement */
-	return 0.0;
-}
-
-
 #if 0
-long double powl(long double, long double);
 double remainder(double, double);
 float remainderf(float, float);
 long double remainderl(long double, long double);
