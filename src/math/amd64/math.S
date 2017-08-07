@@ -71,6 +71,22 @@ MCALL1(fabs, fabs)
 MCALL1L(fabsl, fabs)
 
 
+/* fmod */
+/* FIXME this is only the partial remainder */
+.global fmod
+.type fmod,@function
+fmod:
+	movq	%xmm1, -0x8(%rsp)
+	fldl	-0x8(%rsp)
+	movq	%xmm0, -0x8(%rsp)
+	fldl	-0x8(%rsp)
+	fprem
+	fstpl	-0x8(%rsp)
+	movq	-0x8(%rsp), %xmm0
+	femms
+	ret
+
+
 /* round */
 MCALL1(round, frndint)
 
