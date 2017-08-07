@@ -48,7 +48,8 @@ static int _math(char const * progname)
 			|| fabsf(-3.0) != 3.0
 			|| fabsl(-3.0) != 3.0)
 		ret |= 4;
-	if(fmod(11, 7) != 4)
+	if(fmod(11, 7) != 4
+			|| fmodl(11, 7) != 4)
 		ret |= 8;
 	if(round(1.5) != 2.0)
 		ret |= 16;
