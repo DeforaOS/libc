@@ -406,10 +406,9 @@ long double erfl(long double);
 
 /* exp */
 #ifndef ARCH_exp
-# warning Unsupported platform: exp() is not implemented
 double exp(double x)
 {
-	return 0.0;
+	return expl(x);
 }
 #endif
 
@@ -418,8 +417,30 @@ double exp(double x)
 double exp2(double);
 float exp2f(float);
 long double exp2l(long double);
-float expf(float);
-long double expl(long double);
+#endif
+
+
+/* expf */
+#ifndef ARCH_expf
+float expf(float x)
+{
+	return exp(x);
+}
+#endif
+
+
+/* expl */
+#ifndef ARCH_expl
+# warning Unsupported platform: expl() is not implemented
+long double expl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+#if 0
 double expm1(double);
 float expm1f(float);
 long double expm1l(long double);
