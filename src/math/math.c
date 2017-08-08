@@ -581,18 +581,33 @@ long double frexpl(long double value, int *);
 
 /* hypot */
 #ifndef ARCH_hypot
-# warning Unsupported platform: hypot() is not implemented
 double hypot(double x, double y)
 {
-	/* FIXME implement */
-	return 0.0;
+	return hypotl(x, y);
+}
+#endif
+
+
+/* hypotf */
+#ifndef ARCH_hypotf
+float hypotf(float x, float y)
+{
+	return hypot(x, y);
+}
+#endif
+
+
+/* hypotl */
+#ifndef ARCH_hypotl
+long double hypotl(long double x, long double y)
+{
+	/* XXX may overflow */
+	return sqrt((x * x) + (y * y));
 }
 #endif
 
 
 #if 0
-float hypotf(float, float);
-long double hypotl(long double, long double);
 int ilogb(double);
 int ilogbf(float);
 int ilogbl(long double);
