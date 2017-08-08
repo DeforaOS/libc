@@ -679,6 +679,8 @@ int ilogbf(float);
 int ilogbl(long double);
 int isinf(float x);
 #endif
+
+
 /* isnan */
 int isnan(float x)
 {
