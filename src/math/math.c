@@ -251,22 +251,18 @@ long double asinl(long double);
 
 /* atan */
 #ifndef ARCH_atan
-# warning Unsupported platform: atan() is not implemented
 double atan(double x)
 {
-	/* FIXME implement */
-	return 0.0;
+	return atanl(x);
 }
 #endif
 
 
 /* atan2 */
 #ifndef ARCH_atan2
-# warning Unsupported platform: atan2() is not implemented
 double atan2(double x, double y)
 {
-	/* FIXME implement */
-	return 0.0;
+	return atan2l(x, y);
 }
 #endif
 
@@ -280,8 +276,13 @@ float atan2f(float x, float y)
 #endif
 
 
-#if 0
-long double atan2l(long double, long double);
+/* atan2l */
+#ifndef ARCH_atan2l
+long double atan2l(long double x, long double y)
+{
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
@@ -296,11 +297,9 @@ float atanf(float x)
 
 /* atanh */
 #ifndef ARCH_atanh
-# warning Unsupported platform: atanh() is not implemented
 double atanh(double x)
 {
-	/* FIXME implement */
-	return 0.0;
+	return atanhl(x);
 }
 #endif
 
@@ -314,9 +313,29 @@ float atanhf(float x)
 #endif
 
 
+/* atanhl */
+#ifndef ARCH_atanhl
+# warning Unsupported platform: atanhl() is not implemented
+long double atanhl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+/* atanl */
+#ifndef ARCH_atanl
+# warning Unsupported platform: atanl() is not implemented
+long double atanl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
 #if 0
-long double atanhl(long double);
-long double atanl(long double);
 double cbrt(double);
 float cbrtf(float);
 long double cbrtl(long double);
