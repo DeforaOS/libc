@@ -990,6 +990,7 @@ double sin(double x)
 #endif
 
 
+/* sinf */
 #ifndef ARCH_sinf
 float sinf(float x)
 {
@@ -998,13 +999,36 @@ float sinf(float x)
 #endif
 
 
-#if 0
-double sinh(double);
-float sinhf(float);
-long double sinhl(long double);
+/* sinh */
+#ifndef ARCH_sinh
+double sinh(double x)
+{
+	return sinhl(x);
+}
 #endif
 
 
+/* sinhf */
+#ifndef ARCH_sinhf
+float sinhf(float x)
+{
+	return sinh(x);
+}
+#endif
+
+
+/* sinhl */
+#ifndef ARCH_sinhl
+# warning Unsupported platform: sinhl() is not implemented
+long double sinhl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+/* sinl */
 #ifndef ARCH_sinl
 # warning Unsupported platform: sinl() is not implemented
 long double sinl(long double x)
