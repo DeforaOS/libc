@@ -802,10 +802,36 @@ double log10(double x)
 #endif
 
 
+/* log1p */
+#ifndef ARCH_log1p
+double log1p(double x)
+{
+	return log1pl(x);
+}
+#endif
+
+
+/* log1pf */
+#ifndef ARCH_log1pf
+float log1pf(float x)
+{
+	return log1p(x);
+}
+#endif
+
+
+/* log1pl */
+#ifndef ARCH_log1pl
+# warning Unsupported platform: log1pl() is not implemented
+long double log1pl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
 #if 0
-double log1p(double);
-float log1pf(float);
-long double log1pl(long double);
 double log2(double);
 float log2f(float);
 long double log2l(long double);
