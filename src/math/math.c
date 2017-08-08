@@ -456,10 +456,32 @@ double exp(double x)
 #endif
 
 
-#if 0
-double exp2(double);
-float exp2f(float);
-long double exp2l(long double);
+/* exp2 */
+#ifndef ARCH_exp2
+double exp2(double x)
+{
+	return exp2l(x);
+}
+#endif
+
+
+/* exp2f */
+#ifndef ARCH_exp2f
+float exp2f(float x)
+{
+	return exp2(x);
+}
+#endif
+
+
+/* exp2l */
+#ifndef ARCH_exp2l
+# warning Unsupported platform: exp2l() is not implemented
+long double exp2l(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
