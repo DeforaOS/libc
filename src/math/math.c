@@ -929,15 +929,29 @@ long double remquol(long double, long double, int *);
 
 
 /* rint */
+#ifndef ARCH_rint
 double rint(double x)
 {
 	return floor(x + 0.5);
 }
+#endif
 
 
-#if 0
-float rintf(float);
-long double rintl(long double);
+/* rintf */
+#ifndef ARCH_rintf
+float rintf(float x)
+{
+	return floor(x + 0.5);
+}
+#endif
+
+
+/* rintl */
+#ifndef ARCH_rintl
+long double rintl(long double x)
+{
+	return floor(x + 0.5);
+}
 #endif
 
 
