@@ -397,10 +397,32 @@ float cosf(float x)
 #endif
 
 
-#if 0
-double cosh(double);
-float coshf(float);
-long double coshl(long double);
+/* cosh */
+#ifndef ARCH_cosh
+double cosh(double x)
+{
+	return coshl(x);
+}
+#endif
+
+
+/* coshf */
+#ifndef ARCH_coshf
+float coshf(float x)
+{
+	return cosh(x);
+}
+#endif
+
+
+/* coshl */
+#ifndef ARCH_coshl
+# warning Unsupported platform: coshl() is not implemented
+long double coshl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
