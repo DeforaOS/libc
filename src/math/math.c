@@ -619,28 +619,29 @@ long double fmodl(long double x, long double y)
 
 /* frexp */
 #ifndef ARCH_frexp
-# warning Unsupported platform: frexp() is not implemented
 double frexp(double x, int * y)
 {
-	/* FIXME implement */
-	return 0.0;
+	return frexpl(x, y);
 }
 #endif
 
 
 /* frexpf */
 #ifndef ARCH_frexpf
-# warning Unsupported platform: frexpf() is not implemented
-float frexpf(float value, int * y)
+float frexpf(float x, int * y)
 {
-	/* FIXME implement */
-	return 0.0;
+	return frexp(x, y);
 }
 #endif
 
 
-#if 0
-long double frexpl(long double value, int *);
+#ifndef ARCH_frexpl
+# warning Unsupported platform: frexpl() is not implemented
+long double frexpl(long double x, int * y)
+{
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
