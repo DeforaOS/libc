@@ -389,10 +389,12 @@ double cos(double x)
 
 
 /* cosf */
+#ifndef ARCH_cosf
 float cosf(float x)
 {
 	return cos(x);
 }
+#endif
 
 
 #if 0
