@@ -864,6 +864,7 @@ long lroundl(long double);
 
 
 /* modf */
+#ifndef ARCH_modf
 double modf(double x, double * iptr)
 {
 	double ret = fmod(x, 1.0);
@@ -871,11 +872,34 @@ double modf(double x, double * iptr)
 	*iptr = x - ret;
 	return ret;
 }
+#endif
+
+
+/* modff */
+#ifndef ARCH_modff
+float modff(float x, float * iptr)
+{
+	float ret = fmodf(x, 1.0);
+
+	*iptr = x - ret;
+	return ret;
+}
+#endif
+
+
+/* modfl */
+#ifndef ARCH_modfl
+long double modfl(long double x, long double * iptr)
+{
+	long double ret = fmodl(x, 1.0);
+
+	*iptr = x - ret;
+	return ret;
+}
+#endif
 
 
 #if 0
-float modff(float, float *);
-long double modfl(long double, long double *);
 double nan(const char *);
 float nanf(const char *);
 long double nanl(const char *);
