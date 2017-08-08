@@ -791,10 +791,16 @@ double log(double x)
 #endif
 
 
+/* log10 */
+#ifndef ARCH_log10
+double log10(double x)
+{
+	return log10l(x);
+}
+#endif
+
+
 #if 0
-double log10(double);
-float log10f(float);
-long double log10l(long double);
 double log1p(double);
 float log1pf(float);
 long double log1pl(long double);
@@ -804,6 +810,26 @@ long double log2l(long double);
 double logb(double);
 float logbf(float);
 long double logbl(long double);
+#endif
+
+
+/* log10f */
+#ifndef ARCH_log10f
+float log10f(float x)
+{
+	return log10(x);
+}
+#endif
+
+
+/* log10l */
+#ifndef ARCH_log10l
+# warning Unsupported platform: log10l() is not implemented
+long double log10l(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
