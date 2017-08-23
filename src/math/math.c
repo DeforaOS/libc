@@ -952,6 +952,7 @@ double pow(double x, double y)
 #endif
 
 
+/* powf */
 #ifndef ARCH_powf
 float powf(float x, float y)
 {
@@ -960,6 +961,7 @@ float powf(float x, float y)
 #endif
 
 
+/* powl */
 #ifndef ARCH_powl
 # warning Unsupported platform: powl() is not implemented
 long double powl(long double x, long double y)
