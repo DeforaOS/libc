@@ -1198,9 +1198,33 @@ long double tanl(long double x)
 double tgamma(double);
 float tgammaf(float);
 long double tgammal(long double);
-double trunc(double);
-float truncf(float);
-long double truncl(long double);
+#endif
+
+
+/* trunc */
+#ifndef ARCH_trunc
+double trunc(double x)
+{
+	return rint(x);
+}
+#endif
+
+
+/* truncf */
+#ifndef ARCH_truncf
+float truncf(float x)
+{
+	return rintf(x);
+}
+#endif
+
+
+/* truncl */
+#ifndef ARCH_truncl
+long double truncl(long double x)
+{
+	return rintl(x);
+}
 #endif
 
 
