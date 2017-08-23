@@ -972,10 +972,34 @@ long double powl(long double x, long double y)
 #endif
 
 
+/* remainder */
+#ifndef ARCH_remainder
+double remainder(double x, double y)
+{
+	return remainderl(x, y);
+}
+#endif
+
+
+/* remainderf */
+#ifndef ARCH_remainderf
+float remainderf(float x, float y)
+{
+	return remainder(x, y);
+}
+#endif
+
+
+/* remainderl */
+#ifndef ARCH_remainderl
+long double remainderl(long double x, long double y)
+{
+	return x - floor(x / y);
+}
+#endif
+
+
 #if 0
-double remainder(double, double);
-float remainderf(float, float);
-long double remainderl(long double, long double);
 double remquo(double, double, int *);
 float remquof(float, float, int *);
 long double remquol(long double, long double, int *);
