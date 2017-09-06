@@ -76,12 +76,28 @@ static int _arc4random(char const * progname)
 /* calloc */
 static int _calloc(char const * progname)
 {
+	int * p;
+	size_t i;
+	const size_t cnt = 16;
+
 	printf("%s: Testing calloc()\n", progname);
 	if(calloc(SIZE_MAX, 2) != NULL || calloc(2, SIZE_MAX) != NULL)
 	{
 		printf("calloc() failed to detect overflow\n");
 		return 1;
 	}
+	if((p = calloc(sizeof(int), cnt)) == NULL)
+	{
+		printf("calloc() failed to allocate memory\n");
+		return 1;
+	}
+	for(i = 0; i < cnt; i++)
+		if(p[i] != 0)
+		{
+			printf("calloc() failed to clear memory\n");
+			return 1;
+		}
+	free(p);
 	return 0;
 }
 
