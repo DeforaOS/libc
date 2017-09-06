@@ -280,10 +280,14 @@ void * bsearch(const void * key, const void * base, size_t nel,
 void * calloc(size_t nmemb, size_t size)
 {
 	void * ptr;
-	size_t sz = nmemb * size;
+	size_t sz;
 
-	assert(nmemb + size >= max(nmemb, size)); /* int overflow checks */
-	assert(sz >= nmemb + size - 1);
+	if(nmemb != 0 && size != 0 && SIZE_MAX / nmemb < size)
+	{
+		errno = ENOMEM;
+		return NULL;
+	}
+	sz = nmemb * size;
 	if((ptr = malloc(sz)) == NULL)
 		return NULL;
 	memset(ptr, 0, sz);
