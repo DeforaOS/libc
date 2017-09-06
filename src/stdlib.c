@@ -426,7 +426,7 @@ void * malloc(size_t size)
 	Alloc * b = NULL;
 	intptr_t inc;
 
-	if(size >= INT_MAX - sizeof(*b) - 0x8)
+	if(size >= LONG_MAX - sizeof(*b) - 0x8)
 	{
 		errno = ENOMEM;
 		return NULL;
