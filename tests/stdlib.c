@@ -43,6 +43,7 @@ extern char ** environ;
 static int _error(char const * progname, char const * message, int ret);
 
 static int _arc4random(char const * progname);
+static int _calloc(char const * progname);
 static int _environ(char const * program);
 static int _mkstemp(char const * progname);
 static int _mktemp(char const * progname);
@@ -68,6 +69,19 @@ static int _arc4random(char const * progname)
 	for(i = 1; i < sizeof(res) / sizeof(*res); i++)
 		if(res[i] == res[0])
 			return 1;
+	return 0;
+}
+
+
+/* calloc */
+static int _calloc(char const * progname)
+{
+	printf("%s: Testing calloc()\n", progname);
+	if(calloc(SIZE_MAX, 2) != NULL || calloc(2, SIZE_MAX) != NULL)
+	{
+		printf("calloc() failed to detect overflow\n");
+		return 1;
+	}
 	return 0;
 }
 
@@ -239,6 +253,7 @@ int main(int argc, char * argv[])
 	int ret = 0;
 
 	ret += _arc4random(argv[0]);
+	ret += _calloc(argv[0]);
 	ret += _environ(argv[0]);
 	ret += _mkstemp(argv[0]);
 	ret += _mktemp(argv[0]);
