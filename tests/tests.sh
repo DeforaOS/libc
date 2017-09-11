@@ -97,7 +97,7 @@ _test()
 #usage
 _usage()
 {
-	echo "Usage: $PROGNAME [-c][-P prefix]" 1>&2
+	echo "Usage: $PROGNAME [-c][-P prefix] target" 1>&2
 	return 1
 }
 
