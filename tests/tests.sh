@@ -54,6 +54,14 @@ _date()
 }
 
 
+#error
+_error()
+{
+	echo "$PROGNAME: $@" 1>&2
+	return 2
+}
+
+
 #fail
 _fail()
 {
@@ -120,6 +128,7 @@ while getopts "cP:" name; do
 done
 shift $((OPTIND - 1))
 if [ $# -ne 1 ]; then
+	_error "No target specified"
 	_usage
 	exit $?
 fi
@@ -171,7 +180,7 @@ _fail "dlfcn" "../src/libc.$SOEXT"
 [ "$SYSTEM" = "NetBSD" ] || _fail "stdlib"
 _fail "time"
 if [ -n "$FAILED" ]; then
-	echo "Failed tests:$FAILED" 1>&2
-	exit 2
+	_error "Failed tests:$FAILED" 1>&2
+	exit $?
 fi
 echo "All tests completed" 1>&2
