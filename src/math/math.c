@@ -649,10 +649,34 @@ long double expl(long double x)
 #endif
 
 
-#if 0
-double expm1(double);
-float expm1f(float);
-long double expm1l(long double);
+/* expm1 */
+#ifndef ARCH_expm1
+double expm1(double x)
+{
+	return expm1l(x);
+}
+#endif
+
+
+/* expm1f */
+#ifndef ARCH_expm1f
+float expm1f(float x)
+{
+	return expm1(x);
+}
+#endif
+
+
+/* expm1l */
+#ifndef ARCH_expm1l
+# warning Unsupported platform: expm1l() is not implemented
+long double expm1l(long double x)
+{
+	(void) x;
+
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
