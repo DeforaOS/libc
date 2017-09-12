@@ -506,7 +506,7 @@ long double ceill(long double x)
 {
 	long double y;
 
-	y = round(x);
+	y = roundl(x);
 	return (y >= x) ? y : y + 1.0;
 }
 #endif
