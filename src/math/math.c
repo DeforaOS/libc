@@ -869,6 +869,7 @@ long double ldexpl(long double x, int y)
 
 
 /* lgamma */
+#ifndef ARCH_lgamma
 double lgamma(double x)
 {
     register int  k = floor (x);
@@ -900,11 +901,32 @@ double lgamma(double x)
     _signgam = k >= 0  ?  0  :  k & 1;
     return z - log (w);
 }
+#endif
+
+
+/* lgammaf */
+#ifndef ARCH_lgammaf
+float lgammaf(float x)
+{
+	return lgamma(x);
+}
+#endif
+
+
+/* lgammal */
+#ifndef ARCH_lgammal
+# warning Unsupported platform: lgammal() is not implemented
+long double lgammal(long double x)
+{
+	(void) x;
+
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
 
 
 #if 0
-float lgammaf(float);
-long double lgammal(long double);
 long long llrint(double);
 long long llrintf(float);
 long long llrintl(long double);
