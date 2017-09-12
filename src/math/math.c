@@ -516,7 +516,7 @@ float cosf(float x)
 #ifndef ARCH_cosh
 double cosh(double x)
 {
-	return coshl(x);
+	return (exp(x) + exp(-x)) / 2;
 }
 #endif
 
@@ -525,20 +525,16 @@ double cosh(double x)
 #ifndef ARCH_coshf
 float coshf(float x)
 {
-	return cosh(x);
+	return (expf(x) + expf(-x)) / 2;
 }
 #endif
 
 
 /* coshl */
 #ifndef ARCH_coshl
-# warning Unsupported platform: coshl() is not implemented
 long double coshl(long double x)
 {
-	(void) x;
-
-	/* FIXME implement */
-	return 0.0;
+	return (expl(x) + expl(-x)) / 2;
 }
 #endif
 
@@ -1240,7 +1236,7 @@ float sinf(float x)
 #ifndef ARCH_sinh
 double sinh(double x)
 {
-	return sinhl(x);
+	return (exp(x) - exp(-x)) / 2;
 }
 #endif
 
@@ -1249,20 +1245,16 @@ double sinh(double x)
 #ifndef ARCH_sinhf
 float sinhf(float x)
 {
-	return sinh(x);
+	return (expf(x) - expf(-x)) / 2;
 }
 #endif
 
 
 /* sinhl */
 #ifndef ARCH_sinhl
-# warning Unsupported platform: sinhl() is not implemented
 long double sinhl(long double x)
 {
-	(void) x;
-
-	/* FIXME implement */
-	return 0.0;
+	return (expl(x) - expl(-x)) / 2;
 }
 #endif
 
