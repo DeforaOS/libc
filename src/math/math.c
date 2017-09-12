@@ -772,12 +772,84 @@ long double floorl(long double x)
 double fma(double, double, double);
 float fmaf(float, float, float);
 long double fmal(long double, long double, long double);
-double fmax(double, double);
-float fmaxf(float, float);
-long double fmaxl(long double, long double);
-double fmin(double, double);
-float fminf(float, float);
-long double fminl(long double, long double);
+#endif
+
+
+/* fmax */
+#ifndef ARCH_fmax
+double fmax(double x, double y)
+{
+	if(isnan(x))
+		return y;
+	if(isnan(y))
+		return x;
+	return (x >= y) ? x : y;
+}
+#endif
+
+
+/* fmaxf */
+#ifndef ARCH_fmaxf
+float fmaxf(float x, float y)
+{
+	if(isnan(x))
+		return y;
+	if(isnan(y))
+		return x;
+	return (x >= y) ? x : y;
+}
+#endif
+
+
+/* fmaxl */
+#ifndef ARCH_fmaxl
+long double fmaxl(long double x, long double y)
+{
+	if(isnan(x))
+		return y;
+	if(isnan(y))
+		return x;
+	return (x >= y) ? x : y;
+}
+#endif
+
+
+/* fmin */
+#ifndef ARCH_fmin
+double fmin(double x, double y)
+{
+	if(isnan(x))
+		return y;
+	if(isnan(y))
+		return x;
+	return (x <= y) ? x : y;
+}
+#endif
+
+
+/* fminf */
+#ifndef ARCH_fminf
+float fminf(float x, float y)
+{
+	if(isnan(x))
+		return y;
+	if(isnan(y))
+		return x;
+	return (x <= y) ? x : y;
+}
+#endif
+
+
+/* fminl */
+#ifndef ARCH_fminl
+long double fminl(long double x, long double y)
+{
+	if(isnan(x))
+		return y;
+	if(isnan(y))
+		return x;
+	return (x <= y) ? x : y;
+}
 #endif
 
 
