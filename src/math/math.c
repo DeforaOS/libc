@@ -799,6 +799,7 @@ float fmodf(float x, float y)
 #endif
 
 
+/* fmodl */
 #ifndef ARCH_fmodl
 long double fmodl(long double x, long double y)
 {
@@ -828,6 +829,7 @@ float frexpf(float x, int * y)
 #endif
 
 
+/* frexpl */
 #ifndef ARCH_frexpl
 # warning Unsupported platform: frexpl() is not implemented
 long double frexpl(long double x, int * y)
@@ -929,6 +931,7 @@ float ldexpf(float x, int y)
 #endif
 
 
+/* ldexpl */
 #ifndef ARCH_ldexpl
 # warning Unsupported platform: ldexpl() is not implemented
 long double ldexpl(long double x, int y)
