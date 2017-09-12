@@ -707,10 +707,35 @@ long double fabsl(long double x)
 #endif
 
 
-#if 0
-double fdim(double, double);
-float fdimf(float, float);
-long double fdiml(long double, long double);
+/* fdim */
+#ifndef ARCH_fdim
+double fdim(double x, double y)
+{
+	return fdiml(x, y);
+}
+#endif
+
+
+/* fdimf */
+#ifndef ARCH_fdimf
+float fdimf(float x, float y)
+{
+	return fdim(x, y);
+}
+#endif
+
+
+/* fdiml */
+#ifndef ARCH_fdiml
+# warning Unsupported platform: fdiml() is not implemented
+long double fdiml(long double x, long double y)
+{
+	(void) x;
+	(void) y;
+
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
