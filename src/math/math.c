@@ -960,7 +960,7 @@ int isnan(float x)
 	(void) x;
 
 	/* FIXME implement */
-	return 1;
+	return 0;
 }
 
 
