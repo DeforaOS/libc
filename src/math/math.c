@@ -450,10 +450,35 @@ long double atanl(long double x)
 #endif
 
 
-#if 0
-double cbrt(double);
-float cbrtf(float);
-long double cbrtl(long double);
+
+/* cbrt */
+#ifndef ARCH_cbrt
+double cbrt(double x)
+{
+	return cbrtl(x);
+}
+#endif
+
+
+/* cbrtf */
+#ifndef ARCH_cbrtf
+float cbrtf(float x)
+{
+	return cbrt(x);
+}
+#endif
+
+
+/* cbrtl */
+#ifndef ARCH_cbrtl
+# warning Unsupported platform: cbrtl() is not implemented
+long double cbrtl(long double x)
+{
+	(void) x;
+
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
