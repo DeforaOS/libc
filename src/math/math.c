@@ -233,13 +233,65 @@ static long double  _yn ( int n, double* x )
 
 
 /* public */
+/* acos */
+#ifndef ARCH_acos
+double acos(double x)
+{
+	return acosl(x);
+}
+#endif
+
+
+/* acosf */
+#ifndef ARCH_acosf
+float acosf(float x)
+{
+	return acos(x);
+}
+#endif
+
+
+/* acosh */
+#ifndef ARCH_acosh
+double acosh(double x)
+{
+	return acoshl(x);
+}
+#endif
+
+
+/* acoshf */
+#ifndef ARCH_acoshf
+float acoshf(float x)
+{
+	return acosh(x);
+}
+#endif
+
+
+/* acoshl */
+#ifndef ARCH_acoshl
+# warning Unsupported platform: acoshl() is not implemented
+long double acoshl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+/* acosl */
+#ifndef ARCH_acosl
+# warning Unsupported platform: acosl() is not implemented
+long double acosl(long double x)
+{
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
 #if 0
-double acos(double);
-float acosf(float);
-double acosh(double);
-float acoshf(float);
-long double acoshl(long double);
-long double acosl(long double);
 double asin(double);
 float asinf(float);
 double asinh(double);
