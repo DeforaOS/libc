@@ -1321,10 +1321,30 @@ float tanf(float x)
 #endif
 
 
-#if 0
-double tanh(double);
-float tanhf(float);
-long double tanhl(long double);
+/* tanh */
+#ifndef ARCH_tanh
+double tanh(double x)
+{
+	return sinh(x) / cosh(x);
+}
+#endif
+
+
+/* tanhf */
+#ifndef ARCH_tanhf
+float tanhf(float x)
+{
+	return sinhf(x) / coshf(x);
+}
+#endif
+
+
+/* tanhl */
+#ifndef ARCH_tanhl
+long double tanhl(long double x)
+{
+	return sinhl(x) / coshl(x);
+}
 #endif
 
 
