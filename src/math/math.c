@@ -295,13 +295,65 @@ long double acosl(long double x)
 #endif
 
 
-#if 0
-double asin(double);
-float asinf(float);
-double asinh(double);
-float asinhf(float);
-long double asinhl(long double);
-long double asinl(long double);
+/* asin */
+#ifndef ARCH_asin
+double asin(double x)
+{
+	return asinl(x);
+}
+#endif
+
+
+/* asinf */
+#ifndef ARCH_asinf
+float asinf(float x)
+{
+	return asin(x);
+}
+#endif
+
+
+/* asinh */
+#ifndef ARCH_asinh
+double asinh(double x)
+{
+	return asinhl(x);
+}
+#endif
+
+
+/* asinhf */
+#ifndef ARCH_asinhf
+float asinhf(float x)
+{
+	return asinh(x);
+}
+#endif
+
+
+/* asinhl */
+#ifndef ARCH_asinhl
+# warning Unsupported platform: asinhl() is not implemented
+long double asinhl(long double x)
+{
+	(void) x;
+
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+/* asinl */
+#ifndef ARCH_asinl
+# warning Unsupported platform: asinl() is not implemented
+long double asinl(long double x)
+{
+	(void) x;
+
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
