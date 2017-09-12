@@ -274,6 +274,8 @@ float acoshf(float x)
 # warning Unsupported platform: acoshl() is not implemented
 long double acoshl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -285,6 +287,8 @@ long double acoshl(long double x)
 # warning Unsupported platform: acosl() is not implemented
 long double acosl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -332,6 +336,9 @@ float atan2f(float x, float y)
 #ifndef ARCH_atan2l
 long double atan2l(long double x, long double y)
 {
+	(void) x;
+	(void) y;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -370,6 +377,8 @@ float atanhf(float x)
 # warning Unsupported platform: atanhl() is not implemented
 long double atanhl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -381,6 +390,8 @@ long double atanhl(long double x)
 # warning Unsupported platform: atanl() is not implemented
 long double atanl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -472,6 +483,8 @@ float coshf(float x)
 # warning Unsupported platform: coshl() is not implemented
 long double coshl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -483,6 +496,8 @@ long double coshl(long double x)
 # warning Unsupported platform: cosl() is not implemented
 long double cosl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -531,6 +546,8 @@ float exp2f(float x)
 # warning Unsupported platform: exp2l() is not implemented
 long double exp2l(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -551,6 +568,8 @@ float expf(float x)
 # warning Unsupported platform: expl() is not implemented
 long double expl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -691,6 +710,9 @@ float frexpf(float x, int * y)
 # warning Unsupported platform: frexpl() is not implemented
 long double frexpl(long double x, int * y)
 {
+	(void) x;
+	(void) y;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -719,6 +741,9 @@ float hypotf(float x, float y)
 #ifndef ARCH_hypotl
 long double hypotl(long double x, long double y)
 {
+	(void) x;
+	(void) y;
+
 	/* XXX may overflow */
 	return sqrt((x * x) + (y * y));
 }
@@ -736,6 +761,8 @@ int isinf(float x);
 /* isnan */
 int isnan(float x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 1;
 }
@@ -784,6 +811,9 @@ float ldexpf(float x, int y)
 # warning Unsupported platform: ldexpl() is not implemented
 long double ldexpl(long double x, int y)
 {
+	(void) x;
+	(void) y;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -877,6 +907,8 @@ float log1pf(float x)
 # warning Unsupported platform: log1pl() is not implemented
 long double log1pl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -907,6 +939,8 @@ float log10f(float x)
 # warning Unsupported platform: log10l() is not implemented
 long double log10l(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -927,6 +961,8 @@ float logf(float x)
 # warning Unsupported platform: logl() is not implemented
 long double logl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -1018,6 +1054,9 @@ float powf(float x, float y)
 # warning Unsupported platform: powl() is not implemented
 long double powl(long double x, long double y)
 {
+	(void) x;
+	(void) y;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -1108,6 +1147,8 @@ float roundf(float x)
 # warning Unsupported platform: roundl() is not implemented
 long double roundl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -1166,6 +1207,8 @@ float sinhf(float x)
 # warning Unsupported platform: sinhl() is not implemented
 long double sinhl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -1177,6 +1220,8 @@ long double sinhl(long double x)
 # warning Unsupported platform: sinl() is not implemented
 long double sinl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
@@ -1206,6 +1251,8 @@ float sqrtf(float x)
 # warning Unsupported platform: sqrtl() is not implemented
 long double sqrtl(long double x)
 {
+	(void) x;
+
 	/* FIXME implement */
 	return 0.0;
 }
