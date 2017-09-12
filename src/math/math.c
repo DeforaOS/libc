@@ -1357,10 +1357,34 @@ long double tanl(long double x)
 #endif
 
 
-#if 0
-double tgamma(double);
-float tgammaf(float);
-long double tgammal(long double);
+/* tgamma */
+#ifndef ARCH_tgamma
+double tgamma(double x)
+{
+	return tgammal(x);
+}
+#endif
+
+
+/* tgammaf */
+#ifndef ARCH_tgammaf
+float tgammaf(float x)
+{
+	return tgamma(x);
+}
+#endif
+
+
+/* tgammal */
+#ifndef ARCH_tgammal
+# warning Unsupported platform: tgammal() is not implemented
+long double tgammal(long double x)
+{
+	(void) x;
+
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
