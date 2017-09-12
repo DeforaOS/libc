@@ -1316,7 +1316,7 @@ double tan(double x)
 #ifndef ARCH_tanf
 float tanf(float x)
 {
-	return tan(x);
+	return sinf(x) / cosf(x);
 }
 #endif
 
