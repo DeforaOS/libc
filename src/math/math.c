@@ -1410,7 +1410,7 @@ double rint(double x)
 #ifndef ARCH_rintf
 float rintf(float x)
 {
-	return floor(x + 0.5);
+	return floorf(x + 0.5);
 }
 #endif
 
@@ -1419,7 +1419,7 @@ float rintf(float x)
 #ifndef ARCH_rintl
 long double rintl(long double x)
 {
-	return floor(x + 0.5);
+	return floorl(x + 0.5);
 }
 #endif
 
