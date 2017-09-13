@@ -860,13 +860,23 @@ static long double _strtold(char const * str, char ** endptr)
 {
 	/* FIXME support additional notations */
 	long double ret;
-	char const * e = str;
-	int neg = (*e == '-') ? 1 : 0;
+	char const * e;
+	int neg = 0;
 	unsigned long u = 0;
 	unsigned long cnt;
 	long double f;
 
-	if(neg)
+	/* skip initial spaces */
+	for(e = str; *e != '\0'; e++)
+		if(!isspace(*e))
+			break;
+	/* skip optional '-' or '+' sign */
+	if(*e == '-')
+	{
+		neg = 1;
+		e++;
+	}
+	else if(*e == '+')
 		e++;
 	for(cnt = 0; isdigit((unsigned char)e[cnt]); cnt++)
 		u = u * 10 + (e[cnt] - '0');
