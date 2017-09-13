@@ -898,11 +898,9 @@ static long double _strtold(char const * str, char ** endptr)
 			f = f / 10;
 		ret += f;
 	}
-	if(neg)
-		ret = -ret;
 	if(endptr != NULL)
 		*endptr = (char *)e;
-	return ret;
+	return neg ? -ret : ret;
 }
 
 
