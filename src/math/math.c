@@ -30,6 +30,8 @@
 
 
 #include "sys/types.h"
+#include "stdlib.h"
+#include "string.h"
 #include "math.h"
 #include "arch.h"
 
@@ -1286,10 +1288,37 @@ long double modfl(long double x, long double * iptr)
 #endif
 
 
+/* nan */
+double nan(const char * tagp)
+{
+	if(tagp == NULL || strlen(tagp) == 0)
+		return strtod("NAN()", NULL);
+	/* FIXME implement */
+	return 0.0;
+}
+
+
+/* nanf */
+float nanf(const char * tagp)
+{
+	if(tagp == NULL || strlen(tagp) == 0)
+		return strtof("NAN()", NULL);
+	/* FIXME implement */
+	return 0.0;
+}
+
+
+/* nanl */
+long double nanl(const char * tagp)
+{
+	if(tagp == NULL || strlen(tagp) == 0)
+		return strtold("NAN()", NULL);
+	/* FIXME implement */
+	return 0.0;
+}
+
+
 #if 0
-double nan(const char *);
-float nanf(const char *);
-long double nanl(const char *);
 double nearbyint(double);
 float nearbyintf(float);
 long double nearbyintl(long double);
