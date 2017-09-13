@@ -32,6 +32,7 @@
 #include "sys/types.h"
 #include "stdlib.h"
 #include "string.h"
+#include "errno.h"
 #include "math.h"
 #include "arch.h"
 
@@ -1351,14 +1352,29 @@ float powf(float x, float y)
 
 /* powl */
 #ifndef ARCH_powl
-# warning Unsupported platform: powl() is not implemented
 long double powl(long double x, long double y)
 {
-	(void) x;
-	(void) y;
+	long double ret;
 
-	/* FIXME implement */
-	return 0.0;
+	if(x == 1.0 || y == 0.0)
+		return 1.0;
+	if(isnan(x))
+		return x;
+	else if(isnan(y))
+		return y;
+	if(x < 0.0 || roundl(y) != y)
+	{
+		/* XXX really report the error */
+		errno = EDOM;
+		return 0.0;
+	}
+	if(x == 0.0 && y > 0.0)
+		return 0.0;
+	/* XXX there are more corner cases with infinity */
+	for(ret = 1.0; y >= 1.0; y -= 1.0)
+		/* FIXME detect overflows and underflows */
+		ret = ret * x;
+	return ret;
 }
 #endif
 
