@@ -1134,13 +1134,65 @@ long double log1pl(long double x)
 #endif
 
 
-#if 0
-double log2(double);
-float log2f(float);
-long double log2l(long double);
-double logb(double);
-float logbf(float);
-long double logbl(long double);
+/* log2 */
+#ifndef ARCH_log2
+double log2(double x)
+{
+	return log2l(x);
+}
+#endif
+
+
+/* log2f */
+#ifndef ARCH_log2f
+float log2f(float x)
+{
+	return log2(x);
+}
+#endif
+
+
+/* log2l */
+#ifndef ARCH_log2l
+# warning Unsupported platform: log2l() is not implemented
+long double log2l(long double x)
+{
+	(void) x;
+
+	/* FIXME implement */
+	return 0.0;
+}
+#endif
+
+
+/* logb */
+#ifndef ARCH_logb
+double logb(double x)
+{
+	return logbl(x);
+}
+#endif
+
+
+/* logbf */
+#ifndef ARCH_logbf
+float logbf(float x)
+{
+	return logb(x);
+}
+#endif
+
+
+/* logbl */
+#ifndef ARCH_logbl
+# warning Unsupported platform: logbl() is not implemented
+long double logbl(long double x)
+{
+	(void) x;
+
+	/* FIXME implement */
+	return 0.0;
+}
 #endif
 
 
