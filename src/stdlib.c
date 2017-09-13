@@ -868,7 +868,7 @@ static long double _strtold(char const * str, char ** endptr)
 
 	/* skip initial spaces */
 	for(e = str; *e != '\0'; e++)
-		if(!isspace(*e))
+		if(!isspace((unsigned char)*e))
 			break;
 	/* skip optional '-' or '+' sign */
 	if(*e == '-')
