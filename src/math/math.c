@@ -277,8 +277,11 @@ float acoshf(float x)
 # warning Unsupported platform: acoshl() is not implemented
 long double acoshl(long double x)
 {
-	(void) x;
-
+	if(x < 1.0)
+	{
+		errno = EDOM;
+		return nanl(NULL);
+	}
 	/* FIXME implement */
 	return 0.0;
 }
@@ -432,8 +435,11 @@ float atanhf(float x)
 # warning Unsupported platform: atanhl() is not implemented
 long double atanhl(long double x)
 {
-	(void) x;
-
+	if(abs(x) >= 1.0)
+	{
+		errno = EDOM;
+		return nanl(NULL);
+	}
 	/* FIXME implement */
 	return 0.0;
 }
