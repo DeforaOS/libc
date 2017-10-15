@@ -32,6 +32,30 @@
 # define LIBC_KERNEL_OPENBSD_SYS_MSG_H
 
 
+/* types */
+# ifndef msqid_ds
+#  define msqid_ds msqid_ds
+struct msqid_ds
+{
+	struct ipc_perm msg_perm;
+	struct msg * __padding1;
+	struct msg * __padding2;
+	unsigned long msg_cbytes;
+	unsigned long msg_qnum;
+	unsigned long msg_qbytes;
+	pid_t msg_lspid;
+	pid_t msg_lrpid;
+	time_t msg_stime;
+	long __padding3;
+	time_t msg_rtime;
+	long __padding4;
+	time_t msg_ctime;
+	long __padding5;
+	long __padding6[4];
+};
+# endif
+
+
 /* constants */
 # define MSG_NOERROR	010000
 
