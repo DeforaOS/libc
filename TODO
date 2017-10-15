@@ -8,7 +8,7 @@ Platform specific:
   * reflect the current status in the test suite
 - Linux:
   * fork() and pause() may have to be inline (asm/unistd.h)
-  * fix ARM OABI/EABI
+  * re-introduce ARM OABI
 - NetBSD:
   * fix random crashes for the "stdlib" test
 - OpenBSD:
