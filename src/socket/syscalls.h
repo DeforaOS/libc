@@ -58,7 +58,7 @@
 
 /* OpenBSD */
 # elif defined(__OpenBSD__)
-#  if defined(__arm__) || defined(__i386__)
+#  if defined(__amd64__) || defined(__arm__) || defined(__i386__)
 #   include "kernel/openbsd/common.h"
 #  else
 #   warning Unsupported OpenBSD architecture
