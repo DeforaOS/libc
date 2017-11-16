@@ -61,9 +61,7 @@ _clint()
 		[ -d "../$subdir" ] || continue
 		for filename in $($FIND "../$subdir" -type f -a -name '*.c' | $SORT); do
 			(_clint_file "$filename")
-			if [ $? -eq 0 ]; then
-				echo "$PROGNAME: $filename: OK" 1>&2
-			else
+			if [ $? -ne 0 ]; then
 				echo "$PROGNAME: $filename: FAIL" 1>&2
 				ret=2
 			fi
