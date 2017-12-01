@@ -93,15 +93,9 @@ typedef enum _DLError
 
 
 /* constants */
-#ifndef __BYTE_ORDER__
-# warning Assuming little-endian
-# define ELFDATA	ELFDATA2LSB
-#elif __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-# define ELFDATA	ELFDATA2LSB
-#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 # define ELFDATA	ELFDATA2MSB
 #else
-# warning Assuming little-endian
 # define ELFDATA	ELFDATA2LSB
 #endif
 
