@@ -58,6 +58,7 @@
 # define isinf(f)	0
 # define isnan(f)	0
 # define isnormal(f)	((f) != 0.0 && !isinf(f) && !isnan(f))
+# define signbit(f)	((isnormal(f) && f < 0.0) ? 1 : 0)
 
 
 /* functions */
