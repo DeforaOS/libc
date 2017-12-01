@@ -46,6 +46,7 @@
 # define ELFSIZE 32
 #endif
 #include <dl/elf.h>
+#include "endian.h"
 #include "dlfcn.h"
 
 
@@ -92,19 +93,6 @@ typedef enum _DLError
 
 
 /* constants */
-#ifndef __BYTE_ORDER__
-# if defined(__amd64__)
-#  define __BYTE_ORDER__	__ORDER_LITTLE_ENDIAN__
-# elif defined(__arm__)
-#  warning Assuming ARM is little-endian
-#  define __BYTE_ORDER__	__ORDER_LITTLE_ENDIAN__
-# elif defined(__i386__)
-#  define __BYTE_ORDER__	__ORDER_LITTLE_ENDIAN__
-# elif defined(__sparc__)
-#  define __BYTE_ORDER__	__ORDER_BIG_ENDIAN__
-# endif
-#endif
-
 #ifndef __BYTE_ORDER__
 # warning Assuming little-endian
 # define ELFDATA	ELFDATA2LSB
