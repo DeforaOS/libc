@@ -138,8 +138,6 @@ int ilogbl(long double);
 double j0(double);
 double j1(double);
 double jn(int, double);
-int isinf(float x);
-int isnan(float x);
 double ldexp(double, int);
 float ldexpf(float, int);
 long double ldexpl(long double, int);

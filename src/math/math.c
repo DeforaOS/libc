@@ -959,22 +959,7 @@ long double hypotl(long double x, long double y)
 int ilogb(double);
 int ilogbf(float);
 int ilogbl(long double);
-int isinf(float x);
 #endif
-
-
-/* isnan */
-int isnan(float x)
-{
-	union
-	{
-		float f;
-		uint32_t u32;
-	} u;
-
-	u.f = x;
-	return u.u32 != 0;
-}
 
 
 /* j0 */
