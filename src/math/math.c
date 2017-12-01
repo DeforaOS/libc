@@ -966,10 +966,14 @@ int isinf(float x);
 /* isnan */
 int isnan(float x)
 {
-	(void) x;
+	union
+	{
+		float f;
+		uint32_t u32;
+	} u;
 
-	/* FIXME implement */
-	return 0;
+	u.f = x;
+	return u.u32 != 0;
 }
 
 
