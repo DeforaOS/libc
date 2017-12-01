@@ -53,6 +53,12 @@
 		 { __ll: 0x7ff0000000000000ULL }).__d)
 
 
+/* macros */
+/* FIXME really implement */
+# define isnan(f)	0
+# define isinf(f)	0
+
+
 /* functions */
 double acos(double);
 float acosf(float);
