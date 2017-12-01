@@ -1023,12 +1023,12 @@ double lgamma(double x)
     long double   w;
     long double   y;
     long double   z;
-   
+
     _signgam = 0;
 
     if ( k >= 7 )
         return _logfact (x-1);
-       
+
     if ( k == x )
         switch (k) {
         case 1 :
@@ -1039,12 +1039,12 @@ double lgamma(double x)
         case 6 : return 4.787491742782045994244981560l;
         default: return 1./0.; /* ignore the gcc warning, this is intentional */
         }
-       
+
     z = _logfact (y = x - k + 7.0 - 1);
     w = 1;
     for ( k = 7 - k; k--; )
         w *= y, y -= 1.;
-       
+
     _signgam = k >= 0  ?  0  :  k & 1;
     return z - log (w);
 }
