@@ -33,22 +33,22 @@
 
 
 /* constants */
-# define DBL_MAX_EXP	1024
+# define DBL_MAX_EXP		1024
 
 # ifdef __FLT_EVAL_METHOD__
-#  define FLT_EVAL_METHOD __FLT_EVAL_METHOD__
+#  define FLT_EVAL_METHOD	__FLT_EVAL_METHOD__
 # else
-#  define FLT_EVAL_METHOD -1
+#  define FLT_EVAL_METHOD	-1
 # endif
 # ifdef __FLT_RADIX__
-#  define FLT_RADIX __FLT_RADIX__
+#  define FLT_RADIX		__FLT_RADIX__
 # endif
 # ifdef __FLT_ROUNDS__
-#  define FLT_ROUNDS __FLT_ROUNDS__
+#  define FLT_ROUNDS		__FLT_ROUNDS__
 # else
-#  define FLT_ROUNDS -1
+#  define FLT_ROUNDS		-1
 # endif
 
-# define LDBL_MAX_EXP	1024
+# define LDBL_MAX_EXP		1024
 
 #endif /* !LIBC_FLOAT_H */
