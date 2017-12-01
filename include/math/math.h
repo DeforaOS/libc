@@ -55,8 +55,9 @@
 
 /* macros */
 /* FIXME really implement */
-# define isnan(f)	0
 # define isinf(f)	0
+# define isnan(f)	0
+# define isnormal(f)	((f) != 0.0 && !isinf(f) && !isnan(f))
 
 
 /* functions */
