@@ -51,6 +51,7 @@ static int _socket(char const * progname, char const * title, int type)
 int main(int argc, char * argv[])
 {
 	int ret = 0;
+	(void) argc;
 
 	ret |= _socket(argv[0], "1/2", SOCK_DGRAM);
 	ret |= _socket(argv[0], "2/2", SOCK_STREAM);

@@ -162,6 +162,7 @@ static int _strstr_test(char const * str1, char const * str2,
 int main(int argc, char * argv[])
 {
 	int ret = 0;
+	(void) argc;
 
 	ret |= _memchr(argv[0]);
 	ret |= _strerror(argv[0]);

@@ -161,6 +161,7 @@ static int _tzset(char const * progname)
 int main(int argc, char * argv[])
 {
 	int res = 0;
+	(void) argc;
 
 	res += _clock(argv[0]);
 	res += _getdate(argv[0]);

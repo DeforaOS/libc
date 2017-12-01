@@ -354,6 +354,7 @@ static int _hstrerror(char const * message, int value)
 int main(int argc, char * argv[])
 {
 	int ret = 0;
+	(void) argc;
 
 	ret |= _netdb(argv[0]);
 	return (ret == 0) ? 0 : 2;

@@ -85,6 +85,7 @@ static char const * _stdarg_str(char const * progname, ...)
 int main(int argc, char * argv[])
 {
 	int ret = 0;
+	(void) argc;
 
 	ret += _stdarg(argv[0]);
 	return (ret == 0) ? 0 : 2;

@@ -267,6 +267,7 @@ static int _strtoul(char const * progname)
 int main(int argc, char * argv[])
 {
 	int ret = 0;
+	(void) argc;
 
 	ret += _arc4random(argv[0]);
 	ret += _calloc(argv[0]);

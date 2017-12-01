@@ -45,6 +45,7 @@ static int _langinfo(char const * progname, nl_item item)
 int main(int argc, char * argv[])
 {
 	int res = 0;
+	(void) argc;
 
 	res += _langinfo(argv[0], CODESET);
 	res += _langinfo(argv[0], D_T_FMT);

@@ -149,6 +149,7 @@ static int _tmpnam(char const * progname, char * str)
 int main(int argc, char * argv[])
 {
 	int ret = 0;
+	(void) argc;
 
 	ret += _fmemopen(argv[0], "test", 5);
 	ret += _fopen(argv[0], "a", O_WRONLY | O_APPEND | O_CREAT);

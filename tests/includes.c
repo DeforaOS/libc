@@ -103,6 +103,8 @@
 /* functions */
 int main(int argc, char * argv[])
 {
+	(void) argc;
+
 	printf("%s: %s", argv[0], "Including all headers\n");
 	return 0;
 }

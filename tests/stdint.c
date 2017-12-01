@@ -54,6 +54,7 @@ static int _stdint(char const * progname, size_t size, char const * name,
 int main(int argc, char * argv[])
 {
 	int ret = 0;
+	(void) argc;
 
 	ret |= _stdint(argv[0], sizeof(int8_t), "int8_t", 1);
 	ret |= _stdint(argv[0], sizeof(int16_t), "int16_t", 2);

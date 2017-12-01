@@ -109,5 +109,7 @@ void stub(void)
 /* main */
 int main(int argc, char * argv[])
 {
+	(void) argc;
+
 	return (_regex(argv[0]) == 0) ? 0 : 2;
 }

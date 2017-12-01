@@ -108,6 +108,7 @@ static int _error(char const * progname, char const * message, int ret)
 int main(int argc, char * argv[])
 {
 	int ret = 0;
+	(void) argc;
 
 	ret += _ssp(argv[0], 0x41414141);
 	ret += _ssp(argv[0], 0x00000000);

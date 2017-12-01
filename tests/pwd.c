@@ -65,6 +65,7 @@ static int _getpwnam(char const * progname)
 int main(int argc, char * argv[])
 {
 	int res = 0;
+	(void) argc;
 
 	res += _getpwnam(argv[0]);
 	res += _getpwent(argv[0]);

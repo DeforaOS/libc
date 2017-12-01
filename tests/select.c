@@ -131,6 +131,7 @@ static int _error(char const * progname, char const * message, int ret)
 int main(int argc, char * argv[])
 {
 	int ret = 0;
+	(void) argc;
 
 	ret |= _pselect(argv[0]);
 	ret |= _pselect2(argv[0], 0);

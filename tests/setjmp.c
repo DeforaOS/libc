@@ -173,6 +173,7 @@ static void _sigsetjmp_test2(void)
 int main(int argc, char * argv[])
 {
 	int res;
+	(void) argc;
 
 	/* _setjmp */
 	printf("%s: %s", argv[0], "Testing _setjmp()\n");

@@ -115,6 +115,7 @@ static int _sleep(char const * progname, unsigned int t)
 int main(int argc, char * argv[])
 {
 	int ret = 0;
+	(void) argc;
 
 	ret += _chroot(argv[0]);
 	ret += _fork(argv[0]);

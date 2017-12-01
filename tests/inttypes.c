@@ -46,5 +46,6 @@ static int _inttypes(char const * progname)
 int main(int argc, char * argv[])
 {
 	(void) argc;
+
 	return (_inttypes(argv[0]) == 0) ? 0 : 2;
 }
