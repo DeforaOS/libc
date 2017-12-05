@@ -54,9 +54,8 @@
 
 
 /* macros */
-/* FIXME really implement */
-# define isinf(f)	0
-# define isnan(f)	0
+# define isinf(f)	__isinf(f)
+# define isnan(f)	__isnan(f)
 # define isnormal(f)	((f) != 0.0 && !isinf(f) && !isnan(f))
 # define signbit(f)	((isnormal(f) && f < 0.0) ? 1 : 0)
 
@@ -143,6 +142,8 @@ long double hypotl(long double, long double);
 int ilogb(double);
 int ilogbf(float);
 int ilogbl(long double);
+int __isinf(double);
+int __isnan(double);
 double j0(double);
 double j1(double);
 double jn(int, double);

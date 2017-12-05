@@ -962,6 +962,22 @@ int ilogbl(long double);
 #endif
 
 
+/* isinf */
+int __isinf(double x)
+{
+	/* FIXME really implement */
+	return 0;
+}
+
+
+/* isnan */
+int __isnan(double x)
+{
+	/* FIXME really implement */
+	return 0;
+}
+
+
 /* j0 */
 double j0(double x)
 {
