@@ -29,53 +29,53 @@
 
 
 #include <unistd.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <math.h>
 
 
 /* math */
 /* private */
+/* prototypes */
+static int _math(char const * progname);
+
+static int _error(int code, char const * format, ...);
+
+
 /* functions */
+/* math */
 static int _math(char const * progname)
 {
 	int ret = 0;
 
 	if(cos(0.0) != 1.0 || cosl(0.0) != 1.0)
-	{
-		ret |= 2;
-		printf("%s: cos(): Wrong value\n", progname);
-	}
+		ret |= _error(2, "%s: cos(): Wrong value", progname);
 	if(sin(0.0) != 0.0 || sinl(0.0) != 0.0)
-	{
-		ret |= 2;
-		printf("%s: sin(): Wrong value\n", progname);
-	}
+		ret |= _error(2, "%s: sin(): Wrong value", progname);
 	if(fabs(-3.0) != 3.0 || fabsf(-3.0) != 3.0 || fabsl(-3.0) != 3.0)
-	{
-		ret |= 4;
-		printf("%s: fabs(): Wrong value\n", progname);
-	}
+		ret |= _error(4, "%s: fabs(): Wrong value", progname);
 	if(fmod(11, 7) != 4 || fmodl(11, 7) != 4)
-	{
-		ret |= 8;
-		printf("%s: fmod(): Wrong value\n", progname);
-	}
+		ret |= _error(8, "%s: fmod(): Wrong value", progname);
 	if(pow(3.0, 0.0) != 1.0 || pow(4.0, 1.0) != 4.0 || pow(2.0, 3.0) != 8.0)
-	{
-		ret |= 16;
-		printf("%s: pow(): Wrong value\n", progname);
-	}
+		ret |= _error(16, "%s: pow(): Wrong value", progname);
 	if(round(1.5) != 2.0)
-	{
-		ret |= 32;
-		printf("%s: round(): Wrong value\n", progname);
-	}
+		ret |= _error(32, "%s: round(): Wrong value", progname);
 	if(sqrt(4.0) != 2.0)
-	{
-		ret |= 64;
-		printf("%s: sqrt(): Wrong value\n", progname);
-	}
+		ret |= _error(64, "%s: sqrt(): Wrong value", progname);
 	return ret;
+}
+
+
+/* error */
+static int _error(int code, char const * format, ...)
+{
+	va_list ap;
+
+	va_start(ap, format);
+	vprintf(format, ap);
+	va_end(ap);
+	putchar('\n');
+	return code;
 }
 
 
