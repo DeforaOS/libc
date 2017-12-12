@@ -271,6 +271,7 @@ void analyze(int number, long arg1, long arg2, long arg3, long arg4)
 #endif
 		case SYS_chdir:
 		case SYS_chroot:
+		case SYS_unlink:
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
 			break;
@@ -282,6 +283,8 @@ void analyze(int number, long arg1, long arg2, long arg3, long arg4)
 #ifdef SYS_fsync
 		case SYS_fsync:
 #endif
+		case SYS_setgid:
+		case SYS_setuid:
 			snprintf(buf, sizeof(buf), "(%d)\n", arg1);
 			break;
 		case SYS_execve:
