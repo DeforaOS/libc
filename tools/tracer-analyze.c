@@ -237,7 +237,7 @@ static void _analyze_print(char const * str);
 
 /* public */
 /* functions */
-void analyze(int number, long arg1, long arg2, long arg3)
+void analyze(int number, long arg1, long arg2, long arg3, long arg4)
 {
 	size_t i;
 	char buf[256];

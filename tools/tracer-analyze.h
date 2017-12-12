@@ -32,6 +32,6 @@
 # define LIBC_TRACER_ANALYZE_H
 
 
-void analyze(int number, long arg1, long arg2, long arg3);
+void analyze(int number, long arg1, long arg2, long arg3, long arg4);
 
 #endif /* !LIBC_TRACER_ANALYZE_H */
