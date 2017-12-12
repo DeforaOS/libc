@@ -119,8 +119,10 @@ _syscalls[] =
 #ifdef SYS_brk
 	{ SYS_brk,		"brk"		},
 #endif
+	{ SYS_chdir,		"chdir"		},
 	{ SYS_chmod,		"chmod"		},
 	{ SYS_chown,		"chown"		},
+	{ SYS_chroot,		"chroot"	},
 	{ SYS_close,		"close"		},
 	{ SYS_dup,		"dup"		},
 #ifdef SYS_dup2
@@ -192,6 +194,7 @@ _syscalls[] =
 #ifdef SYS_poll
 	{ SYS_poll,		"poll"		},
 #endif
+	{ SYS_ptrace,		"ptrace"	},
 	{ SYS_read,		"read"		},
 	{ SYS_readlink,		"readlink"	},
 #ifdef SYS_select
@@ -218,6 +221,7 @@ _syscalls[] =
 #endif
 	{ SYS_umask,		"umask"		},
 	{ SYS_unlink,		"unlink"	},
+	{ SYS_unmount,		"unmount"	},
 #ifdef SYS_wait4
 	{ SYS_wait4,		"wait4"		},
 #endif
@@ -264,6 +268,11 @@ void analyze(int number, long arg1, long arg2, long arg3, long arg4)
 			snprintf(buf, sizeof(buf), ")\n");
 			break;
 #endif
+		case SYS_chdir:
+		case SYS_chroot:
+			s = (char const *)arg1;
+			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
+			break;
 		case SYS_close:
 		case SYS_exit:
 #ifdef SYS_fchdir
@@ -320,6 +329,11 @@ void analyze(int number, long arg1, long arg2, long arg3, long arg4)
 			_analyze_print_mask(_flags_open, arg2);
 			snprintf(buf, sizeof(buf), ")\n");
 			break;
+		case SYS_ptrace:
+			p = (void *)arg3;
+			snprintf(buf, sizeof(buf), "(%d, %d, %p, %d)\n", arg1,
+					arg2, p, arg4);
+			break;
 		case SYS_read:
 		case SYS_write:
 			p = (void *)arg2;
@@ -332,6 +346,10 @@ void analyze(int number, long arg1, long arg2, long arg3, long arg4)
 			snprintf(buf, sizeof(buf), "(%p, %u)\n", arg1, arg2);
 			break;
 #endif
+		case SYS_unmount:
+			s = (char const *)arg1;
+			snprintf(buf, sizeof(buf), "(\"%s\", %#x)\n", s, arg2);
+			break;
 		default:
 			snprintf(buf, sizeof(buf), "()\n");
 			break;
