@@ -77,7 +77,7 @@
 #  define __ino_t unsigned long long
 # endif
 # ifndef __intptr_t
-#  define __intptr_t signed long
+#  define __intptr_t long
 # endif
 # ifndef __key_t
 #  define __key_t long
@@ -92,7 +92,7 @@
 #  define __off_t long long
 # endif
 # ifndef __pid_t
-#  define __pid_t signed int
+#  define __pid_t int
 # endif
 # ifndef __ptrdiff_t
 #  define __ptrdiff_t long

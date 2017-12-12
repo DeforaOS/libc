@@ -38,22 +38,22 @@
 # ifdef __INT8_TYPE__
 typedef __INT8_TYPE__ int8_t;
 # else
-typedef signed char int8_t;
+typedef char int8_t;
 # endif
 # ifdef __INT16_TYPE__
 typedef __INT16_TYPE__ int16_t;
 # else
-typedef signed short int int16_t;
+typedef short int int16_t;
 # endif
 # ifdef __INT32_TYPE__
 typedef __INT32_TYPE__ int32_t;
 # else
-typedef signed int int32_t;
+typedef int int32_t;
 # endif
 # ifdef __INT64_TYPE__
 typedef __INT64_TYPE__ int64_t;
 # else
-typedef signed long long int64_t;
+typedef long long int64_t;
 # endif
 # ifdef __UINT8_TYPE__
 typedef __UINT8_TYPE__ uint8_t;
@@ -84,7 +84,7 @@ typedef unsigned long long uint64_t;
 
 # ifndef intmax_t
 #  define intmax_t intmax_t
-typedef signed long intmax_t;
+typedef long intmax_t;
 # endif
 # ifndef intptr_t
 #  define intptr_t intptr_t
