@@ -219,6 +219,7 @@ _syscalls[] =
 #ifdef SYS_sysctl
 	{ SYS_sysctl,		"sysctl"	},
 #endif
+	{ SYS_truncate,		"truncate"	},
 	{ SYS_umask,		"umask"		},
 	{ SYS_unlink,		"unlink"	},
 	{ SYS_unmount,		"unmount"	},
@@ -356,6 +357,10 @@ void analyze(int number, long arg1, long arg2, long arg3, long arg4)
 			snprintf(buf, sizeof(buf), "(%p, %u)\n", arg1, arg2);
 			break;
 #endif
+		case SYS_truncate:
+			s = (char const *)arg1;
+			snprintf(buf, sizeof(buf), "(\"%s\", %#lx)\n", s, arg2);
+			break;
 		case SYS_unmount:
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\", %#x)\n", s, arg2);
