@@ -11,6 +11,7 @@ This implementation of the standard C library has a number of goals:
  * support any combination of kernel, compiler or hardware architecture;
  * ease cross-compilation (including cross-OS) thanks to these portable headers;
  * ensure code compiling with this libc will build everywhere supported as-is;
+ * provide a broad range of declarations for Reverse Engineering;
  * generally, let headers and code be more readable to humans or programs.
 
 Some of the most immediate benefits include faster compilation times, while
