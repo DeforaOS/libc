@@ -145,6 +145,16 @@ ssize_t recvfrom(int fd, void * buf, size_t len, int flags,
 #endif
 
 
+/* recvmsg */
+#ifndef SYS_recvmsg
+ssize_t recvmsg(int fd, struct msghdr * msg, int flags)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* send */
 #ifndef SYS_send
 # ifdef SYS_sendto
@@ -162,6 +172,16 @@ ssize_t send(int fd, const void * buf, size_t len, int flags)
 	return -1;
 }
 # endif
+#endif
+
+
+/* sendmsg */
+#ifndef SYS_sendmsg
+ssize_t sendmsg(int fd, const struct msghdr * msg, int flags)
+{
+	errno = ENOSYS;
+	return -1;
+}
 #endif
 
 

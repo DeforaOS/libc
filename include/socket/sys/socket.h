@@ -91,7 +91,9 @@ int listen(int fd, int backlog);
 ssize_t recv(int fd, void * buf, size_t len, int flags);
 ssize_t recvfrom(int fd, void * buf, size_t len, int flags,
 		struct sockaddr * addr, socklen_t * addrlen);
+ssize_t recvmsg(int fd, struct msghdr * msg, int flags);
 ssize_t send(int fd, const void * buf, size_t len, int flags);
+ssize_t sendmsg(int fd, const struct msghdr * msg, int flags);
 ssize_t sendto(int fd, const void * buf, size_t len, int flags,
 		struct sockaddr * addr, socklen_t addrlen);
 int setsockopt(int fd, int level, int name, const void * value,

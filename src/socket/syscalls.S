@@ -117,8 +117,14 @@ SYSCALL(recv)
 #ifdef SYS_recvfrom
 SYSCALL(recvfrom)
 #endif
+#ifdef SYS_recvmsg
+SYSCALL(recvmsg)
+#endif
 #ifdef SYS_send
 SYSCALL(send)
+#endif
+#ifdef SYS_sendmsg
+SYSCALL(sendmsg)
 #endif
 #ifdef SYS_sendto
 SYSCALL(sendto)
