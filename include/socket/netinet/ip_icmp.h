@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008-2016 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2017 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,34 +28,21 @@
 
 
 
-#ifndef LIBSOCKET_NETINET_TCP_H
-# define LIBSOCKET_NETINET_TCP_H
+#ifndef LIBSOCKET_NETINET_IP_ICMP_H
+# define LIBSOCKET_NETINET_IP_ICMP_H
 
 # include "stdint.h"
-# include "../compat/netinet/tcp.h"
 
 
 /* types */
 # pragma pack(1)
-struct tcphdr
+struct icmp
 {
-	uint16_t th_sport;
-	uint16_t th_dport;
-	uint32_t th_seq;
-	uint32_t th_ack;
-#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-	uint8_t th_off:4;
-	uint8_t _padding0:4;
-#else
-	uint8_t th_off:4;
-	uint8_t _padding0:4;
-#endif
-	uint8_t th_flags;
-	uint16_t th_win;
-	uint16_t th_sum;
-	uint16_t th_urp;
+	uint8_t icmp_type;
+	uint8_t icmp_code;
+	uint16_t icmp_cksum;
 };
 # pragma pack()
 
 
-#endif /* !LIBSOCKET_NETINET_TCP_H */
+#endif /* !LIBSOCKET_NETINET_IP_ICMP_H */
