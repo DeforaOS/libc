@@ -55,7 +55,7 @@ struct in_addr
 #  define sockaddr_in sockaddr_in
 struct sockaddr_in
 {
-	unsigned char sin_len;
+	unsigned char _padding0;
 	sa_family_t sin_family;
 	in_port_t sin_port;
 	struct in_addr sin_addr;
