@@ -122,7 +122,9 @@ _syscalls[] =
 	{ SYS_chdir,		"chdir"		},
 	{ SYS_chmod,		"chmod"		},
 	{ SYS_chown,		"chown"		},
+#ifdef SYS_chroot
 	{ SYS_chroot,		"chroot"	},
+#endif
 	{ SYS_close,		"close"		},
 	{ SYS_dup,		"dup"		},
 #ifdef SYS_dup2
@@ -270,7 +272,9 @@ void analyze(int number, long arg1, long arg2, long arg3, long arg4)
 			break;
 #endif
 		case SYS_chdir:
+#ifdef SYS_chroot
 		case SYS_chroot:
+#endif
 		case SYS_unlink:
 			s = (char const *)arg1;
 			snprintf(buf, sizeof(buf), "(\"%s\")\n", s);
