@@ -1304,7 +1304,7 @@ long double modfl(long double x, long double * iptr)
 double nan(const char * tagp)
 {
 	if(tagp == NULL || strlen(tagp) == 0)
-		return strtod("NAN()", NULL);
+		return strtod("NAN", NULL);
 	/* FIXME implement */
 	return 0.0;
 }
@@ -1314,7 +1314,7 @@ double nan(const char * tagp)
 float nanf(const char * tagp)
 {
 	if(tagp == NULL || strlen(tagp) == 0)
-		return strtof("NAN()", NULL);
+		return strtof("NAN", NULL);
 	/* FIXME implement */
 	return 0.0;
 }
@@ -1324,7 +1324,7 @@ float nanf(const char * tagp)
 long double nanl(const char * tagp)
 {
 	if(tagp == NULL || strlen(tagp) == 0)
-		return strtold("NAN()", NULL);
+		return strtold("NAN", NULL);
 	/* FIXME implement */
 	return 0.0;
 }
