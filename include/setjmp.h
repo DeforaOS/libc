@@ -34,7 +34,7 @@
 
 /* types */
 # if defined(__amd64__)
-typedef long jmp_buf[9 + 1 + 4];
+typedef long jmp_buf[9 + 1 + 2];
 # elif defined(__i386__)
 typedef long jmp_buf[6 + 1 + 4];
 # else
