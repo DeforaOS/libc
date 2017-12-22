@@ -121,15 +121,13 @@ _longjmp:
 	mov	0(%rdi), %rdx			/* return address */
 	mov	%rdx, 0(%rsp)
 
-	/* if(val != 0) goto __longjmp_return; else val++ */
-	mov	%esi, %eax
+	mov	%esi, %eax			/* if(val != 0) */
 	test	%eax, %eax
-	jnz	__longjmp_return
-	inc	%eax
+	jnz	__longjmp_return		/*   goto __longjmp_return */
+	inc	%eax				/* val = 1 */
 
-	/* return val */
 __longjmp_return:
-	ret
+	ret					/* return val */
 
 
 /* longjmp */
@@ -139,10 +137,9 @@ longjmp:
 .global siglongjmp
 .type siglongjmp,@function
 siglongjmp:
-	/* if(env[9] == 0) goto _longjmp_registers */
-	mov	72(%rdi), %rdx
+	mov	72(%rdi), %rdx			/* if(env[9] == 0) */
 	test	%rdx, %rdx
-	jz	_longjmp_registers
+	jz	_longjmp_registers		/*   goto _longjmp_registers */
 
 	/* restore the signal mask */
 	/* sigprocmask(SIG_SETMASK, &env[10], NULL) */
@@ -172,15 +169,13 @@ _longjmp_registers:
 	mov	0(%rdi), %rdx			/* return address */
 	mov	%rdx, 0(%rsp)
 
-	/* if(val != 0) return val; else val++ */
-	mov	%esi, %eax
+	mov	%esi, %eax			/* if(val != 0) */
 	test	%eax, %eax
-	jnz	_longjmp_return
-	inc	%eax
+	jnz	_longjmp_return			/*   goto _longjmp_return */
+	inc	%eax				/* else val = 1 */
 
-	/* return val */
 _longjmp_return:
-	ret
+	ret					/* return val */
 
 
 /* lseek */
@@ -242,11 +237,9 @@ _setjmp:
 	mov	%r15, 64(%rdi)			/* %r15 */
 
 	/* the signal mask is not saved */
-	/* env[9] = 0 */
-	movq	$0x0, 72(%rdi)
+	movq	$0x0, 72(%rdi)			/* env[9] = 0 */
 
-	/* return 0 */
-	mov	$0x0, %eax
+	mov	$0x0, %eax			/* return 0 */
 	ret
 
 
@@ -267,8 +260,7 @@ setjmp:
 	mov	%r15, 64(%rdi)			/* %r15 */
 
 	/* the signal mask is not saved yet */
-	/* env[9] = 0 */
-	movq	$0x0, 72(%rdi)
+	movq	$0x0, 72(%rdi)			/* env[9] = 0 */
 
 	/* res = sigprocmask(0, NULL, &env[10]) */
 	push	%rdi
@@ -283,14 +275,12 @@ setjmp:
 	pop	%rdi
 
 	/* the signal mask was saved */
-	/* if(res == 0) env[9] = 1 */
-	test	%eax, %eax
+	test	%eax, %eax			/* if(res == 0) */
 	jnz	_setjmp_return
-	movq	$0x1, 72(%rdi)
+	movq	$0x1, 72(%rdi)			/*   env[9] = 1 */
 
-	/* return 0 */
 _setjmp_return:
-	mov	$0x0, %eax
+	mov	$0x0, %eax			/* return 0 */
 	ret
 
 
@@ -329,15 +319,14 @@ sigaction:
 .global sigsetjmp
 .type sigsetjmp,@function
 sigsetjmp:
-	/* if(savemask != 0) return setjmp(); else return _setjmp(); */
-	test	%esi, %esi
+	test	%esi, %esi			/* if(savemask != 0) */
 #ifdef __PIC__
-	jnz	setjmp@PLT
+	jnz	setjmp@PLT			/*   return setjmp() */
 #else
 	jnz	setjmp
 #endif
 #ifdef __PIC__
-	jmp	_setjmp@PLT
+	jmp	_setjmp@PLT			/* return _setjmp() */
 #else
 	jmp	_setjmp
 #endif
