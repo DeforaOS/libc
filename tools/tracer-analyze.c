@@ -146,6 +146,9 @@ _syscalls[] =
 #ifdef SYS_fsync
 	{ SYS_fsync,		"fsync"		},
 #endif
+#ifdef SYS_ftruncate
+	{ SYS_ftruncate,	"ftruncate"	},
+#endif
 #ifdef SYS_getdents
 	{ SYS_getdents,		"getdents"	},
 #endif
@@ -308,6 +311,11 @@ void analyze(int number, long arg1, long arg2, long arg3, long arg4)
 #endif
 			snprintf(buf, sizeof(buf), "(%d, %d)\n", arg1, arg2);
 			break;
+#ifdef SYS_ftruncate
+		case SYS_ftruncate:
+			snprintf(buf, sizeof(buf), "(%d, %#lx)\n", arg1, arg2);
+			break;
+#endif
 		case SYS_kill:
 			snprintf(buf, sizeof(buf), "(%d, ", arg1);
 			_analyze_print(buf);
