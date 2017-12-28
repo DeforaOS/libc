@@ -39,7 +39,8 @@ static int _ctype(void)
 	size_t i;
 
 	for(i = 0; str[i] != '\0'; i++)
-		if(isprint(str[i]) || isspace(str[i]))
+		if(isprint((unsigned char)str[i])
+				|| isspace((unsigned char)str[i]))
 			putchar(str[i]);
 	return 0;
 }
