@@ -1,3 +1,4 @@
+/ctype
 /dlfcn
 /errno
 /fnmatch
@@ -5,6 +6,7 @@
 /includes
 /inttypes
 /langinfo
+/math
 /mman
 /msg
 /netdb
@@ -15,6 +17,7 @@
 /rt
 /select
 /setjmp
+/shm
 /signal
 /socket
 /ssp
