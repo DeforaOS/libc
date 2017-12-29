@@ -72,7 +72,6 @@ MCALL1L(fabsl, fabs)
 
 
 /* fmod */
-/* FIXME this is only the partial remainder */
 .global fmod
 .type fmod,@function
 fmod:
@@ -80,7 +79,11 @@ fmod:
 	fldl	-0x8(%rsp)
 	movq	%xmm0, -0x8(%rsp)
 	fldl	-0x8(%rsp)
+.fmod_fprem:
 	fprem
+	fstsw	%ax
+	sahf
+	jp	.fmod_fprem
 	fstpl	-0x8(%rsp)
 	movq	-0x8(%rsp), %xmm0
 	emms
@@ -88,13 +91,16 @@ fmod:
 
 
 /* fmodl */
-/* FIXME this is only the partial remainder */
 .global fmodl
 .type fmodl,@function
 fmodl:
 	fldt	0x18(%rsp)
 	fldt	0x8(%rsp)
+.fmodl_fprem:
 	fprem
+	fstsw	%ax
+	sahf
+	jp	.fmodl_fprem
 	ret
 
 
