@@ -60,6 +60,9 @@ _fixme()
 		for filename in $($FIND "../$subdir" -type f | $SORT); do
 			callback=
 			case "$filename" in
+				*.asm|*.S)
+					callback="_fixme_asm"
+					;;
 				*.c|*.h|*.js)
 					callback="_fixme_c"
 					;;
@@ -76,6 +79,18 @@ _fixme()
 		done
 	done
 	return $ret
+}
+
+_fixme_asm()
+{
+	retc=0
+	filename="$1"
+
+	#warnings
+	$GREP -nH '/\*.*\(TODO\|XXX\)' "$filename"
+	#failures
+	$GREP -nH '/\*.*FIXME' "$filename" && retc=2
+	return $retc
 }
 
 _fixme_c()
