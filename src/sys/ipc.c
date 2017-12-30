@@ -30,7 +30,14 @@
 
 #include "../syscalls.h"
 #include "sys/ipc.h"
+#include "errno.h"
 
 
 /* functions */
-/* FIXME implement */
+/* ftok */
+key_t ftok(const char * path, int id)
+{
+	/* TODO really implement */
+	errno = ENOSYS;
+	return -1;
+}
