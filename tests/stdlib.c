@@ -61,6 +61,7 @@ static int _arc4random(char const * progname)
 	size_t i;
 
 	printf("%s: Testing arc4random()\n", progname);
+	/* XXX not deterministic */
 	for(i = 0; i < sizeof(res) / sizeof(*res); i++)
 		res[i] = arc4random();
 	for(i = 0; i < sizeof(res) / sizeof(*res); i++)
