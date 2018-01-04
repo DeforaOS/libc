@@ -1,3 +1,4 @@
+- fix random failures for the "stdlib" and "unistd" tests
 - pass the "time" test
 
 Platform specific:
@@ -9,7 +10,5 @@ Platform specific:
 - Linux:
   * fork() and pause() may have to be inline (asm/unistd.h)
   * re-introduce ARM OABI
-- NetBSD:
-  * fix random crashes for the "stdlib" test
 - OpenBSD:
   * complete support for SSP
