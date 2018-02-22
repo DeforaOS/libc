@@ -32,6 +32,8 @@
 # define LIBSOCKET_KERNEL_FREEBSD_COMMON_H
 
 
+# define SYS_recvmsg		27
+# define SYS_sendmsg		28
 # define SYS_recvfrom		29
 # define SYS_accept		30
 # define SYS_getpeername	31
