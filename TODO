@@ -1,4 +1,5 @@
 - fix random failures for the "stdlib" and "unistd" tests
+- pass the FIXME test
 - pass the "time" test
 
 Platform specific:
