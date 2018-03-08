@@ -81,6 +81,7 @@
 # define SYS_select		93
 # define SYS_fsync		95
 # define SYS_setpriority	96
+# define SYS_getdents		99
 # define SYS_getpriority	100
 # define SYS_gettimeofday	116
 # define SYS_getrusage		117
