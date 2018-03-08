@@ -29,6 +29,7 @@
 
 
 #include <unistd.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <limits.h>
 #include <errno.h>
