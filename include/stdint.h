@@ -116,4 +116,16 @@ typedef __uintptr_t uintptr_t;
 # define UINT32_MAX	0xffffffff
 # define UINT64_MAX	0xffffffffffffffff
 
+# ifndef ULONG_MAX
+#  ifdef _LP64 /* FIXME probably sometimes wrong */
+#   define ULONG_MAX 0xffffffffffffffff
+#  else
+#   define ULONG_MAX 0xffffffff
+#  endif
+# endif
+
+# ifndef SIZE_MAX
+#  define SIZE_MAX	ULONG_MAX
+# endif
+
 #endif /* !LIBC_STDINT_H */

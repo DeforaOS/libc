@@ -93,9 +93,6 @@
 # ifndef SCHAR_MIN
 #  define SCHAR_MIN -0x7f
 # endif
-# ifndef SIZE_MAX
-#  define SIZE_MAX ULONG_MAX
-# endif
 # ifndef SSIZE_MAX
 #  define SSIZE_MAX LONG_MAX
 # endif
@@ -110,13 +107,6 @@
 # endif
 # ifndef UINT_MAX
 #  define UINT_MAX 0xffffffff
-# endif
-# ifndef ULONG_MAX
-#  ifdef _LP64 /* FIXME probably sometimes wrong */
-#   define ULONG_MAX 0xffffffffffffffff
-#  else
-#   define ULONG_MAX 0xffffffff
-#  endif
 # endif
 
 # ifndef DBL_MAX
