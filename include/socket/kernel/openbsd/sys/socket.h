@@ -33,6 +33,11 @@
 
 
 /* types */
+# ifndef socklen_t
+#  define socklen_t socklen_t
+typedef unsigned int socklen_t;
+# endif
+
 # ifndef msghdr
 #  define msghdr msghdr
 struct msghdr
