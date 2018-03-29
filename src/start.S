@@ -85,6 +85,7 @@
 # else /* !__arm__ && !__i386__ */
 #  warning Unsupported OpenBSD architecture
 # endif
+# include "kernel/openbsd/start.S"
 
 /* Solaris */
 #elif defined(__sun__)
