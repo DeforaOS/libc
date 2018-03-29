@@ -29,6 +29,8 @@
 
 
 #include <stdio.h>
+#include <string.h>
+#include <errno.h>
 #include <pwd.h>
 
 
@@ -54,7 +56,11 @@ static int _getpwnam(char const * progname)
 
 	printf("%s: Testing getpwnam()\n", progname);
 	if((pw = getpwnam("root")) == NULL)
+	{
+		fprintf(stderr, "%s: %s: %s\n", progname, "getpwnam",
+				strerror(errno));
 		return 2;
+	}
 	printf("%s: %s:%s:%u:%u:%s:%s:%s\n", progname, pw->pw_name, "*",
 			pw->pw_uid, pw->pw_gid, pw->pw_gecos, pw->pw_dir,
 			pw->pw_shell);
