@@ -40,9 +40,8 @@ static int _getpwent(char const * progname)
 	setpwent();
 	printf("%s: Testing getpwent()\n", progname);
 	while((pw = getpwent()) != NULL)
-		printf("%s: Testing getpwent(): %s (%u:%u) %s\n", progname,
-				pw->pw_name, pw->pw_uid, pw->pw_gid,
-				pw->pw_shell);
+		printf("%s: %s (%u:%u) %s\n", progname, pw->pw_name, pw->pw_uid,
+				pw->pw_gid, pw->pw_shell);
 	endpwent();
 	return 0;
 }
@@ -54,8 +53,12 @@ static int _getpwnam(char const * progname)
 	struct passwd * pw;
 
 	printf("%s: Testing getpwnam()\n", progname);
-	if((pw = getpwnam("root")) == NULL
-			|| pw->pw_uid != 0)
+	if((pw = getpwnam("root")) == NULL)
+		return -1;
+	printf("%s: %s:%s:%u:%u:%s:%s:%s\n", progname, pw->pw_name, "*",
+			pw->pw_uid, pw->pw_gid, pw->pw_gecos, pw->pw_dir,
+			pw->pw_shell);
+	if(pw->pw_uid != 0)
 		return -1;
 	return 0;
 }
