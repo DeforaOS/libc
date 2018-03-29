@@ -54,12 +54,12 @@ static int _getpwnam(char const * progname)
 
 	printf("%s: Testing getpwnam()\n", progname);
 	if((pw = getpwnam("root")) == NULL)
-		return -1;
+		return 2;
 	printf("%s: %s:%s:%u:%u:%s:%s:%s\n", progname, pw->pw_name, "*",
 			pw->pw_uid, pw->pw_gid, pw->pw_gecos, pw->pw_dir,
 			pw->pw_shell);
 	if(pw->pw_uid != 0)
-		return -1;
+		return 4;
 	return 0;
 }
 
@@ -67,10 +67,10 @@ static int _getpwnam(char const * progname)
 /* main */
 int main(int argc, char * argv[])
 {
-	int res = 0;
+	int res;
 	(void) argc;
 
-	res += _getpwnam(argv[0]);
-	res += _getpwent(argv[0]);
-	return (res == 0) ? 0 : 2;
+	res = _getpwnam(argv[0]);
+	res |= _getpwent(argv[0]);
+	return res;
 }
