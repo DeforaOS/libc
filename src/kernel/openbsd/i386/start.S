@@ -46,11 +46,19 @@ _start:
 	push	%ebp
 	push	%esp
 	mov	%esp, %ebp
-
-	/* run the program */
 	push	%ecx
 	push	%ebx
 	push	%eax
+
+#if defined(__SSP__)
+	/* initialize SSP */
+	call	__stack_chk_setup
+#endif
+
+	/* initialize stdio */
+	call	__start_stdio
+
+	/* run the program */
 	call	main
 
 	/* exit the program */
