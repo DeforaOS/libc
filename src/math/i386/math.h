@@ -44,7 +44,11 @@
 #define ARCH_floorf
 #define ARCH_floorl
 #define ARCH_fmod
+#define ARCH_fmodf
+#define ARCH_fmodl
 #define ARCH_frexp
+#define ARCH_frexpf
+#define ARCH_frexpl
 #define ARCH_hypot
 #define ARCH_ldexp
 #define ARCH_log

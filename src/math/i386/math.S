@@ -206,11 +206,73 @@ fmod:
 	ret
 
 
+/* fmodf */
+.global fmodf
+.type fmodf,@function
+fmodf:
+	flds	0x8(%esp)
+	flds	0x4(%esp)
+.Lfmodf:
+	fprem
+	fstsw	%ax
+	sahf
+	jp	.Lfmodf
+	fstp	%st(1)
+	ret
+
+
+/* fmodl */
+.global fmodl
+.type fmodl,@function
+fmodl:
+	fldt	0x10(%esp)
+	fldt	0x04(%esp)
+.Lfmodl:
+	fprem
+	fstsw	%ax
+	sahf
+	jp	.Lfmodl
+	fstp	%st(1)
+	ret
+
+
 /* frexp */
 .global frexp
 .type frexp,@function
 frexp:
 	fldl	0x4(%esp)
+	mov	0xc(%esp), %eax
+	fxtract
+	fxch
+	fistpl	(%eax)
+	push	0x3f000000	/* 1/2 */
+	fmuls	(%esp)
+	incl	(%eax)
+	pop	%eax
+	ret
+
+
+/* frexpf */
+.global frexpf
+.type frexpf,@function
+frexpf:
+	flds	0x4(%esp)
+	mov	0x8(%esp), %eax
+	fxtract
+	fxch
+	fistpl	(%eax)
+	push	0x3f000000	/* 1/2 */
+	fmuls	(%esp)
+	incl	(%eax)
+	pop	%eax
+	ret
+
+
+/* frexpl */
+.global frexpl
+.type frexpl,@function
+frexpl:
+	fldt	0x4(%esp)
 	mov	0xc(%esp), %eax
 	fxtract
 	fxch
