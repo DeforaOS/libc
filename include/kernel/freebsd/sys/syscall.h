@@ -108,6 +108,7 @@
 # define SYS_msgget		225
 # define SYS_msgsnd		226
 # define SYS_msgrcv		227
+# define SYS_shmctl		231
 # define SYS_nanosleep		240
 # define SYS_lchown		254
 # define SYS__getcwd		326
