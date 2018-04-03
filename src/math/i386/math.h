@@ -57,7 +57,7 @@
 #define ARCH_ldexpf
 #define ARCH_ldexp
 #define ARCH_log
-#define ARCH_pow
+#define ARCH_powl
 #define ARCH_round
 #define ARCH_roundf
 #define ARCH_roundl

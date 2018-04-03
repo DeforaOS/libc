@@ -374,12 +374,12 @@ log:
 	ret
 
 
-/* pow */
-.global pow
-.type pow,@function
-pow:
-	fldl	0x4(%esp)
-	fldl	0xc(%esp)
+/* powl */
+.global powl
+.type powl,@function
+powl:
+	fldt	0x04(%esp)
+	fldt	0x10(%esp)
 	ftst			/* y = 0 ? */
 	fstsw	%ax
 	fld1			/* st(0)=1, st(1)=y, st(2)=x */
