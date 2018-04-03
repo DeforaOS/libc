@@ -34,6 +34,8 @@
 
 #define ARCH_ceil
 #define ARCH_cos
+#define ARCH_cosf
+#define ARCH_cosl
 #define ARCH_exp
 #define ARCH_fabs
 #define ARCH_fabsf
@@ -47,6 +49,7 @@
 #define ARCH_round
 #define ARCH_roundf
 #define ARCH_sin
+#define ARCH_sinl
 #define ARCH_sinf
 #define ARCH_sqrt
 #define ARCH_sqrtf

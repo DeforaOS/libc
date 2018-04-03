@@ -56,12 +56,53 @@ ceil:
 	jmp	.Lflcetr
 
 
+/* cosf */
+.global cosf
+.type cosf,@function
+cosf:
+	flds	0x4(%esp)
+1:	fcos
+	fnstsw	%ax
+	test	$0x4, %ah
+	je	3f
+	fldpi
+	fadd	%st
+	fxch	%st(1)
+2:	fprem1
+	fnstsw	%ax
+	test	$0x4, %ah
+	jne	2b
+	fstp	%st(1)
+	fcos
+3:	ret
+
+
 /* cos */
 .global cos
 .type cos,@function
 cos:
 	fldl	0x4(%esp)
-/* FIXME check there are no conflicts between labels 1, 2 and 3 and sin() */
+1:	fcos
+	fnstsw	%ax
+	test	$0x4, %ah
+	je	3f
+	fldpi
+	fadd	%st
+	fxch	%st(1)
+2:	fprem1
+	fnstsw	%ax
+	test	$0x4, %ah
+	jne	2b
+	fstp	%st(1)
+	fcos
+3:	ret
+
+
+/* cosl */
+.global cosl
+.type cosl,@function
+cosl:
+	fldt	0x4(%esp)
 1:	fcos
 	fnstsw	%ax
 	test	$0x4, %ah
@@ -284,6 +325,27 @@ sin:
 .type sinf,@function
 sinf:
 	flds	0x4(%esp)
+1:	fsin
+	fnstsw	%ax
+	test	$0x4, %ah
+	je	3f
+	fldpi
+	fadd	%st
+	fxch	%st(1)
+2:	fprem1
+	fnstsw	%ax
+	test	$0x4, %ah
+	jne	2b
+	fstp	%st(1)
+	fsin
+3:	ret
+
+
+/* sinl */
+.global sinl
+.type sinl,@function
+sinl:
+	fldt	0x4(%esp)
 1:	fsin
 	fnstsw	%ax
 	test	$0x4, %ah
