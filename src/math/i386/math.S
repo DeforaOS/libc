@@ -155,11 +155,38 @@ fabsf:
 	ret
 
 
+/* fabsl */
+.global fabsl
+.type fabsl,@function
+fabsl:
+	fldt	0x4(%esp)
+	fabs
+	ret
+
+
 /* floor */
 .global floor
 .type floor,@function
 floor:
 	fldl	0x4(%esp)
+	mov	$0x4, %ah
+	jmp	.Lflcetr
+
+
+/* floorf */
+.global floorf
+.type floorf,@function
+floorf:
+	flds	0x4(%esp)
+	mov	$0x4, %ah
+	jmp	.Lflcetr
+
+
+/* floorl */
+.global floorl
+.type floorl,@function
+floorl:
+	fldt	0x4(%esp)
 	mov	$0x4, %ah
 	jmp	.Lflcetr
 

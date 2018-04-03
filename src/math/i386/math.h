@@ -39,7 +39,10 @@
 #define ARCH_exp
 #define ARCH_fabs
 #define ARCH_fabsf
+#define ARCH_fabsl
 #define ARCH_floor
+#define ARCH_floorf
+#define ARCH_floorl
 #define ARCH_fmod
 #define ARCH_frexp
 #define ARCH_hypot
