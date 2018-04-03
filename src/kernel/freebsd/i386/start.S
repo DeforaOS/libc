@@ -79,10 +79,10 @@ auxv_done:
 	/* initialize stdio */
 	call	__start_stdio
 
-	/* run the main program */
+	/* run the program */
 	call	main
 
-	/* exit the main program */
+	/* exit the program */
 	mov	%ebp, %esp
 	push	%eax
 	call	exit
