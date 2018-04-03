@@ -52,6 +52,7 @@
 #define ARCH_hypot
 #define ARCH_hypotf
 #define ARCH_hypotl
+#define ARCH_ldexpf
 #define ARCH_ldexp
 #define ARCH_log
 #define ARCH_pow
@@ -63,5 +64,6 @@
 #define ARCH_sinf
 #define ARCH_sqrt
 #define ARCH_sqrtf
+#define ARCH_sqrtl
 
 #endif /* !MATH_I386_H */

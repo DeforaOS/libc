@@ -336,6 +336,16 @@ ldexp:
 	ret
 
 
+/* ldexpf */
+.global ldexpf
+.type ldexpf,@function
+ldexpf:
+	filds	0x8(%esp)
+	flds	0x4(%esp)
+	fscale
+	ret
+
+
 /* log */
 .global log
 .type log,@function
@@ -502,5 +512,14 @@ sqrt:
 .type sqrtf,@function
 sqrtf:
 	flds	0x4(%esp)
+	fsqrt
+	ret
+
+
+/* sqrtl */
+.global sqrtl
+.type sqrtl,@function
+sqrtl:
+	fldt	0x4(%esp)
 	fsqrt
 	ret
