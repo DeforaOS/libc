@@ -298,6 +298,34 @@ hypot:
 	ret
 
 
+/* hypotf */
+.global hypotf
+.type hypotf,@function
+hypotf:
+	flds	0x8(%esp)
+	flds	0x4(%esp)
+	fmul	%st(0), %st(0)
+	fxch
+	fmul	%st(0), %st(0)
+	faddp
+	fsqrt
+	ret
+
+
+/* hypotl */
+.global hypotl
+.type hypotl,@function
+hypotl:
+	fldt	0x10(%esp)
+	fldt	0x04(%esp)
+	fmul	%st(0), %st(0)
+	fxch
+	fmul	%st(0), %st(0)
+	faddp
+	fsqrt
+	ret
+
+
 /* ldexp */
 .global ldexp
 .type ldexp,@function
@@ -384,6 +412,15 @@ round:
 .type roundf,@function
 roundf:
 	flds	0x4(%esp)
+	frndint
+	ret
+
+
+/* roundl */
+.global roundl
+.type roundl,@function
+roundl:
+	fldt	0x4(%esp)
 	frndint
 	ret
 

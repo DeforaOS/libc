@@ -50,11 +50,14 @@
 #define ARCH_frexpf
 #define ARCH_frexpl
 #define ARCH_hypot
+#define ARCH_hypotf
+#define ARCH_hypotl
 #define ARCH_ldexp
 #define ARCH_log
 #define ARCH_pow
 #define ARCH_round
 #define ARCH_roundf
+#define ARCH_roundl
 #define ARCH_sin
 #define ARCH_sinl
 #define ARCH_sinf
