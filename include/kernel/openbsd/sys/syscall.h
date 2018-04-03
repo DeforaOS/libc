@@ -109,6 +109,7 @@
 # define SYS_lseek		199
 # define SYS_truncate		200
 # define SYS_ftruncate		201
+# define SYS_sysctl		202
 # define SYS_mlock		203
 # define SYS_munlock		204
 # define SYS_getpgid		207
