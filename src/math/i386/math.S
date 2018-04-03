@@ -56,6 +56,24 @@ ceil:
 	jmp	.Lflcetr
 
 
+/* ceilf */
+.global ceilf
+.type ceilf,@function
+ceilf:
+	flds	0x4(%esp)
+	mov	$0x8, %ah
+	jmp	.Lflcetr
+
+
+/* ceill */
+.global ceill
+.type ceill,@function
+ceill:
+	fldt	0x4(%esp)
+	mov	$0x8, %ah
+	jmp	.Lflcetr
+
+
 /* cosf */
 .global cosf
 .type cosf,@function

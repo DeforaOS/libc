@@ -33,6 +33,8 @@
 
 
 #define ARCH_ceil
+#define ARCH_ceilf
+#define ARCH_ceill
 #define ARCH_cos
 #define ARCH_cosf
 #define ARCH_cosl
