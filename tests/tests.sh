@@ -25,14 +25,15 @@
 
 
 #variables
-ARCH="$(uname -m)"
-case "$ARCH" in
-	x86_64)
-		ARCH="amd64"
-		;;
-esac
+ARCH=
 DEVNULL="/dev/null"
 [ -n "$OBJDIR" ] || OBJDIR="./"
+HOST_ARCH="$(uname -m)"
+case "$HOST_ARCH" in
+	x86_64)
+		HOST_ARCH="amd64"
+		;;
+esac
 PROGNAME="tests.sh"
 SYSTEM="$(uname -s)"
 SOEXT="so"
@@ -113,10 +114,13 @@ _usage()
 
 #main
 clean=0
-while getopts "cP:" name; do
+while getopts "cO:P:" name; do
 	case "$name" in
 		c)
 			clean=1
+			;;
+		O)
+			export "${OPTARG%%=*}"="${OPTARG#*=}"
 			;;
 		P)
 			#XXX ignored
@@ -142,6 +146,13 @@ if ! _run "start" argv1 argv2 > "$DEVNULL" 2>&1; then
 	echo "Not performing tests (not functional)"
 	exit 0
 fi
+#detect the architecture
+[ -n "$ARCH" ] || ARCH="$HOST_ARCH"
+if [ -z "$ARCH" ]; then
+	echo "Not performing tests (could not detect architecture)"
+	exit 0
+fi
+echo "Detected architecture: $ARCH" 1>&2
 _date > "$target"
 FAILED=
 echo "Performing tests:" 1>&2
