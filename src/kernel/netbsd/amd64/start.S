@@ -104,4 +104,5 @@ auxv_done:
 #else
 	call	exit
 #endif
+
 	hlt
