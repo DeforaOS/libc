@@ -139,8 +139,8 @@ static int _file_mmap(DL * dl, Elf_Phdr * phdr);
 static int _file_prot(unsigned int flags);
 static int _file_symbols(DL * dl);
 static int _file_relocations(DL * dl);
-static void _file_relocations_arch(DL * dl, Elf_Rela * rela, char * strtab,
-		size_t strtab_cnt, Elf_Sym * sym);
+static void _file_relocations_arch(DL * dl, Elf_Rela * rela,
+		char const * strtab, size_t strtab_cnt, Elf_Sym * sym);
 
 static void * _dl_new(char const * pathname)
 {
@@ -439,8 +439,8 @@ static int _file_relocations(DL * dl)
 	return 0;
 }
 
-static void _file_relocations_arch(DL * dl, Elf_Rela * rela, char * strtab,
-		size_t strtab_cnt, Elf_Sym * sym)
+static void _file_relocations_arch(DL * dl, Elf_Rela * rela,
+		char const * strtab, size_t strtab_cnt, Elf_Sym * sym)
 {
 #ifndef DEBUG
 	(void) strtab;
