@@ -391,8 +391,8 @@ static int _file_relocations(DL * dl)
 {
 	size_t i;
 	Elf_Shdr * shdr;
-	size_t j;
 	Elf_Rel * rel = NULL;
+	size_t j;
 	Elf_Rela rela;
 	Elf_Sym * symtab;
 	size_t symtab_cnt;
