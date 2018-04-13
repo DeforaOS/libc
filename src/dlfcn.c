@@ -253,7 +253,7 @@ static int _new_self_dynamic(DL * dl, Elf_Phdr * phdr)
 	Elf_Dyn * dyn;
 
 	/* FIXME also check for the size */
-	for(dyn = (char *)dl->data_addr + phdr->p_vaddr;
+	for(dyn = (Elf_Dyn *)(dl->data_addr + phdr->p_vaddr);
 			dyn->d_tag != DT_NULL; dyn++)
 		switch(dyn->d_tag)
 		{
@@ -274,9 +274,10 @@ static int _new_self_dynamic(DL * dl, Elf_Phdr * phdr)
 				break;
 			case DT_SYMTAB:
 #ifdef __linux__
-				dl->symtab = dyn->d_un.d_ptr;
+				dl->symtab = (Elf_Sym *)dyn->d_un.d_ptr;
 #else
-				dl->symtab = dl->data_addr + dyn->d_un.d_ptr;
+				dl->symtab = (Elf_Sym *)(dl->data_addr
+						+ dyn->d_un.d_ptr);
 #endif
 				break;
 #ifdef DEBUG
