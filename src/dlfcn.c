@@ -231,7 +231,8 @@ static int _new_self(DL * dl)
 		dl->data_addr = (char *)_dl_phdr - _dl_phdr[i].p_vaddr;
 		dl->text_addr = (char *)_dl_phdr - _dl_phdr[i].p_vaddr;
 #ifdef DEBUG
-		fprintf(stderr, "DEBUG: addr=%p\n", dl->data_addr);
+		fprintf(stderr, "DEBUG: %s() addr=%p\n", __func__,
+				dl->data_addr);
 #endif
 		break;
 	}
@@ -282,8 +283,9 @@ static int _new_self_dynamic(DL * dl, Elf_Phdr * phdr)
 				break;
 #ifdef DEBUG
 			default:
-				fprintf(stderr, "DEBUG: %d (0x%x)\n",
-						dyn->d_tag, dyn->d_un.d_val);
+				fprintf(stderr, "DEBUG: %s() %d (0x%x)\n",
+						__func__, dyn->d_tag,
+						dyn->d_un.d_val);
 				break;
 #endif
 		}
