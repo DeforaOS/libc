@@ -482,11 +482,17 @@ static void _file_relocations_arch(DL * dl, Elf_Rela * rela,
 			break;
 	}
 #elif defined(__i386__)
+	Elf_Addr * addr;
+
 	switch(ELF_R_TYPE(rela->r_info))
 	{
 		case R_386_32:
 		case R_386_PC32:
 			/* FIXME implement */
+			break;
+		case R_386_RELATIVE:
+			addr = dl->data_addr + rela->r_offset;
+			*addr += dl->data_addr;
 			break;
 	}
 #endif
@@ -808,7 +814,8 @@ static void * _sym_lookup(DL * dl, char const * name, char const * strtab,
 		/* FIXME handle only known types */
 		if(ELF_ST_TYPE(sym->st_info) == STT_FUNC)
 			ret = (void *)(sym->st_value + dl->text_addr);
-		ret = (void *)(sym->st_value + dl->data_addr);
+		else
+			ret = (void *)(sym->st_value + dl->data_addr);
 		if(ELF_ST_BIND(sym->st_info) != STB_WEAK)
 			return ret;
 	}
