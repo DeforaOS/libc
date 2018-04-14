@@ -488,6 +488,8 @@ static void _file_relocations_arch(DL * dl, Elf_Rela * rela,
 
 	switch(ELF_R_TYPE(rela->r_info))
 	{
+		case R_386_NONE:
+			break;
 		case R_386_32:
 		case R_386_PC32:
 			/* FIXME implement */
