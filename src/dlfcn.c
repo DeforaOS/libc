@@ -135,7 +135,8 @@ static int _new_file(DL * dl, char const * pathname);
 static int _new_self(DL * dl);
 static int _new_self_dynamic(DL * dl, Elf_Phdr * phdr);
 static int _file_read_ehdr(int fd, Elf_Ehdr * ehdr);
-static int _file_mmap(DL * dl, Elf_Phdr * phdr);
+static int _file_mmap(DL * dl, Elf_Phdr * phdr, int prot, char ** base,
+		size_t * size, char ** addr);
 static int _file_prot(unsigned int flags);
 static int _file_symbols(DL * dl);
 static int _file_relocations(DL * dl);
@@ -175,6 +176,7 @@ static int _new_file(DL * dl, char const * pathname)
 {
 	Elf_Phdr * phdr;
 	size_t i;
+	int prot;
 	ssize_t len;
 
 	dl->fd = open(pathname, O_RDONLY);
@@ -197,8 +199,24 @@ static int _new_file(DL * dl, char const * pathname)
 			free(phdr);
 			return _dl_error_set(DE_INVALID_FORMAT, -1);
 		}
-		if(_file_mmap(dl, &phdr[i]) == 0)
-			continue;
+		if(_file_prot(phdr[i].p_flags) == (PROT_READ | PROT_EXEC))
+		{
+			if(dl->text_addr != NULL)
+				return _dl_error_set(DE_INVALID_FORMAT, -1);
+			if(_file_mmap(dl, &phdr[i], prot, &dl->text_base,
+						&dl->text_size,
+						&dl->text_addr) == 0)
+				continue;
+		}
+		else
+		{
+			if(dl->data_addr != NULL)
+				return _dl_error_set(DE_INVALID_FORMAT, -1);
+			if(_file_mmap(dl, &phdr[i], prot, &dl->data_base,
+						&dl->data_size,
+						&dl->data_addr) == 0)
+				continue;
+		}
 		free(phdr);
 		return -1;
 	}
@@ -317,33 +335,14 @@ static int _file_read_ehdr(int fd, Elf_Ehdr * ehdr)
 	return 0;
 }
 
-static int _file_mmap(DL * dl, Elf_Phdr * phdr)
+static int _file_mmap(DL * dl, Elf_Phdr * phdr, int prot, char ** base,
+		size_t * size, char ** addr)
 {
-	int prot;
 	int flags;
-	char ** base;
-	size_t * size;
-	char ** addr;
 	size_t len;
 	off_t offset;
 
-	prot = _file_prot(phdr->p_flags);
 	flags = (prot & PROT_WRITE) ? MAP_PRIVATE : MAP_SHARED;
-	/* FIXME assuming the order here */
-	if(dl->text_addr == NULL)
-	{
-		base = &dl->text_base;
-		size = &dl->text_size;
-		addr = &dl->text_addr;
-	}
-	else if(dl->data_addr == NULL)
-	{
-		base = &dl->data_base;
-		size = &dl->data_size;
-		addr = &dl->data_addr;
-	}
-	else
-		return _dl_error_set(DE_INVALID_FORMAT, -1);
 	len = phdr->p_memsz;
 	offset = phdr->p_offset;
 #ifdef DEBUG
