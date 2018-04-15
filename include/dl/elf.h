@@ -285,6 +285,7 @@ typedef struct _Elf32_Rel
 
 # define ELF64_R_SYM(info)	((info) >> 32)
 # define ELF64_R_TYPE(info)	((info) & 0xffffffff)
+# define R_X86_64_NONE		0
 # define R_X86_64_GLOB_DAT	6
 # define R_X86_64_JUMP_SLOT	7
 # define R_X86_64_RELATIVE	8

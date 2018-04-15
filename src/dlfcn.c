@@ -455,6 +455,8 @@ static void _file_relocations_arch(DL * dl, Elf_Rela * rela,
 
 	switch(ELF_R_TYPE(rela->r_info))
 	{
+		case R_X86_64_NONE:
+			break;
 		case R_X86_64_RELATIVE:
 		case R_X86_64_GLOB_DAT:
 			/* FIXME implement */
