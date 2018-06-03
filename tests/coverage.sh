@@ -39,7 +39,7 @@ CC="gcc -fprofile-arcs -ftest-coverage"
 DATE="date"
 FIND="find"
 GCOV="gcov"
-MAKE="make"
+[ -n "$MAKE" ] || MAKE="make"
 MKDIR="mkdir -p"
 MKTEMP="mktemp"
 RM="rm -f"
@@ -48,21 +48,21 @@ RM="rm -f"
 #coverage
 _coverage()
 {
-	subdirs="src/ssp src"
-
 	#create a temporary directory
 	tmpdir=$($MKTEMP -d)
 	if [ $? -ne 0 ]; then
 		return 2
 	fi
 	#build the project in a separate directory
-	for subdir in $subdirs; do
-		$MKDIR "$tmpdir/$subdir" &&
-		(cd "../$subdir" && $MAKE CC="$CC" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" OBJDIR="$tmpdir/$subdir/") || break
-	done
+	for dir in src/ssp src/dl src/math src/pthread src/regex src/rt src/socket src tools; do
+		[ -d "../$dir" ] || continue
+		$MKDIR "$tmpdir/$dir" &&
+		(cd "../$dir" && $MAKE CC="$CC" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" OBJDIR="$tmpdir/$dir/") || break
+	done &&
 	$MKDIR "$tmpdir/tests" &&
 	$MAKE CC="$CC" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" OBJDIR="$tmpdir/tests/" "$tmpdir/tests/$TARGET"
 	res=$?
+	unset dir
 	#look for any code executed
 	$FIND "$tmpdir" -name '*.gcda' | while read filename; do
 		echo
@@ -96,10 +96,13 @@ _usage()
 
 #main
 clean=0
-while getopts "cP:" name; do
+while getopts "cO:P:" name; do
 	case "$name" in
 		c)
 			clean=1
+			;;
+		O)
+			export "${OPTARG%%=*}"="${OPTARG#*=}"
 			;;
 		P)
 			#XXX ignored
