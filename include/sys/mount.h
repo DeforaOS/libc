@@ -36,7 +36,8 @@
 
 /* types */
 # ifndef size_t
-#  define size_t __size_t
+#  define size_t size_t
+typedef __size_t size_t;
 # endif
 
 # include "../compat/sys/mount.h"
