@@ -33,6 +33,7 @@
 
 /* _start */
 .global _start
+.type _start, @function
 
 
 /* FreeBSD */

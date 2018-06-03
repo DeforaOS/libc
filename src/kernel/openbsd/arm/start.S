@@ -32,7 +32,6 @@
 
 
 _start:
-.type _start,#function
 	/* terminate stack */
 	mov	fp, $0
 
