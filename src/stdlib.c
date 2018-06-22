@@ -737,7 +737,7 @@ long strtol(char const * str, char ** endptr, int base)
 	ret = _strtoull(str, endptr, base, &neg);
 	if(neg != 0)
 	{
-		if(ret > (unsigned)LONG_MAX + 1)
+		if(ret > (unsigned long)LONG_MAX + 1)
 		{
 			errno = ERANGE;
 			return LONG_MIN;
