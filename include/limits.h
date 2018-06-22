@@ -108,6 +108,13 @@
 # ifndef UINT_MAX
 #  define UINT_MAX 0xffffffff
 # endif
+# ifndef ULONG_MAX
+#  ifdef _LP64 /* FIXME probably sometimes wrong */
+#   define ULONG_MAX 0xffffffffffffffff
+#  else
+#   define ULONG_MAX 0xffffffff
+#  endif
+# endif
 
 # ifndef DBL_MAX
 #  define DBL_MAX 1.7976931348623157E+308
