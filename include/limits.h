@@ -65,13 +65,13 @@
 #  define SHRT_MAX 0x7fff
 # endif
 # ifndef SHRT_MIN
-#  define SHRT_MIN -0x7fff
+#  define SHRT_MIN -0x8000
 # endif
 # ifndef INT_MAX
 #  define INT_MAX 0x7fffffff
 # endif
 # ifndef INT_MIN
-#  define INT_MIN -0x7fffffff
+#  define INT_MIN -0x80000000
 # endif
 # ifndef LONG_MAX
 #  ifdef _LP64 /* FIXME probably sometimes wrong */
@@ -82,7 +82,7 @@
 # endif
 # ifndef LONG_MIN
 #  ifdef _LP64 /* FIXME probably sometimes wrong */
-#   define LONG_MIN 0x8000000000000000
+#   define LONG_MIN -0x8000000000000000
 #  else
 #   define LONG_MIN -0x80000000
 #  endif
@@ -91,7 +91,7 @@
 #  define SCHAR_MAX 0x7f
 # endif
 # ifndef SCHAR_MIN
-#  define SCHAR_MIN -0x7f
+#  define SCHAR_MIN -0x80
 # endif
 # ifndef SSIZE_MAX
 #  define SSIZE_MAX LONG_MAX
