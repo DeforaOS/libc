@@ -115,6 +115,9 @@
 #   define ULONG_MAX 0xffffffff
 #  endif
 # endif
+# ifndef WORD_BIT
+#  define WORD_BIT 32
+# endif
 
 # ifndef DBL_MAX
 #  define DBL_MAX 1.7976931348623157E+308
