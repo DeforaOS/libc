@@ -88,14 +88,18 @@
 #  endif
 # endif
 # ifndef LONG_MAX
-#  ifdef _LP64 /* FIXME probably sometimes wrong */
+#  ifdef __LONG_MAX__
+#   define LONG_MAX __LONG_MAX__
+#  elif defined(_LP64) /* XXX could be wrong */
 #   define LONG_MAX 0x7fffffffffffffff
 #  else
 #   define LONG_MAX 0x7fffffff
 #  endif
 # endif
 # ifndef LONG_MIN
-#  ifdef _LP64 /* FIXME probably sometimes wrong */
+#  ifdef __LONG_MAX__
+#   define LONG_MIN (-__LONG_MAX__ - 1)
+#  elif defined(_LP64) /* XXX could be wrong */
 #   define LONG_MIN -0x8000000000000000
 #  else
 #   define LONG_MIN -0x80000000
@@ -123,10 +127,19 @@
 #  define UINT_MAX 0xffffffff
 # endif
 # ifndef ULONG_MAX
-#  ifdef _LP64 /* FIXME probably sometimes wrong */
+#  ifdef __LONG_MAX__
+#   define ULONG_MAX (2UL * __LONG_MAX__ + 0x1)
+#  elif defined(_LP64) /* XXX could be wrong */
 #   define ULONG_MAX 0xffffffffffffffff
 #  else
 #   define ULONG_MAX 0xffffffff
+#  endif
+# endif
+# ifndef ULLONG_MAX
+#  ifdef ___LONG_LONG_MAX__
+#   define ULLONG_MAX (2ULL * __LONG_LONG_MAX__ + 0x1)
+#  else
+#   define ULLONG_MAX 0xffffffffffffffff
 #  endif
 # endif
 # ifndef WORD_BIT
