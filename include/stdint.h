@@ -117,7 +117,9 @@ typedef __uintptr_t uintptr_t;
 # define UINT64_MAX	0xffffffffffffffff
 
 # ifndef ULONG_MAX
-#  ifdef _LP64 /* FIXME probably sometimes wrong */
+#  ifdef __LONG_MAX__
+#   define ULONG_MAX (2UL * __LONG_MAX__ + 0x1)
+#  elif defined(_LP64) /* XXX could be wrong */
 #   define ULONG_MAX 0xffffffffffffffff
 #  else
 #   define ULONG_MAX 0xffffffff
