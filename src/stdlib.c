@@ -769,17 +769,17 @@ long long strtoll(char const * str, char ** endptr, int base)
 	ret = _strtoull(str, endptr, base, &neg);
 	if(neg != 0)
 	{
-		if(ret > (unsigned)LONG_MAX+1)
+		if(ret > (unsigned long long)LLONG_MAX + 1)
 		{
 			errno = ERANGE;
-			return LONG_MIN;
+			return LLONG_MIN;
 		}
 		return -ret;
 	}
-	if(ret > LONG_MAX)
+	if(ret > LLONG_MAX)
 	{
 		errno = ERANGE;
-		return LONG_MAX;
+		return LLONG_MAX;
 	}
 	return ret;
 }
