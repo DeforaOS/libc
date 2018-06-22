@@ -199,7 +199,15 @@ static int _new_file(DL * dl, char const * pathname)
 			free(phdr);
 			return _dl_error_set(DE_INVALID_FORMAT, -1);
 		}
-		if(_file_prot(phdr[i].p_flags) == (PROT_READ | PROT_EXEC))
+		prot = _file_prot(phdr[i].p_flags);
+		/* enforce W^X */
+		if((prot & (PROT_WRITE | PROT_EXEC))
+				== (PROT_WRITE | PROT_EXEC))
+		{
+			free(phdr);
+			return _dl_error_set(DE_INVALID_FORMAT, -1);
+		}
+		if(prot == (PROT_READ | PROT_EXEC))
 		{
 			if(dl->text_addr != NULL)
 			{
