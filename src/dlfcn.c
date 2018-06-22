@@ -202,7 +202,10 @@ static int _new_file(DL * dl, char const * pathname)
 		if(_file_prot(phdr[i].p_flags) == (PROT_READ | PROT_EXEC))
 		{
 			if(dl->text_addr != NULL)
+			{
+				free(phdr);
 				return _dl_error_set(DE_INVALID_FORMAT, -1);
+			}
 			if(_file_mmap(dl, &phdr[i], prot, &dl->text_base,
 						&dl->text_size,
 						&dl->text_addr) == 0)
@@ -211,7 +214,10 @@ static int _new_file(DL * dl, char const * pathname)
 		else
 		{
 			if(dl->data_addr != NULL)
+			{
+				free(phdr);
 				return _dl_error_set(DE_INVALID_FORMAT, -1);
+			}
 			if(_file_mmap(dl, &phdr[i], prot, &dl->data_base,
 						&dl->data_size,
 						&dl->data_addr) == 0)
