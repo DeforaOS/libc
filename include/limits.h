@@ -73,6 +73,20 @@
 # ifndef INT_MIN
 #  define INT_MIN -0x80000000
 # endif
+# ifndef LLONG_MAX
+#  ifdef ___LONG_LONG_MAX__
+#   define LLONG_MAX __LONG_LONG_MAX__
+#  else
+#   define LLONG_MAX 0x7fffffffffffffff
+#  endif
+# endif
+# ifndef LLONG_MIN
+#  ifdef __LONG_LONG_MAX__
+#   define LLONG_MIN (-__LONG_LONG_MAX__ - 1)
+#  else
+#   define LLONG_MIN -0x8000000000000000
+#  endif
+# endif
 # ifndef LONG_MAX
 #  ifdef _LP64 /* FIXME probably sometimes wrong */
 #   define LONG_MAX 0x7fffffffffffffff
