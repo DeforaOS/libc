@@ -51,7 +51,9 @@ static int _mktemp(char const * progname);
 static int _strtold(char const * progname, char const * str,
 		long double expected);
 static int _strtol(char const * progname);
+static int _strtoll(char const * progname);
 static int _strtoul(char const * progname);
+static int _strtoull(char const * progname);
 
 
 /* functions */
@@ -243,6 +245,58 @@ static int _strtol(char const * progname)
 }
 
 
+/* strtoll */
+static int _strtoll(char const * progname)
+{
+	char * p;
+	char const spaces[] = "      ";
+	long long ll;
+	unsigned long long llu;
+	char buf[32];
+
+	/* spaces */
+	errno = 0;
+	strtoll(spaces, &p, 0);
+	if(p != spaces || errno != ERANGE)
+	{
+		fprintf(stderr, "%s: %s: Conversion error (spaces)\n", progname,
+				"strtol");
+		return 1;
+	}
+	/* -LLONG_MAX - 1 */
+	llu = (unsigned long long)LLONG_MAX + 1;
+	snprintf(buf, sizeof(buf), "-%llu", llu);
+	errno = 0;
+	ll = strtoll(buf, &p, 10);
+	if(errno != 0)
+	{
+		fprintf(stderr, "%s: %s: Conversion error (-LLONG_MAX - 1)\n",
+				progname, "strtoll");
+		return 1;
+	}
+	/* -LLONG_MAX - 2 */
+	llu = (unsigned long)LLONG_MAX + 2;
+	snprintf(buf, sizeof(buf), "-%llu", llu);
+	errno = 0;
+	strtoll(buf, &p, 10);
+	if(errno != ERANGE)
+	{
+		fprintf(stderr, "%s: %s: Conversion error (-LLONG_MAX - 2)\n",
+				progname, "strtoll");
+		return 1;
+	}
+	/* invalid input */
+	ll = strtoll("invalid", &p, 0);
+	if(ll != 0 || errno != EINVAL)
+	{
+		fprintf(stderr, "%s: %s: Conversion error (invalid input)\n",
+				progname, "strtoll");
+		return 1;
+	}
+	return 0;
+}
+
+
 /* strtoul */
 static int _strtoul(char const * progname)
 {
@@ -273,6 +327,36 @@ static int _strtoul(char const * progname)
 }
 
 
+/* strtoull */
+static int _strtoull(char const * progname)
+{
+	char * p;
+	char const spaces[] = "      ";
+	char buf[32];
+
+	/* spaces */
+	errno = 0;
+	strtoull(spaces, &p, 0);
+	if(p != spaces || errno != ERANGE)
+	{
+		fprintf(stderr, "%s: %s: Conversion error (spaces)\n", progname,
+				"strtoul");
+		return 1;
+	}
+	/* ULLONG_MAX */
+	snprintf(buf, sizeof(buf), "%llu", ULLONG_MAX);
+	errno = 0;
+	strtoull(buf, &p, 10);
+	if(errno != 0 || *p != '\0')
+	{
+		fprintf(stderr, "%s: %s: Conversion error (ULLONG_MAX)\n",
+				progname, "strtoul");
+		return 1;
+	}
+	return 0;
+}
+
+
 /* public */
 /* functions */
 /* main */
@@ -295,5 +379,7 @@ int main(int argc, char * argv[])
 	ret += _strtold(argv[0], "-1.01", -1.01);
 	ret += _strtol(argv[0]);
 	ret += _strtoul(argv[0]);
+	ret += _strtoll(argv[0]);
+	ret += _strtoull(argv[0]);
 	return (ret == 0) ? 0 : 2;
 }
