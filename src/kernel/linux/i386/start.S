@@ -37,6 +37,7 @@ _start:
 	mov	%esp, %ebx	/* argv */
 	push	%eax
 	mov	%eax, %ecx	/* envp */
+	inc	%ecx
 	shl	$2, %ecx
 	add	%ebx, %ecx
 	mov	%ecx, environ	/* environ */
@@ -49,10 +50,8 @@ auxv:
 	jmp	auxv
 auxv_done:
 	add	$0x4, %edx
+	push	%edx
 #endif
-	push	%ebp
-	push	%esp
-	mov	%esp, %ebp
 	push	%ecx
 	push	%ebx
 	push	%eax
@@ -68,18 +67,29 @@ auxv_done:
 #if defined(__ELF__)
 	/* initialize dlfcn */
 	call	__start_dlfcn
-	pop	%eax
+	add	$0x4, %esp
 #endif
 
 	/* initialize stdio */
 	call	__start_stdio
 
+	/* call the global constructors */
+	call	_init
+
 	/* run the program */
 	call	main
+#if defined(__ELF__)
+	add	$0x10, %esp
+#else
+	add	$0xc, %esp
+#endif
+	push	%eax
+
+	/* call the global destructors */
+	call	_fini
 
 	/* exit the program */
-	mov	%ebp, %esp
-	push	%eax
 	call	exit
+	add	$0x4, %esp
 
 	hlt
