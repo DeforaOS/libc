@@ -30,17 +30,17 @@
 
 _start:
 	/* reset the stack */
-	xor	%rbp, %rbp	/* stack */
+	xor	%rbp, %rbp
 
 	/* setup the environment */
 	mov	(%rsp), %rdi	/* argc */
 	mov	%rsp, %rsi	/* argv */
 	add	$0x8, %rsi
 	mov	%rdi, %rdx	/* envp */
+	inc	%rdx
 	shl	$3, %rdx
 	add	%rsi, %rdx
-	add	$0x8, %rdx
-#ifdef __PIC__			/* environ	*/
+#ifdef __PIC__			/* environ */
 	mov	environ@GOTPCREL(%rip), %rcx
 	mov	%rdx, (%rcx)
 #else
@@ -87,6 +87,13 @@ auxv_done:
 	call	__start_stdio
 # endif
 
+	/* call the global constructors */
+#ifdef __PIC__
+	call	_init@PLT
+#else
+	call	_init
+#endif
+
 	/* run the program */
 	pop	%rdx
 	pop	%rsi
@@ -96,9 +103,17 @@ auxv_done:
 #else
 	call	main
 #endif
+	push	%rax
+
+	/* call the global destructors */
+#ifdef __PIC__
+	call	_fini@PLT
+#else
+	call	_fini
+#endif
 
 	/* exit the program */
-	mov	%rax, %rdi
+	pop	%rdi
 #ifdef __PIC__
 	call	exit@PLT
 #else
