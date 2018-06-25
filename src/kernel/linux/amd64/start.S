@@ -33,7 +33,7 @@
 
 _start:
 	/* reset the stack */
-	xor	%rbp, %rbp	/* stack */
+	xor	%rbp, %rbp
 
 	/* set the thread-local storage area */
 	mov	$ARCH_SET_FS, %rdi
@@ -50,10 +50,10 @@ _start:
 	mov	%rsp, %rsi	/* argv */
 	add	$0x8, %rsi
 	mov	%rdi, %rdx	/* envp */
+	inc	%rdx
 	shl	$3, %rdx
 	add	%rsi, %rdx
-	add	$0x8, %rdx
-#ifdef __PIC__			/* environ	*/
+#ifdef __PIC__			/* environ */
 	mov	environ@GOTPCREL(%rip), %rcx
 	mov	%rdx, (%rcx)
 #else
@@ -132,6 +132,7 @@ auxv_done:
 #else
 	call	exit
 #endif
+
 	hlt
 
 .bss
