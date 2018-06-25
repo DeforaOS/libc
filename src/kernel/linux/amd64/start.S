@@ -100,6 +100,13 @@ auxv_done:
 	call	__start_stdio
 # endif
 
+	/* call the global constructors */
+#ifdef __PIC__
+	call	_init@PLT
+#else
+	call	_init
+#endif
+
 	/* run the program */
 	pop	%rdx
 	pop	%rsi
@@ -109,9 +116,17 @@ auxv_done:
 #else
 	call	main
 #endif
+	push	%rax
+
+	/* call the global destructors */
+#ifdef __PIC__
+	call	_fini@PLT
+#else
+	call	_fini
+#endif
 
 	/* exit the program */
-	mov	%rax, %rdi
+	pop	%rdi
 #ifdef __PIC__
 	call	exit@PLT
 #else
