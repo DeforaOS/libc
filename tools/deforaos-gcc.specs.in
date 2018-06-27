@@ -9,7 +9,7 @@
 @LIBDIR@/libgcc.a
 
 *startfile:
-start.o%s
+@LIBDIR@/start.o
 
 *endfile:
 
