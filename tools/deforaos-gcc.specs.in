@@ -9,10 +9,10 @@
 @LIBDIR@/libgcc.a
 
 *startfile:
-@LIBDIR@/start.o
+@LIBDIR@/start.o @LIBDIR@/crti.o
 
 *endfile:
-
+@LIBDIR@/crtn.o
 
 *lib:
 %{!nostdlib:-lc} %(old_lib)
