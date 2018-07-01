@@ -28,27 +28,20 @@
 
 
 
-/* Linux */
-#if defined(__linux__)
-# if defined(__amd64__)
-#  include "kernel/linux/amd64/crtn.S"
-# elif defined(__i386__)
-#  include "kernel/linux/i386/crtn.S"
-# else
-#  warning Unsupported Linux architecture
-# endif
+/* sections */
+/* init */
+.section .init
+.global _init
+.type _init,@function
+_init:
+	push	%rbp
+	mov	%rsp, %rbp
 
-/* NetBSD */
-#elif defined(__NetBSD__)
-# if defined(__amd64__)
-#  include "kernel/netbsd/amd64/crtn.S"
-# elif defined(__i386__)
-#  include "kernel/netbsd/i386/crtn.S"
-# else
-#  warning Unsupported NetBSD architecture
-# endif
 
-/* Unknown */
-#else
-# warning Unsupported kernel and architecture
-#endif
+/* fini */
+.section .fini
+.global _fini
+.type _fini,@function
+_fini:
+	push	%rbp
+	mov	%rsp, %rbp

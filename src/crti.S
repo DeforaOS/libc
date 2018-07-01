@@ -28,8 +28,18 @@
 
 
 
+/* Linux */
+#if defined(__linux__)
+# if defined(__amd64__)
+#  include "kernel/linux/amd64/crti.S"
+# elif defined(__i386__)
+#  include "kernel/linux/i386/crti.S"
+# else
+#  warning Unsupported Linux architecture
+# endif
+
 /* NetBSD */
-#if defined(__NetBSD__)
+#elif defined(__NetBSD__)
 # if defined(__amd64__)
 #  include "kernel/netbsd/amd64/crti.S"
 # elif defined(__i386__)
@@ -37,7 +47,6 @@
 # else
 #  warning Unsupported NetBSD architecture
 # endif
-
 
 /* Unknown */
 #else
