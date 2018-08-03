@@ -31,6 +31,7 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include <limits.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -152,6 +153,29 @@ static int _mktemp(char const * progname)
 
 	printf("%s: Testing mktemp()\n", progname);
 	return (mktemp(buf) == buf) ? 0 : _error(progname, "mktemp", 1);
+}
+
+
+/* realloc */
+static int _realloc(char const * progname)
+{
+	size_t i;
+	char * p = NULL;
+	char * q;
+
+	for(i = 0; i < 65536; i++)
+	{
+		if((q = realloc(p, arc4random() % 65536)) == NULL)
+		{
+			fprintf(stderr, "%s: %s: %s (%zu)\n", progname,
+					"realloc", strerror(errno), i);
+			free(p);
+			return -1;
+		}
+		p = q;
+	}
+	free(p);
+	return 0;
 }
 
 
@@ -370,6 +394,7 @@ int main(int argc, char * argv[])
 	ret += _environ(argv[0]);
 	ret += _mkstemp(argv[0]);
 	ret += _mktemp(argv[0]);
+	ret += _realloc(argv[0]);
 	ret += _strtold(argv[0], "0.0", 0.0);
 	ret += _strtold(argv[0], " 0.1", 0.1);
 	ret += _strtold(argv[0], "  1.0", 1.0);
