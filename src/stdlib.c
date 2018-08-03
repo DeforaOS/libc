@@ -604,9 +604,18 @@ void * realloc(void * ptr, size_t size)
 		size = (size | 0x7) + 1; /* round up to 64 bits */
 	if(size == a->size)
 		return ptr;
-	if(size < a->size || (a->next != NULL && (uintptr_t)a->next
-				- (uintptr_t)a - sizeof(*a) >= size))
+	if(a->next == NULL)
 	{
+		/* reallocate the space */
+		if(sbrk(size - a->size) == (void *)-1)
+			return NULL;
+		a->size = size;
+		return ptr;
+	}
+	if(size < a->size || (uintptr_t)a->next - (uintptr_t)a - sizeof(*a)
+			>= size)
+	{
+		/* update the size */
 		a->size = size;
 		return ptr;
 	}
