@@ -331,9 +331,12 @@ void free(void * ptr)
 	b->next = a->next;
 	if(a->next != NULL) /* memory is allocated past a */
 		a->next->prev = b;
-	else
+	else if(b != &_alloc)
 		/* decrease to lowest possible value */
 		sbrk(-((uintptr_t)a + a->size - (uintptr_t)b - b->size));
+	else
+		/* remove the last object */
+		sbrk(-sizeof(*a) - a->size);
 }
 
 static void _free_abort(void)
