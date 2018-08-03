@@ -307,9 +307,10 @@ void exit(int status)
 
 
 /* free */
+static void _free_abort(void);
+
 void free(void * ptr)
 {
-	const char buf[] = "invalid free detected: terminated\n";
 	Alloc * a = (Alloc*)((char*)ptr - sizeof(*a));
 	Alloc * b;
 
@@ -318,8 +319,7 @@ void free(void * ptr)
 	b = a->prev;
 	if(b->next != a)
 	{
-		write(2, buf, sizeof(buf) - 1);
-		abort();
+		_free_abort();
 		return;
 	}
 	b->next = a->next;
@@ -329,6 +329,14 @@ void free(void * ptr)
 		return;
 	}
 	sbrk(-(a->size + sizeof(*a)));
+}
+
+static void _free_abort(void)
+{
+	const char buf[] = "invalid free detected: terminated\n";
+
+	write(2, buf, sizeof(buf) - 1);
+	abort();
 }
 
 
