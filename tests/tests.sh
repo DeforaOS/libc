@@ -182,6 +182,7 @@ _test "start" argv1 argv2
 _test "stdarg"
 _test "stdint"
 _test "stdio"
+_test "stdlib"
 _test "string"
 _test "unistd"
 _test "utsname"
@@ -190,7 +191,6 @@ _fail "dlfcn" "../src/libc.$SOEXT"
 [ "$ARCH" = "amd64" -o "$ARCH" = "i386" ] || _fail "math"
 [ "$SYSTEM" = "FreeBSD" -o "$SYSTEM" = "Linux" ] && _fail "signal"
 [ "$SYSTEM" != "Linux" -o "$ARCH" != "amd64" ] || _fail "ssp"
-_fail "stdlib"
 _fail "time"
 if [ -n "$FAILED" ]; then
 	_error "Failed tests:$FAILED" 1>&2
