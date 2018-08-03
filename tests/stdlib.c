@@ -163,6 +163,7 @@ static int _realloc(char const * progname)
 	char * p = NULL;
 	char * q;
 
+	printf("%s: Testing realloc()\n", progname);
 	for(i = 0; i < 65536; i++)
 	{
 		if((q = realloc(p, arc4random() % 65536)) == NULL)
