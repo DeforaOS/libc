@@ -595,7 +595,7 @@ int rand(void)
 /* realloc */
 void * realloc(void * ptr, size_t size)
 {
-	Alloc * a = (Alloc *)((char *)ptr - sizeof(*a));
+	Alloc * a = (Alloc *)ptr - 1;
 	void * p;
 
 	if(ptr == NULL)
