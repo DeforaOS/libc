@@ -452,11 +452,11 @@ void * malloc(size_t size)
 	inc = size + sizeof(*b);
 	if(_alloc.next != NULL) /* look for available space */
 		for(a = _alloc.next; a->next != NULL; a = a->next)
-			if(inc <= (intptr_t)(a->next) - (intptr_t)a
-					- (intptr_t)sizeof(*a)
-					- (intptr_t)a->size)
+			if(inc <= (uintptr_t)a->next - (uintptr_t)a - sizeof(*a)
+					- a->size)
 			{
-				b = (Alloc *)((char *)a + sizeof(*a) + a->size);
+				b = (Alloc *)((uintptr_t)a + sizeof(*a)
+						+ a->size);
 				a->next->prev = b;
 				break;
 			}
@@ -604,8 +604,8 @@ void * realloc(void * ptr, size_t size)
 		size = (size | 0x7) + 1; /* round up to 64 bits */
 	if(size == a->size)
 		return ptr;
-	if(size < a->size || (a->next != NULL && (char *)a->next - (char *)a
-				- sizeof(*a) >= size))
+	if(size < a->size || (a->next != NULL && (uintptr_t)a->next
+				- (uintptr_t)a - sizeof(*a) >= size))
 	{
 		a->size = size;
 		return ptr;
