@@ -47,7 +47,7 @@ static int _chroot(char const * progname)
 
 	printf("%s: Testing chroot()\n", progname);
 	if((p = strdup(progname)) == NULL)
-		return -1;
+		return 2;
 	dir = dirname(p);
 	res = chroot(dir);
 	free(p);
@@ -59,7 +59,9 @@ static int _chroot(char const * progname)
 				/* we can ignore these errors */
 				break;
 			default:
-				return -1;
+				fprintf(stderr, "%s: chroot: Obtained %d\n",
+						progname, errno);
+				return 3;
 		}
 	return 0;
 }
@@ -75,7 +77,7 @@ static int _fork(char const * progname)
 
 	printf("%s: Testing fork()\n", progname);
 	if((pid = fork()) == -1)
-		return -1;
+		return 4;
 	if(pid == 0)
 		/* child process */
 		_exit(res);
@@ -89,7 +91,7 @@ static int _fork(char const * progname)
 		if(WIFEXITED(status) && WEXITSTATUS(status) == res)
 			return 0;
 	}
-	return -1;
+	return 8;
 }
 
 
@@ -105,7 +107,7 @@ static int _sleep(char const * progname, unsigned int t)
 	res = sleep(t);
 	after = time(NULL);
 	if(res == 0)
-		return (after - before == t) ? 0 : -1;
+		return (after - before == t) ? 0 : 16;
 	/* XXX ignore other cases (signal deliveries...) */
 	return 0;
 }
@@ -114,12 +116,12 @@ static int _sleep(char const * progname, unsigned int t)
 /* main */
 int main(int argc, char * argv[])
 {
-	int ret = 0;
+	int ret;
 	(void) argc;
 
-	ret += _chroot(argv[0]);
-	ret += _fork(argv[0]);
-	ret += _sleep(argv[0], 0);
-	ret += _sleep(argv[0], 1);
-	return (ret == 0) ? 0 : 2;
+	ret = _chroot(argv[0]);
+	ret |= _fork(argv[0]);
+	ret |= _sleep(argv[0], 0);
+	ret |= _sleep(argv[0], 1);
+	return ret;
 }
