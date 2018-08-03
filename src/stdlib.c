@@ -311,11 +311,17 @@ static void _free_abort(void);
 
 void free(void * ptr)
 {
-	Alloc * a = (Alloc*)((char*)ptr - sizeof(*a));
+	Alloc * a;
 	Alloc * b;
 
 	if(ptr == NULL)
 		return;
+	if(ptr < (void *)sizeof(*a))
+	{
+		_free_abort();
+		return;
+	}
+	a = (Alloc *)ptr - 1;
 	b = a->prev;
 	if(b->next != a)
 	{
