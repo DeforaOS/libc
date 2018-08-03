@@ -439,21 +439,18 @@ void * malloc(size_t size)
 					- (intptr_t)sizeof(*a)
 					- (intptr_t)a->size)
 			{
-				b = (Alloc*)((char*)a + sizeof(*a) + a->size);
-				b->size = size;
+				b = (Alloc *)((char *)a + sizeof(*a) + a->size);
 				a->next->prev = b;
 				break;
 			}
 	if(b == NULL) /* increase process size to allocate memory */
-	{
 		if((b = sbrk(inc)) == (void *)-1)
 			return NULL;
-		b->size = size;
-	}
+	b->size = size;
 	b->prev = a;
 	b->next = a->next;
 	a->next = b;
-	return (char *)b + sizeof(*b);
+	return b + 1;
 }
 
 
@@ -581,7 +578,7 @@ int rand(void)
 /* realloc */
 void * realloc(void * ptr, size_t size)
 {
-	Alloc * a = (Alloc*)((char*)ptr - sizeof(*a));
+	Alloc * a = (Alloc *)((char *)ptr - sizeof(*a));
 	void * p;
 
 	if(ptr == NULL)
@@ -589,7 +586,7 @@ void * realloc(void * ptr, size_t size)
 	if(size == a->size)
 		return ptr;
 	size = (size | 0xf) + 1; /* round up to 64 bits */
-	if(size < a->size || (a->next != NULL && (char*)a->next - (char*)a
+	if(size < a->size || (a->next != NULL && (char *)a->next - (char *)a
 				- sizeof(*a) >= size))
 	{
 		a->size = size;
