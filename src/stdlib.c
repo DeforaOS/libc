@@ -329,12 +329,11 @@ void free(void * ptr)
 		return;
 	}
 	b->next = a->next;
-	if(a->next != NULL) /* return if memory is alloc'd past a */
-	{
+	if(a->next != NULL) /* memory is allocated past a */
 		a->next->prev = b;
-		return;
-	}
-	sbrk(-(a->size + sizeof(*a)));
+	else
+		/* decrease to lowest possible value */
+		sbrk(-((uintptr_t)a + a->size - (uintptr_t)b - b->size));
 }
 
 static void _free_abort(void)
