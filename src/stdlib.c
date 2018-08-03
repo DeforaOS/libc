@@ -431,7 +431,8 @@ void * malloc(size_t size)
 		errno = ENOMEM;
 		return NULL;
 	}
-	size = (size | 0x7) + 1; /* round up to 64 bits */
+	if((size & 0x7) != 0x0)
+		size = (size | 0x7) + 1; /* round up to 64 bits */
 	inc = size + sizeof(*b);
 	if(_alloc.next != NULL) /* look for available space */
 		for(a = _alloc.next; a->next != NULL; a = a->next)
@@ -583,9 +584,10 @@ void * realloc(void * ptr, size_t size)
 
 	if(ptr == NULL)
 		return malloc(size);
+	if((size & 0x7) != 0x0)
+		size = (size | 0x7) + 1; /* round up to 64 bits */
 	if(size == a->size)
 		return ptr;
-	size = (size | 0xf) + 1; /* round up to 64 bits */
 	if(size < a->size || (a->next != NULL && (char *)a->next - (char *)a
 				- sizeof(*a) >= size))
 	{
