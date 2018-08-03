@@ -83,14 +83,14 @@ static int _regex_regexec(char const * progname, char const * pattern,
 	{
 		regerror(r, &reg, buf, sizeof(buf));
 		fprintf(stderr, "%s: %s: %s\n", progname, pattern, buf);
-		return 1;
+		return 4;
 	}
 	if((ret = regexec(&reg, string, sizeof(match) / sizeof(*match), match,
 					0)) != 0)
 	{
 		regerror(ret, &reg, buf, sizeof(buf));
 		fprintf(stderr, "%s: %s: %s\n", progname, pattern, buf);
-		ret = 1;
+		ret = 8;
 	}
 	regfree(&reg);
 	return ret;
@@ -111,5 +111,5 @@ int main(int argc, char * argv[])
 {
 	(void) argc;
 
-	return (_regex(argv[0]) == 0) ? 0 : 2;
+	return _regex(argv[0]);
 }
