@@ -440,9 +440,9 @@ void * malloc(size_t size)
 {
 	Alloc * a = &_alloc;
 	Alloc * b = NULL;
-	intptr_t inc;
+	uintptr_t inc;
 
-	if(size >= LONG_MAX - sizeof(*b) - 0x8)
+	if(size >= SSIZE_MAX - sizeof(*b) - 0x8)
 	{
 		errno = ENOMEM;
 		return NULL;
