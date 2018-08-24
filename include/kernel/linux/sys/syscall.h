@@ -287,10 +287,10 @@
 #   define SYS_pselect		270
 
 /* for <sys/shm.h> */
-#   define _IPC_SHMAT		21
-#   define _IPC_SHMDT		22
-#   define _IPC_SHMGET		23
-#   define _IPC_SHMCTL		24
+#   define __IPC_SHMAT		21
+#   define __IPC_SHMDT		22
+#   define __IPC_SHMGET		23
+#   define __IPC_SHMCTL		24
 
 #  endif
 
