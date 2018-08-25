@@ -50,6 +50,7 @@ _socketcall:
 name:; \
 	mov	$SYS_socketcall, %eax; \
 	mov	%esp, %ecx; \
+	add	$0x4, %ecx; \
 	push	%ebx; \
 	mov	$SYS_ ## name, %ebx; \
 	jmp	_socketcall
