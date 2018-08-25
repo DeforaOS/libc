@@ -30,7 +30,7 @@
 
 
 
-_syscall:
+_socketcall:
 	int	$0x80
 	jnc	.errnoret
 .errno:
@@ -48,4 +48,4 @@ name:; \
 	mov	$SYS_socketcall, %eax; \
 	mov	$SYS_ ## name, %ebx; \
 	mov	%esp, %ecx; \
-	jmp	_syscall
+	jmp	_socketcall
