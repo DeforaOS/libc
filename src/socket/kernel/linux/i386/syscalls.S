@@ -39,6 +39,7 @@ _socketcall:
 	mov	%eax, errno
 	mov	$-1, %eax
 .errnoret:
+	pop	%ebx
 	ret
 
 
@@ -48,6 +49,7 @@ _socketcall:
 .type name,@function; \
 name:; \
 	mov	$SYS_socketcall, %eax; \
-	mov	$SYS_ ## name, %ebx; \
 	mov	%esp, %ecx; \
+	push	%ebx; \
+	mov	$SYS_ ## name, %ebx; \
 	jmp	_socketcall
