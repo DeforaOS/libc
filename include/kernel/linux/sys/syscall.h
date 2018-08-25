@@ -293,5 +293,6 @@
 #   define __IPC_SHMCTL		24
 
 #  endif
+# endif
 
 #endif /* !KERNEL_LINUX_SYS_SYSCALL_H */
