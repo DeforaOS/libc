@@ -184,6 +184,7 @@ _test "stdint"
 _test "stdio"
 _test "stdlib"
 _test "string"
+_test "strings"
 _test "unistd"
 _test "utsname"
 echo "Expected failures:" 1>&2
