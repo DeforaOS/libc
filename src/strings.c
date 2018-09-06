@@ -39,7 +39,7 @@ int ffs(int i)
 	size_t j;
 
 	for(j = 0; j < bits; j++)
-		if((i << (bits - j)) != 0)
+		if((i << (bits - j - 1)) != 0)
 			return j;
 	return 0;
 }
