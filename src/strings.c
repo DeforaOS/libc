@@ -35,7 +35,7 @@
 /* ffs */
 int ffs(int i)
 {
-	size_t bits = sizeof(i) * 8;
+	const size_t bits = sizeof(i) * 8;
 	size_t j;
 
 	for(j = 0; j < bits; j++)
