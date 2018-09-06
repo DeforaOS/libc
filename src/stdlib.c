@@ -156,6 +156,7 @@ static int _atexit_do(AtexitFunction function, void (*callback)(void))
 		case AF_EXEC:
 			while(cb_pos-- > 0)
 				cb[cb_pos]();
+			/* fallthrough */
 		case AF_PURGE:
 			free(cb);
 			cb = NULL;
