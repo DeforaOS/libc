@@ -655,8 +655,8 @@ static int _setenv_do(char const * name, char const * value, int overwrite)
 {
 	static char ** env = NULL;
 	static size_t env_cnt;
-	size_t nlen = strlen(name);
-	size_t vlen = (value == NULL) ? 0 : strlen(value);
+	const size_t nlen = strlen(name);
+	const size_t vlen = (value == NULL) ? 0 : strlen(value);
 	char ** p;
 	char * pos;
 
