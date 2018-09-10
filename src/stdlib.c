@@ -681,8 +681,9 @@ static int _setenv_do(char const * name, char const * value, int overwrite)
 			strcpy(pos + nlen + 1, value);
 			return 0;
 		}
-		if((pos = realloc(pos, nlen + vlen + 2)) == NULL)
+		if((pos = realloc(*p, nlen + vlen + 2)) == NULL)
 			return -1;
+		*p = pos;
 		strcpy(&pos[nlen + 1], value);
 		return 0;
 	}
