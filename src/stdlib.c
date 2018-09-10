@@ -670,7 +670,8 @@ static int _setenv_do(char const * name, char const * value, int overwrite)
 			return 0;
 		if(value == NULL) /* unset variable */
 		{
-			for(free(pos); *p != NULL; p++)
+			free(pos);
+			for(; *p != NULL; p++)
 				*p = *(p + 1);
 			env_cnt--; /* may want to realloc(env) here */
 			return 0;
@@ -682,7 +683,7 @@ static int _setenv_do(char const * name, char const * value, int overwrite)
 		}
 		if((pos = realloc(pos, nlen + vlen + 2)) == NULL)
 			return -1;
-		strcpy(&pos[nlen+1], value);
+		strcpy(&pos[nlen + 1], value);
 		return 0;
 	}
 	if(value == NULL) /* variable is already unset */
