@@ -98,6 +98,11 @@ static char const * _days_long[] =
 };
 
 
+/* prototypes */
+static time_t _time_seconds_per_month(int month, int year);
+static time_t _time_seconds_per_year(int year);
+
+
 /* public */
 /* variables */
 int daylight = 0;
@@ -220,25 +225,44 @@ struct tm * gmtime(time_t const * t)
 struct tm * gmtime_r(time_t const * t, struct tm * ret)
 {
 	time_t u;
+	time_t v;
+	int i;
+	int j;
 
 	if(t == NULL || ret == NULL)
 	{
 		errno = EINVAL;
 		return NULL;
 	}
-	ret->tm_sec = *t % 60;
-	u = (*t - ret->tm_sec) / 60;
+	u = *t;
+	ret->tm_year = 0;
+	for(i = 1970;; i++)
+	{
+		v = _time_seconds_per_year(i);
+		if(u < v)
+			break;
+		u -= v;
+	}
+	ret->tm_year = i - 1900;
+	for(j = 0; j < 12; j++)
+	{
+		v = _time_seconds_per_month(j + 1, i);
+		if(u < v)
+			break;
+		u -= v;
+	}
+	ret->tm_mon = j;
+	ret->tm_sec = u % 60;
+	u = (u - ret->tm_sec) / 60;
 	ret->tm_min = u % 60;
 	u = (u - ret->tm_min) / 60;
 	ret->tm_hour = u % 24;
 	u = (u - ret->tm_hour) / 24;
+	ret->tm_mday = u + 1;
 	/* FIXME implement this correctly */
 	ret->tm_wday = (u + 4) % 7;
 	u = (u - ret->tm_wday) / 7;
-	ret->tm_year = 70 + (u / 365);
 	/* FIXME implement the rest */
-	ret->tm_mday = 0;
-	ret->tm_mon = 0;
 	ret->tm_yday = 0;
 	ret->tm_isdst = 0;
 	/* FIXME implement this?
@@ -270,9 +294,6 @@ struct tm * localtime_r(time_t const * t, struct tm * ret)
 
 
 /* mktime */
-static time_t _mktime_seconds_per_month(int month, int year);
-static time_t _mktime_seconds_per_year(int year);
-
 time_t mktime(struct tm * timep)
 {
 	time_t ret;
@@ -290,53 +311,10 @@ time_t mktime(struct tm * timep)
 	ret += timep->tm_hour * hour;
 	ret += (timep->tm_mday - 1) * day;
 	for(i = 1970; i < timep->tm_year + 1900; i++)
-		ret += _mktime_seconds_per_year(i);
+		ret += _time_seconds_per_year(i);
 	for(j = 0; j < timep->tm_mon; j++)
-		ret += _mktime_seconds_per_month(j + 1, i);
+		ret += _time_seconds_per_month(j + 1, i);
 	return ret;
-}
-
-static time_t _mktime_seconds_per_month(int month, int year)
-{
-	const time_t day = 60 * 60 * 24;
-	const time_t month28 = day * 28;
-	const time_t month29 = day * 29;
-	const time_t month30 = day * 30;
-	const time_t month31 = day * 31;
-
-	switch(month)
-	{
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 8:
-		case 10:
-		case 12:
-			return month31;
-		case 2:
-			if((year & 0x3) == 0 && (year % 400) != 0)
-				return month29;
-			return month28;
-		case 4:
-		case 6:
-		case 9:
-		case 11:
-			return month30;
-		default:
-			return 0;
-	}
-}
-
-static time_t _mktime_seconds_per_year(int year)
-{
-	const time_t day = 60 * 60 * 24;
-	const time_t year365 = day * 365;
-	const time_t year366 = day * 366;
-
-	if((year & 0x3) == 0 && (year % 400) != 0)
-		return year366;
-	return year365;
 }
 
 
@@ -688,4 +666,53 @@ time_t time(time_t * t)
 void tzset(void)
 {
 	/* FIXME implement, set daylight, timezone and tzname */
+}
+
+
+/* private */
+/* functions */
+/* time_seconds_per_month */
+static time_t _time_seconds_per_month(int month, int year)
+{
+	const time_t day = 60 * 60 * 24;
+	const time_t month28 = day * 28;
+	const time_t month29 = day * 29;
+	const time_t month30 = day * 30;
+	const time_t month31 = day * 31;
+
+	switch(month)
+	{
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			return month31;
+		case 2:
+			if((year & 0x3) == 0 && (year % 400) != 0)
+				return month29;
+			return month28;
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			return month30;
+		default:
+			return 0;
+	}
+}
+
+
+/* time_seconds_per_year */
+static time_t _time_seconds_per_year(int year)
+{
+	const time_t day = 60 * 60 * 24;
+	const time_t year365 = day * 365;
+	const time_t year366 = day * 366;
+
+	if((year & 0x3) == 0 && (year % 400) != 0)
+		return year366;
+	return year365;
 }
