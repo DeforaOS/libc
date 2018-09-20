@@ -90,7 +90,7 @@ static int _mktime(char const * progname)
 		return -1;
 	}
 	printf("localtime: %02d/%02d/%4d %02d:%02d:%02d\n",
-			tm.tm_mday, tm.tm_mon, tm.tm_year + 1900,
+			tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
 			tm.tm_hour, tm.tm_min, tm.tm_sec);
 	if((t = mktime(&tm)) == (time_t)-1 || t == 0)
 	{
