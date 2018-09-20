@@ -270,30 +270,73 @@ struct tm * localtime_r(time_t const * t, struct tm * ret)
 
 
 /* mktime */
+static time_t _mktime_seconds_per_month(int month, int year);
+static time_t _mktime_seconds_per_year(int year);
+
 time_t mktime(struct tm * timep)
 {
 	time_t ret;
 	const time_t min = 60;
 	const time_t hour = min * 60;
 	const time_t day = hour * 24;
-	const time_t month28 = day * 28;
-	const time_t month30 = day * 30;
-	const time_t month31 = day * 31;
-	time_t month;
-	const time_t year = day * 365;
+	int i;
+	int j;
 
+	if(timep->tm_year < 70)
+		return 0;
 	ret = timep->tm_sec;
 	/* FIXME not accurate */
 	ret += timep->tm_min * min;
 	ret += timep->tm_hour * hour;
-	ret += timep->tm_mday * day;
-	month = (timep->tm_mon == 1 || timep->tm_mon == 3 || timep->tm_mon == 5
-			|| timep->tm_mon == 7 || timep->tm_mon == 8
-			|| timep->tm_mon == 10 || timep->tm_mon == 12)
-		? month31 : ((timep->tm_mon != 2) ? month30 : month28);
-	ret += timep->tm_mon * month;
-	ret += (timep->tm_year - 70) * year;
+	ret += (timep->tm_mday - 1) * day;
+	for(i = 1970; i < timep->tm_year + 1900; i++)
+		ret += _mktime_seconds_per_year(i);
+	for(j = 1; j < timep->tm_mon; j++)
+		ret += _mktime_seconds_per_month(j, i);
 	return ret;
+}
+
+static time_t _mktime_seconds_per_month(int month, int year)
+{
+	const time_t day = 60 * 60 * 24;
+	const time_t month28 = day * 28;
+	const time_t month29 = day * 29;
+	const time_t month30 = day * 30;
+	const time_t month31 = day * 31;
+
+	switch(month)
+	{
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			return month31;
+		case 2:
+			if((year & 0x3) == 0 && (year % 400) != 0)
+				return month29;
+			return month28;
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			return month30;
+		default:
+			return 0;
+	}
+}
+
+static time_t _mktime_seconds_per_year(int year)
+{
+	const time_t day = 60 * 60 * 24;
+	const time_t year365 = day * 365;
+	const time_t year366 = day * 366;
+
+	if((year & 0x3) == 0 && (year % 400) != 0)
+		return year366;
+	return year365;
 }
 
 
