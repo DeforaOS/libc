@@ -77,21 +77,27 @@ static int _getdate(char const * progname)
 /* mktime */
 static int _mktime(char const * progname)
 {
-	time_t t = 0;
+	time_t t;
 	struct tm tm;
 
 	printf("%s: Testing mktime()\n", progname);
 	tzset();
+	t = time(NULL);
+	printf("time: %ld\n", t);
 	if(localtime_r(&t, &tm) == NULL)
 	{
 		perror("localtime_r");
 		return -1;
 	}
-	if((t = mktime(&tm)) == (time_t)-1 || t != 0)
+	printf("localtime: %02d/%02d/%4d %02d:%02d:%02d\n",
+			tm.tm_mday, tm.tm_mon, tm.tm_year + 1900,
+			tm.tm_hour, tm.tm_min, tm.tm_sec);
+	if((t = mktime(&tm)) == (time_t)-1 || t == 0)
 	{
 		perror("mktime");
 		return -1;
 	}
+	printf("mktime: %ld\n", t);
 	return 0;
 }
 
