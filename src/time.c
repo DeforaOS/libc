@@ -291,8 +291,8 @@ time_t mktime(struct tm * timep)
 	ret += (timep->tm_mday - 1) * day;
 	for(i = 1970; i < timep->tm_year + 1900; i++)
 		ret += _mktime_seconds_per_year(i);
-	for(j = 1; j < timep->tm_mon; j++)
-		ret += _mktime_seconds_per_month(j, i);
+	for(j = 0; j < timep->tm_mon; j++)
+		ret += _mktime_seconds_per_month(j + 1, i);
 	return ret;
 }
 
