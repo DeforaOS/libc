@@ -219,7 +219,7 @@ static int _new_file(DL * dl, char const * pathname)
 						&dl->text_addr) == 0)
 				continue;
 		}
-		else
+		else if(phdr[i].p_memsz > 0)
 		{
 			if(dl->data_addr != NULL)
 			{
@@ -231,6 +231,8 @@ static int _new_file(DL * dl, char const * pathname)
 						&dl->data_addr) == 0)
 				continue;
 		}
+		else
+			_dl_error_set(DE_INVALID_FORMAT, -1);
 		free(phdr);
 		return -1;
 	}
