@@ -27,7 +27,6 @@
 #variables
 ARCH=
 DEVNULL="/dev/null"
-[ -n "$OBJDIR" ] || OBJDIR="./"
 HOST_ARCH="$(uname -m)"
 case "$HOST_ARCH" in
 	x86_64)
@@ -81,6 +80,7 @@ _run()
 	echo -n "$test:" 1>&2
 	(echo
 	echo "Testing: $test" "$@"
+	[ -n "$OBJDIR" ] || OBJDIR="./"
 	"$OBJDIR$test" "$@") 2>&1
 	res=$?
 	if [ $res -ne 0 ]; then
