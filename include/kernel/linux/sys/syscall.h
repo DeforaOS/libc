@@ -234,7 +234,7 @@
 #  define SYS_fchmodat		306
 #  define SYS_faccessat		307
 #  define SYS_pselect		308
- 
+
 /* architecture specific: arm */
 #  if defined(__arm__)
 #   define SYS_lchown		16
