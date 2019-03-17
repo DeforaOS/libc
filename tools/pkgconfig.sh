@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2011-2016 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2011-2019 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -25,8 +25,8 @@
 
 
 #variables
+CONFIGSH="${0%/pkgconfig.sh}/../config.sh"
 PREFIX="/usr/local"
-[ -f "../config.sh" ] && . "../config.sh"
 DEBUG="_debug"
 DEVNULL="/dev/null"
 PROGNAME="pkgconfig.sh"
@@ -35,6 +35,7 @@ INSTALL="install -m 0644"
 MKDIR="mkdir -m 0755 -p"
 RM="rm -f"
 SED="sed"
+[ -f "$CONFIGSH" ] && . "$CONFIGSH"
 
 
 #functions
@@ -92,7 +93,7 @@ while getopts "ciuO:P:" name; do
 	esac
 done
 shift $(($OPTIND - 1))
-if [ $# -eq 0 ]; then
+if [ $# -lt 0 ]; then
 	_usage
 	exit $?
 fi
