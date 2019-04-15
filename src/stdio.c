@@ -681,12 +681,12 @@ int putchar_unlocked(int c)
 
 
 /* puts */
-int puts(char const * string)
+int puts(char const * str)
 {
 	size_t i;
 
-	i = strlen(string);
-	if(fwrite(string, sizeof(char), i, stdout) != i)
+	i = strlen(str);
+	if(fwrite(str, sizeof(char), i, stdout) != i)
 		return EOF;
 	fputc('\n', stdout);
 	return i <= INT_MAX ? i : INT_MAX;
@@ -795,13 +795,13 @@ int sprintf(char * str, char const * format, ...)
 
 
 /* sscanf */
-int sscanf(char const * string, char const * format, ...)
+int sscanf(char const * str, char const * format, ...)
 {
 	int ret;
 	va_list arg;
 
 	va_start(arg, format);
-	ret = vsscanf(string, format, arg);
+	ret = vsscanf(str, format, arg);
 	va_end(arg);
 	return ret;
 }
