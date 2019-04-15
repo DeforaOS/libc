@@ -71,7 +71,7 @@ void * memcpy(void * dest, void const * src, size_t n)
 {
 	char * d = dest;
 	char const * s = src;
-	
+
 	while(n--)
 		*d++ = *s++;
 	return dest;
