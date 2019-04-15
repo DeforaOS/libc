@@ -685,6 +685,8 @@ int puts(char const * str)
 {
 	size_t i;
 
+	if(str == NULL) /* XXX be nice and do not crash */
+		str = "(null)";
 	i = strlen(str);
 	if(fwrite(str, sizeof(char), i, stdout) != i)
 		return EOF;
