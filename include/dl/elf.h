@@ -182,7 +182,7 @@ typedef struct _Elf64_Ehdr
 # define SHN_UNDEF	0
 /* type */
 # define SHT_NULL	0
-# define SHT_PROGBIGS	1
+# define SHT_PROGBITS	1
 # define SHT_SYMTAB	2
 # define SHT_STRTAB	3
 # define SHT_RELA	4
