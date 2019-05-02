@@ -193,6 +193,10 @@ typedef struct _Elf64_Ehdr
 # define SHT_REL	9
 # define SHT_SHLIB	10
 # define SHT_DYNSYM	11
+/* flags */
+# define SHF_WRITE	0x1
+# define SHF_ALLOC	0x2
+# define SHF_EXECINSTR	0x4
 
 typedef struct _Elf32_Shdr
 {
