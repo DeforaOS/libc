@@ -180,6 +180,8 @@ typedef struct _Elf64_Ehdr
 /* Elf_Shdr */
 /* name */
 # define SHN_UNDEF	0
+# define SHN_ABS	0xfff1
+# define SHN_COMMON	0xfff2
 /* type */
 # define SHT_NULL	0
 # define SHT_PROGBITS	1
