@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2014 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,28 +28,51 @@
 
 
 
-#ifndef LIBC_COMPAT_ERRNO_H
-# define LIBC_COMPAT_ERRNO_H
+#ifndef LIBC_KERNEL_DEFORAOS_ERRNO_H
+# define LIBC_KERNEL_DEFORAOS_ERRNO_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/errno.h"
-# elif defined(__DeforaOS__)
-#  include "kernel/deforaos/errno.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/errno.h"
-# elif defined(__linux__)
-#  include "kernel/linux/errno.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/errno.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/errno.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/errno.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/errno.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+# define EPERM		1
+# define ENOENT		2
+# define ESRCH		3
+# define EINTR		4
+# define EIO		5
+# define ENXIO		6
+# define E2BIG		7
+# define ENOEXEC	8
+# define EBADF		9
+# define ECHILD		10
+# define ENOMEM		12
+# define EACCES		13
+# define EFAULT		14
+# define EBUSY		16
+# define EEXIST		17
+# define EXDEV		18
+# define ENODEV		19
+# define ENOTDIR	20
+# define EISDIR		21
+# define EINVAL		22
+# define ENOTTY		25
+# define ENOSPC		28
+# define ESPIPE		29
+# define EROFS		30
+# define EPIPE		32
+# define EDOM		33
+# define ERANGE		34
+# define EAGAIN		35
+# define EINPROGRESS	36
+# define EOPNOTSUPP	45
+# define EAFNOSUPPORT	47
+# define EADDRINUSE	48
+# define EADDRNOTAVAIL	49
+# define ENOBUFS	55
+# define ETIMEDOUT	60
+# define ECONNREFUSED	61
+# define ELOOP		62
+# define ENOTEMPTY	66
+# define ENOSYS		78
+# define ENOTSUP	86
+# define EPROTO		96
 
-#endif /* !LIBC_COMPAT_ERRNO_H */
+#endif /* !LIBC_KERNEL_DEFORAOS_ERRNO_H */
