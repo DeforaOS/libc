@@ -29,6 +29,7 @@
 
 
 #include "../syscalls.h"
+#include "errno.h"
 #include "sys/ioctl.h"
 
 
