@@ -28,6 +28,9 @@
 
 
 
+#include "kernel/deforaos/errno.h"
+
+
 /* macros */
 #ifndef SYSCALL
 # define SYSCALL(name) \
