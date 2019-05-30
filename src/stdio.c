@@ -41,7 +41,9 @@
 #include "stdio.h"
 #include "start.h"
 
-#define min(a, b) ((a) > (b) ? (b) : (a))
+#ifndef min
+# define min(a, b) ((a) > (b) ? (b) : (a))
+#endif
 
 
 /* private */

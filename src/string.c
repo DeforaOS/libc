@@ -33,7 +33,9 @@
 #include "string.h"
 #include "errno.h"
 
-#define max(a, b) ((a) > (b) ? (a) : (b))
+#ifndef max
+# define max(a, b) ((a) > (b) ? (a) : (b))
+#endif
 
 
 /* memchr */

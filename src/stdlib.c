@@ -48,8 +48,12 @@
 #define ECRYPT_ENCRYPTS_BYTES
 #include "chacha/chacha.c"
 
-#define min(a, b) (((a) > (b)) ? (b) : (a))
-#define max(a, b) (((a) > (b)) ? (a) : (b))
+#ifndef min
+# define min(a, b) (((a) > (b)) ? (b) : (a))
+#endif
+#ifndef max
+# define max(a, b) (((a) > (b)) ? (a) : (b))
+#endif
 
 
 /* private */
