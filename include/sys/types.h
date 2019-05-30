@@ -71,6 +71,10 @@ typedef __nlink_t nlink_t;
 #  define off_t off_t
 typedef __off_t off_t;
 # endif
+# ifndef paddr_t
+#  define paddr_t paddr_t
+typedef __paddr_t paddr_t;
+# endif
 # ifndef pid_t
 #  define pid_t pid_t
 typedef __pid_t pid_t;
@@ -94,6 +98,10 @@ typedef __uid_t uid_t;
 # ifndef useconds_t
 #  define useconds_t useconds_t
 typedef __useconds_t useconds_t;
+# endif
+# ifndef vaddr_t
+#  define vaddr_t vaddr_t
+typedef __vaddr_t vaddr_t;
 # endif
 
 /* pthread */

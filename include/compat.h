@@ -91,6 +91,9 @@
 # ifndef __off_t
 #  define __off_t long long
 # endif
+# ifndef __paddr_t
+#  define __paddr_t unsigned long
+# endif
 # ifndef __pid_t
 #  define __pid_t int
 # endif
@@ -125,6 +128,9 @@
 #   warning Unsupported architecture: va_list is not supported
 #   define __va_list char *
 #  endif
+# endif
+# ifndef __vaddr_t
+#  define __vaddr_t unsigned long
 # endif
 # ifndef __wchar_t
 #  define __wchar_t char
