@@ -34,7 +34,5 @@
 
 /* constants */
 /* syscalls */
-# define SYS_exit		1
-# define SYS_brk		17
 
 #endif /* !KERNEL_DEFORAOS_SYS_SYSCALL_H */

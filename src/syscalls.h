@@ -31,8 +31,18 @@
 #ifndef LIBC_SRC_SYSCALLS_H
 # define LIBC_SRC_SYSCALLS_H
 
+/* DeforaOS */
+# if defined(__DeforaOS__)
+#  if defined(__amd64__) || defined(__i386__)
+#   include "sys/syscall.h"
+#   define SYS_brk
+#   define SYS_exit
+#  else
+#   warning Unsupported DeforaOS architecture
+#  endif
+
 /* FreeBSD */
-# if defined(__FreeBSD__)
+# elif defined(__FreeBSD__)
 #  if defined(__amd64__) || defined(__i386__)
 #   include "sys/syscall.h"
 #  else
