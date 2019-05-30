@@ -30,6 +30,7 @@
 /stdio
 /stdlib
 /string
+/strings
 /tests.log
 /time
 /unistd
