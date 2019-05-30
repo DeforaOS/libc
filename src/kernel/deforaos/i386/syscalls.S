@@ -38,3 +38,13 @@ name:; \
 	mov	$-1, %eax; \
 	ret
 #endif
+
+
+/* functions */
+/* _brk */
+.global _brk
+.type _brk,@function
+_brk:
+	xor	%eax, %eax
+	ret
+#undef SYS_brk

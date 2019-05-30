@@ -49,3 +49,13 @@ name:; \
 	ret
 # endif
 #endif
+
+
+/* functions */
+/* _brk */
+.global _brk
+.type _brk,@function
+_brk:
+	xor	%rax, %rax
+	ret
+#undef SYS_brk
