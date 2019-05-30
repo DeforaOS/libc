@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012-2019 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,24 +28,13 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_SYSCALL_H
-# define LIBC_COMPAT_SYS_SYSCALL_H
+#ifndef KERNEL_DEFORAOS_SYS_SYSCALL_H
+# define KERNEL_DEFORAOS_SYS_SYSCALL_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/sys/syscall.h"
-# elif defined(__DeforaOS__)
-#  include "kernel/deforaos/sys/syscall.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/syscall.h"
-# elif defined(__linux__)
-#  include "kernel/linux/sys/syscall.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/syscall.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/syscall.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+/* syscalls */
+# define SYS_exit		1
+# define SYS_brk		17
 
-#endif /* !LIBC_COMPAT_SYS_SYSCALL_H */
+#endif /* !KERNEL_DEFORAOS_SYS_SYSCALL_H */
