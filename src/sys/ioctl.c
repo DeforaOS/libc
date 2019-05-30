@@ -30,3 +30,13 @@
 
 #include "../syscalls.h"
 #include "sys/ioctl.h"
+
+
+/* functions */
+#ifndef SYS_ioctl
+int ioctl(int fildes, int request, ...)
+{
+	errno = ENOSYS;
+	return -1;
+}
+#endif
