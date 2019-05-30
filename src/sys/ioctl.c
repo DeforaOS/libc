@@ -34,6 +34,7 @@
 
 /* functions */
 #ifndef SYS_ioctl
+# warning Unsupported platform: ioctl() is missing
 int ioctl(int fildes, int request, ...)
 {
 	errno = ENOSYS;

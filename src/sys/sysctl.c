@@ -35,6 +35,7 @@
 
 /* functions */
 #ifndef SYS_sysctl
+# warning Unsupported platform: sysctl() is missing
 int sysctl(int const * name, unsigned int namecnt, void * from,
 		size_t * fromsize, void const * to, size_t tosize)
 {
