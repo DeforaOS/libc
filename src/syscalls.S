@@ -34,8 +34,18 @@
 .text
 
 
+/* DeforaOS */
+#if defined(__DeforaOS__)
+# if defined(__amd64__)
+#  include "kernel/deforaos/amd64/syscalls.S"
+# elif defined(__i386__)
+#  include "kernel/deforaos/i386/syscalls.S"
+# else /* !amd64 && !i386 */
+#  warning Unsupported DeforaOS architecture
+#endif
+
 /* FreeBSD */
-#if defined(__FreeBSD__)
+#elif defined(__FreeBSD__)
 # if defined(__amd64__)
 #  include "kernel/freebsd/amd64/syscalls.S"
 # elif defined(__i386__)
