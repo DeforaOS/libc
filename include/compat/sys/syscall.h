@@ -34,6 +34,7 @@
 
 # if defined(__APPLE__)
 #  include "kernel/darwin/sys/syscall.h"
+# elif defined(__DeforaOS__)
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/syscall.h"
 # elif defined(__linux__)
