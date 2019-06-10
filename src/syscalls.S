@@ -59,7 +59,6 @@
 
 /* MacOS X */
 #elif defined(__APPLE__)
-# include "kernel/darwin/common.h"
 # if defined(__amd64__)
 #  include "kernel/darwin/amd64/syscalls.S"
 # else /* !__amd64__ */
