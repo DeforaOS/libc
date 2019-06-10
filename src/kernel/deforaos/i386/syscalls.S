@@ -67,17 +67,14 @@ _exit:
 .global write
 .type write,@function
 write:
-	push	%ebp
-	mov	%esp, %ebp
 	call	console_get_default
-	mov	0x10(%ebp), %ecx
+	mov	0xc(%esp), %ecx
 	push	%ecx
-	mov	0xc(%ebp), %ecx
+	mov	0xc(%esp), %ecx
 	push	%ecx
 	push	%eax
 	call	console_print
-	mov	0x10(%ebp), %eax
-	mov	%ebp, %esp
-	pop	%ebp
+	add	$0xc, %esp
+	mov	0xc(%esp), %eax
 	ret
 #undef SYS_write
