@@ -28,16 +28,14 @@
 
 
 
-#ifndef KERNEL_DEFORAOS_SYS_SYSCALL_H
-# define KERNEL_DEFORAOS_SYS_SYSCALL_H
+#ifndef KERNEL_DEFORAOS_COMMON_H
+# define KERNEL_DEFORAOS_COMMON_H
 
 
-/* constants */
-/* syscalls */
-# define SYS_gettimeofday
-# define SYS_mmap
-# define SYS_mprotect
-# define SYS_munmap
-# define SYS_write
+# undef SYS_gettimeofday
+# undef SYS_mmap
+# undef SYS_mprotect
+# undef SYS_munmap
+# undef SYS_write
 
-#endif /* !KERNEL_DEFORAOS_SYS_SYSCALL_H */
+#endif /* !KERNEL_DEFORAOS_COMMON_H */

@@ -36,6 +36,7 @@
 
 /* DeforaOS */
 #if defined(__DeforaOS__)
+# include "kernel/deforaos/common.h"
 # if defined(__amd64__)
 #  include "kernel/deforaos/amd64/syscalls.S"
 # elif defined(__i386__)
