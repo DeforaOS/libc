@@ -72,3 +72,30 @@ _exit:
 	cli
 1:	hlt
 	jmp	1b
+
+
+/* write */
+.global write
+.type write,@function
+write:
+	push	%rdx
+	push	%rdx
+	push	%rsi
+	push	%rdi
+#ifdef __PIC__
+	call	console_get_default@PLT
+#else
+	call	console_get_default
+#endif
+	pop	%rdi
+	pop	%rsi
+	pop	%rdx
+	mov	%rax, %rdi
+#ifdef __PIC__
+	call	console_print@PLT
+#else
+	call	console_print
+#endif
+	pop	%rax
+	ret
+#undef SYS_write
