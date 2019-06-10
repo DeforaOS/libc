@@ -61,3 +61,23 @@ _exit:
 	cli
 1:	hlt
 	jmp	1b
+
+
+/* write */
+.global write
+.type write,@function
+write:
+	push	%ebp
+	mov	%esp, %ebp
+	call	console_get_default
+	mov	0x10(%ebp), %ecx
+	push	%ecx
+	mov	0xc(%ebp), %ecx
+	push	%ecx
+	push	%eax
+	call	console_print
+	mov	0x10(%ebp), %eax
+	mov	%ebp, %esp
+	pop	%ebp
+	ret
+#undef SYS_write

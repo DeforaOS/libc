@@ -34,5 +34,6 @@
 
 /* constants */
 /* syscalls */
+# define SYS_write
 
 #endif /* !KERNEL_DEFORAOS_SYS_SYSCALL_H */
