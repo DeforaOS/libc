@@ -1,0 +1,9 @@
+prefix=@PREFIX@
+libdir=@LIBDIR@
+includedir=@INCLUDEDIR@
+
+Name: DeforaOS libc
+Description: libc for the DeforaOS Operating System
+Version: @VERSION@
+Libs: -nostdlib @RPATH@ -lc ${libdir}/start.o
+Cflags: -nostdinc -isystem ${includedir} -freestanding
