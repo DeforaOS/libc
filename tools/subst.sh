@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2012-2017 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2012-2019 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -36,7 +36,6 @@ LIBEXECDIR=
 MANDIR=
 PROGNAME="subst.sh"
 SYSCONFDIR=
-[ -f "$CONFIGSH" ] && . "$CONFIGSH"
 #executables
 CHMOD="chmod"
 DATE="date"
@@ -46,6 +45,7 @@ INSTALL="install"
 MKDIR="mkdir -m 0755 -p"
 RM="rm -f"
 SED="sed"
+[ -f "$CONFIGSH" ] && . "$CONFIGSH"
 
 
 #functions
@@ -125,8 +125,8 @@ _subst()
 			-e "s;@LIBDIR@;$LIBDIR;g" \
 			-e "s;@LIBEXECDIR@;$LIBEXECDIR;g" \
 			-e "s;@MANDIR@;$MANDIR;g" \
-			-e "s;@SYSCONFDIR@;$SYSCONFDIR;g" \
 			-e "s;@PWD@;$PWD;g" \
+			-e "s;@SYSCONFDIR@;$SYSCONFDIR;g" \
 			-- "$source" > "$target"
 		if [ $? -ne 0 ]; then
 			$RM -- "$target" 2> "$DEVNULL"
