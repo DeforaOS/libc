@@ -84,6 +84,12 @@ also provided and installed by default.
 
 This specs file is experimental, with some known issues remaining.
 
+Alternatively, a pkg-config file is provided. The corresponding compilation
+flags can be generated as follows:
+
+    $ pkg-config --cflags DeforaOS-libc
+    $ pkg-config --libs DeforaOS-libc
+
 
 Cross-compiling with DeforaOS libc
 ----------------------------------
