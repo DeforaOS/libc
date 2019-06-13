@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2017 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,19 @@
 
 
 
-#ifndef LIBC_COMPAT_UNISTD_H
-# define LIBC_COMPAT_UNISTD_H
+#ifndef LIBC_KERNEL_DEFORAOS_UNISTD_H
+# define LIBC_KERNEL_DEFORAOS_UNISTD_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/unistd.h"
-# elif defined(__DeforaOS__)
-#  include "kernel/deforaos/unistd.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/unistd.h"
-# elif defined(__linux__)
-#  include "kernel/linux/unistd.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/unistd.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/unistd.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/unistd.h"
-# else
-#  warning Unsupported platform
+/* constants */
+# ifndef SEEK_SET
+#  define SEEK_SET	0
+# endif
+# ifndef SEEK_CUR
+#  define SEEK_CUR	1
+# endif
+# ifndef SEEK_END
+#  define SEEK_END	2
 # endif
 
-#endif /* !LIBC_COMPAT_UNISTD_H */
+#endif /* !LIBC_KERNEL_DEFORAOS_UNISTD_H */
