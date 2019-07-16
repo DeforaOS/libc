@@ -62,7 +62,6 @@
 # elif defined(__APPLE__)
 #  if defined(__amd64__)
 #   include "sys/syscall.h"
-#   include "kernel/darwin/common.h"
 #  else
 #   warning Unsupported Darwin architecture
 #  endif
