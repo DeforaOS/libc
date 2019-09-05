@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2017 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,26 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_STAT_H
-# define LIBC_COMPAT_SYS_STAT_H
+#ifndef LIBC_KERNEL_DEFORAOS_SYS_STAT_H
+# define LIBC_KERNEL_DEFORAOS_SYS_STAT_H
 
 
-# if defined(__DeforaOS__)
-#  include "kernel/deforaos/sys/stat.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/stat.h"
-# elif defined(__linux__)
-#  include "kernel/linux/sys/stat.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/stat.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/stat.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/sys/stat.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/sys/stat.h"
-# else
-#  warning Unsupported platform
-# endif
+/* types */
+struct stat
+{
+	dev_t st_dev;
+	mode_t st_mode;
+	ino_t st_ino;
+	nlink_t st_nlink;
+	uid_t st_uid;
+	gid_t st_gid;
+	dev_t st_rdev;
+	time_t st_atime;
+	time_t st_mtime;
+	time_t st_ctime;
+	off_t st_size;
+	blkcnt_t st_blocks;
+	blksize_t st_blksize;
+};
 
-#endif /* !LIBC_COMPAT_SYS_STAT_H */
+#endif /* !LIBC_KERNEL_DEFORAOS_SYS_STAT_H */
