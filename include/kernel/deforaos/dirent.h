@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,24 +28,18 @@
 
 
 
-#ifndef LIBC_COMPAT_DIRENT_H
-# define LIBC_COMPAT_DIRENT_H
+#ifndef LIBC_KERNEL_DEFORAOS_DIRENT_H
+# define LIBC_KERNEL_DEFORAOS_DIRENT_H
 
 
-# if defined(__DeforaOS__)
-#  include "kernel/deforaos/dirent.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/dirent.h"
-# elif defined(__linux__)
-#  include "kernel/linux/dirent.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/dirent.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/dirent.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/dirent.h"
-# else
-#  warning Unsupported platform
-# endif
+/* types */
+struct dirent
+{
+	ino_t d_ino;
+	unsigned short int d_reclen;
+	unsigned short int _padding0;
+	unsigned char d_type;
+	char d_name[512]; /* NAME_MAX + 1 */
+};
 
-#endif /* !LIBC_COMPAT_DIRENT_H */
+#endif /* !LIBC_KERNEL_DEFORAOS_DIRENT_H */
