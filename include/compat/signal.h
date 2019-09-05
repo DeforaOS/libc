@@ -34,6 +34,8 @@
 
 # if defined(__APPLE__)
 #  include "kernel/darwin/signal.h"
+# elif defined(__DeforaOS__)
+#  include "kernel/deforaos/signal.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/signal.h"
 # elif defined(__linux__)
