@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2014 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,28 +28,19 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_MMAN_H
-# define LIBC_COMPAT_SYS_MMAN_H
+#ifndef LIBC_KERNEL_DEFORAOS_SYS_MMAN_H
+# define LIBC_KERNEL_DEFORAOS_SYS_MMAN_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/sys/mman.h"
-# elif defined(__DeforaOS__)
-#  include "kernel/deforaos/sys/mman.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/mman.h"
-# elif defined(__linux__)
-#  include "kernel/linux/sys/mman.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/mman.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/mman.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/sys/mman.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/sys/mman.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+# define PROT_NONE	0x0
+# define PROT_READ	0x1
+# define PROT_WRITE	0x2
+# define PROT_EXEC	0x4
 
-#endif /* !LIBC_COMPAT_SYS_MMAN_H */
+# define MAP_SHARED	0x0001
+# define MAP_PRIVATE	0x0002
+# define MAP_FIXED	0x0010
+# define MAP_ANONYMOUS	0x1000
+
+#endif /* !LIBC_KERNEL_DEFORAOS_SYS_MMAN_H */
