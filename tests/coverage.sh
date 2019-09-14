@@ -54,7 +54,7 @@ _coverage()
 		return 2
 	fi
 	#build the project in a separate directory
-	for dir in src/ssp src/dl src/math src/pthread src/regex src/rt src/socket src tools; do
+	for dir in src tools; do
 		[ -d "../$dir" ] || continue
 		$MKDIR "$tmpdir/$dir" &&
 		(cd "../$dir" && $MAKE CC="$CC" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" OBJDIR="$tmpdir/$dir/") || break
