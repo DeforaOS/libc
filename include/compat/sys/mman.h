@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2014 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -34,10 +34,12 @@
 
 # if defined(__APPLE__)
 #  include "kernel/darwin/sys/mman.h"
-# elif defined(__linux__)
-#  include "kernel/linux/sys/mman.h"
+# elif defined(__DeforaOS__)
+#  include "kernel/deforaos/sys/mman.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/mman.h"
+# elif defined(__linux__)
+#  include "kernel/linux/sys/mman.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/sys/mman.h"
 # elif defined(__OpenBSD__)

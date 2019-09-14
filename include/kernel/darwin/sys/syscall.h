@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2016-2017 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2016-2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -65,6 +65,7 @@
 # define SYS_readlink		58
 # define SYS_execve		59
 # define SYS_umask		60
+# define SYS_chroot		61
 # define SYS_vfork		66
 # define SYS_munmap		73
 # define SYS_mprotect		74

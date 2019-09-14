@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -29,6 +29,7 @@
 
 
 #include "../syscalls.h"
+#include "errno.h"
 #include "sys/ioctl.h"
 
 

@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -32,10 +32,12 @@
 # define LIBC_COMPAT_DIRENT_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/dirent.h"
+# if defined(__DeforaOS__)
+#  include "kernel/deforaos/dirent.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/dirent.h"
+# elif defined(__linux__)
+#  include "kernel/linux/dirent.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/dirent.h"
 # elif defined(__OpenBSD__)

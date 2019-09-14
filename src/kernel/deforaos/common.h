@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,14 @@
 
 
 
-#ifndef LIBC_COMPAT_FCNTL_H
-# define LIBC_COMPAT_FCNTL_H
+#ifndef KERNEL_DEFORAOS_COMMON_H
+# define KERNEL_DEFORAOS_COMMON_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/fcntl.h"
-# elif defined(__DeforaOS__)
-#  include "kernel/deforaos/fcntl.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/fcntl.h"
-# elif defined(__linux__)
-#  include "kernel/linux/fcntl.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/fcntl.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/fcntl.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/fcntl.h"
-# else
-#  warning Unsupported platform
-# endif
+# undef SYS_gettimeofday
+# undef SYS_mmap
+# undef SYS_mprotect
+# undef SYS_munmap
+# undef SYS_write
 
-#endif /* !LIBC_COMPAT_FCNTL_H */
+#endif /* !KERNEL_DEFORAOS_COMMON_H */

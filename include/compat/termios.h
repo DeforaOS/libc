@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2009 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -34,6 +34,8 @@
 
 # if defined(__linux__)
 #  include "kernel/linux/termios.h"
+# elif defined(__DeforaOS__)
+#  include "kernel/deforaos/termios.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/termios.h"
 # elif defined(__NetBSD__)

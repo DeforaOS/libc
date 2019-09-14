@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,36 @@
 
 
 
-#ifndef LIBC_COMPAT_FCNTL_H
-# define LIBC_COMPAT_FCNTL_H
+#include "kernel/deforaos/errno.h"
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/fcntl.h"
-# elif defined(__DeforaOS__)
-#  include "kernel/deforaos/fcntl.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/fcntl.h"
-# elif defined(__linux__)
-#  include "kernel/linux/fcntl.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/fcntl.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/fcntl.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/fcntl.h"
-# else
-#  warning Unsupported platform
-# endif
+/* macros */
+#ifndef SYSCALL
+# define SYSCALL(name) \
+.global name; \
+.type name,@function; \
+name:; \
+	movl	$ENOSYS, errno; \
+	mov	$-1, %eax; \
+	ret
+#endif
 
-#endif /* !LIBC_COMPAT_FCNTL_H */
+
+/* functions */
+/* _brk */
+.global _brk
+.type _brk,@function
+_brk:
+	xor	%eax, %eax
+	ret
+#undef SYS_brk
+
+
+/* _exit */
+.global _exit
+.type _exit,@function
+_exit:
+	/* infinite loop */
+	cli
+1:	hlt
+	jmp	1b

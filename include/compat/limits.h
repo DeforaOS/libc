@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2016 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -34,10 +34,12 @@
 
 # if defined(__APPLE__)
 #  include "kernel/darwin/limits.h"
-# elif defined(__linux__)
-#  include "kernel/linux/limits.h"
+# elif defined(__DeforaOS__)
+#  include "kernel/deforaos/limits.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/limits.h"
+# elif defined(__linux__)
+#  include "kernel/linux/limits.h"
 # elif defined(__NetBSD__)
 #  include "kernel/netbsd/limits.h"
 # elif defined(__OpenBSD__)

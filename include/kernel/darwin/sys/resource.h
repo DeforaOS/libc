@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,67 @@
 
 
 
-#ifndef LIBC_COMPAT_FCNTL_H
-# define LIBC_COMPAT_FCNTL_H
+#ifndef LIBC_KERNEL_DARWIN_SYS_RESOURCE_H
+# define LIBC_KERNEL_DARWIN_SYS_RESOURCE_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/fcntl.h"
-# elif defined(__DeforaOS__)
-#  include "kernel/deforaos/fcntl.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/fcntl.h"
-# elif defined(__linux__)
-#  include "kernel/linux/fcntl.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/fcntl.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/fcntl.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/fcntl.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef timeval
+#  define timeval timeval
+struct timeval
+{
+	time_t tv_sec;
+	suseconds_t tv_usec;
+};
 # endif
 
-#endif /* !LIBC_COMPAT_FCNTL_H */
+# ifndef rlimit
+#  define rlimit rlimit
+struct rlimit
+{
+	rlim_t rlim_cur;
+	rlim_t rlim_max;
+};
+# endif
+
+# ifndef rusage
+#  define rusage rusage
+struct rusage
+{
+	struct timeval ru_utime;
+	struct timeval ru_stime;
+	long ru_maxrss;
+	long ru_ixrss;
+	long ru_idrss;
+	long ru_isrss;
+	long ru_minflt;
+	long ru_majflt;
+	long ru_nswap;
+	long ru_inblock;
+	long ru_oublock;
+	long ru_msgsnd;
+	long ru_msgrcv;
+	long ru_nsignals;
+	long ru_nvcsw;
+	long ru_nivcsw;
+};
+# endif
+
+
+/* constants */
+# define PRIO_PROCESS		0
+# define PRIO_PGRP		1
+# define PRIO_USER		2
+
+# define RLIMIT_CPU		0
+# define RLIMIT_FSIZE		1
+# define RLIMIT_DATA		2
+# define RLIMIT_STACK		3
+# define RLIMIT_CORE		4
+# define RLIMIT_AS		5
+# define RLIMIT_NOFILE		8
+
+# define RUSAGE_SELF		0
+# define RUSAGE_CHILDREN	-1
+
+#endif /* !LIBC_KERNEL_DARWIN_SYS_RESOURCE_H */

@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -32,7 +32,9 @@
 # define LIBC_COMPAT_SYS_RESOURCE_H
 
 
-# if defined(__linux__)
+# if defined(__APPLE__)
+#  include "kernel/darwin/sys/resource.h"
+# elif defined(__linux__)
 #  include "kernel/linux/sys/resource.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/resource.h"

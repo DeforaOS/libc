@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,54 @@
 
 
 
-#ifndef LIBC_COMPAT_FCNTL_H
-# define LIBC_COMPAT_FCNTL_H
+#ifndef LIBC_KERNEL_DEFORAOS_TERMIOS_H
+# define LIBC_KERNEL_DEFORAOS_TERMIOS_H
+
+# define NCCS 20
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/fcntl.h"
-# elif defined(__DeforaOS__)
-#  include "kernel/deforaos/fcntl.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/fcntl.h"
-# elif defined(__linux__)
-#  include "kernel/linux/fcntl.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/fcntl.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/fcntl.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/fcntl.h"
-# else
-#  warning Unsupported platform
-# endif
+/* types */
+typedef unsigned char cc_t;
+typedef unsigned int speed_t;
+typedef unsigned int tcflag_t;
 
-#endif /* !LIBC_COMPAT_FCNTL_H */
+struct termios
+{
+	tcflag_t c_iflag;
+	tcflag_t c_oflag;
+	tcflag_t c_cflag;
+	tcflag_t c_lflag;
+	cc_t c_cc[NCCS];
+};
+
+
+/* constants */
+# define ISIG			0x0080
+# define ICANON			0x0100
+
+# define INPCK			0x0010
+# define ISTRIP			0x0020
+# define INLCR			0x0040
+# define IGNCR			0x0080
+# define ICRNL			0x0100
+# define IXON			0x0200
+# define IXOFF			0x0400
+# define IXANY			0x0800
+
+# define VEOF			0
+# define VEOL			1
+# define VEOL2			2
+# define VERASE			3
+# define VWERASE		4
+# define VKILL			5
+# define VREPRINT		6
+# define VINTR			8
+# define VQUIT			9
+# define VSUSP			10
+# define VSTART			12
+# define VSTOP			13
+# define VDISCARD		15
+# define VMIN			16
+# define VTIME			17
+
+#endif /* !LIBC_KERNEL_DEFORAOS_TERMIOS_H */

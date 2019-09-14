@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2014 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -34,6 +34,8 @@
 
 # if defined(__APPLE__)
 #  include "kernel/darwin/sys/select.h"
+# elif defined(__DeforaOS__)
+#  include "kernel/deforaos/sys/select.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/select.h"
 # elif defined(__linux__)

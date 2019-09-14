@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,24 @@
 
 
 
-#ifndef LIBC_COMPAT_FCNTL_H
-# define LIBC_COMPAT_FCNTL_H
+#ifndef LIBC_KERNEL_DEFORAOS_SYS_TIME_H
+# define LIBC_KERNEL_DEFORAOS_SYS_TIME_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/fcntl.h"
-# elif defined(__DeforaOS__)
-#  include "kernel/deforaos/fcntl.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/fcntl.h"
-# elif defined(__linux__)
-#  include "kernel/linux/fcntl.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/fcntl.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/fcntl.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/fcntl.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef timeval
+#  define timeval timeval
+struct timeval
+{
+	time_t tv_sec;
+	suseconds_t tv_usec;
+};
 # endif
 
-#endif /* !LIBC_COMPAT_FCNTL_H */
+
+/* constants */
+# define ITIMER_REAL	0
+# define ITIMER_VIRTUAL	1
+# define ITIMER_PROF	2
+
+#endif /* !LIBC_KERNEL_DEFORAOS_SYS_TIME_H */

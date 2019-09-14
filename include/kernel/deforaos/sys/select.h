@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,26 +28,40 @@
 
 
 
-#ifndef LIBC_COMPAT_FCNTL_H
-# define LIBC_COMPAT_FCNTL_H
+#ifndef LIBC_KERNEL_DEFORAOS_SYS_SELECT_H
+# define LIBC_KERNEL_DEFORAOS_SYS_SELECT_H
+
+/* XXX for memset() */
+# include <string.h>
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/fcntl.h"
-# elif defined(__DeforaOS__)
-#  include "kernel/deforaos/fcntl.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/fcntl.h"
-# elif defined(__linux__)
-#  include "kernel/linux/fcntl.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/fcntl.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/fcntl.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/fcntl.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef fd_set
+#  define fd_set fd_set
+typedef struct _fd_set
+{
+	int fds_bits[8];
+} fd_set;
 # endif
 
-#endif /* !LIBC_COMPAT_FCNTL_H */
+# ifndef timeval
+#  define timeval timeval
+struct timeval
+{
+	time_t tv_sec;
+	suseconds_t tv_usec;
+};
+# endif
+
+
+/* macros */
+# define FD_CLR(fd, fdset)	\
+	((fdset)->fds_bits[(fd) / 32] &= ~(1 << ((fd) % 8)))
+# define FD_ISSET(fd, fdset)	\
+	((fdset)->fds_bits[(fd) / 32] & (1 << ((fd) % 8)))
+# define FD_SET(fd, fdset)	\
+	((fdset)->fds_bits[(fd) / 32] |= (1 << ((fd) % 8)))
+# define FD_ZERO(fdset)		\
+	memset(fdset, 0, sizeof(fd_set))
+
+#endif /* !LIBC_KERNEL_DEFORAOS_SYS_SELECT_H */

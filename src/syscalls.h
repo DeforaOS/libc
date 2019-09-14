@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2004-2017 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2004-2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -31,8 +31,18 @@
 #ifndef LIBC_SRC_SYSCALLS_H
 # define LIBC_SRC_SYSCALLS_H
 
+/* DeforaOS */
+# if defined(__DeforaOS__)
+#  if defined(__amd64__) || defined(__i386__)
+#   include "sys/syscall.h"
+#   define SYS_brk
+#   define SYS_exit
+#  else
+#   warning Unsupported DeforaOS architecture
+#  endif
+
 /* FreeBSD */
-# if defined(__FreeBSD__)
+# elif defined(__FreeBSD__)
 #  if defined(__amd64__) || defined(__i386__)
 #   include "sys/syscall.h"
 #  else
@@ -52,7 +62,6 @@
 # elif defined(__APPLE__)
 #  if defined(__amd64__)
 #   include "sys/syscall.h"
-#   include "kernel/darwin/common.h"
 #  else
 #   warning Unsupported Darwin architecture
 #  endif

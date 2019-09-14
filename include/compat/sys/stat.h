@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2017 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -32,7 +32,9 @@
 # define LIBC_COMPAT_SYS_STAT_H
 
 
-# if defined(__FreeBSD__)
+# if defined(__DeforaOS__)
+#  include "kernel/deforaos/sys/stat.h"
+# elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/stat.h"
 # elif defined(__linux__)
 #  include "kernel/linux/sys/stat.h"
