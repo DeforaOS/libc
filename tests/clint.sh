@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2016-2018 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2016-2019 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -63,16 +63,25 @@ _clint()
 		for filename in $($FIND "../$subdir" -type f | $SORT); do
 			case "$filename" in
 				*.c)
-					(_clint_lint "$filename" ||
+					echo
+					(_clint_lint "$filename";
 						_clint_rtrim "$filename")
 					;;
 				*.h)
+					echo
+					echo "$filename:"
 					(_clint_rtrim "$filename")
+					;;
+				*)
+					continue
 					;;
 			esac
 			if [ $? -ne 0 ]; then
+				echo "FAIL"
 				echo "$PROGNAME: $filename: FAIL" 1>&2
 				ret=2
+			else
+				echo "OK"
 			fi
 		done
 	done
@@ -83,15 +92,8 @@ _clint_lint()
 {
 	filename="$1"
 
-	echo
+	echo -n "${filename%/*}/"
 	$DEBUG $LINT $CPPFLAGS $CFLAGS "$filename" 2>&1
-	ret=$?
-	if [ $ret -eq 0 ]; then
-		echo "OK"
-	else
-		echo "FAIL"
-	fi
-	return $ret
 }
 
 _clint_rtrim()
@@ -99,15 +101,7 @@ _clint_rtrim()
 	filename="$1"
 	regex="[ 	]\\+\$"
 
-	echo
 	$DEBUG $GREP -vq "$regex" "$filename" 2>&1
-	ret=$?
-	if [ $ret -eq 0 ]; then
-		echo "OK"
-	else
-		echo "FAIL"
-	fi
-	return $ret
 }
 
 
