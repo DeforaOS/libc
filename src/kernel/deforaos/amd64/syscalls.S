@@ -39,7 +39,7 @@
 .type name,@function; \
 name:; \
 	mov	errno@GOTPCREL(%rip), %rcx; \
-	mov	$ENOSYS, (%rcx); \
+	movl	$ENOSYS, (%rcx); \
 	mov	$-1, %rax; \
 	ret
 # else
