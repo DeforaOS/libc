@@ -32,10 +32,10 @@
 # define LIBC_COMPAT_TERMIOS_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/termios.h"
-# elif defined(__DeforaOS__)
+# if defined(__DeforaOS__)
 #  include "kernel/deforaos/termios.h"
+# elif defined(__linux__)
+#  include "kernel/linux/termios.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/termios.h"
 # elif defined(__NetBSD__)

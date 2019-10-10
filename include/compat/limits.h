@@ -32,10 +32,10 @@
 # define LIBC_COMPAT_LIMITS_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/limits.h"
-# elif defined(__DeforaOS__)
+# if defined(__DeforaOS__)
 #  include "kernel/deforaos/limits.h"
+# elif defined(__APPLE__)
+#  include "kernel/darwin/limits.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/limits.h"
 # elif defined(__linux__)

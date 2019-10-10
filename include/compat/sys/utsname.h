@@ -32,10 +32,10 @@
 # define LIBC_COMPAT_SYS_UTSNAME_H
 
 
-# if defined(__linux__)
-#  include "kernel/linux/sys/utsname.h"
-# elif defined(__DeforaOS__)
+# if defined(__DeforaOS__)
 #  include "kernel/deforaos/sys/utsname.h"
+# elif defined(__linux__)
+#  include "kernel/linux/sys/utsname.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/utsname.h"
 # elif defined(__NetBSD__)

@@ -32,10 +32,10 @@
 # define LIBC_COMPAT_ERRNO_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/errno.h"
-# elif defined(__DeforaOS__)
+# if defined(__DeforaOS__)
 #  include "kernel/deforaos/errno.h"
+# elif defined(__APPLE__)
+#  include "kernel/darwin/errno.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/errno.h"
 # elif defined(__linux__)

@@ -32,10 +32,10 @@
 # define LIBC_COMPAT_SYS_MMAN_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/sys/mman.h"
-# elif defined(__DeforaOS__)
+# if defined(__DeforaOS__)
 #  include "kernel/deforaos/sys/mman.h"
+# elif defined(__APPLE__)
+#  include "kernel/darwin/sys/mman.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/mman.h"
 # elif defined(__linux__)

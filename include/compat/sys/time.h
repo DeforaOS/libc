@@ -32,10 +32,10 @@
 # define LIBC_COMPAT_SYS_TIME_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/sys/time.h"
-# elif defined(__DeforaOS__)
+# if defined(__DeforaOS__)
 #  include "kernel/deforaos/sys/time.h"
+# elif defined(__APPLE__)
+#  include "kernel/darwin/sys/time.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/time.h"
 # elif defined(__linux__)

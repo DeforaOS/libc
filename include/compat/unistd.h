@@ -32,10 +32,10 @@
 # define LIBC_COMPAT_UNISTD_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/unistd.h"
-# elif defined(__DeforaOS__)
+# if defined(__DeforaOS__)
 #  include "kernel/deforaos/unistd.h"
+# elif defined(__APPLE__)
+#  include "kernel/darwin/unistd.h"
 # elif defined(__FreeBSD__)
 #  include "kernel/freebsd/unistd.h"
 # elif defined(__linux__)
