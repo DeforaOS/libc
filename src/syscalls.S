@@ -68,7 +68,7 @@
 # endif
 # include "kernel/linux/common.S"
 
-/* MacOS X */
+/* macOS */
 #elif defined(__APPLE__)
 # if defined(__amd64__)
 #  include "kernel/darwin/amd64/syscalls.S"

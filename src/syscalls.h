@@ -58,7 +58,7 @@
 #   warning Unsupported Linux architecture
 #  endif
 
-/* MacOS X */
+/* macOS */
 # elif defined(__APPLE__)
 #  if defined(__amd64__)
 #   include "sys/syscall.h"

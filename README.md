@@ -55,7 +55,7 @@ Linux-based platforms by default. The Makefiles are generated with
 <https://www.defora.org/os/project/16/configure>.
 
 This tool is necessary to generate Makefiles for other platforms (including
-MacOS X), or when working with development versions of DeforaOS libc.
+macOS), or when working with development versions of DeforaOS libc.
 
 The following command should be enough to re-generate the Makefiles:
 
