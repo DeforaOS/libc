@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2012-2017 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2012-2020 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -208,7 +208,7 @@ while [ $# -gt 0 ]; do
 		_error "$target: Could not create documentation"
 		install=0
 	fi
-	$TOUCH "$target"
+	$TOUCH "${OBJDIR}$target"
 
 	#install
 	if [ "$install" -eq 1 ]; then
