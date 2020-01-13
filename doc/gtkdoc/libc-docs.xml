@@ -13,7 +13,7 @@
     <releaseinfo>
       for libc &version;.
       The latest version of this documentation can be found on-line at
-      <ulink role="online-location" url="http://&server;/libc/index.html">http://&server;/libc/</ulink>.
+      <ulink role="online-location" url="https://&server;/libc/index.html">https://&server;/libc/</ulink>.
     </releaseinfo>
   </bookinfo>
 
