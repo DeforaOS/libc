@@ -1,9 +1,16 @@
-%rename cc1 old_cc1
-%rename lib old_lib
-%rename link old_link
+%rename cpp_options old_cpp_options
 
 *cc1:
-%(cc1_cpu) -D__DeforaOS__=1 -nostdinc -isystem =@INCLUDEDIR@ %(old_cc1)
+%(cc1_cpu) -D__DeforaOS__=1 -nostdinc -isystem =@INCLUDEDIR@
+
+*cpp:
+
+
+*cpp_options:
+%(cc1_cpu) -D__DeforaOS__=1 -nostdinc -isystem =@INCLUDEDIR@ %(old_cpp_options)
+
+*link_libgcc:
+-L@LIBDIR@
 
 *libgcc:
 @LIBDIR@/libgcc.a
@@ -15,7 +22,8 @@ start%O%s crti%O%s crtbegin%O%s
 crtend%O%s crtn%O%s
 
 *lib:
-%{!nostdlib:-lc} %(old_lib)
+libc.so%s %{pthread:-lpthread}
 
 *link:
--nostdlib -dynamic-linker @LIBDIR@/ld.so -L =@LIBDIR@ %(old_link)
+-L@LIBDIR@ -L. -dynamic-linker @LIBDIR@/ld.so -nostdlib %{shared:-shared} %{static:-static} %{rdynamic:-export-dynamic}
+
