@@ -71,9 +71,9 @@ _gtkdoc_fixxref()
 
 	(cd "$outputdir" &&
 		$DEBUG $GTKDOC_FIXXREF \
-		--module="$module" \
-		--module-dir="$moduledir" \
-		--html-dir="$htmldir")	|| exit 2
+				--module="$module" \
+				--module-dir="$moduledir" \
+				--html-dir="$htmldir")	|| exit 2
 }
 
 
@@ -88,6 +88,19 @@ _gtkdoc_mkdb()
 		$DEBUG $GTKDOC_MKDB --module="$module" \
 				--output-dir="$outputdir" \
 				--output-format="xml" --tmpl-dir="tmpl")
+}
+
+
+#gtkdoc_mkhtml
+_gtkdoc_mkhtml()
+{
+	module="$1"
+	path="$2"
+	driver="$3"
+	outputdir="$4"
+
+	(cd "$outputdir" &&
+		$DEBUG $GTKDOC_MKHTML --path "$path" "$module" "$driver")
 }
 
 
@@ -201,11 +214,15 @@ while [ $# -gt 0 ]; do
 			$DEBUG $MKDIR -- "$output"		|| exit 2
 			driver="$MODULE-docs.xml"
 			oldpath="$PWD"
-			(cd "$output" &&
-				$DEBUG $GTKDOC_MKHTML \
-						--path "$oldpath/.." \
-						"$MODULE" \
-						"$oldpath/gtkdoc/$driver")
+			[ -n "$OBJDIR" ] && for file in \
+				"gtkdoc/$driver" \
+				"gtkdoc/xml/gtkdocentities.ent"; do
+				[ -f "$file" ] || continue
+				$DEBUG $CP -- "$file" \
+						"${OBJDIR}$file" || exit 2
+			done
+			_gtkdoc_mkhtml "$MODULE" "${oldpath%/*}" "../$driver" \
+					"$output"
 			#detect when gtk-doc is not available
 			res=$?
 			if [ $res -eq 127 ]; then
