@@ -5,19 +5,21 @@
   <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
   <!ENTITY % gtkdocentities SYSTEM "xml/gtkdocentities.ent">
   %gtkdocentities;
+  <!ENTITY % configentities SYSTEM "config.ent">
+  %configentities;
 ]>
 <book id="index" xmlns:xi="http://www.w3.org/2003/XInclude">
   <bookinfo>
-    <title>&package_name; Reference Manual</title>
+    <title>&vendor; &package; &title;</title>
     <releaseinfo>
-      for &package_string;.
+      for &vendor; &package; &version;.
       The latest version of this documentation can be found on-line at
-      <ulink role="online-location" url="https://&server;/&package_name;/">https://&server;/&package_name;/</ulink>.
+      <ulink role="online-location" url="https://&server;/&package;/">https://&server;/&package;/</ulink>.
     </releaseinfo>
   </bookinfo>
 
   <chapter>
-    <title>&title;</title>
+    <title>&vendor; &package;</title>
     <xi:include href="xml/assert.xml"/>
     <xi:include href="xml/complex.xml"/>
     <xi:include href="xml/cpio.xml"/>

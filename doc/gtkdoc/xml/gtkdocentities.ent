@@ -1,4 +1,2 @@
-<!ENTITY package_name "libc">
-<!ENTITY package_string "DeforaOS libc">
 <!ENTITY server "www.defora.org/doc/gtk-doc/html">
-<!ENTITY title "DeforaOS libc">
+<!ENTITY title "Reference Manual">
