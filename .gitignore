@@ -6,5 +6,6 @@ Makefile
 *.o
 *.so
 *.so.*
+/config.ent
 /config.h
 /config.sh
