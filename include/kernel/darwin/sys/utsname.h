@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2019 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2020 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,28 +28,17 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_UTSNAME_H
-# define LIBC_COMPAT_SYS_UTSNAME_H
+#ifndef LIBC_KERNEL_DARWIN_SYS_UTSNAME_H
+# define LIBC_KERNEL_DARWIN_SYS_UTSNAME_H
 
 
-# if defined(__DeforaOS__)
-#  include "kernel/deforaos/sys/utsname.h"
-# elif defined(__APPLE__)
-#  include "kernel/darwin/sys/utsname.h"
-# elif defined(__linux__)
-#  include "kernel/linux/sys/utsname.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/utsname.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/utsname.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/utsname.h"
-# elif defined(__sun__)
-#  include "kernel/solaris/sys/utsname.h"
-# elif defined(__Whitix__)
-#  include "kernel/whitix/sys/utsname.h"
-# else
-#  warning Unsupported platform
-# endif
+/* struct utsname */
+# define _UTSNAME_SIZE			256
+# define _UTSNAME_SYSNAME_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_NODENAME_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_RELEASE_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_VERSION_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_MACHINE_SIZE		_UTSNAME_SIZE
+# define _UTSNAME_PADDING_SIZE		0
 
-#endif /* !LIBC_COMPAT_SYS_UTSNAME_H */
+#endif /* !LIBC_KERNEL_DARWIN_SYS_UTSNAME_H */
