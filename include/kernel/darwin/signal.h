@@ -34,6 +34,13 @@
 # include "../../sys/types.h"
 
 
+/* types */
+# ifndef sigset_t
+#  define sigset_t sigset_t
+typedef unsigned int sigset_t;
+# endif
+
+
 /* constants */
 # define SIGHUP		1
 # define SIGINT		2
