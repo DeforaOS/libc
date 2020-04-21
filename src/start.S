@@ -33,7 +33,9 @@
 
 /* _start */
 .global _start
+#if !defined(__APPLE__)
 .type _start, @function
+#endif
 
 
 /* FreeBSD */
