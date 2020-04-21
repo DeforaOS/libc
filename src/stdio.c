@@ -339,7 +339,7 @@ int fputs(char const * str, FILE * file)
 /* fread */
 size_t fread(void * ptr, size_t size, size_t nb, FILE * file)
 {
-	char * p = (char*)ptr;
+	char * p = (char *)ptr;
 	size_t i;
 	size_t j;
 	size_t len;

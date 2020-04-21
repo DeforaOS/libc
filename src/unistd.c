@@ -356,7 +356,7 @@ static void _execvp_do(char const * filename, char * const argv[])
 		return;
 	/* try with a shell instead */
 	for(i = 0; argv[i] != NULL; i++);
-	len = (i + 2) * sizeof(char*);
+	len = (i + 2) * sizeof(char *);
 	if((arg = malloc(len)) == NULL)
 		return;
 	arg[0] = argv[0];
