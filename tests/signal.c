@@ -70,6 +70,8 @@ static int _sigismember(char const * progname, int signal)
 /* on_sigusr1 */
 static void _on_sigusr1(int signal)
 {
+	(void) signal;
+
 	if(_ret == 3)
 		_ret = 0;
 }
@@ -78,6 +80,8 @@ static void _on_sigusr1(int signal)
 /* on_sigusr2 */
 static void _on_sigusr2(int signal)
 {
+	(void) signal;
+
 	if(_ret == 2)
 		_ret = 3;
 }
