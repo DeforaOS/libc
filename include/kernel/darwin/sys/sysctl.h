@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2015-2016 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2020 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,20 +28,25 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_SYSCTL_H
-# define LIBC_COMPAT_SYS_SYSCTL_H
+#ifndef LIBC_KERNEL_DARWIN_SYS_SYSCTL_H
+# define LIBC_KERNEL_DARWIN_SYS_SYSCTL_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/sys/sysctl.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/sysctl.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/sysctl.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/sysctl.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+# define CTL_KERN	1
+# define CTL_VM		2
+# define CTL_HW		6
 
-#endif /* !LIBC_COMPAT_SYS_SYSCTL_H */
+# define KERN_OSTYPE	1
+# define KERN_OSRELEASE	2
+# define KERN_VERSION	4
+# define KERN_HOSTNAME	10
+# define KERN_CLOCKRATE	12
+# define KERN_ARND	81
+
+# define VM_LOADAVG	2
+
+# define HW_MACHINE	1
+# define HW_PAGESIZE	7
+
+#endif /* !LIBC_KERNEL_DARWIN_SYS_SYSCTL_H */
