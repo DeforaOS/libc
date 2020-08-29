@@ -38,6 +38,16 @@
 #include <errno.h>
 
 
+/* unistd */
+/* private */
+/* prototypes */
+static int _chroot(char const * progname);
+static int _error(char const * progname, char const * message, int ret);
+static int _fork(char const * progname);
+static int _sleep(char const * progname, unsigned int t);
+
+
+/* functions */
 /* chroot */
 static int _chroot(char const * progname)
 {
@@ -47,7 +57,7 @@ static int _chroot(char const * progname)
 
 	printf("%s: Testing chroot()\n", progname);
 	if((p = strdup(progname)) == NULL)
-		return 2;
+		return _error(progname, "strdup", 2);
 	dir = dirname(p);
 	res = chroot(dir);
 	free(p);
@@ -59,11 +69,17 @@ static int _chroot(char const * progname)
 				/* we can ignore these errors */
 				break;
 			default:
-				fprintf(stderr, "%s: chroot: Obtained %d\n",
-						progname, errno);
-				return 3;
+				return _error(progname, "chroot", 3);
 		}
 	return 0;
+}
+
+
+/* error */
+static int _error(char const * progname, char const * message, int ret)
+{
+	fprintf(stderr, "%s: %s: %s\n", progname, message, strerror(errno));
+	return ret;
 }
 
 
@@ -77,7 +93,7 @@ static int _fork(char const * progname)
 
 	printf("%s: Testing fork()\n", progname);
 	if((pid = fork()) == -1)
-		return 4;
+		return _error(progname, "fork", 4);
 	if(pid == 0)
 		/* child process */
 		_exit(res);
@@ -91,7 +107,7 @@ static int _fork(char const * progname)
 		if(WIFEXITED(status) && WEXITSTATUS(status) == res)
 			return 0;
 	}
-	return 8;
+	return _error(progname, "waitpid", 8);
 }
 
 
@@ -107,7 +123,7 @@ static int _sleep(char const * progname, unsigned int t)
 	res = sleep(t);
 	after = time(NULL);
 	if(res == 0)
-		return (after - before == t) ? 0 : 16;
+		return (after - before == t) ? 0 : 32;
 	/* XXX ignore other cases (signal deliveries...) */
 	return 0;
 }

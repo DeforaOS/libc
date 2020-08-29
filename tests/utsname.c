@@ -34,6 +34,7 @@
 #include <errno.h>
 
 
+/* utsname */
 /* private */
 /* prototypes */
 static int _uname(char const * progname);
