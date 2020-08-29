@@ -67,7 +67,7 @@ struct _FILE
 };
 
 typedef int (*print_func)(void * dest, size_t size, const char * buf);
-typedef char (*scan_func)(char const * buf, size_t * i);
+typedef int (*scan_func)(void * data);
 
 
 /* prototypes */
@@ -76,7 +76,7 @@ static FILE * _fopen_new(int fd, int flags, int fbuf);
 
 static int _vprintf(print_func func, void * dest, size_t size,
 		char const * format, va_list arg);
-static int _vscanf(scan_func func, char const * string, char const * format,
+static int _vscanf(scan_func func, void * data, char const * format,
 		va_list arg);
 
 /* public */
@@ -914,11 +914,18 @@ static int _fprint(void * dest, size_t size, char const buf[])
 
 
 /* vfscanf */
+static int _vfscanf_func(void * data);
+
 int vfscanf(FILE * file, char const * format, va_list arg)
 {
-	/* FIXME implement */
-	errno = ENOSYS;
-	return -1;
+	return _vscanf(_vfscanf_func, file, format, arg);
+}
+
+static int _vfscanf_func(void * data)
+{
+	FILE * fp = data;
+
+	return fgetc(fp);
 }
 
 
@@ -982,9 +989,21 @@ int vsprintf(char * str, char const * format, va_list arg)
 
 
 /* vsscanf */
+static int _vsscanf_func(void * data);
+
 int vsscanf(char const * str, char const * format, va_list arg)
 {
-	return _vscanf(NULL, str, format, arg);
+	char const * s = str;
+
+	return _vscanf(_vsscanf_func, &s, format, arg);
+}
+
+static int _vsscanf_func(void * data)
+{
+	char ** const s = data;
+
+	(*s)++;
+	return (unsigned char)**s;
 }
 
 
@@ -1494,49 +1513,53 @@ typedef struct _scan_args
 	int discard;
 	int width;
 } scan_args;
-static size_t _vscanf_do(scan_args * args, char const * string,
+static size_t _vscanf_do(scan_args * args, scan_func func, void * data,
 		char const * format, va_list arg);
-static size_t _vscanf_do_bracket(scan_args * args, char const * string,
+static size_t _vscanf_do_bracket(scan_args * args, scan_func func, void * data,
 		char const * format, va_list arg);
-static size_t _vscanf_do_char(char const * string, char const * format,
+static size_t _vscanf_do_char(scan_func func, void * data, char const * format,
 		va_list arg);
-static size_t _vscanf_do_chars(scan_args * args, char const * string,
+static size_t _vscanf_do_chars(scan_args * args, scan_func func, void * data,
 		va_list arg);
-static size_t _vscanf_do_double(char const * string, char const * format,
+static size_t _vscanf_do_double(scan_func func, void * data,
+		char const * format, va_list arg);
+static size_t _vscanf_do_long(scan_func func, void * data, char const * format,
 		va_list arg);
-static size_t _vscanf_do_long(char const * string, char const * format,
+static size_t _vscanf_do_max(scan_func func, void * data, char const * format,
 		va_list arg);
-static size_t _vscanf_do_max(char const * string, char const * format,
+static size_t _vscanf_do_short(scan_func func, void * data, char const * format,
 		va_list arg);
-static size_t _vscanf_do_short(char const * string, char const * format,
+static size_t _vscanf_do_size(scan_func func, void * data, char const * format,
 		va_list arg);
-static size_t _vscanf_do_size(char const * string, char const * format,
-		va_list arg);
-static size_t _vscanf_do_string(scan_args * args, char const * string,
+static size_t _vscanf_do_string(scan_args * args, scan_func func, void * data,
 		va_list arg);
 
-static int _vscanf(scan_func func, char const * string, char const * format,
+static int _vscanf(scan_func func, void * data, char const * format,
 		va_list arg)
 {
 	scan_args args;
+#if 0
 	char const * s = string;
+#else
+	int c;
+#endif
 	char const * f = format;
 	size_t i;
 	char * p;
 
 	args.ret = 0;
-	for(i = 0; *f != '\0' && *s != '\0'; f += i)
+	for(i = 0; *f != '\0' && (c = func(data)) > 0; f += i)
 	{
 		switch(*f)
 		{
 			case ' ':
 			case '\t':
-				if(!isspace(*s))
+				if(!isspace(c))
 					break;
 				/* skip spaces in the format string */
 				for(i = 1; isspace((unsigned int)f[i]); i++);
 				/* skip spaces in the original string */
-				for(; isspace((unsigned int)*s); s++);
+				while((c = func(data)) > 0 && isspace(c));
 				break;
 			case '%':
 				if((++f)[0] == '*')
@@ -1555,31 +1578,39 @@ static int _vscanf(scan_func func, char const * string, char const * format,
 				if(*f == 'h')
 				{
 					if(*(++f) == 'h')
-						i = _vscanf_do_char(s, ++f,
-								arg);
+						i = _vscanf_do_char(func, data,
+								++f, arg);
 					else
-						i = _vscanf_do_short(s, f,
-								arg);
+						i = _vscanf_do_short(func, data,
+								f, arg);
 				}
 				else if(*f == 'j')
-					i = _vscanf_do_max(s, ++f, arg);
+					i = _vscanf_do_max(func, data, ++f,
+							arg);
 				else if(*f == 'L')
-					i = _vscanf_do_double(s, ++f, arg);
+					i = _vscanf_do_double(func, data, ++f,
+							arg);
 				else if(*f == 'l')
-					i = _vscanf_do_long(s, ++f, arg);
+					i = _vscanf_do_long(func, data, ++f,
+							arg);
 				else if(*f == 'z')
-					i = _vscanf_do_size(s, ++f, arg);
+					i = _vscanf_do_size(func, data, ++f,
+							arg);
 				else
-					i = _vscanf_do(&args, s, f, arg);
+					i = _vscanf_do(&args, func, data, f,
+							arg);
 				if(i == 0)
 					break;
+#if 0
 				s += i;
+#endif
 				/* FIXME hardcoded */
 				i = 1;
 				args.ret++;
 				break;
 			default:
-				i = (*(s++) == f[0]) ? 1 : 0;
+				c = func(data);
+				i = (c == f[0]) ? 1 : 0;
 				break;
 		}
 		if(i == 0)
@@ -1591,7 +1622,7 @@ static int _vscanf(scan_func func, char const * string, char const * format,
 	return args.ret;
 }
 
-static size_t _vscanf_do(scan_args * args, char const * string,
+static size_t _vscanf_do(scan_args * args, scan_func func, void * data,
 		char const * format, va_list arg)
 {
 	int * d;
@@ -1614,7 +1645,7 @@ static size_t _vscanf_do(scan_args * args, char const * string,
 			return ((*f = strtof(string, &s)) != 0 && string != s)
 				? *f : 0;
 		case 'c':
-			return _vscanf_do_chars(args, string, arg);
+			return _vscanf_do_chars(args, func, data, arg);
 		case 'd':
 			d = va_arg(arg, int *);
 			*d = strtol(string, &s, 10);
@@ -1632,7 +1663,7 @@ static size_t _vscanf_do(scan_args * args, char const * string,
 			*v = (void *)strtol(string, &s, 16);
 			return s - string;
 		case 's':
-			return _vscanf_do_string(args, string, arg);
+			return _vscanf_do_string(args, func, data, arg);
 		case 'u':
 			u = va_arg(arg, unsigned int *);
 			*u = strtoul(string, &s, 10);
@@ -1643,22 +1674,24 @@ static size_t _vscanf_do(scan_args * args, char const * string,
 			*u = strtoul(string, &s, 16);
 			return s - string;
 		case '[':
-			return _vscanf_do_bracket(args, string, format, arg);
+			return _vscanf_do_bracket(args, func, data, format,
+					arg);
 		case '%':
 			return (*string == '%') ? 1 : 0;
 		case 'C':
-			return _vscanf_do_long(string, "c", arg);
+			return _vscanf_do_long(func, data, "c", arg);
 		case 'S':
-			return _vscanf_do_long(string, "S", arg);
+			return _vscanf_do_long(func, data, "S", arg);
 	}
 	errno = EINVAL;
 	return 0;
 }
 
-static size_t _vscanf_do_bracket(scan_args * args, char const * string,
+static size_t _vscanf_do_bracket(scan_args * args, scan_func func, void * data,
 		char const * format, va_list arg)
 {
 	int ret = 1;
+	int c;
 	int i;
 	char * s;
 
@@ -1670,15 +1703,15 @@ static size_t _vscanf_do_bracket(scan_args * args, char const * string,
 	/* FIXME really implement */
 	for(; format[ret] != ']'; ret++);
 	s = va_arg(arg, char *);
-	for(i = 0; (args->width <= 0 || i < args->width) && string[i] != '\0';
-			i++)
-		s[i] = string[i];
+	for(i = 0; (args->width <= 0 || i < args->width)
+			&& (c = func(data)) > 0; i++)
+		s[i] = c;
 	/* FIXME check for any off by one */
 	s[i] = '\0';
 	return ret;
 }
 
-static size_t _vscanf_do_char(char const * string, char const * format,
+static size_t _vscanf_do_char(scan_func func, void * data, char const * format,
 		va_list arg)
 {
 	char * d;
@@ -1713,21 +1746,22 @@ static size_t _vscanf_do_char(char const * string, char const * format,
 	return 0;
 }
 
-static size_t _vscanf_do_chars(scan_args * args, char const * string,
+static size_t _vscanf_do_chars(scan_args * args, scan_func func, void * data,
 		va_list arg)
 {
 	size_t ret;
+	int c;
 	char * s;
 	size_t width = (args->width > 0) ? args->width : 1;
 
 	s = va_arg(arg, char *);
-	for(ret = 0; ret < width && *string != '\0'; ret++)
-		*s++ = *string++;
+	for(ret = 0; ret < width && (c = func(data)) > 0; ret++)
+		*s++ = c;
 	return ret;
 }
 
-static size_t _vscanf_do_double(char const * string, char const * format,
-		va_list arg)
+static size_t _vscanf_do_double(scan_func func, void * data,
+		char const * format, va_list arg)
 {
 	long double * f;
 	char * s;
@@ -1750,7 +1784,7 @@ static size_t _vscanf_do_double(char const * string, char const * format,
 	return 0;
 }
 
-static size_t _vscanf_do_long(char const * string, char const * format,
+static size_t _vscanf_do_long(scan_func func, void * data, char const * format,
 		va_list arg)
 {
 	long * d;
@@ -1803,7 +1837,7 @@ static size_t _vscanf_do_long(char const * string, char const * format,
 	return 0;
 }
 
-static size_t _vscanf_do_max(char const * string, char const * format,
+static size_t _vscanf_do_max(scan_func func, void * data, char const * format,
 		va_list arg)
 {
 	intmax_t * d;
@@ -1838,7 +1872,7 @@ static size_t _vscanf_do_max(char const * string, char const * format,
 	return 0;
 }
 
-static size_t _vscanf_do_short(char const * string, char const * format,
+static size_t _vscanf_do_short(scan_func func, void * data, char const * format,
 		va_list arg)
 {
 	short * d;
@@ -1873,7 +1907,7 @@ static size_t _vscanf_do_short(char const * string, char const * format,
 	return 0;
 }
 
-static size_t _vscanf_do_size(char const * string, char const * format,
+static size_t _vscanf_do_size(scan_func func, void * data, char const * format,
 		va_list arg)
 {
 	ssize_t * d;
@@ -1908,17 +1942,18 @@ static size_t _vscanf_do_size(char const * string, char const * format,
 	return 0;
 }
 
-static size_t _vscanf_do_string(scan_args * args, char const * string,
+static size_t _vscanf_do_string(scan_args * args, scan_func func, void * data,
 		va_list arg)
 {
+	int c;
 	int i;
 	char * s;
 
 	s = va_arg(arg, char *);
 	for(i = 0; (args->width <= 0 || i < args->width)
-			&& !isspace((unsigned int)string[i])
-			&& string[i] != '\0'; i++)
-		s[i] = string[i];
+			&& (c = func(data)) > 0
+			&& !isspace(c); i++)
+		s[i] = c;
 	/* FIXME check for any off by one */
 	s[i] = '\0';
 	return 1;
