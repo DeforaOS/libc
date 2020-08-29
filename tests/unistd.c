@@ -44,6 +44,7 @@
 static int _chroot(char const * progname);
 static int _error(char const * progname, char const * message, int ret);
 static int _fork(char const * progname);
+static int _gethostname(char const * progname);
 static int _sleep(char const * progname, unsigned int t);
 
 
@@ -111,6 +112,20 @@ static int _fork(char const * progname)
 }
 
 
+/* gethostname */
+static int _gethostname(char const * progname)
+{
+	char hostname[64];
+
+	printf("%s: Testing gethostname()\n", progname);
+	if(gethostname(hostname, sizeof(hostname)) != 0)
+		return _error(progname, "gethostname", 16);
+	else
+		printf("hostname: %s\n", hostname);
+	return 0;
+}
+
+
 /* sleep */
 static int _sleep(char const * progname, unsigned int t)
 {
@@ -137,6 +152,7 @@ int main(int argc, char * argv[])
 
 	ret = _chroot(argv[0]);
 	ret |= _fork(argv[0]);
+	ret |= _gethostname(argv[0]);
 	ret |= _sleep(argv[0], 0);
 	ret |= _sleep(argv[0], 1);
 	return ret;
