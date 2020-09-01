@@ -32,6 +32,17 @@
 # define LIBC_KERNEL_DARWIN_SYS_SYSCTL_H
 
 
+/* types */
+struct clockinfo
+{
+	int hz;
+	int tick;
+	int tickadj;
+	int stathz;
+	int profhz;
+};
+
+
 /* constants */
 # define CTL_KERN	1
 # define CTL_VM		2
