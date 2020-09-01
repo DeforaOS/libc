@@ -32,40 +32,40 @@
 # define MATH_I386_H
 
 
-#define ARCH_ceil
-#define ARCH_ceilf
-#define ARCH_ceill
-#define ARCH_cos
-#define ARCH_cosf
-#define ARCH_cosl
-#define ARCH_exp
-#define ARCH_fabs
-#define ARCH_fabsf
-#define ARCH_fabsl
-#define ARCH_floor
-#define ARCH_floorf
-#define ARCH_floorl
-#define ARCH_fmod
-#define ARCH_fmodf
-#define ARCH_fmodl
-#define ARCH_frexp
-#define ARCH_frexpf
-#define ARCH_frexpl
-#define ARCH_hypot
-#define ARCH_hypotf
-#define ARCH_hypotl
-#define ARCH_ldexpf
-#define ARCH_ldexp
-#define ARCH_log
-#define ARCH_powl
-#define ARCH_round
-#define ARCH_roundf
-#define ARCH_roundl
-#define ARCH_sin
-#define ARCH_sinl
-#define ARCH_sinf
-#define ARCH_sqrt
-#define ARCH_sqrtf
-#define ARCH_sqrtl
+# define ARCH_ceil
+# define ARCH_ceilf
+# define ARCH_ceill
+# define ARCH_cos
+# define ARCH_cosf
+# define ARCH_cosl
+# define ARCH_exp
+# define ARCH_fabs
+# define ARCH_fabsf
+# define ARCH_fabsl
+# define ARCH_floor
+# define ARCH_floorf
+# define ARCH_floorl
+# define ARCH_fmod
+# define ARCH_fmodf
+# define ARCH_fmodl
+# define ARCH_frexp
+# define ARCH_frexpf
+# define ARCH_frexpl
+# define ARCH_hypot
+# define ARCH_hypotf
+# define ARCH_hypotl
+# define ARCH_ldexpf
+# define ARCH_ldexp
+# define ARCH_log
+# define ARCH_powl
+# define ARCH_round
+# define ARCH_roundf
+# define ARCH_roundl
+# define ARCH_sin
+# define ARCH_sinl
+# define ARCH_sinf
+# define ARCH_sqrt
+# define ARCH_sqrtf
+# define ARCH_sqrtl
 
 #endif /* !MATH_I386_H */

@@ -32,19 +32,19 @@
 # define MATH_AMD64_H
 
 
-#define ARCH_cos
-#define ARCH_cosl
-#define ARCH_fabs
-#define ARCH_fabsl
-#define ARCH_fmod
-#define ARCH_fmodl
-#define ARCH_round
-#define ARCH_roundl
-#define ARCH_sin
-#define ARCH_sinl
-#define ARCH_sqrt
-#define ARCH_sqrtl
-#define ARCH_tan
-#define ARCH_tanl
+# define ARCH_cos
+# define ARCH_cosl
+# define ARCH_fabs
+# define ARCH_fabsl
+# define ARCH_fmod
+# define ARCH_fmodl
+# define ARCH_round
+# define ARCH_roundl
+# define ARCH_sin
+# define ARCH_sinl
+# define ARCH_sqrt
+# define ARCH_sqrtl
+# define ARCH_tan
+# define ARCH_tanl
 
 #endif /* !MATH_AMD64_H */
