@@ -32,6 +32,8 @@
 # define MATH_AMD64_H
 
 
+# define ARCH_atan
+# define ARCH_atanl
 # define ARCH_cos
 # define ARCH_cosl
 # define ARCH_fabs

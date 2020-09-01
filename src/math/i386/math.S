@@ -47,6 +47,36 @@
 	ret
 
 
+/* atan */
+.global atan
+.type atan,@function
+atan:
+	fldl	0x4(%esp)
+	fld1
+	fpatan
+	ret
+
+
+/* atanf */
+.global atanf
+.type atanf,@function
+atanf:
+	flds	0x4(%esp)
+	fld1
+	fpatan
+	ret
+
+
+/* atanl */
+.global atanl
+.type atanl,@function
+atanl:
+	fldt	0x4(%esp)
+	fld1
+	fpatan
+	ret
+
+
 /* ceil */
 .global ceil
 .type ceil,@function

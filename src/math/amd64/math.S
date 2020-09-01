@@ -55,6 +55,30 @@ name:; \
 
 
 /* functions */
+/* atan */
+.global atan
+.type atan,@function
+atan:
+	movq	%xmm0, -0x8(%rsp)
+	fldl	-0x8(%rsp)
+	fld1
+	fpatan
+	fstpl	-0x8(%rsp)
+	movq	-0x8(%rsp), %xmm0
+	emms
+	ret
+
+
+/* atanl */
+.global atanl
+.type atanl,@function
+atanl:
+	fldt	0x8(%rsp)
+	fld1
+	fpatan
+	ret
+
+
 /* cos */
 MCALL1(cos, fcos)
 

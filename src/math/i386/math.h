@@ -32,6 +32,9 @@
 # define MATH_I386_H
 
 
+# define ARCH_atan
+# define ARCH_atanf
+# define ARCH_atanl
 # define ARCH_ceil
 # define ARCH_ceilf
 # define ARCH_ceill
