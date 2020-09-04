@@ -57,6 +57,36 @@ atan:
 	ret
 
 
+/* atan2 */
+.global atan2
+.type atan2,@function
+atan2:
+	fldl	0x8(%esp)
+	fldl	0x4(%esp)
+	fpatan
+	ret
+
+
+/* atan2f */
+.global atan2f
+.type atan2f,@function
+atan2f:
+	flds	0x8(%esp)
+	flds	0x4(%esp)
+	fpatan
+	ret
+
+
+/* atan2l */
+.global atan2l
+.type atan2l,@function
+atan2l:
+	fldt	0x8(%esp)
+	fldt	0x4(%esp)
+	fpatan
+	ret
+
+
 /* atanf */
 .global atanf
 .type atanf,@function

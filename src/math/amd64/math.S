@@ -69,6 +69,31 @@ atan:
 	ret
 
 
+/* atan2 */
+.global atan2
+.type atan2,@function
+atan2:
+	movq	%xmm0, -0x8(%rsp)
+	movq	%xmm1, -0x10(%rsp)
+	fldl	-0x8(%rsp)
+	fldl	-0x10(%rsp)
+	fpatan
+	fstpl	-0x8(%rsp)
+	movq	-0x8(%rsp), %xmm0
+	emms
+	ret
+
+
+/* atan2l */
+.global atan2l
+.type atan2l,@function
+atan2l:
+	fldt	-0x10(%rsp)
+	fldt	-0x8(%rsp)
+	fpatan
+	ret
+
+
 /* atanl */
 .global atanl
 .type atanl,@function

@@ -34,6 +34,9 @@
 
 # define ARCH_atan
 # define ARCH_atanf
+# define ARCH_atan2
+# define ARCH_atan2f
+# define ARCH_atan2l
 # define ARCH_atanl
 # define ARCH_ceil
 # define ARCH_ceilf
