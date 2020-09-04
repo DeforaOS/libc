@@ -946,9 +946,6 @@ float hypotf(float x, float y)
 #ifndef ARCH_hypotl
 long double hypotl(long double x, long double y)
 {
-	(void) x;
-	(void) y;
-
 	/* XXX may overflow */
 	return sqrt((x * x) + (y * y));
 }
