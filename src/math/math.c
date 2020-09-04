@@ -394,9 +394,6 @@ float atan2f(float x, float y)
 #ifndef ARCH_atan2l
 long double atan2l(long double x, long double y)
 {
-	(void) x;
-	(void) y;
-
 	/* FIXME implement */
 	return 0.0;
 }
