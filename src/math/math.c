@@ -959,16 +959,14 @@ int ilogbl(long double);
 /* isinf */
 int __isinf(double x)
 {
-	/* FIXME really implement */
-	return 0;
+	return x == strtold("INF", NULL);
 }
 
 
 /* isnan */
 int __isnan(double x)
 {
-	/* FIXME really implement */
-	return 0;
+	return x == nanl(NULL);
 }
 
 
