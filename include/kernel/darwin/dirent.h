@@ -31,13 +31,15 @@
 #ifndef LIBC_KERNEL_DARWIN_DIRENT_H
 # define LIBC_KERNEL_DARWIN_DIRENT_H
 
+# include "../../compat.h"
+
 
 /* types */
 # if 1 /* XXX macOS >= 10.6? */
 struct dirent
 {
-	uint64_t d_ino;
-	uint64_t _padding0;
+	unsigned long long d_ino;
+	unsigned long long _padding0;
 	unsigned short int d_reclen;
 	unsigned short int _padding1;
 	unsigned char d_type;
@@ -46,7 +48,7 @@ struct dirent
 # else
 struct dirent
 {
-	ino_t d_ino;
+	__ino_t d_ino;
 	unsigned short int d_reclen;
 	unsigned char d_type;
 	unsigned char _padding0;
