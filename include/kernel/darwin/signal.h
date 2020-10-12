@@ -37,8 +37,33 @@
 /* types */
 # ifndef sigset_t
 #  define sigset_t sigset_t
-typedef unsigned int sigset_t;
+typedef struct { unsigned int bits[1]; } sigset_t;
 # endif
+
+typedef struct
+{
+	int si_signo;
+	int si_errno;
+	int si_code;
+	pid_t _padding0;
+	uid_t _padding1;
+	int _padding2;
+	void * _padding3;
+	long _padding4[8];
+} siginfo_t;
+
+struct sigaction
+{
+	union
+	{
+		void (*sa_handler)(int);
+		void (*sa_sigaction)(int, siginfo_t *, void *);
+	} _sa_u;
+	sigset_t sa_mask;
+	int sa_flags;
+};
+# define sa_handler _sa_u.sa_handler
+# define sa_sigaction _sa_u.sa_sigaction
 
 
 /* constants */
@@ -67,10 +92,14 @@ typedef unsigned int sigset_t;
 
 # define SIG_DFL	((void (*)(int)) 0)
 # define SIG_ERR	((void (*)(int)) -1)
+# define SIG_HOLD	((void (*)(int)) 5)
 # define SIG_IGN	((void (*)(int)) 1)
 
 # define SIG_BLOCK	1
+# define SIG_UNBLOCK	2
+# define SIG_SETMASK	3
 
 # define SA_RESTART	0x2
+# define SA_NOCLDSTOP	0x8
 
 #endif /* !LIBC_KERNEL_DARWIN_SIGNAL_H */
