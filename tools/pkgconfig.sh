@@ -150,10 +150,10 @@ while [ $# -gt 0 ]; do
 	if [ "$PREFIX" != "/usr" ]; then
 		RPATH="-Wl,-rpath-link,\${libdir} -Wl,-rpath,\${libdir}"
 		case $(uname -s) in
-			Darwin)
+			"Darwin")
 				RPATH="-Wl,-rpath,\${libdir}"
 				;;
-			SunOS)
+			"SunOS")
 				RPATH="-Wl,-R\${libdir}"
 				;;
 		esac

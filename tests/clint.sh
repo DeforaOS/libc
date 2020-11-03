@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2016-2019 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2016-2020 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -35,6 +35,7 @@ DEBUG="_debug"
 FIND="find"
 GREP="grep"
 LINT="lint -g"
+MKDIR="mkdir -p"
 SORT="sort -n"
 TR="tr"
 
@@ -43,8 +44,8 @@ TR="tr"
 #clint
 _clint()
 {
-	ret=0
-	subdirs="data doc src tests tools"
+	res=0
+	subdirs=
 
 	$DATE
 	while read line; do
@@ -58,6 +59,10 @@ _clint()
 				;;
 		esac
 	done < "$PROJECTCONF"
+	if [ ! -n "$subdirs" ]; then
+		_error "Could not locate directories to analyze"
+		return $?
+	fi
 	for subdir in $subdirs; do
 		[ -d "../$subdir" ] || continue
 		for filename in $($FIND "../$subdir" -type f | $SORT); do
@@ -79,13 +84,13 @@ _clint()
 			if [ $? -ne 0 ]; then
 				echo "FAIL"
 				echo "$PROGNAME: $filename: FAIL" 1>&2
-				ret=2
+				res=2
 			else
 				echo "OK"
 			fi
 		done
 	done
-	return $ret
+	return $res
 }
 
 _clint_lint()
@@ -117,19 +122,19 @@ _debug()
 }
 
 
+#error
+_error()
+{
+	echo "$PROGNAME: $@" 1>&2
+	return 2
+}
+
+
 #usage
 _usage()
 {
 	echo "Usage: $PROGNAME [-c] target..." 1>&2
 	return 1
-}
-
-
-#warning
-_warning()
-{
-	echo "$PROGNAME: $@" 1>&2
-	return 2
 }
 
 
@@ -162,9 +167,15 @@ fi
 [ $clean -ne 0 ] && exit 0
 
 exec 3>&1
+ret=0
 while [ $# -gt 0 ]; do
 	target="$1"
+	dirname="${target%/*}"
 	shift
 
-	_clint > "$target"					|| exit 2
+	if [ -n "$dirname" -a "$dirname" != "$target" ]; then
+		$MKDIR -- "$dirname"				|| ret=$?
+	fi
+	_clint > "$target"					|| ret=$?
 done
+exit $ret
