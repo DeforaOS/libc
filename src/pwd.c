@@ -130,6 +130,7 @@ static int _getpwent_r(struct passwd * pw, char * buffer, size_t bufsize,
 {
 	char * s;
 	char * t;
+	int c;
 
 	*result = NULL;
 	if(_fp == NULL && (_fp = fopen("/etc/passwd", "r")) == NULL)
@@ -141,6 +142,9 @@ static int _getpwent_r(struct passwd * pw, char * buffer, size_t bufsize,
 			endpwent();
 			return -1;
 		}
+		if(strchr(buffer, '\n') == NULL)
+			/* flush incomplete lines */
+			while((c = fgetc(_fp)) != EOF && c != '\n');
 	}
 	while(buffer[0] == '#');
 	s = buffer;
