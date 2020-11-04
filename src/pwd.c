@@ -125,11 +125,12 @@ void setpwent(void)
 
 /* private */
 /* getpwent_r */
+static int _getpwent_r_parse(struct passwd * pw, char * buffer, size_t bufsize,
+		struct passwd ** result);
+
 static int _getpwent_r(struct passwd * pw, char * buffer, size_t bufsize,
 		struct passwd ** result)
 {
-	char * s;
-	char * t;
 	int c;
 
 	*result = NULL;
@@ -147,6 +148,15 @@ static int _getpwent_r(struct passwd * pw, char * buffer, size_t bufsize,
 			while((c = fgetc(_fp)) != EOF && c != '\n');
 	}
 	while(buffer[0] == '#');
+	return _getpwent_r_parse(pw, buffer, bufsize, result);
+}
+
+static int _getpwent_r_parse(struct passwd * pw, char * buffer, size_t bufsize,
+		struct passwd ** result)
+{
+	char * s;
+	char * t;
+
 	s = buffer;
 	/* check that the record is complete */
 	if(strchr(s, '\n') == NULL)
