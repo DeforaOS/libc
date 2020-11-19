@@ -25,6 +25,7 @@
 
 
 #variables
+CONFIGSH="${0%/gtkdoc.sh}/../config.sh"
 PREFIX="/usr/local"
 PROGNAME="gtkdoc.sh"
 #executables
@@ -41,7 +42,7 @@ RM="rm -f"
 RMDIR="rmdir"
 TOUCH="touch"
 
-[ -f "../config.sh" ] && . "../config.sh"
+[ -f "$CONFIGSH" ] && . "$CONFIGSH"
 
 
 #functions

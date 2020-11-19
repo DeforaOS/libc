@@ -25,6 +25,7 @@
 
 
 #variables
+CONFIGSH="${0%/clint.sh}/../config.sh"
 CFLAGS=
 CPPFLAGS=
 PROGNAME="clint.sh"
@@ -38,6 +39,8 @@ LINT="lint -g"
 MKDIR="mkdir -p"
 SORT="sort -n"
 TR="tr"
+
+[ -f "$CONFIGSH" ] && . "$CONFIGSH"
 
 
 #functions

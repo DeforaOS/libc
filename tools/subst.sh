@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2012-2019 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2012-2020 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -45,6 +45,7 @@ INSTALL="install"
 MKDIR="mkdir -m 0755 -p"
 RM="rm -f"
 SED="sed"
+
 [ -f "$CONFIGSH" ] && . "$CONFIGSH"
 
 

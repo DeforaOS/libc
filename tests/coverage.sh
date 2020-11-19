@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2018 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2018-2020 Pierre Pronchery <khorben@defora.org>
 #This file is part of DeforaOS System libSystem
 #All rights reserved.
 #
@@ -30,6 +30,7 @@
 
 
 #variables
+CONFIGSH="${0%/coverage.sh}/../config.sh"
 CFLAGS=
 LDFLAGS=
 PROGNAME="coverage.sh"
@@ -43,6 +44,8 @@ GCOV="gcov"
 MKDIR="mkdir -p"
 MKTEMP="mktemp"
 RM="rm -f"
+
+[ -f "$CONFIGSH" ] && . "$CONFIGSH"
 
 
 #coverage
