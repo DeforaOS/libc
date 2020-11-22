@@ -33,7 +33,9 @@
 
 /* _start */
 .global _start
-#if !defined(__APPLE__)
+#if defined(__NetBSD__) && defined(__arm__)
+.type _start, %function
+#elif !defined(__APPLE__)
 .type _start, @function
 #endif
 

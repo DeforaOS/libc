@@ -45,6 +45,7 @@ _syscall:
 /* macros */
 #define SYSCALL(name) \
 .global name; \
+.type _start, %function; \
 name:; \
 	mov	%ip, %r7; \
 	ldr	%r7, =SYS_ ## name; \
