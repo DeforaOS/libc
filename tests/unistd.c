@@ -44,6 +44,7 @@
 static int _chroot(char const * progname);
 static int _error(char const * progname, char const * message, int ret);
 static int _fork(char const * progname);
+static int _getgroups(char const * progname);
 static int _gethostname(char const * progname);
 static int _sleep(char const * progname, unsigned int t);
 
@@ -112,6 +113,38 @@ static int _fork(char const * progname)
 }
 
 
+/* getgroups */
+static int _getgroups(char const * progname)
+{
+	int n;
+	gid_t * groups;
+	int i;
+	char const * sep = "";
+
+	printf("%s: Testing getgroups()\n", progname);
+	if((n = getgroups(0, NULL)) < 0)
+		return _error(progname, "getgroups", 16);
+	if(n == 0)
+		return 0;
+	if((groups = malloc(sizeof(*groups) * n)) == NULL)
+		return _error(progname, "malloc", 16);
+	if((n = getgroups(n, groups)) < 0)
+	{
+		free(groups);
+		return _error(progname, "getgroups", 16);
+	}
+	printf("Groups: ");
+	for(i = 0; i < n; i++)
+	{
+		printf("%s%u", sep, groups[i]);
+		sep = ", ";
+	}
+	printf("\n");
+	free(groups);
+	return 0;
+}
+
+
 /* gethostname */
 static int _gethostname(char const * progname)
 {
@@ -119,7 +152,7 @@ static int _gethostname(char const * progname)
 
 	printf("%s: Testing gethostname()\n", progname);
 	if(gethostname(hostname, sizeof(hostname)) != 0)
-		return _error(progname, "gethostname", 16);
+		return _error(progname, "gethostname", 32);
 	else
 		printf("hostname: %s\n", hostname);
 	return 0;
@@ -138,7 +171,7 @@ static int _sleep(char const * progname, unsigned int t)
 	res = sleep(t);
 	after = time(NULL);
 	if(res == 0)
-		return (after - before == t) ? 0 : 32;
+		return (after - before == t) ? 0 : 64;
 	/* XXX ignore other cases (signal deliveries...) */
 	return 0;
 }
@@ -152,6 +185,7 @@ int main(int argc, char * argv[])
 
 	ret = _chroot(argv[0]);
 	ret |= _fork(argv[0]);
+	ret |= _getgroups(argv[0]);
 	ret |= _gethostname(argv[0]);
 	ret |= _sleep(argv[0], 0);
 	ret |= _sleep(argv[0], 1);
