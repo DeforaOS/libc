@@ -485,6 +485,20 @@ gid_t getgid(void)
 #endif
 
 
+/* getgroups */
+#ifndef SYS_getgroups
+# warning Unsupported platform: getgroups() is missing
+int getgroups(int gidsetsize, gid_t grouplist[])
+{
+	(void) gidsetsize;
+	(void) grouplist;
+
+	errno = ENOSYS;
+	return -1;
+}
+#endif
+
+
 /* gethostname */
 int gethostname(char * name, size_t size)
 {

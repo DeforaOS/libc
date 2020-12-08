@@ -119,6 +119,7 @@ char * getcwd(char * buf, size_t size);
 gid_t getegid(void);
 uid_t geteuid(void);
 gid_t getgid(void);
+int getgroups(int gidsetsize, gid_t grouplist[]);
 int gethostname(char * name, size_t size);
 char * getlogin(void);
 int getlogin_r(char * buf, size_t size);
