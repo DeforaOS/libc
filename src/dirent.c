@@ -80,14 +80,24 @@ int dirfd(DIR * dir)
 /* opendir */
 DIR * opendir(char const * name)
 {
+#ifdef O_DIRECTORY
+	const int flags = O_DIRECTORY | O_RDONLY;
+#else
+	const int flags = O_RDONLY;
+	struct stat st;
+#endif
 	DIR * dir;
 	int fd;
-	struct stat st;
 
-	if((fd = open(name, O_RDONLY)) < 0)
+	if((fd = open(name, flags)) < 0)
 		return NULL;
-	if(fcntl(fd, F_SETFD, FD_CLOEXEC) != 0
-			|| fstat(fd, &st) != 0)
+	if(fcntl(fd, F_SETFD, FD_CLOEXEC) != 0)
+	{
+		close(fd);
+		return NULL;
+	}
+#ifndef O_DIRECTORY
+	if(fstat(fd, &st) != 0)
 	{
 		close(fd);
 		return NULL;
@@ -98,6 +108,7 @@ DIR * opendir(char const * name)
 		errno = ENOTDIR;
 		return NULL;
 	}
+#endif
 	if((dir = malloc(sizeof(*dir))) == NULL)
 	{
 		close(fd);
