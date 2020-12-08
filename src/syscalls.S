@@ -458,6 +458,9 @@ SYSCALL(geteuid)
 #ifdef SYS_getgid
 SYSCALL(getgid)
 #endif
+#ifdef SYS_getgroups
+SYSCALL(getgroups)
+#endif
 #ifdef SYS_getlogin_r
 SYSCALL(getlogin_r)
 #endif
