@@ -72,6 +72,10 @@ struct flock
 # define O_DSYNC	0x10000
 # define O_RSYNC	0x20000
 
+# define O_DIRECTORY	0x200000
+# define O_CLOEXEC	0x400000
+# define O_SEARCH	0x800000
+
 # define O_RDONLY	0
 # define O_WRONLY	1
 # define O_RDWR		2
