@@ -33,7 +33,7 @@
 
 /* macros */
 #ifndef SYSCALL
-# ifdef __APPLE__
+# ifdef __clang__
 #  define SYSCALL(name) \
 .global name; \
 name:; \
@@ -55,7 +55,7 @@ name:; \
 /* functions */
 /* _brk */
 .global _brk
-#ifndef __APPLE__
+#ifndef __clang__
 .type _brk,@function
 #endif
 _brk:
@@ -66,7 +66,7 @@ _brk:
 
 /* _exit */
 .global _exit
-#ifndef __APPLE__
+#ifndef __clang__
 .type _exit,@function
 #endif
 _exit:
