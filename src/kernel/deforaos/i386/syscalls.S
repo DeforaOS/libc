@@ -33,20 +33,31 @@
 
 /* macros */
 #ifndef SYSCALL
-# define SYSCALL(name) \
+# ifdef __APPLE__
+#  define SYSCALL(name) \
+.global name; \
+name:; \
+	movl	$ENOSYS, errno; \
+	mov	$-1, %eax; \
+	ret
+# else
+#  define SYSCALL(name) \
 .global name; \
 .type name,@function; \
 name:; \
 	movl	$ENOSYS, errno; \
 	mov	$-1, %eax; \
 	ret
+# endif
 #endif
 
 
 /* functions */
 /* _brk */
 .global _brk
+#ifndef __APPLE__
 .type _brk,@function
+#endif
 _brk:
 	xor	%eax, %eax
 	ret
@@ -55,7 +66,9 @@ _brk:
 
 /* _exit */
 .global _exit
+#ifndef __APPLE__
 .type _exit,@function
+#endif
 _exit:
 	/* infinite loop */
 	cli
