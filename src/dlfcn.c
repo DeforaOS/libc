@@ -512,7 +512,7 @@ static void _file_relocations_arch(DL * dl, Elf_Rela * rela,
 			/* FIXME implement */
 			break;
 		case R_386_RELATIVE:
-			addr = dl->data_addr + rela->r_offset;
+			addr = (Elf_Addr *)(dl->data_addr + rela->r_offset);
 			*addr += dl->data_addr;
 			break;
 	}
