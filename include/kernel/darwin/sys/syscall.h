@@ -90,6 +90,7 @@
 # define SYS_rmdir		137
 # define SYS_utimes		138
 # define SYS_setsid		147
+# define SYS_unmount		159
 # define SYS_setgid		181
 # define SYS_stat		188
 # define SYS_fstat		189
