@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2016-2020 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2016-2021 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -33,6 +33,7 @@ PROJECTCONF="../project.conf"
 #executables
 DATE="date"
 DEBUG="_debug"
+ECHO="/bin/echo"
 FIND="find"
 GREP="grep"
 LINT="lint -g"
@@ -68,41 +69,52 @@ _clint()
 	fi
 	for subdir in $subdirs; do
 		[ -d "../$subdir" ] || continue
-		for filename in $($FIND "../$subdir" -type f | $SORT); do
+		while read filename; do
+			[ -n "$filename" ] || continue
+			r=0
 			case "$filename" in
 				*.c)
 					echo
-					(_clint_lint "$filename";
-						_clint_rtrim "$filename")
+					_clint_lint "$filename"	|| r=$?
+					_clint_rtrim "$filename"|| r=$?
 					;;
 				*.h)
 					echo
 					echo "$filename:"
-					(_clint_rtrim "$filename")
+					_clint_rtrim "$filename"|| r=$?
 					;;
 				*)
 					continue
 					;;
 			esac
-			if [ $? -ne 0 ]; then
+			if [ $r -eq 0 ]; then
+				echo " OK"
+				echo "$PROGNAME: $filename: OK" 1>&2
+			else
 				echo "FAIL"
 				echo "$PROGNAME: $filename: FAIL" 1>&2
 				res=2
-			else
-				echo "OK"
 			fi
-		done
+		done << EOF
+$($FIND "../$subdir" -type f | $SORT)
+EOF
 	done
 	return $res
 }
 
 _clint_lint()
-{
+{(
 	filename="$1"
 
-	echo -n "${filename%/*}/"
+	$ECHO -n "${filename%/*}/"
 	$DEBUG $LINT $CPPFLAGS $CFLAGS "$filename" 2>&1
-}
+	ret=$?
+	if [ $ret -eq 127 ]; then
+		#XXX ignore errors when $LINT is not available
+		ret=0
+	fi
+	return $ret
+)}
 
 _clint_rtrim()
 {
@@ -118,10 +130,6 @@ _debug()
 {
 	echo "$@" 1>&3
 	"$@"
-	res=$?
-	#ignore errors when the command is not available
-	[ $res -eq 127 ]					&& return 0
-	return $res
 }
 
 

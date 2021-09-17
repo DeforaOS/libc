@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2017-2020 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2017-2021 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -199,10 +199,6 @@ _debug()
 {
 	echo "$@" 1>&3
 	"$@"
-	res=$?
-	#ignore errors when the command is not available
-	[ $res -eq 127 ]					&& return 0
-	return $res
 }
 
 
