@@ -1,7 +1,7 @@
 #!/bin/sh
 #$Id$
 #Copyright (c) 2020 Pierre Pronchery <khorben@defora.org>
-#This file is part of DeforaOS System libSystem
+#This file is part of DeforaOS System libc
 #All rights reserved.
 #
 #Redistribution and use in source and binary forms, with or without
