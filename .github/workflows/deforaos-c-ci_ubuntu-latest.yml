@@ -18,7 +18,7 @@ jobs:
     - name: bootstrap configure
       run: git clone https://github.com/DeforaOS/configure.git configure && (cd configure/src && make PREFIX="$HOME/opt/DeforaOS" install)
     - name: configure
-      run: "$HOME/opt/DeforaOS/bin/configure" -p "$HOME/opt/DeforaOS"
+      run: $HOME/opt/DeforaOS/bin/configure -p "$HOME/opt/DeforaOS"
     - name: make
       run: make
     - name: make tests
