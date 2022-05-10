@@ -16,12 +16,12 @@ jobs:
     - name: bootstrap libSystem
       run: git clone https://github.com/DeforaOS/libSystem.git libSystem && for dir in include data src; do (cd libSystem/$dir && make PREFIX="$HOME/opt/DeforaOS" install); done
     - name: bootstrap configure
-      run: git clone https://github.com/DeforaOS/configure.git configure && (cd configure/src && make PREFIX="$HOME/opt/DeforaOS" install)
+      run: git clone https://github.com/DeforaOS/configure.git configure && (cd configure/src && PKG_CONFIG_PATH="$HOME/opt/DeforaOS/lib/pkgconfig" make PREFIX="$HOME/opt/DeforaOS" install)
     - name: configure
       run: $HOME/opt/DeforaOS/bin/configure -p "$HOME/opt/DeforaOS"
     - name: make
-      run: make
+      run: PKG_CONFIG_PATH="$HOME/opt/DeforaOS/lib/pkgconfig" make
     - name: make tests
-      run: make tests
+      run: PKG_CONFIG_PATH="$HOME/opt/DeforaOS/lib/pkgconfig" make tests
     - name: make distcheck
-      run: make distcheck
+      run: PKG_CONFIG_PATH="$HOME/opt/DeforaOS/lib/pkgconfig" make distcheck
