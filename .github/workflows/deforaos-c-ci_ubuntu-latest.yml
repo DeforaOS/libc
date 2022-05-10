@@ -20,8 +20,8 @@ jobs:
     - name: configure
       run: $HOME/opt/DeforaOS/bin/configure -p "$HOME/opt/DeforaOS"
     - name: make
-      run: PKG_CONFIG_PATH="$HOME/opt/DeforaOS/lib/pkgconfig" make
+      run: PKG_CONFIG_PATH="$HOME/opt/DeforaOS/lib/pkgconfig" make CCSHARED="cc -shared"
     - name: make tests
-      run: PKG_CONFIG_PATH="$HOME/opt/DeforaOS/lib/pkgconfig" make tests
+      run: PKG_CONFIG_PATH="$HOME/opt/DeforaOS/lib/pkgconfig" make CCSHARED="cc -shared" tests
     - name: make distcheck
-      run: PKG_CONFIG_PATH="$HOME/opt/DeforaOS/lib/pkgconfig" make distcheck
+      run: PKG_CONFIG_PATH="$HOME/opt/DeforaOS/lib/pkgconfig" make CCSHARED="cc -shared" distcheck
