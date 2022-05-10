@@ -14,11 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: bootstrap libSystem
-      run: git clone https://github.com/DeforaOS/libSystem.git libSystem && cd libSystem && make install
+      run: git clone https://github.com/DeforaOS/libSystem.git libSystem && cd libSystem && make PREFIX="$HOME/opt/DeforaOS" install
     - name: bootstrap configure
-      run: git clone https://github.com/DeforaOS/configure.git configure && cd configure && make install
+      run: git clone https://github.com/DeforaOS/configure.git configure && cd configure && make PREFIX="$HOME/opt/DeforaOS" install
     - name: configure
-      run: configure
+      run: configure -p "$HOME/opt/DeforaOS"
     - name: make
       run: make
     - name: make tests
