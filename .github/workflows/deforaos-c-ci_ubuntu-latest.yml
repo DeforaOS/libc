@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: bootstrap libSystem
-      run: git clone https://github.com/DeforaOS/libSystem.git libSystem && (for dir in include data src; do cd libSystem/$dir && make PREFIX="$HOME/opt/DeforaOS" install; done)
+      run: git clone https://github.com/DeforaOS/libSystem.git libSystem && for dir in include data src; do (cd libSystem/$dir && make PREFIX="$HOME/opt/DeforaOS" install); done
     - name: bootstrap configure
       run: git clone https://github.com/DeforaOS/configure.git configure && (cd configure/src && make PREFIX="$HOME/opt/DeforaOS" install)
     - name: configure
