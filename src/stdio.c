@@ -67,7 +67,7 @@ struct _FILE
 };
 
 typedef int (*print_func)(void * dest, size_t size, const char * buf);
-typedef int (*scan_func)(void * data);
+typedef int (*scan_func)(void * data, int peek);
 
 
 /* prototypes */
@@ -914,18 +914,30 @@ static int _fprint(void * dest, size_t size, char const buf[])
 
 
 /* vfscanf */
-static int _vfscanf_func(void * data);
+struct scan_func_fdata
+{
+	FILE * file;
+	int c;
+};
+
+static int _vfscanf_func(void * data, int peek);
 
 int vfscanf(FILE * file, char const * format, va_list arg)
 {
-	return _vscanf(_vfscanf_func, file, format, arg);
+	struct scan_func_fdata sff;
+
+	sff.file = file;
+	sff.c = -1;
+	return _vscanf(_vfscanf_func, &sff, format, arg);
 }
 
-static int _vfscanf_func(void * data)
+static int _vfscanf_func(void * data, int peek)
 {
-	FILE * fp = data;
+	struct scan_func_fdata * sff = data;
 
-	return fgetc(fp);
+	if(!peek)
+		sff->c = fgetc(sff->file);
+	return sff->c;
 }
 
 
@@ -989,21 +1001,28 @@ int vsprintf(char * str, char const * format, va_list arg)
 
 
 /* vsscanf */
-static int _vsscanf_func(void * data);
+struct scan_func_sdata
+{
+	char const * s;
+};
+
+static int _vsscanf_func(void * data, int peek);
 
 int vsscanf(char const * str, char const * format, va_list arg)
 {
-	char const * s = str;
+	struct scan_func_sdata sfs;
 
-	return _vscanf(_vsscanf_func, &s, format, arg);
+	sfs.s = str;
+	return _vscanf(_vsscanf_func, &sfs, format, arg);
 }
 
-static int _vsscanf_func(void * data)
+static int _vsscanf_func(void * data, int peek)
 {
-	char ** const s = data;
+	struct scan_func_sdata * sfs = data;
 
-	(*s)++;
-	return (unsigned char)**s;
+	if(!peek)
+		sfs->s++;
+	return (unsigned char)*sfs->s;
 }
 
 
@@ -1548,7 +1567,7 @@ static int _vscanf(scan_func func, void * data, char const * format,
 	char * p;
 
 	args.ret = 0;
-	for(i = 0; *f != '\0' && (c = func(data)) > 0; f += i)
+	for(i = 0; *f != '\0' && (c = func(data, 0)) > 0; f += i)
 	{
 		switch(*f)
 		{
@@ -1559,7 +1578,7 @@ static int _vscanf(scan_func func, void * data, char const * format,
 				/* skip spaces in the format string */
 				for(i = 1; isspace((unsigned int)f[i]); i++);
 				/* skip spaces in the original string */
-				while((c = func(data)) > 0 && isspace(c));
+				while((c = func(data, 0)) > 0 && isspace(c));
 				break;
 			case '%':
 				if((++f)[0] == '*')
@@ -1609,7 +1628,7 @@ static int _vscanf(scan_func func, void * data, char const * format,
 				args.ret++;
 				break;
 			default:
-				c = func(data);
+				c = func(data, 0);
 				i = (c == f[0]) ? 1 : 0;
 				break;
 		}
@@ -1704,7 +1723,7 @@ static size_t _vscanf_do_bracket(scan_args * args, scan_func func, void * data,
 	for(; format[ret] != ']'; ret++);
 	s = va_arg(arg, char *);
 	for(i = 0; (args->width <= 0 || i < args->width)
-			&& (c = func(data)) > 0; i++)
+			&& (c = func(data, 0)) > 0; i++)
 		s[i] = c;
 	/* FIXME check for any off by one */
 	s[i] = '\0';
@@ -1755,7 +1774,7 @@ static size_t _vscanf_do_chars(scan_args * args, scan_func func, void * data,
 	size_t width = (args->width > 0) ? args->width : 1;
 
 	s = va_arg(arg, char *);
-	for(ret = 0; ret < width && (c = func(data)) > 0; ret++)
+	for(ret = 0; ret < width && (c = func(data, 0)) > 0; ret++)
 		*s++ = c;
 	return ret;
 }
@@ -1951,7 +1970,7 @@ static size_t _vscanf_do_string(scan_args * args, scan_func func, void * data,
 
 	s = va_arg(arg, char *);
 	for(i = 0; (args->width <= 0 || i < args->width)
-			&& (c = func(data)) > 0
+			&& (c = func(data, 0)) > 0
 			&& !isspace(c); i++)
 		s[i] = c;
 	/* FIXME check for any off by one */
