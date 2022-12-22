@@ -50,11 +50,11 @@ typedef struct _fd_set
 #  define timeval timeval
 struct timeval
 {
-#ifdef __arm__
+#  ifdef __arm__
 	time_t tv_sec;
-#else
+#  else
 	long tv_sec;
-#endif
+#  endif
 	suseconds_t tv_usec;
 };
 # endif

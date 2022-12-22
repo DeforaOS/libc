@@ -41,14 +41,14 @@ typedef struct _fd_set
 	long fds_bits[8];
 } fd_set;
 # endif
-#ifndef timeval
-# define timeval timeval
+# ifndef timeval
+#  define timeval timeval
 struct timeval
 {
 	time_t tv_sec;
 	suseconds_t tv_usec;
 };
-#endif
+# endif
 
 
 /* macros */

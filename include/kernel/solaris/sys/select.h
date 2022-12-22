@@ -33,13 +33,13 @@
 
 
 /* types */
-#ifndef timeval
-# define timeval timeval
+# ifndef timeval
+#  define timeval timeval
 struct timeval
 {
 	time_t tv_sec;
 	suseconds_t tv_usec;
 };
-#endif
+# endif
 
 #endif /* !LIBC_KERNEL_SOLARIS_SYS_TIME_H */
