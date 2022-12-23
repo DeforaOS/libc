@@ -33,16 +33,19 @@
 
 
 /* constants */
-# define FD_SETSIZE	1024
+# ifndef FD_SETSIZE
+#  define FD_SETSIZE	1024
+# endif
 
 
 /* types */
 # ifndef fd_set
 #  define fd_set fd_set
-typedef struct _fd_set
+typedef struct __fd_set
 {
-	unsigned long fds_bits[((FD_SETSIZE) + (((sizeof(unsigned long) * 8))
-				- 1)) / ((sizeof(unsigned long) * 8))];
+	unsigned int fds_bits[(((FD_SETSIZE)
+				+ ((sizeof(unsigned long) << 3) - 1))
+			/ (sizeof(unsigned long) << 3))];
 } fd_set;
 # endif
 
@@ -61,11 +64,20 @@ struct timeval
 
 
 /* macros */
-# define FD_ZERO(fdset)							\
+# define FD_CLR(fd, fdset)	\
+	((fdset)->fds_bits[(fd) / (sizeof((fdset)->fds_bits[0]) << 3)]	\
+	 &= ~(1 << ((fd) & 0x7)))
+# define FD_ISSET(fd, fdset)	\
+	((fdset)->fds_bits[(fd) / (sizeof((fdset)->fds_bits[0]) << 3)]	\
+	 & (1 << ((fd) & 0x7)))
+# define FD_SET(fd, fdset)	\
+	((fdset)->fds_bits[(fd) / (sizeof((fdset)->fds_bits[0]) << 3)]	\
+	 |= (1 << ((fd) & 0x7)))
+# define FD_ZERO(fdset)		\
 	do								\
 	{								\
 		size_t n = 0;						\
-		fd_set * p = fdset;					\
+		fd_set * p = (fdset);					\
 									\
 		while(n < (sizeof(p->fds_bits)				\
 					/ sizeof(p->fds_bits[0])))	\
