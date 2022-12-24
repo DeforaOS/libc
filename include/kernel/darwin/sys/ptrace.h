@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2012-2013 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2022 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,22 +28,14 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_PTRACE_H
-# define LIBC_COMPAT_SYS_PTRACE_H
+#ifndef LIBC_KERNEL_DARWIN_SYS_PTRACE_H
+# define LIBC_KERNEL_DARWIN_SYS_PTRACE_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/sys/ptrace.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/ptrace.h"
-# elif defined(__linux__)
-#  include "kernel/linux/sys/ptrace.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/ptrace.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/ptrace.h"
-# else
-#  warning Unsupported platform
-# endif
+/* constants */
+# define PT_TRACE_ME		0
+# define PT_CONTINUE		7
+# define PT_ATTACH		10
+# define PT_DETACH		11
 
-#endif /* !LIBC_COMPAT_SYS_PTRACE_H */
+#endif /* !LIBC_KERNEL_DARWIN_SYS_PTRACE_H */
