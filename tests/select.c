@@ -34,6 +34,7 @@
 
 
 /* prototypes */
+static int _fdset(char const * progname);
 static int _pselect(char const * progname);
 static int _pselect2(char const * progname, unsigned int t);
 static int _select(char const * progname);
@@ -42,6 +43,31 @@ static int _error(char const * progname, char const * message, int ret);
 
 
 /* functions */
+/* fdset */
+static int _fdset(char const * progname)
+{
+	fd_set fds;
+	unsigned int i;
+
+	printf("%s: Testing %s()\n", progname, "FD_*");
+	FD_ZERO(&fds);
+	for(i = 0; i < FD_SETSIZE; i++)
+		if(FD_ISSET(i, &fds))
+			return _error(progname, "FD_ZERO", 2);
+	for(i = 0; i < FD_SETSIZE; i++)
+		FD_SET(i, &fds);
+	for(i = 0; i < FD_SETSIZE; i++)
+		if(!FD_ISSET(i, &fds))
+			return _error(progname, "FD_SET", 3);
+	for(i = 0; i < FD_SETSIZE; i++)
+		FD_CLR(i, &fds);
+	for(i = 0; i < FD_SETSIZE; i++)
+		if(FD_ISSET(i, &fds))
+			return _error(progname, "FD_CLR", 4);
+	return 0;
+}
+
+
 /* pselect */
 static int _pselect(char const * progname)
 {
@@ -133,6 +159,7 @@ int main(int argc, char * argv[])
 	int ret = 0;
 	(void) argc;
 
+	ret |= _fdset(argv[0]);
 	ret |= _pselect(argv[0]);
 	ret |= _pselect2(argv[0], 0);
 	ret |= _pselect2(argv[0], 1);
