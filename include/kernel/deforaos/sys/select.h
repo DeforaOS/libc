@@ -31,16 +31,21 @@
 #ifndef LIBC_KERNEL_DEFORAOS_SYS_SELECT_H
 # define LIBC_KERNEL_DEFORAOS_SYS_SELECT_H
 
-/* XXX for memset() */
-# include <string.h>
+
+/* constants */
+# ifndef FD_SETSIZE
+#  define FD_SETSIZE	256
+# endif
 
 
 /* types */
 # ifndef fd_set
 #  define fd_set fd_set
-typedef struct _fd_set
+typedef struct __fd_set
 {
-	int fds_bits[8];
+	unsigned int fds_bits[(((FD_SETSIZE)
+				+ ((sizeof(unsigned int) << 3) - 1))
+			/ (sizeof(unsigned int) << 3))];
 } fd_set;
 # endif
 
@@ -56,12 +61,24 @@ struct timeval
 
 /* macros */
 # define FD_CLR(fd, fdset)	\
-	((fdset)->fds_bits[(fd) / 32] &= ~(1 << ((fd) % 8)))
+	((fdset)->fds_bits[(fd) / (sizeof((fdset)->fds_bits[0]) << 3)]	\
+	 &= ~(1 << ((fd) & 0x7)))
 # define FD_ISSET(fd, fdset)	\
-	((fdset)->fds_bits[(fd) / 32] & (1 << ((fd) % 8)))
+	((fdset)->fds_bits[(fd) / (sizeof((fdset)->fds_bits[0]) << 3)]	\
+	 & (1 << ((fd) & 0x7)))
 # define FD_SET(fd, fdset)	\
-	((fdset)->fds_bits[(fd) / 32] |= (1 << ((fd) % 8)))
+	((fdset)->fds_bits[(fd) / (sizeof((fdset)->fds_bits[0]) << 3)]	\
+	 |= (1 << ((fd) & 0x7)))
 # define FD_ZERO(fdset)		\
-	memset(fdset, 0, sizeof(fd_set))
+	do								\
+	{								\
+		size_t n = 0;						\
+		fd_set * p = (fdset);					\
+									\
+		while(n < (sizeof(p->fds_bits)				\
+					/ sizeof(p->fds_bits[0])))	\
+			p->fds_bits[n++] = 0;				\
+	}								\
+	while(0)
 
 #endif /* !LIBC_KERNEL_DEFORAOS_SYS_SELECT_H */
