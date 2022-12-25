@@ -32,7 +32,9 @@
 # define LIBSOCKET_COMPAT_SYS_SOCKET_H
 
 
-# if defined(__FreeBSD__)
+# if defined(__APPLE__)
+#  include "kernel/darwin/sys/socket.h"
+# elif defined(__FreeBSD__)
 #  include "kernel/freebsd/sys/socket.h"
 # elif defined(__linux__)
 #  include "kernel/linux/sys/socket.h"

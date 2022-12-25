@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008-2015 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2022 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,22 +28,14 @@
 
 
 
-#ifndef LIBSOCKET_COMPAT_NETINET_IN_H
-# define LIBSOCKET_COMPAT_NETINET_IN_H
+#ifndef LIBSOCKET_KERNEL_DARWIN_SYS_SOCKET_H
+# define LIBSOCKET_KERNEL_DARWIN_SYS_SOCKET_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/netinet/in.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/netinet/in.h"
-# elif defined(__linux__)
-#  include "kernel/linux/netinet/in.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/netinet/in.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/netinet/in.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef sa_family_t
+#  define sa_family_t sa_family_t
+typedef unsigned char sa_family_t;
 # endif
 
-#endif /* !LIBSOCKET_COMPAT_NETINET_IN_H */
+#endif /* !LIBSOCKET_KERNEL_DARWIN_SYS_SOCKET_H */
