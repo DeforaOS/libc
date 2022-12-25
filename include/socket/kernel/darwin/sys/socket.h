@@ -38,4 +38,14 @@
 typedef unsigned char sa_family_t;
 # endif
 
+# ifndef sockaddr
+#  define sockaddr sockaddr
+struct sockaddr
+{
+	unsigned char sa_len;
+	sa_family_t sa_family;
+	char sa_data[14];
+};
+# endif
+
 #endif /* !LIBSOCKET_KERNEL_DARWIN_SYS_SOCKET_H */
