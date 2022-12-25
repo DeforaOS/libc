@@ -29,8 +29,31 @@
 
 
 /* macros */
-#ifndef MCALL1
-# define MCALL1(name, ins) \
+#ifdef __clang__
+# ifndef MCALL1
+#  define MCALL1(name, ins) \
+.global name; \
+name:; \
+	movq	%xmm0, -0x8(%rsp); \
+	fldl	-0x8(%rsp); \
+	ins; \
+	fstpl	-0x8(%rsp); \
+	movq	-0x8(%rsp), %xmm0; \
+	emms; \
+	ret
+# endif
+
+# ifndef MCALL1L
+#  define MCALL1L(name, ins) \
+.global name; \
+name:; \
+	fldt	0x8(%rsp); \
+	ins; \
+	ret
+# endif
+#else
+# ifndef MCALL1
+#  define MCALL1(name, ins) \
 .global name; \
 .type name,@function; \
 name:; \
@@ -41,23 +64,26 @@ name:; \
 	movq	-0x8(%rsp), %xmm0; \
 	emms; \
 	ret
-#endif
+# endif
 
-#ifndef MCALL1L
-# define MCALL1L(name, ins) \
+# ifndef MCALL1L
+#  define MCALL1L(name, ins) \
 .global name; \
 .type name,@function; \
 name:; \
 	fldt	0x8(%rsp); \
 	ins; \
 	ret
+# endif
 #endif
 
 
 /* functions */
 /* atan */
 .global atan
+#ifndef __clang__
 .type atan,@function
+#endif
 atan:
 	movq	%xmm0, -0x8(%rsp)
 	fldl	-0x8(%rsp)
@@ -71,7 +97,9 @@ atan:
 
 /* atan2 */
 .global atan2
+#ifndef __clang__
 .type atan2,@function
+#endif
 atan2:
 	movq	%xmm0, -0x8(%rsp)
 	movq	%xmm1, -0x10(%rsp)
@@ -86,7 +114,9 @@ atan2:
 
 /* atan2l */
 .global atan2l
+#ifndef __clang__
 .type atan2l,@function
+#endif
 atan2l:
 	fldt	-0x10(%rsp)
 	fldt	-0x8(%rsp)
@@ -96,7 +126,9 @@ atan2l:
 
 /* atanl */
 .global atanl
+#ifndef __clang__
 .type atanl,@function
+#endif
 atanl:
 	fldt	0x8(%rsp)
 	fld1
@@ -122,7 +154,9 @@ MCALL1L(fabsl, fabs)
 
 /* fmod */
 .global fmod
+#ifndef __clang__
 .type fmod,@function
+#endif
 fmod:
 	movq	%xmm1, -0x8(%rsp)
 	fldl	-0x8(%rsp)
@@ -141,7 +175,9 @@ fmod:
 
 /* fmodl */
 .global fmodl
+#ifndef __clang__
 .type fmodl,@function
+#endif
 fmodl:
 	fldt	0x18(%rsp)
 	fldt	0x8(%rsp)
@@ -179,7 +215,9 @@ MCALL1L(sqrtl, fsqrt)
 
 /* tan */
 .global tan
+#ifndef __clang__
 .type tan,@function
+#endif
 tan:
 	movq	%xmm0, -0x8(%rsp)
 	fldl	-0x8(%rsp)
@@ -193,7 +231,9 @@ tan:
 
 /* tanl */
 .global tanl
+#ifndef __clang__
 .type tanl,@function
+#endif
 tanl:
 	fldt	0x8(%rsp)
 	fsincos
