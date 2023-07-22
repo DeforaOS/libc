@@ -84,9 +84,6 @@ sure both macros are undefined; an emulation function will then be used. */
 /* Define to 1 if you have the `memmove' function. */
 #define HAVE_MEMMOVE 1
 
-/* Define to 1 if you have the <memory.h> header file. */
-/* #undef HAVE_MEMORY_H */
-
 /* Define if you have POSIX threads libraries and header files. */
 /* #undef HAVE_PTHREAD */
 
@@ -101,6 +98,9 @@ sure both macros are undefined; an emulation function will then be used. */
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#define HAVE_STDIO_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
@@ -121,7 +121,7 @@ sure both macros are undefined; an emulation function will then be used. */
 /* #undef HAVE_STRTOIMAX */
 
 /* Define to 1 if you have `strtoll'. */
-/* #undef HAVE_STRTOLL */
+#define HAVE_STRTOLL 1
 
 /* Define to 1 if you have `strtoq'. */
 /* #undef HAVE_STRTOQ */
@@ -291,7 +291,9 @@ sure both macros are undefined; an emulation function will then be used. */
    your system. */
 /* #undef PTHREAD_CREATE_JOINABLE */
 
-/* Define to 1 if you have the ANSI C header files. */
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
 
 /* Define to any value to enable support for Just-In-Time compiling. */
