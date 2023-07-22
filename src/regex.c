@@ -33,7 +33,7 @@
 #include "string.h"
 #include "regex.h"
 #include "dlfcn.h"
-#include "regex/pcre/pcre.h"
+#include "regex/pcre2/pcre2.h"
 /* XXX */
 #undef PACKAGE
 #undef VERSION
@@ -49,7 +49,7 @@
 
 /* private */
 /* prototypes */
-static int _pcre_init(void);
+static int _pcre2_init(void);
 
 
 /* variables */
@@ -76,14 +76,18 @@ static struct
 	{ REG_ENOSYS,	"Not implemented"				}
 };
 
-static void * _pcre_handle = NULL;
+static void * _pcre2_handle = NULL;
 
-static void * (*_pcre_compile2)(const char *, int, int *, const char **,
-                  int *, const unsigned char *);
-static int (*_pcre_exec)(const void *, const void *, const char *,
-                   int, int, int, int *, int);
-static int (*_pcre_fullinfo)(const void *, const void *, int,
-                  void *);
+static pcre2_code * (*_pcre2_compile)(PCRE2_SPTR, PCRE2_SIZE,
+		uint32_t, int *, PCRE2_SIZE *, pcre2_compile_context *);
+static int (*_pcre2_pattern_info)(const pcre2_code *, uint32_t, void *);
+static int (*_pcre2_match)(const pcre2_code *, PCRE2_SPTR,
+		PCRE2_SIZE, PCRE2_SIZE, uint32_t,
+		pcre2_match_data *, pcre2_match_context *);
+static pcre2_match_data * (*_pcre2_match_data_create_from_pattern)(
+		const pcre2_code *, pcre2_general_context *);
+static void (*_pcre2_match_data_free)(pcre2_match_data *);
+static PCRE2_SIZE * (*_pcre2_get_ovector_pointer)(pcre2_match_data *);
 
 
 /* public */
@@ -93,23 +97,28 @@ static int _regcomp_error(int error);
 
 int regcomp(regex_t * regex, const char * pattern, int flags)
 {
-	int pflags = 0;
+	uint32_t pflags = 0;
 	int perror = 0;
-	const char * p;
-	int poffset;
-	int nsub;
+	PCRE2_SIZE poffset;
+	uint32_t nsub;
 
-	if(_pcre_init() != 0)
+	if(_pcre2_init() != 0)
 		return REG_ENOSYS;
 	/* XXX implement more flags */
 	if(flags & REG_ICASE)
-		pflags |= PCRE_CASELESS;
+		pflags |= PCRE2_CASELESS;
 	if(flags & REG_NEWLINE)
-		pflags |= PCRE_MULTILINE;
-	if((regex->re_pcre = _pcre_compile2(pattern, pflags, &perror, &p,
+		pflags |= PCRE2_MULTILINE;
+	if((regex->re_pcre = _pcre2_compile((PCRE2_SPTR)pattern,
+					PCRE2_ZERO_TERMINATED, pflags, &perror,
 					&poffset, NULL)) == NULL)
 		return _regcomp_error(perror);
-	_pcre_fullinfo(regex->re_pcre, NULL, PCRE_INFO_CAPTURECOUNT, &nsub);
+	if((perror = _pcre2_pattern_info(regex->re_pcre,
+					PCRE2_INFO_CAPTURECOUNT, &nsub)) != 0)
+	{
+		regfree(regex);
+		return _regcomp_error(perror);
+	}
 	regex->re_nsub = nsub;
 	return 0;
 }
@@ -159,47 +168,53 @@ static int _regexec_error(int error);
 int regexec(const regex_t * regex, const char * string, size_t match_cnt,
 		regmatch_t match[], int flags)
 {
-	int pflags = 0;
-	int * pmatch;
+	uint32_t pflags = 0;
+	pcre2_match_data * pmatch;
 	int res;
+	PCRE2_SIZE * ovector;
 	size_t i;
 
-	if(_pcre_init() != 0)
+	if(_pcre2_init() != 0)
 		return REG_ENOSYS;
 	if(flags & REG_NOTBOL)
-		pflags |= PCRE_NOTBOL;
+		pflags |= PCRE2_NOTBOL;
 	if(flags & REG_NOTEOL)
-		pflags |= PCRE_NOTEOL;
+		pflags |= PCRE2_NOTEOL;
 	if(match_cnt > 0)
 	{
-		if((pmatch = malloc(sizeof(*pmatch) * match_cnt * 3)) == NULL)
+		if((pmatch = _pcre2_match_data_create_from_pattern(
+						regex->re_pcre, NULL)) == NULL)
 			return REG_ESPACE;
 	}
 	else
 		pmatch = NULL;
-	if((res = _pcre_exec(regex->re_pcre, NULL, string, strlen(string), 0,
-					pflags, pmatch, match_cnt * 3)) >= 0)
+	if((res = _pcre2_match((pcre2_code *)regex->re_pcre, (PCRE2_SPTR)string,
+					(PCRE2_SIZE)strlen(string), 0,
+					pflags, pmatch, NULL)) < 0)
 	{
-		for(i = 0; i < match_cnt; i++)
-		{
-			match[i].rm_so = pmatch[i * 2];
-			match[i].rm_eo = pmatch[i * 2 + 1];
-		}
-		free(pmatch);
-		return 0;
+		if(pmatch != NULL)
+			_pcre2_match_data_free(pmatch);
+		return _regexec_error(res);
 	}
-	free(pmatch);
-	return _regexec_error(res);
+	ovector = _pcre2_get_ovector_pointer(pmatch);
+	for(i = 0; i < (size_t)res && i < match_cnt; i++)
+	{
+		match[i].rm_so = ovector[2 * i];
+		match[i].rm_eo = ovector[(2 * i) + 1];
+	}
+	if(pmatch != NULL)
+		_pcre2_match_data_free(pmatch);
+	return 0;
 }
 
 static int _regexec_error(int error)
 {
 	switch(error)
 	{
-		case PCRE_ERROR_NOMATCH:
+		case PCRE2_ERROR_NOMATCH:
 			return REG_NOMATCH;
-		case PCRE_ERROR_MATCHLIMIT:
-		case PCRE_ERROR_NOMEMORY:
+		case PCRE2_ERROR_MATCHLIMIT:
+		case PCRE2_ERROR_NOMEMORY:
 			return REG_ESPACE;
 		default:
 			return REG_ENOSYS;
@@ -211,27 +226,46 @@ static int _regexec_error(int error)
 void regfree(regex_t * regex)
 {
 	free(regex->re_pcre);
+	regex->re_pcre = NULL;
 }
 
 
 /* private */
-/* pcre_init */
-static int _pcre_init(void)
+/* pcre2_init */
+static void * _init_dlopen(char const * path, int mode);
+
+static int _pcre2_init(void)
 {
-	if(_pcre_handle != NULL)
+	if(_pcre2_handle != NULL)
 		return 0;
-	if((_pcre_handle = __dlopen(LIBDIR "/libpcre.so", RTLD_NOW)) == NULL
-			&& (_pcre_handle = __dlopen(NULL, RTLD_NOW)) == NULL)
+	if((_pcre2_handle = _init_dlopen(NULL, RTLD_NOW)) == NULL
+			&& (_pcre2_handle = _init_dlopen(LIBDIR "/libpcre2.so",
+					RTLD_NOW)) == NULL)
 		return -1;
-	if((_pcre_compile2 = __dlsym(_pcre_handle, "pcre_compile2")) == NULL
-			|| (_pcre_exec = __dlsym(_pcre_handle, "pcre_exec"))
-			== NULL
-			|| (_pcre_fullinfo = __dlsym(_pcre_handle,
-					"pcre_fullinfo")) == NULL)
-	{
-		__dlclose(_pcre_handle);
-		_pcre_handle = NULL;
-		return -1;
-	}
 	return 0;
+}
+
+static void * _init_dlopen(char const * path, int mode)
+{
+	void * ret;
+
+	if((ret = __dlopen(path, mode)) == NULL)
+		return NULL;
+	if((_pcre2_compile = __dlsym(ret, "pcre2_compile_8")) == NULL
+			|| (_pcre2_pattern_info = __dlsym(ret,
+					"pcre2_pattern_info_8")) == NULL
+			|| (_pcre2_match = __dlsym(ret,
+					"pcre2_match_8")) == NULL
+			|| (_pcre2_match_data_create_from_pattern = __dlsym(ret,
+					"pcre2_match_data_create_from_pattern_8"))
+			== NULL
+			|| (_pcre2_match_data_free = __dlsym(ret,
+					"pcre2_match_data_free_8")) == NULL
+			|| (_pcre2_get_ovector_pointer = __dlsym(ret,
+					"pcre2_get_ovector_pointer_8")) == NULL)
+	{
+		__dlclose(ret);
+		return NULL;
+	}
+	return ret;
 }
