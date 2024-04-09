@@ -34,10 +34,10 @@ _syscall:
 	jnc	_syscall_return
 .errno:
 #ifdef __PIC__
-	mov	errno@GOTPCREL(%rip), %rcx
+	mov	_errno@GOTPCREL(%rip), %rcx
 	mov	%rax, (%rcx)
 #else
-	mov	%rax, errno
+	mov	%rax, _errno
 #endif
 	mov	$-1, %rax
 _syscall_return:
