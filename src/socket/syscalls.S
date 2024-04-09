@@ -56,6 +56,14 @@
 #  warning Unsupported Linux architecture
 # endif
 
+/* macOS */
+#elif defined(__APPLE__)
+# if defined(__amd64__)
+#  include "kernel/darwin/amd64/syscalls.S"
+# else
+#  warning Unsupported macOS architecture
+# endif
+
 /* NetBSD */
 #elif defined(__NetBSD__)
 # if defined(__amd64__)
