@@ -108,7 +108,7 @@
 # include "kernel/solaris/common.h"
 # if defined(__sparc__)
 #  include "kernel/solaris/sparc/syscalls.S"
-# else
+# else /* !__sparc__ */
 #  warning Unsupported Solaris architecture
 # endif
 
@@ -117,7 +117,7 @@
 # include "kernel/whitix/common.h"
 # if defined(__i386__)
 #  include "kernel/whitix/i386/syscalls.S"
-# else
+# else /* !__i386__ */
 #  warning Unsupported Whitix architecture
 # endif
 
