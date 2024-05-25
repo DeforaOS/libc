@@ -497,7 +497,7 @@ static void _file_relocations_arch(DL * dl, Elf_Rela * rela,
 			fprintf(stderr, "*0x%lx = 0x%lx + 0x%lx\n", addr,
 					dl->data_base, rela->r_addend);
 # endif
-			*addr = dl->text_base + rela->r_addend;
+			*addr = (intptr_t)dl->text_base + rela->r_addend;
 			break;
 	}
 #elif defined(__i386__)
