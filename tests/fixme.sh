@@ -122,7 +122,7 @@ _fixme_callback()
 			echo "_fixme_callback_python"
 			return 0
 			;;
-		"<html"*|"<?xml"*)
+		"<!DOCTYPE"*|"<!doctype"*|"<HTML"*|"<html"*|"<?xml"*)
 			echo "_fixme_callback_xml"
 			return 0
 			;;
