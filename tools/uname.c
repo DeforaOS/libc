@@ -48,7 +48,7 @@ static int _uname(char const * progname)
 	struct utsname name;
 
 	if(uname(&name))
-		return -_error(progname, "utsname", 1);
+		return -_error(progname, "uname", 1);
 	printf("%s\n", name.machine);
 	return 0;
 }
