@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2016-2017 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2024 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS System libc */
 /* All rights reserved.
  *
@@ -28,22 +28,35 @@
 
 
 
-#ifndef LIBC_COMPAT_SYS_MSG_H
-# define LIBC_COMPAT_SYS_MSG_H
+#ifndef LIBC_KERNEL_DARWIN_SYS_MSG_H
+# define LIBC_KERNEL_DARWIN_SYS_MSG_H
 
 
-# if defined(__APPLE__)
-#  include "kernel/darwin/sys/msg.h"
-# elif defined(__linux__)
-#  include "kernel/linux/sys/msg.h"
-# elif defined(__FreeBSD__)
-#  include "kernel/freebsd/sys/msg.h"
-# elif defined(__NetBSD__)
-#  include "kernel/netbsd/sys/msg.h"
-# elif defined(__OpenBSD__)
-#  include "kernel/openbsd/sys/msg.h"
-# else
-#  warning Unsupported platform
+/* types */
+# ifndef msqid_ds
+#  define msqid_ds msqid_ds
+struct msqid_ds
+{
+	struct ipc_perm msg_perm;
+	int _padding1;
+	int _padding2;
+	unsigned long _padding3;
+	unsigned long msg_qnum;
+	unsigned long msg_qbytes;
+	pid_t msg_lspid;
+	pid_t msg_lrpid;
+	time_t msg_stime;
+	int _padding4;
+	time_t msg_rtime;
+	int _padding5;
+	time_t msg_ctime;
+	int _padding6;
+	int __padding7[4];
+};
 # endif
 
-#endif /* !LIBC_COMPAT_SYS_MSG_H */
+
+/* constants */
+# define MSG_NOERROR	010000
+
+#endif /* !LIBC_KERNEL_DARWIN_SYS_MSG_H */
