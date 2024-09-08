@@ -28,8 +28,16 @@
 
 
 
+/* FreeBSD */
+#if defined(__FreeBSD__)
+# if defined(__amd64__)
+#  include "kernel/freebsd/amd64/crtn.S"
+# else
+#  warning Unsupported FreeBSD architecture
+# endif
+
 /* Linux */
-#if defined(__linux__)
+#elif defined(__linux__)
 # if defined(__amd64__)
 #  include "kernel/linux/amd64/crtn.S"
 # elif defined(__i386__)
