@@ -63,6 +63,11 @@ void __stack_chk_setup(void)
 	if(__stack_chk_guard[0] == 0)
 		for(i = 0; i < sizeof(__stack_chk_guard)
 				/ sizeof(*__stack_chk_guard); i++)
+# ifdef _LP64
+			__stack_chk_guard[i] = (unsigned long)arc4random() << 32
+				| arc4random();
+# else
 			__stack_chk_guard[i] = arc4random();
+# endif
 }
 #endif
