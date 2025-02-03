@@ -593,7 +593,7 @@ static void _qsort_exch(char * base, size_t size, size_t a, size_t b)
 int rand(void)
 {
 	_seed *= 0x23456789; /* FIXME totally poor randomness */
-	return _seed % RAND_MAX;
+	return _seed % (RAND_MAX + 1);
 }
 
 
