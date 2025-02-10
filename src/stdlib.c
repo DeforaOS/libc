@@ -69,7 +69,9 @@ typedef struct _Alloc
 /* variables */
 extern char ** environ;
 static Alloc _alloc = { 0, NULL, NULL };
-static unsigned int _seed = 1;
+static uint32_t _seed_lfsr = 1;
+static uint32_t _seed_xc = 1;
+static uint16_t _seed_y = 0;
 
 
 /* prototypes */
@@ -592,8 +594,15 @@ static void _qsort_exch(char * base, size_t size, size_t a, size_t b)
 /* rand */
 int rand(void)
 {
-	_seed *= 0x23456789; /* FIXME totally poor randomness */
-	return _seed % (RAND_MAX + 1);
+	uint32_t t = _seed_lfsr & 1;
+	uint16_t seed_x = _seed_xc;
+
+	_seed_lfsr >>= 1;
+	if(t != 0)
+		_seed_lfsr ^= 0x82608edb;
+	_seed_xc = (_seed_xc >> 16) + seed_x + _seed_y;
+	_seed_y = seed_x + _seed_lfsr;
+	return _seed_xc & RAND_MAX;
 }
 
 
@@ -741,7 +750,15 @@ static void _init_atexit(void)
 /* srand */
 void srand(unsigned int seed)
 {
-	_seed = seed;
+	if(seed == 0)
+		_seed_lfsr = 0x12345678;
+	else
+		_seed_lfsr = seed;
+	_seed_xc = seed;
+	_seed_y = ~seed & 1;
+	rand();
+	rand();
+	rand();
 }
 
 
