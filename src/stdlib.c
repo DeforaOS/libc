@@ -69,9 +69,9 @@ typedef struct _Alloc
 /* variables */
 extern char ** environ;
 static Alloc _alloc = { 0, NULL, NULL };
-static uint32_t _seed_lfsr = 1;
-static uint32_t _seed_xc = 1;
-static uint16_t _seed_y = 0;
+static uint32_t _seed_lfsr = 0x61a864db;
+static uint32_t _seed_xc = 0x00015894;
+static uint16_t _seed_y = 0xf3b8;
 
 
 /* prototypes */
