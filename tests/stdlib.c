@@ -158,28 +158,41 @@ static int _mktemp(char const * progname)
 
 
 /* rand */
+static int _rand_test(unsigned int seed, const uint16_t * expected, unsigned int cnt);
+
 static int _rand(char const * progname)
 {
 	int ret = 0;
 	const uint16_t expected1[10] = { 19533, 24984, 3136, 4047, 27914, 25471,
 		17373, 7887, 7782, 20541 };
-	uint16_t obtained[10];
-	unsigned int i;
+	const uint16_t expected0[10] = { 30440, 896, 24647, 22198, 11946, 311,
+		28109, 32562, 13591, 7962 };
 
 	printf("%s: Testing rand()\n", progname);
-	srand(1);
-	for(i = 0; i < sizeof(expected1) / sizeof(*expected1); i++)
+	if(_rand_test(1, expected1, sizeof(expected1) / sizeof(*expected1)) != 0
+			|| _rand_test(0, expected0,
+				sizeof(expected0) / sizeof(*expected0)) != 0)
 	{
-		obtained[i] = rand();
-		printf("%d: %u (%u)\n", i, obtained[i], expected1[i]);
+		errno = ERANGE;
+		ret = _error(progname, "srand", 1);
 	}
-	for(i = 0; i < sizeof(expected1) / sizeof(*expected1); i++)
-		if(obtained[i] != expected1[i])
-		{
-			errno = ERANGE;
-			ret = _error(progname, "srand", 1);
-			break;
-		}
+	return ret;
+}
+
+static int _rand_test(unsigned int seed, const uint16_t * expected, unsigned int cnt)
+{
+	int ret = 0;
+	unsigned int i;
+	uint16_t obtained;
+
+	srand(seed);
+	for(i = 0; i < cnt; i++)
+	{
+		obtained = rand();
+		printf("%u:%u: %u (%u)\n", seed, i, obtained, expected[i]);
+		if(obtained != expected[i])
+			ret = 1;
+	}
 	return ret;
 }
 
