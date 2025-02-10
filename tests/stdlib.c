@@ -158,7 +158,8 @@ static int _mktemp(char const * progname)
 
 
 /* rand */
-static int _rand_test(unsigned int seed, const uint16_t * expected, unsigned int cnt);
+static int _rand_test(unsigned int seed, const uint16_t * expected,
+		const unsigned int cnt);
 
 static int _rand(char const * progname)
 {
@@ -179,7 +180,8 @@ static int _rand(char const * progname)
 	return ret;
 }
 
-static int _rand_test(unsigned int seed, const uint16_t * expected, unsigned int cnt)
+static int _rand_test(unsigned int seed, const uint16_t * expected,
+		const unsigned int cnt)
 {
 	int ret = 0;
 	unsigned int i;
