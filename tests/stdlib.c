@@ -49,6 +49,7 @@ static int _calloc(char const * progname);
 static int _environ(char const * program);
 static int _mkstemp(char const * progname);
 static int _mktemp(char const * progname);
+static int _rand(char const * progname);
 static int _strtold(char const * progname, char const * str,
 		long double expected);
 static int _strtol(char const * progname);
@@ -153,6 +154,33 @@ static int _mktemp(char const * progname)
 
 	printf("%s: Testing mktemp()\n", progname);
 	return (mktemp(buf) == buf) ? 0 : _error(progname, "mktemp", 1);
+}
+
+
+/* rand */
+static int _rand(char const * progname)
+{
+	int ret = 0;
+	const uint16_t expected1[10] = { 19533, 24984, 3136, 4047, 27914, 25471,
+		17373, 7887, 7782, 20541 };
+	uint16_t obtained[10];
+	unsigned int i;
+
+	printf("%s: Testing rand()\n", progname);
+	srand(1);
+	for(i = 0; i < sizeof(expected1) / sizeof(*expected1); i++)
+	{
+		obtained[i] = rand();
+		printf("%d: %u (%u)\n", i, obtained[i], expected1[i]);
+	}
+	for(i = 0; i < sizeof(expected1) / sizeof(*expected1); i++)
+		if(obtained[i] != expected1[i])
+		{
+			errno = ERANGE;
+			ret = _error(progname, "srand", 1);
+			break;
+		}
+	return ret;
 }
 
 
@@ -395,6 +423,7 @@ int main(int argc, char * argv[])
 	ret += _environ(argv[0]);
 	ret += _mkstemp(argv[0]);
 	ret += _mktemp(argv[0]);
+	ret += _rand(argv[0]);
 	ret += _realloc(argv[0]);
 	ret += _strtold(argv[0], "0.0", 0.0);
 	ret += _strtold(argv[0], " 0.1", 0.1);
