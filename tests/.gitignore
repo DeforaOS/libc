@@ -32,6 +32,7 @@
 /stdlib
 /string
 /strings
+/syslog
 /tests.log
 /time
 /unistd
