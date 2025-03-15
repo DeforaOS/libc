@@ -36,6 +36,8 @@
 #include <time.h>
 #include "syslog.h"
 
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
 
 /* private */
 /* constants */
@@ -132,9 +134,8 @@ void openlog(const char * ident, int logopt, int facility)
 	_log_facilities[facility].options = logopt;
 	if(_log_facilities[facility].fd >= 0)
 		return;
-	if(logopt & LOG_ODELAY)
-		return;
-	_log_open(facility);
+	if(!(logopt & LOG_ODELAY))
+		_log_open(facility);
 }
 
 
@@ -157,7 +158,8 @@ void syslog(int priority, const char * message, ...)
 	int severity;
 	int fd;
 	char buf[1024];
-	size_t size;
+	size_t size = sizeof(buf) - 1;
+	size_t len;
 	time_t t;
 	struct tm timeval;
 	va_list ap;
@@ -179,42 +181,57 @@ void syslog(int priority, const char * message, ...)
 	if((fd = _log_facilities[facility].fd) < 0)
 		return;
 
+	buf[0] = '\0';
+
 	/* date & time (if not through syslogd) */
 	if((t = time(NULL)) != (time_t)-1)
 	{
 		localtime_r(&t, &timeval);
-		if((size = strftime(buf, sizeof(buf), "%d/%m/%Y %H:%M:%S ",
-						&timeval)) > 0)
-			write(fd, buf, size);
+		if((len = strftime(buf, size, "%d/%m/%Y %H:%M:%S ", &timeval))
+				> 0)
+			size -= len;
+	}
+
+	/* ident */
+	if(_log_facilities[facility].ident != NULL)
+	{
+		len = strlen(_log_facilities[facility].ident);
+		strncat(buf, _log_facilities[facility].ident, size);
+		size -= MIN(size, len);
+		strncat(buf, " ", 1);
+		size -= MIN(size, 1);
 	}
 
 	/* severity */
-	size = strlen(_log_severities[severity]);
-	write(fd, _log_severities[severity], size);
-	if(_log_facilities[facility].ident != NULL)
-	{
-		size = strlen(_log_facilities[facility].ident);
-		write(fd, _log_facilities[facility].ident, size);
-	}
+	len = strlen(_log_severities[severity]);
+	strncat(buf, _log_severities[severity], size);
+	size -= MIN(size, len);
 
 	/* PID (optional) */
 	if(_log_facilities[facility].options & LOG_PID)
 	{
-		size = snprintf(buf, sizeof(buf), "[%u]", getpid());
-		write(fd, buf, size);
+		strncat(buf, " ", 1);
+		size -= MIN(size, 1);
+		len = snprintf(&buf[sizeof(buf) - size - 1], size,
+				"[%u]", getpid());
+		size -= MIN(size, len);
 	}
 
 	/* separator */
-	write(fd, sep, sizeof(sep));
+	strncat(buf, sep, sizeof(sep));
+	size -= MIN(size, sizeof(sep));
 
 	/* message */
 	va_start(ap, message);
-	size = vsnprintf(buf, sizeof(buf), message, ap);
+	len = vsnprintf(&buf[sizeof(buf) - size - 1], size, message, ap);
+	size -= MIN(size, len);
 	va_end(ap);
-	write(fd, buf, size);
 
 	/* new line */
-	write(fd, "\n", 1);
+	buf[sizeof(buf) - size - 1] = '\n';
+
+	/* output */
+	write(fd, buf, sizeof(buf) - size);
 }
 
 
