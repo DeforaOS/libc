@@ -33,17 +33,41 @@
 
 
 /* constants */
-# define	LOG_DAEMON		0
-# define	LOG_EMERG		0
-# define	LOG_ALERT		0
-# define	LOG_CRIT		0
-# define	LOG_ERR			0
-# define	LOG_WARNING		0
-# define	LOG_NOTICE		0
-# define	LOG_INFO		0
-# define	LOG_DEBUG		0
-# define	LOG_PID			0
-# define	LOG_CONS		0
+/* options */
+# define	LOG_PID			0x01
+# define	LOG_CONS		0x02
+# define	LOG_NDELAY		0x04
+# define	LOG_ODELAY		0x08
+# define	LOG_NOWAIT		0x10
+
+/* facility */
+# define	LOG_KERN		0x0000
+# define	LOG_USER		0x0001
+# define	LOG_MAIL		0x0002
+# define	LOG_NEWS		0x0003
+# define	LOG_UUCP		0x0004
+# define	LOG_DAEMON		0x0005
+# define	LOG_AUTH		0x0006
+# define	LOG_CRON		0x0007
+# define	LOG_LPR			0x0008
+# define	LOG_LOCAL0		0x0010
+# define	LOG_LOCAL1		0x0011
+# define	LOG_LOCAL2		0x0012
+# define	LOG_LOCAL3		0x0013
+# define	LOG_LOCAL4		0x0014
+# define	LOG_LOCAL5		0x0015
+# define	LOG_LOCAL6		0x0016
+# define	LOG_LOCAL7		0x0017
+
+/* severity */
+# define	LOG_EMERG		0x0000
+# define	LOG_ALERT		0x0100
+# define	LOG_CRIT		0x0200
+# define	LOG_ERR			0x0300
+# define	LOG_WARNING		0x0400
+# define	LOG_NOTICE		0x0500
+# define	LOG_INFO		0x0600
+# define	LOG_DEBUG		0x0700
 
 
 /* functions */
