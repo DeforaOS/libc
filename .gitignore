@@ -1,4 +1,5 @@
 Makefile
+tags
 *.a
 *.bak
 *.core
