@@ -14,6 +14,7 @@
 /mman
 /msg
 /netdb
+/pclint.log
 /ptrace
 /pwd
 /regex
