@@ -1,6 +1,6 @@
 #!/bin/sh
 #$Id$
-#Copyright (c) 2012-2020 Pierre Pronchery <khorben@defora.org>
+#Copyright (c) 2012-2026 Pierre Pronchery <khorben@defora.org>
 #
 #Redistribution and use in source and binary forms, with or without
 #modification, are permitted provided that the following conditions are met:
@@ -252,9 +252,10 @@ while [ $# -gt 0 ]; do
 				$DEBUG $MKDIR -- "$output/xml"	|| exit 2
 				$DEBUG $CP -- "$sections" "$output" \
 								|| exit 2
-				_gtkdoc_scan "$MODULE" "include" "$output"
-				output="${OBJDIR}gtkdoc/xml"
 			fi
+			_gtkdoc_scan "$MODULE" "include" "$output" \
+								|| exit 2
+			output="$output/xml"
 			_gtkdoc_mkdb "$MODULE" "${OBJDIR}gtkdoc" "$output"
 			;;
 		gtkdoc/*.types)
