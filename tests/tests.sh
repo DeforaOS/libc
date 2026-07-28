@@ -41,8 +41,7 @@ SOEXT="so"
 #executables
 DATE="date"
 ECHO="echo"
-UNAME="uname"
-[ $($UNAME -s) != "Darwin" ] || ECHO="/bin/echo"
+[ "$SYSTEM" != "Darwin" ] || ECHO="/bin/echo"
 
 
 #functions
@@ -155,7 +154,7 @@ if [ -z "$ARCH" ]; then
 	echo "Not performing tests (could not detect architecture)"
 	exit 0
 fi
-echo "Detected architecture: $ARCH" 1>&2
+echo "Detected platform: $SYSTEM/$ARCH" 1>&2
 _date > "$target"
 FAILED=
 echo "Performing tests:" 1>&2
