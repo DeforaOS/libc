@@ -68,8 +68,8 @@
 
 /* NetBSD */
 # elif defined(__NetBSD__)
-#  if defined(__amd64__) || defined(__arm__) || defined(__i386__) \
-	|| defined(__sparc__)
+#  if defined(__aarch64__) || defined(__amd64__) || defined(__arm__) \
+	|| defined(__i386__) || defined(__sparc__)
 #   include "sys/syscall.h"
 #   include "kernel/netbsd/sys/sysctl.h"
 #  else
