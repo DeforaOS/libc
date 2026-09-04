@@ -43,7 +43,7 @@ To install DeforaOS libc in a dedicated directory, like `/path/to/libc`:
 
 _Warning_: unless you know what you are doing, do not install DeforaOS libc in a
            directory where it might conflict with the system headers and
-	   libraries, like `/usr` or even the default `/usr/local`.
+           libraries, like `/usr` or even the default `/usr/local`.
 
 
 Generating Makefiles
